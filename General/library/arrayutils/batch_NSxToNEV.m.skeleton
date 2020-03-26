@@ -1,0 +1,146 @@
+function batch_NSxToNEV(monkey,A,B)
+% NSxToNEV(in_nsfilename,in_nevfilename,out_nevfilename,...)
+%
+%  in_nsfilename  = [input file]  name of ns6 filename
+%  in_nevfilename = [input file]  name of nev filename (one with digital timestamps)
+% out_nevfilename = [output file] name of nev file to save...
+%
+% other optional flags:
+%
+% ...,'threshold',value_in_std_dev,...
+% value in units of standard deviations.
+%
+% ...,'bandpass',[low_cutoff high_cutoff],...
+% ...,'lowpass' ,[high_cutoff],...
+% ...,'highpass',[low_cutoff],...
+% all cutoffs in units of Hz.
+
+if ~exist('NSxToNEV','file')
+    addpath(genpath('/home/romesh/Matlab/utils'));
+    addpath('/home/romesh/Matlab');
+end
+
+if ~exist('exporand','file')
+    addpath(genpath('/u/vnl/matlab/ExpoMatlab'));
+end
+
+if ~exist('openNEV','file')
+    addpath(genpath('/u/vnl/matlab/library'));
+end
+
+in_nspath  = sprintf('/experiments/m%d_array/recordings/ns6/',monkey);
+in_nevpath = sprintf('/experiments/m%d_array/recordings/nev/',monkey);
+out_nevpath= sprintf('/home/romesh/Matlab/analysis/m%d/nev/',monkey);
+
+%listing = dir(sprintf('/experiments/m%d_array/recordings/xml/*[LSRC].xml',monkey));
+listing = dir(sprintf('/experiments/m%d_array/recordings/xml/*[nattex32].xml',monkey));
+
+xmlfiles = {listing.name};
+
+%vals = regexp(xmlfiles,'m(\d{3,3})([lr]\d)#(\d{1,3})\[LSRC\]\.xml','tokens');
+vals = regexp(xmlfiles,'m(\d{3,3})([lr]\d)#(\d{1,3})\[nattex32\]\.xml','tokens');
+
+fprintf('%d file(s) found.\n',size(xmlfiles,2));
+for ii=(A:B:size(xmlfiles,2))
+    mstr = vals{ii}{1}{1};
+    hstr = vals{ii}{1}{2};
+    estr = sprintf('%03d',str2double(vals{ii}{1}{3}));    
+    in_nsfilename   = sprintf('%sm%s%s#%s.ns6',in_nspath,mstr,hstr,estr);
+    in_nevfilename  = sprintf('%sm%s%s#%s.nev',in_nevpath,mstr,hstr,estr);
+    out_nevfilename = sprintf('%sm%s%s#%s_neg5.nev',out_nevpath,mstr,hstr,estr);
+    if exist(in_nsfilename,'file')&&exist(in_nevfilename,'file')
+        NSxToNEV(in_nsfilename,in_nevfilename,out_nevfilename,'threshold',-5);
+    end
+end
+
+
+%%
+% threshold = -5;
+% %%
+% 
+% % in_nsfilename   = '/experiments/m644_array/recordings/ns6/m644l2#001.ns6';
+% % in_nevfilename  = '/experiments/m644_array/recordings/nev/m644l2#001.nev';
+% % out_nevfilename = '/home/romesh/Matlab/analysis/m644/nev/m644l2#001_neg5.nev';
+% % NSxToNEV(in_nsfilename,in_nevfilename,out_nevfilename,'threshold',threshold);
+% % 
+% % in_nsfilename   = '/experiments/m644_array/recordings/ns6/m644l1#001.ns6';
+% % in_nevfilename  = '/experiments/m644_array/recordings/nev/m644l1#001.nev';
+% % out_nevfilename = '/home/romesh/Matlab/analysis/m644/nev/m644l1#001_neg5.nev';
+% % NSxToNEV(in_nsfilename,in_nevfilename,out_nevfilename,'threshold',threshold);
+% % 
+% % in_nsfilename   = '/experiments/m644_array/recordings/ns6/m644l1#012.ns6';
+% % in_nevfilename  = '/experiments/m644_array/recordings/nev/m644l1#012.nev';
+% % out_nevfilename = '/home/romesh/Matlab/analysis/m644/nev/m644l1#012_neg5.nev';
+% % NSxToNEV(in_nsfilename,in_nevfilename,out_nevfilename,'threshold',threshold);
+% % 
+% % in_nsfilename   = '/experiments/m644_array/recordings/ns6/m644r1#018.ns6';
+% % in_nevfilename  = '/experiments/m644_array/recordings/nev/m644r1#018.nev';
+% % out_nevfilename =  '/home/romesh/Matlab/analysis/m644/nev/m644r1#018_neg5.nev';
+% % NSxToNEV(in_nsfilename,in_nevfilename,out_nevfilename,'threshold',threshold);
+% % 
+% % in_nsfilename   = '/experiments/m644_array/recordings/ns6/m644r1#009.ns6';
+% % in_nevfilename  = '/experiments/m644_array/recordings/nev/m644r1#009.nev';
+% % out_nevfilename =  '/home/romesh/Matlab/analysis/m644/nev/m644r1#009_neg5.nev';
+% % NSxToNEV(in_nsfilename,in_nevfilename,out_nevfilename,'threshold',threshold);
+% % 
+% % in_nsfilename   = '/experiments/m644_array/recordings/ns6/m644r2#001.ns6';
+% % in_nevfilename  = '/experiments/m644_array/recordings/nev/m644r2#001.nev';
+% % out_nevfilename =  '/home/romesh/Matlab/analysis/m644/nev/m644r2#001_neg5.nev';
+% % NSxToNEV(in_nsfilename,in_nevfilename,out_nevfilename,'threshold',threshold);
+% % 
+% % in_nsfilename   = '/experiments/m644_array/recordings/ns6/m644r2#016.ns6';
+% % in_nevfilename  = '/experiments/m644_array/recordings/nev/m644r2#016.nev';
+% % out_nevfilename =  '/home/romesh/Matlab/analysis/m644/nev/m644r2#016_neg5.nev';
+% % NSxToNEV(in_nsfilename,in_nevfilename,out_nevfilename,'threshold',threshold);
+% % 
+% % in_nsfilename   = '/experiments/m644_array/recordings/ns6/m644r2#021.ns6';
+% % in_nevfilename  = '/experiments/m644_array/recordings/nev/m644r2#021.nev';
+% % out_nevfilename =  '/home/romesh/Matlab/analysis/m644/nev/m644r2#021_neg5.nev';
+% % NSxToNEV(in_nsfilename,in_nevfilename,out_nevfilename,'threshold',threshold);
+% 
+% %%
+% monkey = 643;
+% 
+% in_nspath  = sprintf('/experiments/m%d_array/recordings/ns6/',monkey);
+% in_nevpath = sprintf('/experiments/m%d_array/recordings/nev/',monkey);
+% out_nevpath= sprintf('/home/romesh/Matlab/analysis/m%d/nev/',monkey);
+% 
+% % in_nsfilename   = [in_nspath   'm643l1#014.ns6'];
+% % in_nevfilename  = [in_nevpath  'm643l1#014.nev'];
+% % out_nevfilename = [out_nevpath 'm643l1#014_neg5.nev'];
+% % NSxToNEV(in_nsfilename,in_nevfilename,out_nevfilename,'threshold',threshold);
+% % 
+% % in_nsfilename   = [in_nspath   'm643l2#001.ns6'];
+% % in_nevfilename  = [in_nevpath  'm643l2#001.nev'];
+% % out_nevfilename = [out_nevpath 'm643l2#001_neg5.nev'];
+% % NSxToNEV(in_nsfilename,in_nevfilename,out_nevfilename,'threshold',threshold);
+%  
+% % in_nsfilename   = [in_nspath   'm643l2#013.ns6'];
+% % in_nevfilename  = [in_nevpath  'm643l2#013.nev'];
+% % out_nevfilename = [out_nevpath 'm643l2#013_neg5.nev'];
+% % NSxToNEV(in_nsfilename,in_nevfilename,out_nevfilename,'threshold',threshold);
+% % 
+% % in_nsfilename   = [in_nspath   'm643r1#008.ns6'];
+% % in_nevfilename  = [in_nevpath  'm643r1#008.nev'];
+% % out_nevfilename = [out_nevpath 'm643r1#008_neg5.nev'];
+% % NSxToNEV(in_nsfilename,in_nevfilename,out_nevfilename,'threshold',threshold);
+% 
+% % in_nsfilename   = [in_nspath   'm643r2#005.ns6'];
+% % in_nevfilename  = [in_nevpath  'm643r2#005.nev'];
+% % out_nevfilename = [out_nevpath 'm643r2#005_neg5.nev'];
+% % NSxToNEV(in_nsfilename,in_nevfilename,out_nevfilename,'threshold',threshold);
+% % 
+% % in_nsfilename   = [in_nspath   'm643r2#017.ns6'];
+% % in_nevfilename  = [in_nevpath  'm643r2#017.nev'];
+% % out_nevfilename = [out_nevpath 'm643r2#017_neg5.nev'];
+% % NSxToNEV(in_nsfilename,in_nevfilename,out_nevfilename,'threshold',threshold);
+% 
+% % LSRC_full(643,'l1',14,0);
+% % LSRC_full(643,'l2',1,0);
+% % LSRC_full(643,'l2',13,0); ** ABORTED?? **
+% % LSRC_full(643,'r1',8,0);
+% % LSRC_full(643,'r2',5,0);
+% % LSRC_full(643,'r2',17,0);
+% 
+% 
+% %%

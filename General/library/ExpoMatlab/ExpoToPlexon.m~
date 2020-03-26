@@ -1,0 +1,51 @@
+function ExpoToPlexon(filename,swap)
+%
+% ExpoToPlexon(filename)
+%%
+if ~exist('filename','var')
+    error('ExpoMatlab:ExpoToPlexon','A filename was not provided. See syntax');
+end
+
+if ~exist(filename,'file')
+    error('ExpoMatlab:ExpoToPlexon','The input file provided was not found');
+end
+
+ExpoXMLimport     = ReadExpoXML(filename,1,1);
+
+if isempty(ExpoXMLimport.waveforms)
+    error('ExpoMatlab:ExpoToPlexon','The data did not contain any waveforms.');
+end
+
+Header      = filename(1:end-4);
+NChan       = ExpoXMLimport.waveforms.NumOfChannels;
+Offset      = size(Header,2);
+Freq        = ExpoXMLimport.waveforms.SampleRate;
+Resolution  = DataSize*8;
+MaxMV       = 5;
+Swap        = 0;
+Data        = [];
+midpoint    = (2.^Resolution)./2;
+
+
+switch Resolution
+    case 8
+        Data = int16(double([ExpoXMLimport.waveforms.Data{:,1}])-midpoint);  % uint8 -> int8
+    case 16 % assumes little endian
+        temp = [ExpoXMLimport.waveforms.Data{:,1}];       % [uint8 h uint8 l]
+        temp = temp(1:2:end-1,:).*256 + temp(2:2:end,:);  % [uint8 h uint8 l] -> [uint16]
+        Data = int16(double(temp) - midpoint);            % [uint16] -> [int16].
+        clear temp;
+end
+
+fid = fopen([filename(1:end-3) 'waveforms'],'w+');
+fprintf(fid,'%s',Header);
+fwrite(fid,Data,'int16');
+fclose(fid);
+
+fid = fopen([filename(1:end-3) 'ofi'],'w+');
+fprintf(fid,'Freq: %.6f\n',Freq);
+fprintf(fid,'MaxMV: %.6f\n',MaxMV);
+fprintf(fid,'NChan: %d\n',NChan);
+fprintf(fid,'Offset: %d\n',Offset);
+fprintf(fid,'Resolution: %d\n',Resolution);
+fprintf(fid,'Swap: %d\n',Swap);

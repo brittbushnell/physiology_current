@@ -1,0 +1,6 @@
+Spikesort
+by Ryan Kelly, Matt Smith and Adam Snyder
+
+DISCLAIMER: Spikesort is intended for sorting spike waveforms in NEV files. This software modifies the NEV files and rewrites the sort codes for the channels. The authors of Spikesort take no responsibility for any errors in the software or in its use with your data. Remember that Spikesort modifies the NEV file, so you should have a backup before running this software. You should check that the sorting did what you thought it did with your NEV file. YOU ARE RESPONSIBLE FOR YOUR OWN DATA! 
+
+That said, Spikesort continues to undergo development and has been used extensively. Bugs have existed in the software and will exist again, but it is relatively robust and mature. Go to http://www.smithlab.net/spikesort.html for updated versions and documentation.

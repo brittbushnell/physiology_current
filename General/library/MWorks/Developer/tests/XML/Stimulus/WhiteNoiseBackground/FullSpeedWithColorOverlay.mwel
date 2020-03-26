@@ -1,0 +1,18 @@
+white_noise_background bg ()
+
+image_file img (
+    path = 'flamingos.jpg'
+    x_size = 20
+    y_size = 20
+    alpha_multiplier = 0.5
+)
+
+
+protocol {
+    queue_stimulus (bg)
+    queue_stimulus (img)
+    trial (nsamples = 1000) {
+        randomize_background (bg)
+        update_stimulus_display ()
+    }
+}

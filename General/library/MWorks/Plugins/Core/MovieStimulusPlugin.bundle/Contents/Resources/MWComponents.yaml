@@ -1,0 +1,160 @@
+---
+
+
+name: Base Frame List Stimulus
+abstract: yes
+isa: [Stimulus, Dynamic Stimulus Base]
+parameters: 
+  - 
+    name: ended
+    description: >
+        Variable that will be set to true after the last frame has displayed.
+        (Specifically, it will be set to true at the time that the next frame
+        *after* the last would have been drawn, if there were one.)
+  - 
+    name: loop
+    default: 'NO'
+    description: >
+        If ``YES``, the presentation will repeat indefinitely (or until `Stop
+        Dynamic Stimulus` is invoked)
+  - 
+    name: repeats
+    default: 0
+    description: |
+        Number of times to repeat the presentation.  Note that the presentation
+        will always run at least once, even if this value is less than one.
+
+        If `loop`_ is ``YES``, this parameter is ignored.
+
+
+---
+
+
+name: Frame List Stimulus
+signature: stimulus/frame_list
+isa: Base Frame List Stimulus
+allowed_child:
+  - Replicator
+  - Stimulus
+description: >
+    A simple movie stimulus that presents its frames at the native refresh rate
+    of the display.  The frames can be provided by a stimulus group or attached
+    directly to the frame list as child components.
+parameters: 
+  - 
+    name: stimulus_group
+    description: Stimulus group providing the frames
+  - 
+    name: ending
+    description: >
+        Variable that will be set to true when the frame list begins drawing its
+        last frame (thereby notifying you of the optimal time to `queue <Queue
+        Stimulus>`  stimuli that should be displayed during the frame
+        *immediately following* said last frame)
+
+
+---
+
+
+name: Base Movie Stimulus
+abstract: yes
+isa: Base Frame List Stimulus
+parameters: 
+  - 
+    name: frames_per_second
+    required: yes
+    description: Rate at which to display the movie's frames
+
+
+---
+
+
+name: Movie Stimulus
+signature: stimulus/movie
+isa: Base Movie Stimulus
+allowed_child:
+  - Replicator
+  - Stimulus
+description: |
+    A simple movie stimulus that presents its frames at a specified frame rate.
+    The frames can be provided by a stimulus group or attached directly to the
+    movie as child components.
+
+    *Note*:  For compatibility with previous MWorks versions, this stimulus
+    ignores the `deferred`_ parameter.  Instead, the stimulus instance itself is
+    marked as loaded at creation (as if `deferred`_ were ``no``), but it does
+    not automatically load its frame stimuli (as if `deferred`_ were
+    ``explicit``).  However, explicit `load <Load Stimulus>` and `unload <Unload
+    Stimulus>` actions *will* load/unload the frames along with the movie
+    stimulus itself.
+parameters: 
+  - 
+    name: stimulus_group
+    description: Stimulus group providing the frames
+
+
+---
+
+
+name: Image Directory Movie Stimulus
+signature: stimulus/image_directory_movie
+isa: Base Movie Stimulus
+description: |
+    A movie stimulus that gets its frames from a directory of image files.
+
+    *Note*:  To preserve each image's aspect ratio on screen, `x_size`_ and
+    `y_size`_ must be equal.  When drawn, the larger dimension spans the full
+    specified size, while the smaller dimension is scaled to maintain the
+    aspect ratio.
+parameters: 
+  - 
+    name: directory_path
+    required: yes
+    description: |
+        Filesystem path to the directory containing the image files.
+
+        *All* non-hidden files in this directory must be images.  The frames are
+        ordered according to the lexical sort order of the file names.
+  - 
+    name: x_size
+    example: 5.0
+    description: |
+        Horizontal size (degrees).
+
+        If omitted, the value of `y_size`_ is used.  It is an error to omit both
+        x_size and y_size (unless `fullscreen`_ is ``YES``).
+  - 
+    name: y_size
+    example: 5.0
+    description: |
+        Vertical size (degrees).
+
+        If omitted, the value of `x_size`_ is used.  It is an error to omit both
+        x_size and y_size (unless `fullscreen`_ is ``YES``).
+  - 
+    name: x_position
+    default: 0.0
+    description: Horizontal center position (degrees)
+  - 
+    name: y_position
+    default: 0.0
+    description: Vertical center position (degrees)
+  - 
+    name: rotation
+    default: 0.0
+    description: Rotation (degrees)
+  - 
+    name: alpha_multiplier
+    default: 1.0
+    description: >
+        Controls the transparency of the stimulus.  ``1.0`` is fully opaque,
+        while ``0.0`` is fully tranparent.
+  - 
+    name: fullscreen
+    default: 'NO'
+    description: >
+        If ``YES``, the stimulus is sized to fill the display.  In this mode,
+        `x_size`_, `y_size`_, `x_position`_, `y_position`_, and `rotation`_ are
+        ignored.
+
+

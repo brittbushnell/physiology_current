@@ -1,0 +1,99 @@
+---
+
+
+name: NE-500 Syringe Pump Network
+signature: iodevice/ne500
+isa: IODevice
+platform: macos
+allowed_child: NE-500 Syringe Pump
+description: >
+    Used for interfacing to a network of `NE-500 syringe pumps
+    <http://www.syringepump.com/oem.php#aa>`_, accessed via a serial-to-ethernet
+    bridge or a USB-to-serial adapter
+parameters: 
+  - 
+    name: address
+    example:
+      - '"10.0.254.254"'
+      - /dev/cu.usbserial-FTH1RRH5
+    description: |
+        If `port`_ is provided, the address is taken to be a host name,
+        and MWorks attempts to connect to the pump network via a
+        `TCP <https://en.wikipedia.org/wiki/Transmission_Control_Protocol>`_
+        socket.  Otherwise, the address is assumed to be a filesystem path that
+        represents a serial port.
+
+        If neither address nor port is provided, MWorks looks for a single,
+        connected serial device.  If it finds one, it assumes it to be the
+        desired pump network and attempts to connect.
+  - 
+    name: port
+    example: 100
+    description: Port number for TCP connections
+  - 
+    name: response_timeout
+    default: 100ms
+    description: >
+        Maximum time to wait for responses to pump commands (microseconds).  If
+        no response is received in the allotted time, issue an error message.
+  - 
+    name: log_pump_commands
+    default: 'YES'
+    description: >
+        If ``YES``, log all commands sent to and responses received from the
+        pump network to the MWorks event stream and server console
+
+
+---
+
+
+name: NE-500 Syringe Pump
+signature: iochannel/ne500
+isa: IOChannel
+platform: macos
+description: >
+    Used for interfacing to a specific pump within a `NE-500 Syringe Pump
+    Network`
+parameters: 
+  - 
+    name: capability
+    required: yes
+    example: '00'
+    description: Network address of pump (0 to 99)
+  - 
+    name: syringe_diameter
+    required: yes
+    example: 15.0
+    description: Syringe diameter (millimeters)
+  - 
+    name: flow_rate
+    required: yes
+    example: 5
+    description: Pumping rate (units given by `rate_unit`_)
+  - 
+    name: rate_unit
+    options: [UM, MM, UH, MH]
+    default: MM
+    description: >
+        Units of `flow_rate`_.  The options are uL/min, mL/min, uL/hr, and
+        mL/hr.
+  - 
+    name: variable
+    required: yes
+    description: >
+        Variable from which to read the volume to dispense.  Assigning a nonzero
+        value to the variable causes MWorks to prepare the pump's onboard
+        dispensing program (updating rate, volume, and direction as needed).
+        If the pump network is `enabled <Start IO Device>`, pumping will then
+        begin.
+  - 
+    name: volume_unit
+    options: [UL, ML]
+    description: |
+        Volume units.
+
+        If omitted, volume units are determined by `syringe_diameter`_.  If the
+        syringe diameter is less than or equal to 14mm, UL is used.  Otherwise,
+        ML is used.
+
+
