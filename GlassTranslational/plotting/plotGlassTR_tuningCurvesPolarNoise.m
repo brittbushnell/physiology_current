@@ -45,7 +45,7 @@ oris = 0:45:315;
 oris(end+1) = 0;
 oris = deg2rad(oris);
 
-for ch = 1:96
+for ch = 1%:96
     if dataT.goodCh(ch) == 1
         lin = (squeeze(stimMean(:,:,:,ch)));
         noise = (squeeze(noiseMean(:,:,ch)));

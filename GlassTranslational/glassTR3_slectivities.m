@@ -62,14 +62,17 @@ for fi = 1:size(files,1)
     end    
     %% selectivity
     % compute selectivitie indices based on Smith et al., 2002
-    dataT = glassTR_getOriSelectivity2thetaNoise(dataT,numBoot,numPerm,holdout);    
+    dataT = glassTR_getOriSelectivity2thetaNoise(dataT,numBoot,numPerm,holdout); 
+    fprintf('computed orientation statistics %.2f minutes \n',toc/60)
     %% run perumtation test for OSI
     fprintf('selectivity computed in %d mins\n',toc/60)
      [dataT.OSI2thetaNoisePval,dataT.OSI2thetaNoiseSig] = glassGetPermutationStats_coh...
         (dataT.OriSelectIndex2thetaNoise,dataT.OriSelectIndex2thetaNoisePerm,dataT,'translational vs noise OSI using 2x theta permutation test',plotFlag);
+    fprintf('computed OSI permutation tests %.2f minutes \n',toc/60)
     %% permutation tests for preferred orientation
     [dataT.prefOri2thetaNoisePval,dataT.prefOri2thetaNoiseSig] = glassGetPermutationStats_coh...
         (dataT.prefOri2thetaNoise,dataT.prefOri2thetaNoisePerm,dataT,'preferred orientation translational Glass using 2x theta permutation test',plotFlag);
+    fprintf('computed preferred orientation permutation tests %.2f minutes \n',toc/60)
     %%
     plotGlassTR_tuningCurvesPolarNoise(dataT)
     %% commit to data structure

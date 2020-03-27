@@ -175,7 +175,7 @@ for fi = 1:size(files,1)
         %% get homogeneity
         dataT = ChiSquareHomogeneity(dataT,0.1);
         %% rank order of stim responses
-        NOTE: Wed do permutation test for preferred stim
+        NOTE: Make this like Tony wants it
         dataT = rankGlassSelectivitiesBlank(dataT);
         %% plot
         if plotOther == 1
