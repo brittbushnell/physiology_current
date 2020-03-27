@@ -10,7 +10,7 @@ function [stimBlankPval,sig] = glassGetPermutationStats_coh(realData,permData,da
 %     real d' against the distribution of permuted d's.
 
 %%
-[~,numDots,numDxs,numCoh] = getGlassParameters(dataT);
+[numOris,numDots,numDxs,numCoh,~,oris,dots,dxs,coherences,~] = getGlassTRParameters(dataT);
 stimBlankPval = zeros(4,2,2,96);
 sig = zeros(4,2,2,96);
 %%

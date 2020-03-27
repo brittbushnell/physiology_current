@@ -45,7 +45,7 @@ oris = 0:45:315;
 oris(end+1) = 0;
 oris = deg2rad(oris);
 
-for ch = 1:96
+for ch = 1%:96
     if dataT.goodCh(ch) == 1
         lin = (squeeze(stimMean(:,:,:,ch)));
         noise = (squeeze(noiseMean(:,:,ch)));
@@ -119,8 +119,7 @@ for ch = 1:96
                 end
                 
                 polarplot(dataT.prefOri2thetaNoise(end,dt,dx,ch),max10,'*k');
-                pOri = mod(rad2deg(dataT.prefOri2thetaNoise(end,dt,dx,ch)),360);
-                text(dataT.prefOri2thetaNoise(end,dt,dx,ch),max10+2,sprintf('%.1f',pOri),'FontWeight','bold','FontAngle','italic','FontSize',11)
+                text(dataT.prefOri2thetaNoise(end,dt,dx,ch),max10+2,sprintf('%.1f',(dataT.prefOri2thetaNoise(end,dt,dx,ch))),'FontWeight','bold','FontAngle','italic','FontSize',11)
                 n = polarplot(oris,noiseVect,'-o');
                 n.Color = [1 0.5 0.1 0.8];
                 n.LineWidth = 1.2;
@@ -135,7 +134,7 @@ for ch = 1:96
                 ax.RTick = [0,maxLim/2,maxLim];
                 set(gca,'ThetaTick',0:45:315)
                 
-                title(sprintf('OSI: %.3f',dataT.OriSelectIndex2thetaNoise(end,dt,dx,ch)));
+                title(sprintf('2\\theta OSI: %.3f',dataT.OriSelectIndex2thetaNoise(end,dt,dx,ch)));
                 ndx = ndx+1;
             end
         end
@@ -231,8 +230,7 @@ for ch = 1:96
                 
                 if dataT.prefOri2thetaNoiseSig(end,dt,dx,ch) == 1
                     polarplot(dataT.prefOri2thetaNoise(end,dt,dx,ch),max10,'*k');
-                    pOri = mod(rad2deg(dataT.prefOri2thetaNoise(end,dt,dx,ch)),360);
-                    text(dataT.prefOri2thetaNoise(end,dt,dx,ch),max10+3,sprintf('%.1f',pOri),'FontWeight','bold','FontAngle','italic','FontSize',11)
+                    text(dataT.prefOri2thetaNoise(end,dt,dx,ch),max10+3,sprintf('%.1f',(dataT.prefOri2thetaNoise(end,dt,dx,ch))),'FontWeight','bold','FontAngle','italic','FontSize',11)
                 end
                 
                 b = polarplot(oris,blankVect,'-og');

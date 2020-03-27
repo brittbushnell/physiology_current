@@ -4,7 +4,7 @@ clc
 tic
 %%
 files = {
-'WU_RE_GlassTR_nsp2_20170828_all_s1_perm2k';...
+%'WU_RE_GlassTR_nsp2_20170828_all_s1_perm2k';...
 'WU_LE_GlassTR_nsp2_20170825_002_s1_perm2k';...
 
 'WU_RE_GlassTR_nsp1_20170828_all_s1_perm2k';...
@@ -71,7 +71,7 @@ for fi = 1:size(files,1)
     fprintf('computed OSI permutation tests %.2f minutes \n',toc/60)
     %% permutation tests for preferred orientation
     [dataT.prefOri2thetaNoisePval,dataT.prefOri2thetaNoiseSig] = glassGetPermutationStats_coh...
-        (dataT.prefOri2thetaNoise,dataT.prefOri2thetaNoisePerm,dataT,'preferred orientation translational Glass using 2x theta permutation test',plotFlag);
+        (mod(rad2deg(dataT.prefOri2thetaNoise),360),mod(rad2deg(dataT.prefOri2thetaNoisePerm),360),dataT,'preferred orientation translational Glass using 2x theta permutation test',plotFlag);
     fprintf('computed preferred orientation permutation tests %.2f minutes \n',toc/60)
     %%
     plotGlassTR_tuningCurvesPolarNoise(dataT)
