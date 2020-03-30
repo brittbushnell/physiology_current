@@ -31,7 +31,7 @@ for dt = 1:numDots
                     noiseDprime = abs(dataT.noiseBlankDprime(dt,dx,ch));
                 end
                 
-               [~, rankOrder(:,ch)] = sort([conDprime,radDprime,noiseDprime]);    
+               [~, rankOrder(:,ch)] = sort([conDprime,radDprime,noiseDprime],'descend');    
             end
             dPrimeRank{dt,dx} = rankOrder;
         end
@@ -39,4 +39,4 @@ for dt = 1:numDots
 end
 dataT.dPrimeRankBlank = dPrimeRank;
 %%
-f
+

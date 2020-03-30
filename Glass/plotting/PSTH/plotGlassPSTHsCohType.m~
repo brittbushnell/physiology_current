@@ -203,9 +203,9 @@ for dt = 1:numDots
                 cohNdx = (dataT.coh == 1);
                 concNdx = (dataT.type == 1);
                 radNdx = (dataT.type == 2);
-                blankNdx = (dataT.numDots == 0);
-                dotNdx = (dataT.numDots == dots(dt));
-                dxNdx = (dataT.dx == dxs(dx));
+                blankNdx = (dataT.numDots == dots(dx);
+                dotNdx = (dataT.numDots == 400);
+                dxNdx = (dataT.dx == 0.03);
                 noiseNdx = (dataT.coh == 0);
                 
                 
@@ -235,9 +235,9 @@ for dt = 1:numDots
                 axis off
             end
         end
-        suptitle({sprintf('%s %s %s full coherence Glass pattern %d dots dx %.2f',dataT.animal, dataT.array, dataT.eye, dots(dt),dxs(dx));...
+        suptitle({sprintf('%s %s %s full coherence Glass pattern 400 dots dx 0.03',dataT.animal, dataT.array, dataT.eye);...
             ('concentric: purple  radial: green  dipole: orange')})
-        figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_',dataT.programID,'_PSTH_fullCoh_dots',num2str(dots(dt)),'_dx',num2str(dxs(dx)),'.pdf'];
+        figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_',dataT.programID,'_PSTH_fullCoh'];
         print(gcf, figName,'-dpdf','-fillpage')
     end
 end
