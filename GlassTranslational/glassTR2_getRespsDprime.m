@@ -122,24 +122,24 @@ files = {
 %    'XT_RE_GlassTR_nsp1_20190128_all_s1';
 %    'XT_LE_GlassTR_nsp1_20190130_all_s1';
 %    
-%    'XT_RE_GlassTRCoh_nsp2_20190322_all_s1';
-%    'XT_RE_GlassTRCoh_nsp2_20190324_all_s1';
-%    'XT_RE_GlassTRCoh_nsp1_20190322_all_s1';
-%    'XT_RE_GlassTRCoh_nsp1_20190324_all_s1';
-%    
-%    'WV_RE_GlassTRCoh_nsp2_20190409_all_s1';
-%    'WV_RE_GlassTRCoh_nsp2_20190410_all_s1';
-%    
-%    'WV_LE_GlassTRCoh_nsp2_20190415_all_s1';
-%    'WV_LE_glassTRCoh_nsp2_20190416_all_s1';
-%     'WV_LE_GlassTRCoh_nsp2_20190417_all_s1';
-%    
-%     'WV_RE_GlassTRCoh_nsp1_20190409_all_s1';
-%     'WV_RE_GlassTRCoh_nsp1_20190410_all_s1';
-%     
-%    'WV_LE_GlassTRCoh_nsp1_20190415_all_s1';
-%    'WV_LE_glassTRCoh_nsp1_20190416_all_s1';
-%    'WV_LE_GlassTRCoh_nsp1_20190417_all_s1';
+'XT_RE_GlassTRCoh_nsp2_20190322_all_s1';
+'XT_RE_GlassTRCoh_nsp2_20190324_all_s1';
+'XT_RE_GlassTRCoh_nsp1_20190322_all_s1';
+'XT_RE_GlassTRCoh_nsp1_20190324_all_s1';
+
+'WV_RE_GlassTRCoh_nsp2_20190409_all_s1';
+'WV_RE_GlassTRCoh_nsp2_20190410_all_s1';
+
+'WV_LE_GlassTRCoh_nsp2_20190415_all_s1';
+'WV_LE_glassTRCoh_nsp2_20190416_all_s1';
+'WV_LE_GlassTRCoh_nsp2_20190417_all_s1';
+
+'WV_RE_GlassTRCoh_nsp1_20190409_all_s1';
+'WV_RE_GlassTRCoh_nsp1_20190410_all_s1';
+
+'WV_LE_GlassTRCoh_nsp1_20190415_all_s1';
+'WV_LE_glassTRCoh_nsp1_20190416_all_s1';
+'WV_LE_GlassTRCoh_nsp1_20190417_all_s1';
     };
 
 nameEnd = 'perm2k';
@@ -155,7 +155,7 @@ failedFile= {};
 failNdx = 1;
 for fi = 1:size(files,1)
     %% Get basic information about experiments
-    try
+    %try
         load(files{fi});
         filename = files{fi};
         fprintf('\n*** analyzing %s \n*** file %d/%d \n', filename,fi,size(files,1))
@@ -174,11 +174,11 @@ for fi = 1:size(files,1)
             outputDir = sprintf('~/matFiles/%s/Parsed/',dataT.array);
         end
         %% do all vs blank permutation test
-        dataT = GlassStimVsBlankPermutationTest_allStim(dataT,numPerm,holdout);
-        
-        fprintf('good channel permutaiton test done in %.2f hours \n',toc/3600)
+        dataT = GlassStimVsBlankPermutations_allStim(dataT,numPerm,holdout);  
+        fprintf('good channel permutaitons done in %.2f hours \n',toc/3600)
         %% decide good channels
         [dataT.stimBlankChPvals,dataT.goodCh] = glassGetPermutationStatsAndGoodCh(dataT.allStimBlankDprime,dataT.allStimBlankDprimeBootPerm);
+        fprintf('good channel permutaiton test done in %.2f hours \n',toc/3600)
         %% get stimulus responses
         dataT = getStimResps_GlassTR(dataT, 200);
         %% get real dPrimes for stimulus vs blank and orientations vs noise
@@ -214,15 +214,15 @@ for fi = 1:size(files,1)
         %%
         clear dataT
         fprintf('file done in %.2f hours \n',toc/3600)
-    catch ME
-        failedFile{failNdx} = filename;
-        failedME{failNdx} = ME;
-        failNdx = failNdx+1;
-        fprintf('xxxxxxxxxxx\n')
-        fprintf('file failed \n')
-        fprintf('%s \n',ME.identifier)
-        fprintf('xxxxxxxxxxx\n')
-    end
+%     catch ME
+%         failedFile{failNdx} = filename;
+%         failedME{failNdx} = ME;
+%         failNdx = failNdx+1;
+%         fprintf('xxxxxxxxxxx\n')
+%         fprintf('file failed \n')
+%         fprintf('%s \n',ME.identifier)
+%         fprintf('xxxxxxxxxxx\n')
+%     end
     close all
 end
 if failNdx >1
