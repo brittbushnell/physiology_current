@@ -106,9 +106,9 @@ tic
 %% combined sessions
 files = {%FE
     'WU_LE_Glass_nsp2_20170817_001_raw_perm2k';...
-    'WU_RE_Glass_nsp2_20170818_all_raw_perm2k';...
-    'WU_LE_Glass_nsp1_20170817_001_raw_perm2k';...
-    'WU_RE_Glass_nsp1_20170818_001_raw_perm2k';...
+%     'WU_RE_Glass_nsp2_20170818_all_raw_perm2k';...
+%     'WU_LE_Glass_nsp1_20170817_001_raw_perm2k';...
+%     'WU_RE_Glass_nsp1_20170818_001_raw_perm2k';...
     %
     %     'WV_RE_glassCoh_nsp2_20190404_all_raw_perm2k';...
     %     'WV_LE_GlassCoh_nsp2_20190402_all_raw_perm2k';...
@@ -153,7 +153,7 @@ for fi = 1:size(files,1)
     
     [dataT.conNoiseDprimePvals,dataT.conNoiseSig] = glassGetPermutationStats_coh(dataT.conNoiseDprime,dataT.conNoiseDprimeBootPerm,dataT,'concentric vs noise permutation test',plotHists);
     [dataT.radNoiseDprimePvals,dataT.radNoiseSig] = glassGetPermutationStats_coh(dataT.radNoiseDprime,dataT.radNoiseDprimeBootPerm,dataT,'radial vs noise permutation test',plotHists);
-    [dataT.conRadNoiseDprimePvals,dataT.conRadNoiseSig] = glassGetPermutationStats_coh(dataT.conRadDprime,dataT.conRadDprimeBootPerm,dataT,'concentric vs radial permutation test',plotHists);
+    [dataT.conRadNoiseDprimePvals,dataT.conRadSig] = glassGetPermutationStats_coh(dataT.conRadDprime,dataT.conRadDprimeBootPerm,dataT,'concentric vs radial permutation test',plotHists);
     
     fprintf('stim vs noise permutation tests done %d  hours \n',toc/3600)
     %% latency permutation tests by stimulus
@@ -175,13 +175,10 @@ for fi = 1:size(files,1)
     %% get homogeneity
     dataT = ChiSquareHomogeneity(dataT,0.1);
     %% rank order of stim responses
-    
     dataT = rankGlassSelectivitiesBlank(dataT);
     %% plot
     if plotOther == 1
-        %plotGlass_GlassRankingsDist(dataT)
         plotGlass_GlassRankingsDistBlank(dataT)
-        %        plotGlass_StimSelectivePermTest(dataT)
         plotGlassPSTHsCohType(dataT)
     end
     %% commit to data structure
