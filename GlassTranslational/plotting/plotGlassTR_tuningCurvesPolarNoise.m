@@ -135,7 +135,11 @@ for ch = 1:96
                 ax.RTick = [0,maxLim/2,maxLim];
                 set(gca,'ThetaTick',0:45:315)
                 
-                title(sprintf('OSI: %.3f',dataT.OriSelectIndex2thetaNoise(end,dt,dx,ch)));
+                if dataT.OSI2thetaNoiseSig(end,dt,dx,ch) == 1
+                    title(sprintf('OSI: %.3f *',dataT.OriSelectIndex2thetaNoise(end,dt,dx,ch)))
+                else
+                    title(sprintf('OSI: %.3f',dataT.OriSelectIndex2thetaNoise(end,dt,dx,ch)))
+                end
                 ndx = ndx+1;
             end
         end
@@ -245,7 +249,7 @@ for ch = 1:96
                 ax.RTick = [0,maxLim/2,maxLim];
                 set(gca,'ThetaTick',0:45:315)
                 
-                if dataT.OSI2thetaNoiseSig(end,dt,dx,ch) == 1 
+                if dataT.OSI2thetaNoiseSig(end,dt,dx,ch) == 1
                     title(sprintf('OSI: %.3f *',dataT.OriSelectIndex2thetaNoise(end,dt,dx,ch)))
                 else
                     title(sprintf('OSI: %.3f',dataT.OriSelectIndex2thetaNoise(end,dt,dx,ch)))

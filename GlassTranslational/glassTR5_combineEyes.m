@@ -3,7 +3,7 @@ close all
 clc
 %%
 
-REfile = 'WU_RE_GlassTR_nsp2_20170828_all_s1_perm2k_OSIvsNoise_PermTests';
+REfile = 'WU_RE_GlassTR_nsp2_20170828_all_s1_perm2k_OSIvsBlank_PermTests';
 LEfile = 'WU_LE_GlassTR_nsp2_20170825_002_s1_perm2k_OSIvsNoise_PermTests';
 newName = 'WU_BE_GlassTR_V4_201708';   
 
