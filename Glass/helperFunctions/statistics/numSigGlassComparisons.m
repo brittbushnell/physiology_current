@@ -72,11 +72,11 @@ ranks = dataT.dPrimeRankBlank{dt,dx};
 con1st = sum(ranks(1,:) == 1);
 rad1st = sum(ranks(2,:) == 1);
 noise1st = sum(ranks(3,:) == 1);
-numSig = (con1st+rad1st+noise1st);
+totalSig = (con1st+rad1st+noise1st);
 
-conProp = con1st/numSig;
-radProp = rad1st/numSig;
-noiseProp = noise1st/numSig;
+conProp = con1st/totalSig;
+radProp = rad1st/totalSig;
+noiseProp = noise1st/totalSig;
 
 nsubplot(2,2,1,dx);
 
@@ -93,9 +93,37 @@ set(gca,'XTick',[1, 1.75 2.5],'XTickLabel',{'concentric','radial','dipole'})
 xtickangle(45)
 
  %%
-conSig = squeeze(dataT.numConSigComps(dt,dx,:,:)); 
-conSig0 = sum(conSig == 0)
+conSig2 = squeeze(dataT.numConSigComps(dt,dx,:,:)); 
+radSig2 = squeeze(dataT.numRadSigComps(dt,dx,:,:)); 
+nosSig2 = squeeze(dataT.numNoiseSigComps(dt,dx,:,:)); 
+
+SigSum(1,1) = sum(conSig2(:) == 0);
+SigSum(1,2) = sum(conSig2(:) == 1);
+SigSum(1,3) = sum(conSig2(:) == 2);
+SigSum(1,4) = sum(conSig2(:) == 3);
+
+
+SigSum(2,1) = sum(radSig2(:) == 0);
+SigSum(2,2) = sum(radSig2(:) == 1);
+SigSum(2,3) = sum(radSig2(:) == 2);
+SigSum(2,4) = sum(radSig2(:) == 3);
+
+
+SigSum(3,1) = sum(nosSig2(:) == 0);
+SigSum(3,2) = sum(nosSig2(:) == 1);
+SigSum(3,3) = sum(nosSig2(:) == 2);
+SigSum(3,4) = sum(nosSig2(:) == 3);
+
+%%
 nsubplot(2,2,dt,dx);
 hold on
 
-bar(conSig(1
+bar(SigSum','stacked')
+
+
+
+
+
+
+
+
