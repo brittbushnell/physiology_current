@@ -59,3 +59,43 @@ end
 dataT.numConSigComps = conSig;
 dataT.numRadSigComps = radSig;
 dataT.numNoiseSigComps = noiseSig;
+%% plotting
+dt = 2;
+dx = 2;
+
+figure(1)
+clf
+
+hold on
+ranks = dataT.dPrimeRankBlank{dt,dx};
+
+con1st = sum(ranks(1,:) == 1);
+rad1st = sum(ranks(2,:) == 1);
+noise1st = sum(ranks(3,:) == 1);
+numSig = (con1st+rad1st+noise1st);
+
+conProp = con1st/numSig;
+radProp = rad1st/numSig;
+noiseProp = noise1st/numSig;
+
+nsubplot(2,2,1,dx);
+
+hold on
+bar(1,con1st,0.75,'FaceColor','none','EdgeColor','k')
+bar(1.75,rad1st,0.75,'FaceColor','none','EdgeColor','k')
+bar(2.5,noise1st,0.75,'FaceColor','none','EdgeColor','k')
+
+
+ylim([0 sum(dataT.goodCh)])
+xlim([0.5, 3])
+
+set(gca,'XTick',[1, 1.75 2.5],'XTickLabel',{'concentric','radial','dipole'})
+xtickangle(45)
+
+ %%
+conSig = squeeze(dataT.numConSigComps(dt,dx,:,:)); 
+conSig0 = sum(conSig == 0)
+nsubplot(2,2,dt,dx);
+hold on
+
+bar(conSig(1
