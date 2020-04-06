@@ -31,7 +31,9 @@ for dt = 1:numDots
                     noiseDprime = abs(dataT.noiseBlankDprime(dt,dx,ch));
                 end
                 
-               [~, rankOrder(:,ch)] = sort([conDprime,radDprime,noiseDprime],'descend');    
+               [~, rankOrder(:,ch)] = sort([conDprime,radDprime,noiseDprime],'descend');   
+            else
+                rankOrder(:,ch) = nan(3,1); % adding this in to make sure that channels that aren't signficant don't end up counted later. 
             end
             dPrimeRank{dt,dx} = rankOrder;
         end
