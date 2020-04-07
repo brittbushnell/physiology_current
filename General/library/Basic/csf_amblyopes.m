@@ -64,7 +64,8 @@ Cond = cell(nEye,nCond);
 Perf = Cond;
 for iEye = 1:nEye % do per eye
     for iCond = 1:nCond % do per SF
-        fns = FileNames{iEye,iCond};
+        %fns = FileNames{iEye,iCond};
+        fns = FileNames{iEye}(iCond,:);
         nFN = numel(fns);
         % empty mtx
         cont = []; % contrast
@@ -367,13 +368,13 @@ for iEye = 1:nEye
         h=plot(SFvalue(1,sel),Sensitivity(iEye,sel),'o');
         h.MarkerEdgeColor = cmEye(iEye,:);
         h.MarkerFaceColor = 'w';
-        h.MarkerSize = 12;
+        h.MarkerSize = 10;
         
         for iCond = find(sel)
             h=plot([1 1]*SFvalue(1,iCond),[SensLB(iEye,iCond) SensUB(iEye,iCond)],'-');
             h.LineWidth = 4;
             h.Color = cmEye(iEye,:);
-            h.Clipping = 'off';
+            %h.Clipping = 'off';
         end
         
     end
@@ -432,7 +433,7 @@ for iEye = 1:nEye
     h=plot(uSF,y(1+(iEye-1)*3,:),'o');
     h.MarkerFaceColor = cmEye(iEye,:);
     h.MarkerEdgeColor = 'w';
-    h.MarkerSize = 14;
+    h.MarkerSize = 12;
 
     % fit
     hm=plot(XX,fun(b(iEye,:),XX),'-');
@@ -462,7 +463,7 @@ for iEye = 1:nEye %find(any(~isnan(y),2))'
 end
 
 %% plot resolution
-h=plot(Resolution,0.9,'^','clipping','off');
+h=plot(Resolution,0.9,'^','clipping','on');
 for iEye = 1:nEye
 h(iEye).MarkerFaceColor = cmEye(iEye,:);
 h(iEye).MarkerFaceColor = cmEye(iEye,:);
@@ -496,7 +497,7 @@ ax = hf2.Children(end);
 h=text(ax.XLim(1),ax.YLim(1),sprintf(' A.I. = %.2f',ai));
 h.FontName = 'helvetica';
 h.FontAngle = 'oblique';
-h.FontSize = 24;
+h.FontSize = 18;
 h.VerticalAlignment = 'bottom';
 h.HorizontalAlignment = 'left';
 
