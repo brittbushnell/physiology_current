@@ -226,8 +226,8 @@ for ax = axs(:)'
                 end
                 Data = cellfun(@(d) d(d>0 & d<inf),Data,'uniformoutput',false);
                 Lim =[
-                    min(cellfun(@min,Data))
-                    max(cellfun(@max,Data))
+                    min(cellfun(@min,Data),'uniformoutput',false)
+                    max(cellfun(@max,Data),'uniformoutput',false)
                     ];
             else
                 Lim = get(gca,'xlim');
