@@ -1,4 +1,4 @@
- function [amblyNdx] = AmblyIndx(AEfile,FEfile)
+ function [amblyNdx] = AmblyIndx(AEfile,FEfile, inputType)
 
 % AmblyIndx is a function that will compute the amblyopia index for any 
 % animal.
@@ -6,10 +6,24 @@
 % INPUT: .csf files where the first column is the sf run, the second is the
 % contrast threshold, and the third is standard error. 
 %
+%    inputType: indicates if the program should find the .csf files from 
+%    the list, or if they are matrices with the .csf information.
+%       if inputType == 1, then get data from the .csf files
+%
 % OUTPUT: Amblyopia index is the difference between the area under the
 % contrast sensitivity curves for each eye.
-AE = dlmread(AEfile);
-FE = dlmread(FEfile);
+%
+% edited April 7, 2020 so input files can be matrices rather than .csf
+% files.  
+%  BNB
+%
+if inputType == 1
+    AE = dlmread(AEfile);
+    FE = dlmread(FEfile);
+else
+    AE = AEfile;
+    FE = FEfile;
+end
 
 [AEparams, AEerror] = CSFit(AE);
 [FEparams, FEerror] = CSFit(FE);

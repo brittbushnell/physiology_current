@@ -1,3 +1,5 @@
+function [dataT] = numSigGlassComparisons(dataT)
+%%
 [~,numDots,numDxs] = getGlassParameters(dataT);
 %% get number of significant comparisons per channel
 numSig = nan(numDots,numDxs,96);
@@ -13,6 +15,8 @@ for ch = 1:96
                numSig(dt,dx,ch) = conNoiseSig+conRadSig+radNoiseSig;
            end
        end
+   else
+       numSig(dt,dx,ch) = nan;
    end
 end
 dataT.numSigStimComps = numSig;
@@ -23,9 +27,9 @@ dataT.numSigStimComps = numSig;
 % row3 = noise
 
 % 
-conSig = nan(numDots,numDxs,4,96);
-radSig = nan(numDots,numDxs,4,96);
-noiseSig = nan(numDots,numDxs,4,96);
+conSig = nan(numDots,numDxs,4);
+radSig = nan(numDots,numDxs,4);
+noiseSig = nan(numDots,numDxs,4);
 
 for dt = 1:numDots
     for dx = 1:numDxs
@@ -37,22 +41,22 @@ for dt = 1:numDots
         % significantly different from noise.  
         
         con1 = find(theseRanks(1,:) == 1);  
-        conSig(dt,dx,1,:) = sum(numSig(dt,dx,con1) == 0);% no difference between the stimulus types
-        conSig(dt,dx,2,:) = sum(numSig(dt,dx,con1) == 1);
-        conSig(dt,dx,3,:) = sum(numSig(dt,dx,con1) == 2);
-        conSig(dt,dx,4,:) = sum(numSig(dt,dx,con1) == 3);% all three stimuli are significantly different from zero and one another.
+        conSig(dt,dx,1) = sum(numSig(dt,dx,con1) == 0);% no difference between the stimulus types
+        conSig(dt,dx,2) = sum(numSig(dt,dx,con1) == 1);
+        conSig(dt,dx,3) = sum(numSig(dt,dx,con1) == 2);
+        conSig(dt,dx,4) = sum(numSig(dt,dx,con1) == 3);% all three stimuli are significantly different from zero and one another.
         
         rad1 = find(theseRanks(2,:) == 1);  
-        radSig(dt,dx,1,:) = sum(numSig(dt,dx,rad1) == 0);
-        radSig(dt,dx,2,:) = sum(numSig(dt,dx,rad1) == 1);
-        radSig(dt,dx,3,:) = sum(numSig(dt,dx,rad1) == 2);
-        radSig(dt,dx,4,:) = sum(numSig(dt,dx,rad1) == 3);
+        radSig(dt,dx,1) = sum(numSig(dt,dx,rad1) == 0);
+        radSig(dt,dx,2) = sum(numSig(dt,dx,rad1) == 1);
+        radSig(dt,dx,3) = sum(numSig(dt,dx,rad1) == 2);
+        radSig(dt,dx,4) = sum(numSig(dt,dx,rad1) == 3);
         
         noise1 = find(theseRanks(3,:) == 1);  
-        noiseSig(dt,dx,1,:) = sum(numSig(dt,dx,noise1) == 0);
-        noiseSig(dt,dx,2,:) = sum(numSig(dt,dx,noise1) == 1);
-        noiseSig(dt,dx,3,:) = sum(numSig(dt,dx,noise1) == 2);
-        noiseSig(dt,dx,4,:) = sum(numSig(dt,dx,noise1) == 3);
+        noiseSig(dt,dx,1) = sum(numSig(dt,dx,noise1) == 0);
+        noiseSig(dt,dx,2) = sum(numSig(dt,dx,noise1) == 1);
+        noiseSig(dt,dx,3) = sum(numSig(dt,dx,noise1) == 2);
+        noiseSig(dt,dx,4) = sum(numSig(dt,dx,noise1) == 3);
     end
 end
 

@@ -152,7 +152,7 @@ files = {'WU_RE_Glass_nsp1_20170817_002_cleaned_manu_perm2k';
 nameEnd =  'Stats';
 failNdx = 1;
 plotHists = 0;
-plotOther = 1;
+plotOther = 0;
 for fi = 1:size(files,1)
     %% Get basic information about experiments
     % try
@@ -199,6 +199,7 @@ for fi = 1:size(files,1)
     dataT = ChiSquareHomogeneity(dataT,0.1);
     %% rank order of stim responses
     dataT = rankGlassSelectivitiesBlank(dataT);
+    dataT = numSigGlassComparisons(dataT)
     %% plot
     if plotOther == 1
         plotGlass_GlassRankingsDistBlank(dataT)
