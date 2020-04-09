@@ -139,7 +139,7 @@ tic
 %          'XT_LE_GlassCoh_nsp2_20190325_001';...
 %          'XT_RE_GlassCoh_nsp2_20190322_001'};
 %% merged files
-files = {
+%files = {
 %     'WU_RE_Glass_nsp2_20170818_all';...
 %     'WV_RE_glassCoh_nsp2_20190404_all';...
 %     'WV_LE_GlassCoh_nsp2_20190402_all';...
@@ -165,11 +165,13 @@ files = {
 %     'XT_LE_Glass_nsp1_20190124_all';
 
 % XX
-'XX_LE_Glass_nsp1_20200210_all';
-'XX_LE_Glass_nsp2_20200210_all';
-'XX_RE_Glass_nsp1_20200211_all';
-'XX_RE_Glass_nsp2_20200211_all';
-};
+% 'XX_LE_Glass_nsp1_20200210_all';
+% 'XX_LE_Glass_nsp2_20200210_all';
+% 'XX_RE_Glass_nsp1_20200211_all';
+% 'XX_RE_Glass_nsp2_20200211_all';
+%};
+%% testing Manu's cleaned version
+files = {'WU_RE_Glass_nsp1_20170817_002'};
 %%
 nameEnd = 'raw';
 %%
@@ -198,6 +200,11 @@ for fi = 1:size(files,1)
         % extract information about what was run from file name.
         if length(tmp) == 6
             [dataT.animal, dataT.eye, dataT.programID, dataT.array, dataT.date2,dataT.runNum] = deal(tmp{:});
+            % get date in a format that's useable in figure titles (ex: 09/1/2019 vs 20190901)
+            dataT.date = convertDate(dataT.date2);
+            oneDay = 1;
+        elseif length(tmp) == 7            
+            [dataT.animal, dataT.eye, dataT.programID, dataT.array, dataT.date2,dataT.runNum,ign] = deal(tmp{:});
             % get date in a format that's useable in figure titles (ex: 09/1/2019 vs 20190901)
             dataT.date = convertDate(dataT.date2);
             oneDay = 1;
