@@ -8,6 +8,21 @@
 %       x :     independent variable 
 %       y :     dependent variable.
 %
+%       Dependent variable is a single column. This can be seen as an array
+%       of measured values in nDat rows (trials)
+%           size(y) == [1 , nDat]
+%       
+%       Independent variable requires to have the same number of rows. The
+%       Columns represent different fits. The third dimension can be used
+%       to increase the number of inputs if the fit function needs more
+%       than 1 independent variable.
+%       E.g. fun = @(b,x1,x2) fun(b,x1)+fun(b,x2)
+%           size(x) == [nFit nDat nVarIn]
+%       Summarized:
+%           nFit: Number of experiments
+%           nDat: Number of trials
+%           nVarIn: Number of independent variables
+%
 %       Optional input arguments :  These arguments come in pairs
 %           'fitmethod': Fit method
 %               'fmincon'
@@ -38,13 +53,15 @@
 %       beta :      fitted parameters
 %       betavar :   variance of betas
 %       function :  Function handle
-%       stat :      Statistical information
+%       stat :      Statistical information (Rsqr)
 %       betacon :   As beta, but with constrained (fixed) betas excluded.
 %       
 %
 % V0: MMFIT TvG, Aug 2014, NYU
 % V1: TvG, Jun 2015, NYU
 % V2: TvG, July 2015, NYU: improved help layout and included output
+%   TvG, Nov 2016, NYU: extend IG, LB and UB if it is fixed for all fits
+% V3: TvG Mar 2017, NYU: multi dimensional input
 
 function [varargout]=anyfit(FitFun,Xdata,Ydata,varargin)
 
@@ -63,8 +80,6 @@ Default = [
     {5,'ub',[]}
     {6,'silent',false}
     {7,'plot',true}
-    {8,'maxiter',10000}             % max nr of iteration for fmincon per data point
-    {9,'maxeval',20000}             % max nr of iteration for fmincon for all function evals
     ];
 [   FitMethod,...
     flRestrict,...
@@ -73,72 +88,51 @@ Default = [
     SetUB,...
     flSilent,...
     flPlot,...
-    MI, ...
-    ME, ...
     ] = parse_optional_arg(Default,varargin{:});
 
 %% input
 if nargin(FitFun) ~= 2
     error([mfilename ':input:fittingfunction'],'\nFit function has %.0f variable(s). This should be 2. e.g.\n\tfun = @(b,t) b(1)+b(2)*t\n',nargin(FitFun))
 end
-
-if iscell(Xdata); % used for multi dimensional x data
-    nDim    = numel(Xdata);
-elseif isvector(Xdata)
-    Xdata   = Xdata(:);
-    Ydata   = Ydata(:);
-    nDim    = 1;
-else
-    nDim    = 1; % but multiple fits (spike templates or bootstraps)
-end
-
-% if initialguess input is a function
-if isa(SetIG,'function_handle')
-    IG      = SetIG(Xdata,Ydata);
-    SetIG   = [];
-end
-
-% get some size information
-if nDim > 1
-    Sz      = size(Xdata{1});
-    nFit    = Sz(1);
-    nDat    = Sz(2:end);
-else
-    [nDat,nFit] = size(Xdata);
-end
-
-% dirty way to determine function order
-if nDim == 1
-    MockX = NaN;
-else
-    MockX = cell(1,nDim);
-end
-notOK = true;
-nParIn = 0;
-while notOK
-    try
-        FitFun(nan(nParIn,1),MockX);
-        notOK = false; % if no error is returned
-    catch
-        [E,Eid] = lasterr;
-        MEx = MException(Eid,E);
-        % if error tells nr of b is too small increase nPar
-        if ~strcmpi(Eid,'MATLAB:badsubscript')
-            throw(MEx)
-        else
-            nParIn = nParIn + 1;
-        end
-    end
-end
-
-
+%%
+% number of fits, trials and input variables based on size
+nInd    = size(Xdata,3);
+nFit    = size(Xdata,2);
+nDat    = size(Xdata,1);
+nParIn  = get_nparin(FitFun,nInd); % nr of betas
 
 %% prepare intial guesses and bounds
+
+% if initialguess input is a function call that function with the inputs
+if isa(SetIG,'function_handle')
+    SetIG = SetIG(Xdata,Ydata);
+end
+
+% Bound is set, but has the wrong size
+if (~isempty(SetLB) && size(SetLB,2)~=nParIn) ...
+        || (~isempty(SetUB) && size(SetUB,2)~=nParIn)  ...
+        || (~isempty(SetIG) && size(SetIG,2)~=nParIn) 
+    error([mfilename ':input:inputbounds'],'\nFit function has %.0f parameter(s). But the bounds (Upper, Lower or Initial guess) do not have the equal amount of parameters. e.g.\n\tfun = @(b,t) b(1)+b(2)*t\n\tIG = [1 2]\n',nParIn)
+end
+
+% Extend user supplied boundaries for all fits
+% Should be nFit x nParIn in size.
+if size(SetLB,1)==1
+    SetLB = repmat(SetLB,nFit,1);
+end
+if size(SetUB,1)==1
+    SetUB = repmat(SetUB,nFit,1);
+end
+if size(SetIG,1)==1
+    SetIG = repmat(SetIG,nFit,1);
+end
+
+% Default bounds based on nParIn. 
 LB = -inf(nFit,nParIn);
 UB = +inf(nFit,nParIn);
 IG = zeros(nFit,nParIn);
 
-% check if user supplied boundaries and guesses
+% check where user supplied boundaries and guesses
 selIGSet    = ~isnan(SetIG);
 selLBSet    = ~isnan(SetLB);
 selUBSet    = ~isnan(SetUB);
@@ -148,35 +142,40 @@ IG(selIGSet) = SetIG(selIGSet);
 LB(selLBSet) = SetLB(selLBSet);
 UB(selUBSet) = SetUB(selUBSet);
 
-% if boundaries are the same, restrictions have to be applied despite
-% input.
+% if boundaries are the same restrictions will be applied 
 selRestrict = LB == UB;
 if any(all(selRestrict,1))
     flRestrict = true;
 end
 
 if ~flRestrict
+    % if no restrictions prepare this for the fitting routines
     funVarPar       = @(b,x) FitFun(b,x);
     initialguess    = IG;
     lowerbound      = LB;
     upperbound      = UB;
 else
-    % restricting fit function with evil eval. mainly to reduce free
-    % parameters
+    % restricting fit function 
+
+    % See which are the free parameters 
     freeparam = cell(nParIn,1);
-    for iR = find(all(selRestrict,1))
-        freeparam{iR} = num2str(mean(SetLB(:,iR)));
+    % Make the restricted a text version
+    for iR = find(all(selRestrict,1)) % all fits
+        freeparam{iR} = num2str(SetLB(1,iR)); % use bound of first fit
     end
+    % Replace free with 'b(i)'
     c=0;
     for iR = find(all(~selRestrict,1))
         c=c+1;
         freeparam{iR} = sprintf('b(%g)',c);
     end
+    
+    % combine in new function call
     str = sprintf('%s,',freeparam{:});
     funstr = [sprintf('@(b,x) FitFun([') str(1:end-1) sprintf('],x);')];
     clear freeparam
     
-    funVarPar       = eval(funstr);
+    funVarPar       = eval(funstr); % needs to be evil eval, str2func will not include 'FitFun'
     initialguess    = IG(:,all(~selRestrict,1));
     lowerbound      = LB(:,all(~selRestrict,1));
     upperbound      = UB(:,all(~selRestrict,1));
@@ -185,174 +184,112 @@ end
 % see how many free parameters we have after applying restrictions
 nPar = size(initialguess,2);
 
+%% report
+if ~flSilent
+    Bnds = @(n,i,b) sprintf('%s fit %g | %s',n,i,sprintf('%g ',b));
+    ixI=mat2cell(reshape(reshape(1:nFit*nParIn,nFit,nParIn)',1,[]),1,repmat(nParIn,1,nFit));
+    ixR=mat2cell(reshape(reshape(1:nFit*nPar,nFit,nPar)',1,[]),1,repmat(nPar,1,nFit));
+    md2table([
+        {'--:|:--'}
+        {sprintf('%s|%s','Function',func2str(FitFun))}
+        cellfun(@(iF,iB) Bnds('initialguess',iF,IG(iB)),num2cell(1:nFit),ixI,'uniformoutput',false)';
+        cellfun(@(iF,iB) Bnds('lowerbound',iF,LB(iB)),num2cell(1:nFit),ixI,'uniformoutput',false)';
+        cellfun(@(iF,iB) Bnds('upperbound',iF,UB(iB)),num2cell(1:nFit),ixI,'uniformoutput',false)';
+        %{[sprintf('%s| ','initialguess') sprintf('%g ',IG)]}
+        %{[sprintf('%s|','lowerbound') sprintf('%g ',LB)]}
+        %{[sprintf('%s|','upperbound') sprintf('%g ',UB)]}
+        {sprintf('%s|%g','''Restriction applied''',flRestrict)}
+        {sprintf('%s|%s','Function',func2str(funVarPar))}
+        cellfun(@(iF,iB) Bnds('initialguess',iF,initialguess(iB)),num2cell(1:nFit),ixR,'uniformoutput',false)';
+        cellfun(@(iF,iB) Bnds('lowerbound',iF,lowerbound(iB)),num2cell(1:nFit),ixR,'uniformoutput',false)';
+        cellfun(@(iF,iB) Bnds('upperbound',iF,upperbound(iB)),num2cell(1:nFit),ixR,'uniformoutput',false)';
+        %{[sprintf('%s|','initialguess') sprintf('%g ',initialguess)]}
+        %{[sprintf('%s|','lowerbound') sprintf('%g ',lowerbound)]}
+        %{[sprintf('%s|','upperbound') sprintf('%g ',upperbound)]}
+        {sprintf('--:|:--')}
+        {sprintf('%s|%g','nPar',nPar)}
+        {sprintf('%s|%g','nDat',nDat)}
+        {sprintf('%s|%g','nFit',nFit)}
+        {sprintf('%s|%g','nInd',nInd)}
+        {sprintf('%s|%s','FitMethod',FitMethod)}
+        {'--:|:--'}
+        ])
+    
+end
 %%
 switch FitMethod
     case 'lsqcurvefit'
-        %% Calculate unknown coefficients in the model using fmincon
-        % X = lsqcurvefit(fun,x0,xdata,ydata,lb,ub,options)
-        %
-        % FUN,X0,xdata,ydata
-        %     starts at x0 and finds coefficients x to best fit the
-        %     nonlinear function fun(x,xdata) to the data ydata (in the
-        %     least-squares sense). ydata must be the same size as the
-        %     vector (or matrix) F returned by fun.
-        % ... LB,UB
-        %     defines a set of lower and upper bounds on the design
-        %     variables in x so that the solution is always in the range lb
-        %     ? x ? ub.
-        %     Pass empty matrices for lb and ub if no bounds exist.
-        % ... OPTIONS
-        %     minimizes with the optimization options specified in options.
-        %     Use optimoptions to set these options.
-        %
-        % [x,resnorm,R,exitflag,output,lambda,J] = lsqcurvefit(...)
-        %
-        %   x
-        %     parameters found after minimizing
-        %
-        %   resnorm
-        %     squared 2-norm of the residual at x: sum((fun(x,xdata)-ydata).^2).
-        %
-        %   R       Vector of the residuals.
-        %   Vector of the residuals between your ?t and the data points. Each value
-        %   of the vector refers to the numerical di?erence between the data point
-        %   and the value of the ?t equation for a given value of the independent
-        %   variable.
-        %
-        % ... exitflag
-        %     describes the exit condition of fmincon. 0: max. iterations
-        %     reached 1: solution found. 
-        %
-        % ... output
-        %     structure with information about the optimization. The fields
-        %     of the structure are:
-        %     .iterations: Number of iterations taken
-        %     .funcCount: Number of function evaluations
-        %     .lssteplength: Size of line search step relative to search
-        %       direction (active-set algorithm only)
-        %     .constrviolation: Maximum of constraint functions
-        %     .stepsize: Length of last displacement in x (active-set and
-        %       interior-point algorithms)
-        %     .algorithm: Optimization algorithm used
-        %     .cgiterations: Total number of PCG iterations
-        %       (trust-region-reflective and interior-point algorithms)
-        %     .firstorderopt: Measure of first-order optimality
-        %     .message: Exit message
-        %
-        % ... lambda
-        %     structure whose fields contain the Lagrange multipliers at
-        %     the solution x (separated by constraint type). The fields of
-        %     the structure are:
-        %     .lower: Lower bounds lb
-        %     .upper: Upper bounds ub
-        %     .ineqlin: Linear inequalities
-        %     .eqlin: Linear equalities
-        %     .ineqnonlin: Nonlinear inequalities
-        %     .eqnonlin: Nonlinear equalities
-        %
-        %   J       Jacobian matrix
-        %   The Jacobian matrix of your model function. It is analogous to the
-        %   model matrix X in linear regression, which has a column of 1-s
-        %   representing the constants and a second column representing the
-        %   predictors (y=Xb+e). It is useful for determining 95% confidence
-        %   intervals for the calculated parameters.
+        %% least-square curve fit
+        % starts at IG and minimizes least square error
 
         % lsqcurvefit options
-        options             = optimoptions(@lsqcurvefit);
+        options             = optimoptions(@lsqcurvefit); % standard
         options.PlotFcns    = [];
         options.Display     = 'none';
 
-        fun = funVarPar;
+        % input
+        fun         = funVarPar;
+        
+        % prepare output
         beta        = nan(nFit,nPar);
         resnorm     = nan(nFit,1);
-        R           = nan([nFit nDat]);
+        Res           = nan(nFit,nDat);
         exitflag    = nan(nFit,1);
-        output      = cell(nFit,1);
+        output      = cell(nFit,1); % container for string
         lambda      = cell(nFit,1);
-        J           = nan([nFit,nDat,nPar]);
-        if nFit > 100;
+        J           = nan(nFit,nDat,nPar);
+        
+        
+        if nFit > 100
+            % open parallel pool if large number of fits
             hWB = [];
             PP = gcp('nocreate');
             if isempty(PP)
                 PP = parpool(4);
             end
-        elseif nFit > 1;
+        elseif nFit > 1
+            % show waitbar
             hWB = waitbar(0,'doing lsqcurvefit');
             PP = [];
         else
             hWB = [];
             PP = [];
         end
+        
+        
         if isempty(PP)
             for iF = 1:nFit
                 if ~isempty(hWB);waitbar(iF/nFit,hWB);end
-                if nDim == 1
-                    cX      = Xdata(:,iF);
-                    cY      = Ydata(:,iF);
-                    selNan  = isnan(cY) | isnan(cX);
-                else
-                    cX      = Xdata(iF,:,:);
-                    cY      = Ydata(iF,:,:);
-                    selNanX = false([nFit nDat]);
-                    for iD = 1:nDim
-                        selNanX = selNanX | isnan(cX{iD});
-                    end
-                    selNan  = isnan(cY) | selNanX;
-                end
+                
                 [
                     beta(iF,:),...
                     resnorm(iF),...
-                    R(iF,~selNan),...
+                    Res(iF,:),...
                     exitflag(iF),...
                     output{iF},...
                     lambda{iF},...
-                    j,...
-                    ] = lsqcurvefit(fun,initialguess(iF,:),cX,cY,lowerbound(iF,:),upperbound(iF,:),options);
-                fullj = reshape(full(j),[nDat nPar]);
-                % ooo! this is dirty
-                switch nDim
-                    case 1
-                        J(iF,:,:) = fullj;
-                    case 2
-                        J(iF,:,:,:) = fullj;
-                    case 3
-                        J(iF,:,:,:,:) = fullj;
-                    otherwise
-                        disp('that''s a lot of dimensions')
-                        edit(mfilename)
-                        keyboard
-                end
+                    J(iF,:,:),...
+                    ] = lsq_slicedata(fun,squeeze(Xdata(:,iF,:)),Ydata(:,iF),initialguess(iF,:),lowerbound(iF,:),upperbound(iF,:),options);
+                
             end
             if ~isempty(hWB);close(hWB);end
             
         else
-            % prepare parallel specific variables
-            parR        = cell(nFit,1);
-            parselNan   = cell(nFit,1);
             parfor iF = 1:nFit
-                cX              = Xdata(:,iF);
-                cY              = Ydata(:,iF);
-                parselNan{iF}   = isnan(cY) | isnan(cX);
-                [
+                 [
                     beta(iF,:),...
                     resnorm(iF),...
-                    parR{iF},...
+                    Res(iF,:),...
                     exitflag(iF),...
                     output{iF},...
                     lambda{iF},...
-                    j,...
-                    ] = lsqcurvefit(fun,initialguess(iF,:),cX,cY,lowerbound(iF,:),upperbound(iF,:),options);
-                % this sometimes crashes
-                
-                J(iF,:,:) = full(j);
+                    J(iF,:,:),...
+                    ] = lsq_slicedata(fun,squeeze(Xdata(:,iF,:)),Ydata(:,iF),initialguess(iF,:),lowerbound(iF,:),upperbound(iF,:),options)
                 
                 if mod(iF,nFit/100) == 0
                     fprintf(1,'%3.0f%%\n',iF/nFit*100);
                     %disp(sprintf('%3.0f%%\n',iF/nFit*100));
                 end
-            end
-            for iF = 1:nFit
-                R(iF,~parselNan{iF}) = parR{iF};
             end
             
         end
@@ -360,103 +297,55 @@ switch FitMethod
         % determination
         beta = real(beta);
         J = real(J);
-        R = real(R);
+        Res = real(Res);
         
         if ~flSilent
-            cellfun(@(o) disp(o.message),output)
+            out = [];
+            for iF = 1:nFit
+                o = output{iF};
+                Flds = fieldnames(o);
+                out = [];
+                for cF = Flds'
+                    cVal = getfield(o,cF{:});
+                    if ischar(cVal)
+                        pat = '%s|%s';
+                        cVal = str2cell(cVal);
+                    elseif isnumeric(cVal)
+                        pat = '%s|%g';
+                        cVal = num2cell(cVal);
+                    end
+                    for cV = cVal(:)'
+                        out = [out;{sprintf(pat,cF{:},cV{:})}];
+                    end
+                end
+                out = [{'--:|:--'};{sprintf('fit | %g',iF)};{'--:|:--'};out];
+            end
+            out = [out;{'--:|:--'}];
+            md2table(out)
         end
     case 'fmincon'
         
-        %% Calculate unknown coefficients in the model using fmincon
-        % X = fmincon(FUN,X0,A,B,Aeq,Beq,LB,UB,NONLCON,OPTIONS)
-        %
-        % FUN,X0,A,B
-        %     starts at X0 and finds a minimum X to the function FUN, subject to
-        %     the linear inequalities A*X <= B. FUN accepts input X and returns a
-        %     scalar function value F evaluated at X. X0 may be a scalar, vector,
-        %     or matrix.
-        %
-        % ... Aeq,Beq
-        %     minimizes FUN subject to the linear equalities Aeq*X = Beq as well as
-        %     A*X <= B. (Set A=[] and B=[] if no inequalities exist.)
-        %
-        % ... LB,UB
-        %     defines a set of lower and upper bounds on the design variables, X,
-        %     so that a solution is found in the range LB <= X <= UB. Use empty
-        %     matrices for LB and UB if no bounds exist. Set LB(i) = -Inf if X(i)
-        %     is unbounded below; set UB(i) = Inf if X(i) is unbounded above.
-        %
-        % ... NONLCON
-        %     subjects the minimization to the constraints defined in NONLCON. The
-        %     function NONLCON accepts X and returns the vectors C and Ceq,
-        %     representing the nonlinear inequalities and equalities respectively.
-        %     fmincon minimizes FUN such that C(X) <= 0 and Ceq(X) = 0. (Set LB =
-        %     [] and/or UB = [] if no bounds exist.)
-        %
-        % ... OPTIONS
-        %     minimizes with the default optimization parameters replaced by values
-        %     in the structure OPTIONS, an argument created with the OPTIMSET
-        %     function. See OPTIMSET for details. For a list of options accepted by
-        %     fmincon refer to the documentation.
-        %
-        % [x,fval,exitflag,output,lambda,grad,hessian] = fmincon(...)
-        %
-        % x
-        %     parameters found after minimizing
-        %
-        % ... fval
-        %     the value of the objective function fun at the solution x.
-        %
-        % ... exitflag
-        %     describes the exit condition of fmincon. 0: max. iterations
-        %     reached 1: solution found. 
-        %
-        % ... output
-        %     structure with information about the optimization. The fields
-        %     of the structure are:
-        %     .iterations: Number of iterations taken
-        %     .funcCount: Number of function evaluations
-        %     .lssteplength: Size of line search step relative to search
-        %       direction (active-set algorithm only)
-        %     .constrviolation: Maximum of constraint functions
-        %     .stepsize: Length of last displacement in x (active-set and
-        %       interior-point algorithms)
-        %     .algorithm: Optimization algorithm used
-        %     .cgiterations: Total number of PCG iterations
-        %       (trust-region-reflective and interior-point algorithms)
-        %     .firstorderopt: Measure of first-order optimality
-        %     .message: Exit message
-        %
-        % ... lambda
-        %     structure whose fields contain the Lagrange multipliers at
-        %     the solution x (separated by constraint type). The fields of
-        %     the structure are:
-        %     .lower: Lower bounds lb
-        %     .upper: Upper bounds ub
-        %     .ineqlin: Linear inequalities
-        %     .eqlin: Linear equalities
-        %     .ineqnonlin: Nonlinear inequalities
-        %     .eqnonlin: Nonlinear equalities
-        %
-        % ... grad
-        %     the gradient of fun at the solution x.
-        %
-        % ... hessian
-        %     the Hessian at the solution x.
-        
         % fmincon options
-        %tol = 1e-10;
-        %options = optimset('TolCon',tol,'TolFun',tol,'TolX',tol,'MaxIter',10000,'MaxFunEvals',10000,'Algorithm'           ,'sqp','Display','off');
-        options  = optimset(                                     'Maxiter',MI,'MaxFuneval',ME,'Algorithm','interior-point','Display','off');
+        options                         = optimoptions(@fmincon); % standard
+        options.Display                 = 'off';
+        options.MaxIterations           = 10000; % default
+        options.MaxFunctionEvaluations  = 20000;
         
-        % shape function and minimization function
-        %shapefun =  @(x,mu,sigma) (2*normcdf(x,mu,sigma))-1;
+        % fit properties
         fun = funVarPar;
-        ntrl = numel(Xdata);
-        errfun = @(freepars) minimizationfun(fun,Xdata,Ydata,freepars,ntrl,flPlot);
-        [beta,fval,exitflag,output,lambda,grad,hessian] = fmincon(errfun,initialguess,[],[],[],[],lowerbound,upperbound,[],options);
-        fprintf(1,'.\n');
-        R = (Ydata-fun(beta,Xdata))';
+        ntrl = size(Xdata,1);
+        
+        % minimization function
+        
+        % fit
+        for iF = 1:nFit
+            rm = (isnan(Xdata(:,iF)) | isnan(Ydata(:,iF)));
+            errfun = @(freepars) minimizationfun(fun,Xdata(~rm,iF),Ydata(~rm,iF),freepars,ntrl,flPlot);
+            [beta(iF,:),fval,exitflag,output,lambda,grad,hessian] = fmincon(errfun,initialguess(iF,:),[],[],[],[],lowerbound(iF,:),upperbound(iF,:),[],options);
+        end
+        %fprintf(1,'.\n');
+        % residuals
+        Res = (Ydata-fun(beta,Xdata))';
         
         
     case 'nlinfit'
@@ -496,7 +385,7 @@ switch FitMethod
         %   mmfun   Function to fit
         %   initialguess : Vector of initial guesses for the fit coefficients
         try
-        [beta,R,J,CovB,MSE] = nlinfit(Xdata,Ydata,funVarPar, initialguess);
+        [beta,Res,J,CovB,MSE] = nlinfit(Xdata,Ydata,funVarPar, initialguess);
         catch
             disp(lasterr)
             keyboard
@@ -512,15 +401,15 @@ end
 betaci = nan(nFit,nPar,2);
 if ismember(FitMethod,[{'nlinfit'},{'lsqcurvefit'}])
     for iF = 1:nFit
-        selNan = isnan(R(iF,:));
-        betaci(iF,:,:) = nlparci(beta(iF,:),R(iF,~selNan),'Jacobian',reshape(J(iF,:),prod(nDat),nPar),'alpha',0.05);
+        selNan = isnan(Res(iF,:));
+        betaci(iF,:,:) = nlparci(beta(iF,:),Res(iF,:),'Jacobian',squeeze(J(iF,:,:)),'alpha',0.05);
     end
 else
     % no info to do c.i., maybe do a boostrap here
 end
 
 % Compute the r^2 value
-Rsqr = get_rsq_from_fit(Xdata,Ydata,R');
+Rsqr = get_rsq_from_fit(Xdata,Ydata,Res');
 %% output
 ci      = [betaci(:,:,2) ; betaci(:,:,1)];
 stat    = Rsqr';
@@ -535,18 +424,20 @@ else
     %   bias = 0 b(1)
     %   n = 1 (M.M. fit) b(4)
     
-    out     = nan(nFit,nPar);
-    outvar  = nan(nFit*2,nPar);
-    for iF = 1:nFit;
-        for iR = find(selRestrict(iF,:))
-            out(iF,iR)              = LB(iF,iR);
-            outvar(2*iF+[-1 0],iR)  = NaN;
+    out     = nan(nFit,nParIn);
+    outvar  = nan(nFit*2,nParIn);
+    for iF = 1:nFit
+        % append restricted parameter to row
+        for iP = find(selRestrict(iF,:))
+            out(iF,iP)              = LB(iF,iP);
+            outvar(2*iF+[-1 0],iP)  = NaN;
         end
+        % fill in parameters
         c=0;
-        for iR = find(~selRestrict(iF,:))
+        for iP = find(~selRestrict(iF,:))
             c=c+1;
-            out(iF,iR)              = beta(iF,c);
-            outvar(2*iF+[-1 0],iR)  = ci(2*iF+[-1 0],c);
+            out(iF,iP)              = beta(iF,c);
+            outvar(2*iF+[-1 0],iP)  = ci(2*iF+[-1 0],c);
         end
     end
 end
@@ -575,17 +466,20 @@ if nargout > c
     varargout{c} = outb;
 end
 %%
+outstr = cell(1,nFit);
+for iF = 1:nFit
 strFun = [];
 for iP = 1:nParIn
-    strFun = [strFun sprintf('Beta%1.0f = %+f (+- %f);\n',iP,out(iP),outvar(iP))];
+    strFun = [strFun sprintf('Beta%1.0f = %+g (+- %g);\n',iP,out(iF,iP),diff(outvar([-1 0]+iF*2,iP)))];
 end
-outstr = sprintf('%s r^2 = %.3f',...
+outstr{iF} = sprintf('%sr^2 = %.3f',...
     strFun,...
-    Rsqr);
-if flPlot
+    Rsqr(iF));
+end
+if flPlot && nFit < 20
     %% Plot the nonlinear fit with the raw data
     for iF = 1:nFit
-        figure
+        h=figure;
         subplot(211)
         hold on
         % plot data
@@ -595,43 +489,136 @@ if flPlot
         title('stimulus - response','FontSize',16)
         
         % plot fit
-        x=linspace(min(Xdata(:,iF)),max(Xdata(:,iF)),1000);
+        if nInd > 1
+            % use stimulated
+            x=squeeze(Xdata(:,iF,:));
+        else
+            % smooth curve over one dimension
+            x=linspace(min(Xdata(:,iF)),max(Xdata(:,iF)),100);
+        end
         f=funVarPar(initialguess(iF,:),x);
         plot(x,f,':k')
         f=funVarPar(beta(iF,:),x);
         plot(x,f,'-r')
-        plot(Xdata(:,iF),funVarPar(beta(iF,:),Xdata(:,iF)),'xr')
-        legend('Data Points','Initial guess','Nonlinear Fit',0,'location','northwest')
-        text(max(xlim),max(ylim),outstr,'verticalalign','top','horizontalalign','right')
+        hI=plot(squeeze(Xdata(:,iF,:)),funVarPar(beta(iF,:),Xdata(:,iF,:)),'xr');
+        if nInd>1
+            cm = lines_distinguishable(nInd);
+            for iI = 1:nInd
+                hI(iI).Color = cm(iI,:);
+            end
+        end
+        text(max(xlim),max(ylim),outstr{iF},'verticalalign','top','horizontalalign','right')
+        legend('Data Points','Initial guess','Nonlinear Fit','location','best') % why is this taking so much time
         
         
         % Make a residual plot
         subplot(212)
-        plot(x,0,'-',Xdata(:,iF),R(iF,:),'rx')
+        hR=plot(squeeze(Xdata(:,iF,:)),Res(iF,:),'rx');
+        if nInd>1
+            cm = lines_distinguishable(nInd);
+            for iI = 1:nInd
+                hR(iI).Color = cm(iI,:);
+            end
+        end
         xlabel('x-data','FontSize',14)
         ylabel('y-data','FontSize',14)
         title('Residual Plot','FontSize',16)
-        if iF > 1
-            pos = get(gcf,'position');
-            pos(1) = pos(1) - pos(3) * (iF-1);
-            set(gcf,'position',pos)
+        
+        % reposition figure
+        if nFit > 1
+            if iF == 1
+                % find current monitor
+                RelPos = h.Position - h.Parent.MonitorPositions;
+                [~,iMon] = min(hypot(RelPos(:,1),RelPos(:,2)));
+                PosRng = [1 1]*h.Parent.MonitorPositions(iMon,1) + [0 h.Parent.MonitorPositions(iMon,3)];
+                % new positions
+                NewX = linspace(PosRng(1),PosRng(2),nFit+1);
+                NewW = min([h.Position(3) diff(PosRng)/nFit]);
+            end
+            % set position
+            h.Position(1) = NewX(iF);
+            h.Position(3) = NewW;
         end
+        drawnow
+
     end
     
-else
-    if ~flSilent
-        disp(outstr)
-    end
+end
+if ~flSilent
+    fstr = cellfun(@(s) str2cell(regexprep(regexprep(s,' = ','|'),';\n','\n')),outstr,'uniformoutput',false);
+    fstr = cellfun(@(s) [{'--:|:--'};s],fstr,'uniformoutput',false);
+    fstr = [reshape([fstr{:}],[],1); {'--:|:--'}];
+    md2table(fstr)
 end
 
 
+end
 
+%%
+function nParIn = get_nparin(FitFun,nInd)
+% dirty way to determine function order. 
+% i.e. how many fit parameters there are
+
+MockX = NaN(1,nInd); % fake input
+
+notOK = true;
+nParIn = 0;
+while notOK
+    try
+        % try fitting a [1 x nInd] sized x-data with [nParIn] parameters
+        FitFun(nan(nParIn,1),MockX);
+        notOK = false; % if no error is returned
+    catch ME
+        % if FitFun fails with these nParIn
+        
+        if strcmpi(ME.identifier,'MATLAB:badsubscript')
+            % nr of b is too small increase nPar
+            nParIn = nParIn + 1;
+        else
+            % There was a different error
+            throw(ME)
+        end
+    end
+end
+
+end
+%%
+function [beta, resnorm, R, exitflag, output, lambda, fullj ] = lsq_slicedata(fun,Xdata,Ydata,initialguess,lowerbound,upperbound,options)
+
+nPar = numel(initialguess);
+nDat = numel(Ydata);
+
+R = nan(1,nDat);
+fullj = nan(nDat,nPar);
+
+selNan  = any(isnan([Xdata Ydata]),2); % trail where there is a NaN
+if all(selNan)
+    selNan = ~selNan;
+    Ydata = zeros(size(Ydata));
+    warning([mfilename ':nospikes'],'Data does not contain any spikes, will fit matrix with zeros.')
+end
+[
+    beta,...
+    resnorm,...
+    R(~selNan)...
+    exitflag,...
+    output,...
+    lambda,...
+    j,...
+    ] = lsqcurvefit(fun,initialguess,Xdata(~selNan,:),Ydata(~selNan),lowerbound,upperbound,options);
+
+fullj(~selNan,:) = reshape(full(j),[sum(~selNan) nPar]);
+                
+                
+end
+%%
 function out = minimizationfun(FF,x,y,b,ntrl,F_plot)
+% FF: fit function
 if nargin == 7
     F_plot = false;
 end
 
-err_method = 2;
+err_method = 3;
 switch err_method
     case 1
         % error: Negative log-likelihood (AZ)
@@ -644,6 +631,10 @@ switch err_method
     case 2
         % error: least squared errors
         out = mean( (y - FF(b,x)).^2 );
+    case 3
+        % error: squared errors in log space
+        %   according to tony's csf.c
+        out = sum((log(FF(b,x))-log(y)).^2);
 end
 
 if F_plot
@@ -651,9 +642,11 @@ if F_plot
     plot_conversion(x,y,cy,out)
     drawnow
 else
-    fprintf(1,'.');
+    %fprintf(1,'.');
+end
 end
 
+%%
 function plot_conversion(x,y,cy,out)
 TAG0 = 'CurrentData';
 TAG1 = 'CurrentFit';
@@ -661,6 +654,7 @@ TAG2 = 'Conversion';
 h0=findobj('tag',TAG0);
 h1=findobj('tag',TAG1);
 h2=findobj('tag',TAG2);
+x = squeeze(x);
 if isempty(h0) || isempty(h1) || isempty(h2);
     figure
     subplot(121)
@@ -691,3 +685,6 @@ else
     set(h2,'xdata',[count count(end)+1])
 end
 drawnow
+end
+
+

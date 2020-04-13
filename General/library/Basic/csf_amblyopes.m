@@ -13,7 +13,7 @@
 %       SF : cell array with spatial frequency and distance. Cells are
 %           formatted as: SF(i) = {'0.5@1'); indicating that i-th condition
 %           was a SF of 0.5 c/d run at 1 m.
-%       FileNames: n x m sized cell array with session filenames 
+%       FileNames: n x m sized cell array with session filenames
 %           Rows (n): eye (1st FE, 2nd FE,...).
 %           Columns (m): stimulus condition
 %           e.g. Sessions(i,j) = {
@@ -35,7 +35,7 @@
 %       FEfiles = {{[]} {'peripho_aa.001' 'peripho_aa.003' 'peripho_aa.005'} {'peripho_aa.011' 'peripho_aa.013' 'peripho_aa.015'} .. };
 %       % note that 0.5 c/d at 1 meter was not run for FE
 %
-%       AEfiles = {{..} {..} ... };  
+%       AEfiles = {{..} {..} ... };
 %
 %       FileNames = {
 %           FEfiles;
@@ -74,8 +74,14 @@ for iEye = 1:nEye % do per eye
         for iFN = 1:nFN % do for every file
             fn = fns{iFN};
             % read file
+            %             if contains(fn,'perip_')
+            %                 S=read_behavraw_dos(fn);
+            %             else
+            %                S=read_behavraw_win(fn);
+            %             end
+            
             S=read_behavraw(fn);
- 
+            fn
             % concat. matrices per file
             [~,~,e] = fileparts(fn);
             if strcmpi(e,'.psy') % windows
@@ -89,7 +95,7 @@ for iEye = 1:nEye % do per eye
             end
         end
         [Cond{iEye,iCond},~,ixCont] = unique(cont);
-
+        
         % calculate performance
         %   Note that here we calculate performance as Hit/Total.
         %   Alternatively the performance can be calculated by number of
@@ -152,7 +158,7 @@ end
 % movshonize all subplots
 hs=hf1.Children;
 isax=arrayfun(@(h) strcmp(h.Type,'axes'),hs);
-arrayfun(@movshonize_plots,hs(isax))
+%arrayfun(@movshonize_plots,hs(isax))
 %% do performance fits per SF
 %   with 'response correct' not 'response rightward'
 %   Fit parameters ("Betas") are return as well as the fit function
@@ -162,7 +168,7 @@ fitmethod = 'probit';
 
 switch fitmethod
     case 'cumgamma'
-
+        
         % fit boudaries
         LBgamma = [0.5 0.5  1    0]; % lb3 to avoid peak slopes at x<0 see function M
         UBgamma = [0.5 0.5 50 2000]; % ub3,4 in order to get peaks < 100
@@ -270,7 +276,7 @@ end
 % for iEye = 1:nEye
 %     for iCond = 1:nCond
 %         if ~isempty(Cond{iEye,iCond})
-%             
+%
 %             % minimization function: squared error
 %             %   Note that this happens either in log- or lin-space
 %             %   depending on what function is used.
@@ -282,7 +288,7 @@ end
 %                 X0 = mean(Cond{iEye,iCond});
 %             end
 %             Thresholds(iEye,iCond) = fminsearch(minfun,X0);
-%             
+%
 %         end
 %     end
 % end
@@ -304,7 +310,7 @@ VarianceUB = Thresholds + SD;
 
 if strcmp(fitmethod,'probit')
     % convert back from log transformed
-    Thresholds = 10.^Thresholds; 
+    Thresholds = 10.^Thresholds;
     VarianceLB = 10.^VarianceLB;
     VarianceUB = 10.^VarianceUB;
 end
@@ -359,11 +365,11 @@ ax.XLabel.String = 'Spatial Frequency (c/deg)';
 ax.YLabel.String = 'Contrast sensitivity';
 ax.Title.String = 'Static contrast';
 
-movshonize_plots(ax)
+%movshonize_plots(ax)
 
 for iEye = 1:nEye
     for Dist = unique(SFvalue(2,:)) % distance 1 or 2 meter
-
+        
         sel = SFvalue(2,:) == Dist;
         h=plot(SFvalue(1,sel),Sensitivity(iEye,sel),'o');
         h.MarkerEdgeColor = cmEye(iEye,:);
@@ -434,17 +440,17 @@ for iEye = 1:nEye
     h.MarkerFaceColor = cmEye(iEye,:);
     h.MarkerEdgeColor = 'w';
     h.MarkerSize = 12;
-
+    
     % fit
     hm=plot(XX,fun(b(iEye,:),XX),'-');
     hL=plot(XX,fun(bL(iEye,:),XX),'--');
     hU=plot(XX,fun(bU(iEye,:),XX),'--');
     
     for h = [hm hL hU]
-    h.Color = cmEye(iEye,:);
-    h.LineWidth = 3;
-    h.Color = cmEye(iEye,:);
-    h.Clipping = 'off';
+        h.Color = cmEye(iEye,:);
+        h.LineWidth = 3;
+        h.Color = cmEye(iEye,:);
+        h.Clipping = 'off';
     end
 end
 %% some statistics
@@ -459,14 +465,14 @@ for iEye = 1:nEye %find(any(~isnan(y),2))'
     ix = find(~isnan(y(iEye,:)),1,'last');
     X0 = x(iEye,ix);
     Resolution(iEye) = fminsearch(minfun,X0);
-
+    
 end
 
 %% plot resolution
 h=plot(Resolution,0.9,'^','clipping','on');
 for iEye = 1:nEye
-h(iEye).MarkerFaceColor = cmEye(iEye,:);
-h(iEye).MarkerFaceColor = cmEye(iEye,:);
+    h(iEye).MarkerFaceColor = cmEye(iEye,:);
+    h(iEye).MarkerFaceColor = cmEye(iEye,:);
 end
 for ch = h'
     ch.MarkerEdgeColor = 'w';
@@ -487,7 +493,7 @@ start = 0;
 sumfe = integral(@(x) (fun_logsens(b(1,:),x)),start,Resolution(1));
 sumae = integral(@(x) (fun_logsens(b(2,:),x)),start,Resolution(2));
 
-% amblyopia index 
+% amblyopia index
 ai = (sumfe - sumae)/sumfe;
 
 %% show A.I. in figure
@@ -505,9 +511,9 @@ h.HorizontalAlignment = 'left';
 hf = [hf1 hf2];
 
 % parameters (=beta's) from expexp fit
-Beta = b; 
+Beta = b;
 % GOF at end
 Chisq = nan(nEye,1);
 for iEye = 1:nEye
-    Chisq(iEye) = nansum((log10(fun(b(iEye,:),uSF))-log10(y(iEye,:))).^2); 
+    Chisq(iEye) = nansum((log10(fun(b(iEye,:),uSF))-log10(y(iEye,:))).^2);
 end
