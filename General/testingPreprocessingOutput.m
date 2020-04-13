@@ -1,6 +1,9 @@
 %%
+load('WU_RE_Glass_nsp1_20170817_002_cleaned3_manu_perm2k');
+manu3 = data.RE;
+
 load('WU_RE_Glass_nsp1_20170817_002_cleaned_manu_perm2k');
-manu = data.RE;
+manu4 = data.RE;
 
 load('WU_RE_Glass_nsp1_20170817_002_raw_perm2k');
 raw = data.RE;
@@ -12,7 +15,7 @@ ch = 70;
 figure(1)
 clf
 
-subplot(2,2,1)
+subplot(3,2,1)
 hold on
 cohNdx = (raw.coh == 1);
 concNdx = (raw.type == 1);

@@ -146,7 +146,7 @@ tic
     %     'XT_LE_Glass_nsp1_20190123_all_raw_perm2k';...
 %    };
 %% testing Manu's cleaned version
-files = {'WU_RE_Glass_nsp1_20170817_002_cleaned_manu_perm2k';
+files = {'WU_RE_Glass_nsp1_20170817_002_cleaned3_manu_perm2k';
     'WU_RE_Glass_nsp1_20170817_002_raw_perm2k'};
 %%
 nameEnd =  'Stats';
@@ -199,7 +199,7 @@ for fi = 1:size(files,1)
     dataT = ChiSquareHomogeneity(dataT,0.1);
     %% rank order of stim responses
     dataT = rankGlassSelectivitiesBlank(dataT);
-    dataT = numSigGlassComparisons(dataT)
+    dataT = numSigGlassComparisons(dataT);
     %% plot
     if plotOther == 1
         plotGlass_GlassRankingsDistBlank(dataT)

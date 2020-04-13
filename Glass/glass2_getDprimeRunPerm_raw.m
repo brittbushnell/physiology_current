@@ -123,7 +123,7 @@ tic
     %     'XT_LE_Glass_nsp1_20190123_all_raw';...
 %    };
 %%
-files = {'WU_RE_Glass_nsp1_20170817_002_raw'};
+files = {'WU_RE_Glass_nsp1_20170817_002_cleaned3_manu'};
 %%
 nameEnd = 'perm2k';
 numPerm = 2000;

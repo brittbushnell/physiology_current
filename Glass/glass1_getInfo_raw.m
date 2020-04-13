@@ -171,11 +171,10 @@ tic
 % 'XX_RE_Glass_nsp2_20200211_all';
 %};
 %% testing Manu's cleaned version
-files = {'WU_RE_Glass_nsp1_20170817_002'};
+files = {'WU_RE_Glass_nsp1_20170817_002_cleaned3'};
 %%
-nameEnd = 'raw';
+nameEnd = 'manu';
 %%
-
 startMean = 5;
 endMean = 15;
 startBin = 1;
