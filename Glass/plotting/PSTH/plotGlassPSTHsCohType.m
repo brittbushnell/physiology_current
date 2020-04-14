@@ -86,8 +86,8 @@ for ch = 1:96
     end
 end
 
-suptitle(sprintf('%s %s %s concentric Glass patterns across coherences',dataT.animal, dataT.array, dataT.eye))
-figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_',dataT.programID,'_PSTH_concCoh'];
+suptitle(sprintf('%s %s %s concentric Glass patterns across coherences Manu cleaned threshold -3',dataT.animal, dataT.array, dataT.eye))
+figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_',dataT.programID,'_PSTH_concCoh_manu3'];
 print(gcf, figName,'-dpdf','-fillpage')
 %% plot high radial vs noise
 figure (2)
@@ -133,8 +133,8 @@ for ch = 1:96
     end
 end
 
-suptitle(sprintf('%s %s %s radial 100% Glass pattern vs noise',dataT.animal, dataT.array, dataT.eye))
-figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_',dataT.programID,'_PSTH_sigRad'];
+suptitle(sprintf('%s %s %s radial 100% Glass pattern vs noise Manu cleaned threshold -3',dataT.animal, dataT.array, dataT.eye))
+figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_',dataT.programID,'_PSTH_sigRad_manu3'];
 print(gcf, figName,'-dpdf','-fillpage')
 %% plot radial coherence
 figure (3)
@@ -184,8 +184,8 @@ for ch = 1:96
     end
 end
 
-suptitle(sprintf('%s %s %s radial Glass patterns across coherences',dataT.animal, dataT.array, dataT.eye))
-figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_',dataT.programID,'_PSTH_radCoh'];
+suptitle(sprintf('%s %s %s radial Glass patterns across coherences Manu cleaned threshold -3',dataT.animal, dataT.array, dataT.eye))
+figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_',dataT.programID,'_PSTH_radCoh_manu3'];
 print(gcf, figName,'-dpdf','-fillpage')
 %% high coherence concentric vs radial vs noise
 [~,numDots,numDxs,~,~,~,dots,dxs,~,~] = getGlassParameters(dataT);
@@ -235,9 +235,9 @@ for dt = 1:numDots
                 axis off
             end
         end
-        suptitle({sprintf('%s %s %s full coherence Glass pattern %d dots dx %.2f',dataT.animal, dataT.array, dataT.eye, dots(dt),dxs(dx));...
+        suptitle({sprintf('%s %s %s full coherence Glass pattern %d dots dx %.2f  Manu cleaned threshold -3',dataT.animal, dataT.array, dataT.eye, dots(dt),dxs(dx));...
             ('concentric: purple  radial: green  dipole: orange')})
-        figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_',dataT.programID,'_PSTH_fullCoh_dots',num2str(dots(dt)),'_dx',num2str(dxs(dx)),'.pdf'];
+        figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_',dataT.programID,'_PSTH_fullCoh_dots',num2str(dots(dt)),'_dx',num2str(dxs(dx)),'_manu3','.pdf'];
         print(gcf, figName,'-dpdf','-fillpage')
     end
 end
