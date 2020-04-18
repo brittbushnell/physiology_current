@@ -10,7 +10,7 @@ function [stimBlankPval,sig] = glassGetPermutationStats_coh(realData,permData,da
 %     real d' against the distribution of permuted d's.
 
 %%
-[numOris,numDots,numDxs,numCoh,~,oris,dots,dxs,coherences,~] = getGlassParameters(dataT);
+[~,numDots,numDxs,numCoh,~,~,dots,dxs,coherences,~] = getGlassParameters(dataT);
 stimBlankPval = zeros(4,2,2,96);
 sig = zeros(4,2,2,96);
 %%
@@ -109,7 +109,7 @@ if plotFlag == 1
     %% plot
     for ch = 1:96
         if dataT.goodCh(ch) == 1
-            for co = 1:numCoh % new figure for each coherence
+            for co = numCoh % 1:numCoh % new figure for each coherence
                 figure(6)
                 clf   
                 pos = get(gcf,'Position');
@@ -137,18 +137,18 @@ if plotFlag == 1
                         xMaxs(dt,dx) = max(b);
                         xMins(dt,dx) = min(b);
                         
-                        plot(realDataCh,0.56,'rv','markerfacecolor','r','markeredgecolor','w','MarkerSize',10);
-                        plot(nanmean(permDataCh),0.56,'v','markerfacecolor',[0 0.6 0.2],'markeredgecolor','w','MarkerSize',10);
+                        plot(realDataCh,0.5,'rv','markerfacecolor','r','markeredgecolor','w','MarkerSize',10);
+                        plot(nanmean(permDataCh),0.5,'v','markerfacecolor',[0 0.6 0.2],'markeredgecolor','w','MarkerSize',10);
                         set(gca,'color','none','tickdir','out','box','off')
                         
                         if sig(co,dt,dx,ch) == 1
-                            text((xMins(dt,dx)+0.2),0.58,sprintf('p %.2f',stimBlankPval(co,dt,dx,ch)),'fontWeight','bold')
-                            text(realDataCh,0.59,sprintf('%.2f',realDataCh),'color',[1 0 0],'fontWeight','bold')
-                            text(nanmean(permDataCh),0.58,sprintf('%.2f',nanmean(permDataCh)),'color',[0 0.6 0.2],'fontWeight','bold')
+                            text((xMins(dt,dx)+0.2),0.59,sprintf('p %.2f',stimBlankPval(co,dt,dx,ch)),'fontWeight','bold')
+                            text(realDataCh,0.56,sprintf('%.2f',realDataCh),'color',[1 0 0],'fontWeight','bold')
+                            text(nanmean(permDataCh),0.54,sprintf('%.2f',nanmean(permDataCh)),'color',[0 0.6 0.2],'fontWeight','bold')
                         else
-                            text((xMins(dt,dx)+0.2),0.58,sprintf('p %.2f',stimBlankPval(co,dt,dx,ch)))
-                            text(realDataCh,0.59,sprintf('%.2f',realDataCh),'color',[1 0 0])
-                            text(nanmean(permDataCh),0.58,sprintf('%.2f',nanmean(permDataCh)),'color',[0 0.6 0.2])
+                            text((xMins(dt,dx)+0.2),0.59,sprintf('p %.2f',stimBlankPval(co,dt,dx,ch)))
+                            text(realDataCh,0.56,sprintf('%.2f',realDataCh),'color',[1 0 0])
+                            text(nanmean(permDataCh),0.54,sprintf('%.2f',nanmean(permDataCh)),'color',[0 0.6 0.2])
                         end
                         
                         title(sprintf('%d dots, %.2f dx',dots(dt),dxs(dx)))
@@ -162,7 +162,7 @@ if plotFlag == 1
                 suptitle({sprintf('%s %s %s permutation test for %s ch %d',dataT.animal, dataT.eye, dataT.array, compStr, ch);...
                     (sprintf('coherence %d%%',coherences(co)*100))});
                 
-                figName = [dataT.animal,'_',dataT.array,'_',dataT.eye,'_permTest_',stim,comp,'_coh',coherences(co)*100,'_ch',num2str(ch),'.pdf'];
+                figName = [dataT.animal,'_',dataT.array,'_',dataT.eye,'_permTest_',stim,comp,'_coh',num2str(coherences(co)*100),'_ch',num2str(ch),'.pdf'];
                 print(gcf, figName,'-dpdf','-fillpage')
             end
         end
