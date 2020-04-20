@@ -1,5 +1,7 @@
-function [stimBlankPval,sig] = glassGetPermutationStats_coh(realData,permData,dataT,compStr,plotFlag)
+function [stimBlankPval,sig] = glassGetPermutationStats_1tail(realData,permData,dataT,compStr,plotFlag)
 % glassGetPermutationStats(realData,permData)
+% This version is a single tailed version fo the permutation test. Observed
+% values must be >= 0.95% of the permuted data. 
 %
 % INPUT:
 %  data matrices of glass pattern stimuli responses that are organized by (dt,dx,ch)
@@ -30,7 +32,7 @@ for ch = 1:96
                     end
                     stimBlankPval(co,dt,dx,ch) = ((high)+1)/(length(permDataCh)+1);
                     
-                    if (stimBlankPval(co,dt,dx,ch) >= 0.95) || (stimBlankPval(co,dt,dx,ch) <= 0.05)
+                    if (stimBlankPval(co,dt,dx,ch) >= 0.95) %|| (stimBlankPval(co,dt,dx,ch) <= 0.05)
                         sig(co,dt,dx,ch) = 1;
                     end
                     
@@ -146,9 +148,9 @@ if plotFlag == 1
                             text(realDataCh,0.56,sprintf('%.3f',realDataCh),'color',[1 0 0],'fontWeight','bold','fontSize',12)
                             text(nanmean(permDataCh),0.54,sprintf('%.3f',nanmean(permDataCh)),'color',[0 0.6 0.2],'fontWeight','bold','fontSize',12)
                         else
-                            text((xMins(dt,dx)+0.2),0.59,sprintf('p %.3f',stimBlankPval(co,dt,dx,ch)),'fontSize',9)
-                            text(realDataCh,0.56,sprintf('%.3f',realDataCh),'color',[1 0 0],'fontSize',9)
-                            text(nanmean(permDataCh),0.54,sprintf('%.3f',nanmean(permDataCh)),'color',[0 0.6 0.2],'fontSize',9)
+                            text((xMins(dt,dx)+0.2),0.59,sprintf('p %.3f',stimBlankPval(co,dt,dx,ch)),'fontSize',10)
+                            text(realDataCh,0.56,sprintf('%.3f',realDataCh),'color',[1 0 0],'fontSize',10)
+                            text(nanmean(permDataCh),0.54,sprintf('%.3f',nanmean(permDataCh)),'color',[0 0.6 0.2],'fontSize',10)
                         end
                         
                         title(sprintf('%d dots, %.3f dx',dots(dt),dxs(dx)))

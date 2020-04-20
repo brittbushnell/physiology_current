@@ -22,6 +22,7 @@ dtNdx = (dataT.numDots == dots(1));
 dxNdx = (dataT.dx == dxs(1));
 coNdx = (dataT.coh == coherences(1));
 orNdx = (dataT.rotation == oris(1));
+
 numStimTrials = round(length(find(dataT.bins((linNdx & dtNdx & dxNdx & coNdx & orNdx),5:25,1)))*holdout);
 numNoiseTrials = round(length(find(dataT.bins((noiseNdx & dtNdx & dxNdx),5:25,1)))*holdout);
 
@@ -31,14 +32,14 @@ for ch = 1:96
             for dx = 1:numDxs
                 for co = 1:numCoh
                     
-                    SItmp = nan(numBoot,1);
-                    oriTmp = nan(numBoot,1);
+%                     SItmp = nan(numBoot,1);
+%                     oriTmp = nan(numBoot,1);
                     
                     for nb = 1:numBoot
-                        respVect = nan(numOris,21);
-                        denomVect = nan(numOris,21);
-                        prefNum = nan(numOris,21);
-                        prefDenom = nan(numOris,21);
+%                         respVect = nan(numOris,21);
+%                         denomVect = nan(numOris,21);
+%                         prefNum = nan(numOris,21);
+%                         prefDenom = nan(numOris,21);
                         
                         for or = 1:numOris
                             
@@ -84,8 +85,8 @@ for ch = 1:96
                             oriTmp(nb,1) = ot;
                         end
                     end
-                    prefOri(co,dt,dx,ch) = mean(oriTmp);
-                    SI(co,dt,dx,ch) = mean(SItmp);
+                    prefOri(co,dt,dx,ch) = median(oriTmp);
+                    SI(co,dt,dx,ch) = median(SItmp);
                     clear oriTmp
                     clear SItmp
                 end

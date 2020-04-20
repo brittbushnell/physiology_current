@@ -24,8 +24,8 @@ for ch = 1:96
         for dt = 1:numDots
             for dx = 1:numDxs
                 for co = 1:numCoh
-                    oriTmp = nan(numBoot,1);
-                    SItmp = nan(numBoot,1);
+                    oriTmp = nan(numPerm,1);
+                    SItmp = nan(numPerm,1);
                     
                     for nb = 1:numPerm
                         respVect = nan(numOris,21);
