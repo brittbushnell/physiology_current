@@ -38,7 +38,7 @@ files = {
     % 'WV_LE_GlassTRCoh_nsp1_20190417_all_s1_perm2k';...
     };
 
-nameEnd = 'OSIvsBlank2Only_1tail';
+nameEnd = 'OSIvsNoise_1tail_prefOri';
 %%
 numPerm = 200;
 numBoot = 2000;

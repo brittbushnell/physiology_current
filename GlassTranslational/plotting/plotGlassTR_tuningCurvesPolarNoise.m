@@ -124,7 +124,12 @@ for ch = 1:96
                 pOri = (dataT.prefOri2thetaNoise(end,dt,dx,ch)); 
                 pOriRad = deg2rad(dataT.prefOri2thetaNoise(end,dt,dx,ch));
                 polarplot(pOriRad,max10,'.k','MarkerSize',15);
-                text(pOriRad,max10+2,sprintf('%.1f',pOri),'FontWeight','bold','FontAngle','italic','FontSize',11)
+                
+                if dataT.prefOri2thetaNoiseSig(end,dt,dx,ch) == 1
+                    text(pOriRad,max10+2,sprintf('%.1f *',pOri),'FontWeight','bold','FontAngle','italic','FontSize',11)
+                else
+                    text(pOriRad,max10+2,sprintf('%.1f',pOri),'FontSize',10)
+                end
                 
                 n = polarplot(oris,noiseVect,'-o');
                 n.Color = [1 0.5 0.1 0.8];
