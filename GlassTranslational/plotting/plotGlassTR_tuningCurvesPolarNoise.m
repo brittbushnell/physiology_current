@@ -122,8 +122,8 @@ for ch = 1:96
                 end
                 pOri = (dataT.prefOri2thetaNoise(end,dt,dx,ch)); %mod(rad2deg(dataT.prefOri2thetaNoise(end,dt,dx,ch)),180);
                 pOriRad = rad2deg(dataT.prefOri2thetaNoise(end,dt,dx,ch));%mod(dataT.prefOri2thetaNoise(end,dt,dx,ch),180);
-                polarplot(pOriRad,max10,'.k','MarkerSize',15);
-                text(pOriRad,max10+2,sprintf('%.1f',pOri),'FontWeight','bold','FontAngle','italic','FontSize',11)
+%                 polarplot(pOriRad,max10,'.k','MarkerSize',15);
+%                 text(pOriRad,max10+2,sprintf('%.1f',pOri),'FontWeight','bold','FontAngle','italic','FontSize',11)
                 
                 n = polarplot(oris,noiseVect,'-o');
                 n.Color = [1 0.5 0.1 0.8];
@@ -355,9 +355,9 @@ for ch = 1:96
                 else
                     l.Color = [1 0 0 0.8];
                 end
-                pOri = mod(rad2deg(dataT.prefOri2thetaNoise(end,dt,dx,ch)),180);
-                polarplot(pOri,max10,'.k','MarkerSize',15);
-                text(pOri,max10+2,sprintf('%.1f',pOri),'FontWeight','bold','FontAngle','italic','FontSize',11)
+%                 pOri = mod(rad2deg(dataT.prefOri2thetaNoise(end,dt,dx,ch)),180);
+%                 polarplot(pOri,max10,'.k','MarkerSize',15);
+%                 text(pOri,max10+2,sprintf('%.1f',pOri),'FontWeight','bold','FontAngle','italic','FontSize',11)
                 
                 n = polarplot(oris,noiseVect,'-o');
                 n.Color = [1 0.5 0.1 0.8];

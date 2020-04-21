@@ -43,7 +43,7 @@ for ch = 1:96
                             % stimulus trials, making sure that none of
                             % the trials are assigned to both.
                             [noiseNdx, unusedNdxs] = subsampleBlanks((trials), numNoiseTrials);
-                            stimNdx = subsampleStimuli((unusedNdxs), numStimTrials);
+                            stimNdx = subsampleBlanks((unusedNdxs), numStimTrials);
                             
                             linResp = mean(mean(squeeze(dataT.bins((stimNdx),5:25,ch))))./0.01;
                             noiseResp = mean(mean(squeeze(dataT.bins(noiseNdx,5:25,ch))))./0.01;

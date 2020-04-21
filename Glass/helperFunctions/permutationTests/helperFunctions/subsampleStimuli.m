@@ -28,3 +28,4 @@ else
 end
 
 unusedNdxs = (stimNdx2 == 0);
+unusedNdxs = logical(unusedNdxs);

@@ -49,7 +49,7 @@ for ch = 1:96
                             orNdx = (dataT.rotation == oris(or));
                             
                             noiseNdx2 = subsampleBlanks((noiseNdx & dtNdx & dxNdx), numNoiseTrials);
-                            stimNdx = subsampleStimuli((linNdx & dtNdx & dxNdx & coNdx & orNdx), numStimTrials);
+                            stimNdx = subsampleBlanks((linNdx & dtNdx & dxNdx & coNdx & orNdx), numStimTrials);
                             
                             noiseResp = mean(mean(squeeze(dataT.bins(noiseNdx2,5:25,ch))))./0.01;
                             linResp = mean(mean(squeeze((dataT.bins((stimNdx),5:25,ch)))))./0.01;
