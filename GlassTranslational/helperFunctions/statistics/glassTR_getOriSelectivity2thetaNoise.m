@@ -5,6 +5,12 @@ orientation analysis process from Smith et al 2002
 1) get baseline subtracted responses to each stimulus
 3) compute selectivity
 4) convert to selectivity index
+
+April 21, 2020 edit
+output of preferred orientation is in degrees and should be limited to
+being between 0 and 160 degrees - anything over 160 degrees is reflected
+back to be near zero. 
+
 %}
 %%
 % load 'WU_LE_GlassTR_nsp2_20170824_001_s1_Permutations500';
@@ -78,9 +84,12 @@ for ch = 1:96
                         sumPrefDenom = sum(prefDenom);
                         fra = sumPrefNum/sumPrefDenom;
                         ot = (atand(fra))/2;
+                        ot = mod(rad2deg(ot),180); % convert back to degrees, and bring back to being between 0 and 180
                         
                         if ot < 0
                             oriTmp(nb,1) = ot +180;
+                        elseif ot > 160 % 135 was the highest orientation actually run, so choosing just beyond halfway between there and 180 as the fold point to make 0 and 180the same
+                            oriTmp(nb,1) = ot-180;
                         else
                             oriTmp(nb,1) = ot;
                         end

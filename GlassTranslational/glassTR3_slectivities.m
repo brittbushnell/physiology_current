@@ -68,18 +68,18 @@ for fi = 1:size(files,1)
     %% run perumtation test for OSI
     fprintf('selectivity computed in %d mins\n',toc/60)
     
-    %      [dataT.OSI2thetaNoisePval,dataT.OSI2thetaNoiseSig] = glassGetPermutationStats_coh...
-    %         (dataT.OriSelectIndex2thetaNoise,dataT.OriSelectIndex2thetaNoisePerm,...
-    %         dataT,'translational vs noise OSI using 2x theta permutation test',plotFlag);
-    
     [dataT.OSI2thetaNoisePval,dataT.OSI2thetaNoiseSig] = glassGetPermutationStats_1tail...
         (dataT.OriSelectIndex2thetaNoise,dataT.OriSelectIndex2thetaNoisePerm,...
         dataT,'translational vs noise OSI using 2x theta permutation test',plotFlag);
     fprintf('computed OSI permutation tests %.2f minutes \n',toc/60)
     %% permutation tests for preferred orientation
+%     [dataT.prefOri2thetaNoisePval,dataT.prefOri2thetaNoiseSig] = glassGetPermutationStats_coh...
+%         (mod(rad2deg(dataT.prefOri2thetaNoise),360),mod(rad2deg(dataT.prefOri2thetaNoisePerm),360),dataT,'preferred orientation translational Glass using 2x theta permutation test',plotFlag);
+
     [dataT.prefOri2thetaNoisePval,dataT.prefOri2thetaNoiseSig] = glassGetPermutationStats_coh...
-        (mod(rad2deg(dataT.prefOri2thetaNoise),360),mod(rad2deg(dataT.prefOri2thetaNoisePerm),360),dataT,'preferred orientation translational Glass using 2x theta permutation test',plotFlag);
-    fprintf('computed preferred orientation permutation tests %.2f minutes \n',toc/60)
+        (dataT.prefOri2thetaNoise,dataT.prefOri2thetaNoisePerm, dataT,'preferred orientation translational Glass using 2x theta permutation test',plotFlag);
+    
+fprintf('computed preferred orientation permutation tests %.2f minutes \n',toc/60)
     %%
     plotGlassTR_tuningCurvesPolarNoise(dataT)
     %% commit to data structure

@@ -32,7 +32,7 @@ for ch = 1:96
                     end
                     stimBlankPval(co,dt,dx,ch) = ((high)+1)/(length(permDataCh)+1);
                     
-                    if (stimBlankPval(co,dt,dx,ch) >= 0.95) %|| (stimBlankPval(co,dt,dx,ch) <= 0.05)
+                    if (stimBlankPval(co,dt,dx,ch) <= 0.05)
                         sig(co,dt,dx,ch) = 1;
                     end
                     

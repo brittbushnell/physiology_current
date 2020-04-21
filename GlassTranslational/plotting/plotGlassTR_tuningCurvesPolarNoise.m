@@ -32,11 +32,9 @@ for ch = 1:96
                     coNdx = dataT.coh == 1;
                     orNdx = dataT.rotation == oris(or);
                     
-                    %for nb = 1:numBoot
                     stimMean(or,dt,dx,ch) = mean(mean(squeeze(dataT.bins((linNdx & dtNdx & dxNdx & coNdx & orNdx),5:25,ch))))./0.01;
                     noiseMean(dt,dx,ch) = mean(mean(squeeze(dataT.bins((noiseNdx & dtNdx & dxNdx),5:25,ch))))./0.01;
                     stimMeanBaseSub(or,dt,dx,ch) = stimMean(or,dt,dx,ch) - noiseMean(dt,dx,ch);
-                    % noiseMeanBaseSub(dt,dx,ch) = noiseMean(dt,dx,ch) - blankMean(1,ch);
                     
                 end
             end
@@ -112,18 +110,21 @@ for ch = 1:96
                 else
                     subplot(3,3,ndx,polaraxes);
                 end
+                
                 hold on
                 l = polarplot(oris',linResps,'-o');
                 l.LineWidth = 1.2;
+                
                 if contains(dataT.eye,'LE')
                     l.Color = [0 0 1 0.8];
                 else
                     l.Color = [1 0 0 0.8];
                 end
-                pOri = (dataT.prefOri2thetaNoise(end,dt,dx,ch)); %mod(rad2deg(dataT.prefOri2thetaNoise(end,dt,dx,ch)),180);
-                pOriRad = rad2deg(dataT.prefOri2thetaNoise(end,dt,dx,ch));%mod(dataT.prefOri2thetaNoise(end,dt,dx,ch),180);
-%                 polarplot(pOriRad,max10,'.k','MarkerSize',15);
-%                 text(pOriRad,max10+2,sprintf('%.1f',pOri),'FontWeight','bold','FontAngle','italic','FontSize',11)
+                
+                pOri = (dataT.prefOri2thetaNoise(end,dt,dx,ch)); 
+                pOriRad = deg2rad(dataT.prefOri2thetaNoise(end,dt,dx,ch));
+                polarplot(pOriRad,max10,'.k','MarkerSize',15);
+                text(pOriRad,max10+2,sprintf('%.1f',pOri),'FontWeight','bold','FontAngle','italic','FontSize',11)
                 
                 n = polarplot(oris,noiseVect,'-o');
                 n.Color = [1 0.5 0.1 0.8];
