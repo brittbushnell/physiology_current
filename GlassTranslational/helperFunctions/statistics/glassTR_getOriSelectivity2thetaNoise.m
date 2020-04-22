@@ -84,9 +84,9 @@ for ch = 1:96
                         sumPrefDenom = sum(prefDenom);
                         fra = sumPrefNum/sumPrefDenom;
                         ot = (atand(fra))/2;
-                        ot = ot/2;
-                        ot = mod(rad2deg(ot),180); % convert back to degrees, and bring back to being between 0 and 180
-                        
+%                         ot = ot/2;
+%                         ot = mod(rad2deg(ot),180); % convert back to degrees, and bring back to being between 0 and 180
+%                         
                         if ot < 0
                             oriTmp(nb,1) = ot +180;
 %                         elseif ot > 160 % 135 was the highest orientation actually run, so choosing just beyond halfway between there and 180 as the fold point to make 0 and 180the same

@@ -1,11 +1,11 @@
 clear all
-close all
+%close all
 clc
 %%
 load('WU_LE_GlassTR_nsp2_20170825_002_s1_perm2k')
 dataT = data.LE;
 %%
-ch = 1;
+ch = 72;
 dt = 2;
 dx = 2;
 co = 4;
@@ -25,6 +25,7 @@ orNdx = (dataT.rotation == oris(1));
 numStimTrials = round(length(find(dataT.bins((linNdx & dtNdx & dxNdx & coNdx & orNdx),5:25,1)))*holdout);
 numNoiseTrials = round(length(find(dataT.bins((noiseNdx & dtNdx & dxNdx),5:25,1)))*holdout);
 %%
+
 for or = 1:numOris
     
     dtNdx = (dataT.numDots == dots(dt));
@@ -51,7 +52,7 @@ for or = 1:numOris
     prefNum(or,:) = baseSub .* (sin(ori2));
     prefDenom(or,:) = baseSub .* (cos(ori2));
     
-    clear noiseResp; clear linResp; clear baseSub;
+    %clear noiseResp; clear linResp; clear baseSub;
     
 end
 v = sum(respVect);
