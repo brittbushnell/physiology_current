@@ -128,7 +128,7 @@ if plotFlag == 1
                         if contains(compStr,'latency')
                             histogram(permDataCh,7,'BinWidth',10,'FaceColor',[0 0.6 0.2],'Normalization','probability');
                         else
-                            histogram(permDataCh,7,'FaceColor',[0 0.6 0.2],'Normalization','probability');
+                            histogram(permDataCh,'BinWidth',.05,'FaceColor',[0 0.6 0.2],'Normalization','probability');
                         end
                         
                         ylim([0 0.6])
@@ -161,7 +161,7 @@ if plotFlag == 1
                 minX = min(xMins(:));
                 xLimits = [minX maxX];
                 set(mygca,'XLim',xLimits);
-                suptitle({sprintf('%s %s %s permutation test for %s ch %d',dataT.animal, dataT.eye, dataT.array, compStr, ch);...
+                suptitle({sprintf('%s %s %s %s ch %d',dataT.animal, dataT.eye, dataT.array, compStr, ch);...
                     (sprintf('coherence %d%%',coherences(co)*100))});
                 
                 figName = [dataT.animal,'_',dataT.array,'_',dataT.eye,'_permTest_',stim,comp,'_coh',num2str(coherences(co)*100),'_ch',num2str(ch),'.pdf'];

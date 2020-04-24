@@ -70,7 +70,7 @@ for fi = 1:size(files,1)
     
     [dataT.OSI2thetaNoisePval,dataT.OSI2thetaNoiseSig] = glassGetPermutationStats_1tail...
         (dataT.OriSelectIndex2thetaNoise,dataT.OriSelectIndex2thetaNoisePerm,...
-        dataT,'translational vs noise OSI using 2x theta permutation test',plotFlag);
+        dataT,'translational OSI permutations no subtraction',plotFlag);
     
     fprintf('computed OSI permutation tests %.2f minutes \n',toc/60)
     %% permutation tests for preferred orientation

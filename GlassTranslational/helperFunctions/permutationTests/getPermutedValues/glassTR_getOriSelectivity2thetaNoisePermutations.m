@@ -24,7 +24,6 @@ for ch = 1:96
     if dataT.goodCh(ch) == 1
         for dt = 1:numDots
             for dx = 1:numDxs
-                
                 for co = numCoh %1:numCoh
                     oriTmp = nan(numPerm,1);
                     SItmp = nan(numPerm,1);
@@ -53,7 +52,7 @@ for ch = 1:96
                             
                             linResp = mean(mean(squeeze(dataT.bins((stimNdx),5:25,ch))))./0.01;
                             noiseResp = mean(mean(squeeze(dataT.bins(noiseNdx2,5:25,ch))))./0.01;
-                            baseSub = linResp - noiseResp;
+                            baseSub = linResp;% - noiseResp;
                             
                             ori2 = 2*(radOri(or));
                             
