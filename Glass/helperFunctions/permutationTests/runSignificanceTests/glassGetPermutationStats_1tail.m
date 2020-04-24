@@ -131,26 +131,27 @@ if plotFlag == 1
                             histogram(permDataCh,'BinWidth',.05,'FaceColor',[0 0.6 0.2],'Normalization','probability');
                         end
                         
-                        ylim([0 0.6])
-                        plot([realDataCh realDataCh],[0 0.35],'r-','LineWidth',2)
+                        ylim([0 0.7])
+                        xlim([-0.1 1.1])
+                        plot([realDataCh realDataCh],[0 0.45],'r-','LineWidth',2)
                         mygca(dt,dx) = gca;
                         
                         b = get(gca,'XLim');
                         xMaxs(dt,dx) = max(b);
                         xMins(dt,dx) = min(b);
                         
-                        plot(realDataCh,0.5,'rv','markerfacecolor','r','markeredgecolor','w','MarkerSize',10);
-                        plot(nanmean(permDataCh),0.5,'v','markerfacecolor',[0 0.6 0.2],'markeredgecolor','w','MarkerSize',10);
-                        set(gca,'color','none','tickdir','out','box','off')
+                        plot(realDataCh,0.6,'rv','markerfacecolor','r','markeredgecolor','w','MarkerSize',10);
+                        plot(nanmean(permDataCh),0.6,'v','markerfacecolor',[0 0.6 0.2],'markeredgecolor','w','MarkerSize',10);
+                        set(gca,'color','none','tickdir','out','box','off','XTick',0:0.1:1)
                         
                         if sig(co,dt,dx,ch) == 1
-                            text((xMins(dt,dx)+0.2),0.59,sprintf('p %.3f',stimBlankPval(co,dt,dx,ch)),'fontWeight','bold','fontSize',12)
-                            text(realDataCh,0.56,sprintf('%.3f',realDataCh),'color',[1 0 0],'fontWeight','bold','fontSize',12)
-                            text(nanmean(permDataCh),0.54,sprintf('%.3f',nanmean(permDataCh)),'color',[0 0.6 0.2],'fontWeight','bold','fontSize',12)
+                            text((xMins(dt,dx)+0.2),0.69,sprintf('p %.3f',stimBlankPval(co,dt,dx,ch)),'fontWeight','bold','fontSize',12)
+                            text(realDataCh,0.66,sprintf('%.3f',realDataCh),'color',[1 0 0],'fontWeight','bold','fontSize',12)
+                            text(nanmean(permDataCh),0.64,sprintf('%.3f',nanmean(permDataCh)),'color',[0 0.6 0.2],'fontWeight','bold','fontSize',12)
                         else
-                            text((xMins(dt,dx)+0.2),0.59,sprintf('p %.3f',stimBlankPval(co,dt,dx,ch)),'fontSize',10)
-                            text(realDataCh,0.56,sprintf('%.3f',realDataCh),'color',[1 0 0],'fontSize',10)
-                            text(nanmean(permDataCh),0.54,sprintf('%.3f',nanmean(permDataCh)),'color',[0 0.6 0.2],'fontSize',10)
+                            text((xMins(dt,dx)+0.2),0.69,sprintf('p %.3f',stimBlankPval(co,dt,dx,ch)),'fontSize',10)
+                            text(realDataCh,0.66,sprintf('%.3f',realDataCh),'color',[1 0 0],'fontSize',10)
+                            text(nanmean(permDataCh),0.64,sprintf('%.3f',nanmean(permDataCh)),'color',[0 0.6 0.2],'fontSize',10)
                         end
                         
                         title(sprintf('%d dots, %.3f dx',dots(dt),dxs(dx)))
@@ -160,7 +161,7 @@ if plotFlag == 1
                 maxX = max(xMaxs(:));
                 minX = min(xMins(:));
                 xLimits = [minX maxX];
-                set(mygca,'XLim',xLimits);
+                %set(mygca,'XLim',xLimits);
                 suptitle({sprintf('%s %s %s %s ch %d',dataT.animal, dataT.eye, dataT.array, compStr, ch);...
                     (sprintf('coherence %d%%',coherences(co)*100))});
                 
