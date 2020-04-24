@@ -130,9 +130,10 @@ for ch = 1:96
                 polarplot(pOriRad180,max10,'.k','MarkerSize',15);
                 
 %                if dataT.prefOri2thetaNoiseSig(end,dt,dx,ch) == 1
-                    text(pOriRad,max10+2,sprintf('%.1f *',pOri),'FontWeight','bold','FontAngle','italic','FontSize',11)
+%                    text(pOriRad,max10+2,sprintf('%.1f *',pOri),'FontWeight','bold','FontAngle','italic','FontSize',11)
 %                 else
-%                     text(pOriRad,max10+2,sprintf('%.1f',pOri),'FontSize',10)
+                     text(pOriRad,max10+2,sprintf('%.1f',pOri),'FontSize',12)
+                     text(pOriRad180,max10+2,sprintf('%.1f',pOri180),'FontSize',12)
 %                 end
                 
                 n = polarplot(oris,noiseVect,'-o');

@@ -17,16 +17,20 @@ orNdx = (dataT.rotation == oris(1));
 numStimTrials = round(length(find(dataT.bins((linNdx & dtNdx & dxNdx & coNdx & orNdx),5:25,1)))*holdout);
 numNoiseTrials = round(length(find(dataT.bins((noiseNdx & dtNdx & dxNdx),5:25,1)))*holdout);
 
-trials = 1:size(dataT.bins,1);
+%trials = 1:size(dataT.bins,1);
+
 
 for ch = 1:96
     if dataT.goodCh(ch) == 1
         for dt = 1:numDots
             for dx = 1:numDxs
+                dtNdx = (dataT.numDots == dots(dt));
+                dxNdx = (dataT.dx == dxs(dx));
                 for co = 1:numCoh
                     oriTmp = nan(numPerm,1);
                     SItmp = nan(numPerm,1);
-                    
+                    coNdx = (dataT.coh == coherences(co));
+
                     for nb = 1:numPerm
                         respVect = nan(numOris,21);
                         denomVect = nan(numOris,21);
@@ -43,8 +47,8 @@ for ch = 1:96
                             % stimulus trials, making sure that none of
                             % the trials are assigned to both.
                             
-                            [noiseNdx, unusedNdxs] = subsampleBlanks((trials), numNoiseTrials);
-                            stimNdx = subsampleBlanks((unusedNdxs), numStimTrials);
+                            noiseNdx = subsampleBlanks((noiseNdx & dtNdx & dxNdx), numNoiseTrials);
+                            stimNdx = subsampleBlanks((linNdx& dtNdx & dxNdx & coNdx), numStimTrials);
                             
                             linResp = mean(mean(squeeze(dataT.bins((stimNdx),5:25,ch))))./0.01;
                             noiseResp = mean(mean(squeeze(dataT.bins(noiseNdx,5:25,ch))))./0.01;
@@ -71,7 +75,7 @@ for ch = 1:96
                         sumPrefNum = sum(prefNum);
                         sumPrefDenom = sum(prefDenom);
                         fra = sumPrefNum/sumPrefDenom;
-                        ot = (atand(fra))/2;
+                        oriTmp(nb,1) = (atand(fra))/2;
 %                         ot = ot/2;
 %                         ot = mod(rad2deg(ot),180); % convert back to degrees, and bring back to being between 0 and 180
 %                         
