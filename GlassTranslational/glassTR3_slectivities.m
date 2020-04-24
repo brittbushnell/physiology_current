@@ -40,7 +40,7 @@ files = {
 
 nameEnd = 'OSIvsNoise_1tail_limPermute';
 %%
-numPerm = 200%0; testinng testing crap
+numPerm = 2000; 
 numBoot = 200;
 failNdx = 1;
 holdout = 0.9;

@@ -24,13 +24,12 @@ for ch = 1:96
     if dataT.goodCh(ch) == 1
         for dt = 1:numDots
             for dx = 1:numDxs
-                dtNdx = (dataT.numDots == dots(dt));
-                dxNdx = (dataT.dx == dxs(dx));
-                for co = 1:numCoh
+                
+                for co = numCoh %1:numCoh
                     oriTmp = nan(numPerm,1);
                     SItmp = nan(numPerm,1);
-                    coNdx = (dataT.coh == coherences(co));
-
+                    
+                    
                     for nb = 1:numPerm
                         respVect = nan(numOris,21);
                         denomVect = nan(numOris,21);
@@ -42,16 +41,18 @@ for ch = 1:96
                         % every orientation used and get the baseline
                         % subtracted firing rate, then do the maths.
                         for or = 1:numOris
-                            
+                            dtNdx = (dataT.numDots == dots(dt));
+                            dxNdx = (dataT.dx == dxs(dx));
+                            coNdx = (dataT.coh == coherences(co));
                             % randomly assign trials to noise or
                             % stimulus trials, making sure that none of
                             % the trials are assigned to both.
                             
-                            noiseNdx = subsampleBlanks((noiseNdx & dtNdx & dxNdx), numNoiseTrials);
-                            stimNdx = subsampleBlanks((linNdx& dtNdx & dxNdx & coNdx), numStimTrials);
+                            noiseNdx2 = subsampleBlanks((noiseNdx & dtNdx & dxNdx), numNoiseTrials);
+                            stimNdx = subsampleBlanks((linNdx & dtNdx & dxNdx & coNdx), numStimTrials);
                             
                             linResp = mean(mean(squeeze(dataT.bins((stimNdx),5:25,ch))))./0.01;
-                            noiseResp = mean(mean(squeeze(dataT.bins(noiseNdx,5:25,ch))))./0.01;
+                            noiseResp = mean(mean(squeeze(dataT.bins(noiseNdx2,5:25,ch))))./0.01;
                             baseSub = linResp - noiseResp;
                             
                             ori2 = 2*(radOri(or));
@@ -75,17 +76,18 @@ for ch = 1:96
                         sumPrefNum = sum(prefNum);
                         sumPrefDenom = sum(prefDenom);
                         fra = sumPrefNum/sumPrefDenom;
-                        oriTmp(nb,1) = (atand(fra))/2;
-%                         ot = ot/2;
-%                         ot = mod(rad2deg(ot),180); % convert back to degrees, and bring back to being between 0 and 180
-%                         
-%                         if ot < 0
-%                             oriTmp(nb,1) = ot +180;
-% %                         elseif ot > 160 % 135 was the highest orientation actually run, so choosing just beyond halfway between there and 180 as the fold point to make 0 and 180the same
-% %                             oriTmp(nb,1) = ot-180;
-%                         else
-%                             oriTmp(nb,1) = ot;
-%                         end
+                        ot = (atand(fra))/2;
+                        oriTmp(nb,1) = ot;
+                        %                         ot = ot/2;
+                        %                         ot = mod(rad2deg(ot),180); % convert back to degrees, and bring back to being between 0 and 180
+                        %
+                        %                         if ot < 0
+                        %                             oriTmp(nb,1) = ot +180;
+                        % %                         elseif ot > 160 % 135 was the highest orientation actually run, so choosing just beyond halfway between there and 180 as the fold point to make 0 and 180the same
+                        % %                             oriTmp(nb,1) = ot-180;
+                        %                         else
+                        %                             oriTmp(nb,1) = ot;
+                        %                         end
                         
                     end
                     prefOriPerm(co,dt,dx,ch,:) = oriTmp;
