@@ -79,6 +79,7 @@ for ch = 1:96
             denom = sum((denomVect));
             SItmp(dt,dx) = abs(v) / denom;
             
+            % preferred orientation
             sumPrefNum = sum(prefNum);
             sumPrefDenom = sum(prefDenom);
             fra = sumPrefNum/sumPrefDenom;
