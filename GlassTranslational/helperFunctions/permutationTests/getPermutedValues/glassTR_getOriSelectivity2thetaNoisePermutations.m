@@ -29,12 +29,7 @@ for ch = 1:96
                     SItmp = nan(numPerm,1);
                     
                     
-                    for nb = 1:numPerm
-                        respVect = nan(numOris,21);
-                        denomVect = nan(numOris,21);
-                        prefNum = nan(numOris,21);
-                        prefDenom = nan(numOris,21);
-                        
+                    for nb = 1:numPerm                        
                         % on each permutation, want to compute a OSI and
                         % preferred orientation. To do this, go through
                         % every orientation used and get the baseline
@@ -50,33 +45,34 @@ for ch = 1:96
                             noiseNdx2 = subsampleBlanks((noiseNdx & dtNdx & dxNdx), numNoiseTrials);
                             stimNdx = subsampleBlanks((linNdx & dtNdx & dxNdx & coNdx), numStimTrials);
                             
-                            linResp = mean(mean(squeeze(dataT.bins((stimNdx),5:25,ch))))./0.01;
                             noiseResp = mean(mean(squeeze(dataT.bins(noiseNdx2,5:25,ch))))./0.01;
+                            linResp = mean(mean(squeeze((dataT.bins((stimNdx),5:25,ch)))))./0.01;
                             baseSub = linResp;% - noiseResp;
                             
-                            ori2 = 2*(radOri(or));
-                            
+                            % get inputs for calculating orientation
                             % selectivity
-                            exVar = exp(1i*(ori2));
-                            respVect(or,:) = baseSub .* exVar;
-                            denomVect(or,:) = baseSub;
+                            ori2 = 2*(radOri(or));
+                            expon = 1i*(ori2);
+                            exVar = exp(expon);
+                            respVect(or,1) = baseSub*exVar;
+                            denomVect(or,1) = (abs(baseSub));
                             
                             % preferred orientation
-                            prefNum(or,:) = baseSub .* (sin(ori2));
-                            prefDenom(or,:) = baseSub .* (cos(ori2));
+                            prefNum(or,1) = baseSub .* (sin(ori2));
+                            prefDenom(or,1) = baseSub .* (cos(ori2));
                             
-                            clear noiseResp; clear linResp; clear baseSub;
+                           % clear noiseResp; clear linResp; clear baseSub;
                             
                         end
                         v = sum(respVect);
-                        denom = sum(abs(denomVect));
+                        denom = sum((denomVect));
                         SItmp(nb,1) = abs(v) / denom;
                         
                         sumPrefNum = sum(prefNum);
                         sumPrefDenom = sum(prefDenom);
-                        fra = sumPrefNum/sumPrefDenom;
-                        ot = (atand(fra))/2;
-                        oriTmp(nb,1) = ot;
+                        %fra = sumPrefNum/sumPrefDenom;
+                        oriTmp(nb,1) = (atan2d(sumPrefNum,sumPrefDenom))/2;
+                        
                         %                         ot = ot/2;
                         %                         ot = mod(rad2deg(ot),180); % convert back to degrees, and bring back to being between 0 and 180
                         %

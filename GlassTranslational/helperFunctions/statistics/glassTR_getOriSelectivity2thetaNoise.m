@@ -59,21 +59,21 @@ for ch = 1:96
                             
                             noiseResp = mean(mean(squeeze(dataT.bins(noiseNdx2,5:25,ch))))./0.01;
                             linResp = mean(mean(squeeze((dataT.bins((stimNdx),5:25,ch)))))./0.01;
-                            baseSub = linResp - noiseResp;
+                            baseSub = linResp;% - noiseResp;
                             
                             % get inputs for calculating orientation
                             % selectivity
                             ori2 = 2*(radOri(or));
                             expon = 1i*(ori2);
                             exVar = exp(expon);
-                            respVect(or,:) = baseSub*exVar;
-                            denomVect(or,:) = (abs(baseSub));
+                            respVect(or,1) = baseSub*exVar;
+                            denomVect(or,1) = (abs(baseSub));
                             
                             % preferred orientation
-                            prefNum(or,:) = baseSub .* (sin(ori2));
-                            prefDenom(or,:) = baseSub .* (cos(ori2));
+                            prefNum(or,1) = baseSub .* (sin(ori2));
+                            prefDenom(or,1) = baseSub .* (cos(ori2));
                             
-                            clear noiseResp; clear linResp; clear baseSub;
+                           % clear noiseResp; clear linResp; clear baseSub;
                             
                         end
                         v = sum(respVect);
@@ -82,8 +82,8 @@ for ch = 1:96
                         
                         sumPrefNum = sum(prefNum);
                         sumPrefDenom = sum(prefDenom);
-                        fra = sumPrefNum/sumPrefDenom;
-                        oriTmp(nb,1) = (atand(fra))/2;
+                        %fra = sumPrefNum/sumPrefDenom;
+                        oriTmp(nb,1) = (atan2d(sumPrefNum,sumPrefDenom))/2;
 %                         ot = ot/2;
 %                         ot = mod(rad2deg(ot),180); % convert back to degrees, and bring back to being between 0 and 180
 %                         

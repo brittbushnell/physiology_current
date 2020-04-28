@@ -38,7 +38,7 @@ files = {
     % 'WV_LE_GlassTRCoh_nsp1_20190417_all_s1_perm2k';...
     };
 
-nameEnd = 'OSIvsNoise_1tail_noSub';
+nameEnd = 'OSI_prefOri';
 %%
 numPerm = 2000; 
 numBoot = 200;
@@ -73,16 +73,9 @@ for fi = 1:size(files,1)
         dataT,'translational OSI permutations no subtraction',plotFlag);
     
     fprintf('computed OSI permutation tests %.2f minutes \n',toc/60)
-    %% permutation tests for preferred orientation
-%     [dataT.prefOri2thetaNoisePval,dataT.prefOri2thetaNoiseSig] = glassGetPermutationStats_coh...
-%         (mod(rad2deg(dataT.prefOri2thetaNoise),360),mod(rad2deg(dataT.prefOri2thetaNoisePerm),360),dataT,'preferred orientation translational Glass using 2x theta permutation test',plotFlag);
-
-%     [dataT.prefOri2thetaNoisePval,dataT.prefOri2thetaNoiseSig] = glassGetPermutationStats_coh...
-%         (dataT.prefOri2thetaNoise,dataT.prefOri2thetaNoisePerm, dataT,'preferred orientation translational Glass using 2x theta permutation test',plotFlag);
-    
-fprintf('computed preferred orientation permutation tests %.2f minutes \n',toc/60)
     %%
     plotGlassTR_tuningCurvesPolarNoise(dataT)
+    dataT = plotGlassTR_polarWithSpikeCounts(dataT);
     %% commit to data structure
     if contains(filename,'RE')
         data.RE = dataT;
