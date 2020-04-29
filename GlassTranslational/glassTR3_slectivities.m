@@ -74,8 +74,9 @@ for fi = 1:size(files,1)
     
     fprintf('computed OSI permutation tests %.2f minutes \n',toc/60)
     %%
-    plotGlassTR_tuningCurvesPolarNoise(dataT)
+    %plotGlassTR_tuningCurvesPolarNoise(dataT)
     dataT = plotGlassTR_polarWithSpikeCounts(dataT);
+    plotGlassTR_PolarTuning_errorBar(dataT)
     %% commit to data structure
     if contains(filename,'RE')
         data.RE = dataT;
