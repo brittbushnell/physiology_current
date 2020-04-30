@@ -12,7 +12,8 @@ clf
 pos = get(gcf,'Position');
 set(gcf,'Position',[pos(1) pos(2) 1200 300])
 set(gcf,'PaperOrientation','Landscape');
-
+% suptitle({sprintf('%s %s %s orientation selectivity vs dPrime', dataT.animal, dataT.eye, dataT.array);...
+%     'o: stimulus s: bipole '})
 ndx = 1;
 for dt = 1%:numDots
     for dx = 1%:numDxs
@@ -46,45 +47,48 @@ for dt = 1%:numDots
                 no(isnan(no)) = [];
                 noisCorr(dt,dx) = corr2(no,SI);
             end
+            sp = subplot(1,5,ndx); %position = [left bottom width height]
+            %sp.Position(1) = sp.Position(1)-0.02;
+           sp.Position(2) = sp.Position(2)+0.015;
+            %sp.Position(3) = sp.Position(3)+0.02;
+            sp.Position(4) = sp.Position(4)-0.2;
+            
+            hold on
+            ylim([0 siMax])
+            xlim([dpMin dpMax])
             
             for ch = 1:96
                 dPrime = dataT.linBlankDprime(:,end,dt,dx,ch);
                 noise = dataT.noiseBlankDprime(dt,dx,ch);
                 OSI = dataT.OriSelectIndex2thetaNoise(end,dt,dx,ch);
                 
-                sp = subplot(1,5,ndx); %position = [left bottom width height]
-                %sp.Position(1) = sp.Position(1)-0.02;
-                %sp.Position(2) = sp.Position(2)-0.01;
-                %sp.Position(3) = sp.Position(3)+0.02;
-                sp.Position(4) = sp.Position(4)-0.01;
-
-                hold on
                 if or == 5
                     scatter(noise,OSI,'s','filled','MarkerFaceAlpha',0.3,'MarkerEdgeAlpha',0.3,'MarkerFaceColor','k','MarkerEdgeColor','k');
                     if ch == 1
                         %text(dpMax-0.8,siMax-0.03,sprintf('r_G: %.2f',stimCorr(or,ch)),'FontSize',10)
-                        text(dpMax-1,siMax-0.03,sprintf('r_b: %.2f',noisCorr(dt,dx)),'FontSize',10)
+                        text(dpMax-1.3,siMax-0.03,sprintf('r_b: %.2f',noisCorr(dt,dx)),'FontSize',10)
                         title('bipole')
                     end
                 else
                     scatter(dPrime(ndx),OSI,'filled','MarkerFaceAlpha',0.3,'MarkerEdgeAlpha',0.3,'MarkerFaceColor','k','MarkerEdgeColor','k');
                     if ch == 1
-                        text(dpMax-1,siMax-0.03,sprintf('r_G: %.2f',stimCorr(or,dt,dx)),'FontSize',10)
+                        text(dpMax-1.3,siMax-0.03,sprintf('r_G: %.2f',stimCorr(or,dt,dx)),'FontSize',10)
                         title(oris(or))
-                    end 
+                    end
                 end
                 %scatter(noise,OSI,'s','filled','MarkerFaceAlpha',0.3,'MarkerEdgeAlpha',0.3,'MarkerFaceColor','k','MarkerEdgeColor','k');
-%                 
-%                 if ch == 1
-%                     text(dpMax-0.8,siMax-0.03,sprintf('r_G: %.2f',stimCorr(or,ch)),'FontSize',10)
-%                     % text(dpMax-0.8,siMax-0.06,sprintf('r_b: %.2f',noisCorr(or,ch)),'FontSize',10)
-%                 end
+                %
+                %                 if ch == 1
+                %                     text(dpMax-0.8,siMax-0.03,sprintf('r_G: %.2f',stimCorr(or,ch)),'FontSize',10)
+                %                     % text(dpMax-0.8,siMax-0.06,sprintf('r_b: %.2f',noisCorr(or,ch)),'FontSize',10)
+                %                 end
                 
                 
-                ylim([0 siMax])
-                xlim([dpMin dpMax])
+                % axis square
                 xlabel('dPrime vs Blank')
-                ylabel('OSI')
+                if or == 1
+                    ylabel('OSI')
+                end
                 set(gca,'box','off','tickdir','out')
             end
             ndx = ndx+1;
