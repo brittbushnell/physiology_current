@@ -34,7 +34,7 @@ for ch = 1:96
         noiseNdx = dataT.type == 0;
         blankNdx = dataT.numDots == 0;
         blankMean(1,ch) = mean(mean(squeeze(dataT.bins((blankNdx),5:25,ch))))./0.01;
-        spikeCountPerTrial = nan(numDots,numDxs,numOris,96,36);
+        spikeCountPerTrial =[];% nan(numDots,numDxs,numOris,96,36);
         
         for dt = 1:numDots
             for dx = 1:numDxs
