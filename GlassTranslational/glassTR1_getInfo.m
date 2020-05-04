@@ -9,7 +9,7 @@ tic
 
 %%
 % XT
- files = {
+% files = {
 %     'XT_RE_GlassTR_nsp2_20190125_001';...
 %     'XT_RE_GlassTR_nsp2_20190125_002';...
 %     'XT_RE_GlassTR_nsp2_20190125_003';...
@@ -108,35 +108,41 @@ tic
 %     'WU_LE_GlassTR_nsp1_20170825_002';...
 %     'WU_LE_GlassTR_nsp1_20170824_001'
 
-   'XT_RE_GlassTR_nsp2_20190125_all';
-   'XT_RE_GlassTR_nsp2_20190128_all';
-   'XT_LE_GlassTR_nsp2_20190130_all';
-   
-   'XT_RE_GlassTR_nsp1_20190125_all';
-   'XT_RE_GlassTR_nsp1_20190128_all';
-   'XT_LE_GlassTR_nsp1_20190130_all';
-   
-   'XT_RE_GlassTRCoh_nsp2_20190322_all';
-   'XT_RE_GlassTRCoh_nsp2_20190324_all';
-   'XT_RE_GlassTRCoh_nsp1_20190322_all';
-   'XT_RE_GlassTRCoh_nsp1_20190324_all';
-   
-   'WV_RE_GlassTRCoh_nsp2_20190409_all';
-   'WV_RE_GlassTRCoh_nsp2_20190410_all';
-   
-   'WV_LE_GlassTRCoh_nsp2_20190415_all';
-   'WV_LE_glassTRCoh_nsp2_20190416_all';
-    'WV_LE_GlassTRCoh_nsp2_20190417_all';
-   
-    'WV_RE_GlassTRCoh_nsp1_20190409_all';
-    'WV_RE_GlassTRCoh_nsp1_20190410_all';
-    
-   'WV_LE_GlassTRCoh_nsp1_20190415_all';
-   'WV_LE_glassTRCoh_nsp1_20190416_all';
-   'WV_LE_GlassTRCoh_nsp1_20190417_all';
-    };
+%    'XT_RE_GlassTR_nsp2_20190125_all';
+%    'XT_RE_GlassTR_nsp2_20190128_all';
+%    'XT_LE_GlassTR_nsp2_20190130_all';
+%    
+%    'XT_RE_GlassTR_nsp1_20190125_all';
+%    'XT_RE_GlassTR_nsp1_20190128_all';
+%    'XT_LE_GlassTR_nsp1_20190130_all';
+%    
+%    'XT_RE_GlassTRCoh_nsp2_20190322_all';
+%    'XT_RE_GlassTRCoh_nsp2_20190324_all';
+%    'XT_RE_GlassTRCoh_nsp1_20190322_all';
+%    'XT_RE_GlassTRCoh_nsp1_20190324_all';
+%    
+%    'WV_RE_GlassTRCoh_nsp2_20190409_all';
+%    'WV_RE_GlassTRCoh_nsp2_20190410_all';
+%    
+%    'WV_LE_GlassTRCoh_nsp2_20190415_all';
+%    'WV_LE_glassTRCoh_nsp2_20190416_all';
+%     'WV_LE_GlassTRCoh_nsp2_20190417_all';
+%    
+%     'WV_RE_GlassTRCoh_nsp1_20190409_all';
+%     'WV_RE_GlassTRCoh_nsp1_20190410_all';
+%     
+%    'WV_LE_GlassTRCoh_nsp1_20190415_all';
+%    'WV_LE_glassTRCoh_nsp1_20190416_all';
+%    'WV_LE_GlassTRCoh_nsp1_20190417_all';
+  %%
+  files = {
+      'WU_LE_GlassTR_nsp2_20170825_002_thresh30'
+      'WU_LE_GlassTR_nsp2_20170825_002_thresh35'
+      'WU_LE_GlassTR_nsp2_20170825_002_thresh40'
+      'WU_LE_GlassTR_nsp2_20170825_002_thresh45'
+  };
 %%
-nameEnd = 's1';
+nameEnd = 'tests';
 %%
 
 startMean = 5;
@@ -165,6 +171,13 @@ for fi = 1:size(files,1)
     % extract information about what was run from file name.
     if length(tmp) == 6
         [dataT.animal, dataT.eye, dataT.programID, dataT.array, dataT.date2,dataT.runNum] = deal(tmp{:});
+        % get date in a format that's useable in figure titles (ex: 09/1/2019 vs 20190901)
+        dataT.date = convertDate(dataT.date2);
+        oneDay = 1;
+    elseif length(tmp) == 7 % file was rerun with different thresholds and cleaned up
+        [dataT.animal, dataT.eye, dataT.programID, dataT.array, dataT.date2, dataT.runNum, threshTmp] = deal(tmp{:});
+        threshT2 = strsplit(threshTmp,{'thresh','.'});
+        dataT.threshold = threshT2{2};
         % get date in a format that's useable in figure titles (ex: 09/1/2019 vs 20190901)
         dataT.date = convertDate(dataT.date2);
         oneDay = 1;

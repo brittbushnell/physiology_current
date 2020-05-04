@@ -105,14 +105,14 @@ tic
     
     %'WU_LE_GlassTR_nsp1_20170825_002_s1';...
    % 'WU_LE_GlassTR_nsp1_20170824_001_s1';...
-%%
-files = {
-    
-    'WU_RE_GlassTR_nsp2_20170828_all_s1';...    
-    'WU_LE_GlassTR_nsp2_20170825_002_s1';...
-  
-    'WU_RE_GlassTR_nsp1_20170828_all_s1';...
-    'WU_LE_GlassTR_nsp1_20170825_002_s1';...
+% %%
+% files = {
+%     
+%     'WU_RE_GlassTR_nsp2_20170828_all_s1';...    
+%     'WU_LE_GlassTR_nsp2_20170825_002_s1';...
+%   
+%     'WU_RE_GlassTR_nsp1_20170828_all_s1';...
+%     'WU_LE_GlassTR_nsp1_20170825_002_s1';...
      
 %    'XT_RE_GlassTR_nsp2_20190125_all_s1';
 %    'XT_RE_GlassTR_nsp2_20190128_all_s1';
@@ -122,26 +122,33 @@ files = {
 %    'XT_RE_GlassTR_nsp1_20190128_all_s1';
 %    'XT_LE_GlassTR_nsp1_20190130_all_s1';
 %    
-'XT_RE_GlassTRCoh_nsp2_20190322_all_s1';
-'XT_RE_GlassTRCoh_nsp2_20190324_all_s1';
-'XT_RE_GlassTRCoh_nsp1_20190322_all_s1';
-'XT_RE_GlassTRCoh_nsp1_20190324_all_s1';
-
-'WV_RE_GlassTRCoh_nsp2_20190409_all_s1';
-'WV_RE_GlassTRCoh_nsp2_20190410_all_s1';
-
-'WV_LE_GlassTRCoh_nsp2_20190415_all_s1';
-'WV_LE_glassTRCoh_nsp2_20190416_all_s1';
-'WV_LE_GlassTRCoh_nsp2_20190417_all_s1';
-
-'WV_RE_GlassTRCoh_nsp1_20190409_all_s1';
-'WV_RE_GlassTRCoh_nsp1_20190410_all_s1';
-
-'WV_LE_GlassTRCoh_nsp1_20190415_all_s1';
-'WV_LE_glassTRCoh_nsp1_20190416_all_s1';
-'WV_LE_GlassTRCoh_nsp1_20190417_all_s1';
-    };
-
+% 'XT_RE_GlassTRCoh_nsp2_20190322_all_s1';
+% 'XT_RE_GlassTRCoh_nsp2_20190324_all_s1';
+% 'XT_RE_GlassTRCoh_nsp1_20190322_all_s1';
+% 'XT_RE_GlassTRCoh_nsp1_20190324_all_s1';
+% 
+% 'WV_RE_GlassTRCoh_nsp2_20190409_all_s1';
+% 'WV_RE_GlassTRCoh_nsp2_20190410_all_s1';
+% 
+% 'WV_LE_GlassTRCoh_nsp2_20190415_all_s1';
+% 'WV_LE_glassTRCoh_nsp2_20190416_all_s1';
+% 'WV_LE_GlassTRCoh_nsp2_20190417_all_s1';
+% 
+% 'WV_RE_GlassTRCoh_nsp1_20190409_all_s1';
+% 'WV_RE_GlassTRCoh_nsp1_20190410_all_s1';
+% 
+% 'WV_LE_GlassTRCoh_nsp1_20190415_all_s1';
+% 'WV_LE_glassTRCoh_nsp1_20190416_all_s1';
+% 'WV_LE_GlassTRCoh_nsp1_20190417_all_s1';
+%     };
+%%
+  files = {
+      'WU_LE_GlassTR_nsp2_20170825_002_thresh30_tests'
+      'WU_LE_GlassTR_nsp2_20170825_002_thresh35_tests'
+      'WU_LE_GlassTR_nsp2_20170825_002_thresh40_tests'
+      'WU_LE_GlassTR_nsp2_20170825_002_thresh45_tests'
+  };
+%%
 nameEnd = 'perm2k';
 %%
 numPerm = 2000;

@@ -60,31 +60,31 @@ parfor ch = 1:numCh
                             % randomly assign trials to the different linditions. make
                             % sure not to use the same trials for both linditions.
                             
-                            [noiseNdx1,unusedLin] = subsampleBlanks((trials),numNoiseTrials);
+                            [noiseNdx1,unusedLin] = subsampleBlanks((stimTrials),numNoiseTrials);
                             noiseForLin = nansum(dataT.bins(noiseNdx1, startMean:endMean, ch),2);
-                            
-                            [noiseNdx1,unusedStim] = subsampleBlanks((trials),numNoiseTrials);
-                            noiseForStim = nansum(dataT.bins(noiseNdx1, startMean:endMean, ch),2);
+%                             
+%                             [noiseNdx1,unusedStim] = subsampleBlanks((trials),numNoiseTrials);
+%                             noiseForStim = nansum(dataT.bins(noiseNdx1, startMean:endMean, ch),2);
                             
                             linNdx1 = subsampleStimuli(unusedLin, numLinTrials);
                             linStim = nansum(dataT.bins(linNdx1, (startMean:endMean) ,ch),2);
                             
-                            stim1 = subsampleStimuli(unusedStim,numStimTrials);
-                            stim = nansum(dataT.bins(stim1, (startMean:endMean) ,ch),2);
+%                             stim1 = subsampleStimuli(unusedStim,numStimTrials);
+%                             stim = nansum(dataT.bins(stim1, (startMean:endMean) ,ch),2);
                             %% d'
                             linNoiseBootSimple(1,nb)   = simpleDiscrim((noiseForLin),(linStim));
-                            stimNoiseBootSimple(1,nb)  = simpleDiscrim((noiseForStim),(stim));
+ %                           stimNoiseBootSimple(1,nb)  = simpleDiscrim((noiseForStim),(stim));
                         end
                         %% create matrices of bootstrapped d', standard deviations, and the mean d' from simplified d' code
                         linNoiseDprimePerm(or,co,ndot,dx,ch)   = nanmean(linNoiseBootSimple);
                         linNoiseSDPerm(or,co,ndot,dx,ch)   = nanstd(linNoiseBootSimple);
                         linNoiseDprimeBootPerm(or,co,ndot,dx,ch,:) = linNoiseBootSimple;
                         
-                        if coherences(co) == 1 && or == 1
-                            stimNoiseDprimePerm(ndot,dx,ch)  = nanmean(stimNoiseBootSimple);
-                            stimNoiseSDPerm(ndot,dx,ch)  = nanstd(stimNoiseBootSimple);
-                            stimNoiseDprimeBootPerm(ndot,dx,ch,:) = stimNoiseBootSimple;
-                        end
+%                         if coherences(co) == 1 && or == 1
+%                             stimNoiseDprimePerm(ndot,dx,ch)  = nanmean(stimNoiseBootSimple);
+%                             stimNoiseSDPerm(ndot,dx,ch)  = nanstd(stimNoiseBootSimple);
+%                             stimNoiseDprimeBootPerm(ndot,dx,ch,:) = stimNoiseBootSimple;
+%                         end
                     end
                 end
             end
@@ -93,13 +93,13 @@ parfor ch = 1:numCh
 end
 %% commit everything to the data structure
 dataT.linNoiseDprimePerm = linNoiseDprimePerm;
-dataT.stimNoiseDprimePerm = stimNoiseDprimePerm;
+%dataT.stimNoiseDprimePerm = stimNoiseDprimePerm;
 
 dataT.linNoiseDprimeBootPerm = linNoiseDprimeBootPerm;
-dataT.stimNoiseDprimeBootPerm = stimNoiseDprimeBootPerm;
+%dataT.stimNoiseDprimeBootPerm = stimNoiseDprimeBootPerm;
 
 dataT.linNoiseDprimeSDPerm = linNoiseSDPerm;
-dataT.stimNoiseDprimeSDPerm = stimNoiseSDPerm;
+%dataT.stimNoiseDprimeSDPerm = stimNoiseSDPerm;
 
 
 
