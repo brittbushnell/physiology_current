@@ -205,8 +205,8 @@ for fi = 1:size(files,1)
         dataT = getLatencies_Glass(dataT,numPerm,plotFlag,holdout);
         dataT = getLatencies_Glass_Permutation(dataT,numPerm,holdout);
         
-        dataT = getLatencies_Glass_byStim(dataT,numPerm,holdout);
-        dataT = getLatencies_Glass_byStimPermutation(dataT,numPerm,holdout);
+        dataT = getLatencies_GlassTR_byStim(dataT,numPerm,holdout);
+        dataT = getLatencies_GlassTR_byStimPermutation(dataT,numPerm,holdout);
         
         fprintf('latencies computed in %.2f hours \n',toc/3600)
         %%
