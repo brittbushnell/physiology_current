@@ -280,7 +280,56 @@ suptitle('WU LE V4 translational Glass PSTHs across Thresholds')
 figName = 'WU_LE_GlassTR_PSTH_thresh_ch3771.pdf';
 print(gcf, figName,'-dpdf','-fillpage')
 
+%%
+%% PSTH for -3.5
+load WU_LE_GlassTR_nsp2_20170825_002_s1_perm2k;
+dataT = data.LE;
+cd ../PSTH
 
+figure(6)
+clf
+pos = get(gcf,'Position');
+set(gcf,'Position',[pos(1) pos(2) 1500 1200])
+set(gcf,'PaperOrientation','Landscape');
+
+linNdx = (dataT.type == 3);
+blankNdx = (dataT.numDots == 0);
+dotNdx = (dataT.numDots == 400);
+cohNdx = (dataT.coh == 1);
+dxNdx = (dataT.dx == 0.03);
+noiseNdx = (dataT.coh == 0 & dotNdx & dxNdx);
+
+ndx0 = (linNdx & dotNdx & cohNdx & dxNdx & (dataT.rotation == 0));
+ndx45 = (linNdx & dotNdx & cohNdx & dxNdx & (dataT.rotation == 45));
+ndx90 = (linNdx & dotNdx & cohNdx & dxNdx & (dataT.rotation == 90));
+ndx135 = (linNdx & dotNdx & cohNdx & dxNdx & (dataT.rotation == 135));
+
+for ch = 1:96
+    % if dataT.goodCh(ch) == 1
+    lin0Resp = nanmean(smoothdata(dataT.bins((ndx0), 1:35 ,ch),'gaussian',3))./0.01;
+    lin45Resp = nanmean(smoothdata(dataT.bins((ndx45), 1:35 ,ch),'gaussian',3))./0.01;
+    lin90Resp = nanmean(smoothdata(dataT.bins((ndx90), 1:35 ,ch),'gaussian',3))./0.01;
+    lin135Resp = nanmean(smoothdata(dataT.bins((ndx135), 1:35 ,ch),'gaussian',3))./0.01;
+    
+    blankResp = nanmean(smoothdata(dataT.bins((blankNdx), 1:35 ,ch),'gaussian',3))./0.01;
+    noiseResp = nanmean(smoothdata(dataT.bins((noiseNdx), 1:35 ,ch),'gaussian',3))./0.01;
+    
+    subplot(dataT.amap,10,10,ch)
+    hold on
+    plot(1:35,noiseResp,'color',[0.8 0.4 0 0.7],'LineWidth',0.75);
+    plot(1:35,blankResp,'color',[0 0 0 0.7],'LineWidth',0.75);
+    
+    plot(1:35,lin0Resp,'color',[1 0 0 0.7],'LineWidth',0.75);
+    plot(1:35,lin45Resp,'color',[0 0 1 0.7],'LineWidth',0.75);
+    plot(1:35,lin90Resp,'color',[0 0.6 0.2 0.7],'LineWidth',0.75);
+    plot(1:35,lin135Resp,'color',[0.7 0 0.7 0.7],'LineWidth',0.75);
+    title(ch)
+    
+    set(gca,'XTickLabel',[])
+end
+suptitle('WU LE V4 translational Glass PSTHs raw data')
+figName = 'WU_LE_GlassTR_PSTH_RAW.pdf';
+print(gcf, figName,'-dpdf','-fillpage')
 
 
 
