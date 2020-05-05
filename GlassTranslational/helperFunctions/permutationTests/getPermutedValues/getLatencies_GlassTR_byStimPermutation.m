@@ -203,6 +203,9 @@ for ch = 1:numCh
     end
 end
 %% adjust offsets and save to data structure
+startCheckOn = 5;
+startCheckOff = 20;
+
 dataT.linBlankOnLatPerm = (linBlankOnLat+(startCheckOn-1))*10;
 dataT.noiseBlankOnLatPerm = (noiseBlankOnLat+(startCheckOn-1))*10;
 
