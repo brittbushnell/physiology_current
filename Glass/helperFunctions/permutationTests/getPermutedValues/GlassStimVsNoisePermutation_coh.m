@@ -58,13 +58,13 @@ for ch = 1:numCh
                         
                         % randomly assign trials to the different conditions. make
                         % sure not to use the same trials for both conditions.
-                        
+                        % noise
                         [noiseNdx1,unusedCon] = subsampleBlanks((trials),numNoiseTrials);
                         noiseForCon = nansum(dataT.bins(noiseNdx1, startMean:endMean, ch),2);
                         
                         [noiseNdx1,unusedRad] = subsampleBlanks((trials),numNoiseTrials);
                         noiseForRad = nansum(dataT.bins(noiseNdx1, startMean:endMean, ch),2);
-                        
+                        % stimuli
                         radNdx1 = subsampleStimuli(unusedRad, numRadTrials);
                         radStim = nansum(dataT.bins(radNdx1, (startMean:endMean) ,ch),2);
                         

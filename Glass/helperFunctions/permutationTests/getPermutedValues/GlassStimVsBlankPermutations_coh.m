@@ -58,7 +58,8 @@ parfor ch = 1:numCh
                         conTrials = (dotNdx & dxNdx & conNdx & coNdx);
                         radTrials = (dotNdx & dxNdx & radNdx & coNdx);
                         noiseTrials = (dotNdx & dxNdx & noiseNdx);
-                        trials = 1:size(dataT.bins,1);
+                        
+                        %trials = 1:size(dataT.bins,1);
                         
                         if holdout == 0
                             numStimTrials = sum(conTrials);
@@ -72,29 +73,30 @@ parfor ch = 1:numCh
                         
                         % randomly assign trials to the different conditions. make
                         % sure not to use the same trials for both conditions.
-                        
-                        [noiseNdx1, unusedNdxs]  = subsampleStimuli((trials),numNoiseTrials);
-                        noiseStim2 = nansum(dataT.bins(noiseNdx1, startMean:endMean, ch),2);
-                        
-                        blankNdx1 = subsampleBlanks((unusedNdxs),numBlankTrials);
+                        % blanks 
+                        blankNdx1 = subsampleBlanks((blankTrials),numBlankTrials);
                         noiseBlanks = nansum(dataT.bins(blankNdx1, startMean:endMean, ch),2);
                         
-                        [blankNdx1,unusedCon] = subsampleBlanks((trials),numBlankTrials);
+                        blankNdx1 = subsampleBlanks((blankTrials),numBlankTrials);
                         blanksForCon = nansum(dataT.bins(blankNdx1, startMean:endMean, ch),2);
                         
-                        [blankNdx1,unusedRad] = subsampleBlanks((trials),numBlankTrials);
+                        blankNdx1 = subsampleBlanks((blankTrials),numBlankTrials);
                         blanksForRad = nansum(dataT.bins(blankNdx1, startMean:endMean, ch),2);
                         
-                        [blankNdx1,unusedStim] = subsampleBlanks((trials),numBlankTrials);
+                        blankNdx1 = subsampleBlanks((blankTrials),numBlankTrials);
                         blanksForStim = nansum(dataT.bins(blankNdx1, startMean:endMean, ch),2);
                         
-                        radNdx1 = subsampleStimuli(unusedRad, numRadTrials);
+                        % stimuli                        
+                        noiseNdx1  = subsampleStimuli((stimTrials),numNoiseTrials);
+                        noiseStim2 = nansum(dataT.bins(noiseNdx1, startMean:endMean, ch),2);                        
+                        
+                        radNdx1 = subsampleStimuli(stimTrials, numRadTrials);
                         radStim = nansum(dataT.bins(radNdx1, (startMean:endMean) ,ch),2);
                         
-                        conNdx1 = subsampleStimuli(unusedCon, numConTrials);
+                        conNdx1 = subsampleStimuli(stimTrials, numConTrials);
                         conStim = nansum(dataT.bins(conNdx1, (startMean:endMean) ,ch),2);
                         
-                        stim1 = subsampleStimuli(unusedStim,numStimTrials);
+                        stim1 = subsampleStimuli(stimTrials,numStimTrials);
                         stim = nansum(dataT.bins(stim1, (startMean:endMean) ,ch),2);
                         %% d'
                         

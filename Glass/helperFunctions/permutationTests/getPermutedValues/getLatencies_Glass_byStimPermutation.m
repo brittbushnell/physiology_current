@@ -37,6 +37,7 @@ for ch = 1:numCh
         noiseNdx = (dataT.type == 0);
         radNdx   = (dataT.type == 2);
         blankNdx = (dataT.numDots == 0);
+        stimNdx  = (dataT.numDots > 0);
         
         for ndot = 1:numDots
             for dx = 1:numDxs
@@ -72,10 +73,11 @@ for ch = 1:numCh
                     bootNoiseMinBinOff = nan(1,numBoot);
                     
                     blankTrials = blankNdx;
+                    stimTrials = (dotNdx & dxNdx & stimNdx);
                     conTrials = (dotNdx & dxNdx & conNdx & cohNdx);
                     radTrials = (dotNdx & dxNdx & radNdx & cohNdx);
                     noiseTrials = (dotNdx & dxNdx & noiseNdx);
-                    trials = 1:size(dataT.bins,1);
+                    % trials = 1:size(dataT.bins,1);
                     
                     numConTrials = round(length(find(conTrials))*holdout);
                     numRadTrials = round(length(find(radTrials))*holdout);
@@ -86,21 +88,21 @@ for ch = 1:numCh
                     for nb = 1:numBoot
                         
                         % subsample for onset and offset
-                        [blankNdxOn, unusedNdxs] = subsampleBlanks((trials), numBlankTrials);
-                        conNdxOn = subsampleStimuli((unusedNdxs), numConTrials);
-                        radNdxOn = subsampleStimuli((unusedNdxs), numRadTrials);
-                        noiseNdxOn = subsampleStimuli((unusedNdxs), numNoiseTrials);
+                        blankNdxOn = subsampleBlanks((blankTrials), numBlankTrials);
+                        conNdxOn   = subsampleStimuli((stimTrials), numConTrials);
+                        radNdxOn   = subsampleStimuli((stimTrials), numRadTrials);
+                        noiseNdxOn = subsampleStimuli((stimTrials), numNoiseTrials);
                         
                         
-                        [blankNdxOff, unusedNdxs] = subsampleBlanks((trials), numBlankTrials);
-                        conNdxOff = subsampleStimuli((unusedNdxs), numConTrials);
-                        radNdxOff = subsampleStimuli((unusedNdxs), numRadTrials);
-                        noiseNdxOff = subsampleStimuli((unusedNdxs), numNoiseTrials); 
+                        blankNdxOff = subsampleBlanks((blankTrials), numBlankTrials);
+                        conNdxOff   = subsampleStimuli((stimTrials), numConTrials);
+                        radNdxOff   = subsampleStimuli((stimTrials), numRadTrials);
+                        noiseNdxOff = subsampleStimuli((stimTrials), numNoiseTrials); 
                         
                         % boot strap to find the bin with the maximum response to use
                         % to find the onset latency
-                        conRespOn = mean(smoothdata(dataT.bins(conNdxOn,startCheckOn:endCheckOn,ch),'gaussian',3))./.01;
-                        radRespOn = mean(smoothdata(dataT.bins(radNdxOn,startCheckOn:endCheckOn,ch),'gaussian',3))./.01;
+                        conRespOn   = mean(smoothdata(dataT.bins(conNdxOn,startCheckOn:endCheckOn,ch),'gaussian',3))./.01;
+                        radRespOn   = mean(smoothdata(dataT.bins(radNdxOn,startCheckOn:endCheckOn,ch),'gaussian',3))./.01;
                         noiseRespOn = mean(smoothdata(dataT.bins(noiseNdxOn,startCheckOn:endCheckOn,ch),'gaussian',3))./.01;
                         blankRespOn = mean(smoothdata(dataT.bins(blankNdxOn,startCheckOn:endCheckOn,ch),'gaussian',3))./.01;
                         

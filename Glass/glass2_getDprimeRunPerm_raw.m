@@ -101,11 +101,11 @@ tic
 
 %};
 %%
-%files = {
-    %      'WU_LE_Glass_nsp2_20170817_001_raw_perm2k';...
-    %     'WU_RE_Glass_nsp2_20170818_all_raw_perm2k';...
-    %     'WU_LE_Glass_nsp1_20170817_001_raw';...
-    %     'WU_RE_Glass_nsp1_20170818_001_raw';...
+files = {
+        'WU_LE_Glass_nsp2_20170817_001_raw';...
+        'WU_RE_Glass_nsp2_20170818_all_raw';...
+%         'WU_LE_Glass_nsp1_20170817_001_raw';...
+%         'WU_RE_Glass_nsp1_20170818_001_raw';...
     %
     %     'WV_RE_glassCoh_nsp2_20190404_all_raw';...
     %     'WV_LE_GlassCoh_nsp2_20190402_all_raw';...
@@ -121,12 +121,11 @@ tic
     %    'XT_LE_GlassCoh_nsp1_20190325_all_raw';...
     %     'XT_RE_Glass_nsp1_20190123_all_raw';...
     %     'XT_LE_Glass_nsp1_20190123_all_raw';...
-%    };
+    };
 %%
-files = {'WU_RE_Glass_nsp1_20170817_002_cleaned3_manu'};
-%%
-nameEnd = 'perm2k';
+nameEnd = '2kFixPerm';
 numPerm = 2000;
+numBoot = 200;
 holdout = .90;
 plotFlag = 0;
 %%
@@ -166,17 +165,20 @@ for fi = 1:size(files,1)
     end
     %% get real stimulus d's
     dataT = getStimVsBlankDPrimes_Glass_coh(dataT,numPerm);
-    dataT = getGlassStimDPrimes_coh(dataT);
+    dataT = getGlassStimDPrimes_coh(dataT, numBoot);
     
     fprintf('real dPrimes computed %.2f hours \n',toc/3600)
     %% get stim vs blank permutations
     dataT = GlassStimVsBlankPermutations_coh(dataT, numPerm, holdout);
     
     fprintf('permutation test stim vs blank done %.2f hours \n',toc/3600)
-    %%
-    dataT = GlassStimVsNoisePermutation_coh(dataT, numPerm,holdout);
+    %% stimulus vs noise permutations
+    % for now, skipping this in lieu of setting up a vector process
+    % similiar to Yasmine and James Cavanaugh.
     
-    fprintf('permutation test stim vs noise done%.2f hours \n',toc/3600)
+%     dataT = GlassStimVsNoisePermutation_coh(dataT, numPerm,holdout);
+%     
+%     fprintf('permutation test stim vs noise done%.2f hours \n',toc/3600)
     %% get latency
     dataT = getLatencies_Glass(dataT,numPerm,plotFlag,holdout);
     dataT = getLatencies_Glass_Permutation(dataT,numPerm,holdout);

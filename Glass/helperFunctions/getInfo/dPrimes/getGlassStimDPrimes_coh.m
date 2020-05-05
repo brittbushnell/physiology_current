@@ -1,4 +1,4 @@
-function [dataT] = getGlassStimDPrimes_coh(dataT)
+function [dataT] = getGlassStimDPrimes_coh(dataT, numBoot, holdout)
 % This function will compute d' for stimulus vs  noise screen using only
 % noise and 100% coherence stimuli, and gives an option to subsample the
 % stimuli or not.
@@ -34,14 +34,40 @@ for ch = 1:numCh
                     radTrials = (radNdx & dotNdx & dxNdx & cohNdx);
                     noiseTrials = (noiseNdx & dotNdx & dxNdx);
                     
-                    noiseStim2 = nansum(dataT.bins(noiseTrials, startMean:endMean, ch),2);
-                    radStim = nansum(dataT.bins(radTrials, (startMean:endMean) ,ch),2);
-                    conStim = nansum(dataT.bins(conTrials, (startMean:endMean) ,ch),2);
+                    numConTrials = round(length(find(conTrials))*holdout);
+                    numRadTrials = round(length(find(radTrials))*holdout);
+                    numNoiseTrials = round(length(find(noiseTrials))*holdout);
                     
-                    %% d'
-                    conNoiseDprimeSimple(co,ndot,dx,ch) = simpleDiscrim((noiseStim2),(conStim));
-                    radNoiseDprimeSimple(co,ndot,dx,ch) = simpleDiscrim((noiseStim2),(radStim));                    
-                    conRadDprimeSimple(co,ndot,dx,ch)   = simpleDiscrim((conStim),(radStim));
+                    conNoiseDprimePerm = nan(numBoot,1);
+                    radNoiseDprimePerm = nan(numBoot,1);
+                    conRadDprimePerm   = nan(numBoot,1);
+                    
+                    for nb = 1:numBoot
+                        
+                        % subsample stimuli
+                        radNdx1 = subsampleStimuli(radTrials, numRadTrials);
+                        radStim = nansum(dataT.bins(radNdx1, (startMean:endMean) ,ch),2);
+                        
+                        conNdx1 = subsampleStimuli(conTrials, numConTrials);
+                        conStim = nansum(dataT.bins(conNdx1, (startMean:endMean) ,ch),2);
+                        
+                        nosNdx1 = subsampleStimuli(noiseTrials, numNoiseTrials);
+                        nosStim = nansum(dataT.bins(nosNdx1, (startMean:endMean) ,ch),2);
+                        
+                        % get spike counts
+                        radStim = nansum(dataT.bins(radStim, (startMean:endMean) ,ch),2);
+                        conStim = nansum(dataT.bins(conStim, (startMean:endMean) ,ch),2);
+                        noiseStim2 = nansum(dataT.bins(nosStim, (startMean:endMean), ch),2);
+                        
+                        %% d'
+                        conNoiseDprimePerm(nb,1) = simpleDiscrim((noiseStim2),(conStim));
+                        radNoiseDprimePerm(nb,1) = simpleDiscrim((noiseStim2),(radStim));
+                        conRadDprimePerm(nb,1)   = simpleDiscrim((conStim),(radStim));
+                    end
+                    
+                    conNoiseDprimeSimple(co,ndot,dx,ch) = nanmean(conNoiseDprimePerm);
+                    radNoiseDprimeSimple(co,ndot,dx,ch) = nanmean(radNoiseDprimePerm);
+                    conRadDprimeSimple(co,ndot,dx,ch)   = nanmean(conRadDprimePerm);
                 end
             end
         end
