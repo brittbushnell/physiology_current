@@ -24,7 +24,7 @@ for ch = 1:numCh
     for nb = 1:numBoot
         stimTrials = (stimNdx);
         blankTrials = blankNdx;
-        %trials = 1:size(dataT.bins,1);
+        trials = 1:size(dataT.bins,1);
         
         if holdout == 0
             numStimTrials = sum(conTrials);
@@ -35,10 +35,10 @@ for ch = 1:numCh
         
         % subsample so we can bootstrap and use the same number of stimuli for everything.
         
-        blankNdx1 = subsampleBlanks((blankNdx),numBlankTrials);
-        blankStim2 = nansum(dataT.bins((blankNdx1, startMean:endMean, ch),2);
+        blankNdx1 = subsampleBlanks((trials),numBlankTrials);
+        blankStim2 = nansum(dataT.bins(blankNdx1, startMean:endMean, ch),2);
         
-        stim1 = subsampleStimuli(stimTrials,numStimTrials);
+        stim1 = subsampleStimuli(trials,numStimTrials);
         stim = nansum(dataT.bins(stim1, (startMean:endMean) ,ch),2);
         
         %% d'
@@ -61,5 +61,3 @@ dataT.allStimBlankDprimeBootPerm = stimBlankDprimeBootPerm;
 dataT.allStimBlankDprimeSDPerm = stimBlankSDPerm;
 
 dataT.allStimBlankDprime = realStimBlankDprime;
-
-
