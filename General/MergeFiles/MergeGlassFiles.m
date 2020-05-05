@@ -5,10 +5,10 @@ clc
 % % %WU
 % % %AE
 % files = {
-% %     'WU_RE_Glass_nsp2_20170818_002';...       %5 reps
-% %     'WU_RE_Glass_nsp2_20170818_001';...       %5 reps
-% %    };
-% % newName = 'WU_RE_Glass_nsp2_20170818_all';
+%     'WU_RE_Glass_nsp2_20170818_002';...       %5 reps
+%     'WU_RE_Glass_nsp2_20170818_001';...       %5 reps
+%    };
+% newName = 'WU_RE_Glass_nsp2_20170818_all';
 % %%     %WV
 % %     %AE
 % %     'WV_RE_glassCoh_nsp2_20190404_003';...   %10 reps
@@ -148,16 +148,20 @@ clc
 % };
 % newName = 'XT_LE_Glass_nsp1_20190124_all';
 
+
+%% GlassTR
+%  files = {
 %     'WU_RE_GlassTR_nsp1_20170828_003';...
 %     'WU_RE_GlassTR_nsp1_20170828_002';...
 %     };
 % newName = 'WU_RE_GlassTR_nsp1_20170828_all';
 
-% 'WU_RE_GlassTR_nsp2_20170828_003';...
-%     'WU_RE_GlassTR_nsp2_20170828_002';...
-%     };
-% newName = 'WU_RE_GlassTR_nsp2_20170828_all';
-%% GlassTR
+files = {
+'WU_RE_GlassTR_nsp2_20170828_003';...
+    'WU_RE_GlassTR_nsp2_20170828_002';...
+    };
+newName = 'WU_RE_GlassTR_nsp2_20170828_all';
+
 % XT
 % files = {
 %         'XT_RE_GlassTR_nsp2_20190125_002';...
@@ -293,12 +297,12 @@ clc
 %     };
 % newName = 'WV_LE_GlassTRCoh_nsp1_20190417_all';
 %% XX
-files = {
-     'XX_LE_Glass_20200210_001_nsp1';
-    'XX_LE_Glass_20200210_002_nsp1';
-    'XX_LE_Glass_20200210_003_nsp1';
-    };
-newName = 'XX_LE_Glass_nsp1_20200210_all';
+% files = {
+%      'XX_LE_Glass_20200210_001_nsp1';
+%     'XX_LE_Glass_20200210_002_nsp1';
+%     'XX_LE_Glass_20200210_003_nsp1';
+%     };
+% newName = 'XX_LE_Glass_nsp1_20200210_all';
 
 % files = {
 %      'XX_LE_Glass_20200210_001_nsp2';
@@ -398,7 +402,7 @@ else
 end
 save(newName,'bins','fix_x','fix_y','rotation','size_x','stimOn','stimOff','t_stim','filename',...
     'pos_x','pos_y')
-fprintf('done \n')
+fprintf('file %s done \n', newName)
 
 
 

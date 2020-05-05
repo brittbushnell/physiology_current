@@ -136,13 +136,18 @@ tic
 %    'WV_LE_GlassTRCoh_nsp1_20190417_all';
   %%
   files = {
-      'WU_LE_GlassTR_nsp2_20170825_002_thresh30'
-      'WU_LE_GlassTR_nsp2_20170825_002_thresh35'
-      'WU_LE_GlassTR_nsp2_20170825_002_thresh40'
-      'WU_LE_GlassTR_nsp2_20170825_002_thresh45'
+%       'WU_LE_GlassTR_nsp2_20170825_002_thresh30'
+%       'WU_LE_GlassTR_nsp2_20170825_002_thresh35'
+%       'WU_LE_GlassTR_nsp2_20170825_002_thresh40'
+%       'WU_LE_GlassTR_nsp2_20170825_002_thresh45'
+      
+      'WU_RE_GlassTR_nsp2_20170828_all';...
+      'WU_LE_GlassTR_nsp2_20170825_002';...
+      'WU_RE_GlassTR_nsp1_20170828_all';...
+      'WU_LE_GlassTR_nsp1_20170825_002';...
   };
 %%
-nameEnd = 'tests';
+nameEnd = 'raw';
 %%
 
 startMean = 5;

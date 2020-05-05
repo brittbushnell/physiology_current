@@ -143,13 +143,18 @@ tic
 %     };
 %%
   files = {
-      'WU_LE_GlassTR_nsp2_20170825_002_thresh30_tests'
-      'WU_LE_GlassTR_nsp2_20170825_002_thresh35_tests'
-      'WU_LE_GlassTR_nsp2_20170825_002_thresh40_tests'
-      'WU_LE_GlassTR_nsp2_20170825_002_thresh45_tests'
+%       'WU_LE_GlassTR_nsp2_20170825_002_thresh30_tests'
+%       'WU_LE_GlassTR_nsp2_20170825_002_thresh35_tests'
+%       'WU_LE_GlassTR_nsp2_20170825_002_thresh40_tests'
+%       'WU_LE_GlassTR_nsp2_20170825_002_thresh45_tests'
+      
+      'WU_RE_GlassTR_nsp2_20170828_all_raw';...
+      'WU_LE_GlassTR_nsp2_20170825_002_raw';...
+      'WU_RE_GlassTR_nsp1_20170828_all_raw';...
+      'WU_LE_GlassTR_nsp1_20170825_002_raw';...
   };
 %%
-nameEnd = 'perm2k';
+nameEnd = '2kFixPerm';
 %%
 numPerm = 2000;
 numBoot = 200;
