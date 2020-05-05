@@ -71,8 +71,8 @@ parfor ch = 1:numCh
                             blankNdx1 = subsampleBlanks((blankTrials),numBlankTrials);
                             noiseBlanks = nansum(dataT.bins(blankNdx1, startMean:endMean, ch),2);
 %                             
-%                             [blankNdx1,unusedLin] = subsampleBlanks((trials),numBlankTrials);
-%                             blanksForLin = nansum(dataT.bins(blankNdx1, startMean:endMean, ch),2);
+                            blankNdx1 = subsampleBlanks((trials),numBlankTrials);
+                            blanksForLin = nansum(dataT.bins(blankNdx1, startMean:endMean, ch),2);
 %                             
 %                             [blankNdx1,unusedStim] = subsampleBlanks((trials),numBlankTrials);
 %                             blanksForStim = nansum(dataT.bins(blankNdx1, startMean:endMean, ch),2);
