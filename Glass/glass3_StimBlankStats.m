@@ -202,8 +202,8 @@ for fi = 1:size(files,1)
     dataT = numSigGlassComparisons(dataT);
     %% plot
     if plotOther == 1
-        plotGlass_GlassRankingsDistBlank(dataT)
-        plotGlassPSTHsCohType(dataT)
+        plotGlass_GlassRankingsDistBlank(dataT) % figure 1 and 2
+        plotGlassPSTHsCohType(dataT) % figures 3-6
     end
     %% commit to data structure
     if contains(filename,'RE')

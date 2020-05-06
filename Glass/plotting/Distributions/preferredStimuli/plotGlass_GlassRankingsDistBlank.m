@@ -27,7 +27,7 @@ cd(figDir)
 %%
 [~,numDots,numDxs,~,~,~,dots,dxs,~,~] = getGlassParameters(dataT);
 
-figure(6)
+figure(1)
 clf
 pos = get(gcf,'Position');
 set(gcf,'Position',[pos(1) pos(2) 1000 900]);
@@ -70,7 +70,7 @@ print(gcf, figName,'-dpdf','-fillpage')
 %%
 [~,numDots,numDxs,~,~,~,dots,dxs,~,~] = getGlassParameters(dataT);
 
-figure(7)
+figure(2)
 clf
 pos = get(gcf,'Position');
 set(gcf,'Position',[pos(1) pos(2) 1000 900]);

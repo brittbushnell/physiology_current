@@ -32,23 +32,23 @@ disp(phi*180/pi);
 
 % plot results.
 %plot3(1-x,1-y,1-z,'ko');
-plot3(x,y,z,'k.');
+plot3(x,y,z,'ko','MarkerFaceColor','k');
 %plot3(x,y,z,'k.');
 
 % draw pure X, Y and Z lines
 % line([0 0],[0 1],[0 1],'color','k');
 % line([0 1],[0 1],[0 0],'color','k');
 % line([0 1],[0 0],[0 1],'color','k');
-line([0 1],[0 0],[0 0],'color','k');
-line([0 0],[0 1],[0 0],'color','k');
-line([0 0],[0 0],[0 1],'color','k');
+line([0 1],[0 0],[0 0],'color','k','LineStyle','--');
+line([0 0],[0 1],[0 0],'color','k','LineStyle','--');
+line([0 0],[0 0],[0 1],'color','k','LineStyle','--');
 
 % draw arcs
 nPoints = 1000;
 temp=linspace(0,1,nPoints);
-line(temp,sqrt(1-temp.^2),zeros(1,nPoints),'color','b');
-line(temp,zeros(1,nPoints),sqrt(1-temp.^2),'color','b');
-line(zeros(1,nPoints),temp,sqrt(1-temp.^2),'color','b');
+line(temp,sqrt(1-temp.^2),zeros(1,nPoints),'color','k');
+line(temp,zeros(1,nPoints),sqrt(1-temp.^2),'color','k');
+line(zeros(1,nPoints),temp,sqrt(1-temp.^2),'color','k');
 
 % setup the view 
 box off;

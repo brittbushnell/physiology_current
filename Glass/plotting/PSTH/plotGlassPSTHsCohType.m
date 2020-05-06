@@ -38,7 +38,7 @@ else
     bottomRow = [83 85 88 90 92 93 96];
 end
 %%
-figure (1)
+figure (3)
 clf
 pos = get(gcf,'Position');
 set(gcf,'Position',[pos(1) pos(2) 1500 1200])
@@ -90,7 +90,7 @@ suptitle(sprintf('%s %s %s concentric Glass patterns across coherences Manu clea
 figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_',dataT.programID,'_PSTH_concCoh_manu3'];
 print(gcf, figName,'-dpdf','-fillpage')
 %% plot high radial vs noise
-figure (2)
+figure (4)
 clf
 pos = get(gcf,'Position');
 set(gcf,'Position',[pos(1) pos(2) 1500 1200])
@@ -137,7 +137,7 @@ suptitle(sprintf('%s %s %s radial 100% Glass pattern vs noise Manu cleaned thres
 figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_',dataT.programID,'_PSTH_sigRad_manu3'];
 print(gcf, figName,'-dpdf','-fillpage')
 %% plot radial coherence
-figure (3)
+figure (5)
 clf
 pos = get(gcf,'Position');
 set(gcf,'Position',[pos(1) pos(2) 1500 1200])
@@ -191,7 +191,7 @@ print(gcf, figName,'-dpdf','-fillpage')
 [~,numDots,numDxs,~,~,~,dots,dxs,~,~] = getGlassParameters(dataT);
 for dt = 1:numDots
     for dx = 1:numDxs
-        figure (4)
+        figure (6)
         clf
         pos = get(gcf,'Position');
         set(gcf,'Position',[pos(1) pos(2) 1500 1200])
