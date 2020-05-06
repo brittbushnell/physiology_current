@@ -176,7 +176,7 @@ files = {
     'WU_RE_Glass_nsp2_20170818_all';...
     };
 %%
-nameEnd = 'test';
+nameEnd = 'raw';
 %%
 startBin = 1;
 endBin = 35;

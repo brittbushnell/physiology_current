@@ -165,7 +165,7 @@ for fi = 1:size(files,1)
     end
     %% get real stimulus d's
     dataT = getStimVsBlankDPrimes_Glass_coh(dataT,numPerm);
-    dataT = getGlassStimDPrimes_coh(dataT, numBoot);
+    dataT = getGlassStimDPrimes_coh(dataT, numBoot, holdout);
     
     fprintf('real dPrimes computed %.2f hours \n',toc/3600)
     %% get stim vs blank permutations

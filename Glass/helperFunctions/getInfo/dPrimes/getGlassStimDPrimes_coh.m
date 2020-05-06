@@ -54,14 +54,14 @@ for ch = 1:numCh
                         nosNdx1 = subsampleStimuli(noiseTrials, numNoiseTrials);
                         nosStim = nansum(dataT.bins(nosNdx1, (startMean:endMean) ,ch),2);
                         
-                        % get spike counts
-                        radStim = nansum(dataT.bins(radStim, (startMean:endMean) ,ch),2);
-                        conStim = nansum(dataT.bins(conStim, (startMean:endMean) ,ch),2);
-                        noiseStim2 = nansum(dataT.bins(nosStim, (startMean:endMean), ch),2);
+%                         % get spike counts
+%                         radStim2 = nansum(dataT.bins(radStim, (startMean:endMean) ,ch),2);
+%                         conStim2 = nansum(dataT.bins(conStim, (startMean:endMean) ,ch),2);
+%                         noiseStim2 = nansum(dataT.bins(nosStim, (startMean:endMean), ch),2);
                         
                         %% d'
-                        conNoiseDprimePerm(nb,1) = simpleDiscrim((noiseStim2),(conStim));
-                        radNoiseDprimePerm(nb,1) = simpleDiscrim((noiseStim2),(radStim));
+                        conNoiseDprimePerm(nb,1) = simpleDiscrim((nosStim),(conStim));
+                        radNoiseDprimePerm(nb,1) = simpleDiscrim((nosStim),(radStim));
                         conRadDprimePerm(nb,1)   = simpleDiscrim((conStim),(radStim));
                     end
                     
