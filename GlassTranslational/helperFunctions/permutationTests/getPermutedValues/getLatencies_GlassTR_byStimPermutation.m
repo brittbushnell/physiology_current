@@ -60,7 +60,7 @@ for ch = 1:numCh
                         %% bootstrap
                         for nb = 1:numBoot
                             blankTrials = blankNdx;
-                            linTrials = (dotNdx & dxNdx & conNdx & cohNdx);
+                            linTrials = (dotNdx & dxNdx & cohNdx);
                             noiseTrials = (dotNdx & dxNdx & noiseNdx);
                                           
                             numLinTrials = round(length(find(linTrials))*holdout);
