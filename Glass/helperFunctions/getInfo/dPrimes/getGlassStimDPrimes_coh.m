@@ -38,9 +38,9 @@ for ch = 1:numCh
                     numRadTrials = round(length(find(radTrials))*holdout);
                     numNoiseTrials = round(length(find(noiseTrials))*holdout);
                     
-                    conNoiseDprimePerm = nan(numBoot,1);
-                    radNoiseDprimePerm = nan(numBoot,1);
-                    conRadDprimePerm   = nan(numBoot,1);
+                    conNoiseDprimeBoot = nan(numBoot,1);
+                    radNoiseDprimeBoot = nan(numBoot,1);
+                    conRadDprimeBoot   = nan(numBoot,1);
                     
                     for nb = 1:numBoot
                         
@@ -60,14 +60,14 @@ for ch = 1:numCh
 %                         noiseStim2 = nansum(dataT.bins(nosStim, (startMean:endMean), ch),2);
                         
                         %% d'
-                        conNoiseDprimePerm(nb,1) = simpleDiscrim((nosStim),(conStim));
-                        radNoiseDprimePerm(nb,1) = simpleDiscrim((nosStim),(radStim));
-                        conRadDprimePerm(nb,1)   = simpleDiscrim((conStim),(radStim));
+                        conNoiseDprimeBoot(nb,1) = simpleDiscrim((nosStim),(conStim));
+                        radNoiseDprimeBoot(nb,1) = simpleDiscrim((nosStim),(radStim));
+                        conRadDprimeBoot(nb,1)   = simpleDiscrim((conStim),(radStim));
                     end
                     
-                    conNoiseDprimeSimple(co,ndot,dx,ch) = nanmean(conNoiseDprimePerm);
-                    radNoiseDprimeSimple(co,ndot,dx,ch) = nanmean(radNoiseDprimePerm);
-                    conRadDprimeSimple(co,ndot,dx,ch)   = nanmean(conRadDprimePerm);
+                    conNoiseDprimeSimple(co,ndot,dx,ch) = nanmean(conNoiseDprimeBoot);
+                    radNoiseDprimeSimple(co,ndot,dx,ch) = nanmean(radNoiseDprimeBoot);
+                    conRadDprimeSimple(co,ndot,dx,ch)   = nanmean(conRadDprimeBoot);
                 end
             end
         end

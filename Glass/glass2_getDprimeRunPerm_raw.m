@@ -164,7 +164,7 @@ for fi = 1:size(files,1)
         dataT.goodCh(66) = 0;
     end
     %% get real stimulus d's
-    dataT = getStimVsBlankDPrimes_Glass_coh(dataT,numPerm);
+    dataT = getStimVsBlankDPrimes_Glass_coh(dataT,numBoot, holdout);
     dataT = getGlassStimDPrimes_coh(dataT, numBoot, holdout);
     
     fprintf('real dPrimes computed %.2f hours \n',toc/3600)
