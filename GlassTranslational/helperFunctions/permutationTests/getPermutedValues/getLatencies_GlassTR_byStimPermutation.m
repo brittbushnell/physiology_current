@@ -76,15 +76,15 @@ for ch = 1:numCh
                             noiseNdxOff = subsampleStimuli((noiseTrials), numNoiseTrials);
                             blankNdxOff = subsampleBlanks((blankNdx), numBlankTrials);
                             
-                            % blank
-                            blankTrialsOn = dataT.bins((blankNdxOn),startCheckOn:endCheckOn,ch);
-                            blankTrialsOff = dataT.bins((blankNdxOff),startCheckOff:endCheckOff,ch);
+%                             % blank
+%                             blankTrialsOn = dataT.bins((blankNdxOn),startCheckOn:endCheckOn,ch);
+%                             blankTrialsOff = dataT.bins((blankNdxOff),startCheckOff:endCheckOff,ch);
                             
                             % boot strap to find the bin with the maximum response to use
                             % to find the onset latency
                             linRespOn = mean(smoothdata(dataT.bins(linNdxOn,startCheckOn:endCheckOn,ch),'gaussian',3))./.01;
                             noiseRespOn = mean(smoothdata(dataT.bins(noiseNdxOn,startCheckOn:endCheckOn,ch),'gaussian',3))./.01;
-                            blankRespOn = mean(smoothdata(dataT.bins(blankTrialsOn,startCheckOn:endCheckOn,ch),'gaussian',3))./.01;
+                            blankRespOn = mean(smoothdata(dataT.bins(blankNdxOn,startCheckOn:endCheckOn,ch),'gaussian',3))./.01;
                             
                             bootLinRespsOn(nb,:) = linRespOn - blankRespOn;
                             muLinRespsOnT = abs(bootLinRespsOn(nb,:));
@@ -97,7 +97,7 @@ for ch = 1:numCh
                             % Now, do the same but for the offset latency
                             linRespOff = mean(smoothdata(dataT.bins(linNdxOff,startCheckOff:endCheckOff,ch),'gaussian',3))./.01;
                             noiseRespOff = mean(smoothdata(dataT.bins(noiseNdxOff,startCheckOff:endCheckOff,ch),'gaussian',3))./.01;
-                            blankRespOff = mean(smoothdata(dataT.bins(blankTrialsOff,startCheckOff:endCheckOff,ch),'gaussian',3))./.01;
+                            blankRespOff = mean(smoothdata(dataT.bins(blankNdxOff,startCheckOff:endCheckOff,ch),'gaussian',3))./.01;
                             
                             %concentric
                             bootLinRespsOff(nb,:) = linRespOff - blankRespOff;
