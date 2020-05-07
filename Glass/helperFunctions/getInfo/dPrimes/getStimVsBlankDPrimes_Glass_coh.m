@@ -107,7 +107,7 @@ for ch = 1:numCh
                     
                     conBlankDprime(co,ndot,dx,ch) = nanmean(conBlankDprimeBoot);
                     radBlankDprime(co,ndot,dx,ch) = nanmean(radBlankDprimeBoot);
-                    noiseBlankDprime(co,ndot,dx,ch) = nanmean(noiseBlankDprimeBoot);
+                    noiseBlankDprime(ndot,dx,ch) = nanmean(noiseBlankDprimeBoot);
                     stimBlankDprime(co,ndot,dx,ch)  = nanmean(stimBlankDprimeBoot);
                 end
             end

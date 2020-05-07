@@ -146,13 +146,15 @@ tic
     %     'XT_LE_Glass_nsp1_20190123_all_raw_perm2k';...
 %    };
 %% testing Manu's cleaned version
-files = {'WU_RE_Glass_nsp1_20170817_002_cleaned3_manu_perm2k';
-    'WU_RE_Glass_nsp1_20170817_002_raw_perm2k'};
+files = {       
+    'WU_LE_Glass_nsp2_20170817_001_raw_2kFixPerm';...
+    'WU_RE_Glass_nsp2_20170818_all_raw_2kFixPerm'
+    };
 %%
-nameEnd =  'Stats';
+nameEnd = 'Stats';
 failNdx = 1;
-plotHists = 0;
-plotOther = 0;
+plotHists = 1;
+plotOther = 1;
 for fi = 1:size(files,1)
     %% Get basic information about experiments
     % try
@@ -173,12 +175,12 @@ for fi = 1:size(files,1)
     
     fprintf('stim vs blank tests done %d  hours \n',toc/3600)
     %% stimulus selectivity permutation tests
-    
-    [dataT.conNoiseDprimePvals,dataT.conNoiseSig] = glassGetPermutationStats_coh(dataT.conNoiseDprime,dataT.conNoiseDprimeBootPerm,dataT,'concentric vs noise permutation test',plotHists);
-    [dataT.radNoiseDprimePvals,dataT.radNoiseSig] = glassGetPermutationStats_coh(dataT.radNoiseDprime,dataT.radNoiseDprimeBootPerm,dataT,'radial vs noise permutation test',plotHists);
-    [dataT.conRadNoiseDprimePvals,dataT.conRadSig] = glassGetPermutationStats_coh(dataT.conRadDprime,dataT.conRadDprimeBootPerm,dataT,'concentric vs radial permutation test',plotHists);
-    
-    fprintf('stim vs noise permutation tests done %d  hours \n',toc/3600)
+%     
+%     [dataT.conNoiseDprimePvals,dataT.conNoiseSig] = glassGetPermutationStats_coh(dataT.conNoiseDprime,dataT.conNoiseDprimeBootPerm,dataT,'concentric vs noise permutation test',plotHists);
+%     [dataT.radNoiseDprimePvals,dataT.radNoiseSig] = glassGetPermutationStats_coh(dataT.radNoiseDprime,dataT.radNoiseDprimeBootPerm,dataT,'radial vs noise permutation test',plotHists);
+%     [dataT.conRadNoiseDprimePvals,dataT.conRadSig] = glassGetPermutationStats_coh(dataT.conRadDprime,dataT.conRadDprimeBootPerm,dataT,'concentric vs radial permutation test',plotHists);
+%     
+%     fprintf('stim vs noise permutation tests done %d  hours \n',toc/3600)
     %% latency permutation tests by stimulus
     [dataT.radOnsetLatencyPvals,dataT.radOnsetLatencySig] = glassGetPermutationStats_coh(dataT.radBlankOnLat, dataT.radBlankOnLatBoot,dataT,'radial onset latency permutation test',plotHists);
     [dataT.radOffsetLatencyPvals,dataT.radOnsetLatencySig] = glassGetPermutationStats_coh(dataT.radBlankOffLat, dataT.radBlankOffLatBoot,dataT,'radial offset latency permutation test',plotHists);
@@ -204,6 +206,7 @@ for fi = 1:size(files,1)
     if plotOther == 1
         plotGlass_GlassRankingsDistBlank(dataT) % figure 1 and 2
         plotGlassPSTHsCohType(dataT) % figures 3-6
+        triplotTests(dataT)% figures 7-12
     end
     %% commit to data structure
     if contains(filename,'RE')
