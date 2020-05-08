@@ -148,7 +148,7 @@ tic
 %% testing Manu's cleaned version
 files = {       
     'WU_LE_Glass_nsp2_20170817_001_raw_2kFixPerm';...
-    'WU_RE_Glass_nsp2_20170818_all_raw_2kFixPerm'
+    %'WU_RE_Glass_nsp2_20170818_all_raw_2kFixPerm'
     };
 %%
 nameEnd = 'Stats';
@@ -201,11 +201,13 @@ for fi = 1:size(files,1)
     dataT = ChiSquareHomogeneity(dataT,0.1);
     %% rank order of stim responses
     dataT = rankGlassSelectivitiesBlank(dataT);
-    dataT = numSigGlassComparisons(dataT);
+%    dataT = numSigGlassComparisons(dataT);
     %% plot
+    close all
+    clc
     if plotOther == 1
         plotGlass_GlassRankingsDistBlank(dataT) % figure 1 and 2
-        plotGlassPSTHsCohType(dataT) % figures 3-6
+        %plotGlassPSTHsCohType(dataT) % figures 3-6
         triplotTests(dataT)% figures 7-12
     end
     %% commit to data structure
