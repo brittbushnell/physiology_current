@@ -1,4 +1,4 @@
-function [dataT] = getGlassStimDPrimes_coh(dataT, numBoot, holdout)
+function [dataT] = getGlassStimDPrimes_coh(dataT, numBoot,subsample, holdout)
 % This function will compute d' for stimulus vs  noise screen using only
 % noise and 100% coherence stimuli, and gives an option to subsample the
 % stimuli or not.
@@ -42,32 +42,42 @@ for ch = 1:numCh
                     radNoiseDprimeBoot = nan(numBoot,1);
                     conRadDprimeBoot   = nan(numBoot,1);
                     
-                    for nb = 1:numBoot
+                    if subsample == 0
+                            radStim = nansum(dataT.bins(radTrials, (startMean:endMean) ,ch),2);
+                            conStim = nansum(dataT.bins(conTrials, (startMean:endMean) ,ch),2);
+                            nosStim = nansum(dataT.bins(noiseTrials, (startMean:endMean) ,ch),2);
+                            
+                            conNoiseDprimeSimple(co,ndot,dx,ch) = simpleDiscrim((nosStim),(conStim));
+                            radNoiseDprimeSimple(co,ndot,dx,ch) = simpleDiscrim((nosStim),(radStim));
+                            conRadDprimeSimple(co,ndot,dx,ch)   = simpleDiscrim((conStim),(radtim));
+                    else
+                        for nb = 1:numBoot
+                            
+                            % subsample stimuli
+                            radNdx1 = subsampleStimuli(radTrials, numRadTrials);
+                            radStim = nansum(dataT.bins(radNdx1, (startMean:endMean) ,ch),2);
+                            
+                            conNdx1 = subsampleStimuli(conTrials, numConTrials);
+                            conStim = nansum(dataT.bins(conNdx1, (startMean:endMean) ,ch),2);
+                            
+                            nosNdx1 = subsampleStimuli(noiseTrials, numNoiseTrials);
+                            nosStim = nansum(dataT.bins(nosNdx1, (startMean:endMean) ,ch),2);
+                            
+                            %                         % get spike counts
+                            %                         radStim2 = nansum(dataT.bins(radStim, (startMean:endMean) ,ch),2);
+                            %                         conStim2 = nansum(dataT.bins(conStim, (startMean:endMean) ,ch),2);
+                            %                         noiseStim2 = nansum(dataT.bins(nosStim, (startMean:endMean), ch),2);
+                            
+                            %% d'
+                            conNoiseDprimeBoot(nb,1) = simpleDiscrim((nosStim),(conStim));
+                            radNoiseDprimeBoot(nb,1) = simpleDiscrim((nosStim),(radStim));
+                            conRadDprimeBoot(nb,1)   = simpleDiscrim((conStim),(radStim));
+                        end
                         
-                        % subsample stimuli
-                        radNdx1 = subsampleStimuli(radTrials, numRadTrials);
-                        radStim = nansum(dataT.bins(radNdx1, (startMean:endMean) ,ch),2);
-                        
-                        conNdx1 = subsampleStimuli(conTrials, numConTrials);
-                        conStim = nansum(dataT.bins(conNdx1, (startMean:endMean) ,ch),2);
-                        
-                        nosNdx1 = subsampleStimuli(noiseTrials, numNoiseTrials);
-                        nosStim = nansum(dataT.bins(nosNdx1, (startMean:endMean) ,ch),2);
-                        
-%                         % get spike counts
-%                         radStim2 = nansum(dataT.bins(radStim, (startMean:endMean) ,ch),2);
-%                         conStim2 = nansum(dataT.bins(conStim, (startMean:endMean) ,ch),2);
-%                         noiseStim2 = nansum(dataT.bins(nosStim, (startMean:endMean), ch),2);
-                        
-                        %% d'
-                        conNoiseDprimeBoot(nb,1) = simpleDiscrim((nosStim),(conStim));
-                        radNoiseDprimeBoot(nb,1) = simpleDiscrim((nosStim),(radStim));
-                        conRadDprimeBoot(nb,1)   = simpleDiscrim((conStim),(radStim));
+                        conNoiseDprimeSimple(co,ndot,dx,ch) = nanmean(conNoiseDprimeBoot);
+                        radNoiseDprimeSimple(co,ndot,dx,ch) = nanmean(radNoiseDprimeBoot);
+                        conRadDprimeSimple(co,ndot,dx,ch)   = nanmean(conRadDprimeBoot);
                     end
-                    
-                    conNoiseDprimeSimple(co,ndot,dx,ch) = nanmean(conNoiseDprimeBoot);
-                    radNoiseDprimeSimple(co,ndot,dx,ch) = nanmean(radNoiseDprimeBoot);
-                    conRadDprimeSimple(co,ndot,dx,ch)   = nanmean(conRadDprimeBoot);
                 end
             end
         end

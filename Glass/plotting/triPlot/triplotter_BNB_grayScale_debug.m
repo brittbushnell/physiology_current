@@ -1,45 +1,50 @@
-function triplotter_BNB(x,y,z,model1name,model2name,model3name)
-% Romesh's code for a 3-way scatter plot. modified by Brittany for Glass
-% patterns
+clc;
 
-% for i=1:size(x,1)
-%     normalizer = max([x(i),y(i),z(i)]);
-%     if (normalizer == 0)
-%         normalizer = 1;
-%     end
-%     x(i) = (x(i) ./ normalizer);
-%     y(i) = (y(i) ./ normalizer);
-%     z(i) = (z(i) ./ normalizer);
-% end
+radDps = abs(squeeze(dataT.radBlankDprime(end,dt,dx,:)));
+conDps = abs(squeeze(dataT.conBlankDprime(end,dt,dx,:)));
+nosDps = abs(squeeze(dataT.noiseBlankDprime(dt,dx,:)));
 
+dps = [conDps,radDps,nosDps];
+dpMax = max(dps(:))+0.2;
+dpMin = min(dps(:))-0.2;
+cmaplarge = (gray(110));
+cmap = flipud(cmaplarge(1:96,:));
+
+sortDPs = sortrows(dps);
+pointSize = 30.*ones(size(nosDps));
+
+model1name = 'Concentric';
+model2name = 'Radial';
+model3name = 'Bipole';
+
+x = sortDPs(:,1);
+y = sortDPs(:,2);
+z = sortDPs(:,3);
+%%
+figure(1)
+clf
+pause(0.02)
 
 % convert to spherical coordinates
-[th,phi,r] = cart2sph(x,y,z);
+[az,elev,r] = cart2sph(x,y,z);
 
 % force radius to be 1, thus all vectors are unit vectors.
 r2 = ones(size(r,1),size(r,2));
 r2(find(r==0)) = 0;
 
-
-%th = (pi/2) - th;
-%phi = (pi/2) - phi;
-
-disp(th*180/pi);
-disp(phi*180/pi);
-
 % convert to cartesian coordinates
-[x,y,z] = sph2cart(th,phi,r2);
+[x,y,z] = sph2cart(az,elev,r2);
 
-
-% plot results.
-%plot3(1-x,1-y,1-z,'ko');
-plot3(x,y,z,'ko','MarkerFaceColor','k');
-%plot3(x,y,z,'k.');
+subplot(1,2,1)
+%plot3(y,x,z,'ko');
+scatter3(x,y,z,'k','filled');
 
 % draw pure X, Y and Z lines
-% line([0 0],[0 1],[0 1],'color','k');
-% line([0 1],[0 1],[0 0],'color','k');
-% line([0 1],[0 0],[0 1],'color','k');
+line([0 1],[0 0],[0 0],'color','k','LineStyle','--');
+line([0 0],[0 1],[0 0],'color','k','LineStyle','--');
+line([0 0],[0 0],[0 1],'color','k','LineStyle','--');
+
+% draw pure X, Y and Z lines
 line([0 1],[0 0],[0 0],'color','k','LineStyle','--');
 line([0 0],[0 1],[0 0],'color','k','LineStyle','--');
 line([0 0],[0 0],[0 1],'color','k','LineStyle','--');
@@ -68,10 +73,7 @@ if ~exist('model3name','var')
     model3name = 'model 3';
 end
 
-%text(1.05,0,0,model1name,'HorizontalAlignment','right');
-%text(0,1.05,0,model2name,'HorizontalAlignment','left');
-%text(0,0,1.05,model3name,'HorizontalAlignment','center');
 text(0,1.0,1.0,model1name,'HorizontalAlignment','left','FontSize',12);
 text(1.0,0,1.0,model2name,'HorizontalAlignment','right','FontSize',12);
 text(1.0,1.0,0,model3name,'HorizontalAlignment','center','FontSize',12);
-
+%%

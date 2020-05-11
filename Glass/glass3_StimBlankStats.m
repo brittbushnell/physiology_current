@@ -148,12 +148,12 @@ tic
 %% testing Manu's cleaned version
 files = {       
     'WU_LE_Glass_nsp2_20170817_001_raw_2kFixPerm';...
-    %'WU_RE_Glass_nsp2_20170818_all_raw_2kFixPerm'
+    'WU_RE_Glass_nsp2_20170818_all_raw_2kFixPerm'
     };
 %%
 nameEnd = 'Stats';
 failNdx = 1;
-plotHists = 1;
+plotHists = 0;
 plotOther = 1;
 for fi = 1:size(files,1)
     %% Get basic information about experiments
@@ -208,7 +208,8 @@ for fi = 1:size(files,1)
     if plotOther == 1
         plotGlass_GlassRankingsDistBlank(dataT) % figure 1 and 2
         %plotGlassPSTHsCohType(dataT) % figures 3-6
-        triplotTests(dataT)% figures 7-12
+        plotGlass_triplotStereo_Black(dataT); % figure 7
+        plotGlass3D_dPrimesVblank_grayScale(dataT) %figure 8
     end
     %% commit to data structure
     if contains(filename,'RE')

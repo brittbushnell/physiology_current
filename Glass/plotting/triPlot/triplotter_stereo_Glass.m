@@ -47,11 +47,12 @@ plot3m(0.*ones(1,90),linspace(0,90,90),ones(1,90),'k')
 % [th,phi,r]=cart2sph(1,0,0); plot3m(rad2deg(phi),rad2deg(th),r,'ro')
 % [th,phi,r]=cart2sph(0,1,0); plot3m(rad2deg(phi),rad2deg(th),r,'ro')
 % [th,phi,r]=cart2sph(0,0,1); plot3m(rad2deg(phi),rad2deg(th),r,'ro')
+
 % draw the lines dividing the different zones
 LtoC = (0:1:45); RtoC = fliplr(LtoC); %TtoC = 45:1:90;
 linem(LtoC,LtoC,'color','k','LineStyle','--');
 linem(RtoC,45+LtoC,'color','k','LineStyle','--');
-line([0 0],[0.82 0],[0 0],'color','k','LineStyle','--')
+line([0 0],[0.82 0],[0 0],'color','k','LineStyle','--','LineWidth',0.75)
 
 x = rcb(:,1);
 y = rcb(:,2);

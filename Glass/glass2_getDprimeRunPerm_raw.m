@@ -126,6 +126,7 @@ files = {
 nameEnd = '2kFixPerm';
 numPerm = 2000;
 numBoot = 200;
+subsample = 0;
 holdout = .90;
 plotFlag = 0;
 %%
@@ -164,8 +165,8 @@ for fi = 1:size(files,1)
         dataT.goodCh(66) = 0;
     end
     %% get real stimulus d's
-    dataT = getStimVsBlankDPrimes_Glass_coh(dataT,numBoot, holdout);
-    dataT = getGlassStimDPrimes_coh(dataT, numBoot, holdout);
+    dataT = getStimVsBlankDPrimes_Glass_coh(dataT,numBoot, subsample,holdout);
+    dataT = getGlassStimDPrimes_coh(dataT, numBoot,subsample, holdout);
     
     fprintf('real dPrimes computed %.2f hours \n',toc/3600)
     %% get stim vs blank permutations
