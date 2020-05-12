@@ -49,7 +49,7 @@ for ch = 1:numCh
                             
                             conNoiseDprimeSimple(co,ndot,dx,ch) = simpleDiscrim((nosStim),(conStim));
                             radNoiseDprimeSimple(co,ndot,dx,ch) = simpleDiscrim((nosStim),(radStim));
-                            conRadDprimeSimple(co,ndot,dx,ch)   = simpleDiscrim((conStim),(radtim));
+                            conRadDprimeSimple(co,ndot,dx,ch)   = simpleDiscrim((conStim),(radStim));
                     else
                         for nb = 1:numBoot
                             
