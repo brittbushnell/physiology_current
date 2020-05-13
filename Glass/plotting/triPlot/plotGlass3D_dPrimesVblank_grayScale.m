@@ -100,5 +100,5 @@ end
 suptitle({'Relative dPrimes against blank for concentric, radial, and random dipole Glass patterns';...
     sprintf('%s %s %s stimulus vs blank dPrime at 100%% coherence',dataT.animal, dataT.eye, dataT.array)})
 
-figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_triplot_abs'];
+figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_conVradVbipole3Dplot_abs'];
 print(gcf, figName,'-dpdf','-fillpage')
