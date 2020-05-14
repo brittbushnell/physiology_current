@@ -3,9 +3,9 @@ close all
 clc
 %%
 
-REfile = 'WU_RE_GlassTR_nsp2_20170828_all_s1_perm2k_OSIvsBlank_PermTests';
-LEfile = 'WU_LE_GlassTR_nsp2_20170825_002_s1_perm2k_OSIvsNoise_PermTests';
-newName = 'WU_BE_GlassTR_V4_201708';   
+REfile = 'WU_RE_GlassTR_nsp2_20170828_all_raw_2kFixPerm_OSI_prefOri_PermTests';
+LEfile = 'WU_LE_GlassTR_nsp2_20170825_002_raw_2kFixPerm_OSI_prefOri_PermTests';
+newName = 'WU_BE_GlassTR_V4_201708_may';   
 
 % REfile = 'WU_RE_GlassTR_nsp1_20170828_all_s1_perm2k_OSIvsNoise_PermTests';
 % LEfile = 'WU_LE_GlassTR_nsp1_20170825_002_s1_perm2k_OSIvsNoise_PermTests';

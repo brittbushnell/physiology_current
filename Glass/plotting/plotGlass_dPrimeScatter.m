@@ -5,23 +5,23 @@ for ch = 1:96
     LEgch =  data.LE.goodCh(1,ch);
     tmp = REgch + LEgch;
     if tmp == 0
-        data.RE.radBlankDprime(:,:,ch) = nan(2,2);
-        data.RE.conBlankDprime(:,:,ch) = nan(2,2);
+        data.RE.radBlankDprime(end,:,:,ch) = nan(2,2);
+        data.RE.conBlankDprime(end,:,:,ch) = nan(2,2);
         data.RE.noiseBlankDprime(:,:,ch) = nan(2,2);
         
-        data.LE.radBlankDprime(:,:,ch) = nan(2,2);
-        data.LE.conBlankDprime(:,:,ch) = nan(2,2);
+        data.LE.radBlankDprime(end,:,:,ch) = nan(2,2);
+        data.LE.conBlankDprime(end,:,:,ch) = nan(2,2);
         data.LE.noiseBlankDprime(:,:,ch) = nan(2,2);
         
     else
         if data.RE.goodCh(1,ch) == 0
-            data.RE.radBlankDprime(:,:,ch) = zeros(2,2);
-            data.RE.conBlankDprime(:,:,ch) = zeros(2,2);
+            data.RE.radBlankDprime(end,:,:,ch) = zeros(2,2);
+            data.RE.conBlankDprime(end,:,:,ch) = zeros(2,2);
             data.RE.noiseBlankDprime(:,:,ch) = zeros(2,2);
         end
         if data.LE.goodCh(1,ch) == 0
-            data.LE.radBlankDprime(:,:,ch) = zeros(2,2);
-            data.LE.conBlankDprime(:,:,ch) = zeros(2,2);
+            data.LE.radBlankDprime(end,:,:,ch) = zeros(2,2);
+            data.LE.conBlankDprime(end,:,:,ch) = zeros(2,2);
             data.LE.noiseBlankDprime(:,:,ch) = zeros(2,2);
         end
     end
