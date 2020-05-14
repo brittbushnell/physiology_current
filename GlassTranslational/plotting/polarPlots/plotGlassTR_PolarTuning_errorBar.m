@@ -83,13 +83,13 @@ for ch = 1:96
             
             text(0.1,-0.06,'dx 0.01','FontSize',12,'FontWeight','bold');
             text(0.47,-0.06,'dx 0.02','FontSize',12,'FontWeight','bold');
-            text(0.83,-0.06,'dx 0.04','FontSize',12,'FontWeight','bold');
+            text(0.83,-0.06,'dx 0.03','FontSize',12,'FontWeight','bold');
         else
             text(-0.1,0.83,'200 dots','FontSize',12,'FontWeight','bold');
             text(-0.1,0.23,'400 dots','FontSize',12,'FontWeight','bold');
             
             text(0.19,-0.06,'dx 0.02','FontSize',12,'FontWeight','bold');
-            text(0.76,-0.06,'dx 0.04','FontSize',12,'FontWeight','bold');
+            text(0.76,-0.06,'dx 0.03','FontSize',12,'FontWeight','bold');
         end
         axis off
         
