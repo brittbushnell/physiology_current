@@ -49,6 +49,7 @@ plotGlassPSTHs_visualResponses(data)
 %%
 plotGlassTR_OSIdist(data)
 plotGlassTR_prefOriDist(data)
+plotGlassTR_OSI_eyeComps(data)
 %%
 saveName = [outputDir newName '.mat'];
 save(saveName,'data','-v7.3');
