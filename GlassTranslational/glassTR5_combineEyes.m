@@ -45,11 +45,14 @@ end
 %%
 data = getGlassODI(data);
 %%
-plotGlassPSTHs_visualResponses(data)
+%plotGlassPSTHs_visualResponses(data)
 %%
-plotGlassTR_OSIdist(data)
-plotGlassTR_prefOriDist(data)
-plotGlassTR_OSI_eyeComps(data)
+
+plotGlassTR_prefOriDist(data) % fig 6-11
+plotGlassTR_OSI_eyeComps(data) % fig 12
+%%
+plotGlassTR_OSIdist(data) % fig 3-5
+plotGlassTR_OSIdist_binoc(data) % fig 13-15
 %%
 saveName = [outputDir newName '.mat'];
 save(saveName,'data','-v7.3');

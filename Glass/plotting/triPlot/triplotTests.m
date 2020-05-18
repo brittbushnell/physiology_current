@@ -75,7 +75,7 @@ for dt = 1:numDots
         
         subplot(2,2,ndx)
         hold on
-        triplotter_BNB(dpNoNan(:,1),dpNoNan(:,2),dpNoNan(:,3), 'Radial', 'Concentric','Bipole');
+        triplotter_BNB(dpNoNan(:,1),dpNoNan(:,2),dpNoNan(:,3), 'Radial', 'Concentric','Dipole');
         title(sprintf('%d dots, dx %.2f',dots(dt),dxs(dx)))
        
         ndx = ndx+1;

@@ -67,4 +67,4 @@ h3=textm(0,45,'Model 3');
 
 set(h1,'horizontalalignment','left','string','    Radial')
 set(h2,'horizontalalignment','right','string','Concentric   ')
-set(h3,'horizontalalignment','center','string',sprintf('\n\nBipole'))
+set(h3,'horizontalalignment','center','string',sprintf('\n\nDipole'))
