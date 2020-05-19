@@ -52,10 +52,7 @@ ndx = 1;
 for dt = 1:numDots
     for dx = 1:numDxs
         sig = squeeze(data.RE.OSI2thetaNoiseSig(end,dt,dx,:));
-%         SIR1 = deg2rad(squeeze(data.RE.prefOri2thetaNoise(end,dt,dx,sig == 1)));
-%         SIR2 = SIR1+pi;
-%         SIR = [SIR1; SIR2];
-                SIR = deg2rad(squeeze(data.LE.prefOri2thetaNoise(end,dt,dx,sig == 1)));
+        SIR = deg2rad(squeeze(data.LE.prefOri2thetaNoise(end,dt,dx,sig == 1)));
         
         
         cMean = circ_mean(SIR);
@@ -83,7 +80,7 @@ end
 suptitle({sprintf('%s %s %s distribution of preferred orientations by parameter 100%% coherence',data.RE.animal, data.RE.eye, data.RE.array);...
     sprintf('%s run %s',data.RE.date,data.RE.runNum)});
 
-figName = [data.RE.animal,'_',data.RE.array,'_RE_prefOriDistribition_byParam_binocChs','.pdf'];
+figName = [data.RE.animal,'_',data.RE.array,'_RE_prefOriDistribition_byParam_sigChs','.pdf'];
 print(gcf, figName,'-dpdf','-fillpage')
 %% LE 360 fig 8
 figure(8)
@@ -144,12 +141,12 @@ end
 suptitle({sprintf('%s %s %s distribution of preferred orientations by parameter 100%% coherence',data.LE.animal, data.LE.eye, data.LE.array);...
     sprintf('%s run %s',data.LE.date,data.LE.runNum)});
 
-figName = [data.LE.animal,'_',data.LE.array,'_LE_prefOriDistribition_byParam_binocChs','.pdf'];
+figName = [data.LE.animal,'_',data.LE.array,'_LE_prefOriDistribition_byParam_sigChs','.pdf'];
 print(gcf, figName,'-dpdf','-fillpage')
 
 
-%% BE 360 fig 11
-figure (11)
+%% BE 360 fig 9
+figure (9)
 clf
 pos = get(gcf,'Position');
 set(gcf,'Position',[pos(1) pos(2) 800 500])
@@ -198,5 +195,5 @@ title(sprintf('%s RE',data.RE.animal))
 suptitle({sprintf('%s %s distribtion of preferred orientations across all stimuli',data.RE.animal, data.RE.array);...
     sprintf('%s run %s',data.RE.date,data.RE.runNum)});
 
-figName = [data.RE.animal,'_',data.RE.array,'_BE_prefOriDistribition_binocChs','.pdf'];
-print(gcf, figName,'-dpdf','-fillpage')
+figName = [data.RE.animal,'_',data.RE.array,'_BE_prefOriDistribition_sigChs','.pdf'];
+%print(gcf, figName,'-dpdf','-fillpage')
