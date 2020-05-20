@@ -27,7 +27,7 @@ pos = get(gcf,'Position');
 set(gcf,'Position',[pos(1) pos(2) 1000 1200])
 set(gcf,'PaperOrientation','Landscape');
 
-tmp = squeeze(data.RE.prefOri2thetaNoise(end,:,:,binocCh));
+tmp = squeeze(data.RE.prefOri2thetaNoise(end,:,:,data.RE.goodCh == 1));
 SImax = max(tmp(:));
 SImax = SImax+0.05;
 SImin = -1*SImax;
@@ -51,9 +51,10 @@ axis off
 ndx = 1;
 for dt = 1:numDots
     for dx = 1:numDxs
-        sig = squeeze(data.RE.OSI2thetaNoiseSig(end,dt,dx,:));
-        SIR = deg2rad(squeeze(data.LE.prefOri2thetaNoise(end,dt,dx,sig == 1)));
+        rOris = squeeze(data.RE.prefOri2thetaNoise(end,dt,dx,data.RE.goodCh == 1));
+        rSigs = squeeze(data.RE.OSI2thetaNoiseSig(end,dt,dx,data.RE.goodCh == 1));
         
+        SIR = deg2rad(rOris(rSigs == 1));
         
         cMean = circ_mean(SIR);
         if numDots == 2
@@ -89,7 +90,7 @@ pos = get(gcf,'Position');
 set(gcf,'Position',[pos(1) pos(2) 1000 1200])
 set(gcf,'PaperOrientation','Landscape');
 
-tmp = squeeze(data.LE.prefOri2thetaNoise(end,:,:,binocCh));
+tmp = squeeze(data.LE.prefOri2thetaNoise(end,:,:,data.LE.goodCh == 1));
 SImax = max(tmp(:));
 SImax = SImax+0.05;
 SImin = -1*SImax;
@@ -113,8 +114,10 @@ axis off
 ndx = 1;
 for dt = 1:numDots
     for dx = 1:numDxs
-        sig = squeeze(data.LE.OSI2thetaNoiseSig(end,dt,dx,:));
-        SIR = deg2rad(squeeze(data.LE.prefOri2thetaNoise(end,dt,dx,sig == 1)));
+        lOris = squeeze(data.LE.prefOri2thetaNoise(end,dt,dx,data.LE.goodCh == 1));
+        lSigs = squeeze(data.LE.OSI2thetaNoiseSig(end,dt,dx,data.LE.goodCh == 1));
+        
+        SIL = deg2rad(lOris(lSigs == 1));
         
         if numDots == 2
             subplot(2,2,ndx,polaraxes);
@@ -123,13 +126,13 @@ for dt = 1:numDots
         end
         hold on
         
-        polarhistogram(SIR,'BinWidth',pi/6,'normalization','probability','FaceColor','b','EdgeColor','w')
-        polarhistogram(SIR+pi,'BinWidth',pi/6,'normalization','probability','FaceColor','b','EdgeColor','w')
-        polarplot(nanmedian(SIR),0.35,'<w','MarkerFaceColor','b','MarkerSize',8)
+        polarhistogram(SIL,'BinWidth',pi/6,'normalization','probability','FaceColor','b','EdgeColor','w')
+        polarhistogram(SIL+pi,'BinWidth',pi/6,'normalization','probability','FaceColor','b','EdgeColor','w')
+        polarplot(nanmedian(SIL),0.35,'<w','MarkerFaceColor','b','MarkerSize',8)
         %         polarplot(nanmedian(SIR)+pi,0.35,'>w','MarkerFaceColor','b','MarkerSize',8)
         polarplot([1.57 0 4.71],[1.5 0 1.5],'k-','LineWidth',.75)
         
-        text(nanmedian(SIR)+0.03,0.4,sprintf('median %.2f',rad2deg(nanmedian(SIR))),'FontSize',11)
+        text(nanmedian(SIL)+0.03,0.4,sprintf('median %.2f',rad2deg(nanmedian(SIL))),'FontSize',11)
         %         text(pi+nanmedian(SIR)+0.03,0.4,sprintf('median %.2f',rad2deg(nanmedian(SIR)+pi)),'FontSize',11)
         %
         ax = gca;
@@ -152,12 +155,16 @@ pos = get(gcf,'Position');
 set(gcf,'Position',[pos(1) pos(2) 800 500])
 set(gcf,'PaperOrientation','Landscape');
 
-SIR = deg2rad(squeeze(data.RE.prefOri2thetaNoise(end,:,:,binocCh)));
-SIR = reshape(SIR,[1,numel(SIR)]);
+rOris = squeeze(data.RE.prefOri2thetaNoise(end,:,:,data.RE.goodCh == 1));
+rSigs = squeeze(data.RE.OSI2thetaNoiseSig(end,:,:,data.RE.goodCh == 1));
+
+SIR = deg2rad(rOris(rSigs == 1));
 SIR(isnan(SIR)) = [];
 
-SIL = deg2rad(squeeze(data.LE.prefOri2thetaNoise(end,:,:,binocCh)));
-SIL = reshape(SIL,[1,numel(SIL)]);
+lOris = squeeze(data.LE.prefOri2thetaNoise(end,:,:,data.LE.goodCh == 1));
+lSigs = squeeze(data.LE.OSI2thetaNoiseSig(end,:,:,data.LE.goodCh == 1));
+
+SIL = deg2rad(lOris(lSigs == 1));
 SIL(isnan(SIL)) = [];
 
 subplot(1,2,1,polaraxes)
