@@ -15,17 +15,19 @@ folder = data.RE.date2;
 mkdir(folder)
 cd(sprintf('%s',folder))
 
-folder = 'originals';
+folder = 'binocChs';
 mkdir(folder)
 cd(sprintf('%s',folder))
-%% RE 360 fig 6
-figure(6)
+%% 
+binocCh = (data.RE.goodCh == 1 & data.LE.goodCh == 1);
+%% RE 360 fig 7
+figure(7)
 clf
 pos = get(gcf,'Position');
 set(gcf,'Position',[pos(1) pos(2) 1000 1200])
 set(gcf,'PaperOrientation','Landscape');
 
-tmp = squeeze(data.RE.prefOri2thetaNoise(end,:,:,data.RE.goodCh == 1));
+tmp = squeeze(data.RE.prefOri2thetaNoise(end,:,:,binocCh));
 SImax = max(tmp(:));
 SImax = SImax+0.05;
 SImin = -1*SImax;
@@ -49,9 +51,10 @@ axis off
 ndx = 1;
 for dt = 1:numDots
     for dx = 1:numDxs
-        
+        sig = squeeze(data.RE.OSI2thetaNoiseSig(end,dt,dx,:));
         SIR = deg2rad(squeeze(data.RE.prefOri2thetaNoise(end,dt,dx,:)));
         
+        cMean = circ_mean(SIR)
         if numDots == 2
             subplot(2,2,ndx,polaraxes);
         else
@@ -76,16 +79,16 @@ end
 suptitle({sprintf('%s %s %s distribution of preferred orientations by parameter 100%% coherence',data.RE.animal, data.RE.eye, data.RE.array);...
     sprintf('%s run %s',data.RE.date,data.RE.runNum)});
 
-figName = [data.RE.animal,'_',data.RE.array,'_RE_prefOriDistribition_byParam360','.pdf'];
+figName = [data.RE.animal,'_',data.RE.array,'_RE_prefOriDistribition_byParam_binocChs','.pdf'];
 print(gcf, figName,'-dpdf','-fillpage')
-%% LE 360 fig 7
-figure(7)
+%% LE 360 fig 8
+figure(8)
 clf
 pos = get(gcf,'Position');
 set(gcf,'Position',[pos(1) pos(2) 1000 1200])
 set(gcf,'PaperOrientation','Landscape');
 
-tmp = squeeze(data.LE.prefOri2thetaNoise(end,:,:,data.LE.goodCh == 1));
+tmp = squeeze(data.LE.prefOri2thetaNoise(end,:,:,binocCh);
 SImax = max(tmp(:));
 SImax = SImax+0.05;
 SImin = -1*SImax;
@@ -136,58 +139,59 @@ end
 suptitle({sprintf('%s %s %s distribution of preferred orientations by parameter 100%% coherence',data.LE.animal, data.LE.eye, data.LE.array);...
     sprintf('%s run %s',data.LE.date,data.LE.runNum)});
 
-figName = [data.LE.animal,'_',data.LE.array,'_LE_prefOriDistribition_byParam360','.pdf'];
+figName = [data.LE.animal,'_',data.LE.array,'_LE_prefOriDistribition_byParam_binocChs','.pdf'];
 print(gcf, figName,'-dpdf','-fillpage')
-%% BE 360 fig 8
-% figure (8)
-% clf
-% pos = get(gcf,'Position');
-% set(gcf,'Position',[pos(1) pos(2) 800 500])
-% set(gcf,'PaperOrientation','Landscape');
-% 
-% SIR = deg2rad(squeeze(data.RE.prefOri2thetaNoise(end,:,:,:)));
-% SIR = reshape(SIR,[1,numel(SIR)]);
-% SIR(isnan(SIR)) = [];
-% 
-% SIL = deg2rad(squeeze(data.LE.prefOri2thetaNoise(end,:,:,:)));
-% SIL = reshape(SIL,[1,numel(SIL)]);
-% SIL(isnan(SIL)) = [];
-% 
-% subplot(1,2,1,polaraxes)
-% hold on
-% 
-% polarhistogram(SIL,'BinWidth',pi/6,'normalization','probability','FaceColor','b','EdgeColor','w')
-% %polarplot(nanmedian(SIL),0.35,'<w','MarkerFaceColor','b','MarkerSize',8)
-% 
-% polarhistogram(SIL+pi,'BinWidth',pi/6,'normalization','probability','FaceColor','b','EdgeColor','w')
-% %polarplot(nanmedian(SIL)+pi,0.35,'>w','MarkerFaceColor','b','MarkerSize',8)
-% polarplot([1.57 0 4.71],[1.5 0 1.5],'k-','LineWidth',.75)
-% 
-% ax = gca;
-% % ax.RLim   = [0,0.5];
-% % text(nanmedian(SIL)+0.02,0.4,sprintf('median %.2f',rad2deg(nanmedian(SIL))),'FontSize',11)
-% % text(pi+nanmedian(SIL)-0.05,0.43,sprintf('median %.2f',rad2deg(nanmedian(SIL)+pi)),'FontSize',11)
-% title(sprintf('%s LE',data.LE.animal))
-% 
-% subplot(1,2,2,polaraxes)
-% hold on
-% 
-% p1 = polarhistogram(SIR,'BinWidth',pi/6,'normalization','probability','FaceColor','r','EdgeColor','w');
-% %polarplot(nanmedian(SIR),0.35,'<w','MarkerFaceColor','r','MarkerSize',8)
-% 
-% p2 = polarhistogram(SIR+pi,'BinWidth',pi/6,'normalization','probability','FaceColor','r','EdgeColor','w');
-% %polarplot(nanmedian(SIR)+pi,0.35,'>w','MarkerFaceColor','r','MarkerSize',8)
-% polarplot([1.57 0 4.71],[1.5 0 1.5],'k-','LineWidth',.75)
-% 
-% ax = gca;
-% ax.RLim   = [0,0.5];
-% % text(nanmedian(SIR)+0.02,0.4,sprintf('median %.2f',rad2deg(nanmedian(SIR))),'FontSize',11)
-% % text(pi+nanmedian(SIR)+0.02,0.4,sprintf('median %.2f',rad2deg(nanmedian(SIR)+pi)),'FontSize',11)
-% 
-% title(sprintf('%s RE',data.RE.animal))
-% 
-% suptitle({sprintf('%s %s distribtion of preferred orientations across all stimuli',data.RE.animal, data.RE.array);...
-%     sprintf('%s run %s',data.RE.date,data.RE.runNum)});
-% 
-% figName = [data.RE.animal,'_',data.RE.array,'_BE_prefOriDistribition360','.pdf'];
-% print(gcf, figName,'-dpdf','-fillpage')
+
+
+%% BE 360 fig 11
+figure (11)
+clf
+pos = get(gcf,'Position');
+set(gcf,'Position',[pos(1) pos(2) 800 500])
+set(gcf,'PaperOrientation','Landscape');
+
+SIR = deg2rad(squeeze(data.RE.prefOri2thetaNoise(end,:,:,binocCh)));
+SIR = reshape(SIR,[1,numel(SIR)]);
+SIR(isnan(SIR)) = [];
+
+SIL = deg2rad(squeeze(data.LE.prefOri2thetaNoise(end,:,:,binocCh)));
+SIL = reshape(SIL,[1,numel(SIL)]);
+SIL(isnan(SIL)) = [];
+
+subplot(1,2,1,polaraxes)
+hold on
+
+polarhistogram(SIL,'BinWidth',pi/6,'normalization','probability','FaceColor','b','EdgeColor','w')
+polarplot(nanmedian(SIL),0.35,'<w','MarkerFaceColor','b','MarkerSize',8)
+polarhistogram(SIL+pi,'BinWidth',pi/6,'normalization','probability','FaceColor','b','EdgeColor','w')
+polarplot(nanmedian(SIL)+pi,0.35,'>w','MarkerFaceColor','b','MarkerSize',8)
+polarplot([1.57 0 4.71],[1.5 0 1.5],'k-','LineWidth',.75)
+
+ax = gca;
+ax.RLim   = [0,0.5];
+text(nanmedian(SIL)+0.02,0.4,sprintf('median %.2f',rad2deg(nanmedian(SIL))),'FontSize',11)
+text(pi+nanmedian(SIL)-0.05,0.43,sprintf('median %.2f',rad2deg(nanmedian(SIL)+pi)),'FontSize',11)
+title(sprintf('%s LE',data.LE.animal))
+
+subplot(1,2,2,polaraxes)
+hold on
+
+polarhistogram(SIR,'BinWidth',pi/6,'normalization','probability','FaceColor','r','EdgeColor','w')
+polarplot(nanmedian(SIR),0.35,'<w','MarkerFaceColor','r','MarkerSize',8)
+
+polarhistogram(SIR+pi,'BinWidth',pi/6,'normalization','probability','FaceColor','r','EdgeColor','w')
+polarplot(nanmedian(SIR)+pi,0.35,'>w','MarkerFaceColor','r','MarkerSize',8)
+polarplot([1.57 0 4.71],[1.5 0 1.5],'k-','LineWidth',.75)
+
+ax = gca;
+ax.RLim   = [0,0.5];
+text(nanmedian(SIR)+0.02,0.4,sprintf('median %.2f',rad2deg(nanmedian(SIR))),'FontSize',11)
+text(pi+nanmedian(SIR)+0.02,0.4,sprintf('median %.2f',rad2deg(nanmedian(SIR)+pi)),'FontSize',11)
+
+title(sprintf('%s RE',data.RE.animal))
+
+suptitle({sprintf('%s %s distribtion of preferred orientations across all stimuli',data.RE.animal, data.RE.array);...
+    sprintf('%s run %s',data.RE.date,data.RE.runNum)});
+
+figName = [data.RE.animal,'_',data.RE.array,'_BE_prefOriDistribition_binocChs','.pdf'];
+print(gcf, figName,'-dpdf','-fillpage')

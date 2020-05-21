@@ -45,11 +45,15 @@ end
 %%
 data = getGlassODI(data);
 %%
-plotGlassPSTHs_visualResponses(data)
-%%
-plotGlassTR_OSIdist(data)
-plotGlassTR_prefOriDist(data)
-plotGlassTR_OSI_eyeComps(data)
+%plotGlassPSTHs_visualResponses(data)
+%% polar histograms
+plotGlassTR_prefOriDist(data) % fig 6-8
+plotGlassTR_prefOriDist_eyeComps(data) %fig 8-9
+%% scatter plot
+plotGlassTR_OSI_eyeComps(data) % fig 12
+%% OSI histograms
+plotGlassTR_OSIdist(data) % fig 3-5
+plotGlassTR_OSIdist_binoc(data) % fig 13-15
 %%
 saveName = [outputDir newName '.mat'];
 save(saveName,'data','-v7.3');
