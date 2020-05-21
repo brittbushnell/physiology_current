@@ -48,7 +48,7 @@ data = getGlassODI(data);
 %plotGlassPSTHs_visualResponses(data)
 %% polar histograms
 plotGlassTR_prefOriDist(data) % fig 6-8
-
+plotGlassTR_prefOriDist_eyeComps(data) %fig 8-9
 %% scatter plot
 plotGlassTR_OSI_eyeComps(data) % fig 12
 %% OSI histograms

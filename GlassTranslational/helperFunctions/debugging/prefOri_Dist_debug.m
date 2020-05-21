@@ -29,7 +29,7 @@ for i = 1%:4
     text(cirMu2+0.2,0.4,sprintf('mean: %.1f degrees',rad2deg(cirMu2)),'FontSize',11)
     title(sprintf('%s FE, channels with at least 1 configuration with significant tuning',data.LE.animal))
 
-end
+
 
 %% using pdf normalization
 clc

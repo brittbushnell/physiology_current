@@ -66,7 +66,7 @@ for dt = 1:numDots
         
         polarhistogram(SIR,'BinWidth',pi/6,'normalization','probability','FaceColor','r','EdgeColor','w')
         polarplot(cMean,0.35,'<w','MarkerFaceColor','r','MarkerSize',8)
-        polarplot([1.57 0 4.71],[1.5 0 1.5],'k-','LineWidth',.75)
+        polarplot([1.57 0 4.71],[1.5 0 1.5],'k-','LineWidth',.85)
         polarhistogram(SIR+pi,'BinWidth',pi/6,'normalization','probability','FaceColor','r','EdgeColor','w')
         %         polarplot(nanmedian(SIR)+pi,0.35,'>w','MarkerFaceColor','r','MarkerSize',8)
         
@@ -130,7 +130,7 @@ for dt = 1:numDots
         polarhistogram(SIL+pi,'BinWidth',pi/6,'normalization','probability','FaceColor','b','EdgeColor','w')
         polarplot(nanmedian(SIL),0.35,'<w','MarkerFaceColor','b','MarkerSize',8)
         %         polarplot(nanmedian(SIR)+pi,0.35,'>w','MarkerFaceColor','b','MarkerSize',8)
-        polarplot([1.57 0 4.71],[1.5 0 1.5],'k-','LineWidth',.75)
+        polarplot([1.57 0 4.71],[1.5 0 1.5],'k-','LineWidth',.85)
         
         text(nanmedian(SIL)+0.03,0.4,sprintf('median %.2f',rad2deg(nanmedian(SIL))),'FontSize',11)
         %         text(pi+nanmedian(SIR)+0.03,0.4,sprintf('median %.2f',rad2deg(nanmedian(SIR)+pi)),'FontSize',11)
@@ -146,61 +146,88 @@ suptitle({sprintf('%s %s %s distribution of preferred orientations by parameter 
 
 figName = [data.LE.animal,'_',data.LE.array,'_LE_prefOriDistribition_byParam_sigChs','.pdf'];
 print(gcf, figName,'-dpdf','-fillpage')
-
-
 %% BE 360 fig 9
-figure (9)
-clf
-pos = get(gcf,'Position');
-set(gcf,'Position',[pos(1) pos(2) 800 500])
-set(gcf,'PaperOrientation','Landscape');
-
-rOris = squeeze(data.RE.prefOri2thetaNoise(end,:,:,data.RE.goodCh == 1));
-rSigs = squeeze(data.RE.OSI2thetaNoiseSig(end,:,:,data.RE.goodCh == 1));
-
-SIR = deg2rad(rOris(rSigs == 1));
-SIR(isnan(SIR)) = [];
-
-lOris = squeeze(data.LE.prefOri2thetaNoise(end,:,:,data.LE.goodCh == 1));
-lSigs = squeeze(data.LE.OSI2thetaNoiseSig(end,:,:,data.LE.goodCh == 1));
-
-SIL = deg2rad(lOris(lSigs == 1));
-SIL(isnan(SIL)) = [];
-
-subplot(1,2,1,polaraxes)
-hold on
-
-polarhistogram(SIL,'BinWidth',pi/6,'normalization','probability','FaceColor','b','EdgeColor','w')
-polarplot(nanmedian(SIL),0.35,'<w','MarkerFaceColor','b','MarkerSize',8)
-polarhistogram(SIL+pi,'BinWidth',pi/6,'normalization','probability','FaceColor','b','EdgeColor','w')
-polarplot(nanmedian(SIL)+pi,0.35,'>w','MarkerFaceColor','b','MarkerSize',8)
-polarplot([1.57 0 4.71],[1.5 0 1.5],'k-','LineWidth',.75)
-
-ax = gca;
-ax.RLim   = [0,0.5];
-text(nanmedian(SIL)+0.02,0.4,sprintf('median %.2f',rad2deg(nanmedian(SIL))),'FontSize',11)
-text(pi+nanmedian(SIL)-0.05,0.43,sprintf('median %.2f',rad2deg(nanmedian(SIL)+pi)),'FontSize',11)
-title(sprintf('%s LE',data.LE.animal))
-
-subplot(1,2,2,polaraxes)
-hold on
-
-polarhistogram(SIR,'BinWidth',pi/6,'normalization','probability','FaceColor','r','EdgeColor','w')
-polarplot(nanmedian(SIR),0.35,'<w','MarkerFaceColor','r','MarkerSize',8)
-
-polarhistogram(SIR+pi,'BinWidth',pi/6,'normalization','probability','FaceColor','r','EdgeColor','w')
-polarplot(nanmedian(SIR)+pi,0.35,'>w','MarkerFaceColor','r','MarkerSize',8)
-polarplot([1.57 0 4.71],[1.5 0 1.5],'k-','LineWidth',.75)
-
-ax = gca;
-ax.RLim   = [0,0.5];
-text(nanmedian(SIR)+0.02,0.4,sprintf('median %.2f',rad2deg(nanmedian(SIR))),'FontSize',11)
-text(pi+nanmedian(SIR)+0.02,0.4,sprintf('median %.2f',rad2deg(nanmedian(SIR)+pi)),'FontSize',11)
-
-title(sprintf('%s RE',data.RE.animal))
-
-suptitle({sprintf('%s %s distribtion of preferred orientations across all stimuli',data.RE.animal, data.RE.array);...
-    sprintf('%s run %s',data.RE.date,data.RE.runNum)});
-
-figName = [data.RE.animal,'_',data.RE.array,'_BE_prefOriDistribition_sigChs','.pdf'];
-%print(gcf, figName,'-dpdf','-fillpage')
+% figure (9)
+% clf
+% pos = get(gcf,'Position');
+% set(gcf,'Position',[pos(1) pos(2) 800 500])
+% set(gcf,'PaperOrientation','Landscape');
+% 
+% rOris = squeeze(data.RE.prefOri2thetaNoise(end,:,:,data.RE.goodCh == 1));
+% rSigs = squeeze(data.RE.OSI2thetaNoiseSig(end,:,:,data.RE.goodCh == 1));
+% 
+% SIR = rOris(rSigs == 1);
+% SIR2 = SIR;
+% SIR2(SIR2<0) = SIR2(SIR2<0)+180;
+% SIR2(isnan(SIR2)) = [];
+% cirMuR = circ_mean(deg2rad(SIR(:)));
+% cirMuR2 = cirMuR+pi;
+% 
+% lOris = squeeze(data.LE.prefOri2thetaNoise(end,:,:,data.LE.goodCh == 1));
+% lSigs = squeeze(data.LE.OSI2thetaNoiseSig(end,:,:,data.LE.goodCh == 1));
+% 
+% SIL = lOris(lSigs == 1);
+% SIL2 = SIL;
+% SIL2(SIL2<0) = SIL2(SIL2<0)+180;
+% SIL2(isnan(SIL2)) = [];
+% cirMu = circ_mean(deg2rad(SIL(:)));
+% cirMu2 = cirMu+pi;
+%     
+% subplot(1,2,1,polaraxes)
+% hold on
+% 
+% [bins,edges] = histcounts(deg2rad(SIL2),0:pi/6:pi);
+% bins2 = sqrt(bins)./sum(sqrt(bins));
+% polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor','b','EdgeColor','w')
+% 
+% 
+% [bins,edges] = histcounts(deg2rad(SIL2)+pi,[0:pi/6:pi]+pi);
+% bins2 = sqrt(bins)./sum(sqrt(bins));
+% polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor','b','EdgeColor','w')
+% polarplot([cirMu 0 cirMu2],[1.5 0 1.5],'b-','LineWidth',.85)
+% polarplot([1.57 0 4.71],[1.5 0 1.5],'-','color',[0.4 0.4 0.4])
+% 
+% ax = gca;
+% ax.RLim   = [0,0.3];
+% text(cirMu+0.2,0.25,sprintf('mean: %.1f%c',rad2deg(cirMu),char(176)),'FontSize',11,'HorizontalAlignment','center')
+% text(cirMu2+0.2,0.25,sprintf('mean: %.1f%c',rad2deg(cirMu2),char(176)),'FontSize',11,'HorizontalAlignment','center')
+% 
+% set(gca,'FontSize',12,'FontAngle','italic')
+% if contains(data.LE.animal,'XT')
+%     title(sprintf('%s LE',data.RE.animal))
+% else
+%     title(sprintf('%s FE',data.RE.animal))
+% end
+% 
+% 
+% 
+% subplot(1,2,2,polaraxes)
+% hold on
+% 
+% [bins,edges] = histcounts(deg2rad(SIR2),0:pi/6:pi);
+% bins2 = sqrt(bins)./sum(sqrt(bins));
+% polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor','r','EdgeColor','w')
+% 
+% 
+% [bins,edges] = histcounts(deg2rad(SIR2)+pi,[0:pi/6:pi]+pi);
+% bins2 = sqrt(bins)./sum(sqrt(bins));
+% polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor','r','EdgeColor','w')
+% polarplot([cirMuR 0 cirMuR2],[1.5 0 1.5],'r-','LineWidth',.85)
+% polarplot([1.57 0 4.71],[1.5 0 1.5],'-','color',[0.4 0.4 0.4])
+% 
+% ax = gca;
+% ax.RLim   = [0,0.3];
+% text(cirMuR+0.2,0.25,sprintf('mean: %.1f%c',rad2deg(cirMuR),char(176)),'FontSize',11,'HorizontalAlignment','center')
+% text(cirMuR2+0.2,0.25,sprintf('mean: %.1f%c',rad2deg(cirMuR2),char(176)),'FontSize',11,'HorizontalAlignment','center')
+% 
+% set(gca,'FontSize',12,'FontAngle','italic')
+% if contains(data.RE.animal,'XT')
+%     title(sprintf('%s RE',data.RE.animal))
+% else
+%     title(sprintf('%s AE',data.RE.animal))
+% end
+% suptitle({sprintf('%s %s %s distribution of preferred orientations 100%% coherence',data.LE.animal, data.LE.eye, data.LE.array);...
+%     'Channels with significant tuning only'});
+% 
+% figName = [data.RE.animal,'_',data.RE.array,'_BE_prefOriDistribition_sigChs_area','.pdf'];
+% %print(gcf, figName,'-dpdf','-fillpage')
