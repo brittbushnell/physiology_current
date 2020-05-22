@@ -152,6 +152,9 @@ end
 suptitle((sprintf('%s %s LE stim vs blank', LEdata.animal, LEdata.array)))
 
 %% save figure
+if contains(LEdata.programID,'Coh')
+    LEdata.programID = 'Glass';
+end
 if contains(LEdata.animal,'WV')
     if location == 1
         figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/%s/8Deg/PSTH/',LEdata.animal,LEdata.programID,LEdata.array);

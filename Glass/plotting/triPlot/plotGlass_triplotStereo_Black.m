@@ -4,25 +4,29 @@ location = determineComputer;
 if contains(dataT.animal,'WV')
     if location == 1
         if contains(dataT.programID,'Small')
-            figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/Glass/%s/4Deg/prefStim/%s/triplot',dataT.animal, dataT.array, dataT.eye);
+            figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/Glass/%s/4Deg/prefStim/%s/',dataT.animal, dataT.array, dataT.eye);
         else
-            figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/Glass/%s/8Deg/prefStim/%s/triplot',dataT.animal, dataT.array, dataT.eye);
+            figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/Glass/%s/8Deg/prefStim/%s/',dataT.animal, dataT.array, dataT.eye);
         end
     elseif location == 0
         if contains(dataT.programID,'Small')
-            figDir =  sprintf('~/Dropbox/Figures/%s/Glass/%s/4Deg/prefStim/%s/triplot',dataT.animal, dataT.array, dataT.eye);
+            figDir =  sprintf('~/Dropbox/Figures/%s/Glass/%s/4Deg/prefStim/%s/',dataT.animal, dataT.array, dataT.eye);
         else
-            figDir =  sprintf('~/Dropbox/Figures/%s/Glass/%s/8Deg/prefStim/%s/triplot',dataT.animal, dataT.array, dataT.eye);
+            figDir =  sprintf('~/Dropbox/Figures/%s/Glass/%s/8Deg/prefStim/%s/',dataT.animal, dataT.array, dataT.eye);
         end
     end
 else
     if location == 1
-        figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/Glass/%s/prefStim/%s/triplot',dataT.animal, dataT.array, dataT.eye);
+        figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/Glass/%s/prefStim/%s/',dataT.animal, dataT.array, dataT.eye);
     elseif location == 0
-        figDir =  sprintf('~/Dropbox/Figures/%s/Glass/%s/prefStim/%s/triplot',dataT.animal, dataT.array, dataT.eye);
+        figDir =  sprintf('~/Dropbox/Figures/%s/Glass/%s/prefStim/%s/',dataT.animal, dataT.array, dataT.eye);
     end
 end
 cd(figDir)
+
+folder2 = 'triplot';
+mkdir(folder2)
+cd(sprintf('%s',folder2))
 %%
 [~,numDots,numDxs,~,~,~,dots,dxs,~,~] = getGlassParameters(dataT);
 %%
