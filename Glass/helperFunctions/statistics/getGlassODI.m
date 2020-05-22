@@ -24,26 +24,30 @@ data.RE.ODI = ODI;
 data.LE.ODI = ODI;
 %%
 location = determineComputer;
-
+if contains(REdata.programID,'TR')
+    prog = 'GlassTR';
+else
+    prog = 'Glass';
+end
 if contains(REdata.animal,'WV')
     if location == 1
         if contains(REdata.programID,'Small')
-            figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/Glass/%s/4Deg/EyeComps',REdata.animal, REdata.array);
+            figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/%s/4Deg/EyeComps',REdata.animal, prog,REdata.array);
         else
-            figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/Glass/%s/8Deg/EyeComps',REdata.animal, REdata.array);
+            figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/%s/8Deg/EyeComps',REdata.animal,prog, REdata.array);
         end
     elseif location == 0
         if contains(REdata.programID,'Small')
-            figDir =  sprintf('~/Dropbox/Figures/%s/Glass/%s/4Deg/EyeComps',REdata.animal, REdata.array);
+            figDir =  sprintf('~/Dropbox/Figures/%s/%s/%s/4Deg/EyeComps',REdata.animal, prog,REdata.array);
         else
-            figDir =  sprintf('~/Dropbox/Figures/%s/Glass/%s/8Deg/EyeComps',REdata.animal, REdata.array);
+            figDir =  sprintf('~/Dropbox/Figures/%s/%s/%s/8Deg/EyeComps',REdata.animal,prog, REdata.array);
         end
     end
 else
     if location == 1
-        figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/Glass/%s/EyeComps',REdata.animal, REdata.array);
+        figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/%s/EyeComps',REdata.animal, prog,REdata.array);
     elseif location == 0
-        figDir =  sprintf('~/Dropbox/Figures/%s/Glass/%s/EyeComps',REdata.animal, REdata.array);
+        figDir =  sprintf('~/Dropbox/Figures/%s/%s/%s/EyeComps',REdata.animal,prog, REdata.array);
     end
 end
 cd(figDir)
@@ -76,6 +80,9 @@ xlabel('ODI')
 ylabel('Probability')
 
 title(sprintf('%s %s',REdata.animal, REdata.array))
-figName = [REdata.animal,'_',REdata.array,'_GlassODI_raw','.pdf'];
-
+if contains(REdata.programID,'TR')
+figName = [REdata.animal,'_',REdata.array,'_GlassTR_ODI_raw','.pdf'];
+else
+    figName = [REdata.animal,'_',REdata.array,'_Glass_ODI_raw','.pdf'];
+end
 print(gcf,figName,'-dpdf','-fillpage')
