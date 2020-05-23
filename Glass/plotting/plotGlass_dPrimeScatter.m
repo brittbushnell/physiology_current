@@ -95,25 +95,29 @@ location = determineComputer;
 if contains(data.RE.animal,'WV')
     if contains(data.RE.programID,'Small')
         if location == 1
-            figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/Glass/%s/4Deg/dPrime',data.RE.animal,data.RE.array);
+            figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/Glass/%s/4Deg/',data.RE.animal,data.RE.array);
         elseif location == 0
-            figDir =  sprintf('~/Dropbox/Figures/%s/Glass/%s/4Deg/dPrime',data.RE.animal,data.RE.array);
+            figDir =  sprintf('~/Dropbox/Figures/%s/Glass/%s/4Deg/',data.RE.animal,data.RE.array);
         end
     else
         if location == 1
-            figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/Glass/%s/8Deg/dPrime',data.RE.animal,data.RE.array);
+            figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/Glass/%s/8Deg/',data.RE.animal,data.RE.array);
         elseif location == 0
-            figDir =  sprintf('~/Dropbox/Figures/%s/Glass/%s/8Deg/dPrime',data.RE.animal,data.RE.array);
+            figDir =  sprintf('~/Dropbox/Figures/%s/Glass/%s/8Deg/',data.RE.animal,data.RE.array);
         end
     end
 else
     if location == 1
-        figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/Glass/%s/dPrime',data.RE.animal,data.RE.array);
+        figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/Glass/%s/',data.RE.animal,data.RE.array);
     elseif location == 0
-        figDir =  sprintf('~/Dropbox/Figures/%s/Glass/%s/dPrime',data.RE.animal,data.RE.array);
+        figDir =  sprintf('~/Dropbox/Figures/%s/Glass/%s/',data.RE.animal,data.RE.array);
     end
 end
+
 cd (figDir)
+folder2 = 'dPrime';
+mkdir(folder2)
+cd(sprintf('%s',folder2))
 
 figName = [data.RE.animal '_glassdPrimeScatters_noZZ_prefWin.pdf'];
 set(gcf,'InvertHardCopy','off')
