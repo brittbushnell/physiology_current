@@ -55,7 +55,7 @@ polarplot([1.57 0 4.71],[1.5 0 1.5],'-','color',[0.4 0.4 0.4])
 ax = gca;
 ax.RLim   = [0,0.3];
 text(cirMuL+0.2,0.25,sprintf('mean: %.1f%c',rad2deg(cirMuL),char(176)),'FontSize',11,'HorizontalAlignment','center')
-text(cirMu2+0.2,0.25,sprintf('mean: %.1f%c',rad2deg(cirMuL2),char(176)),'FontSize',11,'HorizontalAlignment','center')
+text(cirMuL2+0.2,0.25,sprintf('mean: %.1f%c',rad2deg(cirMuL2),char(176)),'FontSize',11,'HorizontalAlignment','center')
 
 set(gca,'FontSize',12,'FontAngle','italic','RTickLabels',{'','',''})
 
