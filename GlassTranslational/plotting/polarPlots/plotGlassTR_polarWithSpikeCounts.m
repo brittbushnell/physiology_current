@@ -6,7 +6,7 @@ function [dataT] = plotGlassTR_polarWithSpikeCounts(dataT)
 %
 % returns data structure with the added spike count matrix.
 %
-% April 28, 2020 Brittany Bushnell 
+% April 28, 2020 Brittany Bushnell
 %%
 location = determineComputer;
 if location == 1
@@ -28,6 +28,12 @@ cd(sprintf('%s',folder2))
 [numOris,numDots,numDxs,numCoh,~,orisDeg,dots,dxs,coherences,~] = getGlassTRParameters(dataT);
 radOri = deg2rad(orisDeg);
 
+if contains(dataT.animal,'XT')
+    dtdxStart =2;
+else
+    dtdxStart = 1;
+end
+
 for ch = 1:96
     if dataT.goodCh(ch) == 1
         linNdx = dataT.type == 3;
@@ -36,8 +42,8 @@ for ch = 1:96
         blankMean(1,ch) = mean(mean(squeeze(dataT.bins((blankNdx),5:25,ch))))./0.01;
         spikeCountPerTrial =[];% nan(numDots,numDxs,numOris,96,36);
         
-        for dt = 1:numDots
-            for dx = 1:numDxs
+        for dt = dtdxStart:numDots
+            for dx = dtdxStart:numDxs
                 for or = 1:numOris
                     
                     dtNdx = dataT.numDots == dots(dt);
@@ -88,10 +94,14 @@ for ch = 1:96
         ttl = suptitle({sprintf('%s %s %s Glass orientation tuning curves ch %d',dataT.animal, dataT.eye, dataT.array,ch)});
         ttl.Position = [0.5,-0.025,0];
         axis off
-        
+        if contains(dataT.animal,'XT')
+            dtdxStart =2;
+        else
+            dtdxStart = 1;
+        end
         rowNdx = 1;
-        for dt = 1:numDots
-            for dx = 1:numDxs
+        for dt = dtdxStart:numDots
+            for dx = dtdxStart:numDxs
                 %axis off
                 
                 linResps = repmat(squeeze(stimMean(:,dt,dx,ch)),[2,1]);
@@ -146,10 +156,10 @@ for ch = 1:96
                 set(gca,'ThetaTick',0:45:315)
                 
                 if dataT.OSI2thetaNoiseSig(end,dt,dx,ch) == 1
-                    tO = title(sprintf('OSI: %.3f*',dataT.OriSelectIndex2thetaNoise(dt,dx)));
+                    tO = title(sprintf('OSI: %.3f*',dataT.OriSelectIndex2thetaNoise(end,dt,dx,ch)));
                     tO.FontSize = 10;
                 else
-                    tO = title(sprintf('OSI: %.3f',dataT.OriSelectIndex2thetaNoise(dt,dx)));
+                    tO = title(sprintf('OSI: %.3f',dataT.OriSelectIndex2thetaNoise(end,dt,dx,ch)));
                     tO.FontSize = 9;
                 end
                 tO.Position(2) = tO.Position(2)-0.01;
