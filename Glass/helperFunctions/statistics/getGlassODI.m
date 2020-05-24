@@ -29,7 +29,7 @@ if contains(REdata.programID,'TR')
 else
     prog = 'Glass';
 end
-if contains(REdata.animal,'WV')
+if contains(REdata.animal,'WV') && ~endsWith(prog,'TR')
     if location == 1
         if contains(REdata.programID,'Small')
             figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/%s/4Deg/EyeComps',REdata.animal, prog,REdata.array);

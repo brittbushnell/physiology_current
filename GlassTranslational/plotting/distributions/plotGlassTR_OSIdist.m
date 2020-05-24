@@ -193,8 +193,7 @@ end
 
 figName = [data.LE.animal,'_',data.LE.array,'_LE_OSIdistribition_byParam_sig','.pdf'];
 print(gcf, figName,'-dpdf','-fillpage')
-%%
-    
+%%    
     figure
     clf
     pos = get(gcf,'Position');
@@ -265,8 +264,9 @@ print(gcf, figName,'-dpdf','-fillpage')
     plot(nanmean(SIL),0.28,'vw','MarkerFaceColor','b','MarkerSize',7.5)
     
     text(nanmean(SIL)+0.02,0.28,sprintf('mean %.2f',nanmean(SIL)),'FontSize',11)
-    nGood = 96-sum(isnan(SIL) == 1);
-    text(xmax-0.1, 0.28, sprintf('n: %d',nGood));
+    text(xmax-0.1, 0.28, sprintf('num good and sig: %d',(96-sum(isnan(SIL) == 1))));
+    text(xmax-0.1, 0.26, sprintf('num good channels: %d',sum(data.LE.goodCh)));
+
     
     set(gca,'tickdir', 'out','YTick',0:0.1:0.5,'box','off','Layer','top')
 
@@ -283,8 +283,76 @@ print(gcf, figName,'-dpdf','-fillpage')
     plot(nanmean(SIR),0.28,'vw','MarkerFaceColor','r','MarkerSize',7.5)
     
     text(nanmean(SIR)+0.02,0.28,sprintf('mean %.2f',nanmean(SIR)),'FontSize',11)
-    text(xmax-0.1,0.28,sprintf('n: %d',(96-sum(isnan(SIR) == 1))));
+    text(xmax-0.1,0.28,sprintf('num good and sig: %d',(96-sum(isnan(SIR) == 1))));
+    text(xmax-0.1, 0.26, sprintf('num good channels: %d',sum(data.RE.goodCh)));
+
+    set(gca,'tickdir', 'out','YTick',0:0.1:0.5,'box','off','Layer','top')
+    xlim([-0.05,xmax])
+    ylim([0 0.3])
     
+    ylabel('probability','FontSize',12)
+    xlabel('OSI','FontSize',12)
+    title(sprintf('%s RE',data.RE.animal))
+    
+    suptitle({sprintf('%s %s distribtion of OSIs for each ch best parameter, signficant responses only',data.RE.animal, data.RE.array);...
+        sprintf('%s run %s',data.RE.date,data.RE.runNum)});
+    
+    figName = [data.RE.animal,'_',data.RE.array,'_BE_OSIdistribition_bestDtDx_sigChs','.pdf'];
+    print(gcf, figName,'-dpdf','-fillpage')
+    %%
+        figure
+    clf
+    pos = get(gcf,'Position');
+    set(gcf,'Position',[pos(1) pos(2) 800 500])
+    set(gcf,'PaperOrientation','Landscape');
+    
+    % SIR = squeeze(data.RE.OriSelectIndex2thetaNoise(end,:,:,data.RE.goodCh == 1));
+    % SIR = reshape(SIR,[1,numel(SIR)]);
+    % SIR(isnan(SIR)) = [];
+    %
+    % SIL = squeeze(data.LE.OriSelectIndex2thetaNoise(end,:,:,data.LE.goodCh == 1));
+    % SIL = reshape(SIL,[1,numel(SIL)]);
+    % SIL(isnan(SIL)) = [];
+    
+    rSI = squeeze(data.RE.OriSelectIndex2thetaNoise(end,:,:,:));
+    siA = [squeeze(rSI(1,1,:)),squeeze(rSI(1,2,:)),squeeze(rSI(2,1,:)),squeeze(rSI(2,2,:))];
+    SIR = max(siA,[],2);
+   
+            
+    lSI = squeeze(data.LE.OriSelectIndex2thetaNoise(end,:,:,:));
+    siA = [squeeze(lSI(1,1,:)),squeeze(lSI(1,2,:)),squeeze(lSI(2,1,:)),squeeze(lSI(2,2,:))];
+    SIL = max(siA,[],2);
+    
+    xmax = max([SIR; SIL])+0.05;
+    xmin = xmax*-1;
+    
+    subplot(2,1,1)
+    hold on
+    
+    histogram(SIL,xmin:.02:xmax,'normalization','probability','FaceColor','b','EdgeColor','w')
+    plot(nanmean(SIL),0.28,'vw','MarkerFaceColor','b','MarkerSize',7.5)
+    
+    text(nanmean(SIL)+0.02,0.28,sprintf('mean %.2f',nanmean(SIL)),'FontSize',11)
+    text(xmax-0.1, 0.28, sprintf('num good channels: %d',sum(data.LE.goodCh)));
+
+    
+    set(gca,'tickdir', 'out','YTick',0:0.1:0.5,'box','off','Layer','top')
+
+    xlim([-0.05,xmax])
+    ylim([0 0.3])
+    
+    ylabel('probability','FontSize',12)
+    title(sprintf('%s LE',data.LE.animal))
+    
+    subplot(2,1,2)
+    hold on
+    
+    histogram(SIR,xmin:.02:xmax,'normalization','probability','FaceColor','r','EdgeColor','w')
+    plot(nanmean(SIR),0.28,'vw','MarkerFaceColor','r','MarkerSize',7.5)
+    
+    text(nanmean(SIR)+0.02,0.28,sprintf('mean %.2f',nanmean(SIR)),'FontSize',11)
+    text(xmax-0.1, 0.28, sprintf('num good channels: %d',sum(data.RE.goodCh)));
+
     set(gca,'tickdir', 'out','YTick',0:0.1:0.5,'box','off','Layer','top')
     xlim([-0.05,xmax])
     ylim([0 0.3])
@@ -296,5 +364,5 @@ print(gcf, figName,'-dpdf','-fillpage')
     suptitle({sprintf('%s %s distribtion of OSIs for each ch best parameter',data.RE.animal, data.RE.array);...
         sprintf('%s run %s',data.RE.date,data.RE.runNum)});
     
-    figName = [data.RE.animal,'_',data.RE.array,'_BE_OSIdistribition_bestDtDx','.pdf'];
+    figName = [data.RE.animal,'_',data.RE.array,'_BE_OSIdistribition_bestDtDx_goodChs','.pdf'];
     print(gcf, figName,'-dpdf','-fillpage')
