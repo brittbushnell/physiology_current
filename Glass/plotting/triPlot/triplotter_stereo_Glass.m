@@ -65,25 +65,25 @@ for i = 1:length(rcb)
     tmp = sum_xyz(i);
     
     if tmp > binLim(9) %&& tmp < binLim(5) % plot black
-        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), '.','color',  [1 1 1].*0, 'MarkerSize', 25); hold on;  
+        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), '.','color',  [1 1 1].*0,'MarkerSize', 20); hold on;  
     elseif tmp > binLim(8) && tmp < binLim(9)
-        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), '.','color',  [1 1 1].*.1, 'MarkerSize', 25);
+        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), '.','color',  [1 1 1].*.1,'MarkerSize', 20);
     elseif tmp > binLim(7) && tmp < binLim(8)
-        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), '.','color',  [1 1 1].*.2, 'MarkerSize', 25);
+        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), '.','color',  [1 1 1].*.2,'MarkerSize', 20);
     elseif tmp > binLim(6) && tmp < binLim(7)
-        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), '.','color',  [1 1 1].*.3, 'MarkerSize', 25);
+        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), '.','color',  [1 1 1].*.3,'MarkerSize', 20);
     elseif tmp > binLim(5) && tmp < binLim(6)
-        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), '.','color',  [1 1 1].*.4, 'MarkerSize', 25);
+        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), '.','color',  [1 1 1].*.4,'MarkerSize', 20);
     elseif tmp > binLim(4) && tmp < binLim(5)
-        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), '.','color',  [1 1 1].*.5, 'MarkerSize', 25);
+        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), '.','color',  [1 1 1].*.5,'MarkerSize', 20);
     elseif tmp > binLim(3) && tmp < binLim(4)
-        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), '.','color',  [1 1 1].*.6, 'MarkerSize', 25);
+        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), '.','color',  [1 1 1].*.6,'MarkerSize', 20);
     elseif tmp > binLim(2) && tmp < binLim(3)
-        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), '.','color',  [1 1 1].*.7, 'MarkerSize', 25);
+        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), '.','color',  [1 1 1].*.7,'MarkerSize', 20);
     elseif tmp > binLim(1) && tmp < binLim(2)
-        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), '.','color',  [1 1 1].*.8, 'MarkerSize', 25);
+        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), '.','color',  [1 1 1].*.8,'MarkerSize', 20);
     elseif tmp > 0 && tmp < binLim(1)
-        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), '.','color',  [1 1 1].*.9, 'MarkerSize', 25);  
+        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), '.','color',  [1 1 1].*.9,'MarkerSize', 20);  
     end
         
 end
