@@ -32,8 +32,6 @@ SImin = -1*SImax;
 
 ndx = 1;
 
-
-
 for dt = 1:numDots
     for dx = 1:numDxs
         sig = squeeze(data.RE.OSI2thetaNoiseSig(end,dt,dx,:));
@@ -196,8 +194,6 @@ end
 figName = [data.LE.animal,'_',data.LE.array,'_LE_OSIdistribition_byParam_sig','.pdf'];
 print(gcf, figName,'-dpdf','-fillpage')
 %%
-for i = 1:4
-    numGood = i-1;
     
     figure
     clf
@@ -214,37 +210,68 @@ for i = 1:4
     % SIL(isnan(SIL)) = [];
     
     SIGood = squeeze(data.RE.OSI2thetaNoiseSig(end,:,:,:));
-    sirA = sum(SIGood,1);
-    sirA = squeeze(sum(sirA,2));
-    
-    SIR = squeeze(data.RE.OriSelectIndex2thetaNoise(end,:,:,sirA>numGood)); % with each iteration through the loop, will require one more configuration to be significant.
-    SIR = reshape(SIR,[1,numel(SIR)]);
-    SIR(isnan(SIR)) = [];
-    
+    rSI = squeeze(data.RE.OriSelectIndex2thetaNoise(end,:,:,:));
+    siA = [squeeze(rSI(1,1,:)),squeeze(rSI(1,2,:)),squeeze(rSI(2,1,:)),squeeze(rSI(2,2,:))];
+    [SIR,ind] = max(siA,[],2);
+    for ch = 1:96
+        if ind(ch) == 1
+            gd = SIGood(1,1,ch);
+        elseif ind(ch) == 2
+            gd = SIGood(1,2,ch);
+        elseif ind(ch) == 3
+            gd = SIGood(2,1,ch);
+        else
+             gd = SIGood(2,2,ch);
+        end
+        if gd == 0
+            SIR(ch) = nan;
+        end
+    end
+            
     SIGood = squeeze(data.LE.OSI2thetaNoiseSig(end,:,:,:));
-    silA = sum(SIGood,1);
-    silA = squeeze(sum(silA,2));
+    lSI = squeeze(data.LE.OriSelectIndex2thetaNoise(end,:,:,:));
+    siA = [squeeze(lSI(1,1,:)),squeeze(lSI(1,2,:)),squeeze(lSI(2,1,:)),squeeze(lSI(2,2,:))];
+    [SIL,ind] = max(siA,[],2);
+    for ch = 1:96
+        if ind(ch) == 1
+            gd = SIGood(1,1,ch);
+        elseif ind(ch) == 2
+            gd = SIGood(1,2,ch);
+        elseif ind(ch) == 3
+            gd = SIGood(2,1,ch);
+        else
+             gd = SIGood(2,2,ch);
+        end
+        if gd == 0
+            SIL(ch) = nan;
+        end
+    end
     
-    SIL = squeeze(data.LE.OriSelectIndex2thetaNoise(end,:,:,silA>numGood)); % with each iteration through the loop, will require one more configuration to be significant.
-    SIL = reshape(SIL,[1,numel(SIL)]);
-    SIL(isnan(SIL)) = [];
     
-    xmax = max([SIR, SIL])+0.05;
+%     SIGood = squeeze(data.LE.OSI2thetaNoiseSig(end,:,:,:));
+%     silA = sum(SIGood,1);
+%     
+%     SIL = squeeze(data.LE.OriSelectIndex2thetaNoise(end,:,:,silA>numGood)); % with each iteration through the loop, will require one more configuration to be significant.
+%     SIL = reshape(SIL,[1,numel(SIL)]);
+%     SIL(isnan(SIL)) = [];
+    
+    xmax = max([SIR; SIL])+0.05;
     xmin = xmax*-1;
     
     subplot(2,1,1)
     hold on
     
-    histogram(SIL,xmin:.01:xmax,'normalization','probability','FaceColor','b','EdgeColor','w')
-    plot(nanmean(SIL),0.4,'vw','MarkerFaceColor','b','MarkerSize',7.5)
+    histogram(SIL,xmin:.02:xmax,'normalization','probability','FaceColor','b','EdgeColor','w')
+    plot(nanmean(SIL),0.28,'vw','MarkerFaceColor','b','MarkerSize',7.5)
     
-    text(nanmean(SIL)+0.02,0.4,sprintf('mean %.2f',nanmean(SIL)),'FontSize',11)
-    text(xmax-0.1,0.45,sprintf('n: %d',sum(silA>numGood)));
+    text(nanmean(SIL)+0.02,0.28,sprintf('mean %.2f',nanmean(SIL)),'FontSize',11)
+    nGood = 96-sum(isnan(SIL) == 1);
+    text(xmax-0.1, 0.28, sprintf('n: %d',nGood));
     
     set(gca,'tickdir', 'out','YTick',0:0.1:0.5,'box','off','Layer','top')
 
     xlim([-0.05,xmax])
-    ylim([0 0.5])
+    ylim([0 0.3])
     
     ylabel('probability','FontSize',12)
     title(sprintf('%s LE',data.LE.animal))
@@ -252,23 +279,22 @@ for i = 1:4
     subplot(2,1,2)
     hold on
     
-    histogram(SIR,xmin:.01:xmax,'normalization','probability','FaceColor','r','EdgeColor','w')
-    plot(nanmean(SIR),0.4,'vw','MarkerFaceColor','r','MarkerSize',7.5)
+    histogram(SIR,xmin:.02:xmax,'normalization','probability','FaceColor','r','EdgeColor','w')
+    plot(nanmean(SIR),0.28,'vw','MarkerFaceColor','r','MarkerSize',7.5)
     
-    text(nanmean(SIR)+0.02,0.4,sprintf('mean %.2f',nanmean(SIR)),'FontSize',11)
-    text(xmax-0.1,0.45,sprintf('n: %d',sum(sirA>numGood)));
+    text(nanmean(SIR)+0.02,0.28,sprintf('mean %.2f',nanmean(SIR)),'FontSize',11)
+    text(xmax-0.1,0.28,sprintf('n: %d',(96-sum(isnan(SIR) == 1))));
     
     set(gca,'tickdir', 'out','YTick',0:0.1:0.5,'box','off','Layer','top')
     xlim([-0.05,xmax])
-    ylim([0 0.5])
+    ylim([0 0.3])
     
     ylabel('probability','FontSize',12)
     xlabel('OSI','FontSize',12)
     title(sprintf('%s RE',data.RE.animal))
     
-    suptitle({sprintf('%s %s distribtion of OSIs across all stimuli at least %d parameter(s) per channel significant',data.RE.animal, data.RE.array, numGood+1);...
+    suptitle({sprintf('%s %s distribtion of OSIs for each ch best parameter',data.RE.animal, data.RE.array);...
         sprintf('%s run %s',data.RE.date,data.RE.runNum)});
     
-    figName = [data.RE.animal,'_',data.RE.array,'_BE_OSIdistribition_',num2str(i),'GoodParams','.pdf'];
+    figName = [data.RE.animal,'_',data.RE.array,'_BE_OSIdistribition_bestDtDx','.pdf'];
     print(gcf, figName,'-dpdf','-fillpage')
-end
