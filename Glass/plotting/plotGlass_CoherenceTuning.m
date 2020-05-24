@@ -133,45 +133,45 @@ for dt = 1:numDots
     end
 end
 %%
-for ch = 1:96
-    if data.RE.goodCh(ch) == 1
-        figure(15)
-        pos = get(gcf,'Position');
-        set(gcf,'Position',[pos(1) pos(2) 600 400])
-        for dt = 1:numDots
-            for dx = 1:numDxs
-                
-                nsubplot(2,2,dt,dx);
-                hold on
-                conCohResps = squeeze(data.RE.conNoiseDprime(:,dt,dx,ch));
-                plot(cohs,conCohResps,'-','LineWidth',1.5,'color',[0.5,0,0.5,0.7])
-                
-                radCohResps = squeeze(data.RE.radNoiseDprime(:,dt,dx,ch));
-                plot(cohs,radCohResps,'-','LineWidth',1.5,'color',[0,0.6,0.2,0.7])
-                
-                conRadResps = (squeeze(data.RE.conRadDprime(:,dt,dx,ch)));
-                plot(cohs,conRadResps,'-','LineWidth',1.5,'color',[0.5,0.5,0.5,0.7])
-                
-                title(sprintf('dots %d dx %.2f',dots(dt),dxs(dx)))
-                xlabel('coherence')
-                ylabel('dPrime')
-                xlim([0 125])
-                ylim([yMin yMax])
-                axis square
-                set(gca,'box','off')
-                
-                set(gca,'XTick',0:25:100)
-                xtickangle(45)
-                
-            end
-        end
-        suptitle({sprintf('%s %s %s coherence responses ch %d',data.RE.animal, data.RE.eye, data.RE.array,ch);...
-            ('p: conVnoise  gn: radVnoise  gy: conVsRad')})
-        
-        figName = [data.RE.animal,'_RE_',data.RE.array,'_',data.RE.programID,'_cohTuning_ch',num2str(ch),'.pdf'];
-        print(gcf, figName,'-dpdf','-fillpage')
-    end
-end
+% for ch = 1:96
+%     if data.RE.goodCh(ch) == 1
+%         figure(15)
+%         pos = get(gcf,'Position');
+%         set(gcf,'Position',[pos(1) pos(2) 600 400])
+%         for dt = 1:numDots
+%             for dx = 1:numDxs
+%                 
+%                 nsubplot(2,2,dt,dx);
+%                 hold on
+%                 conCohResps = squeeze(data.RE.conNoiseDprime(:,dt,dx,ch));
+%                 plot(cohs,conCohResps,'-','LineWidth',1.5,'color',[0.5,0,0.5,0.7])
+%                 
+%                 radCohResps = squeeze(data.RE.radNoiseDprime(:,dt,dx,ch));
+%                 plot(cohs,radCohResps,'-','LineWidth',1.5,'color',[0,0.6,0.2,0.7])
+%                 
+%                 conRadResps = (squeeze(data.RE.conRadDprime(:,dt,dx,ch)));
+%                 plot(cohs,conRadResps,'-','LineWidth',1.5,'color',[0.5,0.5,0.5,0.7])
+%                 
+%                 title(sprintf('dots %d dx %.2f',dots(dt),dxs(dx)))
+%                 xlabel('coherence')
+%                 ylabel('dPrime')
+%                 xlim([0 125])
+%                 ylim([yMin yMax])
+%                 axis square
+%                 set(gca,'box','off')
+%                 
+%                 set(gca,'XTick',0:25:100)
+%                 xtickangle(45)
+%                 
+%             end
+%         end
+%         suptitle({sprintf('%s %s %s coherence responses ch %d',data.RE.animal, data.RE.eye, data.RE.array,ch);...
+%             ('p: conVnoise  gn: radVnoise  gy: conVsRad')})
+%         
+%         figName = [data.RE.animal,'_RE_',data.RE.array,'_',data.RE.programID,'_cohTuning_ch',num2str(ch),'.pdf'];
+%         print(gcf, figName,'-dpdf','-fillpage')
+%     end
+% end
 %% plot coherences across the whole array LE
 cd ../../../LE/coherenceTuning/
 folder = data.RE.date2;
@@ -222,42 +222,42 @@ for dt = 1:numDots
     end
 end
 %%
-for ch = 1:96
-    if data.LE.goodCh(ch) == 1
-        figure(15)
-        pos = get(gcf,'Position');
-        set(gcf,'Position',[pos(1) pos(2) 600 400])
-        for dt = 1:numDots
-            for dx = 1:numDxs
-                
-                nsubplot(2,2,dt,dx);
-                hold on
-                conCohResps = squeeze(data.LE.conNoiseDprime(:,dt,dx,ch));
-                plot(cohs,conCohResps,'-','LineWidth',1.5,'color',[0.5,0,0.5,0.7])
-                
-                radCohResps = squeeze(data.LE.radNoiseDprime(:,dt,dx,ch));
-                plot(cohs,radCohResps,'-','LineWidth',1.5,'color',[0,0.6,0.2,0.7])
-                
-                conRadResps = (squeeze(data.LE.conRadDprime(:,dt,dx,ch)));
-                plot(cohs,conRadResps,'-','LineWidth',1.5,'color',[0.5,0.5,0.5,0.7])
-                
-                title(sprintf('dots %d dx %.2f',dots(dt),dxs(dx)))
-                xlabel('coherence')
-                ylabel('dPrime')
-                xlim([0 125])
-                ylim([yMin yMax])
-                axis square
-                set(gca,'box','off')
-                
-                set(gca,'XTick',0:25:100)
-                xtickangle(45)
-                
-            end
-        end
-        suptitle({sprintf('%s %s %s coherence responses ch %d',data.LE.animal, data.LE.eye, data.LE.array,ch);...
-            ('p: conVnoise  gn: radVnoise  gy: conVsRad')})
-        
-        figName = [data.LE.animal,'_LE_',data.LE.array,'_',data.LE.programID,'_cohTuning_ch',num2str(ch),'.pdf'];
-        print(gcf, figName,'-dpdf','-fillpage')
-    end
-end
+% for ch = 1:96
+%     if data.LE.goodCh(ch) == 1
+%         figure(15)
+%         pos = get(gcf,'Position');
+%         set(gcf,'Position',[pos(1) pos(2) 600 400])
+%         for dt = 1:numDots
+%             for dx = 1:numDxs
+%                 
+%                 nsubplot(2,2,dt,dx);
+%                 hold on
+%                 conCohResps = squeeze(data.LE.conNoiseDprime(:,dt,dx,ch));
+%                 plot(cohs,conCohResps,'-','LineWidth',1.5,'color',[0.5,0,0.5,0.7])
+%                 
+%                 radCohResps = squeeze(data.LE.radNoiseDprime(:,dt,dx,ch));
+%                 plot(cohs,radCohResps,'-','LineWidth',1.5,'color',[0,0.6,0.2,0.7])
+%                 
+%                 conRadResps = (squeeze(data.LE.conRadDprime(:,dt,dx,ch)));
+%                 plot(cohs,conRadResps,'-','LineWidth',1.5,'color',[0.5,0.5,0.5,0.7])
+%                 
+%                 title(sprintf('dots %d dx %.2f',dots(dt),dxs(dx)))
+%                 xlabel('coherence')
+%                 ylabel('dPrime')
+%                 xlim([0 125])
+%                 ylim([yMin yMax])
+%                 axis square
+%                 set(gca,'box','off')
+%                 
+%                 set(gca,'XTick',0:25:100)
+%                 xtickangle(45)
+%                 
+%             end
+%         end
+%         suptitle({sprintf('%s %s %s coherence responses ch %d',data.LE.animal, data.LE.eye, data.LE.array,ch);...
+%             ('p: conVnoise  gn: radVnoise  gy: conVsRad')})
+%         
+%         figName = [data.LE.animal,'_LE_',data.LE.array,'_',data.LE.programID,'_cohTuning_ch',num2str(ch),'.pdf'];
+%         print(gcf, figName,'-dpdf','-fillpage')
+%     end
+% end
