@@ -39,8 +39,6 @@ radDps = abs(squeeze(data.LE.radBlankDprime(end,:,:,:)));
 conDps = abs(squeeze(data.LE.conBlankDprime(end,:,:,:)));
 nosDps = abs(squeeze(data.LE.noiseBlankDprime(:,:,:)));
 
- 
-
 rDp = squeeze([squeeze(radDps(1,1,:)),squeeze(radDps(1,2,:)),squeeze(radDps(2,1,:)),squeeze(radDps(2,2,:))]);
 rDp = max(rDp');
 rDp = rDp';
