@@ -10,10 +10,10 @@ clc
 % REfile = 'WV_RE_glassCoh_nsp2_20190404_all_raw_2kFixPerm_Stats';...
 % LEfile = 'WV_LE_glassCoh_nsp2_20190402_all_raw_2kFixPerm_Stats';...
 % newName = 'WV_BE_Glass_V4_raw_combSameDay';
-
- REfile = 'XT_RE_GlassCoh_nsp2_20190321_all_raw_2kFixPerm_Stats';...
- LEfile = 'XT_LE_GlassCoh_nsp2_20190325_all_raw_2kFixPerm_Stats';...
- newName = 'XT_BE_Glass_V4_raw_combSameDay';
+% 
+%  REfile = 'XT_RE_GlassCoh_nsp2_20190321_all_raw_2kFixPerm_Stats';...
+%  LEfile = 'XT_LE_GlassCoh_nsp2_20190325_all_raw_2kFixPerm_Stats';...
+%  newName = 'XT_BE_Glass_V4_raw_combSameDay';
 
 % V1
 
@@ -25,9 +25,9 @@ clc
 % LEfile = 'WV_LE_glassCoh_nsp1_20190403_all_raw_2kFixPerm_Stats';...
 % newName = 'WV_BE_Glass_V1_raw_combSameDay';
 
-%  REfile = 'XT_RE_GlassCoh_nsp1_20190321_all_raw_2kFixPerm_Stats';...
-%  LEfile = 'XT_LE_GlassCoh_nsp1_20190325_all_raw_2kFixPerm_Stats';...
-%  newName = 'XT_BE_Glass_V1_raw_combSameDay';
+ REfile = 'XT_RE_GlassCoh_nsp1_20190321_all_raw_2kFixPerm_Stats';...
+ LEfile = 'XT_LE_GlassCoh_nsp1_20190325_all_raw_2kFixPerm_Stats';...
+ newName = 'XT_BE_Glass_V1_raw_combSameDay';
 %%
 location = determineComputer;
 if location == 1
@@ -58,11 +58,11 @@ data = getGlassODI(data);
 %  plotGlass_latencyDprimeCrossEyes_marginals(data.LE,data.RE)
 %% binocular triplots
  if contains(REfile,'WU') 
- triplotter_stereo_Glass_BE(data,3.5)
+     triplotter_stereo_Glass_BE(data,3)
  elseif contains(REfile,'WV') 
-      triplotter_stereo_Glass_BE(data,3.5)
+      triplotter_stereo_Glass_BE(data,2.5)
  else
-      triplotter_stereo_Glass_BE(data,5.5)
+      triplotter_stereo_Glass_BE(data,1.25)
  end
 %%
 saveName = [outputDir newName '.mat'];
