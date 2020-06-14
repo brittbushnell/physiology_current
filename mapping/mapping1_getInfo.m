@@ -1,18 +1,19 @@
-files = {'WV_LE_MapNoiseRightWide_nsp2_20190121_002'
-
-    };
+clear
+close all
+clc
 %%
+
+files = {'WV_LE_MapNoiseRight_nsp2_20190121_all';
+    'WV_LE_MapNoiseRightWide_nsp2_20190122_002';
+    'WV_RE_MapNoiseRightWide_nsp2_20190122_001';
+    };
 nameEnd = 'raw';
 %%
-startBin = 1;
-endBin = 35;
-
-numBoot = 2000;
-%%
-aMap = getBlackrockArrayMap(files(1,:));
 location = determineComputer;
 failedFiles = {};
 failNdx = 1;
+
+aMap = getBlackrockArrayMap(files(1,:));
 for fi = 1:size(files,1)
     %% Get basic information about experiments
     %try
@@ -28,16 +29,13 @@ for fi = 1:size(files,1)
         [dataT.animal, dataT.eye, dataT.programID, dataT.array, dataT.date2,dataT.runNum] = deal(tmp{:});
         % get date in a format that's useable in figure titles (ex: 09/1/2019 vs 20190901)
         dataT.date = convertDate(dataT.date2);
-        oneDay = 1;
     elseif length(tmp) == 7
         [dataT.animal, dataT.eye, dataT.programID, dataT.array, dataT.date2,dataT.runNum,ign] = deal(tmp{:});
         % get date in a format that's useable in figure titles (ex: 09/1/2019 vs 20190901)
         dataT.date = convertDate(dataT.date2);
-        oneDay = 1;
     else
         [dataT.animal, dataT.eye, dataT.programID, dataT.array, dataT.date2] = deal(tmp{:});
         dataT.date = dataT.date2;
-        oneDay = 0;
     end
     
     if strcmp(dataT.array, 'nsp1')
@@ -45,13 +43,11 @@ for fi = 1:size(files,1)
     elseif strcmp(dataT.array, 'nsp2')
         dataT.array = 'V4';
     end
-    
-    if contains(dataT.animal,'XX')
-        dataT.filename = reshape(dataT.filename,[numel(dataT.filename),1]);
-        dataT.filename = char(dataT.filename);
+    %% 
+    dataT.stimulus = nan(1,size(dataT.filename,1));
+    for i = 1:size(dataT.filename,1)
+        dataT.stimulus(1,i) = parseMapNoiseName(dataT.filename(i,:));
     end
-    dataT.amap = aMap;
-    dataT.date2 = dataT.date2;
     %%
     if location == 1
         outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/GratMapRF/',dataT.array);
@@ -79,4 +75,3 @@ for fi = 1:size(files,1)
     %     end
 end
 %failedFiles
-toc
