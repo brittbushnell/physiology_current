@@ -1,4 +1,4 @@
-function [dataT] = plotGlassTR_polarWithSpikeCounts(dataT)
+function [dataT] = plotGlassTR_polarWithSpikeCounts_thresh(dataT)
 % Makes one figure per channel. Each row is a unique combination of the dot
 % density and dx. On the left are the polar plots with responses to translational,
 % dipoles, and blank screens. To the right are histograms of the spike
@@ -18,6 +18,10 @@ end
 cd(figDir)
 % go to date specific folder, if it doesn't exist, make it
 folder = dataT.date2;
+mkdir(folder)
+cd(sprintf('%s',folder))
+
+folder = dataT.threshold*10;
 mkdir(folder)
 cd(sprintf('%s',folder))
 
@@ -112,7 +116,8 @@ for ch = 1:96
         pos = get(gcf,'Position');
         set(gcf,'Position',[pos(1) pos(2) 1200 1200])
         set(gcf,'PaperOrientation','Landscape');
-        ttl = suptitle({sprintf('%s %s %s Glass orientation tuning curves ch %d',dataT.animal, dataT.eye, dataT.array,ch)});
+        ttl = suptitle({sprintf('%s %s %s Glass orientation tuning curves ch %d',dataT.animal, dataT.eye, dataT.array,ch);...
+            sprintf('cleaned and rethresholded at -%.1f',dataT.threshold)});
         ttl.Position = [0.5,-0.025,0];
         axis off
         if contains(dataT.animal,'XT')
@@ -245,7 +250,7 @@ for ch = 1:96
         end
         %%
         
-        figName = [dataT.animal,'_',dataT.array,'_',dataT.eye,'_oriRespsPolar_spikeCount',num2str(ch),'.pdf'];
+        figName = [dataT.animal,'_',dataT.array,'_',dataT.eye,'_oriRespsPolar_spikeCount_',num2str(ch),'_thresh_',num2str(dataT.threshold),'.pdf'];
         print(gcf, figName,'-dpdf','-fillpage')
     end
 end

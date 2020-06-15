@@ -39,6 +39,7 @@ for fi = 1:size(files,1)
     %% do stim vs blank permutation test
     stimNdx = (dataT.stimulus == 1);
     blankNdx = (dataT.stimulus == 0);
+    
     [dataT] = stimVsBlankPermutations_allStim(dataT,stimNdx,blankNdx, numBoot,holdout);
     
     fprintf('stimulus vs blank permutaiton test done %.2f hours \n',toc/3600)        
