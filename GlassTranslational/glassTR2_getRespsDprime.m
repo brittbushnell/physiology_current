@@ -1,4 +1,4 @@
-clear all
+lsclear all
 close all
 clc
 fprintf('running glassTR2_getRespsDprime \n')

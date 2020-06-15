@@ -33,14 +33,34 @@ if contains(dataT.animal,'XT')
 else
     dtdxStart = 1;
 end
+linNdx = dataT.type == 3;
+noiseNdx = dataT.type == 0;
+blankNdx = dataT.numDots == 0;
+numReps = nan(numDots,numDxs,numOris,96);
+% if there were an unequal number of repeats run on different stimuli, take
+% them down to the lowest non zero number of repeats - that way there will
+% be the same number of repeats for everything.
 
 for ch = 1:96
+    for dt = dtdxStart:numDots
+        for dx = dtdxStart:numDxs
+            for or = 1:numOris
+                dtNdx = dataT.numDots == dots(dt);
+                dxNdx = dataT.dx == dxs(dx);
+                coNdx = dataT.coh == 1;
+                orNdx = dataT.rotation == orisDeg(or);
+                numReps(dt,dx,or,ch) = size(dataT.bins((linNdx & dtNdx & dxNdx & coNdx & orNdx),5:25,ch),1);
+            end
+        end
+    end
+end
+
+numReps(numReps == 0) = [];
+spikeCountPerTrial = nan(numDots,numDxs,numOris,96,min(numReps(:)));
+%%
+for ch = 1:96
     if dataT.goodCh(ch) == 1
-        linNdx = dataT.type == 3;
-        noiseNdx = dataT.type == 0;
-        blankNdx = dataT.numDots == 0;
         blankMean(1,ch) = mean(mean(squeeze(dataT.bins((blankNdx),5:25,ch))))./0.01;
-        spikeCountPerTrial =[];% nan(numDots,numDxs,numOris,96,36);
         
         for dt = dtdxStart:numDots
             for dx = dtdxStart:numDxs
@@ -54,7 +74,8 @@ for ch = 1:96
                     stimMean(or,dt,dx,ch) = mean(mean(squeeze(dataT.bins((linNdx & dtNdx & dxNdx & coNdx & orNdx),5:25,ch))))./0.01;
                     noiseMean(dt,dx,ch) = mean(mean(squeeze(dataT.bins((noiseNdx & dtNdx & dxNdx),5:25,ch))))./0.01;
                     stimMeanBaseSub(or,dt,dx,ch) = stimMean(or,dt,dx,ch) - noiseMean(dt,dx,ch);
-                    spikeCountPerTrial(dt,dx,or,ch,:) = sum(squeeze(dataT.bins((linNdx & dtNdx & dxNdx & coNdx & orNdx),5:25,ch)),2);
+                    spt = sum(squeeze(dataT.bins((linNdx & dtNdx & dxNdx & coNdx & orNdx),5:25,ch)),2);
+                    spikeCountPerTrial(dt,dx,or,ch,:) = spt(1:min(numReps(:)),1); %
                 end
             end
         end
