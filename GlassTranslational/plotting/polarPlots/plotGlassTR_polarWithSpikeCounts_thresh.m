@@ -21,7 +21,7 @@ folder = dataT.date2;
 mkdir(folder)
 cd(sprintf('%s',folder))
 
-folder = dataT.threshold*10;
+folder = num2str(dataT.threshold*10);
 mkdir(folder)
 cd(sprintf('%s',folder))
 

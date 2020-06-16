@@ -53,6 +53,7 @@ for ch = 1:96
     title(ch)
     set(gca,'XTick',1:1:length(xpos),'XTickLabel',[],'YTick',1:1:length(ypos),'YTickLabel',[])
 end
-suptitle(sprintf('%s %s %s baseline subtracted responses to pink noise stimuli by location ch %d',dataT.animal, dataT.eye, dataT.array,ch))
-figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_',dataT.programID,'_locHeatMap_allchs','.pdf'];
+suptitle({sprintf('%s %s %s baseline subtracted responses to pink noise stimuli by location',dataT.animal, dataT.eye, dataT.array);...
+    sprintf('%s',dataT.date)})
+figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_',dataT.programID,'_locHeatMap_allchs_',num2str(dataT.date2),'.pdf'];
 print(gcf, figName,'-dpdf','-fillpage')

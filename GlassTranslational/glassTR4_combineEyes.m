@@ -3,9 +3,9 @@ close all
 clc
 %%
 
-REfile = 'WU_RE_GlassTR_nsp2_20170828_all_raw_2kFixPerm_OSI_prefOri_PermTests';
-LEfile = 'WU_LE_GlassTR_nsp2_20170825_002_raw_2kFixPerm_OSI_prefOri_PermTests';
-newName = 'WU_BE_GlassTR_V4_201708_may';
+% REfile = 'WU_RE_GlassTR_nsp2_20170828_all_raw_2kFixPerm_OSI_prefOri_PermTests';
+% LEfile = 'WU_LE_GlassTR_nsp2_20170825_002_raw_2kFixPerm_OSI_prefOri_PermTests';
+% newName = 'WU_BE_GlassTR_V4_201708_may';
 
 % REfile = 'WV_RE_GlassTRCoh_nsp2_20190410_all_s1_2kFixPerm_OSI_prefOri';
 % LEfile = 'WV_LE_glassTRCoh_nsp2_20190416_all_s1_2kFixPerm_OSI_prefOri';
@@ -16,17 +16,17 @@ newName = 'WU_BE_GlassTR_V4_201708_may';
 % newName = 'XT_BE_GlassTR_V4_May2020';
 
 % V1
-% REfile = 'XT_RE_GlassTR_nsp1_20190125_all_s1_perm2k_select';
-% LEfile = 'XT_LE_GlassTR_nsp1_20190130_all_s1_perm2k_select';
+% REfile = 'XT_RE_GlassTR_nsp1_20190128_all_s1_2kFixPerm_OSI_prefOri';
+% LEfile = 'XT_LE_GlassTR_nsp1_20190130_all_s1_2kFixPerm_OSI_prefOri';
 % newName = 'XT_BE_GlassTR_V1_201901';
 
-% REfile = 'WU_RE_GlassTR_nsp1_20170828_all_raw_2kFixPerm_OSI_prefOri_PermTests';
-% LEfile = 'WU_LE_GlassTR_nsp1_20170825_002_raw_2kFixPerm_OSI_prefOri_PermTests';
+% REfile = 'WU_RE_GlassTR_nsp1_20170828_all_raw_2kFixPerm_OSI_prefOri';
+% LEfile = 'WU_LE_GlassTR_nsp1_20170825_002_raw_2kFixPerm_OSI_prefOri';
 % newName = 'WU_BE_GlassTR_V1_201708';
 
-% REfile = 'WV_RE_GlassTRCoh_nsp1_20190410_all_s1_2kFixPerm_OSI_prefOri';
-% LEfile = 'WV_LE_glassTRCoh_nsp1_20190416_all_s1_2kFixPerm_OSI_prefOri';
-% newName = 'WV_BE_GlassTRCoh_V1_201904';  
+REfile = 'WV_RE_GlassTRCoh_nsp1_20190410_all_s1_2kFixPerm_OSI_prefOri';
+LEfile = 'WV_LE_glassTRCoh_nsp1_20190416_all_s1_2kFixPerm_OSI_prefOri';
+newName = 'WV_BE_GlassTRCoh_V1_201904';  
 %%
 location = determineComputer;
 if location == 1

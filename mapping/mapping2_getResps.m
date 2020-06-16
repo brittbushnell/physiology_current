@@ -12,8 +12,8 @@ files = {
     'WV_LE_MapNoise_nsp2_20190204_all_raw';
     'WV_RE_MapNoise_nsp2_20190205_001_raw';
     
-    'WV_LE_MapNoise_nsp2_20190204_all_raw';
-    'WV_RE_MapNoise_nsp2_20190205_001_raw';
+    'WV_LE_MapNoise_nsp1_20190204_all_raw';
+    'WV_RE_MapNoise_nsp1_20190205_001_raw';
     };
 nameEnd = 'perm';
 %%
