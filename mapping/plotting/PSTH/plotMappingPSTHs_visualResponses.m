@@ -58,7 +58,7 @@ for ch = 1:96
         else
             if contains(dataT.eye,'RE')
                 plot(1:35,blankResp,'color',[1 0 0 0.4],'LineWidth',0.5);
-                plot(1:35,stimResp,'color',[1 0 0 0.6],'LineWidth',2);
+                plot(1:35,stimResp,'color',[1 0 0 0.3],'LineWidth',2);
             else
                 plot(1:35,blankResp,'color',[0 0.2 1 0.4],'LineWidth',0.5);
                 plot(1:35,stimResp,'color',[0 0.2 1 0.3],'LineWidth',2);

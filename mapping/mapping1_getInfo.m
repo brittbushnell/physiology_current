@@ -3,9 +3,18 @@ close all
 clc
 %%
 
-files = {'WV_LE_MapNoiseRight_nsp2_20190121_all';
-    'WV_LE_MapNoiseRightWide_nsp2_20190122_002';
-    'WV_RE_MapNoiseRightWide_nsp2_20190122_001';
+files = {
+    % beginning of recordin
+%     'WV_LE_MapNoiseRight_nsp2_20190121_all';
+%     'WV_LE_MapNoiseRightWide_nsp2_20190122_002';
+%     'WV_RE_MapNoiseRightWide_nsp2_20190122_001';
+    
+    % active arrays
+    'WV_LE_MapNoise_nsp2_20190204_all';
+    'WV_RE_MapNoise_nsp2_20190205_001';
+    
+    'WV_LE_MapNoise_nsp2_20190204_all';
+    'WV_RE_MapNoise_nsp2_20190205_001';
     };
 nameEnd = 'raw';
 %%
@@ -43,7 +52,7 @@ for fi = 1:size(files,1)
     elseif strcmp(dataT.array, 'nsp2')
         dataT.array = 'V4';
     end
-    %% 
+    %%
     dataT.stimulus = nan(1,size(dataT.filename,1));
     for i = 1:size(dataT.filename,1)
         dataT.stimulus(1,i) = parseMapNoiseName(dataT.filename(i,:));

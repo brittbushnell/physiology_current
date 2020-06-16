@@ -4,16 +4,23 @@ clc
 tic
 %%
 
-files = {'WV_LE_MapNoiseRight_nsp2_20190121_all_raw';
-    'WV_LE_MapNoiseRightWide_nsp2_20190122_002_raw';
-    'WV_RE_MapNoiseRightWide_nsp2_20190122_001_raw';
+files = {
+%     'WV_LE_MapNoiseRight_nsp2_20190121_all_raw';
+%     'WV_LE_MapNoiseRightWide_nsp2_20190122_002_raw';
+%     'WV_RE_MapNoiseRightWide_nsp2_20190122_001_raw';
+    
+    'WV_LE_MapNoise_nsp2_20190204_all_raw';
+    'WV_RE_MapNoise_nsp2_20190205_001_raw';
+    
+    'WV_LE_MapNoise_nsp2_20190204_all_raw';
+    'WV_RE_MapNoise_nsp2_20190205_001_raw';
     };
 nameEnd = 'perm';
 %%
 numBoot = 200;
 numPerm = 2000;
 holdout = .90;
-plotFlag = 1; % 0 if you don't want to plot anything. 
+plotFlag = 1; % 0 if you don't want to plot anything.
 %%
 location = determineComputer;
 failedFiles = {};
@@ -41,12 +48,12 @@ for fi = 1:size(files,1)
     blankNdx = (dataT.stimulus == 0);
     [dataT] = stimVsBlankPermutations_allStim(dataT,stimNdx,blankNdx, numBoot,holdout);
     
-    fprintf('stimulus vs blank permutaiton test done %.2f hours \n',toc/3600)        
+    fprintf('stimulus vs blank permutaiton test done %.2f hours \n',toc/3600)
     %% determine good channels
     [dataT.stimBlankPval,dataT.goodCh] = getPermutationStatsAndGoodCh(dataT.allStimBlankDprime,dataT.allStimBlankDprimeBootPerm);
     
     fprintf('determination of visually responsive channels done %.2f hours \n',toc/3600)
-        %% plot PSTHs
+    %% plot PSTHs
     if plotFlag == 1
         plotMappingPSTHs_visualResponses(dataT)
     end

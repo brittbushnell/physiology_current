@@ -2,18 +2,25 @@ clear all
 close all
 clc
 %%
-% files = {
-%     'WV_LE_MapNoise_nsp2_20190204_003';
-%     'WV_LE_MapNoise_nsp2_20190204_002';
-%     'WV_LE_MapNoise_nsp2_20190204_001';
-%     };
-% newName = 'WV_LE_MapNoise_nsp2_20190204_all';
-%%
 files = {
-    'WV_LE_MapNoiseRightWide_nsp2_20190121_002';
-    'WV_LE_MapNoiseRightWide_nsp2_20190121_001';
+    'WV_LE_MapNoise_nsp2_20190204_003';
+    'WV_LE_MapNoise_nsp2_20190204_002';
+    'WV_LE_MapNoise_nsp2_20190204_001';
     };
-newName = 'WV_LE_MapNoiseRight_nsp2_20190121_all';
+newName = 'WV_LE_MapNoise_nsp2_20190204_all';
+
+% files = {
+%     'WV_LE_MapNoise_nsp1_20190204_003';
+%     'WV_LE_MapNoise_nsp1_20190204_002';
+%     'WV_LE_MapNoise_nsp1_20190204_001';
+%     };
+% newName = 'WV_LE_MapNoise_nsp1_20190204_all';
+%%
+% files = {
+%     'WV_LE_MapNoiseRightWide_nsp2_20190121_002';
+%     'WV_LE_MapNoiseRightWide_nsp2_20190121_001';
+%     };
+% newName = 'WV_LE_MapNoiseRight_nsp2_20190121_all';
 
 % files = {
 % 'WV_LE_MapNoiseRightWide_nsp1_20190121_002';
