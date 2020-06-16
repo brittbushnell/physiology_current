@@ -1,0 +1,8 @@
+threshold = 3:0.5:4.5;
+ns6 = 'mnt/vnlstorage/bushnell_arrays/nsp2/nsp2_blackrockv/WU/WU_LE_GlassTR_nsp2_20170825_002.ns6';
+nev = 'mnt/vnlstorage/bushnell_arrays/nsp1/mworks/WU/WU_LE_GlassTR_nsp2_20170825_002.nev';
+
+for thresh = 1:length(threshold)
+    output = sprintf('/mnt/vnlstorage3/bushnell_arrays/nsp2/reThreshold/WU_LE_GlassTR_nsp2_20170825_002_thresh%.1f',threshold(thresh));
+    clean_nev(nev,ns6,threshold);
+end
