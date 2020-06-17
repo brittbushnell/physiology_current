@@ -1,4 +1,4 @@
-function [] = plotGlass_triplotStereo_Black(dataT)
+function [] = plotGlass_callTriplotGray(dataT)
 location = determineComputer;
 
 if contains(dataT.animal,'WV')
@@ -47,7 +47,13 @@ for dt = 1:numDots
         
         subplot(2,2,ndx)
         hold on
-        triplotter_stereo_Glass(dps);
+        if contains(dataT.animal,'WU')
+            triplotter_stereo_Glass(dps,3.5);
+        elseif contains(dataT.animal,'WV')
+            triplotter_stereo_Glass(dps,3.5);
+        else
+            triplotter_stereo_Glass(dps,5.5);
+        end
         title(sprintf('%d dots, dx %.2f',dots(dt),dxs(dx)))
        
         ndx = ndx+1;
@@ -56,3 +62,4 @@ end
 suptitle({'Relative dPrimes against blank for concentric, radial, and random dipole Glass patterns'; sprintf('%s %s %s stimulus vs blank dPrime at 100%% coherence',dataT.animal, dataT.eye, dataT.array)})
 figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_triplotStereo_abs'];
 print(gcf, figName,'-dpdf','-fillpage')
+

@@ -17,13 +17,13 @@ tic
 %     'XT_RE_GlassTR_nsp2_20190125_005';...
 %     'XT_RE_GlassTR_nsp2_20190128_001';...
 %     'XT_RE_GlassTR_nsp2_20190128_002';...
-%     
+%
 %     'XT_LE_GlassTR_nsp2_20190130_001';...
 %     'XT_LE_GlassTR_nsp2_20190130_002';...
 %     'XT_LE_GlassTR_nsp2_20190130_003';...
 %     'XT_LE_GlassTR_nsp2_20190130_004';...
 %     'XT_LE_GlassTR_nsp2_20190131_001';...
-%     
+%
 %     'XT_RE_GlassTRCoh_nsp2_20190322_002';...
 %     'XT_RE_GlassTRCoh_nsp2_20190322_003';...
 %     'XT_RE_GlassTRCoh_nsp2_20190322_004';...
@@ -39,13 +39,13 @@ tic
 %     'XT_RE_GlassTR_nsp1_20190125_005';...
 %     'XT_RE_GlassTR_nsp1_20190128_001';...
 %     'XT_RE_GlassTR_nsp1_20190128_002';...
-%     
+%
 %     'XT_LE_GlassTR_nsp1_20190130_001';...
 %     'XT_LE_GlassTR_nsp1_20190130_002';...
 %     'XT_LE_GlassTR_nsp1_20190130_003';...
 %     'XT_LE_GlassTR_nsp1_20190130_004';...
 %     'XT_LE_GlassTR_nsp1_20190131_001';...
-%     
+%
 %     'XT_RE_GlassTRCoh_nsp1_20190322_002';...
 %     'XT_RE_GlassTRCoh_nsp1_20190322_003';...
 %     'XT_RE_GlassTRCoh_nsp1_20190322_004';...
@@ -53,7 +53,7 @@ tic
 %     'XT_RE_GlassTRCoh_nsp1_20190324_003';...
 %     'XT_RE_GlassTRCoh_nsp1_20190324_004';...
 %     'XT_LE_GlassTRCoh_nsp1_20190325_005';...
-%     
+%
 %     % WV
 %     'WV_RE_glassTRCoh_nsp2_20190405_002';...
 %     'WV_RE_glassTRCoh_nsp2_20190408_001';...
@@ -61,7 +61,7 @@ tic
 %     'WV_RE_glassTRCoh_nsp2_20190409_002';...
 %     'WV_RE_glassTRCoh_nsp2_20190410_001';...
 %     'WV_RE_glassTRCoh_nsp2_20190410_002';...
-%     
+%
 %     'WV_LE_glassTRCoh_nsp2_20190411_001';...
 %     'WV_LE_glassTRCoh_nsp2_20190412_001';...
 %     'WV_LE_glassTRCoh_nsp2_20190415_001';...
@@ -71,7 +71,7 @@ tic
 %     'WV_LE_glassTRCoh_nsp2_20190416_003';...
 %     'WV_LE_glassTRCoh_nsp2_20190417_001';...
 %     'WV_LE_glassTRCoh_nsp2_20190417_002';...
-%     
+%
 %     % V1
 %     'WV_RE_glassTRCoh_nsp1_20190405_002';...
 %     'WV_RE_glassTRCoh_nsp1_20190408_001';...
@@ -79,7 +79,7 @@ tic
 %     'WV_RE_glassTRCoh_nsp1_20190409_002';...
 %     'WV_RE_glassTRCoh_nsp1_20190410_001';...
 %     'WV_RE_glassTRCoh_nsp1_20190410_002';...
-%     
+%
 %     'WV_LE_glassTRCoh_nsp1_20190411_001';...
 %     'WV_LE_glassTRCoh_nsp1_20190412_001';...
 %     'WV_LE_glassTRCoh_nsp1_20190415_001';...
@@ -89,65 +89,65 @@ tic
 %     'WV_LE_glassTRCoh_nsp1_20190416_003';...
 %     'WV_LE_glassTRCoh_nsp1_20190417_001';...
 %     'WV_LE_glassTRCoh_nsp1_20190417_002';...
-%     
-    % WU
+%
+% WU
 %     'WU_RE_GlassTR_nsp2_20170829_001';...
 %     'WU_RE_GlassTR_nsp2_20170828_003';...
 %     'WU_RE_GlassTR_nsp2_20170828_002';...
 %     'WU_RE_GlassTR_nsp2_20170825_001';...
-%     
+%
 %     'WU_LE_GlassTR_nsp2_20170825_002';...
 %     'WU_LE_GlassTR_nsp2_20170824_001';
-%     
+%
 %     %V1
 %     'WU_RE_GlassTR_nsp1_20170829_001';...
 %     'WU_RE_GlassTR_nsp1_20170828_003';...
 %     'WU_RE_GlassTR_nsp1_20170828_002';...
 %     'WU_RE_GlassTR_nsp1_20170825_001';...
-%     
+%
 %     'WU_LE_GlassTR_nsp1_20170825_002';...
 %     'WU_LE_GlassTR_nsp1_20170824_001'
 
 %    'XT_RE_GlassTR_nsp2_20190125_all';
 %    'XT_RE_GlassTR_nsp2_20190128_all';
 %    'XT_LE_GlassTR_nsp2_20190130_all';
-%    
+%
 %    'XT_RE_GlassTR_nsp1_20190125_all';
 %    'XT_RE_GlassTR_nsp1_20190128_all';
 %    'XT_LE_GlassTR_nsp1_20190130_all';
-%    
+%
 %    'XT_RE_GlassTRCoh_nsp2_20190322_all';
 %    'XT_RE_GlassTRCoh_nsp2_20190324_all';
 %    'XT_RE_GlassTRCoh_nsp1_20190322_all';
 %    'XT_RE_GlassTRCoh_nsp1_20190324_all';
-%    
+%
 %    'WV_RE_GlassTRCoh_nsp2_20190409_all';
 %    'WV_RE_GlassTRCoh_nsp2_20190410_all';
-%    
+%
 %    'WV_LE_GlassTRCoh_nsp2_20190415_all';
 %    'WV_LE_glassTRCoh_nsp2_20190416_all';
 %     'WV_LE_GlassTRCoh_nsp2_20190417_all';
-%    
+%
 %     'WV_RE_GlassTRCoh_nsp1_20190409_all';
 %     'WV_RE_GlassTRCoh_nsp1_20190410_all';
-%     
+%
 %    'WV_LE_GlassTRCoh_nsp1_20190415_all';
 %    'WV_LE_glassTRCoh_nsp1_20190416_all';
 %    'WV_LE_GlassTRCoh_nsp1_20190417_all';
-  %%
-  files = {
-%       'WU_LE_GlassTR_nsp2_20170825_002_thresh30'
-%       'WU_LE_GlassTR_nsp2_20170825_002_thresh35'
-%       'WU_LE_GlassTR_nsp2_20170825_002_thresh40'
-%       'WU_LE_GlassTR_nsp2_20170825_002_thresh45'
-      
-      'WU_RE_GlassTR_nsp2_20170828_all';...
-      'WU_LE_GlassTR_nsp2_20170825_002';...
-      'WU_RE_GlassTR_nsp1_20170828_all';...
-      'WU_LE_GlassTR_nsp1_20170825_002';...
-  };
 %%
-nameEnd = 'raw';
+files = {
+    'WU_LE_GlassTR_nsp2_20170825_002_thresh30'
+    'WU_LE_GlassTR_nsp2_20170825_002_thresh35'
+    'WU_LE_GlassTR_nsp2_20170825_002_thresh40'
+    'WU_LE_GlassTR_nsp2_20170825_002_thresh45'
+    
+    %       'WU_RE_GlassTR_nsp2_20170828_all';...
+    %       'WU_LE_GlassTR_nsp2_20170825_002';...
+    %       'WU_RE_GlassTR_nsp1_20170828_all';...
+    %       'WU_LE_GlassTR_nsp1_20170825_002';...
+    };
+%%
+nameEnd = 'vers2';
 %%
 
 startMean = 5;
@@ -182,7 +182,8 @@ for fi = 1:size(files,1)
     elseif length(tmp) == 7 % file was rerun with different thresholds and cleaned up
         [dataT.animal, dataT.eye, dataT.programID, dataT.array, dataT.date2, dataT.runNum, threshTmp] = deal(tmp{:});
         threshT2 = strsplit(threshTmp,{'thresh','.'});
-        dataT.threshold = threshT2{2};
+        thrsh = threshT2{2};
+        dataT.threshold = str2num(thrsh)/10;
         % get date in a format that's useable in figure titles (ex: 09/1/2019 vs 20190901)
         dataT.date = convertDate(dataT.date2);
         oneDay = 1;
@@ -190,12 +191,6 @@ for fi = 1:size(files,1)
         [dataT.animal, dataT.eye, dataT.programID, dataT.array, dataT.date2] = deal(tmp{:});
         dataT.date = dataT.date2;
         oneDay = 0;
-    end
-    
-    if strcmp(dataT.array, 'nsp1')
-        dataT.array = 'V1';
-    elseif strcmp(dataT.array, 'nsp2')
-        dataT.array = 'V4';
     end
     
     ndx = 1;
@@ -218,14 +213,38 @@ for fi = 1:size(files,1)
     [numOris,numDots,numDxs,numCoh,numSamp,oris,dots,dxs,coherences,samples] = getGlassTRParameters(dataT);
     dataT.stimOrder = getStimPresentationOrder(dataT);
     %%
-            if contains(filename,'WU') % remove all the extra parameters from WU's files.
-                dataT = GlassRemoveLowDx(dataT);
-                dataT = GlassRemoveLowDots(dataT);
-            end
+    if numDots > 2 %contains(filename,'WU') % remove all the extra parameters from WU's files.
+        dataT = GlassRemoveLowDx(dataT);
+        dataT = GlassRemoveLowDots(dataT);
+        
+        % runnign twice becuase things get deleted when removing
+        if length(tmp) == 6
+            [dataT.animal, dataT.eye, dataT.programID, dataT.array, dataT.date2,dataT.runNum] = deal(tmp{:});
+            % get date in a format that's useable in figure titles (ex: 09/1/2019 vs 20190901)
+            dataT.date = convertDate(dataT.date2);
+            oneDay = 1;
+        elseif length(tmp) == 7 % file was rerun with different thresholds and cleaned up
+            [dataT.animal, dataT.eye, dataT.programID, dataT.array, dataT.date2, dataT.runNum, threshTmp] = deal(tmp{:});
+            threshT2 = strsplit(threshTmp,{'thresh','.'});
+            thrsh = threshT2{2};
+            dataT.threshold = str2num(thrsh)/10;
+            
+            % get date in a format that's useable in figure titles (ex: 09/1/2019 vs 20190901)
+            dataT.date = convertDate(dataT.date2);
+            oneDay = 1;
+        else
+            [dataT.animal, dataT.eye, dataT.programID, dataT.array, dataT.date2] = deal(tmp{:});
+            dataT.date = dataT.date2;
+            oneDay = 0;
+        end
+    end
     
-    % add in anything that's missing from the new cleanData structure.
-    dataT.amap = aMap;
-    dataT.date2 = dataT.date2;
+    if strcmp(dataT.array, 'nsp1')
+        dataT.array = 'V1';
+    elseif strcmp(dataT.array, 'nsp2')
+        dataT.array = 'V4';
+    end
+    
     %%
     if location == 1
         outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/Glass/Parsed/',dataT.array);

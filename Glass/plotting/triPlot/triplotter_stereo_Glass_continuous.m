@@ -53,50 +53,41 @@ y = rcb(:,2);
 z = rcb(:,3);
 
 [th,phi,r]=cart2sph(x,y,z);
+%plot3m(rad2deg(phi),rad2deg(th),r,'b.')
 
 % plot with the gray scale based on the sum of the d's
 %(sqrt(d'1^2+d'2^2+d'3^2))
 sum_xyz = sqrt(rcb(:,1).^2 + rcb(:,2).^2 + rcb(:,3).^2);
-binLim = linspace(0,grayMax,11);
-binLim = binLim(2:end);
 
+numGoodCh = 96-sum(isnan(rcb(:,1)));
+sort_sums = sort(sum_xyz);
+
+%binLim = linspace(0,grayMax,numGoodCh);%histcounts(sum_xyz,6);
+cmap = (gray(numGoodCh)); % cmap(1,:) = [0 0 0] = black
+ cmap = flipud(cmap);  % cmap(1,:) = [1 1 1] = white
 hold on;
 for i = 1:length(rcb)
     tmp = sum_xyz(i);
-    
-    if tmp > binLim(9) %&& tmp < binLim(5) % plot black
-        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), '.','color',  [1 1 1].*0,'MarkerSize', 20); hold on;  
-    elseif tmp > binLim(8) && tmp < binLim(9)
-        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), '.','color',  [1 1 1].*.1,'MarkerSize', 20);
-    elseif tmp > binLim(7) && tmp < binLim(8)
-        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), '.','color',  [1 1 1].*.2,'MarkerSize', 20);
-    elseif tmp > binLim(6) && tmp < binLim(7)
-        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), '.','color',  [1 1 1].*.3,'MarkerSize', 20);
-    elseif tmp > binLim(5) && tmp < binLim(6)
-        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), '.','color',  [1 1 1].*.4,'MarkerSize', 20);
-    elseif tmp > binLim(4) && tmp < binLim(5)
-        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), '.','color',  [1 1 1].*.5,'MarkerSize', 20);
-    elseif tmp > binLim(3) && tmp < binLim(4)
-        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), '.','color',  [1 1 1].*.6,'MarkerSize', 20);
-    elseif tmp > binLim(2) && tmp < binLim(3)
-        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), '.','color',  [1 1 1].*.7,'MarkerSize', 20);
-    elseif tmp > binLim(1) && tmp < binLim(2)
-        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), '.','color',  [1 1 1].*.8,'MarkerSize', 20);
-    elseif tmp > 0 && tmp < binLim(1)
-        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), '.','color',  [1 1 1].*.9,'MarkerSize', 20);  
+    ndx = find(sort_sums == tmp);
+    cmap(ndx,:)
+    if isnan(tmp) == 0
+        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), '.','color',  cmap(ndx,:), 'MarkerSize', 25); hold on; 
     end
-        
+    pause
+
 end
-map = [.9 .9 .9; .8 .8 .8; .7 .7 .7; .6 .6 .6; .5 .5 .5; .4 .4 .4; .3 .3 .3; .2 .2 .2; .1 .1 .1; 0 0 0];
-colormap(map); colorbar;
-c = colorbar('TickDirection','out');
-c.Ticks = 0:0.25:1;
-c.TickLabels = round(linspace(0,grayMax,5),1);
+
+colormap(cmap); colorbar;
+% c = colorbar('TickDirection','out','Ticks',[[],[],0.2,[],0.4,[],0.6,[],0.8,[],1],...
+%     'TickLabels',{binLim(1),round(binLim(2),1),round(binLim(3),1),round(binLim(4),1),round(binLim(5),1)});
+
 c.Label.String = 'vector sum of dPrimes';
 
 
 c.Label.FontSize = 12;
 set(gca,'FontSize',12)
+% [th,phi,r]=cart2sph(x,y,z); 
+% plot3m(rad2deg(phi),rad2deg(th),r,'ok','MarkerSize',9) % PLOT3M(LAT,LON,Z)
 
 bl=textm(0,0,'Model 1','FontSize',12);
 br=textm(0,90,'Model 2','FontSize',12);
@@ -105,3 +96,4 @@ tp=textm(90,90,'Model 3','FontSize',12);
 set(bl,'horizontalalignment','left','string',sprintf('\n\nRadial    '))
 set(br,'horizontalalignment','right','string',sprintf('\n\n       Concentric'))
 set(tp,'horizontalalignment','center','string',sprintf('Dipole\n\n'))
+%set(gca,'FontSize',16)

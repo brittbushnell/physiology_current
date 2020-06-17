@@ -161,9 +161,9 @@ for fi = 1:size(files,1)
     fprintf('good channel permutaiton test done %.2f hours \n',toc/3600)
     %% decide good channels
     [dataT.stimBlankChPvals,dataT.goodCh] = glassGetPermutationStatsAndGoodCh(dataT.allStimBlankDprime,dataT.allStimBlankDprimeBootPerm);
-    if contains(filename,'WU')
-        dataT.goodCh(66) = 0;
-    end
+%     if contains(filename,'WU')
+%         dataT.goodCh(66) = 0;
+%     end
     %% get real stimulus d's
     dataT = getStimVsBlankDPrimes_Glass_coh(dataT,numBoot, subsample,holdout);
     dataT = getGlassStimDPrimes_coh(dataT, numBoot,subsample, holdout);

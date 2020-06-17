@@ -1,6 +1,11 @@
 function [] = plotGlassTR_PolarTuning_errorBar(dataT)
 location = determineComputer;
 [numOris,numDots,numDxs,~,~,oris,dots,dxs,~,~] = getGlassTRParameters(dataT);
+if contains(dataT.animal,'XT')
+    dtdxStart =2;
+else
+    dtdxStart = 1;
+end
 %% plot data computed with 2theta
 if location == 1
     figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/GlassTR/%s/tuningCurves/%s/polar/',dataT.animal, dataT.array,dataT.eye);
@@ -25,8 +30,8 @@ for ch = 1:96
     if dataT.goodCh(ch) == 1
         blankMean(1,ch) = mean(mean(squeeze(dataT.bins((blankNdx),5:25,ch))))./0.01;
         for or = 1:numOris
-            for dt = 1:numDots
-                for dx = 1:numDxs
+            for dt = dtdxStart:numDots
+                for dx = dtdxStart:numDxs
                     dtNdx = dataT.numDots == dots(dt);
                     dxNdx = dataT.dx == dxs(dx);
                     coNdx = dataT.coh == 1;

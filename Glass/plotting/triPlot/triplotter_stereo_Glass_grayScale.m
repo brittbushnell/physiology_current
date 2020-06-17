@@ -15,7 +15,7 @@ nosDps = abs(squeeze(dataT.noiseBlankDprime(dt,dx,:)));
 
 dPrimes = [conDps,radDps,nosDps];
 
-dPrimeSum = nansum(dPrimes,2);
+dPrimeSum = sqrt(dPrimes(:,1).^2 + dPrimes(:,2).^2 + dPrimes(:,3).^2);
 [~,dPrimeNdx] = sort(dPrimeSum);
 
 dpMax = max(dPrimes(:))+0.2;
@@ -38,53 +38,50 @@ if numGoodCh < 96
     cmapInv = cmapInvPadded;
 end
 %sortDPs = sortrows(dPrimes); % sort channels by repsonse in the first column (concentric)
-pointSize = 30.*ones(size(nosDps));
+pointSize = 25.*ones(size(nosDps));
 %%
 %
-clc
 clf;
-
-pause(0.02);
-set(gca,'color',[0.9 0.9 1],'box','off')  % want background to be white, otherwise mean gray dots which are meaningful will blend into the background
-
-h=axesm('stereo','origin',[45 45 0]); % define the axis space
-
-%axis off; % turn off the axis box
-
-% draw the outlines of the triangle
+h=axesm('stereo','origin',[45 45 0]);
 plot3m(linspace(0,90,90), 0.*ones(1,90),ones(1,90),'k')
 plot3m(linspace(0,90,90),90.*ones(1,90),ones(1,90),'k')
 plot3m(0.*ones(1,90),linspace(0,90,90),ones(1,90),'k')
+
+x = xyz(:,1);
+y = xyz(:,2);
+z = xyz(:,3);
 %%
-% draw the vertices
-[th,phi,r]=cart2sph(1,1,1); plot3m(rad2deg(phi),rad2deg(th),r,'ro')
-[th,phi,r]=cart2sph(1,0,0); plot3m(rad2deg(phi),rad2deg(th),r,'ro')
-[th,phi,r]=cart2sph(0,1,0); plot3m(rad2deg(phi),rad2deg(th),r,'ro')
-[th,phi,r]=cart2sph(0,0,1); plot3m(rad2deg(phi),rad2deg(th),r,'ro')
 
 x = dPrimes(:,1);
 y = dPrimes(:,2);
 z = dPrimes(:,3);
 
 % [az,elev,r]=cart2sph(x,y,z); 
-[dPrimesSph(:,1),dPrimesSph(:,2),dPrimesSph(:,3)]=cart2sph(x,y,z); 
+[th,phi,r]=cart2sph(x,y,z); 
 
 %sortDPsSph = sortrows(dPrimesSph,2,'descend'); % sort channels by repsonse in the second column (elevation)
 
 for ch = 1:numGoodCh
     Ndx = dPrimeNdx(ch);
     %p = plot3m(rad2deg(sortDPsSph(ch,1)),rad2deg(sortDPsSph(ch,2)),sortDPsSph(ch,3),'o','MarkerSize',9,'MarkerFaceColor',cmapInv(grayNdx,:),'MarkerEdgeColor',cmapInv(grayNdx,:)); % PLOT3M(LAT,LON,Z)
-    p = plot3m(rad2deg(dPrimesSph(Ndx,1)),rad2deg(dPrimesSph(Ndx,2)),dPrimesSph(Ndx,3),'o','MarkerSize',9,'MarkerFaceColor',cmapInv(Ndx,:),'MarkerEdgeColor',cmapInv(Ndx,:)); % PLOT3M(LAT,LON,Z)
+    p = plot3m(rad2deg(phi(Ndx)),rad2deg(th(Ndx)),r(Ndx),'o','MarkerSize',9,'MarkerFaceColor',cmapInv(Ndx,:),'MarkerEdgeColor',cmapInv(Ndx,:)); % PLOT3M(LAT,LON,Z)
 end
 %plot3m(rad2deg(az),rad2deg(elev),r,'ok','MarkerSize',9)
 %scatter3m(rad2deg(az),rad2deg(elev),r,pointSize,cmap);
-h1=textm(45,90,'Radial');
-h2=textm(45,0,'Concentric');
-h3=textm(0,45,'Bipole');
+axis off;
 
-set(h1,'horizontalalignment','left','string','    Radial','FontSize',11)
-set(h2,'horizontalalignment','right','string','Concentric   ','FontSize',11)
-set(h3,'horizontalalignment','center','string',sprintf('\n\nDipole'),'FontSize',11)
+[th,phi,r]=cart2sph(1,1,1); plot3m(rad2deg(phi),rad2deg(th),r,'ro')% center
+[th,phi,r]=cart2sph(1,0,0); plot3m(rad2deg(phi),rad2deg(th),r,'ro')% bottom left
+[th,phi,r]=cart2sph(0,1,0); plot3m(rad2deg(phi),rad2deg(th),r,'ro')% bottom right
+[th,phi,r]=cart2sph(0,0,1); plot3m(rad2deg(phi),rad2deg(th),r,'ro')% top
+
+bl=textm(0,0,'Model 1','FontSize',12);
+br=textm(0,90,'Model 2','FontSize',12);
+tp=textm(90,90,'Model 3','FontSize',12);
+
+set(bl,'horizontalalignment','left','string',sprintf('\n\nRadial    '))
+set(br,'horizontalalignment','right','string',sprintf('\n\n       Concentric'))
+set(tp,'horizontalalignment','center','string',sprintf('Dipole\n\n'))
 
 
 

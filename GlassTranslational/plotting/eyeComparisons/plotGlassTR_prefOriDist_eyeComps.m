@@ -19,25 +19,34 @@ pos = get(gcf,'Position');
 set(gcf,'Position',[pos(1) pos(2) 800 500])
 set(gcf,'PaperOrientation','Landscape');
 
+if contains(data.RE.animal,'XT')
+    pOriR = (squeeze(data.RE.prefOri2thetaNoise(end,2:end,2:end,data.RE.goodCh == 1)));
+else
+    pOriR = (squeeze(data.RE.prefOri2thetaNoise(end,:,:,data.RE.goodCh == 1)));
+end
 
-SIR = (squeeze(data.RE.prefOri2thetaNoise(end,:,:,data.RE.goodCh == 1)));
-SIR = reshape(SIR,[1,numel(SIR)]);
-SIR(isnan(SIR)) = [];
-SIR2 = SIR;
+pOriR = reshape(pOriR,[1,numel(pOriR)]);
+pOriR(isnan(pOriR)) = [];
+SIR2 = pOriR;
 SIR2(SIR2<0) = SIR2(SIR2<0)+180;
 
 cirMuR = circ_mean(deg2rad(SIR2(:)*2))/2;
 cirMuR2 = cirMuR+pi;
 
-SIL = (squeeze(data.LE.prefOri2thetaNoise(end,:,:,data.LE.goodCh == 1)));
-SIL = reshape(SIL,[1,numel(SIL)]);
-SIL(isnan(SIL)) = [];
-SIL2 = SIL;
+if contains(data.RE.animal,'XT')
+    pOriL = (squeeze(data.LE.prefOri2thetaNoise(end,2:end,2:end,data.LE.goodCh == 1)));
+else
+    pOriL = (squeeze(data.LE.prefOri2thetaNoise(end,:,:,data.LE.goodCh == 1)));
+end
+
+pOriL = reshape(pOriL,[1,numel(pOriL)]);
+pOriL(isnan(pOriL)) = [];
+SIL2 = pOriL;
 SIL2(SIL2<0) = SIL2(SIL2<0)+180;
 
 cirMuL = circ_mean(deg2rad(SIL2(:)*2))/2;
 cirMuL2 = cirMuL+pi;
-    
+
 subplot(1,2,1,polaraxes)
 hold on
 
@@ -55,7 +64,7 @@ polarplot([1.57 0 4.71],[1.5 0 1.5],'-','color',[0.4 0.4 0.4])
 ax = gca;
 ax.RLim   = [0,0.3];
 text(cirMuL+0.2,0.25,sprintf('mean: %.1f%c',rad2deg(cirMuL),char(176)),'FontSize',11,'HorizontalAlignment','center')
-text(cirMu2+0.2,0.25,sprintf('mean: %.1f%c',rad2deg(cirMuL2),char(176)),'FontSize',11,'HorizontalAlignment','center')
+text(cirMuL2+0.2,0.25,sprintf('mean: %.1f%c',rad2deg(cirMuL2),char(176)),'FontSize',11,'HorizontalAlignment','center')
 
 set(gca,'FontSize',12,'FontAngle','italic','RTickLabels',{'','',''})
 
@@ -95,5 +104,7 @@ end
 suptitle({sprintf('%s %s %s distribution of preferred orientations square root transformed radius',data.LE.animal, data.LE.eye, data.LE.array);...
     'All parameters across any visually responsive channel'});
 
-figName = [data.RE.animal,'_',data.RE.array,'_BE_prefOriDistribition_allVisChs_probArea','.pdf'];
+figName = [data.RE.animal,'_',data.RE.array,'_BE_prefOriDistribition_allChs_allParams','.pdf'];
 print(gcf, figName,'-dpdf','-fillpage')
+%%
+

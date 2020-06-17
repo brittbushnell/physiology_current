@@ -4,6 +4,7 @@ clc
 tic
 %%
 files = {
+<<<<<<< HEAD
 %     'WU_RE_GlassTR_nsp2_20170828_all_raw_2kFixPerm';...
 %     'WU_LE_GlassTR_nsp2_20170825_002_raw_2kFixPerm';...
     %
@@ -23,11 +24,32 @@ files = {
     'WV_RE_GlassTRCoh_nsp1_20190410_all_s1_2kFixPerm1';...
     'WV_LE_glassTRCoh_nsp1_20190416_all_s1_2kFixPerm1';...
 
+=======
+    'WU_RE_GlassTR_nsp1_20170828_all_raw_2kFixPerm';...
+    'WU_LE_GlassTR_nsp1_20170825_002_raw_2kFixPerm';...
+    
+    %'WV_RE_GlassTRCoh_nsp2_20190410_all_s1_2kFixPerm';...
+    %'WV_LE_glassTRCoh_nsp2_20190416_all_s1_2kFixPerm';...
+    'WV_RE_GlassTRCoh_nsp1_20190410_all_s1_2kFixPerm';...
+    'WV_LE_glassTRCoh_nsp1_20190416_all_s1_2kFixPerm';...
+    
+    %'XT_RE_GlassTR_nsp2_20190128_all_s1_2kFixPerm';...
+    %'XT_LE_GlassTR_nsp2_20190130_all_s1_2kFixPerm';...
+    'XT_RE_GlassTR_nsp1_20190128_all_s1_2kFixPerm';...
+    'XT_LE_GlassTR_nsp1_20190130_all_s1_2kFixPerm';...
+>>>>>>> 1193668cac7c7e172ecfd08321d00dd0157e4a91
     };
+%%
+%files = {
+    %'WU_LE_GlassTR_nsp2_20170825_002_thresh30_vers2_2kFixPerm';
+%     'WU_LE_GlassTR_nsp2_20170825_002_thresh35_vers2_2kFixPerm';
+%     'WU_LE_GlassTR_nsp2_20170825_002_thresh40_vers2_2kFixPerm';
+%     'WU_LE_GlassTR_nsp2_20170825_002_thresh45_vers2_2kFixPerm';  
+%};
 
 nameEnd = 'OSI_prefOri';
 %%
-numPerm = 2000; 
+numPerm = 2000;
 numBoot = 200;
 failNdx = 1;
 holdout = 0.9;
@@ -57,13 +79,14 @@ for fi = 1:size(files,1)
     
     [dataT.OSI2thetaNoisePval,dataT.OSI2thetaNoiseSig] = glassGetPermutationStats_1tail...
         (dataT.OriSelectIndex2thetaNoise,dataT.OriSelectIndex2thetaNoisePerm,...
-        dataT,'translational OSI permutations no subtraction',plotFlag);
+        dataT,'translational OSI permutations no subtraction',0);
     
     fprintf('computed OSI permutation tests %.2f minutes \n',toc/60)
     %%
     %plotGlassTR_tuningCurvesPolarNoise(dataT)
     dataT = plotGlassTR_polarWithSpikeCounts(dataT);
-    plotGlassTR_PolarTuning_errorBar(dataT)
+    %[dataT] = plotGlassTR_polarWithSpikeCounts_thresh(dataT);
+   % plotGlassTR_PolarTuning_errorBar(dataT)
     %% commit to data structure
     if contains(filename,'RE')
         data.RE = dataT;
