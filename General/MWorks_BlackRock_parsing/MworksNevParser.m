@@ -213,12 +213,7 @@ if contains(programID,'grat','IgnoreCase',IGNORE)
         'o_direction', 'rotation', 'xoffset','spatial_frequency', 'name',...
         'mask', 'o_rotation', 'o_spatial_frequency', 'action'};
 else
-    stim_var_names = {'starting_phase', 'direction', 'o_starting_phase',...
-        'height', 'temporal_frequency',...
-        'o_temporal_frequency', 'overlay','current_phase', 'width', 'grating',...
-        'type', 'contrast', 'opacity', 'o_current_phase',  'start_time', 'yoffset',...
-        'o_direction', 'rotation', 'xoffset','spatial_frequency', 'name',...
-        'mask', 'o_rotation', 'o_spatial_frequency', 'action'};
+    stim_var_names = {'pos_x','pos_y','filename','size_x','action','rotation'};
 end
 
 for kk = 1:length(stim_var_names)
@@ -229,19 +224,41 @@ n_stim = 0;
 t_stim = [];
 new_stim = 0;
 
-for ind = 1:length(stim_display_update_events)
-    if length(stim_display_update_events(ind).data) > 2
-        cur_time = stim_display_update_events(ind).time_us;
-        
-        if sum((cur_time < success_times) .* (success_times < (cur_time + tSuccess))) ~= 0
-            % determine if this is a new stimulus by looking if spatial_frequnecy and rotation are different from the most recently added value
-            new_stim = 0;
-            if length(spatial_frequency) >= 1
-                if spatial_frequency(end) ~= stim_display_update_events(ind).data{2}.spatial_frequency ||...
-                        rotation(end) ~= stim_display_update_events(ind).data{2}.rotation
+if contains(programID,'grat','IgnoreCase',IGNORE)
+    for ind = 1:length(stim_display_update_events)
+        if length(stim_display_update_events(ind).data) > 2
+            cur_time = stim_display_update_events(ind).time_us;
+            
+            if sum((cur_time < success_times) .* (success_times < (cur_time + tSuccess))) ~= 0
+                % determine if this is a new stimulus by looking if spatial_frequnecy and rotation are different from the most recently added value
+                new_stim = 0;
+                if length(spatial_frequency) >= 1
+                    if spatial_frequency(end) ~= stim_display_update_events(ind).data{2}.spatial_frequency ||...
+                            rotation(end) ~= stim_display_update_events(ind).data{2}.rotation
+                        new_stim = 1;
+                    end
+                else
                     new_stim = 1;
                 end
-            else
+                
+                % add the stimulus:
+                if new_stim == 1
+                    t_stim = [t_stim, cur_time.*regressionResutls(2) + regressionResutls(1)];
+                    for kk = 1:length(stim_var_names)
+                        eval([stim_var_names{kk}, ' = [', stim_var_names{kk},  ', stim_display_update_events(ind).data{2}.', stim_var_names{kk}, '];']);
+                    end
+                    n_stim = n_stim + 1;
+                end
+            end
+        end
+    end
+else
+    for ind = 1:length(stim_display_update_events)
+        if length(stim_display_update_events(ind).data) > 2
+            cur_time = stim_display_update_events(ind).time_us;
+            
+            if sum((cur_time < success_times) .* (success_times < (cur_time + tSuccess))) ~= 0
+                % determine if this is a new stimulus by looking if spatial_frequnecy and rotation are different from the most recently added value
                 new_stim = 1;
             end
             
