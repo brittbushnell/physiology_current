@@ -32,7 +32,6 @@ switch nargin
         num_bins = 100;
         outputDir = '/home/bushnell/binned_dir/';
         save_name = [fileName, '.mat'];
-        inputDir = '/mnt/vnlstorage/bushnell_arrays/';
     case 2 
         fprintf('parsing %s with %d ms bins',varargin(1), varargin(2));
         fileName = varargin(1);
@@ -40,7 +39,6 @@ switch nargin
         num_bins = 100;
         outputDir = '/home/bushnell/binned_dir/';
         save_name = [fileName, '.mat'];
-        inputDir = '/mnt/vnlstorage/bushnell_arrays/';
     case 3
         fprintf('parsing %s in %d %d ms bins',varargin(1), varargin(3), varargin(2));
         fileName = varargin(1);
@@ -48,7 +46,6 @@ switch nargin
         num_bins = varargin(3);
         outputDir = '/home/bushnell/binned_dir/';
         save_name = [fileName, '.mat'];
-        inputDir = '/mnt/vnlstorage/bushnell_arrays/';
     case 4
         fprintf('parsing %s in %d %d ms bins. Mat file will be saved at %s',varargin(1), varargin(3), varargin(2), varargin(4));
         fileName = varargin(1);
@@ -64,29 +61,55 @@ switch nargin
         num_bins = varargin(3);
         outputDir = varargin(4);
         save_name = [fileName, '.mat'];
-        inputDir = '/mnt/vnlstorage/bushnell_arrays/'; 
-    case 6
-        fprintf('parsing %s in %d %d ms bins. Mat file will be saved at %s',varargin(1), varargin(3), varargin(2), varargin(4));
-        fileName = varargin(1);
-        bin_size = varargin(2);
-        num_bins = varargin(3);
-        outputDir = varargin(4);
-        save_name = [fileName, '.mat'];
-        inputDir  = varargin(5);
 
 %%
-prefix_dir = inputDir;
 % example fileName: WU_LE_Gratings_nsp1_20170705_003
+% Where do data live? - all of WU's data is on vnlstorage
+% XT: 
+%  vnlstorage if on or before 20190131
+%  vnlstorage2 for the rest
+%
+% WV:
+%  vnlstorage if on or before 20190130
+%  vnlstorage2 if between 20190130 and 20190603
+%  vnlstorage3 for the rest
+
 tmp = strsplit(fileName,'_');
 if length(tmp) == 6
-    [animal,eye,programID,array,date,run] = deal(tmp);
+    [animal,~,programID,array,date,~] = deal(tmp);
     if contains(animal,'WU')
-        dirBr = sprintf('mnt/vnlstorage/bushnell_arrays/%s/%s_blackrock/%s/',array,array,animal);
-        dirMw = sprintf('mnt/vnlstorage/bushnell_arrays/%s/mworks/%s/',array,animal);
+        blackrockDir = sprintf('/mnt/vnlstorage/bushnell_arrays/%s/%s_blackrock/%s/',array,array,animal);
+        mworksDir = sprintf('/mnt/vnlstorage/bushnell_arrays/%s/mworks/%s/',array,animal);
+    elseif contains(animal,'XT')
+        if date <= 20190131
+            blackrockDir = sprintf('/mnt/vnlstorage/bushnell_arrays/%s/%s_blackrock/%s/',array,array,animal);
+            mworksDir = sprintf('/mnt/vnlstorage/bushnell_arrays/%s/mworks/%s/',array,animal);
+        else
+            blackrockDir = sprintf('/mnt/vnlstorage2/bushnell_arrays/%s/%s_blackrock/%s/',array,array,animal);
+            mworksDir = sprintf('/mnt/vnlstorage2/bushnell_arrays/%s/mworks/%s/',array,animal);
+        end
+    elseif contains(animal,'WV')
+        if date <= 20190130
+            blackrockDir = sprintf('/mnt/vnlstorage/bushnell_arrays/%s/%s_blackrock/%s/',array,array,animal);
+            mworksDir = sprintf('/mnt/vnlstorage/bushnell_arrays/%s/mworks/%s/',array,animal);
+        elseif date > 20190130 && date <= 20191603
+            blackrockDir = sprintf('/mnt/vnlstorage2/bushnell_arrays/%s/%s_blackrock/%s/',array,array,animal);
+            mworksDir = sprintf('/mnt/vnlstorage2/bushnell_arrays/%s/mworks/%s/',array,animal);
+        else
+            blackrockDir = sprintf('/mnt/vnlstorage3/bushnell_arrays/%s/%s_blackrock/%s/',array,array,animal);
+            mworksDir = sprintf('/mnt/vnlstorage3/bushnell_arrays/%s/mworks/%s/',array,animal);
+        end
+    end
+elseif length(tmp) == 7 %working from rethresholded and cleaned data
+        [animal,~,~,array,date,~,threshold] = deal(tmp);
+    if contains(animal,'WU')
+        % /mnt/vnlstorage3/bushnell_arrays/nsp2/reThreshold
+        dirBr = sprintf('/mnt/vnlstorage3/bushnell_arrays/%s/reThreshold/%s/',array,animal);
+        dirMw = sprintf('/mnt/vnlstorage3/bushnell_arrays/%s/reThreshold/%s/',array,animal);
         blackrockDir = [prefix_dir, dirBr];
         mworksDir = [prefix_dir, dirMw];
     end
-
+end
 %%
 tSuccess = 4*250 * 1e3;
 pointsKeep = bin_size * 10;
@@ -96,21 +119,22 @@ numCh = 96;
 
 % for nm in ['WU_gratmap_test_20170110_003']:
 ns_nev_name = [blackrockDir, fileName];
-
+%%
 % only one mwk for multiple .nev files, remove the array-specific parts
 % from the nev file name to get the .mwk name:
-replacement = {'NSP2_P_', '_NSP1_M', '_NSP1_A','_NSP1_P', '_NSP1_S130404',...
-    '_NSP2_P', '_NSP2_M', 'NSP2_A', '_nsp1', '_nsp2'};
+
+% Modifying so it will also ignore added portion for rethresholded files
+replacement = {'_nsp1', '_nsp2','_thresh30','_thresh35','_thresh40','_thresh45'};
 for n = 1: length(replacement)
     if n > 1
         shortName = strrep(shortName, replacement{n}, '');
     else
         shortName = strrep(fileName, replacement{n}, '');
     end
-end
+end   
 
 mwk_name = [mworksDir, shortName, '.mwk2'];
-
+%%
 %%%%%%%%%%%%%%%%%%%%%%%%% get word out times and success events
 force_process = 1;
 % saveAll = 0;
