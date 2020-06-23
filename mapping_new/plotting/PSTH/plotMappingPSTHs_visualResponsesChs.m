@@ -1,6 +1,7 @@
-function [] = plotMappingPSTHs_visualResponsesChs(dataT)
+function [] = plotMappingPSTHs_visualResponsesChs(dataT,useGoodCh)
 % Plot PSTHs for map noise programs combining across all locations and
 % sitmuli
+
 xPos = unique(dataT.pos_x);
 yPos = unique(dataT.pos_y);
 numXs = length(xPos);
@@ -40,9 +41,11 @@ for ch = 1:96
 end
 
 %%
-
+if useGoodCh == 0
+    goodCh = ones(1,96);
+end
 for ch = 1:96
-    figure(2);
+    figure(3);
     clf
     pos = get(gcf,'Position');
     set(gcf,'Position',[pos(1) pos(2) 800 600])
@@ -53,15 +56,14 @@ for ch = 1:96
     
     ndx = 1;
     for x = 1:numXs
-        for y = 1:numYs
-            
+        for y = 1:numYs           
             
             subplot(numXs,numYs,ndx)
             hold on;
             bR = squeeze(blankResp(x,y,ch,:));
             sR = squeeze(stimResp(x,y,ch,:));
             
-            if dataT.goodCh(ch) == 1
+            if goodCh == 1
                 if contains(dataT.animal,'XT')
                     if contains(dataT.eye,'RE')
                         plot(1:35,bR,'color',[0.14 0.63 0.42 0.7],'LineWidth',0.5);
@@ -109,7 +111,7 @@ for ch = 1:96
         end
     end
     suptitle((sprintf('%s %s %s stim vs blank all locations ch %d', dataT.animal,dataT.eye, dataT.array,ch)));
-    figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_',dataT.programID,'_PSTHstimVBlank'];
+    figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_',dataT.programID,'_PSTHstimVBlank_ch',num2str(ch)];
     print(gcf, figName,'-dpdf','-fillpage')
 end
 

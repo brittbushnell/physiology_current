@@ -60,8 +60,9 @@ for fi = 1:size(files,1)
     end
     %% get mean responses per location
     dataT = getMapNoiseRespDprime(dataT, numBoot, holdout);
+    %% plot location specific responses
     plotMapping_locHeatMapbyCh(dataT)
-    plotMappingPSTHs_visualResponsesChs(dataT)
+    plotMappingPSTHs_visualResponsesChs(dataT,0)
        %%
     if location == 1
         outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/GratMapRF/',dataT.array);
