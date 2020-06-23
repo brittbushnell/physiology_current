@@ -21,14 +21,14 @@ xpos = unique(dataT.pos_x);
 
 cmap = gray(20);
 cmap = flipud(cmap);
-
+%%
 for ch = 1:96
 figure(4)
 clf
 hold on
 chResp = flipud(dataT.locDprime(:,:,ch)); 
 imagesc(chResp)
-plot(find(xpos == 0),find(ypos == 0),'ro','MarkerFaceColor','r','MarkerSize',10)
+plot(find(xpos == dataT.fixX),find(ypos == dataT.fixY),'ro','MarkerFaceColor','r','MarkerSize',10)
 colormap(cmap)
 c = colorbar;
 c.FontAngle = 'italic'; c.FontSize = 10;
@@ -55,7 +55,7 @@ for ch = 1:96
     hold on;
     dPrimes = flipud(dataT.locDprime(:,:,ch));
     imagesc(dPrimes)
-    plot(find(xpos == 0),find(ypos == 0),'ro','MarkerFaceColor','r','MarkerSize',4)
+    plot(find(xpos == dataT.fixX),find(ypos == dataT.fixY),'ro','MarkerFaceColor','r','MarkerSize',4)
     colormap(cmap)
     axis square
     axis off
@@ -68,6 +68,7 @@ figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_',dataT.programID,'_locH
 print(gcf, figName,'-dpdf','-fillpage')
 %%
 cd ../../..
+%%
 
 figure(6)
 clf
@@ -79,7 +80,8 @@ set(gcf,'PaperOrientation','Landscape');
 hold on;
 dPrimes = flipud(mean(dataT.locDprime(:,:,:),3));
 imagesc(dPrimes)
-plot(find(xpos == 0),find(ypos == 0),'ro','MarkerFaceColor','r','MarkerSize',4)
+plot(find(xpos == dataT.fixX),find(ypos == dataT.fixX),'ro','MarkerFaceColor','r','MarkerSize',4)
+viscircles([dataT.stimX,dataT.stimY],4);
 colormap(cmap)
 c = colorbar;
 c.FontAngle = 'italic'; c.FontSize = 10;

@@ -1,7 +1,7 @@
 clear all
 close all
 clc
-%tic
+tic
 %%
 
 files = {
