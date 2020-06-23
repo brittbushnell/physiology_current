@@ -11,6 +11,10 @@ cd(figDir)
 folder = dataT.date2;
 mkdir(folder)
 cd(sprintf('%s',folder))
+
+folder = 'dPrime';
+mkdir(folder)
+cd(sprintf('%s',folder))
 %%
 ypos = unique(dataT.pos_y);
 xpos = unique(dataT.pos_x);
@@ -22,7 +26,8 @@ for ch = 1:96
 figure(3)
 clf
 hold on
-imagesc(dataT.locRespsBaseSub(:,:,ch))
+chResp = flipud(dataT.locDprime(:,:,ch)); 
+imagesc(chResp)
 plot(find(xpos == 0),find(ypos == 0),'ro','MarkerFaceColor','r','MarkerSize',10)
 colormap(cmap)
 colorbar
@@ -45,7 +50,7 @@ set(gcf,'PaperOrientation','Landscape');
 for ch = 1:96
     subplot(dataT.amap,10,10,ch)
     hold on;
-    imagesc(dataT.locRespsBaseSub(:,:,ch))
+    imagesc(dataT.locDprime(:,:,ch))
     plot(find(xpos == 0),find(ypos == 0),'ro','MarkerFaceColor','r','MarkerSize',4)
     colormap(cmap)
     axis square

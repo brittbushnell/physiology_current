@@ -10,17 +10,17 @@ files = {
 %     'WV_RE_MapNoiseRightWide_nsp2_20190122_001_raw';
     
     'WV_LE_MapNoise_nsp2_20190204_all_raw';
-    'WV_RE_MapNoise_nsp2_20190205_001_raw';
-    
-    'WV_LE_MapNoise_nsp1_20190204_all_raw';
-    'WV_RE_MapNoise_nsp1_20190205_001_raw';
+%     'WV_RE_MapNoise_nsp2_20190205_001_raw';
+%     
+%     'WV_LE_MapNoise_nsp1_20190204_all_raw';
+%     'WV_RE_MapNoise_nsp1_20190205_001_raw';
     };
 nameEnd = 'perm';
 %%
 numBoot = 200;
 numPerm = 2000;
 holdout = .90;
-plotFlag = 1; % 0 if you don't want to plot anything.
+plotFlag = 0; % 0 if you don't want to plot anything.
 %%
 location = determineComputer;
 failedFiles = {};
@@ -61,6 +61,24 @@ for fi = 1:size(files,1)
     %% get mean responses per location
     dataT = getMapNoiseRespDprime(dataT, numBoot, holdout);
     plotMapping_locHeatMapbyCh(dataT)
-    %%
+    plotMappingPSTHs_visualResponsesChs(dataT)
+       %%
+    if location == 1
+        outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/GratMapRF/',dataT.array);
+    elseif location == 0
+        outputDir =  sprintf('~/Dropbox/ArrayData/matFiles/%s/GratMapRF/',dataT.array);
+    end
+    %% make structures for each eye and save .mat file
     
+    if contains(filename,'LE')
+        data.LE = dataT;
+        data.RE = [];
+    else
+        data.RE = dataT;
+        data.LE = [];
+    end
+    
+    saveName = [outputDir filename '_' nameEnd '.mat'];
+    save(saveName,'data');
+    fprintf('%s saved\n', saveName)
 end
