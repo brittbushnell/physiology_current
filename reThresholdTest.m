@@ -12,7 +12,7 @@ files = {
 %%
 for fi = 1:size(files,1)
     filename = files{fi};
-    fprintf('*** running file %s ***\n %d/%d ',filename,fi,size(files,1))
+    fprintf('*** running file %s ***\n %d/%d\n ',filename,fi,size(files,1))
     threshold = 3.5;
     if contains(filename,'nsp1')
         array = 'nsp1';
@@ -23,8 +23,9 @@ for fi = 1:size(files,1)
     nev = sprintf('/km/vs/array/bushnell_arrays/%s/%s_blackrock/WU/%s.nev',array,array,filename);
     
     for thresh = 1:length(threshold)
-        output = sprintf('/mnt/vnlstorage3/bushnell_arrays/%s/reThreshold/%s_thresh%.1f',array,filename,threshold(thresh));
-        car_nsx(nev,ns6,output,threshold(thresh));
-        
+        newName = [filename, sprintf('_thresh%d',threshold(thresh)*10)];
+        output = sprintf('/mnt/vnlstorage3/bushnell_arrays/%s/reThreshold/',array,filename,newName);
+       % car_nsx(nev,ns6,output,threshold(thresh));
+        MworksNevParser(newName)
     end
 end
