@@ -5,12 +5,13 @@ yPos = unique(dataT.pos_y);
 numXs = length(xPos);
 numYs = length(yPos);
 %%
-locStimResps  = nan(numXs, numYs, 96);
-locBlankResps  = nan(numXs, numYs, 96);
-locDprime = nan(numXs, numYs, 96);
-locStimSE = nan(numXs, numYs, 96);
-locBlankSE = nan(numXs, numYs, 96);
-locRespsBaseSub = nan(numXs, numYs, 96);
+% need to be y,x to plot properly
+locStimResps  = nan(numYs,numXs, 96);
+locBlankResps  = nan(numYs,numXs, 96);
+locDprime = nan(numYs,numXs, 96);
+locStimSE = nan(numYs,numXs, 96);
+locBlankSE = nan(numYs,numXs, 96);
+locRespsBaseSub = nan(numYs,numXs, 96);
 %%
 stimNdx  = dataT.stimulus == 1;
 blankNdx = dataT.stimulus == 0;
@@ -42,11 +43,11 @@ for ch = 1:96
                        
                 dPrimeBoot(1,nb) = simpleDiscrim((blankSpikeCount),(stimSpikeCount));  
             end
-            locDprime(x,y,ch)     = nanmean(dPrimeBoot);
-            locStimResps(x,y,ch)  = nanmean(stimMeanBoot);
-            locStimSE(x,y,ch)     = nanstd(stimMeanBoot);
-            locBlankResps(x,y,ch) = nanmean(blankMeanBoot);
-            locBlankSE(x,y,ch)    = nanstd(blankMeanBoot);
+            locDprime(y,x,ch)     = nanmean(dPrimeBoot);
+            locStimResps(y,x,ch)  = nanmean(stimMeanBoot);
+            locStimSE(y,x,ch)     = nanstd(stimMeanBoot);
+            locBlankResps(y,x,ch) = nanmean(blankMeanBoot);
+            locBlankSE(y,x,ch)    = nanstd(blankMeanBoot);
         end
     end
     locRespsBaseSub(:,:,ch) = locStimResps(:,:,ch) - locBlankResps(:,:,ch);

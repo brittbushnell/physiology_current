@@ -4,17 +4,20 @@ clc
 %%
 
 files = {
-    % beginning of recordin
+    % beginning of recording
 %     'WV_LE_MapNoiseRight_nsp2_20190121_all';
 %     'WV_LE_MapNoiseRightWide_nsp2_20190122_002';
 %     'WV_RE_MapNoiseRightWide_nsp2_20190122_001';
     
     % active arrays
-    'WV_LE_MapNoise_nsp2_20190204_all';
-    'WV_RE_MapNoise_nsp2_20190205_001';
-    
-    'WV_LE_MapNoise_nsp2_20190204_all';
-    'WV_RE_MapNoise_nsp2_20190205_001';
+%     'WV_LE_MapNoise_nsp2_20190204_all';
+%     'WV_RE_MapNoise_nsp2_20190205_001';
+%     
+%     'WV_LE_MapNoise_nsp1_20190204_all';
+%     'WV_RE_MapNoise_nsp1_20190205_001';
+%     
+    'XT_LE_mapNoise_nsp2_Oct2018';
+    'XT_LE_mapNoiseRight_nsp2_Nov2018';
     };
 nameEnd = 'raw';
 %%

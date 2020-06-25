@@ -1,7 +1,7 @@
 %% mapNoise
 
 clear all
-close all
+%close all
 clc
 
 plotPSTH = 1;
@@ -17,11 +17,11 @@ plotPSTH = 1;
 % files = 'XT_RE_mapNoiseRight_nsp2_20181026_001';
 % files = 'XT_RE_mapNoiseRight_nsp2_20181026_003';
 % files = 'XT_RE_mapNoiseRight_nsp2_20181119_001';
-% 
+%
 % files = 'XT_LE_mapNoise_nsp2_Oct2018';
 % files = 'XT_LE_mapNoiseRight_nsp2_Nov2018';
 %files = 'XT_LE_mapNoiseRight_nsp1_Nov2018';
-% 
+%
 %files = 'XT_RE_mapNoise_nsp2_EarlyOct2018';
 %files = 'XT_RE_mapNoiseRight_nsp2_LateOct2018';
 
@@ -40,30 +40,31 @@ plotPSTH = 1;
 %files = 'WV_LE_MapNoise_nsp2_20190204_002';
 
 %files = 'WV_RE_MapNoise_nsp1_20190205_001';
-files = 'WV_LE_MapNoise_nsp1_20190204_002';
+%files = 'WV_LE_MapNoise_nsp1_20190204_002';
+files = 'WV_LE_MapNoise_nsp2_20190204_all_raw';
 %%
-location = 0;
+location = determineComputer;
 startMean = 10;
 endMean = 20;
 numBoot = 100;
 %%
 for fi = 1:size(files,1)
     filename = files(fi,:);
-    data = load(filename);
+    %data = load(filename);
+    load(filename); data = data.LE;
     %% load array map
     data.amap = getBlackrockArrayMap(filename);
-    startBin = 1;
-    endBin = 30;
+    startBin = 5;
+    endBin = 25;
     %%
     tmp = strsplit(filename,'_');
-    [animal, eye, programID, array, date,p] = deal(tmp{:});
+    [animal, eye, programID, array, date,p,t] = deal(tmp{:});
     
     if strcmp(array,'nsp1')
         array = 'V1';
     else
         array = 'V4';
-    end
-    
+    end   
     
     textName = figTitleName(filename);
     disp(sprintf('\n analyzing file: %s',textName))
@@ -95,9 +96,9 @@ for fi = 1:size(files,1)
     elseif location == 0
         goDir = sprintf('~/Dropbox/Figures/%s/Mapping/%s/FullArray/%s/',animal, array, eye);
     end
-    cd(goDir)
+    % cd(goDir)
     
-    figure(1)
+    figure%(1)
     
     for ch = 1:96
         subplot(data.amap,10,10,ch);
@@ -138,33 +139,25 @@ for fi = 1:size(files,1)
     end
     clear ys
     clear xs
-%         %%
-%         xLocMtx = nan(length(ypos),length(xpos));
-%         yLocMtx = nan(length(ypos),length(xpos));
-%         
-%         locs2 = nan(length(ypos),length(xpos));
-%         locsBaseSub2 = nan(length(ypos),length(xpos));
-        
-        for ys = 1:length(ypos)
-            for xs = 1:length(xpos)
-                %useBlank = double(data.bins(blankNdx,binStimOn:binStimOff,(goodCh == 1)))./0.01;
-                useBlank = double(data.bins(blankNdx,binStimOn:binStimOff,:))./0.01;
-                blank = nanmean(useBlank(:));
-                
-                tmpNdx = find((data.pos_x == xpos(xs)) & (data.pos_y == ypos(ys)) & (data.stimType == 1));
-                xLocMtx(ys,xs) = xpos(xs);
-                yLocMtx(ys,xs) = ypos(ys);
-                
-                %useRuns = double(data.bins(tmpNdx,binStimOn:binStimOff,(goodCh == 1)));
-                useRuns = double(data.bins(tmpNdx,binStimOn:binStimOff,:));
-                locs2(ys,xs) = nanmean(useRuns(:))./0.010; %dividing the mean by binStimOn/.010 puts the results into spikes/sec
-                locsBaseSub2(ys,xs) = locs2(ys,xs) - blank;
-                
-                maxResp = max(locsBaseSub2(:));
-                normResps2 = locsBaseSub2./maxResp;
-            end
+    % responses across all channels
+    for ys = 1:length(ypos)
+        for xs = 1:length(xpos)
+            useBlank = double(data.bins(blankNdx,binStimOn:binStimOff,:))./0.01;
+            blank = nanmean(useBlank(:));
+            
+            tmpNdx = find((data.pos_x == xpos(xs)) & (data.pos_y == ypos(ys)) & (data.stimType == 1));
+            xLocMtx(ys,xs) = xpos(xs);
+            yLocMtx(ys,xs) = ypos(ys);
+            
+            useRuns = double(data.bins(tmpNdx,binStimOn:binStimOff,:));
+            locs2(ys,xs) = nanmean(useRuns(:))./0.010; %dividing the mean by binStimOn/.010 puts the results into spikes/sec
+            locsBaseSub2(ys,xs) = locs2(ys,xs) - blank;
+            
+            maxResp = max(locsBaseSub2(:));
+            normResps2 = locsBaseSub2./maxResp;
         end
-
+    end
+    
     %%
     figure%(2)
     clf
@@ -176,61 +169,62 @@ for fi = 1:size(files,1)
         flipud(locsBaseSub{ch});
         imagesc(locsBaseSub{ch})
         title(ch,'FontSize',9)
-        colormap(gray)
+        colormap(flipud(gray))
         axis off; axis tight; axis square
         set(gca, 'tickdir','out','color','none','box','off',...
             'XTick',1:5, 'XTickLabel',{'','', '','', ''},...   % Note: change the tick labels to populate according to matrix values so not hardcoded.
             'YTick',1:5, 'YTickLabel',{'','', '','', ''});
         if ch == 1
-            suptitle({sprintf('%s %s %s receptive feild mapping',animal, eye, array);date})
+            suptitle({sprintf('%s %s %s receptive field mapping',animal, eye, array);date})
         end
     end
     figName = [animal,'_', eye,'_',array,'_RFmappingbyCh',date];
-    print(gcf,figName,'-dpdf','-fillpage')
+    %print(gcf,figName,'-dpdf','-fillpage')
     %% mapping of entire array fig3
-    % limiting to visually responsive channels
-    figure(3)
+    % limiting to visually responsive channels and normalizing by max
+    % response
+    figure%(3)
     clf
     cla reset;
     
     hold on
     imagesc(normResps2);
     axis ij;
-    colormap(gray)
+    colormap(flipud(gray))
     colorbar
     %axis off;
     axis tight; axis square
     if contains(files,'WV')
-    set(gca, 'tickdir','out','color','none','box','off',...
-        'XTick',(1:1:length(xpos_rel)),'XTickLabel',({'-2', '-1', '0', '1', '2'}),...   % Note: change the tick labels to populate according to matrix values so not hardcoded.
-        'YTick',(1:1:length(ypos_rel)),'YTickLabel',({'2', '1', '0', '-1', '-2'}))
+        set(gca, 'tickdir','out','color','none','box','off',...
+            'XTick',(1:1:length(xpos_rel)),'XTickLabel',({'-2', '-1', '0', '1', '2'}),...   % Note: change the tick labels to populate according to matrix values so not hardcoded.
+            'YTick',(1:1:length(ypos_rel)),'YTickLabel',({'2', '1', '0', '-1', '-2'}))
     else
         set(gca, 'tickdir','out','color','none','box','off',...
-        'XTick',(1:1:length(xpos_rel)),'XTickLabel',({'-2', '-1', '0', '1', '2'}),...   % Note: change the tick labels to populate according to matrix values so not hardcoded.
-        'YTick',(1:1:length(ypos_rel)),'YTickLabel',({'2', '1', '0', '-1', '-2'}))
-    end 
+            'XTick',(1:1:length(xpos_rel)),'XTickLabel',({'-2', '-1', '0', '1', '2'}),...   % Note: change the tick labels to populate according to matrix values so not hardcoded.
+            'YTick',(1:1:length(ypos_rel)),'YTickLabel',({'2', '1', '0', '-1', '-2'}))
+    end
     title({sprintf('%s %s %s normalized mapping responses',animal,eye,array),date})
     
     figName = [animal,'_', eye,'_',array,'_mappingNormResp',date];
-    saveas(gcf,figName,'pdf')
+    %saveas(gcf,figName,'pdf')
     %% plotting normalized responses for each channel
-    figure(4)
+    figure%(4)
     clf
     for ch = 1:96
         hold on
         imagesc(normResps{ch})
         axis ij;
         title(ch,'FontSize',7)
-        colormap(gray)
+        colormap(flipud(gray))
         axis off; axis tight; axis square
         set(gca, 'tickdir','out','color','none','box','off')
-
+        
     end
     suptitle({sprintf('%s %s %s receptive feild mapping',animal, eye, array),date})
     figName = [animal,'_', eye,'_',array,'_mappingPSTHArray',date];
-    saveas(gcf,figName,'pdf')
-    %% PSTh by location full array  
-    figure(13)
+    %saveas(gcf,figName,'pdf')
+    %% PSTh by location full array
+    figure%(13)
     pos = get(gcf,'Position');
     set(gcf,'Position',[pos(1) pos(2) 700 700])
     clf
@@ -263,14 +257,14 @@ for fi = 1:size(files,1)
     suptitle({sprintf('%s %s %s response by location full array',animal,eye,array),date})
     
     figName = [animal,'_', eye,'_',array,'_mapping',date];
-    print(gcf,figName,'-dpdf','-fillpage')
+   % print(gcf,figName,'-dpdf','-fillpage')
     %% PSTH by location all chs
-%     if location == 1
-%         goDir = sprintf('/Local/Users/bushnell/Dropbox/Figures/%s/Mapping/%s/Ch/%s/',animal,array,eye);
-%     elseif location == 0
-%         goDir = sprintf('~/Dropbox/Figures/%s/Mapping/%s/Ch/%s/',animal,array,eye);
-%     end
-%     cd(goDir)
+    %     if location == 1
+    %         goDir = sprintf('/Local/Users/bushnell/Dropbox/Figures/%s/Mapping/%s/Ch/%s/',animal,array,eye);
+    %     elseif location == 0
+    %         goDir = sprintf('~/Dropbox/Figures/%s/Mapping/%s/Ch/%s/',animal,array,eye);
+    %     end
+    %     cd(goDir)
     %     useChs = [69 80 45 51 50 19 60 61 26];
     %
     %

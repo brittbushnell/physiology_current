@@ -1,4 +1,6 @@
 function [] = plotMapping_locHeatMapbyCh(dataT)
+% reminder for future: when plotting heat maps like these, need to use
+% axis ij command to get the coordinates correct
 location = determineComputer;
 if location == 1
     figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/Mapping/%s/heatMap/%s/byCh',dataT.animal,dataT.array,dataT.eye);
@@ -18,6 +20,7 @@ cd(sprintf('%s',folder))
 %%
 ypos = unique(dataT.pos_y);
 xpos = unique(dataT.pos_x);
+ypos = sort(ypos,'descend');
 
 cmap = gray(20);
 cmap = flipud(cmap);
@@ -28,7 +31,8 @@ clf
 hold on
 chResp = flipud(dataT.locDprime(:,:,ch)); 
 imagesc(chResp)
-plot(find(xpos == dataT.fixX),find(ypos == dataT.fixY),'ro','MarkerFaceColor','r','MarkerSize',10)
+axis ij;
+plot(find(xpos == unique(dataT.fix_x)),find(ypos == unique(dataT.fix_y)),'ro','MarkerFaceColor','r','MarkerSize',10)
 colormap(cmap)
 c = colorbar;
 c.FontAngle = 'italic'; c.FontSize = 10;
@@ -55,7 +59,8 @@ for ch = 1:96
     hold on;
     dPrimes = flipud(dataT.locDprime(:,:,ch));
     imagesc(dPrimes)
-    plot(find(xpos == dataT.fixX),find(ypos == dataT.fixY),'ro','MarkerFaceColor','r','MarkerSize',4)
+    axis ij;
+    plot(find(xpos == unique(dataT.fix_x)),find(ypos == unique(dataT.fix_y)),'ro','MarkerFaceColor','r','MarkerSize',8)
     colormap(cmap)
     axis square
     axis off
@@ -80,15 +85,16 @@ set(gcf,'PaperOrientation','Landscape');
 hold on;
 dPrimes = flipud(mean(dataT.locDprime(:,:,:),3));
 imagesc(dPrimes)
-plot(find(xpos == dataT.fixX),find(ypos == dataT.fixX),'ro','MarkerFaceColor','r','MarkerSize',4)
-viscircles([dataT.stimX,dataT.stimY],4);
+axis ij;
+plot(find(xpos == unique(dataT.fix_x)),find(ypos == unique(dataT.fix_y)),'ro','MarkerFaceColor','r','MarkerSize',10)
+%viscircles([dataT.stimX,dataT.stimY],4);
 colormap(cmap)
 c = colorbar;
 c.FontAngle = 'italic'; c.FontSize = 10;
 c.Label.String = 'dPrime vs blank'; c.Label.FontSize = 12; c.Label.FontAngle = 'italic';
-
+c.TickDirection = 'out';
 axis square
-axis off
+%axis off
 
 set(gca,'XTick',1:1:length(xpos),'XTickLabel',(xpos),'YTick',1:1:length(ypos),'YTickLabel',(ypos))
 
