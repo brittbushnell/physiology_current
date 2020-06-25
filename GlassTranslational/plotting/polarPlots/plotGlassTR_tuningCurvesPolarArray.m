@@ -42,10 +42,11 @@ end
 oris = 0:45:315;
 oris(end+1) = 0;
 oris = deg2rad(oris);
+useInd = sub2ind([10 10], dataT.amap.row(dataT.amap.channelndx) + 1, dataT.amap.col(dataT.amap.channelndx) + 1)';
 
 for dt = 1:numDots
     for dx = 1:numDxs
-        figure(14)
+        figure%(14)
         clf
         pos = get(gcf,'Position');
         set(gcf,'Position',[pos(1) pos(2) 1000 800])
@@ -66,7 +67,7 @@ for dt = 1:numDots
                 
                 minLim = round(extremes*-1);
                 maxLim = round(extremes);
-                max10 = max(lin(:))+(max(lin(:))/10);                
+                max10 = max(lin(:))+(max(lin(:))/5);
                 
                 linResps = repmat(squeeze(stimMean(:,dt,dx,ch)),[2,1]);
                 linResps(end+1) = linResps(1);
@@ -75,10 +76,15 @@ for dt = 1:numDots
                 blankResp = (squeeze(blankMean(ch)));
                 blankVect = repmat(blankResp,[1,length(oris)]);
                 
-                subplot(dataT.amap,10,10,ch)                
+                %                 subplot(dataT.amap,10,10,ch)
+                s = subplot(10, 10, useInd(ch), polaraxes); %position = [left bottom width height]
+                s.Position(2) = s.Position(2)-0.02;
+                s.Position(4) = s.Position(4)+0.006;
+                s.Position(3) = s.Position(3)+0.006;
+                
                 hold on
-                l = polarplot(oris',linResps,'-o');
-                l.LineWidth = 1.2;
+                l = polarplot(oris',linResps,'-');
+                l.LineWidth = 1.5;
                 
                 if contains(dataT.eye,'LE')
                     l.Color = [0 0 1 0.8];
@@ -91,43 +97,44 @@ for dt = 1:numDots
                 pOri180 = (pOri+180);
                 pOriRad180 = deg2rad(pOri+180);
                 
-                polarplot([pOriRad 0 pOriRad180],[max10 0 max10],'k--','LineWidth',1)
+                polarplot([pOriRad 0 pOriRad180],[max10 0 max10],'k-','LineWidth',1)
                 
                 %                if dataT.prefOri2thetaNoiseSig(end,dt,dx,ch) == 1
                 %                    text(pOriRad,max10+2,sprintf('%.1f *',pOri),'FontWeight','bold','FontAngle','italic','FontSize',11)
                 %                 else
-                text(pOriRad,max10+2,sprintf('%.1f',pOri),'FontSize',10)
-                text(pOriRad180,max10+2,sprintf('%.1f',pOri180),'FontSize',10)
+%                 text(pOriRad,max10+2,sprintf('%.1f',pOri),'FontSize',810)
+%                 text(pOriRad180,max10+2,sprintf('%.1f',pOri180),'FontSize',10)
                 %                 end
                 
-                n = polarplot(oris,noiseVect,'-o');
+                n = polarplot(oris,noiseVect,'-');
                 n.Color = [1 0.5 0.1 0.8];
-                n.LineWidth = 1.2;
+                n.LineWidth = 1.5;
                 
-                b = polarplot(oris,blankVect,'-o');
-                b.Color = [0.5 0.5 0.5 0.8];
-                b.LineWidth = 1.2;
+%                 b = polarplot(oris,blankVect,'-');
+%                 b.Color = [0.5 0.5 0.5 0.8];
+%                 b.LineWidth = 1.2;
                 set(gca,'color','none')
                 
                 ax = gca;
                 ax.RLim   = [0,maxLim];
                 ax.RTick = [0,maxLim/2,maxLim];
-                set(gca,'ThetaTick',0:45:315)
+                ax.RTickLabel = [];
+                set(gca,'ThetaTick',[])
                 
-                if dataT.OSI2thetaNoiseSig(end,dt,dx,ch) == 1
-                    title(sprintf('ch %d OSI: %.3f *',ch,dataT.OriSelectIndex2thetaNoise(end,dt,dx,ch)))
-                else
-                    title(sprintf('ch %d OSI: %.3f',ch,dataT.OriSelectIndex2thetaNoise(end,dt,dx,ch)))
-                end
+%                 if dataT.OSI2thetaNoiseSig(end,dt,dx,ch) == 1
+%                     title(sprintf('ch %d OSI: %.3f *',ch,dataT.OriSelectIndex2thetaNoise(end,dt,dx,ch)))
+%                 else
+%                     title(sprintf('ch %d OSI: %.3f',ch,dataT.OriSelectIndex2thetaNoise(end,dt,dx,ch)))
+%                 end
                 
             end
         end
         
-        ttl = suptitle({sprintf('%s %s %s Glass orientation tuning curves',dataT.animal, dataT.eye, dataT.array);...
+        ttl = suptitle({sprintf('%s %s %s Glass orientation tuning curves %d dots dx:%.2f',dataT.animal, dataT.eye, dataT.array,dots(dt),dxs(dx));...
             sprintf('%s run %s',dataT.date,dataT.runNum)});
         ttl.Position = [0.5,-0.025,0];
         
         figName = [dataT.animal,'_',dataT.array,'_',dataT.eye,'_oriRespsPolar_noise_allCh','.pdf'];
-        print(gcf, figName,'-dpdf','-fillpage')
+        %print(gcf, figName,'-dpdf','-fillpage')
     end
 end
