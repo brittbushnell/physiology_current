@@ -2,10 +2,10 @@ clc
 clear all
 close all
 %%
-addpath(genpath('~/Desktop/my_vnlstorage/bushnell_arrays/'))
-addpath(genpath('~/Desktop/my_zemina/vnlstorage2/'));
-addpath(genpath('~/Desktop/my_zemina/vnlstorage3/'));
-addpath(genpath('/v/awake/'));
+% addpath(genpath('~/Desktop/my_vnlstorage/bushnell_arrays/'))
+% addpath(genpath('~/Desktop/my_zemina/vnlstorage2/'));
+% addpath(genpath('~/Desktop/my_zemina/vnlstorage3/'));
+% addpath(genpath('/v/awake/'));
 %%
 animal = 'WU';
 array = 'nsp2';
