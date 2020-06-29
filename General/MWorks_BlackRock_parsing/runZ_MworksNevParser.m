@@ -6,11 +6,20 @@ close all
 % addpath(genpath('~/Desktop/my_zemina/vnlstorage2/'));
 % addpath(genpath('~/Desktop/my_zemina/vnlstorage3/'));
 % addpath(genpath('/v/awake/'));
+addpath('~/Desktop/my_vnlstorage/bushnell_arrays/nsp1/mworks/WU/')
+addpath('~/Desktop/my_vnlstorage/bushnell_arrays/nsp1/mworks/XT/')
+addpath('~/Desktop/my_vnlstorage/bushnell_arrays/nsp1/mworks/WV/')
+
+addpath('~/Desktop/my_zemina/vnlstorage2/bushnell_arrays/nsp1/mworks/WV/')
+addpath('~/Desktop/my_zemina/vnlstorage2/bushnell_arrays/nsp1/mworks/XT/')
+
+addpath('~/Desktop/my_zemina/vnlstorage3/bushnell_arrays/nsp1/mworks/WV/')
 %%
 animal = 'WU';
 array = 'nsp2';
 
 inputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/%s/',array,animal);
+%inputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage/bushnell_arrays/%s/%s_blackrock/%s/',array,array,animal);
 outputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/%s/parsed',array,animal);
 
 %%
@@ -30,7 +39,7 @@ for fi = 1:size(files,2)
 %    try
     filename = string(files{fi});
     if ~exist(sprintf('%s/%s',outputDir,strrep(filename,'.nev','')),'file')
-        MworksNevParser(filename,'outputDir',outputDir)
+        MworksNevParser(filename,10,100,outputDir);
     end
 %     catch ME
 %        fprintf('\n\n%s failed %s\n\n',filename,ME.message); 
