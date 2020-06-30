@@ -1,6 +1,7 @@
 clc
 clear all
 close all
+tic;
 %%
 % addpath(genpath('~/Desktop/my_vnlstorage/bushnell_arrays/'))
 % addpath(genpath('~/Desktop/my_zemina/vnlstorage2/'));
@@ -38,9 +39,11 @@ ndx = 1;
 for fi = 1:size(files,2)
 %    try
     filename = string(files{fi});
+    fprintf('*** analyzing %s file %d/%d ****\n',filename,fi,size(files,2));
     if ~exist(sprintf('%s/%s',outputDir,strrep(filename,'.nev','')),'file')
         MworksNevParser(filename,10,100,outputDir);
     end
+    toc/3600;
 %     catch ME
 %        fprintf('\n\n%s failed %s\n\n',filename,ME.message); 
 %        failedFiles{ndx} = filename;

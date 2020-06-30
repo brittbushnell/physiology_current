@@ -122,7 +122,7 @@ end
 %mworksDir = sprintf('/v/awake/%s/mwk/',animal);
 %%
 tSuccess = 4*250 * 1e3;
-pointsKeep = bin_size * 10;
+pointsKeep = num_bins;
 intervalKeep = (pointsKeep*10) * 1e3;
 tPerPoint = round(intervalKeep / pointsKeep);
 numCh = 96;
@@ -225,7 +225,8 @@ if contains(programID,'grat','IgnoreCase',true)
         'o_temporal_frequency', 'overlay','current_phase', 'width', 'grating',...
         'type', 'contrast', 'opacity', 'o_current_phase',  'start_time', 'yoffset',...
         'o_direction', 'rotation', 'xoffset','spatial_frequency', 'name',...
-        'mask', 'o_rotation', 'o_spatial_frequency', 'action'};
+        'mask', 'o_rotation', 'o_spatial_frequency', 'action',...
+        'fix_x','fix_y'};
 else
     stim_var_names = {'pos_x','pos_y','filename','size_x','action','rotation'};
 end
@@ -293,17 +294,19 @@ sprintf('stim shown: %i', n_stim)
 %%%%%%%%%%%%%%%%% binning electrophysiology data
 bins = zeros(n_stim, pointsKeep, numCh);
 
-for channel = 1:numCh
+parfor channel = 1:numCh
     channel
-    bins(:,:, channel) = nev_bin_spikes(t_spikes{channel}, t_stim, pointsKeep, tPerPoint);
-    
+    bins(:,:, channel) = nev_bin_spikes(t_spikes{channel}, t_stim, pointsKeep, tPerPoint);    
 end
 %%
+if contains(programID,'grat','IgnoreCase',true)
 save([outputDir, save_name], 'stimOn', 'starting_phase', 'direction', 'o_starting_phase',...
     'height', 'temporal_frequency', 't_stim', 'o_temporal_frequency', 'overlay','current_phase', 'width', 'grating',...
     'type', 'contrast', 'opacity', 'o_current_phase',  'start_time', 'yoffset',...
     'o_direction', 'rotation', 'xoffset','spatial_frequency', 'name',...
     'mask', 'o_rotation', 'o_spatial_frequency', 'action', 'stimOff', 'bins');
+else
+    save([outputDir, save_name], 'stimOn', 'action', 'stimOff', 'bins','pos_x','pos_y','filename','size_x','action','rotation');
 
 end
 
