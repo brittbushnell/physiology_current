@@ -1,6 +1,0 @@
-<?xml version="1.0"?>
-<marionette_info>
-  <expected_messages>
-    <message type="contains">RuntimeError: This is a simulated error</message>
-  </expected_messages>
-</marionette_info>

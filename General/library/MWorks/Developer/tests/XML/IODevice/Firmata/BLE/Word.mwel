@@ -1,2 +1,0 @@
-%define bluetooth_local_name = 'MWORKS-FIRMATA-BLE-TEST'
-%include '../Word.inc'

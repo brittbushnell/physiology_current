@@ -40,12 +40,6 @@ for dt = 1:2
     end
 end
 %%
-figure (10)
-clf
-pos = get(gcf,'Position');
-set(gcf,'Position',[pos(1) pos(2) 800 500])
-set(gcf,'PaperOrientation','Landscape');
-
 if contains(data.RE.animal,'XT')
     pOris = squeeze(data.RE.prefOri2thetaNoise(end,2:end,2:end,:)); % get the preferred orientations for all 100% coherence stimuli
     rSI = squeeze(data.RE.OriSelectIndex2thetaNoise(end,2:end,2:end,:));
@@ -54,10 +48,12 @@ else
     rSI = squeeze(data.RE.OriSelectIndex2thetaNoise(end,:,:,:));
 end
 siA = [squeeze(vSumRE(1,1,:)),squeeze(vSumRE(1,2,:)),squeeze(vSumRE(2,1,:)),squeeze(vSumRE(2,2,:))]; % rearrange the dPrimess so each row is a ch and each dt,dx is a column
-[~,indR] = max(siA,[],2);% get the indices for the dt,dx that gives the highest OSI
+[~,indR] = max(siA,[],2);% get the indices for the dt,dx that gives the highest summed d'
 
 for ch = 1:96
     if data.RE.goodCh(ch) == 1
+        % go through each of the parameter combinations and figure out
+        % which one is preferred for that channel. 
     if indR(ch) == 1
         pOrisR(ch) = pOris(1,1,ch); 
         SIR(ch) = rSI(1,1,ch);
@@ -81,6 +77,7 @@ pOrisR(isnan(pOrisR)) = [];
 SIR2 = pOrisR;
 SIR2(SIR2<0) = SIR2(SIR2<0)+180;
 
+% get preferred orientation for the distribution using circular mean
 cirMuR = circ_mean(deg2rad(SIR2(:)*2))/2;
 cirMuR2 = cirMuR+pi;
 
@@ -122,7 +119,14 @@ SIL2(SIL2<0) = SIL2(SIL2<0)+180;
 
 cirMuL = circ_mean(deg2rad(SIL2(:)*2))/2;
 cirMuL2 = cirMuL+pi;
-    
+
+%%  
+figure (10)
+clf
+pos = get(gcf,'Position');
+set(gcf,'Position',[pos(1) pos(2) 800 500])
+set(gcf,'PaperOrientation','Landscape');
+
 subplot(1,2,1,polaraxes)
 hold on
 

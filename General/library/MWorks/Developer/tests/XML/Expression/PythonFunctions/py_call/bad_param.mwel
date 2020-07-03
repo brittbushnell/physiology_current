@@ -1,5 +1,0 @@
-var result = 0
-
-protocol {
-    result = py_call(3)
-}
