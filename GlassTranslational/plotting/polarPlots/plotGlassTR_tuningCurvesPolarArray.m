@@ -99,12 +99,12 @@ for dt = 1:numDots
                 
                 polarplot([pOriRad 0 pOriRad180],[max10 0 max10],'k-','LineWidth',1)
                 
-                %                if dataT.prefOri2thetaNoiseSig(end,dt,dx,ch) == 1
-                %                    text(pOriRad,max10+2,sprintf('%.1f *',pOri),'FontWeight','bold','FontAngle','italic','FontSize',11)
-                %                 else
-%                 text(pOriRad,max10+2,sprintf('%.1f',pOri),'FontSize',810)
-%                 text(pOriRad180,max10+2,sprintf('%.1f',pOri180),'FontSize',10)
-                %                 end
+%                 if dataT.prefOri2thetaNoiseSig(end,dt,dx,ch) == 1
+%                     text(pOriRad,max10+2,sprintf('%.1f *',pOri),'FontWeight','bold','FontAngle','italic','FontSize',11)
+%                 else
+%                     text(pOriRad,max10+2,sprintf('%.1f',pOri),'FontSize',810)
+%                     text(pOriRad180,max10+2,sprintf('%.1f',pOri180),'FontSize',10)
+%                 end
                 
                 n = polarplot(oris,noiseVect,'-');
                 n.Color = [1 0.5 0.1 0.8];
@@ -121,12 +121,6 @@ for dt = 1:numDots
                 ax.RTickLabel = [];
                 set(gca,'ThetaTick',[])
                 
-%                 if dataT.OSI2thetaNoiseSig(end,dt,dx,ch) == 1
-%                     title(sprintf('ch %d OSI: %.3f *',ch,dataT.OriSelectIndex2thetaNoise(end,dt,dx,ch)))
-%                 else
-%                     title(sprintf('ch %d OSI: %.3f',ch,dataT.OriSelectIndex2thetaNoise(end,dt,dx,ch)))
-%                 end
-                
             end
         end
         
@@ -134,7 +128,16 @@ for dt = 1:numDots
             sprintf('%s run %s',dataT.date,dataT.runNum)});
         ttl.Position = [0.5,-0.025,0];
         
-        figName = [dataT.animal,'_',dataT.array,'_',dataT.eye,'_oriRespsPolar_noise_allCh','.pdf'];
-        %print(gcf, figName,'-dpdf','-fillpage')
+        
+        figName = [dataT.animal,'_',dataT.array,'_',dataT.eye,'_oriRespsPolar_noise_allCh_',num2str(dots(dt)),'_',num2str(dxs(dx)),'.pdf'];
+        print(gcf, figName,'-dpdf','-fillpage')
     end
 end
+%% plot using only the stimuli that give the best d'
+
+if contains(data.LE.animal,'XT')
+    pOris = squeeze(data.LE.prefOri2thetaNoise(end,2:end,2:end,:)); % get the preferred orientations for all 100% coherence stimuli
+else
+    pOris = squeeze(data.LE.prefOri2thetaNoise(end,:,:,:)); % get the preferred orientations for all 100% coherence stimuli
+end
+
