@@ -68,20 +68,20 @@ for fi = 1:size(files,1)
     end
     %% add stimulus center for other programs
     if contains(filename,'WU')
-        dataT.stimX = -3.5;
-        dataT.stimY = 0;
-        dataT.fixX = 0;
-        dataT.fixY = 0;
+        dataT.stimXGlass = -3.5;
+        dataT.stimYGlass = 0;
+        dataT.fixXGlass = 0;
+        dataT.fixYGlass = 0;
     elseif contains(filename,'WV')
-        dataT.stimX = 1.5;
-        dataT.stimY = -1;
-        dataT.fixX = 0;
-        dataT.fixY = 0;
+        dataT.stimXGlass = 1.5;
+        dataT.stimYGlass = -1;
+        dataT.fixXGlass = 0;
+        dataT.fixYGlass = 0;
     elseif contains(filename,'XT') % ran it in a location that would hit both arrays knowing they were on the way out
         dataT.stimXGlass = -2;
         dataT.stimYGlass = -1;
-        dataT.fixX = -1;
-        dataT.fixY = 1;
+        dataT.fixXGlass = -1;
+        dataT.fixYGlass = 1;
     end
     %% make structures for each eye and save .mat file
     
