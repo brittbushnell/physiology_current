@@ -61,11 +61,6 @@ switch nargin
         outputDir = varargin{4};
         %save_name = [fileName, '.mat'];
 end
-
-
-strpName = strrep(fileName,'.nev','');
-save_name = [strpName,'.mat'];
-
 %%
 % example fileName: WU_LE_Gratings_nsp1_20170705_003
 % Where do data live? - all of WU's data is on vnlstorage
@@ -160,7 +155,7 @@ force_process = 1;
 % saveAll = 0;
 
 saveMatFileMWorks = get_all_mworks_info_forBrittany(mwk_name, force_process, 'SaveFilePath', mworksDir);
-
+%%
 aux = load(saveMatFileMWorks);
 
 sent = aux.wordout_varEvents;
@@ -178,12 +173,12 @@ t_sent = cell2mat({sent.time_us});
 
 clear aux;
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% nev file word out times
+%% nev file word out times
 % read header
 if contains(ns_nev_name,'.nev')
     ns_nev_name = strrep(ns_nev_name,'.nev','');
 end
-fp = openNEV([ns_nev_name,'.nev']);
+fp = openNEV([ns_nev_name,'.nev'],'nosave');
 % nev_wordout_times_step1 = fp.Data.SerialDigitalIO.TimeStamp;
 % nev_wordout_times_microseconds = double(nev_wordout_times_step1)/(double(fp.MetaTags.SampleRes)/1e6);
 
@@ -200,7 +195,7 @@ for nn = 1:numCh
     end
 end
 
-%%%% Segment to do time alignment:
+%% Segment to do time alignment:
 %first find the times when mworks sends out a word, mworks data is stored in microseconds, IMAGINE THAT
 mworks_wordout_times = double(cell2mat({sent(cell2mat({sent.data})~=0).time_us}));
 
@@ -230,7 +225,7 @@ if strcmp(msgstr, 'X is rank deficient to within machine precision.')
     regressionResutls(1) = double(nev_wordout_times(1)) - regressionResutls(2).*double(mworks_wordout_times(1));
 end
 
-%%%%%%%%%%%%%% loop through stimuli
+%% loop through stimuli
 if contains(programID,'grat','IgnoreCase',true)
     stim_var_names = {'starting_phase', 'direction', 'o_starting_phase',...
         'height', 'temporal_frequency',...
@@ -278,7 +273,8 @@ if contains(programID,'grat','IgnoreCase',true)
             end
         end
     end
-else
+    
+else % stimulus is a png image
     for ind = 1:length(stim_display_update_events)
         if length(stim_display_update_events(ind).data) > 2
             cur_time = stim_display_update_events(ind).time_us;
@@ -301,24 +297,28 @@ else
 end
 
 sprintf('stim shown: %i', n_stim)
-%%
-%%%%%%%%%%%%%%%%% binning electrophysiology data
+%% binning electrophysiology data
 bins = zeros(n_stim, pointsKeep, numCh);
 tic
 for channel = 1:numCh
-    fprintf('beginning binning of responses\n')
     bins(:,:, channel) = nev_bin_spikes_verRatePerChannel(t_spikes{channel}, t_stim, pointsKeep, tPerPoint,fp.MetaTags);    
     fprintf('%.2f minutes to bin %d channels\n', toc/60,channel)
 end
 %%
+strpName = strrep(fileName,'.nev','');
+save_name = [strpName,'.mat'];
+saveName = fullfile(outputDir,save_name);
 if contains(programID,'grat','IgnoreCase',true)
-    save([outputDir, save_name], 'stimOn', 'starting_phase', 'direction', 'o_starting_phase',...
+    save(saveName, 'stimOn', 'starting_phase', 'direction', 'o_starting_phase',...
         'height', 'temporal_frequency', 't_stim', 'o_temporal_frequency', 'overlay','current_phase', 'width', 'grating',...
         'type', 'contrast', 'opacity', 'o_current_phase',  'start_time', 'yoffset',...
         'o_direction', 'rotation', 'xoffset','spatial_frequency', 'name',...
-        'mask', 'o_rotation', 'o_spatial_frequency', 'action', 'stimOff', 'bins','fix_x','fix_y');
+        'mask', 'o_rotation', 'o_spatial_frequency', 'action', 'stimOff', 'bins',...
+        't_stim','fix_x','fix_y');
+    fprintf('saved as %s\n',saveName)
 else
-    save([outputDir, save_name], 'stimOn', 'action', 'stimOff', 'bins','pos_x','pos_y','filename','size_x','action','rotation','fix_x','fix_y');
+    save(saveName, 'stimOn', 'action', 'stimOff', 'bins','pos_x','pos_y','filename','size_x','action','rotation','fix_x','fix_y','t_stim');
+    fprintf('saved as %s\n',saveName)
 end
 %%
 clear fp

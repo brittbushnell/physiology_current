@@ -18,16 +18,16 @@ addpath('~/Desktop/my_zemina/vnlstorage3/bushnell_arrays/nsp1/mworks/WV/')
 %%
 animal = 'WU';
 array = 'nsp2';
-eye = 'RE';
+eye = 'LE';
 
 %gratings
-    inputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/gratings/%s/%s/',array,animal,eye);
-    %inputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage/bushnell_arrays/%s/%s_blackrock/%s/',array,array,animal);
-    outputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/gratings/%s/parsed',array,animal);
-%png
-%     inputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/png/%s/%s/',array,animal,eye);
+%     inputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/gratings/%s/%s/',array,animal,eye);
 %     %inputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage/bushnell_arrays/%s/%s_blackrock/%s/',array,array,animal);
-%     outputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/png/%s/parsed/',array,animal);
+%     outputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/gratings/%s/parsed',array,animal);
+%png
+     inputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/png/%s/%s/',array,animal,eye);
+%     %inputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage/bushnell_arrays/%s/%s_blackrock/%s/',array,array,animal);
+     outputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/png/%s/parsed/',array,animal);
 
 %%
 cd(inputDir);
@@ -47,7 +47,7 @@ for fi = 1:size(files,2)
     filename = string(files{fi});
     
     fprintf('*** analyzing %s file %d/%d ****\n',filename,fi,size(files,2));
-    if ~exist(sprintf('%s/%s',outputDir,strrep(filename,'.nev','')),'file')
+    if ~exist(sprintf('%s/%s',outputDir,strrep(filename,'.mat','')),'file')
         MworksNevParser(filename,10,100,outputDir);
     end
     toc/3600;

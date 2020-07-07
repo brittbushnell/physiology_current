@@ -99,9 +99,7 @@ spikeCountMatrix(1, auxUnique) = auxCounts.*(subsampleFreq);
 for t = 1:n_stim
     binsFinal(t, :) = spikeCountMatrix(:, round(t_stim_in(t)*(10^-6)*POINTS_KEEP):round(t_stim_in(t)*(10^-6)*POINTS_KEEP + POINTS_KEEP-1));
 end
-
-
-% % Original
+%% Original
 % for stim = 1:n_stim
 %     offset = 1;
 %     for bin_i = 1:POINTS_KEEP
