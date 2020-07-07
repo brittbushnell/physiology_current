@@ -136,15 +136,20 @@ tic
 %    'WV_LE_GlassTRCoh_nsp1_20190417_all';
 %%
 files = {
-    'WU_LE_GlassTR_nsp2_20170825_002_thresh30'
-    'WU_LE_GlassTR_nsp2_20170825_002_thresh35'
-    'WU_LE_GlassTR_nsp2_20170825_002_thresh40'
-    'WU_LE_GlassTR_nsp2_20170825_002_thresh45'
+    %     'WU_LE_GlassTR_nsp2_20170825_002_thresh30'
+    %     'WU_LE_GlassTR_nsp2_20170825_002_thresh35'
+    %     'WU_LE_GlassTR_nsp2_20170825_002_thresh40'
+    %     'WU_LE_GlassTR_nsp2_20170825_002_thresh45'
     
     %       'WU_RE_GlassTR_nsp2_20170828_all';...
     %       'WU_LE_GlassTR_nsp2_20170825_002';...
     %       'WU_RE_GlassTR_nsp1_20170828_all';...
     %       'WU_LE_GlassTR_nsp1_20170825_002';...
+    
+    %'WU_LE_GlassTR_nsp2_20170825_002_thresh35';
+    'WU_LE_GlassTR_nsp2_20170825_002_thresh35_pyParse';...
+    'WU_LE_GlassTR_nsp2_20170825_002_thresh35_matParser';...
+    'WU_LE_GlassTR_nsp2_20170825_002';...
     };
 %%
 nameEnd = 'vers2';
@@ -181,6 +186,14 @@ for fi = 1:size(files,1)
         oneDay = 1;
     elseif length(tmp) == 7 % file was rerun with different thresholds and cleaned up
         [dataT.animal, dataT.eye, dataT.programID, dataT.array, dataT.date2, dataT.runNum, threshTmp] = deal(tmp{:});
+        threshT2 = strsplit(threshTmp,{'thresh','.'});
+        thrsh = threshT2{2};
+        dataT.threshold = str2num(thrsh)/10;
+        % get date in a format that's useable in figure titles (ex: 09/1/2019 vs 20190901)
+        dataT.date = convertDate(dataT.date2);
+        oneDay = 1;
+    elseif length(tmp) == 8
+        [dataT.animal, dataT.eye, dataT.programID, dataT.array, dataT.date2, dataT.runNum,threshTmp,dataT.parser] = deal(tmp{:});
         threshT2 = strsplit(threshTmp,{'thresh','.'});
         thrsh = threshT2{2};
         dataT.threshold = str2num(thrsh)/10;
@@ -229,6 +242,14 @@ for fi = 1:size(files,1)
             thrsh = threshT2{2};
             dataT.threshold = str2num(thrsh)/10;
             
+            % get date in a format that's useable in figure titles (ex: 09/1/2019 vs 20190901)
+            dataT.date = convertDate(dataT.date2);
+            oneDay = 1;
+        elseif length(tmp) == 8
+            [dataT.animal, dataT.eye, dataT.programID, dataT.array, dataT.date2, dataT.runNum,threshTmp,dataT.parser] = deal(tmp{:});
+            threshT2 = strsplit(threshTmp,{'thresh','.'});
+            thrsh = threshT2{2};
+            dataT.threshold = str2num(thrsh)/10;
             % get date in a format that's useable in figure titles (ex: 09/1/2019 vs 20190901)
             dataT.date = convertDate(dataT.date2);
             oneDay = 1;
