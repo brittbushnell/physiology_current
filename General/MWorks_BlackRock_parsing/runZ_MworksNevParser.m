@@ -18,17 +18,23 @@ addpath('~/Desktop/my_zemina/vnlstorage3/bushnell_arrays/nsp1/mworks/WV/')
 %%
 animal = 'WU';
 array = 'nsp2';
+eye = 'RE';
 
-inputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/%s/',array,animal);
-%inputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage/bushnell_arrays/%s/%s_blackrock/%s/',array,array,animal);
-outputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/%s/parsed',array,animal);
+%gratings
+    inputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/gratings/%s/%s/',array,animal,eye);
+    %inputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage/bushnell_arrays/%s/%s_blackrock/%s/',array,array,animal);
+    outputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/gratings/%s/parsed',array,animal);
+%png
+%     inputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/png/%s/%s/',array,animal,eye);
+%     %inputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage/bushnell_arrays/%s/%s_blackrock/%s/',array,array,animal);
+%     outputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/png/%s/parsed/',array,animal);
 
 %%
 cd(inputDir);
 tmp = dir;
 ndx = 1;
 for t = 1:size(tmp,1)
-    if contains(tmp(t).name,'nev')
+    if contains(tmp(t).name,'thresh')
         files{ndx} = tmp(t).name;
         ndx = ndx+1;
     end
@@ -37,14 +43,15 @@ end
 failedFiles = [];
 ndx = 1;
 for fi = 1:size(files,2)
-%    try
+    %    try
     filename = string(files{fi});
+    
     fprintf('*** analyzing %s file %d/%d ****\n',filename,fi,size(files,2));
     if ~exist(sprintf('%s/%s',outputDir,strrep(filename,'.nev','')),'file')
         MworksNevParser(filename,10,100,outputDir);
     end
     toc/3600;
-%     catch ME
+    %     catch ME
 %        fprintf('\n\n%s failed %s\n\n',filename,ME.message); 
 %        failedFiles{ndx} = filename;
 %        ndx = ndx+1;

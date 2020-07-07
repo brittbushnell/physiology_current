@@ -17,7 +17,7 @@ function MworksNevParser(varargin)
 %         bin_size = 10;
 %         num_bins = 100;
 %         outputDir = '/home/bushnell/binned_dir/';
-%         save_name = [fileName, '.mat'];
+%         %save_name = [fileName, '.mat'];
 %
 %
 %% Verify input arguments and set default values
@@ -31,36 +31,41 @@ switch nargin
         bin_size = 10;
         num_bins = 100;
         outputDir = '/home/bushnell/binned_dir/';
-        save_name = [fileName, '.mat'];
+        %save_name = [fileName, '.mat'];
     case 2
         fprintf('parsing %s with %d ms bins\n',varargin{1}, varargin{2});
         fileName = varargin{1};
         bin_size = varargin{2};
         num_bins = 100;
         outputDir = '/home/bushnell/binned_dir/';
-        save_name = [fileName, '.mat'];
+        %save_name = [fileName, '.mat'];
     case 3
         fprintf('parsing %s in %d %d ms bins\n',varargin{1}, varargin{3}, varargin{2});
         fileName = varargin{1};
         bin_size = varargin{2};
         num_bins = varargin{3};
         outputDir = '/home/bushnell/binned_dir/';
-        save_name = [fileName, '.mat'];
+        %save_name = [fileName, '.mat'];
     case 4
         fprintf('parsing %s in %d %d ms bins. Mat file will be saved at %s\n',varargin{1}, varargin{3}, varargin{2}, varargin{4});
         fileName = varargin{1};
         bin_size = varargin{2};
         num_bins = varargin{3};
         outputDir = varargin{4};
-        save_name = [fileName, '.mat'];
+        %save_name = [fileName, '.mat'];
     case 5
         fprintf('parsing %s in %d %d ms bins. Mat file will be saved at %s\n',varargin{1}, varargin{3}, varargin{2}, varargin{4});
         fileName = varargin{1};
         bin_size = varargin{2};
         num_bins = varargin{3};
         outputDir = varargin{4};
-        save_name = [fileName, '.mat'];
+        %save_name = [fileName, '.mat'];
 end
+
+
+strpName = strrep(fileName,'.nev','');
+save_name = [strpName,'.mat'];
+
 %%
 % example fileName: WU_LE_Gratings_nsp1_20170705_003
 % Where do data live? - all of WU's data is on vnlstorage
@@ -77,9 +82,13 @@ tmp = strsplit(fileName,'_');
 fileName = char(fileName);
 
 if length(tmp) == 7 %working from rethresholded and cleaned data
-    [animal,~,programID,array,date,~,threshold] = deal(tmp{:});
+    [animal,eye,programID,array,date,~,threshold] = deal(tmp{:});
     % /vnlstorage3/bushnell_arrays/nsp2/reThreshold
-    blackrockDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/%s/',array,animal);
+    if contains(programID,'grat','IgnoreCase',true)
+        blackrockDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/grating/%s/%s/',array,animal,eye);
+    else
+        blackrockDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/png/%s/%s/',array,animal,eye);
+    end
 else
     [animal,~,programID,array,date,~] = deal(tmp{:});
     if contains(animal,'WU')
@@ -126,7 +135,8 @@ pointsKeep = num_bins;
 intervalKeep = (pointsKeep*10) * 1e3;
 tPerPoint = round(intervalKeep / pointsKeep);
 numCh = 96;
-
+saveMatFileMWorks = {};
+fp = {};
 % for nm in ['WU_gratmap_test_20170110_003']:
 ns_nev_name = [blackrockDir,fileName];
 %%
@@ -159,6 +169,8 @@ success_events = aux.number_of_stm_shownEvents;
 
 stimOn = cell2mat({aux.stimon_timeEvents.data});
 stimOff = cell2mat({aux.stimoff_timeEvents.data});
+fix_x = aux.stimDisplayUpdateEvents(5).data{1,2}.pos_x;
+fix_y = aux.stimDisplayUpdateEvents(5).data{1,2}.pos_y;
 %% 
 
 success_times = cell2mat({success_events.time_us});
@@ -225,8 +237,7 @@ if contains(programID,'grat','IgnoreCase',true)
         'o_temporal_frequency', 'overlay','current_phase', 'width', 'grating',...
         'type', 'contrast', 'opacity', 'o_current_phase',  'start_time', 'yoffset',...
         'o_direction', 'rotation', 'xoffset','spatial_frequency', 'name',...
-        'mask', 'o_rotation', 'o_spatial_frequency', 'action',...
-        'fix_x','fix_y'};
+        'mask', 'o_rotation', 'o_spatial_frequency', 'action'};
 else
     stim_var_names = {'pos_x','pos_y','filename','size_x','action','rotation'};
 end
@@ -293,22 +304,25 @@ sprintf('stim shown: %i', n_stim)
 %%
 %%%%%%%%%%%%%%%%% binning electrophysiology data
 bins = zeros(n_stim, pointsKeep, numCh);
-
-parfor channel = 1:numCh
-    channel
-    bins(:,:, channel) = nev_bin_spikes(t_spikes{channel}, t_stim, pointsKeep, tPerPoint);    
+tic
+for channel = 1:numCh
+    fprintf('beginning binning of responses\n')
+    bins(:,:, channel) = nev_bin_spikes_verRatePerChannel(t_spikes{channel}, t_stim, pointsKeep, tPerPoint,fp.MetaTags);    
+    fprintf('%.2f minutes to bin %d channels\n', toc/60,channel)
 end
 %%
 if contains(programID,'grat','IgnoreCase',true)
-save([outputDir, save_name], 'stimOn', 'starting_phase', 'direction', 'o_starting_phase',...
-    'height', 'temporal_frequency', 't_stim', 'o_temporal_frequency', 'overlay','current_phase', 'width', 'grating',...
-    'type', 'contrast', 'opacity', 'o_current_phase',  'start_time', 'yoffset',...
-    'o_direction', 'rotation', 'xoffset','spatial_frequency', 'name',...
-    'mask', 'o_rotation', 'o_spatial_frequency', 'action', 'stimOff', 'bins');
+    save([outputDir, save_name], 'stimOn', 'starting_phase', 'direction', 'o_starting_phase',...
+        'height', 'temporal_frequency', 't_stim', 'o_temporal_frequency', 'overlay','current_phase', 'width', 'grating',...
+        'type', 'contrast', 'opacity', 'o_current_phase',  'start_time', 'yoffset',...
+        'o_direction', 'rotation', 'xoffset','spatial_frequency', 'name',...
+        'mask', 'o_rotation', 'o_spatial_frequency', 'action', 'stimOff', 'bins','fix_x','fix_y');
 else
-    save([outputDir, save_name], 'stimOn', 'action', 'stimOff', 'bins','pos_x','pos_y','filename','size_x','action','rotation');
-
+    save([outputDir, save_name], 'stimOn', 'action', 'stimOff', 'bins','pos_x','pos_y','filename','size_x','action','rotation','fix_x','fix_y');
 end
+%%
+clear fp
+
 
 
 
