@@ -46,6 +46,7 @@ end
 if useGoodCh == 0
     goodCh = ones(1,96);
 end
+
 for ch = 1:96
     figure(3);
     clf
@@ -122,7 +123,7 @@ for ch = 1:96
 suptitle({(sprintf('%s %s %s stim vs blank by locations ch', dataT.animal,dataT.eye, dataT.array,ch)),...
     sprintf('%s fixation at (%d,%d)',dataT.date, unique(dataT.fix_x),unique(dataT.fix_y))});
 figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_',dataT.programID,'_PSTHstimVBlank_ch',num2str(ch)];
-       % print(gcf, figName,'-dpdf','-fillpage')
+       print(gcf, figName,'-dpdf','-fillpage')
     end
 end
 %% all channels

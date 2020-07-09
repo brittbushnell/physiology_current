@@ -210,20 +210,14 @@ minimum_interword_interval = min(diff(mworks_wordout_times));
 %choose the later of the two close values as the starting point
 bad_nev_times = find(diff(nev_wordout_times)<minimum_interword_interval/2) + 1; %find nev inter_word_intervals that are too short
 nev_wordout_times(bad_nev_times) = []; %remove these times
+nev_wordout_times = nev_wordout_times./(10^6);
 
 lastwarn('');
 % mworks_correction = polyfit(double(mworks_wordout_times), nev_wordout_times_microseconds, 0);
-[regressionResutls, ~, ~, ~, regressionStats] = regress(double(nev_wordout_times)',...
-    [ones(size(nev_wordout_times)); double(mworks_wordout_times)]');
+regressionResutls = regress(double(nev_wordout_times)',...
+    [ones(size(nev_wordout_times)); double(mworks_wordout_times)./(10^6)]');
+regressionResutls(1) = regressionResutls(1).*(10^6);
 
-[msgstr, ~] = lastwarn;
-if strcmp(msgstr, 'X is rank deficient to within machine precision.')
-    % What is happening it a perfect line and regress is having a hard
-    % time with it.
-    regressionResutls(2) = (double(nev_wordout_times(1)) - double(nev_wordout_times(2)))./...
-        (double(mworks_wordout_times(1)) - double(mworks_wordout_times(2)));
-    regressionResutls(1) = double(nev_wordout_times(1)) - regressionResutls(2).*double(mworks_wordout_times(1));
-end
 
 %% loop through stimuli
 if contains(programID,'grat','IgnoreCase',true)
