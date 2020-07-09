@@ -244,6 +244,7 @@ end
 n_stim = 0;
 t_stim = [];
 new_stim = 0;
+filename = [];
 
 if contains(programID,'grat','IgnoreCase',true)
     for ind = 1:length(stim_display_update_events)
@@ -280,15 +281,21 @@ else % stimulus is a png image
             cur_time = stim_display_update_events(ind).time_us;
             
             if sum((cur_time < success_times) .* (success_times < (cur_time + tSuccess))) ~= 0
-                % determine if this is a new stimulus by looking if spatial_frequnecy and rotation are different from the most recently added value
-                new_stim = 1;
-            end
-            
-            % add the stimulus:
-            if new_stim == 1
                 t_stim = [t_stim, cur_time.*regressionResutls(2) + regressionResutls(1)];
                 for kk = 1:length(stim_var_names)
-                    eval([stim_var_names{kk}, ' = [', stim_var_names{kk},  ', stim_display_update_events(ind).data{2}.', stim_var_names{kk}, '];']);
+                    if contains(stim_var_names{kk},'filename')
+                        tmpName1 = string(stim_display_update_events(ind).data{2}.filename);
+                        tmpName2 = strsplit(tmpName1,'/');
+                        tmpFname = tmpName2(end); % this gets rid of all of the unneeded path name, and just keeps the stimulus name
+                        filename = cat(1,filename,tmpFname);
+                        clear tmpFname
+                        clear tmpName1
+                        clear tmpName2
+                        %eval({stim_var_names{kk}, ' = [', stim_var_names{kk},  ', stim_display_update_events(ind).data{2}.', stim_var_names{kk}, '];'})%;
+                        %size(filename)
+                    else
+                        eval([stim_var_names{kk}, ' = [', stim_var_names{kk},  ', stim_display_update_events(ind).data{2}.', stim_var_names{kk}, '];'])%;
+                    end
                 end
                 n_stim = n_stim + 1;
             end
