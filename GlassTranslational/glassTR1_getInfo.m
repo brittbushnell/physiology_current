@@ -147,9 +147,9 @@ files = {
     %       'WU_LE_GlassTR_nsp1_20170825_002';...
     
     %'WU_LE_GlassTR_nsp2_20170825_002_thresh35';
-    'WU_LE_GlassTR_nsp2_20170825_002_thresh35_pyParse';...
-    'WU_LE_GlassTR_nsp2_20170825_002_thresh35_matParser';...
-    'WU_LE_GlassTR_nsp2_20170825_002';...
+    %'WU_LE_GlassTR_nsp2_20170825_002_thresh35_pyParse';...
+    'WU_LE_GlassTR_nsp2_20170825_002_thresh35_matParsed';...
+    %'WU_LE_GlassTR_nsp2_20170825_002';...
     };
 %%
 nameEnd = 'vers2';
@@ -175,15 +175,14 @@ for fi = 1:size(files,1)
     
     filename = files{fi};
     nChan = 96;
-    dataT.amap = aMap;
-    tmp = strsplit(filename,'_');
-    
-    % extract information about what was run from file name.
+    tmp = strsplit(filename,'_');    
+
+    % extract information about what was run from file name. 
     if length(tmp) == 6
         [dataT.animal, dataT.eye, dataT.programID, dataT.array, dataT.date2,dataT.runNum] = deal(tmp{:});
         % get date in a format that's useable in figure titles (ex: 09/1/2019 vs 20190901)
         dataT.date = convertDate(dataT.date2);
-        oneDay = 1;
+      
     elseif length(tmp) == 7 % file was rerun with different thresholds and cleaned up
         [dataT.animal, dataT.eye, dataT.programID, dataT.array, dataT.date2, dataT.runNum, threshTmp] = deal(tmp{:});
         threshT2 = strsplit(threshTmp,{'thresh','.'});
@@ -191,7 +190,7 @@ for fi = 1:size(files,1)
         dataT.threshold = str2num(thrsh)/10;
         % get date in a format that's useable in figure titles (ex: 09/1/2019 vs 20190901)
         dataT.date = convertDate(dataT.date2);
-        oneDay = 1;
+      
     elseif length(tmp) == 8
         [dataT.animal, dataT.eye, dataT.programID, dataT.array, dataT.date2, dataT.runNum,threshTmp,dataT.parser] = deal(tmp{:});
         threshT2 = strsplit(threshTmp,{'thresh','.'});
@@ -199,16 +198,16 @@ for fi = 1:size(files,1)
         dataT.threshold = str2num(thrsh)/10;
         % get date in a format that's useable in figure titles (ex: 09/1/2019 vs 20190901)
         dataT.date = convertDate(dataT.date2);
-        oneDay = 1;
+      
     else
         [dataT.animal, dataT.eye, dataT.programID, dataT.array, dataT.date2] = deal(tmp{:});
         dataT.date = dataT.date2;
-        oneDay = 0;
+       
     end
     
     ndx = 1;
     for i = 1:size(dataT.filename,1)
-        [type, numDots, dx, coh, sample] = parseGlassName(dataT.filename(i,:),oneDay);
+        [type, numDots, dx, coh, sample] = parseGlassName(dataT.filename(i,:));
         %  type: numeric versions of the first letter of the pattern type
         %     0:  noise
         %     1: concentric
@@ -235,28 +234,31 @@ for fi = 1:size(files,1)
             [dataT.animal, dataT.eye, dataT.programID, dataT.array, dataT.date2,dataT.runNum] = deal(tmp{:});
             % get date in a format that's useable in figure titles (ex: 09/1/2019 vs 20190901)
             dataT.date = convertDate(dataT.date2);
-            oneDay = 1;
+            
+            dataT.amap = aMap;
         elseif length(tmp) == 7 % file was rerun with different thresholds and cleaned up
             [dataT.animal, dataT.eye, dataT.programID, dataT.array, dataT.date2, dataT.runNum, threshTmp] = deal(tmp{:});
             threshT2 = strsplit(threshTmp,{'thresh','.'});
             thrsh = threshT2{2};
             dataT.threshold = str2num(thrsh)/10;
-            
+            dataT.amap = aMap;
             % get date in a format that's useable in figure titles (ex: 09/1/2019 vs 20190901)
             dataT.date = convertDate(dataT.date2);
-            oneDay = 1;
+            
         elseif length(tmp) == 8
             [dataT.animal, dataT.eye, dataT.programID, dataT.array, dataT.date2, dataT.runNum,threshTmp,dataT.parser] = deal(tmp{:});
             threshT2 = strsplit(threshTmp,{'thresh','.'});
             thrsh = threshT2{2};
             dataT.threshold = str2num(thrsh)/10;
+            dataT.amap = aMap;
             % get date in a format that's useable in figure titles (ex: 09/1/2019 vs 20190901)
             dataT.date = convertDate(dataT.date2);
-            oneDay = 1;
+          
         else
             [dataT.animal, dataT.eye, dataT.programID, dataT.array, dataT.date2] = deal(tmp{:});
             dataT.date = dataT.date2;
-            oneDay = 0;
+            hasSlash = 0;
+            dataT.amap = aMap;
         end
     end
     

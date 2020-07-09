@@ -1,8 +1,7 @@
-function [type, numDots, dx, coh, sample] = parseGlassName (path, WU)
+function [type, numDots, dx, coh, sample] = parseGlassName (path)
 % Example filename: C_N100_Dx0.01_Coh0.0_v1_Dsz4
 % INPUT
-%   PATH: file name with full path from data.filename
-%   WU: if running from WU, say 1    
+%   PATH: file name with full path from data.filename   
 %
 % OUTPUT
 %  type: numeric versions of the first letter of the pattern type
@@ -19,11 +18,14 @@ function [type, numDots, dx, coh, sample] = parseGlassName (path, WU)
 % dsz: dot size in pixels
 %
 % Written August 24, 2017 Brittany Bushnell
+%
+% edited 7/8/2020 to automatically detect if the full path needs to be
+% removed or not.  
 
 % path = 'crapper/C_N100_Dx0.01_Coh0.0_v1_Dsz4.png'; %example name for
 % testing
 % 
-if WU == 1
+if contains(path,'/')
     % WU's files were parsed differently.
     pathChunks = strsplit(path,'/');
     name   = char(pathChunks(end));
