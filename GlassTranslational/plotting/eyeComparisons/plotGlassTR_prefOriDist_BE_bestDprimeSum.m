@@ -1,4 +1,4 @@
-function [] = plotGlassTR_prefOriDist_BE_bestDprimeSum(data)
+function [data] = plotGlassTR_prefOriDist_BE_bestDprimeSum(data)
 %% 
 location = determineComputer;
 if location == 1
@@ -275,3 +275,8 @@ suptitle({sprintf('%s %s distribtion of OSIs for each ch greatest norm dPrime',d
 
 figName = [data.RE.animal,'_',data.RE.array,'_BE_OSIdist_bestDprime','.pdf'];
 print(gcf, figName,'-dpdf','-fillpage')
+%%
+pOrisR(pOrisR<0) = pOrisR(pOrisR<0)+180;
+pOrisL(pOrisL<0) = pOrisL(pOrisL<0)+180;
+data.RE.prefOriBestDprime = pOrisR;
+data.LE.prefOriBestDprime = pOrisL;

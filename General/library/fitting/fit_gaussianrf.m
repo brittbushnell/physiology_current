@@ -11,13 +11,13 @@ function [params,rhat,errorsum,stats] = fit_gaussianrf(x_points,y_points,fr)
 if isvector(x_points) && isvector(y_points)
     [x,y] = meshgrid(1:length(x_points),1:length(y_points));
     
-    x_find = @(r1) interp1(x(1,:),x_points,r1);
-    y_find = @(r2) interp1(y(:,1),y_points,r2);
+    x_find = @(r1) interp1(x(1,:),x_points,r1,'linear','extrap');
+    y_find = @(r2) interp1(y(:,1),y_points,r2,'linear','extrap');
     offset = mean(unique(diff(unique(x_points(:),'rows'))));
 else
     [x,y] = meshgrid(1:length(x_points(1,:)),1:length(y_points(:,1)));
-    x_find = @(r1) interp1(x(1,:),x_points(1,:),r1);
-    y_find = @(r2) interp1(y(:,1),y_points(:,1),r2);
+    x_find = @(r1) interp1(x(1,:),x_points(1,:),r1,'linear','extrap');
+    y_find = @(r2) interp1(y(:,1),y_points(:,1),r2,'linear','extrap');
     offset = mean(unique(diff(unique(x_points,'rows'))));
 end
 
@@ -59,6 +59,12 @@ stats.rotation = params(5); %receptive field rotation
 stats.gain = params(6); %gain of response
 stats.offset = params(7); % firing rate offset
 stats.paramsadj = [stats.rf_center(:); stats.rfstds(:); lin(params(5:7))]; %adjusted parameters, reflecting things in degrees
+
+
+
+
+
+
 
 end
 
