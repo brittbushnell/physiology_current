@@ -60,12 +60,6 @@ stats.gain = params(6); %gain of response
 stats.offset = params(7); % firing rate offset
 stats.paramsadj = [stats.rf_center(:); stats.rfstds(:); lin(params(5:7))]; %adjusted parameters, reflecting things in degrees
 
-
-
-
-
-
-
 end
 
 
