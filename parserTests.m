@@ -124,7 +124,7 @@ for ch = 1:96
     
     pyParsed.goodCh(ch);
     mParsed.goodCh(ch);
-    tmp(1,ch) = (pyParsed.goodCh(ch)+ mParsed.goodCh(ch));
+    %tmp(1,ch) = (pyParsed.goodCh(ch)+ mParsed.goodCh(ch));
     
     pycoh = (pyParsed.coh == 1);
     pynoiseCoh = (pyParsed.coh == 0);
@@ -154,11 +154,66 @@ end
 
 suptitle((sprintf('%s %s %s stim vs blank matlab parsed', pyParsed.animal,pyParsed.eye, pyParsed.array)))
 %%
+figure%(1)
+clf
+pos = get(gcf,'Position');
+set(gcf,'Position',[pos(1) pos(2) 1000 800])
+set(gcf,'PaperOrientation','Landscape');
+
+for ch = 1:96
+    
+    subplot(pyParsed.amap,10,10,ch)
+    hold on;
+    
+    pyParsed.goodCh(ch);
+    mParsed.goodCh(ch);
+    %tmp(1,ch) = (pyParsed.goodCh(ch)+ mParsed.goodCh(ch));
+    
+    pycoh = (pyParsed.coh == 1);
+    pynoiseCoh = (pyParsed.coh == 0);
+    pycohNdx = logical(pycoh + pynoiseCoh);
+    
+    mcoh = (mParsed.coh == 1);
+    mnoiseCoh = (mParsed.coh == 0);
+    mcohNdx = logical(mcoh + mnoiseCoh);
+    
+    if contains(pyParsed.animal,'XT')
+        blankResp = nanmean(smoothdata(mParsed.bins((mParsed.numDots == 0), 1:35 ,ch),'gaussian',3))./0.01;
+        stimResp = nanmean(smoothdata(mParsed.bins((mcohNdx), 1:35 ,ch),'gaussian',3))./0.01;
+        plot(1:35,blankResp,'color',[0.3 0.3 0.3 0.9],'LineWidth',0.5);
+        plot(1:35,stimResp,'color',[0.3 0.3 0.3 0.9],'LineWidth',2.5);
+    else
+        blankResp = nanmean(smoothdata(mParsed.bins((mParsed.numDots == 0), 1:35 ,ch),'gaussian',3))./0.01;
+        stimResp = nanmean(smoothdata(mParsed.bins((mcohNdx), 1:35 ,ch),'gaussian',3))./0.01;
+        plot(1:35,blankResp,'color',[0 0 1 0.7],'LineWidth',0.5);
+        plot(1:35,stimResp,'color',[0 0 1 0.8],'LineWidth',2);
+    end
+    
+    if contains(pyParsed.animal,'XT')
+        blankResp = nanmean(smoothdata(pyParsed.bins((pyParsed.numDots == 0), 1:35 ,ch),'gaussian',3))./0.01;
+        stimResp = nanmean(smoothdata(pyParsed.bins((pycohNdx), 1:35 ,ch),'gaussian',3))./0.01;
+        plot(1:35,blankResp,'color',[0.14 0.63 0.42 0.7],'LineWidth',0.5);
+        plot(1:35,stimResp,'color',[0.14 0.63 0.42 0.8],'LineWidth',2);
+    else
+        blankResp = nanmean(smoothdata(pyParsed.bins((pyParsed.numDots == 0), 1:35 ,ch),'gaussian',3))./0.01;
+        stimResp = nanmean(smoothdata(pyParsed.bins((pycohNdx), 1:35 ,ch),'gaussian',3))./0.01;
+        plot(1:35,blankResp,'color',[1 0 0 0.7],'LineWidth',0.5);
+        plot(1:35,stimResp,'color',[1 0 0 0.8],'LineWidth',2);
+    end
+    
+    title(ch)
+    set(gca,'Color','none','tickdir','out','XTickLabel',[],'FontAngle','italic');%,'FontSize',12);
+    %ylim([0 yMax])
+    ylim([0 inf])
+end
+
+suptitle((sprintf('%s %s %s stim vs blank both parsers', pyParsed.animal,pyParsed.eye, pyParsed.array)))
+%%
+pF = pyParsed.filename;
 for f = 1:length(pF)
     tmp = strsplit(pF(f,:),'/');
     shortP(f,:) = tmp(end);
 end
-%%
 %%
 
 randTrials = randi(length(pyParsed.numDots),[1,100]);

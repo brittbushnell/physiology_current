@@ -48,7 +48,7 @@ for fi = 1:size(files,2)
     
     fprintf('*** analyzing %s file %d/%d ****\n',filename,fi,size(files,2));
     if ~exist(sprintf('%s/%s',outputDir,strrep(filename,'.mat','')),'file')
-        MworksNevParser(filename,10,100,outputDir);
+        MworksNevParser1(filename,10,100,outputDir);
     end
     toc/3600;
     %     catch ME
