@@ -1,4 +1,4 @@
-function [dataT] = plotArrayReceptiveFields(dataT)
+function [dataT] = getReceptiveFields(dataT)
 
 %%
 location = determineComputer;
@@ -64,66 +64,66 @@ for ch = 1:96
     chFit{ch} = cf.paramsadj;
 end
 %%
-figure(6)
-clf
-hold on
-
-for ch = 1:96
-    if contains(dataT.eye,'LE')
-        draw_ellipse(chFit{ch},[.4 .6 .7])
-    else
-        draw_ellipse(chFit{ch},[.8 .2  .5])
-   end
-end
-
-draw_ellipse(fullArray.paramsadj)
-plot(0,0,'r.','MarkerSize',16)
-
-ax = gca;
-xMax = max(abs(ax.XLim(:)));
-yMax = max(abs(ax.YLim(:)));
-lims = max(xMax,yMax);
-ylim([-lims, lims]);
-xlim([-lims, lims]);
-
-set(gca,'YAxisLocation','origin','XAxisLocation','origin',...
-    'Layer','top','FontWeight','bold','FontSize',12,'FontAngle','italic')
-axis square
-title(sprintf('%s %s %s receptive field locations all channels',dataT.animal, dataT.eye, dataT.array),'FontSize',14,'FontAngle','italic')   
-
-figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_',dataT.programID,'_receptiveFieldLocations_allCh'];
-print(gcf, figName,'-dpdf','-fillpage')
-%%
-figure(7)
-clf
-hold on
-
-for ch = 1:96
-    if dataT.goodCh(ch) == 1
-        if contains(dataT.eye,'LE')
-            draw_ellipse(chFit{ch},[.4 .6 .7])
-        else
-            draw_ellipse(chFit{ch},[.8 .2  .5])
-        end
-    end
-end
-draw_ellipse(goodChArray.paramsadj)
-plot(0,0,'r.','MarkerSize',16)
-
-ax = gca;
-xMax = max(abs(ax.XLim(:)));
-yMax = max(abs(ax.YLim(:)));
-lims = max(xMax,yMax);
-ylim([-lims, lims]);
-xlim([-lims, lims]);
-
-set(gca,'YAxisLocation','origin','XAxisLocation','origin',...
-    'Layer','top','FontWeight','bold','FontSize',12,'FontAngle','italic')
-axis square
-title(sprintf('%s %s %s receptive field locations visually responsive channels',dataT.animal, dataT.eye, dataT.array),'FontSize',14,'FontAngle','italic')   
-
-figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_',dataT.programID,'_receptiveFieldLocations_goodCh'];
-print(gcf, figName,'-dpdf','-fillpage')
+% figure(6)
+% clf
+% hold on
+% 
+% for ch = 1:96
+%     if contains(dataT.eye,'LE')
+%         draw_ellipse(chFit{ch},[.4 .6 .7])
+%     else
+%         draw_ellipse(chFit{ch},[.8 .2  .5])
+%    end
+% end
+% 
+% draw_ellipse(fullArray.paramsadj)
+% plot(0,0,'r.','MarkerSize',16)
+% 
+% ax = gca;
+% xMax = max(abs(ax.XLim(:)));
+% yMax = max(abs(ax.YLim(:)));
+% lims = max(xMax,yMax);
+% ylim([-lims, lims]);
+% xlim([-lims, lims]);
+% 
+% set(gca,'YAxisLocation','origin','XAxisLocation','origin',...
+%     'Layer','top','FontWeight','bold','FontSize',12,'FontAngle','italic')
+% axis square
+% title(sprintf('%s %s %s receptive field locations all channels',dataT.animal, dataT.eye, dataT.array),'FontSize',14,'FontAngle','italic')   
+% 
+% figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_',dataT.programID,'_receptiveFieldLocations_allCh'];
+% print(gcf, figName,'-dpdf','-fillpage')
+% %%
+% figure(7)
+% clf
+% hold on
+% 
+% for ch = 1:96
+%     if dataT.goodCh(ch) == 1
+%         if contains(dataT.eye,'LE')
+%             draw_ellipse(chFit{ch},[.4 .6 .7])
+%         else
+%             draw_ellipse(chFit{ch},[.8 .2  .5])
+%         end
+%     end
+% end
+% draw_ellipse(goodChArray.paramsadj)
+% plot(0,0,'r.','MarkerSize',16)
+% 
+% ax = gca;
+% xMax = max(abs(ax.XLim(:)));
+% yMax = max(abs(ax.YLim(:)));
+% lims = max(xMax,yMax);
+% ylim([-lims, lims]);
+% xlim([-lims, lims]);
+% 
+% set(gca,'YAxisLocation','origin','XAxisLocation','origin',...
+%     'Layer','top','FontWeight','bold','FontSize',12,'FontAngle','italic')
+% axis square
+% title(sprintf('%s %s %s receptive field locations visually responsive channels',dataT.animal, dataT.eye, dataT.array),'FontSize',14,'FontAngle','italic')   
+% 
+% figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_',dataT.programID,'_receptiveFieldLocations_goodCh'];
+% print(gcf, figName,'-dpdf','-fillpage')
 %%
 dataT.chReceptiveFieldParams = chFit;
 dataT.arrayReceptiveFieldParams = fullArray.paramsadj;
