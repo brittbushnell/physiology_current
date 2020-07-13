@@ -2,12 +2,12 @@ clear all
 close all
 clc
 %% XT
-% rd = load('XT_LE_mapNoiseRight_nsp2_Nov2018_raw_perm.mat');
-% gd = load('XT_BE_GlassTR_V4_May2020');
+rd = load('XT_LE_mapNoiseRight_nsp2_Nov2018_raw_perm.mat');
+gd = load('XT_BE_GlassTR_V4_May2020');
 %% WV
 % V4
-rd = load('WV_LE_MapNoise_nsp2_20190204_all_raw_perm');
-gd = load('WV_BE_GlassTRCoh_V4_May2020');
+% rd = load('WV_LE_MapNoise_nsp2_20190204_all_raw_perm');
+% gd = load('WV_BE_GlassTRCoh_V4_May2020');
 % 
 % rd = 'WV_RE_MapNoise_nsp2_20190205_001_raw';
 % gd = 'WV_RE_GlassTRCoh_nsp2_20190410_all_s1_2kFixPerm';...
@@ -98,7 +98,7 @@ axis square
 title(sprintf('%s %s %s receptive field locations all channels',rfData.animal, rfData.eye, rfData.array),'FontSize',14,'FontAngle','italic')
 
 figName = [rfData.animal,'_',rfData.eye,'_',rfData.array,'_',rfData.programID,'_receptiveFieldLocations_allCh'];
-print(gcf, figName,'-dpdf','-fillpage')
+print(gcf, figName,'-dpdf','-bestfit')
 %% prepare for plotting preferred orientation of Glass patterns
 stimRad = glassSize/2;
 lEdgeGlass = (xPosRelFix - stimRad)-1;
@@ -207,7 +207,7 @@ text(2,6.5,'Fixation point','color','r','FontWeight','bold','FontSize',14,'FontA
         title(sprintf('%s %s %s screen geometry ch %d',rfData.animal, rfData.eye, rfData.array,ch),'FontSize',14,'FontAngle','italic')
         
         figName = [rfData.animal,'_',rfData.eye,'_',rfData.array,'_',rfData.programID,'_receptiveField_ch',num2str(ch)];
-        print(gcf, figName,'-dpdf','-fillpage')
+        print(gcf, figName,'-dpdf','-bestfitﬂ')
     end
     
 end
