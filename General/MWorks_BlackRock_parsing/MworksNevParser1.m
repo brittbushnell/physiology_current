@@ -47,14 +47,7 @@ switch nargin
         outputDir = '/home/bushnell/binned_dir/';
         %save_name = [fileName, '.mat'];
     case 4
-        fprintf('parsing %s in %d %d ms bins. Mat file will be saved at %s\n',varargin{1}, varargin{3}, varargin{2}, varargin{4});
-        fileName = varargin{1};
-        bin_size = varargin{2};
-        num_bins = varargin{3};
-        outputDir = varargin{4};
-        %save_name = [fileName, '.mat'];
-    case 5
-        fprintf('parsing %s in %d %d ms bins. Mat file will be saved at %s\n',varargin{1}, varargin{3}, varargin{2}, varargin{4});
+        fprintf('parsing %s in %d %d ms bins.\n Mat file will be saved at %s\n',varargin{1}, varargin{3}, varargin{2}, varargin{4});
         fileName = varargin{1};
         bin_size = varargin{2};
         num_bins = varargin{3};
@@ -172,10 +165,9 @@ success_times = cell2mat({success_events.time_us});
 t_sent = cell2mat({sent.time_us});
 
 clear aux;
-
 %% nev file word out times
 % read header
-if contains(ns_nev_name,'.nev')
+if contains(ns_nev_name,'.nev') % some files had .nev.nev ends, so this will get rid of all of those.
     ns_nev_name = strrep(ns_nev_name,'.nev','');
 end
 fp = openNEV([ns_nev_name,'.nev'],'nosave');
@@ -217,8 +209,6 @@ lastwarn('');
 regressionResutls = regress(double(nev_wordout_times)',...
     [ones(size(nev_wordout_times)); double(mworks_wordout_times)./(10^6)]');
 regressionResutls(1) = regressionResutls(1).*(10^6);
-
-
 %% loop through stimuli
 if contains(programID,'grat','IgnoreCase',true)
     stim_var_names = {'starting_phase', 'direction', 'o_starting_phase',...
@@ -284,8 +274,6 @@ else % stimulus is a png image
                         clear tmpFname
                         clear tmpName1
                         clear tmpName2
-                        %eval({stim_var_names{kk}, ' = [', stim_var_names{kk},  ', stim_display_update_events(ind).data{2}.', stim_var_names{kk}, '];'})%;
-                        %size(filename)
                     else
                         eval([stim_var_names{kk}, ' = [', stim_var_names{kk},  ', stim_display_update_events(ind).data{2}.', stim_var_names{kk}, '];'])%;
                     end
@@ -295,7 +283,6 @@ else % stimulus is a png image
         end
     end
 end
-
 sprintf('stim shown: %i', n_stim)
 %% binning electrophysiology data
 bins = zeros(n_stim, pointsKeep, numCh);
@@ -321,7 +308,7 @@ else
     fprintf('saved as %s\n',saveName)
 end
 %%
-clear fp
+
 
 
 
