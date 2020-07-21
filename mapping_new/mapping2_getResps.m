@@ -8,20 +8,25 @@ files = {
     %     'WV_LE_MapNoiseRight_nsp2_20190121_all_raw';
     %     'WV_LE_MapNoiseRightWide_nsp2_20190122_002_raw';
     %     'WV_RE_MapNoiseRightWide_nsp2_20190122_001_raw';
-%     
-     'WV_LE_MapNoise_nsp2_20190204_all_raw';
-%     'WV_RE_MapNoise_nsp2_20190205_001_raw';
-%     
-%     'WV_LE_MapNoise_nsp1_20190204_all_raw';
-%     'WV_RE_MapNoise_nsp1_20190205_001_raw';
-%     
-%     'XT_LE_mapNoise_nsp2_Oct2018_raw';
-%      'XT_LE_mapNoiseRight_nsp2_Nov2018_raw';
-%     
-%     'XT_LE_mapNoise_nsp1_Oct2018_raw';
-%     'XT_LE_mapNoiseRight_nsp1_Nov2018_raw';
+    %
+    %     'WV_LE_MapNoise_nsp2_20190204_all_raw';
+    %     'WV_RE_MapNoise_nsp2_20190205_001_raw';
+    %
+    %     'WV_LE_MapNoise_nsp1_20190204_all_raw';
+    %     'WV_RE_MapNoise_nsp1_20190205_001_raw';
+    %
+    %     'XT_LE_mapNoise_nsp2_Oct2018_raw';
+    %      'XT_LE_mapNoiseRight_nsp2_Nov2018_raw';
+    %
+    %     'XT_LE_mapNoise_nsp1_Oct2018_raw';
+    %     'XT_LE_mapNoiseRight_nsp1_Nov2018_raw';
+    
+    % 'WV_LE_MapNoise_nsp2_Jan2019_all_thresh35_info';
+    % 'WV_RE_MapNoise_nsp2_Jan2019_all_thresh35_info';
+    'XT_LE_mapNoiseRight_nsp2_nov2018_all_thresh35_info';
+    'XT_RE_mapNoiseRight_nsp2_nov2018_all_thresh35_info';
     };
-nameEnd = 'perm';
+nameEnd = 'resps';
 %%
 numBoot = 200;
 numPerm = 2000;
@@ -69,10 +74,10 @@ for fi = 1:size(files,1)
     %% get receptive field centers and boundaries
     dataT = getReceptiveFields(dataT);
     %% plot location specific responses
-  %  plotMapping_locHeatMapbyCh(dataT) 
-   % plotMappingPSTHs_visualResponsesChs(dataT,0)
-%    dataT = plotArrayReceptiveFields(dataT);
-       %%
+    %  plotMapping_locHeatMapbyCh(dataT)
+    % plotMappingPSTHs_visualResponsesChs(dataT,0)
+    %    dataT = plotArrayReceptiveFields(dataT);
+    %%
     if location == 1
         outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/GratMapRF/',dataT.array);
     elseif location == 0

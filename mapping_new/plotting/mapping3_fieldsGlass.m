@@ -2,26 +2,52 @@ clear all
 close all
 clc
 %% XT
-rd = load('XT_LE_mapNoiseRight_nsp2_Nov2018_raw_perm.mat');
-gd = load('XT_BE_GlassTR_V4_May2020');
+% rd = load('XT_LE_mapNoiseRight_nsp2_Nov2018_raw_perm.mat');
+% gd = load('XT_BE_GlassTR_V4_May2020');
 %% WV
 % V4
-% rd = load('WV_LE_MapNoise_nsp2_20190204_all_raw_perm');
-% gd = load('WV_BE_GlassTRCoh_V4_May2020');
+% rd = load('WV_LE_MapNoise_nsp2_Jan2019_all_thresh35_info_resps');
+% gd = load('WV_LE_glassTRCoh_nsp2_20190416_all_s1_2kFixPerm_OSI_prefOri');
+% eye = 'LE';
 % 
-% rd = 'WV_RE_MapNoise_nsp2_20190205_001_raw';
-% gd = 'WV_RE_GlassTRCoh_nsp2_20190410_all_s1_2kFixPerm';...
+% rd = load('WV_RE_MapNoise_nsp2_Jan2019_all_thresh35_info_resps');
+% gd = load('WV_RE_GlassTRCoh_nsp2_20190410_all_s1_2kFixPerm');
+% eye = 'RE';
 % 
 % % V1
-% rd = 'WV_LE_MapNoise_nsp1_20190204_all_raw';
-% gd = 'WV_LE_glassTRCoh_nsp1_20190416_all_s1_2kFixPerm';
+% rd = load('WV_LE_MapNoise_nsp1_20190204_all_raw');
+% gd = load('WV_LE_glassTRCoh_nsp1_20190416_all_s1_2kFixPerm');
+% eye = 'LE';
 % 
-% rd = 'WV_RE_MapNoise_nsp1_20190205_001_raw';
-% gd = 'WV_RE_GlassTRCoh_nsp1_20190410_all_s1_2kFixPerm';...
-%    
+% rd = load('WV_RE_MapNoise_nsp1_20190205_001_raw');
+% gd = load('WV_RE_GlassTRCoh_nsp1_20190410_all_s1_2kFixPerm');
+% eye = 'RE';
 %%
-rfData = rd.data.LE;
-glassData = gd.data.LE;
+% rd = load('WU_RE_GratingsMapRF_nsp2_20170814_all_thresh35_info_resps');
+% gd = load('WU_RE_GlassTR_nsp2_20170828_all_raw_2kFixPerm_OSI_prefOri_PermTests');
+% eye = 'RE';
+
+% gd = load('WU_LE_GlassTR_nsp2_20170825_002_raw_2kFixPerm_OSI_prefOri_PermTests');
+% rd = load('WU_LE_GratingsMapRF_nsp2_20170620_001_thresh35_info_resps');
+% eye = 'LE';
+%%
+if strcmp(eye,'RE')
+    rfData = rd.data.RE;
+    glassData = gd.data.RE;
+    if contains(rd.data.RE.animal,'WU')
+        glassData.fix_x = 0;
+        glassData.fix_y = 0;
+        glassData.size_x = 8;
+    end
+else
+    rfData = rd.data.LE;
+    glassData = gd.data.LE;
+    if contains(rd.data.LE.animal,'WU')
+        glassData.fix_x = 0;
+        glassData.fix_y = 0;
+        glassData.size_x = 8;
+    end
+end
 %%
 location = determineComputer;
 if location == 1
@@ -99,6 +125,51 @@ title(sprintf('%s %s %s receptive field locations all channels',rfData.animal, r
 
 figName = [rfData.animal,'_',rfData.eye,'_',rfData.array,'_',rfData.programID,'_receptiveFieldLocations_allCh'];
 print(gcf, figName,'-dpdf','-bestfit')
+
+%% plot all channels on one, limited to channels that are responsive to Glass patterns
+figure(3)
+clf
+hold on
+
+for ch = 1:96
+    if glassData.goodCh(ch) == 1
+    if contains(rfData.eye,'LE')
+        draw_ellipse(chFit{ch},[.4 .6 .7])
+    else
+        draw_ellipse(chFit{ch},[.8 .2  .5])
+    end
+    end
+end
+viscircles([xPosRelFix,yPosRelFix],glassSize/2,...
+    'color',[0.6 0.6 0.0]);
+draw_ellipse(rfData.arrayReceptiveFieldParams)
+plot(0,0,'r.','MarkerSize',16)
+
+ax = gca;
+xMax = max(abs(ax.XLim(:)));
+yMax = max(abs(ax.YLim(:)));
+lims = max(xMax,yMax);
+ylim([-lims, lims]);
+xlim([-lims, lims]);
+
+if contains(rfData.eye,'LE')
+    text(5,14,'Channel receptive fields','color',[.4 .6 .7],'FontWeight','bold','FontSize',14,'FontAngle','italic')
+else
+    text(5,14,'Channel receptive fields','color',[.8 .2  .5],'FontWeight','bold','FontSize',14,'FontAngle','italic')
+end
+
+text(2,7.5,'Array receptive field','color',[0 0 0],'FontWeight','bold','FontSize',14,'FontAngle','italic')
+text(2,7,'Glass Pattern location','color',[0.6 0.6 0.05],'FontWeight','bold','FontSize',14,'FontAngle','italic')
+text(2,6.5,'Fixation point','color','r','FontWeight','bold','FontSize',14,'FontAngle','italic')
+
+
+set(gca,'YAxisLocation','origin','XAxisLocation','origin',...
+    'Layer','top','FontWeight','bold','FontSize',12,'FontAngle','italic')
+axis square
+title(sprintf('%s %s %s receptive field locations Glass responsive channels',rfData.animal, rfData.eye, rfData.array),'FontSize',14,'FontAngle','italic')
+
+figName = [rfData.animal,'_',rfData.eye,'_',rfData.array,'_',rfData.programID,'_receptiveFieldLocations_goodCh'];
+print(gcf, figName,'-dpdf','-bestfit')
 %% prepare for plotting preferred orientation of Glass patterns
 stimRad = glassSize/2;
 lEdgeGlass = (xPosRelFix - stimRad)-1;
@@ -107,66 +178,10 @@ rEdgeGlass = (xPosRelFix + stimRad)+1;
 folder = 'byCh';
 mkdir(folder)
 cd(sprintf('%s',folder))
-
-folder = 'prefOri';
-mkdir(folder)
-cd(sprintf('%s',folder))
-%%
-% for ch = 1:96
-%     if glassData.goodCh(ch) == 1
-%         figure(2)
-%         %pause(2)
-%         clf
-%         hold on
-%         
-%         if contains(rfData.eye,'LE')
-%             draw_ellipse(chFit{ch},[.4 .6 .7])
-%         else
-%             draw_ellipse(chFit{ch},[.8 .2  .5])
-%         end
-%         
-%         viscircles([xPosRelFix,yPosRelFix],stimRad,...
-%             'color',[0.6 0.6 0.05],'LineWidth',1.5);
-%         
-%         plot(0,0,'r.','MarkerSize',16)
-%         ln = plot([lEdgeGlass rEdgeGlass],[yPosRelFix yPosRelFix],'-sk');
-%         pOri = glassData.prefOriBestDprime(ch);
-%         rotate(ln,[1,1,0],pOri)
-%         text(rEdgeGlass+0.5,yPosRelFix,sprintf('%.2f %c',pOri,char(176)),'FontSize',11)
-%         
-%         set(gca,'YAxisLocation','origin','XAxisLocation','origin',...
-%             'Layer','top','FontWeight','bold','FontSize',12,'FontAngle','italic')
-%         
-%         % use limits from the full array - they'll be largest and therefore
-%         % consistent across everything
-%         ylim([-lims, lims]);
-%         xlim([-lims, lims]);
-%         if contains(rfData.eye,'LE')
-%             text(5,14,'Channel receptive fields','color',[.4 .6 .7],'FontWeight','bold','FontSize',14,'FontAngle','italic')
-%         else
-%             text(5,14,'Channel receptive fields','color',[.8 .2  .5],'FontWeight','bold','FontSize',14,'FontAngle','italic')
-%         end
-%         text(5,12,'Glass pattern location','color',[0.6 0.6 0.05],'FontWeight','bold','FontSize',14,'FontAngle','italic')
-%         text(5,10,'Fixation point','color','r','FontWeight','bold','FontSize',14,'FontAngle','italic')
-%         text(5,8,'preferred Glass orientation','color','k','FontWeight','bold','FontSize',14,'FontAngle','italic')
-%         
-%         title(sprintf('%s %s %s screen geometry ch %d',rfData.animal, rfData.eye, rfData.array,ch),'FontSize',14,'FontAngle','italic')
-%         
-%         figName = [rfData.animal,'_',rfData.eye,'_',rfData.array,'_',rfData.programID,'_receptiveField_pOri_ch',num2str(ch)];
-%         print(gcf, figName,'-dpdf','-fillpage')
-%     end
-%     
-% end
-%%
-cd ..
-folder = 'normal';
-mkdir(folder)
-cd(sprintf('%s',folder))
 %%
 for ch = 1:96
     if glassData.goodCh(ch) == 1
         figure(2)
-        %pause(2)
         clf
         hold on
         
@@ -180,10 +195,6 @@ for ch = 1:96
             'color',[0.6 0.6 0.05],'LineWidth',1.5);
         
         plot(0,0,'r.','MarkerSize',16)
-%        ln = plot([lEdgeGlass rEdgeGlass],[yPosRelFix yPosRelFix],'-sk');
-%         pOri = glassData.prefOriBestDprime(ch);
-%         rotate(ln,[1,1,0],pOri)
-%        text(rEdgeGlass+0.5,yPosRelFix,sprintf('%.2f %c',pOri,char(176)),'FontSize',11)
         
         set(gca,'YAxisLocation','origin','XAxisLocation','origin',...
             'Layer','top','FontWeight','bold','FontSize',12,'FontAngle','italic')
@@ -207,7 +218,7 @@ text(2,6.5,'Fixation point','color','r','FontWeight','bold','FontSize',14,'FontA
         title(sprintf('%s %s %s screen geometry ch %d',rfData.animal, rfData.eye, rfData.array,ch),'FontSize',14,'FontAngle','italic')
         
         figName = [rfData.animal,'_',rfData.eye,'_',rfData.array,'_',rfData.programID,'_receptiveField_ch',num2str(ch)];
-        print(gcf, figName,'-dpdf','-bestfitﬂ')
+        print(gcf, figName,'-dpdf','-bestfit')
     end
     
 end

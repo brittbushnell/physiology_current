@@ -1,30 +1,12 @@
-clear
+%gratMapping1_getInfo
+clear all
 close all
 clc
 %%
-
-files = {
-    % beginning of recording
-    %     'WV_LE_MapNoiseRight_nsp2_20190121_all';
-    %     'WV_LE_MapNoiseRightWide_nsp2_20190122_002';
-    %     'WV_RE_MapNoiseRightWide_nsp2_20190122_001';
-    
-    % active arrays
-    %     'WV_LE_MapNoise_nsp2_20190204_all';
-    %     'WV_RE_MapNoise_nsp2_20190205_001';
-    %
-    %     'WV_LE_MapNoise_nsp1_20190204_all';
-    %     'WV_RE_MapNoise_nsp1_20190205_001';
-    %
-    %     'XT_LE_mapNoise_nsp2_Oct2018';
-    %     'XT_LE_mapNoiseRight_nsp2_Nov2018';
-    
-    %     'WV_LE_MapNoise_nsp2_Jan2019_all_thresh35';
-    %     'WV_RE_MapNoise_nsp2_Jan2019_all_thresh35';
-    'XT_LE_mapNoiseRight_nsp2_nov2018_all_thresh35';
-    'XT_RE_mapNoiseRight_nsp2_nov2018_all_thresh35';
-    };
-nameEnd = 'info';
+files = {'WU_RE_GratingsMapRF_nsp2_20170814_all_thresh35';
+    'WU_LE_GratingsMapRF_nsp2_20170620_001_thresh35';
+};
+nameEnd ='info';
 %%
 location = determineComputer;
 failedFiles = {};
@@ -49,7 +31,7 @@ for fi = 1:size(files,1)
     elseif length(tmp) == 7
         [dataT.animal, dataT.eye, dataT.programID, dataT.array, dataT.date2,dataT.runNum,ign] = deal(tmp{:});
         % get date in a format that's useable in figure titles (ex: 09/1/2019 vs 20190901)
-        %        dataT.date = convertDate(dataT.date2);
+        dataT.date = convertDate(dataT.date2);
     else
         [dataT.animal, dataT.eye, dataT.programID, dataT.array, dataT.date2] = deal(tmp{:});
         dataT.date = dataT.date2;
@@ -60,33 +42,13 @@ for fi = 1:size(files,1)
     elseif strcmp(dataT.array, 'nsp2')
         dataT.array = 'V4';
     end
-    %% check and adjust locations so fixation is at (0,0)
-    % adjust locations so fixation is at (0,0). This will also allow us to
-    % combine across runs with different locations to get full maps.
-    if dataT.fix_x ~=0
-        dataT.fix_xOrig = dataT.fix_x;
-        dataT.fix_x = dataT.fix_x - dataT.fix_x;
-        dataT.pos_xOrig = dataT.pos_x;
-        dataT.pos_x = dataT.pos_x - dataT.fix_xOrig;
-    end
-    if dataT.fix_y ~=0
-        dataT.fix_yOrig = dataT.fix_y;
-        dataT.fix_y = dataT.fix_y - dataT.fix_y;
-        dataT.pos_yOrig = dataT.pos_y;
-        dataT.pos_y = dataT.pos_y - dataT.fix_yOrig;
-    end
-    %%
-    dataT.stimulus = nan(1,size(dataT.filename,1));
-    for i = 1:size(dataT.filename,1)
-        dataT.stimulus(1,i) = parseMapNoiseName(dataT.filename(i,:));
-    end
-    %%
+        %%
     if location == 1
         outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/GratMapRF/',dataT.array);
     elseif location == 0
         outputDir =  sprintf('~/Dropbox/ArrayData/matFiles/%s/GratMapRF/',dataT.array);
     end
-    %% add stimulus center for other programs
+       %% add stimulus center for other programs
     if contains(filename,'WU')
         dataT.stimXGlass = -3.5;
         dataT.stimYGlass = 0;
@@ -104,6 +66,11 @@ for fi = 1:size(files,1)
         dataT.fixYGlass = 1;
     end
     
+        
+    if ~contains(filename,'all')
+        dataT.pos_x = dataT.xoffset;
+        dataT.pos_y = dataT.yoffset;
+    end
     %% make structures for each eye and save .mat file
     
     if contains(filename,'LE')
@@ -124,4 +91,3 @@ for fi = 1:size(files,1)
     %         failNdx = failNdx+1;
     %     end
 end
-%failedFiles

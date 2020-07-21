@@ -1,4 +1,4 @@
-function [params,rhat,errorsum,stats] = fit_gaussianrf(x_points,y_points,fr)
+function [params,rhat,errornansum,stats] = fit_gaussianrf(x_points,y_points,fr)
 %% FITS A 2D gaussian receptive field model to the data to estimate RF location, skew
 % INPUT:
 %
@@ -25,17 +25,17 @@ end
 
 lin = @(x) x(:);
 func = @(P) gauss_rf(x,y,P);
-weights = fr./sum(fr(:));
-error = @(P) sum(weights(:).* lin((fr-func(P)).^2));
+weights = fr./nansum(fr(:));
+error = @(P) nansum(weights(:).* lin((fr-func(P)).^2));
 P0 = zeros(7,1);
 
 %guess x0,y0
-P0(1) = sum(fr(:).*x(:))./sum(fr(:));
-P0(2) = sum(fr(:).*y(:))./sum(fr(:));
+P0(1) = nansum(fr(:).*x(:))./nansum(fr(:));
+P0(2) = nansum(fr(:).*y(:))./nansum(fr(:));
 col = fr(:,round(P0(2)));
-P0(3) = sqrt(sum(abs(([1:length(col)]' - P0(2)).^2 .* col))/sum(col));
+P0(3) = sqrt(nansum(abs(([1:length(col)]' - P0(2)).^2 .* col))/nansum(col));
 row = fr(round(P0(1)),:)';
-P0(4) = sqrt(sum(abs(([1:length(row)]' - P0(2)).^2 .* row))/sum(row));
+P0(4) = sqrt(nansum(abs(([1:length(row)]' - P0(2)).^2 .* row))/nansum(row));
 P0(5)= 0;
 P0(6) = max(fr(:));
 P0(7) = min(fr(:));
@@ -51,7 +51,7 @@ problem = createOptimProblem('fmincon','objective',...
 [params,f] = run(GlobalSearch,problem);
 rhat = func(params);
 
-errorsum = f;
+errornansum = f;
 stats = struct;
 stats.rfstds = offset*[params(3) params(4)]; %receptive field standard deviations
 stats.rf_center = [x_find(params(1)) y_find(params(2))]; %receptive field center
