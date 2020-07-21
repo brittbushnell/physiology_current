@@ -3,8 +3,14 @@ clear all
 close all
 clc
 %%
-LE = load('WV_LE_MapNoise_nsp2_Jan2019_all_thresh35_info_resps');
-RE = load('WV_RE_MapNoise_nsp2_Jan2019_all_thresh35_info_resps');
+% LE = load('WV_LE_MapNoise_nsp2_Jan2019_all_thresh35_info_resps');
+% RE = load('WV_RE_MapNoise_nsp2_Jan2019_all_thresh35_info_resps');
+
+RE = load('WU_RE_GratingsMapRF_nsp2_20170814_all_thresh35_info_resps');
+
+
+LE = load('WU_LE_GratingsMapRF_nsp2_20170620_001_thresh35_info_resps');
+
 LEdata = LE.data.LE;
 REdata = RE.data.RE;
 %%

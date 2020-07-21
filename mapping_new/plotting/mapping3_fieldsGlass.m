@@ -2,8 +2,15 @@ clear all
 close all
 clc
 %% XT
-% rd = load('XT_LE_mapNoiseRight_nsp2_Nov2018_raw_perm.mat');
-% gd = load('XT_BE_GlassTR_V4_May2020');
+
+
+%  rd = load('XT_LE_mapNoiseRight_nsp2_nov2018_all_thresh35_info_resps');
+%  gd = load('XT_BE_GlassTR_V4_May2020');
+%  eye = 'LE'; 
+
+%  rd = load('XT_RE_mapNoiseRight_nsp2_nov2018_all_thresh35_info_resps');
+%  gd = load('XT_BE_GlassTR_V4_May2020');
+%  eye = 'RE';
 %% WV
 % V4
 % rd = load('WV_LE_MapNoise_nsp2_Jan2019_all_thresh35_info_resps');
@@ -27,9 +34,9 @@ clc
 % gd = load('WU_RE_GlassTR_nsp2_20170828_all_raw_2kFixPerm_OSI_prefOri_PermTests');
 % eye = 'RE';
 
-% gd = load('WU_LE_GlassTR_nsp2_20170825_002_raw_2kFixPerm_OSI_prefOri_PermTests');
-% rd = load('WU_LE_GratingsMapRF_nsp2_20170620_001_thresh35_info_resps');
-% eye = 'LE';
+gd = load('WU_LE_GlassTR_nsp2_20170825_002_raw_2kFixPerm_OSI_prefOri_PermTests');
+rd = load('WU_LE_GratingsMapRF_nsp2_20170620_001_thresh35_info_resps');
+eye = 'LE';
 %%
 if strcmp(eye,'RE')
     rfData = rd.data.RE;
@@ -100,12 +107,8 @@ viscircles([xPosRelFix,yPosRelFix],glassSize/2,...
 draw_ellipse(rfData.arrayReceptiveFieldParams)
 plot(0,0,'r.','MarkerSize',16)
 
-ax = gca;
-xMax = max(abs(ax.XLim(:)));
-yMax = max(abs(ax.YLim(:)));
-lims = max(xMax,yMax);
-ylim([-lims, lims]);
-xlim([-lims, lims]);
+ylim([-15, 15]);
+xlim([-15, 15]);
 
 if contains(rfData.eye,'LE')
     text(5,14,'Channel receptive fields','color',[.4 .6 .7],'FontWeight','bold','FontSize',14,'FontAngle','italic')
@@ -149,8 +152,8 @@ ax = gca;
 xMax = max(abs(ax.XLim(:)));
 yMax = max(abs(ax.YLim(:)));
 lims = max(xMax,yMax);
-ylim([-lims, lims]);
-xlim([-lims, lims]);
+ylim([-15, 15]);
+xlim([-15, 15]);
 
 if contains(rfData.eye,'LE')
     text(5,14,'Channel receptive fields','color',[.4 .6 .7],'FontWeight','bold','FontSize',14,'FontAngle','italic')
@@ -201,8 +204,8 @@ for ch = 1:96
         
         % use limits from the full array - they'll be largest and therefore
         % consistent across everything
-        ylim([-lims, lims]);
-        xlim([-lims, lims]);
+        ylim([-15, 15]);
+        xlim([-15, 15]);
         if contains(rfData.eye,'LE')
            % text(5,14,'Channel receptive fields','color',[.4 .6 .7],'FontWeight','bold','FontSize',14,'FontAngle','italic')
             text(2,7.5,'Channel receptive fields','color',[.4 .6 .7],'FontWeight','bold','FontSize',14,'FontAngle','italic')
