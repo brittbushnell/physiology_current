@@ -73,7 +73,7 @@ if length(tmp) == 7 %working from rethresholded and cleaned data
     [animal,eye,programID,array,date,~,threshold] = deal(tmp{:});
     % /vnlstorage3/bushnell_arrays/nsp2/reThreshold
     if contains(programID,'grat','IgnoreCase',true)
-        blackrockDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/grating/%s/%s/',array,animal,eye);
+        blackrockDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/gratings/%s/%s/',array,animal,eye);
     else
         blackrockDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/png/%s/%s/',array,animal,eye);
     end

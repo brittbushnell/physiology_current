@@ -16,9 +16,9 @@ tic;
 %
 % addpath('~/Desktop/my_zemina/vnlstorage3/bushnell_arrays/nsp1/mworks/WV/')
 %%
-animal = 'WU';
+%animal = 'WU';
 %stimType = 'png';
-stimType = 'grat';
+%stimType = 'grat';
 %% figure out what you're running
 for mk = 1:3
     if mk == 1
@@ -54,6 +54,7 @@ for mk = 1:3
                 cd(inputDir);
                 tmp = dir;
                 ndx = 1;
+                files = {};
                 for t = 1:size(tmp,1)
                     if contains(tmp(t).name,'thresh')
                         files{ndx} = tmp(t).name;
@@ -66,19 +67,19 @@ for mk = 1:3
                 failedFiles = [];
                 ndx = 1;
                 for fi = 1:size(files,2)
-                    %try
-                    filename = string(files{fi});
-                    
-                    fprintf('*** analyzing %s file %d/%d ****\n',filename,fi,size(files,2));
-                    if ~exist(sprintf('%s/%s',outputDir,strrep(filename,'.mat','')),'file')
-                        MworksNevParser1(filename,10,100,outputDir);
+                    try
+                        filename = string(files{fi});
+                        
+                        fprintf('*** analyzing %s file %d/%d ****\n',filename,fi,size(files,2));
+                        if ~exist(sprintf('%s/%s',outputDir,strrep(filename,'.mat','')),'file')
+                            MworksNevParser1(filename,10,100,outputDir);
+                        end
+                        toc/3600;
+                    catch ME
+                        fprintf('\n\n%s failed %s\n\n',filename,ME.message);
+                        failedFiles{ndx} = filename;
+                        ndx = ndx+1;
                     end
-                    toc/3600;
-                    %     catch ME
-                    %         fprintf('\n\n%s failed %s\n\n',filename,ME.message);
-                    %         failedFiles{ndx} = filename;
-                    %         ndx = ndx+1;
-                    %     end
                 end
             end
         end
