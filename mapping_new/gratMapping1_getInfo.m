@@ -3,9 +3,10 @@ clear all
 close all
 clc
 %%
-files = {'WU_RE_GratingsMapRF_nsp2_20170814_all_thresh35';
-    'WU_LE_GratingsMapRF_nsp2_20170620_001_thresh35';
-};
+files = {
+    'WU_RE_GratingsMapRF_nsp2_20170814_all_thresh35';
+    'WU_LE_GratingsMapRF_nsp2_20170620_001_thresh35';     
+     };
 nameEnd ='info';
 %%
 location = determineComputer;

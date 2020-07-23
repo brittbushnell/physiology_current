@@ -22,7 +22,29 @@ files = {
     %     'WV_LE_MapNoise_nsp2_Jan2019_all_thresh35';
     %     'WV_RE_MapNoise_nsp2_Jan2019_all_thresh35';
     'XT_LE_mapNoiseRight_nsp2_nov2018_all_thresh35';
+    'XT_LE_mapNoiseRight_nsp2_nov20182_all_thresh35';
     'XT_RE_mapNoiseRight_nsp2_nov2018_all_thresh35';
+    
+    'WV_LE_MapNoise_nsp2_20190122_003_thresh35';
+    'WV_LE_MapNoise_nsp2_20190130_001_thresh35';
+    'WV_LE_MapNoise_nsp2_20190130_002_thresh35';
+    'WV_RE_MapNoise_nsp2_20190130_003_thresh35';
+    'WV_RE_MapNoise_nsp2_20190130_004_thresh35';
+    'XT_LE_mapNoiseRight_nsp2_20181105_003_thresh35';
+    'XT_LE_mapNoiseRight_nsp2_20181105_004_thresh35';
+    'XT_LE_mapNoiseRight_nsp2_20181120_001_thresh35';
+    'XT_LE_mapNoiseRight_nsp2_20181120_002_thresh35';
+    'XT_LE_mapNoiseRight_nsp2_20181120_003_thresh35';
+    'XT_LE_mapNoiseRight_nsp2_20181127_001_thresh35';
+    'XT_LE_mapNoise_nsp2_20181023_002_thresh35';
+    'XT_LE_mapNoise_nsp2_20181025_001_thresh35';
+    'XT_RE_mapNoiseLeft_nsp2_20181026_001_thresh35';
+    'XT_RE_mapNoiseRight_nsp2_20181026_001_thresh35';
+    'XT_RE_mapNoiseRight_nsp2_20181026_003_thresh35';
+    'XT_RE_mapNoiseRight_nsp2_20181119_001_thresh35';
+    'XT_RE_mapNoise_nsp2_20181024_001_thresh35';
+    'XT_RE_mapNoise_nsp2_20181024_002_thresh35';
+    'XT_RE_mapNoise_nsp2_20181024_003_thresh35';
     };
 nameEnd = 'info';
 %%
@@ -104,7 +126,7 @@ for fi = 1:size(files,1)
         dataT.fixYGlass = 1;
     end
     
-    %% make structures for each eye and save .mat file
+    %% make structures for each eye and save  file
     
     if contains(filename,'LE')
         data.LE = dataT;
@@ -114,7 +136,7 @@ for fi = 1:size(files,1)
         data.LE = [];
     end
     
-    saveName = [outputDir filename '_' nameEnd '.mat'];
+    saveName = [outputDir filename '_' nameEnd ''];
     save(saveName,'data');
     fprintf('%s saved\n', saveName)
     %     catch ME

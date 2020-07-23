@@ -57,28 +57,28 @@ clc
 %          'XT_RE_mapNoiseRight_nsp2_20181026_003'};
 % newName = 'XT_RE_mapNoiseRight_nsp2_LateOct2018';
 
-% files = {
-%     'XT_LE_mapNoiseRight_nsp2_20181105_003_thresh35.mat';
-%     'XT_LE_mapNoiseRight_nsp2_20181105_004_thresh35.mat';
-%     'XT_LE_mapNoiseRight_nsp2_20181120_001_thresh35.mat';
-%     'XT_LE_mapNoiseRight_nsp2_20181120_002_thresh35.mat';
-%     'XT_LE_mapNoiseRight_nsp2_20181120_003_thresh35.mat';
-%     'XT_LE_mapNoiseRight_nsp2_20181127_001_thresh35.mat';
+ files = {
+    'XT_LE_mapNoiseRight_nsp2_20181105_003_thresh35.mat';
+    'XT_LE_mapNoiseRight_nsp2_20181105_004_thresh35.mat';
+    'XT_LE_mapNoiseRight_nsp2_20181120_001_thresh35.mat';
+    'XT_LE_mapNoiseRight_nsp2_20181120_002_thresh35.mat';
+    'XT_LE_mapNoiseRight_nsp2_20181120_003_thresh35.mat';
+    'XT_LE_mapNoiseRight_nsp2_20181127_001_thresh35.mat';
 %     'XT_LE_mapNoise_nsp2_20181023_002_thresh35.mat';
 %     'XT_LE_mapNoise_nsp2_20181025_001_thresh35.mat';
-% };
-% newName = 'XT_LE_mapNoiseRight_nsp2_nov2018_all_thresh35';
+ };
+ newName = 'XT_LE_mapNoiseRight_nsp2_nov20182_all_thresh35';
 
- files = {
-'XT_RE_mapNoiseLeft_nsp2_20181026_001_thresh35.mat';
-'XT_RE_mapNoiseRight_nsp2_20181026_001_thresh35.mat';
-'XT_RE_mapNoiseRight_nsp2_20181026_003_thresh35.mat';
-'XT_RE_mapNoiseRight_nsp2_20181119_001_thresh35.mat';
-'XT_RE_mapNoise_nsp2_20181024_001_thresh35.mat';
-'XT_RE_mapNoise_nsp2_20181024_002_thresh35.mat';
-'XT_RE_mapNoise_nsp2_20181024_003_thresh35.mat';
-};
-newName = 'XT_RE_mapNoiseRight_nsp2_nov2018_all_thresh35';
+%  files = {
+% 'XT_RE_mapNoiseLeft_nsp2_20181026_001_thresh35.mat';
+% 'XT_RE_mapNoiseRight_nsp2_20181026_001_thresh35.mat';
+% 'XT_RE_mapNoiseRight_nsp2_20181026_003_thresh35.mat';
+% 'XT_RE_mapNoiseRight_nsp2_20181119_001_thresh35.mat';
+% 'XT_RE_mapNoise_nsp2_20181024_001_thresh35.mat';
+% 'XT_RE_mapNoise_nsp2_20181024_002_thresh35.mat';
+% 'XT_RE_mapNoise_nsp2_20181024_003_thresh35.mat';
+% };
+% newName = 'XT_RE_mapNoiseRight_nsp2_nov2018_all_thresh35';
 
 %% WU
 % files = {'WU_RE_GratingsMapRF_nsp2_20170814_001_thresh35';
