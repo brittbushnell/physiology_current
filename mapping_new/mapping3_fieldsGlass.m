@@ -225,3 +225,34 @@ text(2,6.5,'Fixation point','color','r','FontWeight','bold','FontSize',14,'FontA
     end
     
 end
+%%
+cd ..
+figure(5)
+clf
+pos = get(gcf,'Position');
+set(gcf,'Position',[pos(1) pos(2) 1000 1000])
+set(gcf,'PaperOrientation','Landscape');
+for ch = 1:96
+    subplot(glassData.amap,10,10,ch)
+    hold on;
+    
+    if contains(rfData.eye,'LE')
+        draw_ellipse(rfParams{ch},[.4 .6 .9])
+    else
+        draw_ellipse(rfParams{ch},[.8 .2  .5])
+    end
+    viscircles([0,0],4,...
+        'color',[0.6 0.6 0.0],'LineWidth',1);
+    
+    title(ch)
+    xlim([-8,8])
+    ylim([-8,8])
+    set(gca,'YAxisLocation','origin','XAxisLocation','origin',...
+        'Layer','top','FontWeight','bold','FontSize',12,'FontAngle','italic','XTickLabel',[],'YTickLabel',[])
+    axis square
+end
+suptitle(sprintf('%s %s %s receptive fields relative to Glass pattern location',rfData.animal, rfData.eye, rfData.array))
+
+
+figName = [rfData.animal,'_',rfData.eye,'_',rfData.array,'_',rfData.programID,'_receptiveField_arrayLayout'];
+print(gcf, figName,'-dpdf','-bestfit')

@@ -148,7 +148,7 @@ files = {
     
     %'WU_LE_GlassTR_nsp2_20170825_002_thresh35';
     %'WU_LE_GlassTR_nsp2_20170825_002_thresh35_pyParse';...
-    'WU_LE_GlassTR_nsp2_20170825_002_thresh35_matParsed';...
+    'WU_LE_GlassTR_nsp2_20170825_002_thresh35';...
     %'WU_LE_GlassTR_nsp2_20170825_002';...
     };
 %%
@@ -175,14 +175,14 @@ for fi = 1:size(files,1)
     
     filename = files{fi};
     nChan = 96;
-    tmp = strsplit(filename,'_');    
-
-    % extract information about what was run from file name. 
+    tmp = strsplit(filename,'_');
+    
+    % extract information about what was run from file name.
     if length(tmp) == 6
         [dataT.animal, dataT.eye, dataT.programID, dataT.array, dataT.date2,dataT.runNum] = deal(tmp{:});
         % get date in a format that's useable in figure titles (ex: 09/1/2019 vs 20190901)
         dataT.date = convertDate(dataT.date2);
-      
+        
     elseif length(tmp) == 7 % file was rerun with different thresholds and cleaned up
         [dataT.animal, dataT.eye, dataT.programID, dataT.array, dataT.date2, dataT.runNum, threshTmp] = deal(tmp{:});
         threshT2 = strsplit(threshTmp,{'thresh','.'});
@@ -190,7 +190,7 @@ for fi = 1:size(files,1)
         dataT.threshold = str2num(thrsh)/10;
         % get date in a format that's useable in figure titles (ex: 09/1/2019 vs 20190901)
         dataT.date = convertDate(dataT.date2);
-      
+        
     elseif length(tmp) == 8
         [dataT.animal, dataT.eye, dataT.programID, dataT.array, dataT.date2, dataT.runNum,threshTmp,dataT.parser] = deal(tmp{:});
         threshT2 = strsplit(threshTmp,{'thresh','.'});
@@ -198,11 +198,11 @@ for fi = 1:size(files,1)
         dataT.threshold = str2num(thrsh)/10;
         % get date in a format that's useable in figure titles (ex: 09/1/2019 vs 20190901)
         dataT.date = convertDate(dataT.date2);
-      
+        
     else
         [dataT.animal, dataT.eye, dataT.programID, dataT.array, dataT.date2] = deal(tmp{:});
         dataT.date = dataT.date2;
-       
+        
     end
     
     ndx = 1;
@@ -253,7 +253,7 @@ for fi = 1:size(files,1)
             dataT.amap = aMap;
             % get date in a format that's useable in figure titles (ex: 09/1/2019 vs 20190901)
             dataT.date = convertDate(dataT.date2);
-          
+            
         else
             [dataT.animal, dataT.eye, dataT.programID, dataT.array, dataT.date2] = deal(tmp{:});
             dataT.date = dataT.date2;
@@ -267,7 +267,8 @@ for fi = 1:size(files,1)
     elseif strcmp(dataT.array, 'nsp2')
         dataT.array = 'V4';
     end
-    
+    %% get receptive field parameters
+    dataT = callReceptiveFieldParameters(dataT);
     %%
     if location == 1
         outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/Glass/Parsed/',dataT.array);
