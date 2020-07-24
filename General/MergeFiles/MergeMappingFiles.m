@@ -2,31 +2,6 @@ clear all
 close all
 clc
 %% WV
-% files = {
-%     'WV_LE_MapNoise_nsp2_20190204_003';
-%     'WV_LE_MapNoise_nsp2_20190204_002';
-%     'WV_LE_MapNoise_nsp2_20190204_001';
-%     };
-% newName = 'WV_LE_MapNoise_nsp2_20190204_all';
-
-% files = {
-%     'WV_LE_MapNoise_nsp1_20190204_003';
-%     'WV_LE_MapNoise_nsp1_20190204_002';
-%     'WV_LE_MapNoise_nsp1_20190204_001';
-%     };
-% newName = 'WV_LE_MapNoise_nsp1_20190204_all';
-%
-% files = {
-%     'WV_LE_MapNoiseRightWide_nsp2_20190121_002';
-%     'WV_LE_MapNoiseRightWide_nsp2_20190121_001';
-%     };
-% newName = 'WV_LE_MapNoiseRight_nsp2_20190121_all';
-
-% files = {
-% 'WV_LE_MapNoiseRightWide_nsp1_20190121_002';
-% 'WV_LE_MapNoiseRight_nsp1_20190121_001';
-% };
-% newName = 'WV_LE_MapNoiseRight_nsp1_20190121_all';
 
 % files = {
 %      'WV_LE_MapNoise_nsp2_20190122_003_thresh35';
@@ -40,34 +15,31 @@ clc
 %      'WV_RE_MapNoise_nsp2_20190130_004_thresh35';
 %     };
 % newName = 'WV_RE_MapNoise_nsp2_Jan2019_all_thresh35';
+
+files = {
+     'WV_LE_MapNoise_nsp2_20190122_003';
+     'WV_LE_MapNoise_nsp2_20190130_001';
+     'WV_LE_MapNoise_nsp2_20190130_002';
+    };
+newName = 'WV_LE_MapNoise_nsp2_Jan2019_all';
+
+% files = {
+%     'WV_RE_MapNoise_nsp2_20190130_003';
+%      'WV_RE_MapNoise_nsp2_20190130_004';
+%     };
+% newName = 'WV_RE_MapNoise_nsp2_Jan2019_all';
 %% XT
-% V4
-% files = {'XT_LE_mapNoise_nsp2_20181023_001'; 'XT_LE_mapNoise_nsp2_20181025_001'};
-% newName = 'XT_LE_mapNoise_nsp2_Oct2018';
-
-% files = {'XT_LE_mapNoiseRight_nsp2_20181120_001'; 'XT_LE_mapNoiseRight_nsp2_20181120_002'};
-% newName = 'XT_LE_mapNoiseRight_nsp2_Nov2018';
-
-% files = {'XT_RE_mapNoise_nsp2_20181024_001';...
-%          'XT_RE_mapNoise_nsp2_20181024_002';...
-%          'XT_RE_mapNoise_nsp2_20181024_004'};
-% newName = 'XT_RE_mapNoise_nsp2_EarlyOct2018';
-
-% files = {'XT_RE_mapNoiseRight_nsp2_20181026_001';...
-%          'XT_RE_mapNoiseRight_nsp2_20181026_003'};
-% newName = 'XT_RE_mapNoiseRight_nsp2_LateOct2018';
-
- files = {
-    'XT_LE_mapNoiseRight_nsp2_20181105_003_thresh35.mat';
-    'XT_LE_mapNoiseRight_nsp2_20181105_004_thresh35.mat';
-    'XT_LE_mapNoiseRight_nsp2_20181120_001_thresh35.mat';
-    'XT_LE_mapNoiseRight_nsp2_20181120_002_thresh35.mat';
-    'XT_LE_mapNoiseRight_nsp2_20181120_003_thresh35.mat';
-    'XT_LE_mapNoiseRight_nsp2_20181127_001_thresh35.mat';
-%     'XT_LE_mapNoise_nsp2_20181023_002_thresh35.mat';
-%     'XT_LE_mapNoise_nsp2_20181025_001_thresh35.mat';
- };
- newName = 'XT_LE_mapNoiseRight_nsp2_nov20182_all_thresh35';
+%  files = {
+%     'XT_LE_mapNoiseRight_nsp2_20181105_003_thresh35.mat';
+%     'XT_LE_mapNoiseRight_nsp2_20181105_004_thresh35.mat';
+%     'XT_LE_mapNoiseRight_nsp2_20181120_001_thresh35.mat';
+%     'XT_LE_mapNoiseRight_nsp2_20181120_002_thresh35.mat';
+%     'XT_LE_mapNoiseRight_nsp2_20181120_003_thresh35.mat';
+%     'XT_LE_mapNoiseRight_nsp2_20181127_001_thresh35.mat';
+%      'XT_LE_mapNoise_nsp2_20181023_002_thresh35.mat';
+%      'XT_LE_mapNoise_nsp2_20181025_001_thresh35.mat';
+%  };
+%  newName = 'XT_LE_mapNoiseRight_nsp2_nov20182_all_thresh35';
 
 %  files = {
 % 'XT_RE_mapNoiseLeft_nsp2_20181026_001_thresh35.mat';
