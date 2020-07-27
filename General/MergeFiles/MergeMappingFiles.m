@@ -16,12 +16,12 @@ clc
 %     };
 % newName = 'WV_RE_MapNoise_nsp2_Jan2019_all_thresh35';
 
-files = {
-     'WV_LE_MapNoise_nsp2_20190122_003';
-     'WV_LE_MapNoise_nsp2_20190130_001';
-     'WV_LE_MapNoise_nsp2_20190130_002';
-    };
-newName = 'WV_LE_MapNoise_nsp2_Jan2019_all';
+% files = {
+%      'WV_LE_MapNoise_nsp2_20190122_003';
+%      'WV_LE_MapNoise_nsp2_20190130_001';
+%      'WV_LE_MapNoise_nsp2_20190130_002';
+%     };
+% newName = 'WV_LE_MapNoise_nsp2_Jan2019_all';
 
 % files = {
 %     'WV_RE_MapNoise_nsp2_20190130_003';
@@ -51,6 +51,30 @@ newName = 'WV_LE_MapNoise_nsp2_Jan2019_all';
 % 'XT_RE_mapNoise_nsp2_20181024_003_thresh35.mat';
 % };
 % newName = 'XT_RE_mapNoiseRight_nsp2_nov2018_all_thresh35';
+
+% raw
+%  files = {
+%     'XT_LE_mapNoiseRight_nsp2_20181105_003';
+%     'XT_LE_mapNoiseRight_nsp2_20181105_004';
+%     'XT_LE_mapNoiseRight_nsp2_20181120_001';
+%     'XT_LE_mapNoiseRight_nsp2_20181120_002';
+%     'XT_LE_mapNoiseRight_nsp2_20181120_003';
+%     'XT_LE_mapNoiseRight_nsp2_20181127_001';
+%      'XT_LE_mapNoise_nsp2_20181023_002';
+%      'XT_LE_mapNoise_nsp2_20181025_001';
+%  };
+%  newName = 'XT_LE_mapNoiseRight_nsp2_nov20182_all';
+
+ files = {
+'XT_RE_mapNoiseLeft_nsp2_20181026_001';
+'XT_RE_mapNoiseRight_nsp2_20181026_001';
+'XT_RE_mapNoiseRight_nsp2_20181026_003';
+'XT_RE_mapNoiseRight_nsp2_20181119_001';
+'XT_RE_mapNoise_nsp2_20181024_001';
+'XT_RE_mapNoise_nsp2_20181024_002';
+'XT_RE_mapNoise_nsp2_20181024_003';
+};
+newName = 'XT_RE_mapNoiseRight_nsp2_nov2018_all';
 
 %% WU
 % files = {'WU_RE_GratingsMapRF_nsp2_20170814_001_thresh35';
@@ -85,14 +109,12 @@ for fi = 1:size(files,1)
     data.fix_xOrig = data.fix_x;
     data.fix_x = data.fix_x - data.fix_x;
     data.pos_xOrig = data.pos_x;
-    data.pos_x = data.pos_x - data.fix_xOrig;
+    data.pos_x = data.pos_x - double(unique(data.fix_xOrig));
     
     data.fix_yOrig = data.fix_y;
     data.fix_y = data.fix_y - data.fix_y;
     data.pos_yOrig = data.pos_y;
-    data.pos_y = data.pos_y - data.fix_yOrig;
-
-    data
+    data.pos_y = data.pos_y - double(unique(data.fix_yOrig));
     dataComp{fi} = data;
     
 end

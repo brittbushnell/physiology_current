@@ -21,31 +21,56 @@ files = {
     
     %     'WV_LE_MapNoise_nsp2_Jan2019_all_thresh35';
     %     'WV_RE_MapNoise_nsp2_Jan2019_all_thresh35';
-    'XT_LE_mapNoiseRight_nsp2_nov2018_all_thresh35';
-    'XT_LE_mapNoiseRight_nsp2_nov20182_all_thresh35';
-    'XT_RE_mapNoiseRight_nsp2_nov2018_all_thresh35';
-    
-    'WV_LE_MapNoise_nsp2_20190122_003_thresh35';
-    'WV_LE_MapNoise_nsp2_20190130_001_thresh35';
-    'WV_LE_MapNoise_nsp2_20190130_002_thresh35';
-    'WV_RE_MapNoise_nsp2_20190130_003_thresh35';
-    'WV_RE_MapNoise_nsp2_20190130_004_thresh35';
-    'XT_LE_mapNoiseRight_nsp2_20181105_003_thresh35';
-    'XT_LE_mapNoiseRight_nsp2_20181105_004_thresh35';
-    'XT_LE_mapNoiseRight_nsp2_20181120_001_thresh35';
-    'XT_LE_mapNoiseRight_nsp2_20181120_002_thresh35';
-    'XT_LE_mapNoiseRight_nsp2_20181120_003_thresh35';
-    'XT_LE_mapNoiseRight_nsp2_20181127_001_thresh35';
-    'XT_LE_mapNoise_nsp2_20181023_002_thresh35';
-    'XT_LE_mapNoise_nsp2_20181025_001_thresh35';
-    'XT_RE_mapNoiseLeft_nsp2_20181026_001_thresh35';
-    'XT_RE_mapNoiseRight_nsp2_20181026_001_thresh35';
-    'XT_RE_mapNoiseRight_nsp2_20181026_003_thresh35';
-    'XT_RE_mapNoiseRight_nsp2_20181119_001_thresh35';
-    'XT_RE_mapNoise_nsp2_20181024_001_thresh35';
-    'XT_RE_mapNoise_nsp2_20181024_002_thresh35';
-    'XT_RE_mapNoise_nsp2_20181024_003_thresh35';
-    };
+%     'XT_LE_mapNoiseRight_nsp2_nov2018_all_thresh35';
+%     'XT_LE_mapNoiseRight_nsp2_nov20182_all_thresh35';
+%     'XT_RE_mapNoiseRight_nsp2_nov2018_all_thresh35';
+%     
+%     'WV_LE_MapNoise_nsp2_20190122_003_thresh35';
+%     'WV_LE_MapNoise_nsp2_20190130_001_thresh35';
+%     'WV_LE_MapNoise_nsp2_20190130_002_thresh35';
+%     'WV_RE_MapNoise_nsp2_20190130_003_thresh35';
+%     'WV_RE_MapNoise_nsp2_20190130_004_thresh35';
+%     'XT_LE_mapNoiseRight_nsp2_20181105_003_thresh35';
+%     'XT_LE_mapNoiseRight_nsp2_20181105_004_thresh35';
+%     'XT_LE_mapNoiseRight_nsp2_20181120_001_thresh35';
+%     'XT_LE_mapNoiseRight_nsp2_20181120_002_thresh35';
+%     'XT_LE_mapNoiseRight_nsp2_20181120_003_thresh35';
+%     'XT_LE_mapNoiseRight_nsp2_20181127_001_thresh35';
+%     'XT_LE_mapNoise_nsp2_20181023_002_thresh35';
+%     'XT_LE_mapNoise_nsp2_20181025_001_thresh35';
+%     'XT_RE_mapNoiseLeft_nsp2_20181026_001_thresh35';
+%     'XT_RE_mapNoiseRight_nsp2_20181026_001_thresh35';
+%     'XT_RE_mapNoiseRight_nsp2_20181026_003_thresh35';
+%     'XT_RE_mapNoiseRight_nsp2_20181119_001_thresh35';
+%     'XT_RE_mapNoise_nsp2_20181024_001_thresh35';
+%     'XT_RE_mapNoise_nsp2_20181024_002_thresh35';
+%     'XT_RE_mapNoise_nsp2_20181024_003_thresh35';
+
+%     'WV_LE_MapNoise_nsp2_20190122_003';
+%     'WV_LE_MapNoise_nsp2_20190130_001';
+%     'WV_LE_MapNoise_nsp2_20190130_002';
+%     'WV_RE_MapNoise_nsp2_20190130_003';
+%     'WV_RE_MapNoise_nsp2_20190130_004';
+%     'XT_LE_mapNoiseRight_nsp2_20181105_003';
+%     'XT_LE_mapNoiseRight_nsp2_20181105_004';
+%     'XT_LE_mapNoiseRight_nsp2_20181120_001';
+%     'XT_LE_mapNoiseRight_nsp2_20181120_002';
+%     'XT_LE_mapNoiseRight_nsp2_20181120_003';
+%     'XT_LE_mapNoiseRight_nsp2_20181127_001';
+%     'XT_LE_mapNoise_nsp2_20181023_002';
+%     'XT_LE_mapNoise_nsp2_20181025_001';
+%     'XT_RE_mapNoiseLeft_nsp2_20181026_001';
+%     'XT_RE_mapNoiseRight_nsp2_20181026_001';
+%     'XT_RE_mapNoiseRight_nsp2_20181026_003';
+%     'XT_RE_mapNoiseRight_nsp2_20181119_001';
+%     'XT_RE_mapNoise_nsp2_20181024_001';
+%     'XT_RE_mapNoise_nsp2_20181024_002';
+%     'XT_RE_mapNoise_nsp2_20181024_003';
+'XT_RE_mapNoiseRight_nsp2_nov2018_all';
+'XT_LE_mapNoiseRight_nsp2_nov20182_all';
+'WV_LE_MapNoise_nsp2_Jan2019_all';
+'WV_RE_MapNoise_nsp2_Jan2019_all';
+};
 nameEnd = 'info';
 %%
 location = determineComputer;
@@ -55,7 +80,7 @@ failNdx = 1;
 aMap = getBlackrockArrayMap(files(1,:));
 for fi = 1:size(files,1)
     %% Get basic information about experiments
-    %try
+   % try
     filename = files{fi};
     dataT = load(filename);
     
@@ -67,7 +92,7 @@ for fi = 1:size(files,1)
     if length(tmp) == 6
         [dataT.animal, dataT.eye, dataT.programID, dataT.array, dataT.date2,dataT.runNum] = deal(tmp{:});
         % get date in a format that's useable in figure titles (ex: 09/1/2019 vs 20190901)
-        dataT.date = convertDate(dataT.date2);
+        %dataT.date = convertDate(dataT.date2);
     elseif length(tmp) == 7
         [dataT.animal, dataT.eye, dataT.programID, dataT.array, dataT.date2,dataT.runNum,ign] = deal(tmp{:});
         % get date in a format that's useable in figure titles (ex: 09/1/2019 vs 20190901)
@@ -89,13 +114,13 @@ for fi = 1:size(files,1)
         dataT.fix_xOrig = dataT.fix_x;
         dataT.fix_x = dataT.fix_x - dataT.fix_x;
         dataT.pos_xOrig = dataT.pos_x;
-        dataT.pos_x = dataT.pos_x - dataT.fix_xOrig;
+        dataT.pos_x = dataT.pos_x - double(unique(dataT.fix_xOrig));
     end
     if dataT.fix_y ~=0
         dataT.fix_yOrig = dataT.fix_y;
         dataT.fix_y = dataT.fix_y - dataT.fix_y;
         dataT.pos_yOrig = dataT.pos_y;
-        dataT.pos_y = dataT.pos_y - dataT.fix_yOrig;
+        dataT.pos_y = dataT.pos_y - double(unique(dataT.fix_yOrig));
     end
     %%
     dataT.stimulus = nan(1,size(dataT.filename,1));
@@ -139,11 +164,11 @@ for fi = 1:size(files,1)
     saveName = [outputDir filename '_' nameEnd ''];
     save(saveName,'data');
     fprintf('%s saved\n', saveName)
-    %     catch ME
-    %         fprintf('%s did not work. \nError message: %s \n',filename,ME.message)
-    %         failedFiles{failNdx} = filename;
-    %         failedME{failNdx} = ME;
-    %         failNdx = failNdx+1;
-    %     end
+%         catch ME
+%             fprintf('\n%s did not work. \nError message: %s \n\n',filename,ME.message)
+%             failedFiles{failNdx} = filename;
+%             failedME{failNdx} = ME;
+%             failNdx = failNdx+1;
+%         end
 end
 %failedFiles

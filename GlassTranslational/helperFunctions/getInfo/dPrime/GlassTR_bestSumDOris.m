@@ -61,16 +61,17 @@ for ch = 1:96
     end
 end
 
-pOrisR(isnan(pOrisR)) = [];
-SIR2 = pOrisR;
-SIR2(SIR2<0) = SIR2(SIR2<0)+180;  
+%pOrisR(isnan(pOrisR)) = [];
+pOris2 = pOrisR;
+pOris2(pOris2<0) = pOris2(pOris2<0)+180;  
 
 % get preferred orientation for the distribution using circular mean
-cirMu = circ_mean(deg2rad(SIR2(:)*2))/2;
+cirMu = circ_mean(deg2rad(pOris2(:)*2))/2;
 %cirMu2 = cirMu+pi; % no reason to save both of these in the data structure
 %just need to make sure to do the reflection in the plotting codes. 
 %%
 dataT.prefParamResps = prefParamResps;
 dataT.prefParamRespsBaseSub = prefParamRespsBaseSub;
-dataT.prefParamMuOri = cirMu;
+dataT.prefParamMuOriDist = cirMu;
 dataT.prefParamSI = SIR;
+dataT.prefParamsPrefOri = pOris2;
