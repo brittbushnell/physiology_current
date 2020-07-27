@@ -29,28 +29,22 @@ clc
 %     };
 % newName = 'WV_RE_MapNoise_nsp2_Jan2019_all';
 %% XT
-%  files = {
-%     'XT_LE_mapNoiseRight_nsp2_20181105_003_thresh35.mat';
-%     'XT_LE_mapNoiseRight_nsp2_20181105_004_thresh35.mat';
-%     'XT_LE_mapNoiseRight_nsp2_20181120_001_thresh35.mat';
-%     'XT_LE_mapNoiseRight_nsp2_20181120_002_thresh35.mat';
-%     'XT_LE_mapNoiseRight_nsp2_20181120_003_thresh35.mat';
-%     'XT_LE_mapNoiseRight_nsp2_20181127_001_thresh35.mat';
-%      'XT_LE_mapNoise_nsp2_20181023_002_thresh35.mat';
-%      'XT_LE_mapNoise_nsp2_20181025_001_thresh35.mat';
-%  };
-%  newName = 'XT_LE_mapNoiseRight_nsp2_nov20182_all_thresh35';
+ files = {
+    'XT_LE_mapNoiseRight_nsp2_20181105_003_thresh35.mat';
+    'XT_LE_mapNoiseRight_nsp2_20181105_004_thresh35.mat';
+    'XT_LE_mapNoiseRight_nsp2_20181120_001_thresh35.mat';
+    'XT_LE_mapNoiseRight_nsp2_20181120_002_thresh35.mat';
+    'XT_LE_mapNoiseRight_nsp2_20181120_003_thresh35.mat';
+    'XT_LE_mapNoiseRight_nsp2_20181127_001_thresh35.mat';
+ };
+ newName = 'XT_LE_mapNoiseVarCheck_nsp2_nov20182_all_thresh35';
 
 %  files = {
-% 'XT_RE_mapNoiseLeft_nsp2_20181026_001_thresh35.mat';
 % 'XT_RE_mapNoiseRight_nsp2_20181026_001_thresh35.mat';
 % 'XT_RE_mapNoiseRight_nsp2_20181026_003_thresh35.mat';
 % 'XT_RE_mapNoiseRight_nsp2_20181119_001_thresh35.mat';
-% 'XT_RE_mapNoise_nsp2_20181024_001_thresh35.mat';
-% 'XT_RE_mapNoise_nsp2_20181024_002_thresh35.mat';
-% 'XT_RE_mapNoise_nsp2_20181024_003_thresh35.mat';
 % };
-% newName = 'XT_RE_mapNoiseRight_nsp2_nov2018_all_thresh35';
+% newName = 'XT_RE_mapNoiseVarCheck_nsp2_nov2018_all_thresh35';
 
 % raw
 %  files = {
@@ -60,21 +54,15 @@ clc
 %     'XT_LE_mapNoiseRight_nsp2_20181120_002';
 %     'XT_LE_mapNoiseRight_nsp2_20181120_003';
 %     'XT_LE_mapNoiseRight_nsp2_20181127_001';
-%      'XT_LE_mapNoise_nsp2_20181023_002';
-%      'XT_LE_mapNoise_nsp2_20181025_001';
 %  };
-%  newName = 'XT_LE_mapNoiseRight_nsp2_nov20182_all';
+%  newName = 'XT_LE_mapNoiseVarCheck_nsp2_nov20182_all';
 
- files = {
-'XT_RE_mapNoiseLeft_nsp2_20181026_001';
-'XT_RE_mapNoiseRight_nsp2_20181026_001';
-'XT_RE_mapNoiseRight_nsp2_20181026_003';
-'XT_RE_mapNoiseRight_nsp2_20181119_001';
-'XT_RE_mapNoise_nsp2_20181024_001';
-'XT_RE_mapNoise_nsp2_20181024_002';
-'XT_RE_mapNoise_nsp2_20181024_003';
-};
-newName = 'XT_RE_mapNoiseRight_nsp2_nov2018_all';
+%  files = {
+% 'XT_RE_mapNoiseRight_nsp2_20181026_001';
+% 'XT_RE_mapNoiseRight_nsp2_20181026_003';
+% 'XT_RE_mapNoiseRight_nsp2_20181119_001';
+% };
+% newName = 'XT_RE_mapNoiseVarCheck_nsp2_nov2018_all';
 
 %% WU
 % files = {'WU_RE_GratingsMapRF_nsp2_20170814_001_thresh35';
@@ -147,7 +135,11 @@ for i = 1:length(dataComp)
     if ~contains(files{fi,:},'WU') %there are a few things that are named differently because WU was run with gratings instead of pngs
         fnm    = dataComp{i}.filename;
         filename = cat(1, filename, fnm);
+%         if fi == 6
+%             szx = [];
+%         else
         szx    = dataComp{i}.size_x;
+%         end
         xPos = dataComp{i}.pos_x;
         yPos = dataComp{i}.pos_y;
     else

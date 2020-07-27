@@ -10,30 +10,24 @@ else
 end
 
 %% XT
-load('XT_RE_mapNoiseRight_nsp2_nov2018_all_thresh35_info');
- files = {
-'XT_RE_mapNoiseLeft_nsp2_20181026_001_thresh35_info.mat';
-'XT_RE_mapNoiseRight_nsp2_20181026_001_thresh35_info.mat';
-'XT_RE_mapNoiseRight_nsp2_20181026_003_thresh35_info.mat';
-'XT_RE_mapNoiseRight_nsp2_20181119_001_thresh35_info.mat';
-'XT_RE_mapNoise_nsp2_20181024_001_thresh35_info.mat';
-'XT_RE_mapNoise_nsp2_20181024_002_thresh35_info.mat';
-'XT_RE_mapNoise_nsp2_20181024_003_thresh35_info.mat';
-};
-dataT = data.RE;
+% load('XT_RE_mapNoiseVarCheck_nsp2_nov2018_all_thresh35_info');
+% files = {
+%     'XT_RE_mapNoiseRight_nsp2_20181026_001_thresh35_info.mat';
+%     'XT_RE_mapNoiseRight_nsp2_20181026_003_thresh35_info.mat';
+%     'XT_RE_mapNoiseRight_nsp2_20181119_001_thresh35_info.mat';
+%     };
+% dataT = data.RE;
 
-% load('XT_LE_mapNoiseRight_nsp2_nov2018_all_thresh35_info');
-%  files = {
-%     'XT_LE_mapNoiseRight_nsp2_20181105_003_thresh35_info.mat';
-%     'XT_LE_mapNoiseRight_nsp2_20181105_004_thresh35_info.mat';
-%     'XT_LE_mapNoiseRight_nsp2_20181120_001_thresh35_info.mat';
-%     'XT_LE_mapNoiseRight_nsp2_20181120_002_thresh35_info.mat';
-%     'XT_LE_mapNoiseRight_nsp2_20181120_003_thresh35_info.mat';
-%     'XT_LE_mapNoiseRight_nsp2_20181127_001_thresh35_info.mat';
-%      'XT_LE_mapNoise_nsp2_20181023_002_thresh35_info.mat';
-%      'XT_LE_mapNoise_nsp2_20181025_001_thresh35_info.mat';
-%  };
-% dataT = data.LE;
+load('XT_LE_mapNoiseVarCheck_nsp2_nov20182_all_thresh35_info');
+ files = {
+    'XT_LE_mapNoiseRight_nsp2_20181105_003_thresh35_info.mat';
+    'XT_LE_mapNoiseRight_nsp2_20181105_004_thresh35_info.mat';
+    'XT_LE_mapNoiseRight_nsp2_20181120_001_thresh35_info.mat';
+    'XT_LE_mapNoiseRight_nsp2_20181120_002_thresh35_info.mat';
+    'XT_LE_mapNoiseRight_nsp2_20181120_003_thresh35_info.mat';
+    'XT_LE_mapNoiseRight_nsp2_20181127_001_thresh35_info.mat';
+ };
+dataT = data.LE;
 %% WV
 % load('WV_LE_MapNoise_nsp2_Jan2019_all_thresh35_info');
 % files = {
@@ -65,7 +59,7 @@ dataT = data.RE;
 %     'WV_RE_MapNoise_nsp2_20190130_004_info';
 % };
 
-%  load('XT_LE_mapNoiseRight_nsp2_nov20182_all_info');
+%  load('XT_LE_mapNoiseVarCheck_nsp2_nov20182_all_info');
 % dataT = data.LE;
 % files = {
 %     'XT_LE_mapNoiseRight_nsp2_20181105_003_info';
@@ -74,20 +68,15 @@ dataT = data.RE;
 %     'XT_LE_mapNoiseRight_nsp2_20181120_002_info';
 %     'XT_LE_mapNoiseRight_nsp2_20181120_003_info';
 %     'XT_LE_mapNoiseRight_nsp2_20181127_001_info';
-%     'XT_LE_mapNoise_nsp2_20181023_002_info';
-%     'XT_LE_mapNoise_nsp2_20181025_001_info';
 %   };
 
-% load('XT_RE_mapNoiseRight_nsp2_nov2018_all_info');
+% load('XT_RE_mapNoiseVarCheck_nsp2_nov2018_all_info');
 % dataT = data.RE;
 % files = {
-%     'XT_RE_mapNoiseLeft_nsp2_20181026_001_info';
 %     'XT_RE_mapNoiseRight_nsp2_20181026_001_info';
 %     'XT_RE_mapNoiseRight_nsp2_20181026_003_info';
 %     'XT_RE_mapNoiseRight_nsp2_20181119_001_info';
-%     'XT_RE_mapNoise_nsp2_20181024_001_info';
-%     'XT_RE_mapNoise_nsp2_20181024_002_info';
-%     'XT_RE_mapNoise_nsp2_20181024_003_info';
+% 
 %     };
 %%
 blankTrials = dataT.bins(dataT.stimulus == 0,:,:);
@@ -96,7 +85,19 @@ resps = reshape(blankTrials,[size(blankTrials,1)*96,size(blankTrials,2)]);
 %%
 figure(1)
 clf
-imagesc(resps)
+if contains(dataT.animal,'WV')
+    if contains(dataT.eye,'RE')
+        imagesc(resps,[0 2])
+    else
+        imagesc(resps,[0 4])
+    end
+elseif contains(dataT.animal,'XT')
+    if contains(dataT.eye,'RE')
+        imagesc(resps,[0 4])
+    else
+        imagesc(resps,[0 5.5])
+    end
+end
 %imagesc(blanks)
 colorbar
 xlabel('time (10ms)')
@@ -106,15 +107,27 @@ if contains(files{1},'thresh')
     title(sprintf('%s %s %s all sessions, all channels cleaned data',dataT.animal, dataT.eye, dataT.array),'FontSize',14,'FontAngle','italic')
     figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_allChAllSessionsCleaned.pdf'];
 else
-   title(sprintf('%s %s %s all sessions, all channels raw data',dataT.animal, dataT.eye, dataT.array),'FontSize',14,'FontAngle','italic')
-   figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_allChAllSessionsRaw.pdf'];
+    title(sprintf('%s %s %s all sessions, all channels raw data',dataT.animal, dataT.eye, dataT.array),'FontSize',14,'FontAngle','italic')
+    figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_allChAllSessionsRaw.pdf'];
 end
 
 
 print(gcf, figName,'-dpdf','-fillpage')
 %%
 figure(2)
-imagesc(blanks)%,[0 0.8])
+if contains(dataT.animal,'WV')
+    if contains(dataT.eye,'RE')
+        imagesc(blanks,[0 2])
+    else
+        imagesc(blanks,[0 4])
+    end
+elseif contains(dataT.animal,'XT')
+    if contains(dataT.eye,'RE')
+        imagesc(blanks,[0 4])
+    else
+        imagesc(blanks,[0 5.5])
+    end
+end
 colorbar
 xlabel('time (10ms)')
 ylabel('trial number')
@@ -183,20 +196,32 @@ for fi = 1:length(files)
     end
     blanks = squeeze(mean(dataT.bins(dataT.stimulus == 0,:,:),3));
     %resps = reshape(dataT.bins,[size(dataT.bins,1)*96,size(dataT.bins,2)]);
-    if size(files,1)< 7
+    if size(files,1)< 5
         subplot(1,3,fi)
     else
-        subplot(4,2,fi)
+        subplot(3,2,fi)
     end
     %imagesc(resps,[0 4])
-    imagesc(blanks,[0 3.4])
+    if contains(dataT.animal,'WV')
+        if contains(dataT.eye,'RE')
+            imagesc(blanks,[0 2])
+        else
+            imagesc(blanks,[0 4])
+        end
+    elseif contains(dataT.animal,'XT')
+        if contains(dataT.eye,'RE')
+            imagesc(blanks,[0 4])
+        else
+            imagesc(blanks,[0 5.5])
+        end
+    end
     title(fname,'Interpreter','none','FontSize',11)
     colorbar
     
     ylabel('trial number')
     if fi >= 7
         xlabel('time (10ms)')
-    end 
+    end
     clear blanks
 end
 
