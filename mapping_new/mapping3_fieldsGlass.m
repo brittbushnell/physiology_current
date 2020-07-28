@@ -182,7 +182,7 @@ folder = 'byCh';
 mkdir(folder)
 cd(sprintf('%s',folder))
 %%
-for ch = 1:96
+for ch = 1%:96
     if glassData.goodCh(ch) == 1
         figure(2)
         clf
@@ -221,7 +221,7 @@ text(2,6.5,'Fixation point','color','r','FontWeight','bold','FontSize',14,'FontA
         title(sprintf('%s %s %s screen geometry ch %d',rfData.animal, rfData.eye, rfData.array,ch),'FontSize',14,'FontAngle','italic')
         
         figName = [rfData.animal,'_',rfData.eye,'_',rfData.array,'_',rfData.programID,'_receptiveField_ch',num2str(ch)];
-        print(gcf, figName,'-dpdf','-bestfit')
+       % print(gcf, figName,'-dpdf','-bestfit')
     end
     
 end
