@@ -47,7 +47,7 @@ files = {
 %     'WU_LE_GlassTR_nsp2_20170825_002_thresh45_vers2_2kFixPerm';  
 %};
 
-nameEnd = 'OSI_prefOri';
+nameEnd = 'OSI_pOriBestParam';
 %%
 numPerm = 2000;
 numBoot = 200;
