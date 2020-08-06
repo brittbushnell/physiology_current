@@ -66,15 +66,16 @@ files = {
 %     'XT_RE_mapNoise_nsp2_20181024_001';
 %     'XT_RE_mapNoise_nsp2_20181024_002';
 %     'XT_RE_mapNoise_nsp2_20181024_003';
-% 'XT_RE_mapNoiseRight_nsp2_nov2018_all';
-% 'XT_LE_mapNoiseRight_nsp2_nov20182_all';
-% 'WV_LE_MapNoise_nsp2_Jan2019_all';
-% 'WV_RE_MapNoise_nsp2_Jan2019_all';
 
-'XT_LE_mapNoiseVarCheck_nsp2_nov20182_all_thresh35';
-'XT_RE_mapNoiseVarCheck_nsp2_nov2018_all_thresh35';
-'XT_LE_mapNoiseVarCheck_nsp2_nov20182_all';
-'XT_RE_mapNoiseVarCheck_nsp2_nov2018_all';
+'XT_RE_mapNoiseRight_nsp2_nov2018_all';
+'XT_LE_mapNoiseRight_nsp2_nov20182_all';
+'WV_LE_MapNoise_nsp2_Jan2019_all';
+'WV_RE_MapNoise_nsp2_Jan2019_all';
+
+% 'XT_LE_mapNoiseVarCheck_nsp2_nov20182_all_thresh35';
+% 'XT_RE_mapNoiseVarCheck_nsp2_nov2018_all_thresh35';
+% 'XT_LE_mapNoiseVarCheck_nsp2_nov20182_all';
+% 'XT_RE_mapNoiseVarCheck_nsp2_nov2018_all';
 };
 nameEnd = 'info';
 %%

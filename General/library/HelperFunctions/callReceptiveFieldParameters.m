@@ -51,10 +51,10 @@ elseif contains(dataT.animal,'XT')
         end
     else
         if contains(dataT.array,'V4')
-            load('XT_LE_mapNoiseRight_nsp2_nov2018_all_thresh35_info_resps');
+            load('XT_LE_mapNoiseRight_nsp2_nov20182_all_thresh35_info_resps');
             rfData = data.RE;
         else
-            load('XT_LE_mapNoiseRight_nsp1_nov2018_all_thresh35_info_resps');
+            load('XT_LE_mapNoiseRight_nsp1_nov20182_all_thresh35_info_resps');
             rfData = data.RE;
         end
     end

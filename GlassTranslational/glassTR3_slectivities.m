@@ -84,6 +84,7 @@ for fi = 1:size(files,1)
     fprintf('computed OSI permutation tests %.2f minutes \n',toc/60)
     %% get the preferred orientation for the preferred stimulus (density, dx)
     dataT = GlassTR_bestSumDOris(dataT);
+    [dataT.rfQuadrant, dataT.quadOris] = getOrisInRFs(dataT);
     %%
     %plotGlassTR_tuningCurvesPolarNoise(dataT)
     %plotGlassTR_tuningCurvesPolarArray(dataT)

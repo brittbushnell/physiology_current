@@ -48,17 +48,18 @@ for mk = 1:3
                 end
                 %%
                 inputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/%s/%s/%s/',array,stimType,animal,eye);
-                outputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/%s/%s/parsed/',array,stimType,animal);
-                
-                %%
+
                 cd(inputDir);
                 tmp = dir;
                 ndx = 1;
                 files = {};
+                %%
                 for t = 1:size(tmp,1)
                     if contains(tmp(t).name,'thresh')
+                        if ~contains(tmp(t).name,'bar','IgnoreCase',true) % ignore bar map files
                         files{ndx} = tmp(t).name;
                         ndx = ndx+1;
+                        end
                     end
                 end
                 clear tmp
@@ -70,11 +71,36 @@ for mk = 1:3
                     try
                         filename = string(files{fi});
                         
+                        if contains(stimType,'png')
+                            if contains(filename,'map','IgnoreCase',true)
+                                outputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/%s/%s/parsed/Mapping/%s/',array,stimType,animal,eye);
+                            elseif contains(filename,'glass','IgnoreCase',true)
+                                outputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/%s/%s/parsed/Glass/%s/',array,stimType,animal,eye);
+                            elseif contains(filename,'radial','IgnoreCase',true)
+                                outputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/%s/%s/parsed/RadialFrequency/%s/',array,stimType,animal,eye);
+                            elseif contains(filename,'tex','IgnoreCase',true)
+                                outputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/%s/%s/parsed/Textures/%s/',array,stimType,animal,eye);
+                            elseif contains(filename,'Pasupathy','IgnoreCase',true)
+                                outputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/%s/%s/parsed/Pasupathy/%s/',array,stimType,animal,eye);
+                            else
+                                outputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/%s/%s/parsed/%s/',array,stimType,animal,eye);
+                            end
+                        else
+                            if contains(filename,'edge','IgnoreCase',true)
+                                outputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/%s/%s/parsed/Edge/%s/',array,stimType,animal,eye);
+                            elseif contains (filename,'map','IgnoreCase',true)
+                                outputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/%s/%s/parsed/Mapping/%s/',array,stimType,animal,eye);
+                            else
+                                outputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/%s/%s/parsed/Gratings/%s/',array,stimType,animal,eye);
+                            end
+                        end
+                            
                         fprintf('*** analyzing %s file %d/%d ****\n',filename,fi,size(files,2));
                         if ~exist(sprintf('%s/%s',outputDir,strrep(filename,'.mat','')),'file')
                             MworksNevParser1(filename,10,100,outputDir);
                         end
                         toc/3600;
+                        
                     catch ME
                         fprintf('\n\n%s failed %s\n\n',filename,ME.message);
                         failedFiles{ndx} = filename;

@@ -21,9 +21,9 @@ files = {
     %     'XT_LE_mapNoise_nsp1_Oct2018_raw';
     %     'XT_LE_mapNoiseRight_nsp1_Nov2018_raw';
     
-    % 'WV_LE_MapNoise_nsp2_Jan2019_all_thresh35_info';
-    % 'WV_RE_MapNoise_nsp2_Jan2019_all_thresh35_info';
-    'XT_LE_mapNoiseRight_nsp2_nov2018_all_thresh35_info';
+    'WV_LE_MapNoise_nsp2_Jan2019_all_thresh35_info';
+    'WV_RE_MapNoise_nsp2_Jan2019_all_thresh35_info';
+    'XT_LE_mapNoiseRight_nsp2_nov20182_all_thresh35_info';
     'XT_RE_mapNoiseRight_nsp2_nov2018_all_thresh35_info';
     };
 nameEnd = 'resps';
