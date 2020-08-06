@@ -4,8 +4,8 @@ location = 0;
 %% XT noise mapping
 
 % V1
-files = ['XT_LE_mapNoise_nsp1_20181023_001'; 'XT_LE_mapNoise_nsp1_20181025_001'];
-newName = 'XT_LE_mapNoise_nsp1_Oct2018';
+% files = ['XT_LE_mapNoise_nsp1_20181023_001'; 'XT_LE_mapNoise_nsp1_20181025_001'];
+% newName = 'XT_LE_mapNoise_nsp1_Oct2018';
 
 % files = ['XT_RE_mapNoise_nsp1_20181024_001'; 'XT_RE_mapNoise_nsp1_20181024_002'; 'XT_RE_mapNoise_nsp1_20181024_004'];
 % newName = 'XT_RE_mapNoise_nsp1_Oct2018';
@@ -47,5 +47,11 @@ newName = 'XT_LE_mapNoise_nsp1_Oct2018';
 % files = ['WV_RE_MapNoise_nsp2_20190201_001';...
 %          'WV_RE_MapNoise_nsp2_20190205_001'];
 % newName = 'WV_RE_MapNoise_nsp2_Feb2019';
+% %% WU
+% files = {'WU_RE_GratingsMapRF_nsp2_20170814_001_thresh35';
+%     'WU_RE_GratingsMapRF_nsp2_20170814_002_thresh35';
+%     'WU_RE_GratingsMapRF_nsp2_20170815_001_thresh35';
+% };
+% newName = 'WU_RE_GratingsMapRF_nsp2_20170814_all_thresh35';
 %%
 MergePNGFiles(files, newName, location);

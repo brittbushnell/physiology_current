@@ -33,10 +33,11 @@ files = {
 %     'WV_RE_GlassTRCoh_nsp1_20190410_all_s1_2kFixPerm';...
 %     'WV_LE_glassTRCoh_nsp1_20190416_all_s1_2kFixPerm';...
     
-    'XT_RE_GlassTR_nsp2_20190128_all_s1_2kFixPerm';...
-    'XT_LE_GlassTR_nsp2_20190130_all_s1_2kFixPerm';...
-    'XT_RE_GlassTR_nsp1_20190128_all_s1_2kFixPerm';...
-    'XT_LE_GlassTR_nsp1_20190130_all_s1_2kFixPerm';...
+%     'XT_RE_GlassTR_nsp2_20190128_all_s1_2kFixPerm';...
+%     'XT_LE_GlassTR_nsp2_20190130_all_s1_2kFixPerm';...
+%     'XT_RE_GlassTR_nsp1_20190128_all_s1_2kFixPerm';...
+%     'XT_LE_GlassTR_nsp1_20190130_all_s1_2kFixPerm';...
+'WU_LE_GlassTR_nsp2_20170825_002_thresh35_vers2_2kFixPerm'
     };
 %%
 %files = {
@@ -46,7 +47,7 @@ files = {
 %     'WU_LE_GlassTR_nsp2_20170825_002_thresh45_vers2_2kFixPerm';  
 %};
 
-nameEnd = 'OSI_prefOri';
+nameEnd = 'OSI_pOriBestParam';
 %%
 numPerm = 2000;
 numBoot = 200;
@@ -81,9 +82,11 @@ for fi = 1:size(files,1)
         dataT,'translational OSI permutations no subtraction',0);
     
     fprintf('computed OSI permutation tests %.2f minutes \n',toc/60)
+    %% get the preferred orientation for the preferred stimulus (density, dx)
+    dataT = GlassTR_bestSumDOris(dataT);
     %%
     %plotGlassTR_tuningCurvesPolarNoise(dataT)
-    plotGlassTR_tuningCurvesPolarArray(dataT)
+    %plotGlassTR_tuningCurvesPolarArray(dataT)
     %dataT = plotGlassTR_polarWithSpikeCounts(dataT);
     %[dataT] = plotGlassTR_polarWithSpikeCounts_thresh(dataT);
    % plotGlassTR_PolarTuning_errorBar(dataT)

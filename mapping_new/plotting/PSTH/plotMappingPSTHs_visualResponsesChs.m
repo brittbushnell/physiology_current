@@ -46,6 +46,7 @@ end
 if useGoodCh == 0
     goodCh = ones(1,96);
 end
+
 for ch = 1:96
     figure(3);
     clf
@@ -106,7 +107,9 @@ for ch = 1:96
                 ylim([0 yMax])
                 plot([unique(dataT.stimOn)/10,unique(dataT.stimOn)/10],[0,yMax],'k:')
                 plot([unique(dataT.stimOff)/10,unique(dataT.stimOff)/10],[0,yMax],'k:')
-                t = title(sprintf('(%d,%d)',xPos(x),yPos(y)));
+                relX = unique(dataT.fix_x)-xPos(x);
+                relY = yPos(y) - unique(dataT.fix_y);
+                t = title(sprintf('(%d,%d)',relX,relY));
                 t.Position(2) = t.Position(2)-(yMax/10);
                 
                 set(gca,'Color','none','tickdir','out','FontAngle','italic',...
@@ -120,7 +123,7 @@ for ch = 1:96
 suptitle({(sprintf('%s %s %s stim vs blank by locations ch', dataT.animal,dataT.eye, dataT.array,ch)),...
     sprintf('%s fixation at (%d,%d)',dataT.date, unique(dataT.fix_x),unique(dataT.fix_y))});
 figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_',dataT.programID,'_PSTHstimVBlank_ch',num2str(ch)];
-        print(gcf, figName,'-dpdf','-fillpage')
+       print(gcf, figName,'-dpdf','-fillpage')
     end
 end
 %% all channels

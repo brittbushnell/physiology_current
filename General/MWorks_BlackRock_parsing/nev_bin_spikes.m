@@ -10,7 +10,7 @@ dims(2) = POINTS_KEEP;
 
 binsFinal = zeros(dims);
 
-stim = 1;
+% stim = 1;
 
 for stim = 1:n_stim
     offset = 1;
@@ -20,7 +20,7 @@ for stim = 1:n_stim
             if(offset >= n_spikes) || (t_spikesFinal(offset) > (t_stim_in(stim) + (bin_i+1)*T_PER_POINT))
                 break;
             end
-                        
+            
             % if spike is past the start  of the bin
             if t_spikesFinal(offset) >= (t_stim_in(stim) + bin_i.*T_PER_POINT)
                 binsFinal(stim, bin_i) = binsFinal(stim, bin_i) + 1;

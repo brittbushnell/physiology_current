@@ -92,6 +92,7 @@ function [] = MergePNGFiles(files, newName, location)
 
 %newName = 'WU_LE_Pasupathy1loc_nsp1';
 %% cd to save directory
+location = determineComputer;
 if location == 1
     if contains(files(1,:),'nsp1')
         cd '/Local/Users/bushnell/Dropbox/ArrayData/matFiles/V1/ConcatenatedMats'
@@ -100,16 +101,17 @@ if location == 1
     end
 elseif location == 0
     if contains(files(1,:),'nsp1')
-        cd  /Users/bbushnell/Dropbox/ArrayData/matFiles/V1/ConcatenatedMats
+        cd  /Users/brittany/Dropbox/ArrayData/matFiles/V1/ConcatenatedMats
     else
-        cd  /Users/bbushnell/Dropbox/ArrayData/matFiles/V4/ConcatenatedMats
+        cd  /Users/brittany/Dropbox/ArrayData/matFiles/V4/ConcatenatedMats
     end
 end
 %% load data and extract info
 for fi = 1:size(files,1)
-    data = load(files(fi,:));
+    filename = files{fi};
+    data = load(filename);
     
-    if strfind(files(1,:),'Pasupathy')
+    if strfind(filename,'Pasupathy')
         [data.filename, data.stimName] = PasupathyFileNameFix(data.filename);
     end
     
