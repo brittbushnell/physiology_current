@@ -1,0 +1,87 @@
+
+[~,numDots,numDxs,numCoh,~,~,dots,dxs,coherences,~] = getGlassParameters(dataT);
+%%
+con = squeeze(dataT.conNoiseDprime(:,end,end,:));
+conSig = (squeeze(dataT.conNoiseSig(end,end,end,:)))';
+conGood = con(:,(dataT.goodCh & conSig));
+
+rad = squeeze(dataT.radNoiseDprime(:,end,end,:));
+radSig = (squeeze(dataT.radNoiseSig(end,end,end,:)))';
+radGood = rad(:,(dataT.goodCh & radSig));
+
+figure(1)
+clf
+
+subplot(1,2,1)
+hold on
+plot(conGood,'o-k')
+set(gca,'TickDir','out','XTick',1:4,'XTickLabel',coherences)
+xlim([0 4.5])
+ylim([-1 3])
+ylabel('dPrime vs dipole')
+xlabel('% coherence')
+text(3.8,2.9,sprintf('n: %d',sum(conSig)))
+
+subplot(1,2,2)
+hold on
+plot(radGood,'o-k')
+set(gca,'TickDir','out','XTick',1:4,'XTickLabel',coherences)
+xlim([0 4.5])
+ylim([-1 3])
+text(3.8,2.9,sprintf('n: %d',sum(radSig)))
+%%
+if contains(data.LE.animal,'WU')
+    bottomRow = [81 83 85 88 90 92 93 96];
+elseif contains(data.LE.animal,'WV')
+    bottomRow = [2 81 85 88 90 92 93 96 10 83];
+else
+    bottomRow = [81 83 85 88 90 92 93 96];
+end
+
+cohs = coherences*100;
+
+for dt = numDots
+    for dx = numDxs
+        figure
+        pos = get(gcf,'Position');
+        set(gcf,'Position',[pos(1) pos(2) 1000 1000])
+        set(gcf,'PaperOrientation','Landscape');
+        for ch = 1:96
+            if data.LE.goodCh(ch) == 1
+                
+                subplot(data.LE.amap,10,10,ch);
+                hold on
+                conCohResps = squeeze(data.LE.conNoiseDprime(:,dt,dx,ch));
+                if dataT.conNoiseSig(end,dt,dx,ch)
+                    plot(cohs,conCohResps,'.-','LineWidth',1.5,'color',[0.5,0,0.5,0.7])
+                end
+                
+                radCohResps = squeeze(data.LE.radNoiseDprime(:,dt,dx,ch));
+                if dataT.radNoiseSig(end,dt,dx,ch)
+                    plot(cohs,radCohResps,'.-','LineWidth',1.5,'color',[0,0.6,0.2,0.7])
+                end
+                
+                title(ch)
+                %                 xlabel('coherence')
+                %                 ylabel('dPrime')
+                xlim([15 110])
+                %ylim([yMin yMax])
+                ylim([-0.75 3])
+                %axis square
+                set(gca,'box','off')
+                
+                if intersect(bottomRow,ch)
+                    set(gca,'XTick',0:25:100)%,'YScale','log')
+                    xtickangle(45)
+                else
+                    set(gca,'XTick',[])
+                end
+            end
+        end
+        suptitle({sprintf('%s %s %s coherence responses dots %d dx %.2f',data.LE.animal, data.LE.eye, data.LE.array,dots(dt),dxs(dx));...
+            ('p: conVnoise  gn: radVnoise')})
+        
+        %figName = [data.LE.animal,'_',data.LE.eye,'_',data.LE.array,'_',data.LE.programID,'_cohTuning_array_dots',num2str(dots(dt)),'_dx',num2str(dxs(dx)),'.pdf'];
+        %print(gcf, figName,'-dpdf','-fillpage')
+    end
+end

@@ -35,12 +35,12 @@ mkdir(folder)
 cd(sprintf('%s',folder))
 %% RE plot coherences when stim v noise is significant
 %NOTE: need to plot d' on a log scale, but also want to include negative values...
-if contains(data.RE.animal,'WU')
+if contains(data.LE.animal,'WU')
     bottomRow = [81 83 85 88 90 92 93 96];
-elseif contains(data.RE.animal,'WV')
+elseif contains(data.LE.animal,'WV')
     bottomRow = [2 81 85 88 90 92 93 96 10 83];
 else
-    bottomRow = [83 85 88 90 92 93 96];
+    bottomRow = [81 83 85 88 90 92 93 96];
 end
 
 cohs = coherences*100;
@@ -177,7 +177,7 @@ cd ../../../LE/coherenceTuning/
 folder = data.RE.date2;
 mkdir(folder)
 cd(sprintf('%s',folder))
-
+%%
 for dt = 1:numDots
     for dx = 1:numDxs
         figure
@@ -190,19 +190,20 @@ for dt = 1:numDots
                 subplot(data.LE.amap,10,10,ch);
                 hold on
                 conCohResps = squeeze(data.LE.conNoiseDprime(:,dt,dx,ch));
-                plot(cohs,conCohResps,'-','LineWidth',1.5,'color',[0.5,0,0.5,0.7])
+                plot(cohs,conCohResps,'.-','LineWidth',1.5,'color',[0.5,0,0.5,0.7])
                 
                 radCohResps = squeeze(data.LE.radNoiseDprime(:,dt,dx,ch));
-                plot(cohs,radCohResps,'-','LineWidth',1.5,'color',[0,0.6,0.2,0.7])
+                plot(cohs,radCohResps,'.-','LineWidth',1.5,'color',[0,0.6,0.2,0.7])
                 
                 conRadResps = (squeeze(data.LE.conRadDprime(:,dt,dx,ch)));
-                plot(cohs,conRadResps,'-','LineWidth',1.5,'color',[0.5,0.5,0.5,0.7])
+                plot(cohs,conRadResps,'.-','LineWidth',1.5,'color',[0.5,0.5,0.5,0.7])
                 
                 title(ch)
                 %                 xlabel('coherence')
                 %                 ylabel('dPrime')
                 xlim([0 125])
-                ylim([yMin yMax])
+                %ylim([yMin yMax])
+                ylim([-0.75 3])
                 %axis square
                 set(gca,'box','off')
                 
@@ -217,8 +218,8 @@ for dt = 1:numDots
         suptitle({sprintf('%s %s %s coherence responses dots %d dx %.2f',data.LE.animal, data.LE.eye, data.LE.array,dots(dt),dxs(dx));...
             ('p: conVnoise  gn: radVnoise  gy: conVsRad')})
         
-        figName = [data.LE.animal,'_',data.LE.eye,'_',data.LE.array,'_',data.LE.programID,'_cohTuning_array_dots',num2str(dots(dt)),'_dx',num2str(dxs(dx)),'.pdf'];
-        print(gcf, figName,'-dpdf','-fillpage')
+        %figName = [data.LE.animal,'_',data.LE.eye,'_',data.LE.array,'_',data.LE.programID,'_cohTuning_array_dots',num2str(dots(dt)),'_dx',num2str(dxs(dx)),'.pdf'];
+        %print(gcf, figName,'-dpdf','-fillpage')
     end
 end
 %%

@@ -13,17 +13,17 @@ numCh = size(dataT.bins,3);
 
 conNoiseDprimePerm = nan(numCoh,numDots, numDxs, numCh);
 radNoiseDprimePerm = nan(numCoh,numDots, numDxs, numCh);
-conRadDprimePerm = nan(numCoh,numDots, numDxs, numCh);
+% %conRadDprimePerm = nan(numCoh,numDots, numDxs, numCh);
 
 conNoiseSDPerm = nan(numCoh,numDots, numDxs, numCh);
 radNoiseSDPerm = nan(numCoh,numDots, numDxs, numCh);
-conRadSDPerm = nan(numCoh,numDots, numDxs, numCh);
+% %conRadSDPerm = nan(numCoh,numDots, numDxs, numCh);
 
 radDprimeBootPerm = nan(numCoh,numDots, numDxs, numCh,numBoot);
 conDprimeBootPerm = nan(numCoh,numDots, numDxs, numCh,numBoot);
-conRadDprimeBootPerm = nan(numCoh,numDots, numDxs, numCh,numBoot);
+% %conRadDprimeBootPerm = nan(numCoh,numDots, numDxs, numCh,numBoot);
 %% mean responses and d' to each stimulus
-% type codes 1=concentric  2=radial 0=noise  100=blank
+% type codes 1=concentric  2=radial 0=noise  100=blank 3 = translational
 
 for ch = 1:numCh
     if dataT.goodCh(ch) == 1
@@ -41,45 +41,45 @@ for ch = 1:numCh
                     dotNdx = (dataT.numDots == dots(ndot));
                     dxNdx = (dataT.dx == dxs(dx));
                     coNdx = (dataT.coh == coherences(co));
+                    stimNdx = dataT.numDots > 0;
                     
                     conNoiseBoot  = nan(1,numBoot);
                     radNoiseBoot  = nan(1,numBoot);
-                    conRadBoot = nan(1,numBoot);
+                    %conRadBoot = nan(1,numBoot);
                     
                     for nb = 1:numBoot
-                        conTrials = (dotNdx & dxNdx & conNdx & coNdx);
-                        radTrials = (dotNdx & dxNdx & radNdx & coNdx);
-                        noiseTrials = (dotNdx & dxNdx & noiseNdx);
-                        trials = 1:size(dataT.bins,1);
+                        % make the list of trials to randomly pull from to
+                        % assign coherences to. Inlclude 0 coherence in
+                        % these, but limit to concentric or radial
+                        % otherwise.
+                        conTrials = (dotNdx & dxNdx & stimNdx & ~radNdx);
+                        radTrials = (dotNdx & dxNdx & stimNdx & ~conNdx);
                         
-                        numConTrials = round(length(find(conTrials))*holdout);
-                        numRadTrials = round(length(find(radTrials))*holdout);
-                        numNoiseTrials = round(length(find(noiseTrials))*holdout);
+                        % how many trials were run for each unique stimulus
+                        numConCoh = round(sum(conTrials & coNdx) * holdout);
+                        numRadCoh = round(sum(radTrials & coNdx) * holdout);
+                        numNoiseTrials  = round(sum(dotNdx & dxNdx & noiseNdx) * holdout);
                         
-                        % randomly assign trials to the different conditions. make
-                        % sure not to use the same trials for both conditions.
-                        % noise
-                        [noiseNdx1,unusedCon] = subsampleBlanks((trials),numNoiseTrials);
+                        % from conTrials and radTrials, randomly choose
+                        % trials to be counted as 0 coherence
+                        [noiseNdx1,unusedCon] = subsampleStimuli((conTrials),numNoiseTrials);
                         noiseForCon = nansum(dataT.bins(noiseNdx1, startMean:endMean, ch),2);
                         
-                        [noiseNdx1,unusedRad] = subsampleBlanks((trials),numNoiseTrials);
+                        [noiseNdx1,unusedRad] = subsampleStimuli((radTrials),numNoiseTrials);
                         noiseForRad = nansum(dataT.bins(noiseNdx1, startMean:endMean, ch),2);
-                        % stimuli
-                        radNdx1 = subsampleStimuli(unusedRad, numRadTrials);
+                        
+                        % Using the leftover stimuli, randomly assign other
+                        % trials for the coherence.
+                        radNdx1 = subsampleStimuli(unusedRad, numRadCoh);
                         radStim = nansum(dataT.bins(radNdx1, (startMean:endMean) ,ch),2);
                         
-                        conNdx1 = subsampleStimuli(unusedCon, numConTrials);
+                        conNdx1 = subsampleStimuli(unusedCon, numConCoh);
                         conStim = nansum(dataT.bins(conNdx1, (startMean:endMean) ,ch),2);
                         
-                        [conNdx1,unusedRad] = subsampleBlanks((trials),numConTrials);
-                        conForRad = nansum(dataT.bins(conNdx1, startMean:endMean, ch),2);
-                        
-                        radNdx1 = subsampleStimuli(unusedRad, numRadTrials);
-                        radForCon = nansum(dataT.bins(radNdx1, (startMean:endMean) ,ch),2);
                         %% d'
                         conNoiseBoot(1,nb) = simpleDiscrim((noiseForCon),(conStim));
                         radNoiseBoot(1,nb) = simpleDiscrim((noiseForRad),(radStim));
-                        conRadBoot(1,nb) = simpleDiscrim((conForRad),(radForCon));
+                        %conRadBoot(1,nb) = simpleDiscrim((conForRad),(radForCon));
                     end
                     %% create matrices of bootstrapped d', standard deviations, and the mean d'
                     conNoiseDprimePerm(co,ndot,dx,ch)   = nanmedian(conNoiseBoot);
@@ -91,9 +91,9 @@ for ch = 1:numCh
                     conDprimeBootPerm(co,ndot,dx,ch,:) = conNoiseBoot;
                     radDprimeBootPerm(co,ndot,dx,ch,:) = radNoiseBoot;
                     
-                    conRadDprimePerm(co,ndot,dx,ch)  = nanmedian(conRadBoot);
-                    conRadSDPerm(co,ndot,dx,ch)  = nanstd(conRadBoot);
-                    conRadDprimeBootPerm(co,ndot,dx,ch,:) = conRadBoot;
+                    %conRadDprimePerm(co,ndot,dx,ch)  = nanmedian(%conRadBoot);
+                    %conRadSDPerm(co,ndot,dx,ch)  = nanstd(%conRadBoot);
+                    %conRadDprimeBootPerm(co,ndot,dx,ch,:) = %conRadBoot;
                 end
             end
         end
@@ -102,12 +102,12 @@ end
 %% commit everything to the data structure
 dataT.conNoiseDprimePerm = conNoiseDprimePerm;
 dataT.radNoiseDprimePerm = radNoiseDprimePerm;
-dataT.conRadDprimePerm = conRadDprimePerm;
+% dataT.conRadDprimePerm = conRadDprimePerm;
 
 dataT.radNoiseDprimeBootPerm = radDprimeBootPerm;
 dataT.conNoiseDprimeBootPerm = conDprimeBootPerm;
-dataT.conRadDprimeBootPerm = conRadDprimeBootPerm;
+% dataT.%conRadDprimeBootPerm = %conRadDprimeBootPerm;
 
 dataT.conNoiseDprimeSDPerm = conNoiseSDPerm;
 dataT.radNoiseDprimeSDPerm = radNoiseSDPerm;
-dataT.conRadDprimeSDPerm = conRadSDPerm;
+% dataT.%conRadDprimeSDPerm = %conRadSDPerm;
