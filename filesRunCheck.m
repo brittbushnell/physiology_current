@@ -1,21 +1,28 @@
 clear
 clc
 %%
-animalMtx = {'WV'; 'WU';'XT'};
+animalMtx = {
+%    'WV'; 
+%    'WU';
+    'XT'
+    };
 
 mountMtx = {
     'vnlstorage';
     'vnlstorage2';
-    'vnlstorage3';
+%    'vnlstorage3';
     };
 
-progMtx = {'map';
+progMtx = {
+    'map';
     'glass';
     'tr';
     'edge';
-    'radial';
+    'rad';
     'pas';
     'tex';
+    'cont';
+    'grat';
     }; % which file types do you want to run? Case doesn't matter in this scenario
 %%
 for an = 1:length(animalMtx)
@@ -60,10 +67,10 @@ for an = 1:length(animalMtx)
                 files(contains(files,'BE')) = [];
             end
             numL = sum(contains(files,'LE'));
-            fprintf('%d LE %s files in %s %s\n',numL,progType,mount,array)
+            fprintf('%s %d LE %s files in %s %s\n',animal,numL,progType,mount,array)
             
             numR = sum(contains(files,'RE'));
-            fprintf('%d RE %s files in %s %s\n\n',numR,progType,mount,array)
+            fprintf('%s %d RE %s files in %s %s\n\n',animal,numR,progType,mount,array)
         end
     end
     catch

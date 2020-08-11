@@ -21,6 +21,7 @@ tic;
 %stimType = 'grat';
 %% figure out what you're running
 for mk = 1:3
+    
     if mk == 1
         animal = 'WU';
     elseif mk == 2
@@ -28,18 +29,21 @@ for mk = 1:3
     else
         animal = 'XT';
     end
+    
     for st = 1:2
         if st == 1
             stimType = 'png';
         else
             stimType = 'gratings';
         end
+        
         for ar = 1:2
             if ar == 1
                 array = 'nsp2';
             else
                 array = 'nsp1';
             end
+            
             for ey = 1:2
                 if ey == 1
                     eye = 'RE';
