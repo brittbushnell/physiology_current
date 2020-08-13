@@ -5,33 +5,71 @@ clc
 %% WV
 
 % V4
-files = {
-%     'WV_LE_MapNoiseRightWide_nsp2_20190121_001_thresh35';
-%     'WV_LE_MapNoiseRightWide_nsp2_20190121_002_thresh35';
-%     
-%     'WV_LE_MapNoiseRightWide_nsp2_20190122_002_thresh35';
-%     
-%     'WV_LE_MapNoise_nsp2_20190122_003_thresh35';
-    
-    'WV_LE_MapNoise_nsp2_20190130_001_thresh35';
-    'WV_LE_MapNoise_nsp2_20190130_002_thresh35';
-    };
-newName = 'WV_LE_MapNoise_nsp2_20190130_all_thresh35';
+% files = { 
+%     'WV_LE_MapNoise_nsp2_20190130_001_thresh35';
+%     'WV_LE_MapNoise_nsp2_20190130_002_thresh35';
+%     };
+% newName = 'WV_LE_MapNoise_nsp2_20190130_all_thresh35';
+
+% files = {
+%      'WV_RE_MapNoise_nsp2_20190130_003_thresh35.mat';           
+%      'WV_RE_MapNoise_nsp2_20190130_004_thresh35.mat';
+%      };
+% newName = 'WV_RE_MapNoise_nsp2_20190130_all_thresh35';
 
 % V1
-files = {
-%     'WV_LE_MapNoiseRightWide_nsp2_20190121_001_thresh35';
-%     'WV_LE_MapNoiseRightWide_nsp2_20190121_002_thresh35';
-%     
-%     'WV_LE_MapNoiseRightWide_nsp2_20190122_002_thresh35';
-%     
-%     'WV_LE_MapNoise_nsp2_20190122_003_thresh35';
-    
-    'WV_LE_MapNoise_nsp2_20190130_001_thresh35';
-    'WV_LE_MapNoise_nsp2_20190130_002_thresh35';
-    };
-newName = 'WV_LE_MapNoise_nsp2_20190130_all_thresh35';
+% files = {     
+%     'WV_LE_MapNoise_nsp1_20190130_001_thresh35';
+%     'WV_LE_MapNoise_nsp1_20190130_002_thresh35';
+%     };
+% newName = 'WV_LE_MapNoise_nsp1_20190130_all_thresh35';
 
+% files = {
+%      'WV_RE_MapNoise_nsp1_20190130_003_thresh35.mat';           
+%      'WV_RE_MapNoise_nsp1_20190130_004_thresh35.mat';
+%      };
+% newName = 'WV_RE_MapNoise_nsp1_20190130_all_thresh35';
+%% XT
+
+% V4
+% files = {
+%    'XT_LE_mapNoiseRight_nsp2_20181120_001_thresh35';
+%    'XT_LE_mapNoiseRight_nsp2_20181120_002_thresh35';
+%    'XT_LE_mapNoiseRight_nsp2_20181120_003_thresh35';
+% };
+% newName = 'XT_LE_mapNoiseRight_nsp2_20181120_all_thresh35';
+
+% files = {
+%    'XT_RE_mapNoiseRight_nsp2_20181026_001_thresh35';
+%    'XT_RE_mapNoiseRight_nsp2_20181026_003_thresh35';
+% };
+% newName = 'XT_RE_mapNoiseRight_nsp2_20181026_all_thresh35';
+
+% V1
+% files = {
+%    'XT_LE_mapNoiseRight_nsp1_20181120_001_thresh35';
+%    'XT_LE_mapNoiseRight_nsp1_20181120_002_thresh35';
+%    'XT_LE_mapNoiseRight_nsp1_20181120_003_thresh35';
+% };
+% newName = 'XT_LE_mapNoiseRight_nsp1_20181120_all_thresh35';
+
+% files = {
+%    'XT_RE_mapNoiseRight_nsp1_20181026_001_thresh35';
+%    'XT_RE_mapNoiseRight_nsp1_20181026_003_thresh35';
+% };
+% newName = 'XT_RE_mapNoiseRight_nsp1_20181026_all_thresh35';
+%% WU
+% files = {
+%    'WU_LE_Gratmap_nsp2_20170428_003_thresh35';
+%    'WU_LE_Gratmap_nsp2_20170428_004_thresh35';
+% };
+% newName = 'WU_LE_Gratmap_nsp2_20170428_all_thresh35';
+
+files = {
+   'WU_LE_Gratmap_nsp1_20170428_003_thresh35';
+   'WU_LE_Gratmap_nsp1_20170428_004_thresh35';
+};
+newName = 'WU_LE_Gratmap_nsp1_20170428_all_thresh35';
 %%
 location = determineComputer;
 for fi = 1:size(files,1)
@@ -50,6 +88,11 @@ for fi = 1:size(files,1)
     % adjust locations so fixation is at (0,0). This will also allow us to
     % combine across runs with different locations to get full maps.
     
+    if contains(filename,'WU')
+        data.pos_x = data.xoffset;
+        data.pos_y = data.yoffset;
+    end
+
     data.fix_xOrig = data.fix_x;
     data.fix_x = data.fix_x - data.fix_x;
     data.pos_xOrig = data.pos_x;
