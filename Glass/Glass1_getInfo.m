@@ -13,8 +13,6 @@
 %
 % Brittany Bushnell Aug 17, 2020
 %%
-
-%%
 clear all
 close all
 clc
@@ -106,6 +104,28 @@ for fi = 1:size(files,1)
     %% determine good channels
     dataT = GlassStimVsBlankPermutations_allStim(dataT,numPerm,holdout);
     [dataT.stimBlankChPvals,dataT.goodCh] = glassGetPermutationStatsAndGoodCh(dataT.allStimBlankDprime,dataT.allStimBlankDprimeBootPerm);
+    %% find channels whose receptive fields are within the stimulus bounds
+    
+    fixX = double(unique(dataT.fix_x));
+    fixY = double(unique(dataT.fix_y));
+    xPos = double(unique(dataT.pos_x));
+    yPos = double(unique(dataT.pos_y));
+    
+    % adjust locations so they are relative to fixation, not to the center of the monitor (as they were in MWorks)
+    % graphically, this will make it so fixation is always at origin, and you can get
+    % a better sense of the actual eccentricies of the receptive fields.
+    if fixX ~= 0
+        xPosRelFix = xPos-fixX;
+    else
+        xPosRelFix = xPos;
+    end
+    
+    if fixY ~= 0
+        yPosRelFix = yPos-fixY;
+    else
+        yPosRelFix = yPos;
+    end
+    
     %%
     if location == 1
         outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/Glass/Parsed/',dataT.array);
