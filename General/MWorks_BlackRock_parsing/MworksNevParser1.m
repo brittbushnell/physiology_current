@@ -1,6 +1,6 @@
 % bin spike counts from nev file
 
-function MworksNevParser(varargin)
+function MworksNevParser1(varargin)
 % This function is at its most simple, a re-creation of Darren Seibert's
 % Python parsing code. This Matlab version builds on it and increases some
 % of the flexibility.
@@ -216,7 +216,7 @@ if contains(programID,'grat','IgnoreCase',true)
         'o_temporal_frequency', 'overlay','current_phase', 'width', 'grating',...
         'type', 'contrast', 'opacity', 'o_current_phase',  'start_time', 'yoffset',...
         'o_direction', 'rotation', 'xoffset','spatial_frequency', 'name',...
-        'mask', 'o_rotation', 'o_spatial_frequency', 'action'};
+        'mask', 'o_rotation', 'o_spatial_frequency', 'action','pos_x','pos_y'};
 else
     stim_var_names = {'pos_x','pos_y','filename','size_x','action','rotation'};
 end
