@@ -1,9 +1,14 @@
 function dataOut = callReceptiveFieldParameters(dataT)
 % This function will get the receptive field parameters from previously
 % analyzed data and save them into the current dataT structure.
-%
-dataOut = dataT;
+% 
+% Receptive field locations are relative to fixation point, not center of
+% the monitor. 
 
+fprintf('\n *********UPDATE MAPPING FILES WITH FINALIZED AND CLEANED FILENAMES********* \n\n')
+fprintf( 'Receptive field locations are relative to fixation point, not the center of the monitor.\n')
+
+dataOut = dataT;
 if contains(dataT.animal,'WU')
     if contains(dataT.eye,'LE')
         if contains(dataT.array,'V4')

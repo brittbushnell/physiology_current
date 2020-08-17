@@ -1,5 +1,5 @@
-
-[~,numDots,numDxs,numCoh,~,~,dots,dxs,coherences,~] = getGlassParameters(dataT);
+function plotGlass_CoherenceResps(dataT)
+[~,numDots,numDxs,~,~,~,dots,dxs,coherences,~] = getGlassParameters(dataT);
 coherences = coherences *100;
 %%
 con = squeeze(dataT.conNoiseDprime(:,end,end,:));
