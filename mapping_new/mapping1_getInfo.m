@@ -4,78 +4,23 @@ clc
 %%
 
 files = {
-    % beginning of recording
-    %     'WV_LE_MapNoiseRight_nsp2_20190121_all';
-    %     'WV_LE_MapNoiseRightWide_nsp2_20190122_002';
-    %     'WV_RE_MapNoiseRightWide_nsp2_20190122_001';
-    
-    % active arrays
-    %     'WV_LE_MapNoise_nsp2_20190204_all';
-    %     'WV_RE_MapNoise_nsp2_20190205_001';
-    %
-    %     'WV_LE_MapNoise_nsp1_20190204_all';
-    %     'WV_RE_MapNoise_nsp1_20190205_001';
-    %
-    %     'XT_LE_mapNoise_nsp2_Oct2018';
-    %     'XT_LE_mapNoiseRight_nsp2_Nov2018';
-    
-    %     'WV_LE_MapNoise_nsp2_Jan2019_all_thresh35';
-    %     'WV_RE_MapNoise_nsp2_Jan2019_all_thresh35';
-%     'XT_LE_mapNoiseRight_nsp2_nov2018_all_thresh35';
-%     'XT_LE_mapNoiseRight_nsp2_nov20182_all_thresh35';
-%     'XT_RE_mapNoiseRight_nsp2_nov2018_all_thresh35';
-%     
-%     'WV_LE_MapNoise_nsp2_20190122_003_thresh35';
-%     'WV_LE_MapNoise_nsp2_20190130_001_thresh35';
-%     'WV_LE_MapNoise_nsp2_20190130_002_thresh35';
-%     'WV_RE_MapNoise_nsp2_20190130_003_thresh35';
-%     'WV_RE_MapNoise_nsp2_20190130_004_thresh35';
-%     'XT_LE_mapNoiseRight_nsp2_20181105_003_thresh35';
-%     'XT_LE_mapNoiseRight_nsp2_20181105_004_thresh35';
-%     'XT_LE_mapNoiseRight_nsp2_20181120_001_thresh35';
-%     'XT_LE_mapNoiseRight_nsp2_20181120_002_thresh35';
-%     'XT_LE_mapNoiseRight_nsp2_20181120_003_thresh35';
-%     'XT_LE_mapNoiseRight_nsp2_20181127_001_thresh35';
-%     'XT_LE_mapNoise_nsp2_20181023_002_thresh35';
-%     'XT_LE_mapNoise_nsp2_20181025_001_thresh35';
-%     'XT_RE_mapNoiseLeft_nsp2_20181026_001_thresh35';
-%     'XT_RE_mapNoiseRight_nsp2_20181026_001_thresh35';
-%     'XT_RE_mapNoiseRight_nsp2_20181026_003_thresh35';
-%     'XT_RE_mapNoiseRight_nsp2_20181119_001_thresh35';
-%     'XT_RE_mapNoise_nsp2_20181024_001_thresh35';
-%     'XT_RE_mapNoise_nsp2_20181024_002_thresh35';
-%     'XT_RE_mapNoise_nsp2_20181024_003_thresh35';
-
-%     'WV_LE_MapNoise_nsp2_20190122_003';
-%     'WV_LE_MapNoise_nsp2_20190130_001';
-%     'WV_LE_MapNoise_nsp2_20190130_002';
-%     'WV_RE_MapNoise_nsp2_20190130_003';
-%     'WV_RE_MapNoise_nsp2_20190130_004';
-%     'XT_LE_mapNoiseRight_nsp2_20181105_003';
-%     'XT_LE_mapNoiseRight_nsp2_20181105_004';
-%     'XT_LE_mapNoiseRight_nsp2_20181120_001';
-%     'XT_LE_mapNoiseRight_nsp2_20181120_002';
-%     'XT_LE_mapNoiseRight_nsp2_20181120_003';
-%     'XT_LE_mapNoiseRight_nsp2_20181127_001';
-%     'XT_LE_mapNoise_nsp2_20181023_002';
-%     'XT_LE_mapNoise_nsp2_20181025_001';
-%     'XT_RE_mapNoiseLeft_nsp2_20181026_001';
-%     'XT_RE_mapNoiseRight_nsp2_20181026_001';
-%     'XT_RE_mapNoiseRight_nsp2_20181026_003';
-%     'XT_RE_mapNoiseRight_nsp2_20181119_001';
-%     'XT_RE_mapNoise_nsp2_20181024_001';
-%     'XT_RE_mapNoise_nsp2_20181024_002';
-%     'XT_RE_mapNoise_nsp2_20181024_003';
-
-'XT_RE_mapNoiseRight_nsp2_nov2018_all';
-'XT_LE_mapNoiseRight_nsp2_nov20182_all';
-'WV_LE_MapNoise_nsp2_Jan2019_all';
-'WV_RE_MapNoise_nsp2_Jan2019_all';
-
-% 'XT_LE_mapNoiseVarCheck_nsp2_nov20182_all_thresh35';
-% 'XT_RE_mapNoiseVarCheck_nsp2_nov2018_all_thresh35';
-% 'XT_LE_mapNoiseVarCheck_nsp2_nov20182_all';
-% 'XT_RE_mapNoiseVarCheck_nsp2_nov2018_all';
+   'WV_LE_MapNoise_nsp2_20190130_all_thresh35';
+   'WV_RE_MapNoise_nsp2_20190130_all_thresh35';
+   
+   'WV_LE_MapNoise_nsp1_20190130_all_thresh35';
+   'WV_RE_MapNoise_nsp1_20190130_all_thresh35';
+   
+   'XT_LE_mapNoiseRight_nsp2_20181120_all_thresh35';
+   'XT_RE_mapNoiseRight_nsp2_20181026_all_thresh35';
+   
+   'XT_LE_mapNoiseRight_nsp1_20181120_all_thresh35';
+   'XT_RE_mapNoiseRight_nsp1_20181026_all_thresh35';
+   
+   'WU_LE_Gratmap_nsp2_20170428_all_thresh35';
+   'WU_RE_Gratmap_nsp2_20170428_006_thresh35';
+   
+   'WU_LE_Gratmap_nsp1_20170428_all_thresh35';
+   'WU_RE_Gratmap_nsp1_20170428_006_thresh35';
 };
 nameEnd = 'info';
 %%
@@ -129,9 +74,12 @@ for fi = 1:size(files,1)
         dataT.pos_y = dataT.pos_y - double(unique(dataT.fix_yOrig));
     end
     %%
-    dataT.stimulus = nan(1,size(dataT.filename,1));
-    for i = 1:size(dataT.filename,1)
-        dataT.stimulus(1,i) = parseMapNoiseName(dataT.filename(i,:));
+    if contains(filename, 'WU')
+    else
+        dataT.stimulus = nan(1,size(dataT.filename,1));
+        for i = 1:size(dataT.filename,1)
+            dataT.stimulus(1,i) = parseMapNoiseName(dataT.filename(i,:));
+        end
     end
     %%
     if location == 1
