@@ -2,29 +2,38 @@ clear all
 close all
 clc
 %% XT
-%  rd = load('XT_LE_mapNoiseRight_nsp2_nov2018_all_thresh35_info_resps');
+%  rd = load('XT_LE_mapNoiseRight_nsp2_20181120_all_thresh35_info_resps');
 %  gd = load('XT_BE_GlassTR_V4_May2020');
 %  eye = 'LE';
 
-%  rd = load('XT_RE_mapNoiseRight_nsp2_nov2018_all_thresh35_info_resps');
+%  rd = load('XT_RE_mapNoiseRight_nsp2_20181026_all_thresh35_info_resps');
 %  gd = load('XT_BE_GlassTR_V4_May2020');
 %  eye = 'RE';
+
+%  rd = load('XT_LE_mapNoiseRight_nsp1_20181120_all_thresh35_info_resps');
+%  gd = load('XT_BE_GlassTR_V1_May2020');
+%  eye = 'LE';
+
+%  rd = load('XT_RE_mapNoiseRight_nsp1_20181026_all_thresh35_info_resps');
+%  gd = load('XT_BE_GlassTR_V1_May2020');
+%  eye = 'RE';
+
 %% WV
 % V4
-rd = load('WV_LE_MapNoise_nsp2_20190130_all_thresh35_info_resps');
-gd = load('WV_LE_glassTRCoh_nsp2_20190416_all_s1_2kFixPerm_OSI_prefOri');
-eye = 'LE';
+% rd = load('WV_LE_MapNoise_nsp2_20190130_all_thresh35_info_resps');
+% gd = load('WV_LE_glassTRCoh_nsp2_20190416_all_s1_2kFixPerm_OSI_prefOri');
+% eye = 'LE';
 %
-% rd = load('WV_RE_MapNoise_nsp2_20190130_all_thresh35_info_resps';);
+% rd = load('WV_RE_MapNoise_nsp2_20190130_all_thresh35_info_resps');
 % gd = load('WV_RE_GlassTRCoh_nsp2_20190410_all_s1_2kFixPerm');
 % eye = 'RE';
 %
 % % V1
-% rd = load('WV_LE_MapNoise_nsp1_20190130_all_thresh35_info_resps';);
-% gd = load('WV_LE_glassTRCoh_nsp1_20190416_all_s1_2kFixPerm');
-% eye = 'LE';
-%
-% rd = load('WV_RE_MapNoise_nsp1_20190130_all_thresh35_info_resps';);
+rd = load('WV_LE_MapNoise_nsp1_20190130_all_thresh35_info_resps');
+gd = load('WV_LE_glassTRCoh_nsp1_20190416_all_s1_2kFixPerm');
+eye = 'LE';
+
+% rd = load('WV_RE_MapNoise_nsp1_20190130_all_thresh35_info_resps');
 % gd = load('WV_RE_GlassTRCoh_nsp1_20190410_all_s1_2kFixPerm');
 % eye = 'RE';
 %% WU
@@ -115,9 +124,9 @@ else
     text(5,14,'Channel receptive fields','color',[.8 .2  .5],'FontWeight','bold','FontSize',14,'FontAngle','italic')
 end
 
-text(2,7.5,'Array receptive field','color',[0 0 0],'FontWeight','bold','FontSize',14,'FontAngle','italic')
-text(2,7,'Glass Pattern location','color',[0.6 0.6 0.05],'FontWeight','bold','FontSize',14,'FontAngle','italic')
-text(2,6.5,'Fixation point','color','r','FontWeight','bold','FontSize',14,'FontAngle','italic')
+text(2,10,'Array receptive field','color',[0 0 0],'FontWeight','bold','FontSize',14,'FontAngle','italic')
+text(2,9,'Glass Pattern location','color',[0.6 0.6 0.05],'FontWeight','bold','FontSize',14,'FontAngle','italic')
+text(2,8,'Fixation point','color','r','FontWeight','bold','FontSize',14,'FontAngle','italic')
 
 
 set(gca,'YAxisLocation','origin','XAxisLocation','origin',...
@@ -155,18 +164,18 @@ ylim([-15, 15]);
 xlim([-15, 15]);
 
 if contains(rfData.eye,'LE')
-    text(5,14,'Channel receptive fields','color',[.4 .6 .7],'FontWeight','bold','FontSize',14,'FontAngle','italic')
+    text(2,11,'Channel receptive fields','color',[.4 .6 .7],'FontWeight','bold','FontSize',14,'FontAngle','italic')
 else
-    text(5,14,'Channel receptive fields','color',[.8 .2  .5],'FontWeight','bold','FontSize',14,'FontAngle','italic')
+    text(2,11,'Channel receptive fields','color',[.8 .2  .5],'FontWeight','bold','FontSize',14,'FontAngle','italic')
 end
 
-text(2,7.5,'Array receptive field','color',[0 0 0],'FontWeight','bold','FontSize',14,'FontAngle','italic')
-text(2,7,'Glass Pattern location','color',[0.6 0.6 0.05],'FontWeight','bold','FontSize',14,'FontAngle','italic')
-text(2,6.5,'Fixation point','color','r','FontWeight','bold','FontSize',14,'FontAngle','italic')
+text(2,10,'Array receptive field','color',[0 0 0],'FontWeight','bold','FontSize',14,'FontAngle','italic')
+text(2,9,'Glass Pattern location','color',[0.6 0.6 0.05],'FontWeight','bold','FontSize',14,'FontAngle','italic')
+text(2,8,'Fixation point','color','r','FontWeight','bold','FontSize',14,'FontAngle','italic')
 
 
 set(gca,'YAxisLocation','origin','XAxisLocation','origin',...
-    'Layer','top','FontWeight','bold','FontSize',12,'FontAngle','italic')
+    'Layer','top','FontWeight','bold','FontSize',12,'FontAngle','italic','XTick',[-10 0 10],'YTick',[-10 0 10])
 axis square
 title(sprintf('%s %s %s receptive field locations Glass responsive channels',rfData.animal, rfData.eye, rfData.array),'FontSize',14,'FontAngle','italic')
 
@@ -199,7 +208,7 @@ for ch = 1:96
         plot(0,0,'r.','MarkerSize',16)
         
         set(gca,'YAxisLocation','origin','XAxisLocation','origin',...
-            'Layer','top','FontWeight','bold','FontSize',12,'FontAngle','italic')
+            'Layer','top','FontWeight','bold','FontSize',12,'FontAngle','italic','XTick',[-10 0 10],'YTick',[-10 0 10])
         
         % use limits from the full array - they'll be largest and therefore
         % consistent across everything
@@ -207,20 +216,20 @@ for ch = 1:96
         xlim([-15, 15]);
         if contains(rfData.eye,'LE')
             % text(5,14,'Channel receptive fields','color',[.4 .6 .7],'FontWeight','bold','FontSize',14,'FontAngle','italic')
-            text(2,7.5,'Channel receptive fields','color',[.4 .6 .7],'FontWeight','bold','FontSize',14,'FontAngle','italic')
+            text(2,10,'Channel receptive fields','color',[.4 .6 .7],'FontWeight','bold','FontSize',14,'FontAngle','italic')
         else
             %             text(5,14,'Channel receptive fields','color',[.8 .2  .5],'FontWeight','bold','FontSize',14,'FontAngle','italic')
-            text(2,7.5,'Channel receptive fields','color',[.8 .2  .5],'FontWeight','bold','FontSize',14,'FontAngle','italic')
+            text(2,10,'Channel receptive fields','color',[.8 .2  .5],'FontWeight','bold','FontSize',14,'FontAngle','italic')
         end
         %         text(5,12,'Glass pattern location','color',[0.6 0.6 0.05],'FontWeight','bold','FontSize',14,'FontAngle','italic')
         %         text(5,10,'Fixation point','color','r','FontWeight','bold','FontSize',14,'FontAngle','italic')
         %         text(5,8,'preferred Glass orientation','color','k','FontWeight','bold','FontSize',14,'FontAngle','italic')
-        text(2,7,'Glass Pattern location','color',[0.6 0.6 0.05],'FontWeight','bold','FontSize',14,'FontAngle','italic')
-        text(2,6.5,'Fixation point','color','r','FontWeight','bold','FontSize',14,'FontAngle','italic')
+        text(2,9,'Glass Pattern location','color',[0.6 0.6 0.05],'FontWeight','bold','FontSize',14,'FontAngle','italic')
+        text(2,8,'Fixation point','color','r','FontWeight','bold','FontSize',14,'FontAngle','italic')
         title(sprintf('%s %s %s screen geometry ch %d',rfData.animal, rfData.eye, rfData.array,ch),'FontSize',14,'FontAngle','italic')
         
         figName = [rfData.animal,'_',rfData.eye,'_',rfData.array,'_',rfData.programID,'_receptiveField_ch',num2str(ch)];
-        % print(gcf, figName,'-dpdf','-bestfit')
+        print(gcf, figName,'-dpdf','-bestfit')
     end
     
 end
@@ -239,18 +248,18 @@ for ch = 1:96
     hold on;
     
     if contains(rfData.eye,'LE')
-        draw_ellipse(rfParams{ch},[.4 .6 1])
+        draw_ellipse(rfParams{ch},[.2 .4 1])
     else
-        draw_ellipse(rfParams{ch},[.8 .2  .5])
+        draw_ellipse(rfParams{ch},[1 .1  .3])
     end
-    viscircles([0,0],4,...
-        'color',[0.6 0.6 0.0],'LineWidth',0.75);
+    viscircles([unique(glassData.pos_x),unique(glassData.pos_y)],4,...
+        'color',[0.6 0.6 0.0],'LineWidth',0.55);
     
     title(ch)
-    xlim([-8,8])
-    ylim([-8,8])
+    xlim([-15,15])
+    ylim([-15,15])
     set(gca,'YAxisLocation','origin','XAxisLocation','origin',...
-        'Layer','top','FontWeight','bold','FontSize',12,'FontAngle','italic','XTickLabel',[],'YTickLabel',[])
+        'Layer','top','FontAngle','italic','XTick',[-10 0 10],'YTick',[-10 0 10])
     axis square
 end
 suptitle(sprintf('%s %s %s receptive fields relative to Glass pattern location',rfData.animal, rfData.eye, rfData.array))

@@ -226,6 +226,7 @@ for fi = 1:size(files,1)
         plotGlass_GlassRankingsDistBlank(dataT) % figure 1 and 2
         plotGlassPSTHs_stimParams_allCh(dataT)
         plotGlass_callTriplotGray(dataT)
+        plotGlass_CoherenceResps(dataT)
         %plotGlass3D_dPrimesVblank_grayScale(dataT) %figure 8
     end
     %% commit to data structure

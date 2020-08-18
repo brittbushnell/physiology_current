@@ -1,4 +1,4 @@
-function [cleandataT] = GlassRemoveLowDx(dataT)
+function [cleandataT] = GlassRemoveLowDots(dataT)
 
 % this is a function to be used on data collected on WU where translational
 % glass patterns were intermixed with rotational and concnetric. It will
@@ -22,26 +22,23 @@ if contains(dataT.programID,'TR')
     cleanRotation = dataT.rotation;
 end
 
-%% find the trials where dx == 0.01
-dxTrials = find(dataT.dx == 0.01);
+%% find trials run with dots == 100;
+dotsTrials = find((dataT.numDots == 100));
+%% remove trials where number of dots == 100;
+cleanXpos(dotsTrials) = [];
+cleanYpos(dotsTrials) = [];
 
-%% remove trials 
-cleanXpos(dxTrials) = [];
-cleanYpos(dxTrials) = [];
-
-cleanType(dxTrials) = [];
-cleanNumDots(dxTrials) = [];
-cleanDx(dxTrials) = [];
-cleanCoh(dxTrials) = [];
-cleanSample(dxTrials) = [];
-cleanStimOrder(dxTrials) = [];
-cleanBins(dxTrials,:,:) = [];
-cleanFile(dxTrials,:) = [];
-
+cleanType(dotsTrials) = [];
+cleanNumDots(dotsTrials) = [];
+cleanDx(dotsTrials) = [];
+cleanCoh(dotsTrials) = [];
+cleanSample(dotsTrials) = [];
+cleanStimOrder(dotsTrials) = [];
+cleanBins(dotsTrials,:,:) = [];
+cleanFile(dotsTrials,:) = [];
 if contains(dataT.programID,'TR')
-    cleanRotation(dxTrials) = [];
+    cleanRotation(dotsTrials) = [];
 end
-
 %% re-establish clean Data structure
 cleandataT.bins = cleanBins;
 cleandataT.pos_x = cleanXpos;
@@ -63,6 +60,9 @@ cleandataT.date = dataT.date;
 cleandataT.date2 = dataT.date2;
 cleandataT.stimOrder = cleanStimOrder;
 cleandataT.runNum = dataT.runNum;
+cleandataT.fix_x = dataT.fix_x;
+cleandataT.fix_y = dataT.fix_y;
+
 if contains(dataT.programID,'TR')
     cleandataT.rotation = cleanRotation;
 end

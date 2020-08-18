@@ -16,12 +16,6 @@ files = {
    
    'XT_LE_mapNoiseRight_nsp1_20181120_all_thresh35_info';
    'XT_RE_mapNoiseRight_nsp1_20181026_all_thresh35_info';
-   
-   'WU_LE_Gratmap_nsp2_20170428_all_thresh35_info';
-   'WU_RE_Gratmap_nsp2_20170428_006_thresh35_info';
-   
-   'WU_LE_Gratmap_nsp1_20170428_all_thresh35_info';
-   'WU_RE_Gratmap_nsp1_20170428_006_thresh35_info';
     };
 nameEnd = 'resps';
 %%
