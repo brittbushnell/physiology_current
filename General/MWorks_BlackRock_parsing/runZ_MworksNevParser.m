@@ -20,15 +20,14 @@ tic;
 %stimType = 'png';
 %stimType = 'grat';
 %% figure out what you're running
-for mk = 1:3
-    
-    if mk == 1
-        animal = 'WU';
-    elseif mk == 2
-        animal = 'WV';
-    else
-        animal = 'XT';
-    end
+monk = {
+    'WV';
+%     'WU';
+%     'XT'
+    };
+
+for mk = 1:length(monk)
+    animal = monk{mk};
     
     for st = 1:2
         if st == 1
