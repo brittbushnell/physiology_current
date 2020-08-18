@@ -63,6 +63,9 @@ cleandataT.date = dataT.date;
 cleandataT.date2 = dataT.date2;
 cleandataT.stimOrder = cleanStimOrder;
 cleandataT.runNum = dataT.runNum;
+cleandataT.fix_x = dataT.fix_x;
+cleandataT.fix_y = dataT.fix_y;
+
 if contains(dataT.programID,'TR')
     cleandataT.rotation = cleanRotation;
 end

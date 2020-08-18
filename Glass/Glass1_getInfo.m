@@ -19,7 +19,7 @@ clc
 tic
 %%
 files = {
-    'WU_LE_Glass_nsp2_20170817_001_thresh35';
+    'XT_LE_Glass_nsp2_20190123_001_thresh35';
     };
 %%
 nameEnd = 'info';
@@ -30,7 +30,8 @@ aMap = getBlackrockArrayMap(files(1,:));
 location = determineComputer;
 failedFiles = {};
 failNdx = 1;
-for fi = 1:size(files,1)
+%%
+for fi = 1%:size(files,1)
     %% Get basic information about experiments
     %try
     filename = files{fi};
@@ -96,36 +97,28 @@ for fi = 1:size(files,1)
     end
     
     % add in anything that's missing from the new cleanData structure.
-    dataT.amap = aMap;
-    dataT.date2 = dataT.date2;
+%     dataT.amap = aMap;
+%     dataT.date2 = dataT.date2;
     %% get receptive field parameters
     %RF center is relative to fixation, not center of the monitor.
     dataT = callReceptiveFieldParameters(dataT);
     %% determine good channels
     dataT = GlassStimVsBlankPermutations_allStim(dataT,numPerm,holdout);
-    [dataT.stimBlankChPvals,dataT.goodCh] = glassGetPermutationStatsAndGoodCh(dataT.allStimBlankDprime,dataT.allStimBlankDprimeBootPerm);
+    [dataT.stimBlankChPvals,dataT.responsiveCh] = glassGetPermutationStatsAndGoodCh(dataT.allStimBlankDprime,dataT.allStimBlankDprimeBootPerm);
+    fprintf('responsive channels defined\n')
     %% find channels whose receptive fields are within the stimulus bounds
-    
-    fixX = double(unique(dataT.fix_x));
-    fixY = double(unique(dataT.fix_y));
-    xPos = double(unique(dataT.pos_x));
-    yPos = double(unique(dataT.pos_y));
-    
-    % adjust locations so they are relative to fixation, not to the center of the monitor (as they were in MWorks)
-    % graphically, this will make it so fixation is always at origin, and you can get
-    % a better sense of the actual eccentricies of the receptive fields.
-    if fixX ~= 0
-        xPosRelFix = xPos-fixX;
+    [dataT.rfQuadrant] = getRFsinStim(dataT);
+    dataT.goodCh = dataT.responsiveCh & ~isnan(dataT.rfQuadrant);
+    fprintf('%d good channels %d responsive channels',sum(dataT.responsiveCh), sum(dataT.goodCh))
+    %% get spike counts for responsive and good channels
+    if contains(filename,'TR')
+        [dataT.goodChTRSpikeCount,dataT.goodChNoiseSpikeCount,dataT.goodChBlankSpikeCount,dataT.goodChStimSpikeCount] = getGlassTRSpikeCounts(dataT,dataT.goodCh,holdout,numPerm);
+        [dataT.respChTRSpikeCount,dataT.respChNoiseSpikeCount,dataT.respChBlankSpikeCount,dataT.respChStimSpikeCount] = getGlassTRSpikeCounts(dataT,dataT.responsiveCh,holdout,numPerm);
     else
-        xPosRelFix = xPos;
+        [dataT.goodChConSpikeCount,dataT.goodChRadSpikeCount,dataT.goodChNoiseSpikeCount,dataT.goodChBlankSpikeCount,dataT.goodChStimSpikeCount] = getGlassCRSpikeCounts(dataT,dataT.goodCh,holdout,numPerm);
+        [dataT.respChConSpikeCount,dataT.respChRadSpikeCount,dataT.respChNoiseSpikeCount,dataT.respChBlankSpikeCount,dataT.respChStimSpikeCount] = getGlassCRSpikeCounts(dataT,dataT.responsiveCh,holdout,numPerm);
     end
-    
-    if fixY ~= 0
-        yPosRelFix = yPos-fixY;
-    else
-        yPosRelFix = yPos;
-    end
-    
+    fprintf('spike counts computed \n')
     %%
     if location == 1
         outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/Glass/Parsed/',dataT.array);

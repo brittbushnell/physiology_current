@@ -64,3 +64,5 @@ cleanData.date = data.date;
 cleanData.date2 = data.date2;
 cleanData.stimOrder = cleanStimOrder;
 cleanData.runNum = data.runNum;
+cleanData.fix_x = data.fix_x;
+cleanData.fix_y = data.fix_y;
