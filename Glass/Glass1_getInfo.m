@@ -13,25 +13,27 @@
 %
 % Brittany Bushnell Aug 17, 2020
 %%
-clear all
+clear
 close all
 clc
 tic
 %%
 files = {
-    'XT_LE_Glass_nsp2_20190123_001_thresh35';
+    'WU_LE_GlassTR_nsp2_20170825_002_thresh35';
     };
 %%
 nameEnd = 'info';
 numPerm = 2000;
+numBoot = 200;
 holdout = 0.9;
+plotFlag = 1;
 %%
 aMap = getBlackrockArrayMap(files(1,:));
 location = determineComputer;
 failedFiles = {};
 failNdx = 1;
 %%
-for fi = 1%:size(files,1)
+for fi = 1:size(files,1)
     %% Get basic information about experiments
     %try
     filename = files{fi};
@@ -83,7 +85,7 @@ for fi = 1%:size(files,1)
         ndx = ndx+1;
     end
     
-    [numTypes,numDots,numDxs,numCoh,numSamp,types,dots,dxs,coherences,samples] = getGlassParameters(dataT);
+    %[numTypes,numDots,numDxs,numCoh,numSamp,types,dots,dxs,coherences,samples] = getGlassParameters(dataT);
     
     dataT.stimOrder = getStimPresentationOrder(dataT);
     %%
@@ -97,8 +99,8 @@ for fi = 1%:size(files,1)
     end
     
     % add in anything that's missing from the new cleanData structure.
-%     dataT.amap = aMap;
-%     dataT.date2 = dataT.date2;
+    %     dataT.amap = aMap;
+    %     dataT.date2 = dataT.date2;
     %% get receptive field parameters
     %RF center is relative to fixation, not center of the monitor.
     dataT = callReceptiveFieldParameters(dataT);
@@ -109,16 +111,20 @@ for fi = 1%:size(files,1)
     %% find channels whose receptive fields are within the stimulus bounds
     [dataT.rfQuadrant] = getRFsinStim(dataT);
     dataT.goodCh = dataT.responsiveCh & ~isnan(dataT.rfQuadrant);
-    fprintf('%d good channels %d responsive channels',sum(dataT.responsiveCh), sum(dataT.goodCh))
+    fprintf('%d good channels \n%d responsive channels\n',sum(dataT.responsiveCh), sum(dataT.goodCh))
     %% get spike counts for responsive and good channels
     if contains(filename,'TR')
-        [dataT.goodChTRSpikeCount,dataT.goodChNoiseSpikeCount,dataT.goodChBlankSpikeCount,dataT.goodChStimSpikeCount] = getGlassTRSpikeCounts(dataT,dataT.goodCh,holdout,numPerm);
-        [dataT.respChTRSpikeCount,dataT.respChNoiseSpikeCount,dataT.respChBlankSpikeCount,dataT.respChStimSpikeCount] = getGlassTRSpikeCounts(dataT,dataT.responsiveCh,holdout,numPerm);
+        [dataT.goodChTRSpikeCount,dataT.goodChNoiseSpikeCount,dataT.goodChBlankSpikeCount,dataT.goodChStimSpikeCount] = getGlassTRSpikeCounts(dataT,dataT.goodCh,holdout,numBoot);
+        [dataT.respChTRSpikeCount,dataT.respChNoiseSpikeCount,dataT.respChBlankSpikeCount,dataT.respChStimSpikeCount] = getGlassTRSpikeCounts(dataT,dataT.responsiveCh,holdout,numBoot);
     else
-        [dataT.goodChConSpikeCount,dataT.goodChRadSpikeCount,dataT.goodChNoiseSpikeCount,dataT.goodChBlankSpikeCount,dataT.goodChStimSpikeCount] = getGlassCRSpikeCounts(dataT,dataT.goodCh,holdout,numPerm);
-        [dataT.respChConSpikeCount,dataT.respChRadSpikeCount,dataT.respChNoiseSpikeCount,dataT.respChBlankSpikeCount,dataT.respChStimSpikeCount] = getGlassCRSpikeCounts(dataT,dataT.responsiveCh,holdout,numPerm);
+        [dataT.goodChConSpikeCount,dataT.goodChRadSpikeCount,dataT.goodChNoiseSpikeCount,dataT.goodChBlankSpikeCount,dataT.goodChStimSpikeCount] = getGlassCRSpikeCounts(dataT,dataT.goodCh,holdout,numBoot);
+        [dataT.respChConSpikeCount,dataT.respChRadSpikeCount,dataT.respChNoiseSpikeCount,dataT.respChBlankSpikeCount,dataT.respChStimSpikeCount] = getGlassCRSpikeCounts(dataT,dataT.responsiveCh,holdout,numBoot);
     end
     fprintf('spike counts computed \n')
+    %% plot spike count distributions
+    if plotFlag == 1
+        
+    end
     %%
     if location == 1
         outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/Glass/Parsed/',dataT.array);
