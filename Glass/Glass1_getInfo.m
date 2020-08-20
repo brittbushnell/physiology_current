@@ -142,7 +142,7 @@ for fi = 1:size(files,1)
     end
     
     saveName = [outputDir filename '_' nameEnd '.mat'];
-    save(saveName,'data');
+   % save(saveName,'data');
     fprintf('%s saved\n', saveName)
     %     catch ME
     %         fprintf('%s did not work. \nError message: %s \n',filename,ME.message)

@@ -1,12 +1,12 @@
-function [trSpikeCount,noiseSpikeCount,blankSpikeCount,stimSpikeCount] = getGlassTRSpikeCounts(dataT, goodCh, holdout, numBoot)
+function [trSpikeCount,noiseSpikeCount,blankSpikeCount,stimSpikeCount] = getGlassTRSpikeCounts(dataT, goodCh)
 % set goodCh to either dataT.responsiveCh or dataT.goodCh
 
 [numOris,numDots,numDxs,numCoh,~,orientations,dots,dxs,coherences,~] = getGlassTRParameters(dataT);
 
-trSpikeCount = nan(numOris,numCoh,numDots,numDxs,96);
-stimSpikeCount = nan(numDots,numDxs,96);
-noiseSpikeCount = nan(numDots,numDxs,96);
-blankSpikeCount = nan(numDots,numDxs,96);
+% trSpikeCount = nan(numOris,numCoh,numDots,numDxs,96);
+% stimSpikeCount = nan(numDots,numDxs,96);
+% noiseSpikeCount = nan(numDots,numDxs,96);
+% blankSpikeCount = nan(numDots,numDxs,96);
 %%
 for ch = 1:96
     if goodCh(ch) == 1
@@ -30,45 +30,12 @@ for ch = 1:96
                         noiseTrials = (noiseNdx & dotNdx & dxNdx);
                         stimTrials = (dotNdx & dxNdx);
                         
-                        numTrials = length(linTrials);
+                        trSpikeCount(or,co,ndot,dx,ch,:) = sum(dataT.bins(linTrials, (startMean:endMean) ,ch),2);
                         
-                        noiseBoot = nan(1,numBoot);
-                        linStimBoot   = nan(1,numBoot);
-                        blankBoot = nan(1,numBoot);
-                        stimBoot  = nan(1,numBoot);
-
-                        if holdout == 0
-                            linNdx1 = subsampleStimuli(linTrials, numTrials);
-                            trSpikeCount(or,co,ndot,dx,ch) = nansum(dataT.bins(linNdx1, (startMean:endMean) ,ch),2);
-                            
-                            if co == 1 && or == 1
-                                noiseNdx1  = subsampleStimuli((noiseTrials),numTrials);
-                                noiseSpikeCount(ndot,dx,ch) = nansum(dataT.bins(noiseNdx1, startMean:endMean, ch),2);
-                                
-                                blankNdx1 = subsampleBlanks((blankNdx),numTrials);
-                                blankSpikeCount(ndot,dx,ch) = nansum(dataT.bins(blankNdx1, startMean:endMean, ch),2);
-                                
-                                stim1 = subsampleStimuli(stimTrials,numTrials);
-                                stimSpikeCount(ndot,dx,ch) = nansum(dataT.bins(stim1,(startMean:endMean) ,ch),2);
-                            end
-                            
-                        else  % use all of the trials for each stimulus type without subsampling.
-                            for nb = 1:numBoot
-                                linStimBoot(1,nb) = sum(nansum(dataT.bins(linTrials, (startMean:endMean) ,ch),2));
-                                
-                                if co == 1 && or == 1
-                                    noiseBoot(1,nb) = sum(nansum(dataT.bins(noiseTrials, startMean:endMean, ch),2));
-                                    blankBoot(1,nb) = sum(nansum(dataT.bins(blankNdx, startMean:endMean, ch),2));
-                                    stimBoot(1,nb)  = sum(nansum(dataT.bins(stimTrials, (startMean:endMean) ,ch),2));
-                                end
-                            end
-                            
-                            trSpikeCount(or,co,ndot,dx,ch) = mean(linStimBoot);
-                            if co == 1 && or == 1 % don't need to run this on every iteration, just on the ones where these values are actually being computed
-                                blankSpikeCount(ndot,dx,ch) = mean(blankBoot);
-                                noiseSpikeCount(ndot,dx,ch) = mean(noiseBoot);
-                                stimSpikeCount(ndot,dx,ch)  = mean(stimBoot);
-                            end
+                        if co == 1 && or == 1
+                            noiseSpikeCount(ndot,dx,ch,:) = sum(dataT.bins(noiseTrials, startMean:endMean, ch),2);  
+                            blankSpikeCount(ndot,dx,ch,:) = sum(dataT.bins(blankNdx, startMean:endMean, ch),2);
+                            stimSpikeCount(ndot,dx,ch,:) = sum(dataT.bins(stimTrials,(startMean:endMean) ,ch),2);
                         end
                     end
                 end
