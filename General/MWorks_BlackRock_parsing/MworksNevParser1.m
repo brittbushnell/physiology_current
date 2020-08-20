@@ -71,6 +71,7 @@ fileName = char(fileName);
 
 if length(tmp) == 7 %working from rethresholded and cleaned data
     [animal,eye,programID,array,date,~,threshold] = deal(tmp{:});
+    date = str2double(date);
     % /vnlstorage3/bushnell_arrays/nsp2/reThreshold
     if contains(programID,'grat','IgnoreCase',true)
         blackrockDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/gratings/%s/%s/',array,animal,eye);
