@@ -52,14 +52,7 @@ cleandataT.numDots = cleanNumDots;
 cleandataT.dx = cleanDx;
 cleandataT.coh = cleanCoh;
 cleandataT.sample = cleanSample;
-cleandataT.animal = dataT.animal;
-cleandataT.eye = dataT.eye;
-cleandataT.programID = dataT.programID;
-cleandataT.array = dataT.array;
-cleandataT.date = dataT.date;
-cleandataT.date2 = dataT.date2;
 cleandataT.stimOrder = cleanStimOrder;
-cleandataT.runNum = dataT.runNum;
 cleandataT.fix_x = dataT.fix_x;
 cleandataT.fix_y = dataT.fix_y;
 

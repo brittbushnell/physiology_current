@@ -20,6 +20,7 @@ tic
 %%
 files = {
     'WU_LE_GlassTR_nsp2_20170825_002_thresh35';
+    'WU_LE_GlassTR_nsp2_20170825_002';
     };
 %%
 nameEnd = 'info';
@@ -45,24 +46,24 @@ for fi = 1:size(files,1)
     
     % extract information about what was run from file name.
     if length(tmp) == 6
-        [dataT.animal, dataT.eye, dataT.programID, dataT.array, dataT.date2,dataT.runNum] = deal(tmp{:});
+        [animal, eye, dataT.programID, array, date2,runNum] = deal(tmp{:});
         % get date in a format that's useable in figure titles (ex: 09/1/2019 vs 20190901)
-        dataT.date = convertDate(dataT.date2);
+        date = convertDate(date2);
     elseif length(tmp) == 7
-        [dataT.animal, dataT.eye, dataT.programID, dataT.array, dataT.date2,dataT.runNum,ign] = deal(tmp{:});
-        dataT.date = convertDate(dataT.date2);
+        [animal, eye, dataT.programID, array, date2,runNum,reThreshold] = deal(tmp{:});
+        date = convertDate(date2);
     else
-        [dataT.animal, dataT.eye, dataT.programID, dataT.array, dataT.date2] = deal(tmp{:});
-        dataT.date = dataT.date2;
+        [animal, eye, dataT.programID, array, date2] = deal(tmp{:});
+        date = date2;
     end
     
-    if strcmp(dataT.array, 'nsp1')
-        dataT.array = 'V1';
-    elseif strcmp(dataT.array, 'nsp2')
-        dataT.array = 'V4';
+    if strcmp(array, 'nsp1')
+        array = 'V1';
+    elseif strcmp(array, 'nsp2')
+        array = 'V4';
     end
     
-    if contains(dataT.animal,'XX')
+    if contains(animal,'XX')
         dataT.filename = reshape(dataT.filename,[numel(dataT.filename),1]);
         dataT.filename = char(dataT.filename);
     end
@@ -99,8 +100,25 @@ for fi = 1:size(files,1)
     end
     
     % add in anything that's missing from the new cleanData structure.
-    %     dataT.amap = aMap;
-    %     dataT.date2 = dataT.date2;
+    if length(tmp) == 6
+        [dataT.animal, dataT.eye, dataT.programID, dataT.array, dataT.date2,dataT.runNum] = deal(tmp{:});
+        % get date in a format that's useable in figure titles (ex: 09/1/2019 vs 20190901)
+        dataT.date = convertDate(dataT.date2);
+        dataT.reThreshold = '';
+    elseif length(tmp) == 7
+        [dataT.animal, dataT.eye, dataT.programID, dataT.array, dataT.date2,dataT.runNum,dataT.reThreshold] = deal(tmp{:});
+        dataT.date = convertDate(dataT.date2);
+    else
+        [dataT.animal, dataT.eye, dataT.programID, dataT.array, dataT.date2] = deal(tmp{:});
+        dataT.date = dataT.date2;
+        dataT.reThreshold = '';
+    end
+    
+    if strcmp(dataT.array, 'nsp1')
+        dataT.array = 'V1';
+    elseif strcmp(dataT.array, 'nsp2')
+        dataT.array = 'V4';
+    end
     %% get receptive field parameters
     %RF center is relative to fixation, not center of the monitor.
     dataT = callReceptiveFieldParameters(dataT);
@@ -114,24 +132,29 @@ for fi = 1:size(files,1)
     fprintf('%d good channels \n%d responsive channels\n',sum(dataT.responsiveCh), sum(dataT.goodCh))
     %% get spike counts for responsive and good channels
     if contains(filename,'TR')
-        [dataT.goodChTRSpikeCount,dataT.goodChNoiseSpikeCount,dataT.goodChBlankSpikeCount,dataT.goodChStimSpikeCount] = getGlassTRSpikeCounts(dataT,dataT.goodCh,holdout,numBoot);
-        [dataT.respChTRSpikeCount,dataT.respChNoiseSpikeCount,dataT.respChBlankSpikeCount,dataT.respChStimSpikeCount] = getGlassTRSpikeCounts(dataT,dataT.responsiveCh,holdout,numBoot);
+        [dataT.goodChTRSpikeCount,dataT.goodChNoiseSpikeCount,dataT.goodChBlankSpikeCount,dataT.goodChStimSpikeCount] = getGlassTRSpikeCounts(dataT,dataT.goodCh);
+        [dataT.respChTRSpikeCount,dataT.respChNoiseSpikeCount,dataT.respChBlankSpikeCount,dataT.respChStimSpikeCount] = getGlassTRSpikeCounts(dataT,dataT.responsiveCh);
     else
-        [dataT.goodChConSpikeCount,dataT.goodChRadSpikeCount,dataT.goodChNoiseSpikeCount,dataT.goodChBlankSpikeCount,dataT.goodChStimSpikeCount] = getGlassCRSpikeCounts(dataT,dataT.goodCh,holdout,numBoot);
-        [dataT.respChConSpikeCount,dataT.respChRadSpikeCount,dataT.respChNoiseSpikeCount,dataT.respChBlankSpikeCount,dataT.respChStimSpikeCount] = getGlassCRSpikeCounts(dataT,dataT.responsiveCh,holdout,numBoot);
+        [dataT.goodChConSpikeCount,dataT.goodChRadSpikeCount,dataT.goodChNoiseSpikeCount,dataT.goodChBlankSpikeCount,dataT.goodChStimSpikeCount] = getGlassCRSpikeCounts(dataT,dataT.goodCh);
+        [dataT.respChConSpikeCount,dataT.respChRadSpikeCount,dataT.respChNoiseSpikeCount,dataT.respChBlankSpikeCount,dataT.respChStimSpikeCount] = getGlassCRSpikeCounts(dataT,dataT.responsiveCh);
     end
     fprintf('spike counts computed \n')
     %% plot spike count distributions
     if plotFlag == 1
-        
+        if contains(programID,'TR')
+            plotGlassTR_spikeCounts(dataT)
+        else
+            
+        end
     end
-    %%
+   %% z-score 
+    %% save data
+    
     if location == 1
         outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/Glass/Parsed/',dataT.array);
     elseif location == 0
         outputDir =  sprintf('~/Dropbox/ArrayData/matFiles/%s/Glass/Parsed/',dataT.array);
     end
-    %% make structures for each eye and save .mat file
     
     if contains(filename,'LE')
         data.LE = dataT;
