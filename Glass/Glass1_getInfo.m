@@ -20,14 +20,14 @@ tic
 %%
 files = {
     'WU_LE_GlassTR_nsp2_20170825_002_thresh35';
-    'WU_LE_GlassTR_nsp2_20170825_002';
+    %'WU_LE_GlassTR_nsp2_20170825_002';
     };
 %%
 nameEnd = 'info';
 numPerm = 2000;
 numBoot = 200;
 holdout = 0.9;
-plotFlag = 1;
+plotFlag = 0;
 %%
 aMap = getBlackrockArrayMap(files(1,:));
 location = determineComputer;
@@ -41,7 +41,6 @@ for fi = 1:size(files,1)
     dataT = load(filename);
     
     nChan = 96;
-    dataT.amap = aMap;
     tmp = strsplit(filename,'_');
     
     % extract information about what was run from file name.
@@ -119,26 +118,33 @@ for fi = 1:size(files,1)
     elseif strcmp(dataT.array, 'nsp2')
         dataT.array = 'V4';
     end
+    
+    dataT.amap = aMap;
     %% get receptive field parameters
-    %RF center is relative to fixation, not center of the monitor.
+    % RF center is relative to fixation, not center of the monitor.
     dataT = callReceptiveFieldParameters(dataT);
-    %% determine good channels
+    %% determine reponsive channels
     dataT = GlassStimVsBlankPermutations_allStim(dataT,numPerm,holdout);
     [dataT.stimBlankChPvals,dataT.responsiveCh] = glassGetPermutationStatsAndGoodCh(dataT.allStimBlankDprime,dataT.allStimBlankDprimeBootPerm);
     fprintf('responsive channels defined\n')
     %% find channels whose receptive fields are within the stimulus bounds
     [dataT.rfQuadrant] = getRFsinStim(dataT);
-    dataT.goodCh = dataT.responsiveCh & ~isnan(dataT.rfQuadrant);
+    dataT.inStim = ~isnan(dataT.rfQuadrant); % want all channels whos RF center is within the stimulus bounds to be 1.
+    dataT.goodCh = dataT.responsiveCh & dataT.inStim;
     fprintf('%d good channels \n%d responsive channels\n',sum(dataT.responsiveCh), sum(dataT.goodCh))
     %% get spike counts for responsive and good channels
     if contains(filename,'TR')
-        [dataT.goodChTRSpikeCount,dataT.goodChNoiseSpikeCount,dataT.goodChBlankSpikeCount,dataT.goodChStimSpikeCount] = getGlassTRSpikeCounts(dataT,dataT.goodCh);
-        [dataT.respChTRSpikeCount,dataT.respChNoiseSpikeCount,dataT.respChBlankSpikeCount,dataT.respChStimSpikeCount] = getGlassTRSpikeCounts(dataT,dataT.responsiveCh);
+        [dataT.goodChTRSpikeCount,dataT.goodChNoiseTRSpikeCount,dataT.goodChBlankTRSpikeCount,dataT.goodChTRStimSpikeCount] = getGlassTRSpikeCounts(dataT,dataT.goodCh);
+        [dataT.respChTRSpikeCount,dataT.respChNoiseTRSpikeCount,dataT.respChBlankTRSpikeCount,dataT.respChTRStimSpikeCount] = getGlassTRSpikeCounts(dataT,dataT.responsiveCh);
+        [dataT.RFinStimGlassTRSpikeCount,dataT.RFinStimChNoiseTRSpikeCount,dataT.RFinStimChBlankSTRpikeCount,dataT.RFinStimAllStimTRSpikeCount] = getGlassTRSpikeCounts(dataT,dataT.inStim);
     else
-        [dataT.goodChConSpikeCount,dataT.goodChRadSpikeCount,dataT.goodChNoiseSpikeCount,dataT.goodChBlankSpikeCount,dataT.goodChStimSpikeCount] = getGlassCRSpikeCounts(dataT,dataT.goodCh);
-        [dataT.respChConSpikeCount,dataT.respChRadSpikeCount,dataT.respChNoiseSpikeCount,dataT.respChBlankSpikeCount,dataT.respChStimSpikeCount] = getGlassCRSpikeCounts(dataT,dataT.responsiveCh);
+        [dataT.goodChSpikeCount,dataT.goodChNoiseSpikeCount,dataT.goodChBlankSpikeCount,dataT.goodChStimSpikeCount] = getGlassSpikeCounts(dataT,dataT.goodCh);
+        [dataT.respChSpikeCount,dataT.respChNoiseSpikeCount,dataT.respChBlankSpikeCount,dataT.respChStimSpikeCount] = getGlassSpikeCounts(dataT,dataT.responsiveCh);
+        [dataT.RFinStimGlassSpikeCount,dataT.RFinStimChNoiseSpikeCount,dataT.RFinStimChBlankSpikeCount,dataT.RFinStimAllStimSpikeCount] = getGlassSpikeCounts(dataT,dataT.inStim);
     end
     fprintf('spike counts computed \n')
+    %% get Zscore
+    dataT.RFinStimGlassZscore = getGlassStimZscore(dataT);
     %% plot spike count distributions
     if plotFlag == 1
         if contains(programID,'TR')

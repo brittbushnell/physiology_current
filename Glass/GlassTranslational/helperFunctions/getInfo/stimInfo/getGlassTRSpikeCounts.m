@@ -2,11 +2,6 @@ function [trSpikeCount,noiseSpikeCount,blankSpikeCount,stimSpikeCount] = getGlas
 % set goodCh to either dataT.responsiveCh or dataT.goodCh
 
 [numOris,numDots,numDxs,numCoh,~,orientations,dots,dxs,coherences,~] = getGlassTRParameters(dataT);
-
-% trSpikeCount = nan(numOris,numCoh,numDots,numDxs,96);
-% stimSpikeCount = nan(numDots,numDxs,96);
-% noiseSpikeCount = nan(numDots,numDxs,96);
-% blankSpikeCount = nan(numDots,numDxs,96);
 %%
 for ch = 1:96
     if goodCh(ch) == 1
@@ -16,6 +11,10 @@ for ch = 1:96
         noiseNdx = (dataT.type == 0);
         linearNdx = (dataT.type == 3);
         blankNdx = (dataT.numDots == 0);
+        stimTrials = (dataT.numDots >0);
+        
+        blankSpikeCount(ch,:) = sum(dataT.bins(blankNdx, startMean:endMean, ch),2);
+        stimSpikeCount(ch,:) = sum(dataT.bins(stimTrials,(startMean:endMean) ,ch),2);
         
         for ndot = 1:numDots
             for dx = 1:numDxs
@@ -28,14 +27,12 @@ for ch = 1:96
                         
                         linTrials = (linearNdx & dotNdx & dxNdx & oriNdx & cohNdx);
                         noiseTrials = (noiseNdx & dotNdx & dxNdx);
-                        stimTrials = (dotNdx & dxNdx);
+                        
                         
                         trSpikeCount(or,co,ndot,dx,ch,:) = sum(dataT.bins(linTrials, (startMean:endMean) ,ch),2);
                         
                         if co == 1 && or == 1
                             noiseSpikeCount(ndot,dx,ch,:) = sum(dataT.bins(noiseTrials, startMean:endMean, ch),2);  
-                            blankSpikeCount(ndot,dx,ch,:) = sum(dataT.bins(blankNdx, startMean:endMean, ch),2);
-                            stimSpikeCount(ndot,dx,ch,:) = sum(dataT.bins(stimTrials,(startMean:endMean) ,ch),2);
                         end
                     end
                 end
