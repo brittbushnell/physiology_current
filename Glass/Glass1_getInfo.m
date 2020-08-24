@@ -20,9 +20,9 @@ tic
 %%
 files = {
     'WU_LE_GlassTR_nsp2_20170825_002_thresh35';
-    'XT_RE_GlassTRCoh_nsp2_20190325_001_thresh35';
+    'XT_LE_GlassTRCoh_nsp2_20190325_001_thresh35';
     'WU_LE_GlassTR_nsp2_20170825_002';
-    'XT_RE_GlassTRCoh_nsp2_20190325_001';
+    'XT_LE_GlassTRCoh_nsp2_20190325_001';
     };
 %%
 nameEnd = 'info';

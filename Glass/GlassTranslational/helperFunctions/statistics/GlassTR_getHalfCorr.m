@@ -142,10 +142,17 @@ for ch = 1:96
             
         end
     end
-    suptitle({sprintf('%s %s %s split half correlations across orientations at 100%% coherence',dataT.animal,dataT.eye, dataT.array);...
-        sprintf('ch %d',ch)})
-    
-    figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_splitCorrByStim_ch',num2str(ch),'.pdf'];
+    if isempty(dataT.reThreshold)
+        suptitle({sprintf('%s %s %s split half correlations across orientations at 100%% coherence',dataT.animal,dataT.eye, dataT.array);...
+            sprintf('ch %d  raw data',ch)})
+        
+        figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_splitCorrByStim_raw_ch',num2str(ch),'.pdf'];
+    else
+        suptitle({sprintf('%s %s %s split half correlations across orientations at 100%% coherence',dataT.animal,dataT.eye, dataT.array);...
+            sprintf('ch %d  cleaned data',ch)})
+        
+        figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_splitCorrByStim_clean_ch',num2str(ch),'.pdf'];
+    end
     print(gcf, figName,'-dpdf','-fillpage')
 end
 %%
@@ -177,10 +184,17 @@ for dt = 1:numDots
         xlabel('ch')
     end
 end
-    suptitle({sprintf('%s %s %s split half correlations across orientations for each stimulus at 100%% coherence',dataT.animal,dataT.eye, dataT.array);...
+if isempty(dataT.reThreshold)
+suptitle({sprintf('%s %s %s split half correlations across orientations for each stimulus at 100%% coherence raw data',dataT.animal,dataT.eye, dataT.array);...
         sprintf('R: 0%c  G: 45%c  B: 90%c  P: 135%c',char(176),char(176),char(176),char(176))});
     
-    figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_splitCorrByStim_ch',num2str(ch),'.pdf'];
+    figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_splitCorrByStim_raw_ch',num2str(ch),'.pdf'];
+else
+        suptitle({sprintf('%s %s %s split half correlations across orientations for each stimulus at 100%% coherence clean data',dataT.animal,dataT.eye, dataT.array);...
+        sprintf('R: 0%c  G: 45%c  B: 90%c  P: 135%c',char(176),char(176),char(176),char(176))});
+    
+    figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_splitCorrByStim_clean_ch',num2str(ch),'.pdf'];
+end
     print(gcf, figName,'-dpdf','-fillpage')
 %%
 % figure%(3)
@@ -229,11 +243,15 @@ set(gca,'tickdir','out','Layer','top','YTick',0:0.25:1,'XTick',0:0.2:1)
 
 xlabel('Permutation p-value','FontAngle','italic','FontSize',12)
 ylabel('Half-Split Correlation Reliability Index','FontAngle','italic','FontSize',12)
-title(sprintf('%s %s %s median Half-split correlation for each channel vs Permutation test p-value',dataT.animal, dataT.eye, dataT.array),'FontAngle','italic','FontSize',14)
+
 
 if isempty(dataT.reThreshold)
     figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_ReliabilityXpermTest_raw.pdf'];
+    title({sprintf('%s %s %s median Half-split correlation for each channel vs Permutation test p-value',dataT.animal, dataT.eye, dataT.array);...
+        'raw data'},'FontAngle','italic','FontSize',14)
 else
+        title({sprintf('%s %s %s median Half-split correlation for each channel vs Permutation test p-value',dataT.animal, dataT.eye, dataT.array);...
+        'cleaned data'},'FontAngle','italic','FontSize',14)
     figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_ReliabilityXpermTest_cleaned.pdf'];
 end
 print(gcf, figName,'-dpdf','-fillpage')
