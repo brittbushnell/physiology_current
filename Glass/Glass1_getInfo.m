@@ -20,14 +20,17 @@ tic
 %%
 files = {
     'WU_LE_GlassTR_nsp2_20170825_002_thresh35';
-    %'WU_LE_GlassTR_nsp2_20170825_002';
+    'XT_RE_GlassTRCoh_nsp2_20190325_001_thresh35';
+    'WU_LE_GlassTR_nsp2_20170825_002';
+    'XT_RE_GlassTRCoh_nsp2_20190325_001';
     };
 %%
 nameEnd = 'info';
 numPerm = 2000;
 numBoot = 200;
 holdout = 0.9;
-plotFlag = 0;
+
+plotFlag = 1;
 %%
 aMap = getBlackrockArrayMap(files(1,:));
 location = determineComputer;
@@ -143,17 +146,17 @@ for fi = 1:size(files,1)
         [dataT.RFinStimGlassSpikeCount,dataT.RFinStimChNoiseSpikeCount,dataT.RFinStimChBlankSpikeCount,dataT.RFinStimAllStimSpikeCount] = getGlassSpikeCounts(dataT,dataT.inStim);
     end
     fprintf('spike counts computed \n')
-    %% get Zscore
+    %% get Zscore and split half correlations
     dataT.RFinStimGlassZscore = getGlassStimZscore(dataT);
-    %% plot spike count distributions
+    [reliabilityMetricByCond,chSplitHalfCorrDist,chReliabilityIndex] = GlassTR_getHalfCorr(dataT);
+    %% optional plots 
     if plotFlag == 1
-        if contains(programID,'TR')
+        if contains(dataT.programID,'TR')
             plotGlassTR_spikeCounts(dataT)
         else
             
         end
     end
-   %% z-score 
     %% save data
     
     if location == 1
@@ -171,7 +174,7 @@ for fi = 1:size(files,1)
     end
     
     saveName = [outputDir filename '_' nameEnd '.mat'];
-   % save(saveName,'data');
+    save(saveName,'data');
     fprintf('%s saved\n', saveName)
     %     catch ME
     %         fprintf('%s did not work. \nError message: %s \n',filename,ME.message)

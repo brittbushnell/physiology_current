@@ -1,4 +1,7 @@
 function [GlassZscore] = getGlassStimZscore(dataT)
+% This code will work for either Concentric/radial patterns or
+% translational.
+
 % (or,co,ndot,dx,ch,:)
 if contains(dataT.programID,'TR')
     [numOris,numDots,numDxs,numCoh] = getGlassTRParameters(dataT);
