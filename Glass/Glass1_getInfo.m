@@ -19,10 +19,10 @@ clc
 tic
 %%
 files = {
-    'WU_LE_GlassTR_nsp2_20170825_002_thresh35';
-    'XT_LE_GlassTRCoh_nsp2_20190325_001_thresh35';
+    %'WU_LE_GlassTR_nsp2_20170825_002_thresh35';
+    'XT_RE_GlassTRCoh_nsp2_20190324_001_thresh35';
     'WU_LE_GlassTR_nsp2_20170825_002';
-    'XT_LE_GlassTRCoh_nsp2_20190325_001';
+    'XT_RE_GlassTRCoh_nsp2_20190324_001';
     };
 %%
 nameEnd = 'info';
@@ -137,13 +137,14 @@ for fi = 1:size(files,1)
     fprintf('%d good channels \n%d responsive channels\n',sum(dataT.responsiveCh), sum(dataT.goodCh))
     %% get spike counts for responsive and good channels
     if contains(filename,'TR')
-        [dataT.goodChTRSpikeCount,dataT.goodChNoiseTRSpikeCount,dataT.goodChBlankTRSpikeCount,dataT.goodChTRStimSpikeCount] = getGlassTRSpikeCounts(dataT,dataT.goodCh);
-        [dataT.respChTRSpikeCount,dataT.respChNoiseTRSpikeCount,dataT.respChBlankTRSpikeCount,dataT.respChTRStimSpikeCount] = getGlassTRSpikeCounts(dataT,dataT.responsiveCh);
-        [dataT.RFinStimGlassTRSpikeCount,dataT.RFinStimChNoiseTRSpikeCount,dataT.RFinStimChBlankSTRpikeCount,dataT.RFinStimAllStimTRSpikeCount] = getGlassTRSpikeCounts(dataT,dataT.inStim);
+%         [dataT.goodChTRSpikeCount,dataT.goodChNoiseTRSpikeCount,dataT.goodChBlankTRSpikeCount,dataT.goodChTRStimSpikeCount] = getGlassTRSpikeCounts(dataT,dataT.goodCh);
+%         [dataT.respChTRSpikeCount,dataT.respChNoiseTRSpikeCount,dataT.respChBlankTRSpikeCount,dataT.respChTRStimSpikeCount] = getGlassTRSpikeCounts(dataT,dataT.responsiveCh);
+        [dataT.GlassTRSpikeCount,dataT.NoiseTRSpikeCount,dataT.BlankTRSpikeCount,dataT.AllStimTRSpikeCount] = getGlassTRSpikeCounts(dataT);
     else
-        [dataT.goodChSpikeCount,dataT.goodChNoiseSpikeCount,dataT.goodChBlankSpikeCount,dataT.goodChStimSpikeCount] = getGlassSpikeCounts(dataT,dataT.goodCh);
-        [dataT.respChSpikeCount,dataT.respChNoiseSpikeCount,dataT.respChBlankSpikeCount,dataT.respChStimSpikeCount] = getGlassSpikeCounts(dataT,dataT.responsiveCh);
-        [dataT.RFinStimGlassSpikeCount,dataT.RFinStimChNoiseSpikeCount,dataT.RFinStimChBlankSpikeCount,dataT.RFinStimAllStimSpikeCount] = getGlassSpikeCounts(dataT,dataT.inStim);
+%         [dataT.goodChSpikeCount,dataT.goodChNoiseSpikeCount,dataT.goodChBlankSpikeCount,dataT.goodChStimSpikeCount] = getGlassSpikeCounts(dataT,dataT.goodCh);
+%         [dataT.respChSpikeCount,dataT.respChNoiseSpikeCount,dataT.respChBlankSpikeCount,dataT.respChStimSpikeCount] = getGlassSpikeCounts(dataT,dataT.responsiveCh);
+%        [dataT.RFinStimGlassSpikeCount,dataT.RFinStimChNoiseSpikeCount,dataT.RFinStimChBlankSpikeCount,dataT.RFinStimAllStimSpikeCount] = getGlassSpikeCounts(dataT,dataT.inStim);
+         [dataT.GlassSpikeCount,dataT.NoiseSpikeCount,dataT.BlankSpikeCount,dataT.AllStimTRSpikeCount] = getGlassTRSpikeCounts(dataT);
     end
     fprintf('spike counts computed \n')
     %% get Zscore and split half correlations

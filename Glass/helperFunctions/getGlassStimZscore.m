@@ -11,7 +11,7 @@ if contains(dataT.programID,'TR')
             for dx = 1:numDxs
                 for co = 1:numCoh
                     for or = 1:numOris
-                        spikes = squeeze(dataT.RFinStimGlassTRSpikeCount(or,co,dt,dx,ch,:));
+                        spikes = squeeze(dataT.GlassTRSpikeCount(or,co,dt,dx,ch,:));
                         GlassZscore(or,co,dt,dx,ch,:) = zscore(spikes);
                     end
                 end
@@ -25,7 +25,7 @@ else
         for dt = 1:numDots
             for dx = 1:numDxs
                 for co = 1:numCoh
-                    spikes = squeeze(dataT.RFinStimGlassSpikeCount(co,dt,dx,ch,:));
+                    spikes = squeeze(dataT.GlassSpikeCount(co,dt,dx,ch,:));
                     GlassZscore(co,dt,dx,ch,:) = zscore(spikes);
                 end
             end
