@@ -19,7 +19,7 @@ clc
 tic
 %%
 files = {
-    %'WU_LE_GlassTR_nsp2_20170825_002_thresh35';
+    'WU_LE_GlassTR_nsp2_20170825_002_thresh35';
     'XT_RE_GlassTRCoh_nsp2_20190324_001_thresh35';
     'WU_LE_GlassTR_nsp2_20170825_002';
     'XT_RE_GlassTRCoh_nsp2_20190324_001';
@@ -30,7 +30,7 @@ numPerm = 2000;
 numBoot = 200;
 holdout = 0.9;
 
-plotFlag = 1;
+plotFlag = 0;
 %%
 aMap = getBlackrockArrayMap(files(1,:));
 location = determineComputer;
@@ -144,12 +144,18 @@ for fi = 1:size(files,1)
 %         [dataT.goodChSpikeCount,dataT.goodChNoiseSpikeCount,dataT.goodChBlankSpikeCount,dataT.goodChStimSpikeCount] = getGlassSpikeCounts(dataT,dataT.goodCh);
 %         [dataT.respChSpikeCount,dataT.respChNoiseSpikeCount,dataT.respChBlankSpikeCount,dataT.respChStimSpikeCount] = getGlassSpikeCounts(dataT,dataT.responsiveCh);
 %        [dataT.RFinStimGlassSpikeCount,dataT.RFinStimChNoiseSpikeCount,dataT.RFinStimChBlankSpikeCount,dataT.RFinStimAllStimSpikeCount] = getGlassSpikeCounts(dataT,dataT.inStim);
-         [dataT.GlassSpikeCount,dataT.NoiseSpikeCount,dataT.BlankSpikeCount,dataT.AllStimTRSpikeCount] = getGlassTRSpikeCounts(dataT);
+         [dataT.GlassSpikeCount,dataT.NoiseSpikeCount,dataT.BlankSpikeCount,dataT.AllStimSpikeCount] = getGlassSpikeCounts(dataT);
     end
     fprintf('spike counts computed \n')
     %% get Zscore and split half correlations
-    dataT.RFinStimGlassZscore = getGlassStimZscore(dataT);
-    [reliabilityMetricByCond,chSplitHalfCorrDist,chReliabilityIndex] = GlassTR_getHalfCorr(dataT);
+    if contains(dataT.programID,'TR')
+        [dataT.GlassTRZscore,dataT.GlassAllStimTRZscore] = getGlassStimZscore(dataT);
+    else
+        [dataT.GlassZscore,dataT.GlassAllStimZscore] = getGlassStimZscore(dataT);
+    end
+    fprintf('zscores computed \n')
+    %%
+    [dataT.reliabilityIndex,dataT.splitHalfCorrBoots] = GlassTR_getHalfCorr_ch(dataT);
     %% optional plots 
     if plotFlag == 1
         if contains(dataT.programID,'TR')

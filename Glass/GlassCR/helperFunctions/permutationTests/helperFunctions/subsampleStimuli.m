@@ -10,12 +10,10 @@ function [stimNdx2,unusedNdxs] = subsampleStimuli(stimNdx, numTrials)
 
 
 
-stim = find(stimNdx);  % get the actual index numbers of the blank trials
+stim = find(stimNdx);  % get the actual index numbers of the trials
 if length(stim)>= numTrials
     randStim = randsample(stim, numTrials);
-    
-    %randBlank = randsample((length(blankStim1)), length(conStim));
-    
+        
     stimNdx2 = zeros(size(stimNdx,1), size(stimNdx,2));
     
     for i = 1:length(randStim)

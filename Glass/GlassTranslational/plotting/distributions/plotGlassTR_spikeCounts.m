@@ -33,7 +33,7 @@ for ch = 1:96
         ndx = 1;
         
         % histogram limits
-        tp = (dataT.goodChTRSpikeCount(:,coh,:,:,ch,:));
+        tp = (dataT.GlassTRSpikeCount(:,coh,:,:,ch,:));
         tp(isnan(tp)) = [];
         tp = squeeze(tp);
         maxSpikesCh = max(tp(:))+1;
@@ -42,7 +42,7 @@ for ch = 1:96
             for dx = 1:numDxs
                 for or = 1:numOris
                     
-                    spikes = squeeze(dataT.goodChTRSpikeCount(or,coh,dt,dx,ch,:));
+                    spikes = squeeze(dataT.GlassTRSpikeCount(or,coh,dt,dx,ch,:));
                     
                     subplot(4,4,ndx)
                     hold on
