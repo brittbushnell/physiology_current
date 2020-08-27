@@ -155,7 +155,7 @@ for fi = 1:size(files,1)
     end
     fprintf('zscores computed \n')
     %%
-    [dataT.reliabilityIndex,dataT.splitHalfCorrBoots] = GlassTR_getHalfCorr_ch(dataT);
+    [dataT.reliabilityIndex,dataT.splitHalfCorrBoots] = GlassTR_getHalfCorr(dataT);
     %% optional plots 
     if plotFlag == 1
         if contains(dataT.programID,'TR')
