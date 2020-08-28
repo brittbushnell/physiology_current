@@ -15,7 +15,7 @@ cleanNumDots = data.numDots;
 cleanDx = data.dx;
 cleanCoh = data.coh;
 cleanSample = data.sample;
-cleanStimOrder = data.stimOrder;
+%cleanStimOrder = data.stimOrder;
 
 %% find the trials where  the translational stimulus was used.
 trlTrials = zeros(1,size(data.filename,1));
@@ -40,7 +40,7 @@ cleanNumDots(trlTrials == 1) = [];
 cleanDx(trlTrials == 1) = [];
 cleanCoh(trlTrials == 1) = [];
 cleanSample(trlTrials == 1) = [];
-cleanStimOrder(trlTrials == 1) = [];
+%cleanStimOrder(trlTrials == 1) = [];
 cleanBins(trlTrials == 1,:,:) = [];
 cleanFile(trlTrials == 1,:) = [];
 %% re-establish clean Data structure
@@ -56,8 +56,8 @@ cleanData.numDots = cleanNumDots;
 cleanData.dx = cleanDx;
 cleanData.coh = cleanCoh;
 cleanData.sample = cleanSample;
-cleanData.stimOrder = cleanStimOrder;
-cleanData.programID = programID;
-cleanData.runNum = data.runNum;
+% cleanData.stimOrder = cleanStimOrder;
+cleanData.programID = data.programID;
+% cleanData.runNum = data.runNum;
 cleanData.fix_x = data.fix_x;
 cleanData.fix_y = data.fix_y;

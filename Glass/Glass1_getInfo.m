@@ -18,11 +18,10 @@ close all
 clc
 tic
 %%
+%cd ~/Dropbox/ArrayData/matFiles/reThreshold/png/WU/V4/Glass/LE/
 files = {
-    'WU_LE_GlassTR_nsp2_20170825_002_thresh35';
-    'XT_RE_GlassTRCoh_nsp2_20190324_001_thresh35';
-    'WU_LE_GlassTR_nsp2_20170825_002';
-    'XT_RE_GlassTRCoh_nsp2_20190324_001';
+    'WU_LE_GlassTR_nsp2_20170825_002_thresh35'
+    'WV_RE_glassCoh_nsp2_20190405_001_thresh35';
     };
 %%
 nameEnd = 'info';
@@ -90,7 +89,7 @@ for fi = 1:size(files,1)
     
     %[numTypes,numDots,numDxs,numCoh,numSamp,types,dots,dxs,coherences,samples] = getGlassParameters(dataT);
     
-    dataT.stimOrder = getStimPresentationOrder(dataT);
+
     %%
     if sum(ismember(dataT.numDots,100)) ~=0 % if 100 and 0.01 were run, remove them.
         if ~contains(dataT.programID,'TR')
@@ -100,8 +99,8 @@ for fi = 1:size(files,1)
         dataT = GlassRemoveLowDx(dataT);
         dataT = GlassRemoveLowDots(dataT);
     end
-    
-    % add in anything that's missing from the new cleanData structure.
+       % dataT.stimOrder = getStimPresentationOrder(dataT);
+    % add in anything that's missing from the new dataT structure.
     if length(tmp) == 6
         [dataT.animal, dataT.eye, dataT.programID, dataT.array, dataT.date2,dataT.runNum] = deal(tmp{:});
         % get date in a format that's useable in figure titles (ex: 09/1/2019 vs 20190901)
@@ -135,28 +134,20 @@ for fi = 1:size(files,1)
     dataT.inStim = ~isnan(dataT.rfQuadrant); % want all channels whos RF center is within the stimulus bounds to be 1.
     dataT.goodCh = dataT.responsiveCh & dataT.inStim;
     fprintf('%d good channels \n%d responsive channels\n',sum(dataT.responsiveCh), sum(dataT.goodCh))
-    %% get spike counts for responsive and good channels
-    if contains(filename,'TR')
-%         [dataT.goodChTRSpikeCount,dataT.goodChNoiseTRSpikeCount,dataT.goodChBlankTRSpikeCount,dataT.goodChTRStimSpikeCount] = getGlassTRSpikeCounts(dataT,dataT.goodCh);
-%         [dataT.respChTRSpikeCount,dataT.respChNoiseTRSpikeCount,dataT.respChBlankTRSpikeCount,dataT.respChTRStimSpikeCount] = getGlassTRSpikeCounts(dataT,dataT.responsiveCh);
-        [dataT.GlassTRSpikeCount,dataT.NoiseTRSpikeCount,dataT.BlankTRSpikeCount,dataT.AllStimTRSpikeCount] = getGlassTRSpikeCounts(dataT);
-    else
-%         [dataT.goodChSpikeCount,dataT.goodChNoiseSpikeCount,dataT.goodChBlankSpikeCount,dataT.goodChStimSpikeCount] = getGlassSpikeCounts(dataT,dataT.goodCh);
-%         [dataT.respChSpikeCount,dataT.respChNoiseSpikeCount,dataT.respChBlankSpikeCount,dataT.respChStimSpikeCount] = getGlassSpikeCounts(dataT,dataT.responsiveCh);
-%        [dataT.RFinStimGlassSpikeCount,dataT.RFinStimChNoiseSpikeCount,dataT.RFinStimChBlankSpikeCount,dataT.RFinStimAllStimSpikeCount] = getGlassSpikeCounts(dataT,dataT.inStim);
-         [dataT.GlassSpikeCount,dataT.NoiseSpikeCount,dataT.BlankSpikeCount,dataT.AllStimSpikeCount] = getGlassSpikeCounts(dataT);
-    end
-    fprintf('spike counts computed \n')
-    %% get Zscore and split half correlations
+
+    %% get spike counts, Zscore, and split half correlations
     if contains(dataT.programID,'TR')
+        [dataT.GlassTRSpikeCount,dataT.NoiseTRSpikeCount,dataT.BlankTRSpikeCount,dataT.AllStimTRSpikeCount] = getGlassTRSpikeCounts(dataT);
         [dataT.GlassTRZscore,dataT.GlassAllStimTRZscore] = getGlassStimZscore(dataT);
+        [dataT.reliabilityIndex,dataT.splitHalfCorrBoots] = GlassTR_getHalfCorr(dataT);
     else
+        [dataT.GlassSpikeCount,dataT.NoiseSpikeCount,dataT.BlankSpikeCount,dataT.AllStimSpikeCount] = getGlassCRSpikeCounts(dataT);
         [dataT.GlassZscore,dataT.GlassAllStimZscore] = getGlassStimZscore(dataT);
+        [dataT.reliabilityIndex,dataT.split_half_correlation] = Glass_getHalfCorr(dataT);
+        
     end
-    fprintf('zscores computed \n')
-    %%
-    [dataT.reliabilityIndex,dataT.splitHalfCorrBoots] = GlassTR_getHalfCorr(dataT);
-    %% optional plots 
+    fprintf('spike counts done, zscores computed, halves correlated \n')
+    %% optional plots
     if plotFlag == 1
         if contains(dataT.programID,'TR')
             plotGlassTR_spikeCounts(dataT)
@@ -167,9 +158,9 @@ for fi = 1:size(files,1)
     %% save data
     
     if location == 1
-        outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/Glass/Parsed/',dataT.array);
+        outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/Glass/info/',dataT.array);
     elseif location == 0
-        outputDir =  sprintf('~/Dropbox/ArrayData/matFiles/%s/Glass/Parsed/',dataT.array);
+        outputDir =  sprintf('~/Dropbox/ArrayData/matFiles/%s/Glass/info/',dataT.array);
     end
     
     if contains(filename,'LE')

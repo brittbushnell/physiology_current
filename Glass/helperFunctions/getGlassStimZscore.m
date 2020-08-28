@@ -24,7 +24,7 @@ if contains(dataT.programID,'TR')
 else
     [~,numDots,numDxs,numCoh] = getGlassParameters(dataT);
     for ch = 1:96
-        allSpikes = squeeze(dataT.AllStimTRSpikeCount(ch,:));
+        allSpikes = squeeze(dataT.AllStimSpikeCount(ch,:));
         GlassAllStimZscore(ch,:) = zscore(allSpikes);
         for dt = 1:numDots
             for dx = 1:numDxs

@@ -16,7 +16,7 @@ cleanNumDots = dataT.numDots;
 cleanDx = dataT.dx;
 cleanCoh = dataT.coh;
 cleanSample = dataT.sample;
-cleanStimOrder = dataT.stimOrder;
+%cleanStimOrder = dataT.stimOrder;
 
 if contains(dataT.programID,'TR')
     cleanRotation = dataT.rotation;
@@ -34,7 +34,7 @@ cleanNumDots(dxTrials) = [];
 cleanDx(dxTrials) = [];
 cleanCoh(dxTrials) = [];
 cleanSample(dxTrials) = [];
-cleanStimOrder(dxTrials) = [];
+%cleanStimOrder(dxTrials) = [];
 cleanBins(dxTrials,:,:) = [];
 cleanFile(dxTrials,:) = [];
 
@@ -56,7 +56,7 @@ cleandataT.dx = cleanDx;
 cleandataT.coh = cleanCoh;
 cleandataT.sample = cleanSample;
 cleandataT.programID = dataT.programID;
-cleandataT.stimOrder = cleanStimOrder;
+%cleandataT.stimOrder = cleanStimOrder;
 cleandataT.fix_x = dataT.fix_x;
 cleandataT.fix_y = dataT.fix_y;
 

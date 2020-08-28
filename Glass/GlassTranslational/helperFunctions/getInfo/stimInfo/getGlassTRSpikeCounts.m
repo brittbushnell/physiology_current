@@ -48,4 +48,4 @@ end
 dataT.translationalSpikeCount = trSpikeCount;
 dataT.stimSpikeCount = stimSpikeCount;
 dataT.noiseSpikeCount = noiseSpikeCount;
-dataT.noiseSpikeCount = blankSpikeCount;
+dataT.blankSpikeCount = blankSpikeCount;

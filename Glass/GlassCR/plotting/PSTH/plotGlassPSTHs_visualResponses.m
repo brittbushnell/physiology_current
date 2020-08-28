@@ -178,7 +178,7 @@ print(gcf, figName,'-dpdf','-fillpage')
 figure(103);
 clf
 pos = get(gcf,'Position');
-set(gcf,'Position',[pos(1) pos(2) 800 800])
+set(gcf,'Position',[pos(1) pos(2) 1000 1200])
 set(gcf,'PaperOrientation','Landscape');
 for ch = 1:96
     
