@@ -5,7 +5,7 @@ for nb = 1:1000
     %rearrange_spkcnt = permute(dataT.GlassZscore,[1 2 3 4 6 5]);
     numRepeats = size(dataT.GlassZscore,5);
     reshape_spkcnt = reshape(rearrange_spkcnt,16,numRepeats,96); 
-    sample1 = randperm(numRepeats,numRepeats/2,1);
+    sample1 = randperm(numRepeats,numRepeats/2);
     sample2 = datasample(setdiff([1:numRepeats]',sample1),numRepeats/2,1);
     
     set1 = squeeze(nanmean(reshape_spkcnt(:,sample1,:),2));
