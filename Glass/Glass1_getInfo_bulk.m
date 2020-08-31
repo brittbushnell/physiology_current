@@ -32,7 +32,7 @@ holdout = 0.9;
 plotFlag = 0;
 location = determineComputer;
 failedFiles = {};
-failNdx = 1;
+failNdx = 0;
 %%
 for an = 1:3
     if an == 1
@@ -54,7 +54,11 @@ for an = 1:3
             else
                 area = 'V1';
             end
-            dataDir = sprintf('~/Dropbox/ArrayData/matFiles/reThreshold/png/%s/%s/Glass/%s/',monk,area,eye);
+            if location == 0
+                dataDir = sprintf('~/Dropbox/ArrayData/matFiles/reThreshold/png/%s/%s/Glass/%s/',monk,area,eye);
+            else
+                dataDir = sprintf('/Local/Users/bushnell/Dropbox/ArrayData/matFiles/reThreshold/png/%s/%s/Glass/%s/',monk,area,eye);
+            end
             cd(dataDir);
             
             tmp = dir;
@@ -75,7 +79,7 @@ for an = 1:3
             %%
             for fi = 1:size(files,1)
                 %% Get basic information about experiments
-                %try
+                try
                     filename = files{fi};
                     dataT = load(filename);
                     
@@ -160,7 +164,11 @@ for an = 1:3
                     
                     dataT.amap = aMap;
                     %% plot stim vs blank PSTH to look for timing funkiness
-                    figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/GlassTR/%s/PSTH/%s/',dataT.animal, dataT.array,eye);
+                    if location == 0
+                        figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/GlassTR/%s/PSTH/%s/',dataT.animal, dataT.array,eye);
+                    else
+                        figDir =  sprintf( '/Local/Users/bushnell/Dropbox/Figures/%s/GlassTR/%s/PSTH/%s/',dataT.animal, dataT.array,eye);
+                    end
                     cd(figDir)
                     
                     figure(200);
@@ -240,15 +248,16 @@ for an = 1:3
                     saveName = [outputDir filename '_' nameEnd '.mat'];
                     save(saveName,'data');
                     fprintf('%s saved\n  run time: %.2f minutes', saveName, toc/60)
-%                 catch ME
-%                     fprintf('%s did not work. \nError message: %s \n',filename,ME.message)
-%                     failedFiles{failNdx} = filename;
-%                     failedME{failNdx} = ME;
-%                     failNdx = failNdx+1;
-%                 end
+                catch ME
+                    fprintf('%s did not work. \nError message: %s \n',filename,ME.message)
+                    failNdx = failNdx+1;
+                    failedFiles{failNdx} = filename;
+                    failedME{failNdx} = ME;
+                    
+                end
             end
         end
     end
 end
-failedFiles
+fprintf('\n####### %d files failed at some point #######\n',failNdx)
 toc

@@ -20,7 +20,12 @@ tic
 %%
 %cd ~/Dropbox/ArrayData/matFiles/reThreshold/png/WU/V4/Glass/LE/
 files = {
-'XT_RE_GlassTRCoh_nsp2_20190324_001_cleaned35ogcorrupt'
+    %'WU_LE_GlassTR_nsp2_20170822_002_thresh35.mat';      
+    'WU_RE_GlassTR_nsp2_20170825_001_thresh35.mat';      
+    'WV_LE_glassCohSmall_nsp1_20190425_002_thresh35.mat';
+    'WV_RE_glassCohSmall_nsp1_20190423_001_thresh35.mat';
+    'XT_LE_GlassCoh_nsp1_20190324_005_thresh35.mat';     
+    'XT_RE_GlassCoh_nsp1_20190321_002_thresh35.mat';     
 };
 %%
 nameEnd = 'info';
