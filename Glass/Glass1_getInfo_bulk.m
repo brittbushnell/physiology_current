@@ -54,6 +54,7 @@ for an = 1:3
             else
                 area = 'V1';
             end
+            %%
             if location == 0
                 dataDir = sprintf('~/Dropbox/ArrayData/matFiles/reThreshold/png/%s/%s/Glass/%s/',monk,area,eye);
             else
@@ -66,18 +67,16 @@ for an = 1:3
             files = {};
             %%
             for t = 1:size(tmp,1)
-                if contains(tmp(t).name,'thresh')
-                    if ~contains(tmp(t).name,'bar','IgnoreCase',true) % ignore bar map files
-                        files{ndx} = tmp(t).name;
-                        ndx = ndx+1;
-                    end
+                if contains(tmp(t).name,'.mat')
+                    files{ndx} = tmp(t).name;
+                    ndx = ndx+1;
                 end
             end
             clear tmp
             clear ndx
             aMap = getBlackrockArrayMap(files(1,:));
             %%
-            for fi = 1:size(files,1)
+            for fi = 1:length(files)
                 %% Get basic information about experiments
                 try
                     filename = files{fi};
@@ -171,10 +170,10 @@ for an = 1:3
                     end
                     cd(figDir)
                     
-                    figure%(200);
+                    figure(200);
                     clf
                     pos = get(gcf,'Position');
-                    set(gcf,'Position',[pos(1) pos(2) 1400 1200])
+                    set(gcf,'Position',[pos(1) pos(2) 1200 900])
                     set(gcf,'PaperOrientation','Landscape');
                     for ch = 1:96
                         
@@ -197,7 +196,8 @@ for an = 1:3
                         'clean data, Matlab parser'})
                     
                     figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_',dataT.programID,'_PSTH_',dataT.date2,'_',dataT.runNum,'.pdf'];    
-                     print(gcf, figName,'-dpdf','-fillpage')
+                     print(gcf, figName,'-dpdf','-bestfit')
+                     
                     %% get receptive field parameters
 %                     % RF center is relative to fixation, not center of the monitor.
 %                     dataT = callReceptiveFieldParameters(dataT);
