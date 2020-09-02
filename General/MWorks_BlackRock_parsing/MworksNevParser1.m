@@ -1,6 +1,6 @@
 % bin spike counts from nev file
 
-function MworksNevParser(varargin)
+function MworksNevParser1(varargin)
 % This function is at its most simple, a re-creation of Darren Seibert's
 % Python parsing code. This Matlab version builds on it and increases some
 % of the flexibility.
@@ -71,14 +71,18 @@ fileName = char(fileName);
 
 if length(tmp) == 7 %working from rethresholded and cleaned data
     [animal,eye,programID,array,date,~,threshold] = deal(tmp{:});
+    date = str2double(date);
     % /vnlstorage3/bushnell_arrays/nsp2/reThreshold
     if contains(programID,'grat','IgnoreCase',true)
         blackrockDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/gratings/%s/%s/',array,animal,eye);
+    elseif contains(fileName,'clean')
+        blackrockDir = '/users/bushnell/Desktop/my_zemina/vnlstorage3/';
     else
         blackrockDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/png/%s/%s/',array,animal,eye);
     end
 else
     [animal,~,programID,array,date,~] = deal(tmp{:});
+    date = str2double(date);
     if contains(animal,'WU')
         blackrockDir = sprintf('/users/bushnell/Desktop/my_vnlstorage/bushnell_arrays/%s/%s_blackrock/%s/',array,array,animal);
     elseif contains(animal,'XT')
@@ -132,7 +136,7 @@ ns_nev_name = [blackrockDir,fileName];
 % from the nev file name to get the .mwk name:
 
 % Modifying so it will also ignore added portion for rethresholded files
-replacement = {'_nsp1', '_nsp2','_thresh30','_thresh35','_thresh40','_thresh45','.nev'};
+ replacement = {'_nsp1', '_nsp2','_thresh30','_thresh35','_thresh40','_thresh45','_cleaned3.5ogcorrupt','.nev'};% '_cleaned4.5',,'_cleaned3.5'
 for n = 1: length(replacement)
     if n > 1
         shortName = strrep(shortName, replacement{n}, '');
@@ -210,13 +214,13 @@ regressionResutls = regress(double(nev_wordout_times)',...
     [ones(size(nev_wordout_times)); double(mworks_wordout_times)./(10^6)]');
 regressionResutls(1) = regressionResutls(1).*(10^6);
 %% loop through stimuli
-if contains(programID,'grat','IgnoreCase',true)
+if contains(programID,'grat','IgnoreCase',true) || contains(programID,'edge','IgnoreCase',true)
     stim_var_names = {'starting_phase', 'direction', 'o_starting_phase',...
         'height', 'temporal_frequency',...
         'o_temporal_frequency', 'overlay','current_phase', 'width', 'grating',...
         'type', 'contrast', 'opacity', 'o_current_phase',  'start_time', 'yoffset',...
         'o_direction', 'rotation', 'xoffset','spatial_frequency', 'name',...
-        'mask', 'o_rotation', 'o_spatial_frequency', 'action'};
+        'mask', 'o_rotation', 'o_spatial_frequency', 'action','xoffset','yoffset'};
 else
     stim_var_names = {'pos_x','pos_y','filename','size_x','action','rotation'};
 end
@@ -229,7 +233,7 @@ n_stim = 0;
 t_stim = [];
 new_stim = 0;
 
-if contains(programID,'grat','IgnoreCase',true)
+if contains(programID,'grat','IgnoreCase',true) || contains(programID,'edge','IgnoreCase',true)
     for ind = 1:length(stim_display_update_events)
         if length(stim_display_update_events(ind).data) > 2
             cur_time = stim_display_update_events(ind).time_us;
@@ -289,13 +293,13 @@ bins = zeros(n_stim, pointsKeep, numCh);
 tic
 for channel = 1:numCh
     bins(:,:, channel) = nev_bin_spikes_verRatePerChannel(t_spikes{channel}, t_stim, pointsKeep, tPerPoint,fp.MetaTags);    
-    fprintf('%.2f minutes to bin %d channels\n', toc/60,channel)
+    %fprintf('%.2f minutes to bin %d channels\n', toc/60,channel)
 end
 %%
 strpName = strrep(fileName,'.nev','');
 save_name = [strpName,'.mat'];
 saveName = fullfile(outputDir,save_name);
-if contains(programID,'grat','IgnoreCase',true)
+if contains(programID,'grat','IgnoreCase',true) || contains(programID,'edge','IgnoreCase',true)
     save(saveName, 'stimOn', 'starting_phase', 'direction', 'o_starting_phase',...
         'height', 'temporal_frequency', 't_stim', 'o_temporal_frequency', 'overlay','current_phase', 'width', 'grating',...
         'type', 'contrast', 'opacity', 'o_current_phase',  'start_time', 'yoffset',...

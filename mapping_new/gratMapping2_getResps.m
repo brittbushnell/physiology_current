@@ -3,9 +3,13 @@ close all
 clc
 tic
 %%
-files = {'WU_RE_GratingsMapRF_nsp2_20170814_all_thresh35_info';
-    'WU_LE_GratingsMapRF_nsp2_20170620_001_thresh35_info';
-    };
+files = {
+    'WU_RE_GratingsMapRF_nsp2_20170814_002_thresh35_info';
+    'WU_LE_GratingsMapRF_nsp2_20170814_003_thresh35_info';    
+    
+    'WU_RE_GratingsMapRF_nsp1_20170814_002_thresh35_info';
+    'WU_LE_GratingsMapRF_nsp1_20170814_003_thresh35_info';
+     };
 nameEnd ='resps';
 %%
 numBoot = 200;
@@ -30,9 +34,9 @@ for fi = 1:size(files,1)
     end
     %%
     if location == 1
-        outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/GratMapRF/',dataT.array);
+        outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/GratMapRF/resps',dataT.array);
     elseif location == 0
-        outputDir =  sprintf('~/Dropbox/ArrayData/matFiles/%s/GratMapRF/',dataT.array);
+        outputDir =  sprintf('~/Dropbox/ArrayData/matFiles/%s/GratMapRF/resps',dataT.array);
     end
     %% do stim vs blank permutation test
     stimNdx  = dataT.spatial_frequency ~=0;
