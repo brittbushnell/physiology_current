@@ -47,8 +47,6 @@ for fi = 1:length(files)
         
         if contains(programID,'grat','IgnoreCase',true)
             output = sprintf('/mnt/vnlstorage3/bushnell_arrays/%s/reThreshold/gratings/%s/%s/%s',array,animal,eye,newName);
-        elseif contains(programID,'glass','IgnoreCase',true)
-            output = sprintf('/mnt/vnlstorage3/bushnell_arrays/%s/reThreshold/png/glass/%s/%s/%s',array,animal,eye,newName);
         else
             output = sprintf('/mnt/vnlstorage3/bushnell_arrays/%s/reThreshold/png/%s/%s/%s',array,animal,eye,newName);
         end
