@@ -53,8 +53,8 @@ cleandataT.dx = cleanDx;
 cleandataT.coh = cleanCoh;
 cleandataT.sample = cleanSample;
 % cleandataT.stimOrder = cleanStimOrder;
-cleandataT.fix_x = dataT.fix_x;
-cleandataT.fix_y = dataT.fix_y;
+% cleandataT.fix_x = dataT.fix_x;
+% cleandataT.fix_y = dataT.fix_y;
 
 if contains(dataT.programID,'TR')
     cleandataT.rotation = cleanRotation;

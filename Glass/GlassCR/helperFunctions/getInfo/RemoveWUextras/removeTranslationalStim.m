@@ -23,7 +23,7 @@ trlTrials = zeros(1,size(data.filename,1));
 % typeTrials = find(data.type == 3);
 
 for t = 1:size(data.filename,1)
-    fn = data.filename;
+    fn = string(data.filename);
     if contains(fn,'T_')
         trlTrials(1,t) = 1;
     end
@@ -59,5 +59,5 @@ cleanData.sample = cleanSample;
 % cleanData.stimOrder = cleanStimOrder;
 cleanData.programID = data.programID;
 % cleanData.runNum = data.runNum;
-cleanData.fix_x = data.fix_x;
-cleanData.fix_y = data.fix_y;
+% cleanData.fix_x = data.fix_x;
+% cleanData.fix_y = data.fix_y;

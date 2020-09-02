@@ -74,11 +74,12 @@ for an = 1:3
             end
             clear tmp
             clear ndx
-            aMap = getBlackrockArrayMap(files(1,:));
             %%
             for fi = 1:length(files)
                 %% Get basic information about experiments
                 try
+                                aMap = getBlackrockArrayMap(files{1});
+
                     filename = files{fi};
                     dataT = load(filename);
                     

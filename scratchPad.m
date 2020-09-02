@@ -4,42 +4,45 @@
 clear
 close all
 clc
+location = determineComputer;
 %%
-load 'XT_RE_GlassTRCoh_nsp2_20190324_001_cleaned35ogcorrupt_info';
-cleanData = data.RE;
-
-load 'XT_RE_GlassTRCoh_nsp2_20190324_001_info';
-rawData = data.RE;
-%%
-
-figure;
-clf
-pos = get(gcf,'Position');
-set(gcf,'Position',[pos(1) pos(2) 1400 1200])
-set(gcf,'PaperOrientation','Landscape');
-for ch = 1:96
-    
-    subplot(cleanData.amap,10,10,ch)
-    hold on;
-    
-    REcoh = (cleanData.coh == 1);
-    REnoiseCoh = (cleanData.coh == 0);
-    REcohNdx = logical(REcoh + REnoiseCoh);
-    
-    blankResp = sum(smoothdata(cleanData.bins((cleanData.numDots == 0), 1:35 ,ch),'gaussian',3));
-    stimResp = sum(smoothdata(cleanData.bins((REcohNdx), 1:35 ,ch),'gaussian',3));
-%     plot(1:35,blankResp,'b','LineWidth',0.5);
-%     plot(1:35,stimResp,'b','LineWidth',2);
-    
-    
-    blankResp = sum(smoothdata(rawData.bins((rawData.numDots == 0), 1:35 ,ch),'gaussian',3));
-    stimResp = sum(smoothdata(rawData.bins((REcohNdx), 1:35 ,ch),'gaussian',3));
-    plot(1:35,blankResp,'r','LineWidth',0.5);
-    plot(1:35,stimResp,'r','LineWidth',2);
-    
-    title(ch)
-    set(gca,'Color','none','tickdir','out','FontAngle','italic','FontSize',10,'XTick',[]);
-%     ylim([0 inf])
+ndx = 1;
+files = {};
+for an = 1:3
+    if an == 1
+        monk = 'WU';
+    elseif an == 2
+        monk = 'WV';
+    else
+        monk = 'XT';
+    end
+    for ey = 1:2
+        if ey == 1
+            eye = 'LE';
+        else
+            eye = 'RE';
+        end
+        for ar = 1:2
+            if ar == 1
+                area = 'V4';
+            else
+                area = 'V1';
+            end
+            %%
+            if location == 0
+                dataDir = sprintf('~/Dropbox/ArrayData/matFiles/reThreshold/png/%s/%s/Glass/%s/',monk,area,eye);
+            else
+                dataDir = sprintf('/Local/Users/bushnell/Dropbox/ArrayData/matFiles/reThreshold/png/%s/%s/Glass/%s/',monk,area,eye);
+            end
+            cd(dataDir);
+            tmp = dir;
+            %%
+            for t = 1:size(tmp,1)
+                if contains(tmp(t).name,'.mat')
+                    files{ndx,1} = tmp(t).name;
+                    ndx = ndx+1;
+                end
+            end
+        end
+    end
 end
-
-suptitle('Red: raw data, Blue: cleaned and repaired data')
