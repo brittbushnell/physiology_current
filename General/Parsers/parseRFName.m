@@ -4,11 +4,12 @@ function [name, rf, rad, mod, ori, sf] = parseRFName(filename)
 %
 % Created by Brittany Bushnell May 24, 2017
 
-
-% pathChunks = strsplit(filename, '/');
-% name = char(pathChunks{end});
-
-name = char(filename);
+if contains(filename,'/')
+    pathChunks = strsplit(filename, '/');
+    name = char(pathChunks{end});
+else
+    name = char(filename);
+end
 
 % example filename: RF4_RAD2.0_MOD200.00_ORI0_SF1.png
 
