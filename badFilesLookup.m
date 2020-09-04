@@ -1,4 +1,4 @@
-%function [badFiles] = badFilesLookup()
+function [badFiles] = badFilesLookup()
 % lookup table of recording files that have fatal flaws and should be
 % ignored.  This document will be continually updated.
 
