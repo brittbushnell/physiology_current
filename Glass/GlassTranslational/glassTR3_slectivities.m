@@ -99,11 +99,20 @@ for fi = 1:size(files,1)
     end
     %% save data
     location = determineComputer;
+    %% save data
+    
     if location == 1
-        outputDir = '~/bushnell-local/Dropbox/ArrayData/matFiles/V4/Glass/Parsed/';
+        outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/GlassTR/dPrimePerm/',dataT.array);
+        if ~exist(outputDir, 'dir')
+            mkdir(outputDir)
+        end
     elseif location == 0
-        outputDir =  '~/Dropbox/ArrayData/matFiles/V4/Glass/Parsed/';
+        outputDir =  sprintf('~/Dropbox/ArrayData/matFiles/%s/GlassTR/dPrimePerm/',dataT.array);
+        if ~exist(outputDir, 'dir')
+            mkdir(outputDir)
+        end
     end
+    
     saveName = [outputDir filename '_' nameEnd '.mat'];
     save(saveName,'data','-v7.3');
     fprintf('%s saved\n', saveName)

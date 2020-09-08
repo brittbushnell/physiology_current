@@ -29,11 +29,20 @@ newName = 'XT_BE_GlassTR_V4_May2020';
 % newName = 'WV_BE_GlassTRCoh_V1_201904';  
 %%
 location = determineComputer;
-if location == 1
-    outputDir = '~/bushnell-local/Dropbox/ArrayData/matFiles/V4/Glass/Parsed/';
-elseif location == 0
-    outputDir =  '~/Dropbox/ArrayData/matFiles/V4/Glass/Parsed/';
-end
+    %% save data
+    
+    if location == 1
+        outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/GlassTR/bothEyes/',dataT.array);
+        if ~exist(outputDir, 'dir')
+            mkdir(outputDir)
+        end
+    elseif location == 0
+        outputDir =  sprintf('~/Dropbox/ArrayData/matFiles/%s/GlassTR/bothEyes/',dataT.array);
+        if ~exist(outputDir, 'dir')
+            mkdir(outputDir)
+        end
+    end
+    
 %% combine data from the two eyes into one pair of structures
 data = CombineEyes_OD(LEfile, REfile);
 

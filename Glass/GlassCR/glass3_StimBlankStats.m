@@ -238,10 +238,18 @@ for fi = 1:size(files,1)
     
     location = determineComputer;
     if location == 1
-        outputDir = '~/bushnell-local/Dropbox/ArrayData/matFiles/V4/Glass/Parsed/';
+        outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/Glass/stats/%s/',dataT.array,dataT.animal);
+        if ~exist(outputDir,'dir')
+            mkdir(outputDir)
+        end
     elseif location == 0
-        outputDir =  '~/Dropbox/ArrayData/matFiles/V4/Glass/Parsed/';
+        outputDir =  sprintf('~/Dropbox/ArrayData/matFiles/%s/Glass/stats/%s/',dataT.array,dataT.animal);
+        if ~exist(outputDir,'dir')
+            mkdir(outputDir)
+        end
     end
+    
+    cd(figDir)
     saveName = [outputDir filename '_' nameEnd '.mat'];
     save(saveName,'data','-v7.3');
     fprintf('%s saved\n', saveName)

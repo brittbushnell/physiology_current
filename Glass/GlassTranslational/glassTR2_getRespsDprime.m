@@ -48,14 +48,19 @@ for fi = 1:size(files,1)
         else
             dataT = data.LE;
         end
-        %%
+        %%        
         if location == 1
-            outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/Glass/Parsed/',dataT.array);
+            outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/GlassTR/dPrimePerm/',dataT.array);
+            if ~exist(outputDir, 'dir')
+                mkdir(outputDir)
+            end
         elseif location == 0
-            outputDir =  sprintf('~/Dropbox/ArrayData/matFiles/%s/Glass/Parsed/',dataT.array);
-        elseif location == 3
-            outputDir = sprintf('~/matFiles/%s/Parsed/',dataT.array);
+            outputDir =  sprintf('~/Dropbox/ArrayData/matFiles/%s/GlassTR/dPrimePerm/',dataT.array);
+            if ~exist(outputDir, 'dir')
+                mkdir(outputDir)
+            end
         end
+        
         %% do all vs blank permutation test
         dataT = GlassStimVsBlankPermutations_allStim(dataT,numPerm,holdout);  
         fprintf('good channel permutaitons done in %.2f hours \n',toc/3600)
@@ -78,13 +83,13 @@ for fi = 1:size(files,1)
         
         fprintf('stim vs noise permutations done in %.2f hours \n',toc/3600)
         %% get latency
-        dataT = getLatencies_Glass(dataT,numPerm,plotFlag,holdout);
-        dataT = getLatencies_Glass_Permutation(dataT,numPerm,holdout);
-        
-        dataT = getLatencies_GlassTR_byStim(dataT,numPerm,holdout);
-        dataT = getLatencies_GlassTR_byStimPermutation(dataT,numPerm,holdout);
-        
-        fprintf('latencies computed in %.2f hours \n',toc/3600)
+%         dataT = getLatencies_Glass(dataT,numPerm,plotFlag,holdout);
+%         dataT = getLatencies_Glass_Permutation(dataT,numPerm,holdout);
+%         
+%         dataT = getLatencies_GlassTR_byStim(dataT,numPerm,holdout);
+%         dataT = getLatencies_GlassTR_byStimPermutation(dataT,numPerm,holdout);
+%         
+%         fprintf('latencies computed in %.2f hours \n',toc/3600)
         %%
         if contains(filename,'RE')
             data.RE = dataT;

@@ -28,21 +28,20 @@ clc
  REfile = 'XT_RE_GlassCoh_nsp1_20190321_all_raw_2kFixPerm_Stats';...
  LEfile = 'XT_LE_GlassCoh_nsp1_20190325_all_raw_2kFixPerm_Stats';...
  newName = 'XT_BE_Glass_V1_raw_combSameDay';
-%%
-location = determineComputer;
-if location == 1
-    outputDir = '~/bushnell-local/Dropbox/ArrayData/matFiles/V4/Glass/Parsed/';
-elseif location == 0
-    outputDir =  '~/Dropbox/ArrayData/matFiles/V4/Glass/Parsed/';
-end
 %% combine data from the two eyes into one pair of structures
 data = CombineEyes_OD(LEfile, REfile);
 
 location = determineComputer;
 if location == 1
-    outputDir = '~/bushnell-local/Dropbox/ArrayData/matFiles/V4/Glass/Parsed/';
+    outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/Glass/bothEyes/%s/',dataT.array,dataT.animal);
+    if ~exist(outputDir,'dir')
+        mkdir(outputDir)
+    end
 elseif location == 0
-    outputDir =  '~/Dropbox/ArrayData/matFiles/V4/Glass/Parsed/';
+    outputDir =  sprintf('~/Dropbox/ArrayData/matFiles/%s/Glass/bothEyes/%s/',dataT.array,dataT.animal);
+    if ~exist(outputDir,'dir')
+        mkdir(outputDir)
+    end
 end
  %%
 data = getGlassODI(data);

@@ -149,12 +149,18 @@ for fi = 1:size(files,1)
     end
     %%
     if location == 1
-        outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/Glass/Parsed/',dataT.array);
+        outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/Glass/dPrimePerm/%s/',dataT.array,dataT.animal);
+        if ~exist(outputDir,'dir')
+            mkdir(outputDir)
+        end
     elseif location == 0
-        outputDir =  sprintf('~/Dropbox/ArrayData/matFiles/%s/Glass/Parsed/',dataT.array);
-    elseif location == 3
-        outputDir = sprintf('~/matFiles/%s/',dataT.animal);
+        outputDir =  sprintf('~/Dropbox/ArrayData/matFiles/%s/Glass/dPrimePerm/%s/',dataT.array,dataT.animal);
+        if ~exist(outputDir,'dir')
+            mkdir(outputDir)
+        end
     end
+    
+    cd(figDir)
     %% get real stimulus d's
     dataT = getStimVsBlankDPrimes_Glass_coh(dataT,numBoot, subsample,holdout);
     dataT = getGlassStimDPrimes_coh(dataT, numBoot,subsample, holdout);
@@ -168,13 +174,16 @@ for fi = 1:size(files,1)
     dataT = GlassStimVsNoisePermutation_coh(dataT, numBoot, holdout);
     fprintf('permuted vaules for stim vs noise done %.2f hours \n',toc/3600)
     %% get latency
-    dataT = getLatencies_Glass(dataT,numPerm,plotFlag,holdout);
-    dataT = getLatencies_Glass_Permutation(dataT,numPerm,holdout);
+    % latency will have to be done on the raw data only, the cleaned data
+    % is not reliable enough to do latency measurements on.
     
-    dataT = getLatencies_Glass_byStim(dataT,numPerm,holdout);
-    dataT = getLatencies_Glass_byStimPermutation(dataT,numPerm,holdout);
-    
-    fprintf('latencies computed %.2f hours \n',toc/3600)   
+%     dataT = getLatencies_Glass(dataT,numPerm,plotFlag,holdout);
+%     dataT = getLatencies_Glass_Permutation(dataT,numPerm,holdout);
+%     
+%     dataT = getLatencies_Glass_byStim(dataT,numPerm,holdout);
+%     dataT = getLatencies_Glass_byStimPermutation(dataT,numPerm,holdout);
+%     
+%     fprintf('latencies computed %.2f hours \n',toc/3600)   
     %%
     if contains(filename,'RE')
         data.RE = dataT;
@@ -186,7 +195,6 @@ for fi = 1:size(files,1)
     fprintf('%s saved\n', saveName)
     %%
     clear dataT
-    
     fprintf('file %s done %.2f hours \n',filename, toc/3600)
         catch ME
             failedFile{failNdx} = filename;
