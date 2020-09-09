@@ -1,2 +1,0 @@
-function [cleanData] = makeCleanDataStruct(data)
-

@@ -1,4 +1,4 @@
-function [RFStimResps,blankResps] = parseRadFreqStimResp2(data,startBin,endBin)%,ch)
+function [RFStimResps,blankResps, stimResps] = parseRadFreqStimResp(data)
 % PARSERADFREQSTIMRESP function will return an cell matrix of the
 % responses of each channel to each unique stimulus.
 %
@@ -34,6 +34,10 @@ function [RFStimResps,blankResps] = parseRadFreqStimResp2(data,startBin,endBin)%
 % July 9, 2018
 % Edited to add in some data cleanup and remove any responses that are due
 % to artifacts that were present during stimulus presentation.
+%
+% September 9, 2020
+% removing cleanup portion of code since that's done automatically before
+% this now.
 %% Testing
 % clear all
 % %close all
@@ -42,27 +46,26 @@ function [RFStimResps,blankResps] = parseRadFreqStimResp2(data,startBin,endBin)%
 % 
 % file = 'WU_RE_RadFreqLoc2_nsp2_20170707_005';
 % data = load(file);
-% startBin = 5;
-% endBin = 35;
 % boop = 53;
-%% Get stimulus information
+
+% Get stimulus information
 % all of the other unique parameters are stored in the file name and need
 % to be parsed out.
-for i = 1:length(data.filename)
-    [name, rf, rad, mod, ori, sf] = parseRFName(data.filename(i,:));
-    
-    data.rf(i,1)  = rf;
-    data.amplitude(i,1) = mod;
-    data.orientation(i,1) = ori;
-    data.spatialFrequency(i,1) = sf;
-    data.radius(i,1) = rad; %remember, size of RF stimuli is in mean radius
-    name  = char(name);
-    data.name(i,:) = name;
-end
-numChannels = size(data.bins,3);
-
-params = [data.rf data.amplitude data.orientation data.spatialFrequency data.radius data.pos_x' data.pos_y']; % make a column matrix  of all of the parameters
-
+% for i = 1:length(data.filename)
+%     [name, rf, rad, mod, ori, sf] = parseRFName(data.filename(i,:));
+%     
+%     data.rf(i,1)  = rf;
+%     data.amplitude(i,1) = mod;
+%     data.orientation(i,1) = ori;
+%     data.spatialFrequency(i,1) = sf;
+%     data.radius(i,1) = rad; %remember, size of RF stimuli is in mean radius
+%     name  = char(name);
+%     data.name(i,:) = name;
+% end
+%%
+startBin = 5;
+endBin = 25;
+params = [data.rf data.amplitude data.orientation data.spatialFrequency data.radius data.pos_x data.pos_y]; % make a column matrix  of all of the parameters
 %% Create grouped and sorted matrices
 [types,~,indexOfTypes] = unique(params,'rows'); % types is a matrix of the stimulus parameters, index of types are the indices that correspond to each type
 
@@ -71,8 +74,7 @@ params = [data.rf data.amplitude data.orientation data.spatialFrequency data.rad
 [~,sortedIndices] = sort(indexOfTypes); % sort the indices
 FR2 = data.bins(sortedIndices,:, :); % make a new verion of data.bins that we will manipulate to correspond to indices that were grouped and sorted earlier.
 
-stimResps = mat2cell(FR2,groupedNums,size(data.bins,2),numChannels); % FR2 (data.bins) rearranged so they're sorted by grouped indices.
-
+stimResps = mat2cell(FR2,groupedNums,size(data.bins,2),96); % FR2 (data.bins) rearranged so each unique stimulus is a cell matrix that's #repeats x 100 bins x 96 channels.
 %% See how many unique locations (and therefore blanks) were run
 xPoss = unique(data.pos_x);
 yPoss = unique(data.pos_y);
@@ -93,27 +95,26 @@ if legitLocs < 1
 elseif legitLocs == 1
     disp('Stimuli only run at 1 location')
 elseif legitLocs == 3
-    disp('3 stimulus locations run, must be single session')
+    disp('3 stimulus locations run')
 elseif legitLocs == 5
-    disp('5 stimulus locations run, must be combining days')
+    disp('5 stimulus locations run, must be combining days for WU')
 elseif legitLocs > 5
     error('Found more than 5 stimulus locations used')
 end
-%% Setup empty data structures for blank data
+%% Initialize data structures for blank data
 typeTps = types';  % Transpose the stimulus type array so it's now each column is a unique stimulus.
 blankParams = typeTps(:,(end-(legitLocs - 1)):end); % Define which stimuli are the blanks
 
 numBlank = size(blankParams,1) + (legitLocs .* size(stimResps{end},1)) + 4; % multiplying by legitLocs because there are three blanks, and adding 4 onto the end for mean, median, ste, and normalized response.
 
 blankTmp = nan(numBlank,1);
-blankResps  = cell(1,numChannels);
-%% setup empty data structures for stimulus data
+blankResps  = cell(1,96);
+%% initialize data structures for stimulus data
 typeTps = typeTps(:,1:end-legitLocs); % Define which stimuli are not blanks.
 %numStim = size(typeTps,1) + size(stimResps{1},1) + 4;
 numParams = size(typeTps,1);
 
-RFStimResps = cell(1,numChannels);
-
+RFStimResps = cell(1,96);
 
 for r = 1:(size(stimResps,1) - legitLocs)
     numTrials(r,1) = size(stimResps{r},1);
@@ -122,8 +123,9 @@ tmpRows = size(typeTps,1) + max(numTrials) + 4; % parameters + trials + summary 
 tmpCols = size(typeTps,2);
 tmp = nan(tmpRows,tmpCols);
 %% Make the matrices of responses to a blank stimulus for each channel
-for ch = 1:numChannels
-    
+for ch = 1:96
+    stmTmp = nan(tmpRows,tmpCols);
+    blankTmp = nan(numBlank,1);
     blankTmp(1:size(blankParams,1),1) = blankParams(:,1);
     
     for t = 1:legitLocs-1
@@ -133,57 +135,30 @@ for ch = 1:numChannels
             a = [a; b];
         else
             b = stimResps{end-t}(:,startBin:endBin,ch);
-            a = [a; b];
+            a = [a; b]; % a is a matrix with 
         end
     end
     
-    meanResps =  mean(a,2)./.01;
+    meanBlankResps =  nanmean(a,2)./.01;
+        
+    blankTmp(8:8+length(a)-1) = meanBlankResps;
     
-    % get rid of stimulus presentations where there was an artifact, based
-    % on irrationally high firing rates given the rest of the responses to
-    % the blank. 
-    meanRespsCleaned = removeRespOutliers(meanResps);
-    
-%     outLogic = isoutlier(meanResps);
-%     
-%     ndx = 1;
-%     for do = 1:length(meanResps)
-%         if outLogic(do,1) == 0
-%             meanRespsCleaned(ndx,1) = meanResps(do,1);
-%             ndx = ndx+1;
-%         end
-%     end
-    
-    blankTmp(8:8+length(meanRespsCleaned)-1) = meanRespsCleaned;
-    
-    blankTmp(end+1,1) = mean(meanRespsCleaned);
-    blankTmp(end+1,1) = median(meanRespsCleaned);
-    blankTmp(end+1,1) = std(meanRespsCleaned)/sqrt(length(meanRespsCleaned));
-    blankTmp(end+1,1) = nan; % replace with normalized response in future
+    blankTmp(end+1,1) = nanmean(meanBlankResps);
+    blankTmp(end+1,1) = nanmedian(meanBlankResps);
+    blankTmp(end+1,1) = nanstd(meanBlankResps)/sqrt(length(meanBlankResps));
+    blankTmp(end+1,1) = nan; % may replace with normalized response in future
     
     blankResps{ch} = blankTmp;
     %% Make the matrices of responses to each stimulus for each channel
     %tmp = nan(21,size(typeTps,2));
     for r = 1:size(typeTps,2)
         tmp(1:size(typeTps,1),:) = typeTps;
-        muResp = mean(stimResps{r}(:,startBin:endBin,ch),2)./0.01;
-        
-        muRespClean = removeRespOutliers(muResp);
-        
-%         outs = isoutlier(muResp);
-%         
-%         ndx = 1;
-%         for do = 1:length(muResp)
-%             if outs(do,1) == 0
-%                 muRespClean(ndx,1) = muResp(do,1);
-%                 ndx = ndx+1;
-%             end
-%         end
-        
-        tmp(numParams+1:(numParams+1)+length(muRespClean)-1,r) = muRespClean;
-        tmp(end-3,r) = mean(muRespClean);
-        tmp(end-2,r) = median(muRespClean);
-        tmp(end-1,r) = std(muRespClean)/sqrt(length(muRespClean));
+        muResp = nanmean(stimResps{r}(:,startBin:endBin,ch),2)./0.01;
+
+        tmp(numParams+1:(numParams+1)+length(muResp)-1,r) = muResp;
+        tmp(end-3,r) = nanmean(muResp);
+        tmp(end-2,r) = nanmedian(muResp);
+        tmp(end-1,r) = nanstd(muResp)/sqrt(length(muResp));
     end
     RFStimResps{ch} = tmp;
 end

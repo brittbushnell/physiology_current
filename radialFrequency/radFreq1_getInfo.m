@@ -62,6 +62,18 @@ for fi = 1:length(files)
     dataT = stimVsBlankPermutations_allStim(dataT, numBoot, holdout, stimNdx, blankNdx);
     [dataT.stimBlankPval,dataT.responsiveChannels] = getPermutationStatsAndGoodCh(dataT.allStimBlankDprime,dataT.allStimBlankDprimeBootPerm);
     fprintf('responsive channel permutations done in %.2f minutes\n',toc/60)
+    %% get mean response, spike count, and zscore to each stimulus
+    % Calling the desired values: RFspikeCount{ch}(desired meausre,stim#)
+    %  If you want to get the spike counts or zscores, then the desired
+    %  measure is 9:end. If you want overall mean response to descriptive
+    %  statistics based on response rate then:
+    %        end-3 mean response
+    %        end-2 median response
+    %        end-1 standard error
+
+    [RFStimResps,blankResps,stimResps] = parseRadFreqStimResp(dataT);
+    [RFspikeCount,blankSpikeCount,RFzScore,blankZscore] = getRadFreqSpikeCountZscore(dataT, stimResps);
+    
         %% save data
         
         if location == 1
