@@ -1,8 +1,29 @@
-function [dataT] = GlassStimVsBlankPermutations_allStim(dataT, numBoot,holdout)
-% This function will compute d' for stimulus vs  blank screen using only
-% noise and 100% coherence stimuli (ignoring other coherences).
+function [dataT] = stimVsBlankPermutations_allStim(dataT, numBoot,holdout, stimNdx, blankNdx)
+% This function will compute d' for stimulus vs  blank screen using
+% whatever you indicate as stimulus and blank.  This is a generalized
+% version of GlassStimVsBlankPermutations_allStim function that does this
+% but only for Glass patterns. This function uses a 50:250ms time window to
+% compute d' from the time the stimulus comes on.
 %
-
+% INPUTS:
+%   DATAT:  Data structure with vectors for stimulus specific information
+%   NUMBOOT:  Number of times to permute the data (usually 2,000)
+%   HOLDOUT:  Proportion of the data to include in the permutation draw
+%   (usually using 0.9 so 90% of the data is used and 10% is held out.
+%   Yes, I know I named this variable backwards, but I did it across all of
+%   the programs so it's at least consistently wrong.)
+%   STIMNDX:  Logical vector for what trials a stimulus was shown
+%   BLANKNDX: Logical vector for what trials a blank screen was shown
+%
+%
+% OUTPUT:
+%   DATAT: same data structure updated to now have:
+%     dataT.allStimBlankDprimePerm 
+%     dataT.allStimBlankDprimeBootPerm 
+%     dataT.allStimBlankDprimeSDPerm 
+%     dataT.allStimBlankDprime 
+% 
+% Brittany Bushnell September 8, 2020
 %% Make matrices of responses
 % Initialize matrices
 stimBlankDprimePerm = nan(1,96);
@@ -15,9 +36,6 @@ realStimBlankDprime = nan(1,96);
 startMean = 5;
 endMean = 25;
 for ch = 1:96
-  
-    stimNdx = (dataT.numDots>0);
-    blankNdx = (dataT.numDots == 0);
     stimBlankBoot = nan(1,numBoot);
     
     for nb = 1:numBoot

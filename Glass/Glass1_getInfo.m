@@ -35,7 +35,6 @@ holdout = 0.9;
 
 plotFlag = 0;
 %%
-aMap = getBlackrockArrayMap(files(1,:));
 location = determineComputer;
 failedFiles = {};
 failNdx = 1;
@@ -46,22 +45,10 @@ for fi = 1:size(files,1)
     filename = files{fi};
     dataT = load(filename);
     
-    nChan = 96;
     tmp = strsplit(filename,'_');
-    
-    % extract information about what was run from file name.
-    if length(tmp) == 6
-        [animal, eye, dataT.programID, array, date2,runNum] = deal(tmp{:});
-        % get date in a format that's useable in figure titles (ex: 09/1/2019 vs 20190901)
-        date = convertDate(date2);
-    elseif length(tmp) == 7
-        [animal, eye, dataT.programID, array, date2,runNum,reThreshold] = deal(tmp{:});
-        date = convertDate(date2);
-    else
-        [animal, eye, dataT.programID, array, date2] = deal(tmp{:});
-        date = date2;
-    end
-    
+    animal = tmp{1};  eye = tmp{2}; programID = tmp{3}; array = tmp{4}; date2 = tmp{5};
+    runNum = tmp{6}; reThreshold = tmp{7}; date = convertDate(date2);
+   
     if strcmp(array, 'nsp1')
         array = 'V1';
     elseif strcmp(array, 'nsp2')
@@ -126,35 +113,8 @@ for fi = 1:size(files,1)
     end
     
     dataT.amap = aMap;
-    
-    figure;
-    clf
-    pos = get(gcf,'Position');
-    set(gcf,'Position',[pos(1) pos(2) 1400 1200])
-    set(gcf,'PaperOrientation','Landscape');
-    for ch = 1:96
-        
-        subplot(dataT.amap,10,10,ch)
-        hold on;
-        
-        REcoh = (dataT.coh == 1);
-        REnoiseCoh = (dataT.coh == 0);
-        REcohNdx = logical(REcoh + REnoiseCoh);
-        
-        blankResp = sum(smoothdata(dataT.bins((dataT.numDots == 0), 1:35 ,ch),'gaussian',3))./0.01;
-        stimResp = sum(smoothdata(dataT.bins((REcohNdx), 1:35 ,ch),'gaussian',3))./0.01;
-        plot(1:35,blankResp,'r','LineWidth',0.5);
-        plot(1:35,stimResp,'r','LineWidth',2);
-        title(ch)
-        set(gca,'Color','none','tickdir','out','FontAngle','italic','FontSize',10,'XTick',[],'YTick',[]);
-        ylim([0 inf])
-    end
-    suptitle({(sprintf('%s %s %s %s run %s', dataT.animal, dataT.array, dataT.programID,dataT.date,dataT.runNum));...
-        'clean data, Matlab parser'})
-    pause(0.1)
-    % get receptive field parameters
-    % RF center is relative to fixation, not center of the monitor.
-    dataT = callReceptiveFieldParameters(dataT);
+    %% plot psths
+    plotGlassPSTH_rawVsClean(dataT,filename)
     %% determine reponsive channels
     dataT = GlassStimVsBlankPermutations_allStim(dataT,numPerm,holdout);
     [dataT.stimBlankChPvals,dataT.responsiveCh] = glassGetPermutationStatsAndGoodCh(dataT.allStimBlankDprime,dataT.allStimBlankDprimeBootPerm);

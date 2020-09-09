@@ -401,8 +401,8 @@ for fi = 1:length(files)
             REnoiseCoh = (cleanData.coh == 0);
             REcohNdx = logical(REcoh + REnoiseCoh);
             
-            blankResp = sum(smoothdata(cleanData.bins((cleanData.numDots == 0), 1:35 ,ch),'gaussian',3));
-            stimResp = sum(smoothdata(cleanData.bins((REcohNdx), 1:35 ,ch),'gaussian',3));
+            blankResp = mean(smoothdata(cleanData.bins((cleanData.numDots == 0), 1:35 ,ch),'gaussian',3))//0.01;
+            stimResp = mean(smoothdata(cleanData.bins((REcohNdx), 1:35 ,ch),'gaussian',3))./0.01;
             plot(1:35,blankResp,'b','LineWidth',0.5);
             plot(1:35,stimResp,'b','LineWidth',2);
             
@@ -410,8 +410,8 @@ for fi = 1:length(files)
             REnoiseCoh = (rawData.coh == 0);
             REcohNdx = logical(REcoh + REnoiseCoh);
             
-            blankResp = sum(smoothdata(rawData.bins((rawData.numDots == 0), 1:35 ,ch),'gaussian',3));
-            stimResp = sum(smoothdata(rawData.bins((REcohNdx), 1:35 ,ch),'gaussian',3));
+            blankResp = mean(smoothdata(rawData.bins((rawData.numDots == 0), 1:35 ,ch),'gaussian',3))./0.01;
+            stimResp = mean(smoothdata(rawData.bins((REcohNdx), 1:35 ,ch),'gaussian',3))./0.01;
             plot(1:35,blankResp,'r','LineWidth',0.5);
             plot(1:35,stimResp,'r','LineWidth',2);
             

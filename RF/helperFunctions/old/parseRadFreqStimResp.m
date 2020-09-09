@@ -17,13 +17,12 @@ function [RFStimResps,blankResps] = parseRadFreqStimResp(data,startBin,endBin)%,
 %        2)   Amplitude (Weber fraction)
 %        3)   Phase (Orientation)
 %        4)   Spatial frequency
-%        5)   Amplitude 
-%        6)   Size (mean radius)
-%        7)   X position
-%        8)   Y position
-%        9 - ?) mean response to the stimulus on every repeat
-%        end - 3) mean response
-%        end - 2) median response
+%        5)   Size (nmean radius)
+%        6)   X position
+%        7)   Y position
+%        8 - ?) nanmean response to the stimulus on every repeat
+%        end - 3) nanmean response
+%        end - 2) nanmedian response
 %        end - 1) standard error
 %        end) NAN (will be used for a normalized value)
 %
@@ -52,7 +51,7 @@ function [RFStimResps,blankResps] = parseRadFreqStimResp(data,startBin,endBin)%,
 %     data.amplitude(i,1) = mod;
 %     data.orientation(i,1) = ori;
 %     data.spatialFrequency(i,1) = sf;
-%     data.radius(i,1) = rad; %remember, size of RF stimuli is in mean radius
+%     data.radius(i,1) = rad; %remember, size of RF stimuli is in nanmean radius
 %     name  = char(name);
 %     data.name(i,:) = name;
 % end
@@ -100,27 +99,26 @@ end
 typeTps = types';  % Transpose the stimulus type array so it's now each column is a unique stimulus.
 blankParams = typeTps(:,(end-(legitLocs - 1)):end); % Define which stimuli are the blanks
 
-numBlank = size(blankParams,1) + (legitLocs .* size(stimResps{end},1)) + 4; % multiplying by legitLocs because there are three blanks, and adding 4 onto the end for mean, median, ste, and normalized response.
+numBlank = size(blankParams,1) + (legitLocs .* size(stimResps{end},1)) + 4; % multiplying by legitLocs because there are three blanks, and adding 4 onto the end for nanmean, nanmedian, ste, and normalized response.
 
-blankTmp = nan(numBlank,1);
+
 blankResps  = cell(1,numChannels);
+RFStimResps = cell(1,numChannels);
 %% setup empty data structures for stimulus data 
 typeTps = typeTps(:,1:end-legitLocs); % Define which stimuli are not blanks.
 %numStim = size(typeTps,1) + size(stimResps{1},1) + 4;
 numParams = size(typeTps,1);
 
-RFStimResps = cell(1,numChannels);
-
-
 for r = 1:(size(stimResps,1) - legitLocs)
     numTrials(r,1) = size(stimResps{r},1);
 end
+
 tmpRows = size(typeTps,1) + max(numTrials) + 4; % parameters + trials + summary data
 tmpCols = size(typeTps,2);
-tmp = nan(tmpRows,tmpCols);
 %% Make the matrices of responses to a blank stimulus for each channel
 for ch = 1:numChannels
-    
+    stmTmp = nan(tmpRows,tmpCols);
+    blankTmp = nan(numBlank,1);
     blankTmp(1:size(blankParams,1),1) = blankParams(:,1);
     
     for t = 1:legitLocs-1
@@ -133,12 +131,12 @@ for ch = 1:numChannels
             a = [a; b];
         end
     end
-    mu_a = mean(a,2)./.01;
+    mu_a = nanmean(a,2)./.01;
     
-    blankTmp(8:8+length(mu_a)-1) = mean(a,2)./.01;
+    blankTmp(8:8+length(mu_a)-1) = nanmean(a,2)./.01;
 
-    blankTmp(end+1,1) = mean(mu_a);
-    blankTmp(end+1,1) = median(mu_a);
+    blankTmp(end+1,1) = nanmean(mu_a);
+    blankTmp(end+1,1) = nanmedian(mu_a);
     blankTmp(end+1,1) = std(mu_a)/sqrt(length(mu_a));
     blankTmp(end+1,1) = nan; % replace with normalized response in future
     
@@ -146,12 +144,12 @@ for ch = 1:numChannels
     %% Make the matrices of responses to each stimulus for each channel
     %tmp = nan(21,size(typeTps,2));
     for r = 1:size(typeTps,2) 
-        tmp(1:size(typeTps,1),:) = typeTps;
-        muResp = mean(stimResps{r}(:,startBin:endBin,ch),2)./0.01;
-        tmp(numParams+1:(numParams+1)+length(muResp)-1,r) = muResp;
-        tmp(end-3,r) = mean(muResp);
-        tmp(end-2,r) = median(muResp);
-        tmp(end-1,r) = std(muResp)/sqrt(length(muResp));
+        stmTmp(1:size(typeTps,1),:) = typeTps;
+        muResp = nanmean(stimResps{r}(:,startBin:endBin,ch),2)./0.01;
+        stmTmp(numParams+1:(numParams+1)+length(muResp)-1,r) = muResp;
+        stmTmp(end-3,r) = nanmean(muResp);
+        stmTmp(end-2,r) = nanmedian(muResp);
+        stmTmp(end-1,r) = std(muResp)/sqrt(length(muResp));
     end
-    RFStimResps{ch} = tmp;
+    RFStimResps{ch} = stmTmp;
 end

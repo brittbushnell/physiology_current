@@ -3,15 +3,40 @@ README_RadialFrequencyPhysiology
 
 Notes about the status of the physiology analysis of RF data overall.
 
+%%%%%% September 8, 2020 %%%%%%
+After a long hiatus to work on Glass pattern analysis, I'm back working on
+this.  The plan is to make the analysis pipeline for all of the different
+stimuli follow the same process with each one tailored to those specific
+stimuli and questions.  
+
+radFreq1_getInfo:
+    1) Get all basic information about the experiments. 
+           - extract what stimuli were run on each trial
+           - define the array map
+           - copy over the receptive field locations for each channel
+
+    2) Plot clean and raw psths to look for any abnormalities in timing
+    that may need to be cleaned up
+    
+    3) Stim vs blank permutation test to determine responsive channels and
+    get p-values
+
+    4) Get spike counts, z-scores, and split-half correlations 
+
+    5) save data with ending _info
+
+NOTE: in Glass patterns, this is where we'd also limit to channels whose
+receptive fields fall within the stimulus bounds.  Because we're using
+three different stimulus locations, will have to figure out how to do that
+for RF stimuli. 
+
+
 
 %%%%%% April 5, 2019 %%%%%%
 Data collection is complete from WU, XT, and WV, so recommencing with data
 analysis - particularly cleaning up the code and setting things up for
 comparisons across animals.  As part of this, making new versions of all of
 the 
-
-
-
 
 %%%%%% July 12, 2018 %%%%%%
 After VSS, I broke the analyses down by step 1, step 2, step 3 etc. Step 1,
