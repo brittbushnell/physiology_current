@@ -4,22 +4,22 @@ clc
 %%
 
 files = {
-   'WV_LE_MapNoise_nsp2_20190130_all_thresh35';
-   'WV_RE_MapNoise_nsp2_20190130_all_thresh35';
-   
-   'WV_LE_MapNoise_nsp1_20190130_all_thresh35';
-   'WV_RE_MapNoise_nsp1_20190130_all_thresh35';
-   
-   'XT_LE_mapNoiseRight_nsp2_20181120_all_thresh35';
-   'XT_RE_mapNoiseRight_nsp2_20181026_all_thresh35';
-   
-   'XT_LE_mapNoiseRight_nsp1_20181120_all_thresh35';
-   'XT_RE_mapNoiseRight_nsp1_20181026_all_thresh35';
-   
-   'WU_LE_Gratmap_nsp2_20170428_all_thresh35';
+%    'WV_LE_MapNoise_nsp2_20190204_002_thresh35';
+%    'WV_RE_MapNoise_nsp2_20190205_001_thresh35';
+%    
+%    'WV_LE_MapNoise_nsp1_20190204_002_thresh35';
+%    'WV_RE_MapNoise_nsp1_20190205_001_thresh35';
+%    
+%    'XT_LE_mapNoiseRight_nsp2_20181120_002_thresh35';
+%    'XT_RE_mapNoiseRight_nsp2_20181026_001_thresh35';
+%    
+%    'XT_LE_mapNoiseRight_nsp1_20181120_002_thresh35';
+%    'XT_RE_mapNoiseRight_nsp1_20181026_001_thresh35';
+    
+   'WU_LE_Gratmap_nsp2_20170424_001_thresh35';
    'WU_RE_Gratmap_nsp2_20170428_006_thresh35';
    
-   'WU_LE_Gratmap_nsp1_20170428_all_thresh35';
+   'WU_LE_Gratmap_nsp1_20170424_001_thresh35';
    'WU_RE_Gratmap_nsp1_20170428_006_thresh35';
 };
 nameEnd = 'info';
@@ -28,39 +28,32 @@ location = determineComputer;
 failedFiles = {};
 failNdx = 1;
 
-aMap = getBlackrockArrayMap(files(1,:));
 for fi = 1:size(files,1)
     %% Get basic information about experiments
    % try
     filename = files{fi};
     dataT = load(filename);
     
-    nChan = 96;
-    dataT.amap = aMap;
+    dataT.amap = getBlackrockArrayMap(filename);
     tmp = strsplit(filename,'_');
+    dataT.animal = tmp{1};  dataT.eye = tmp{2}; dataT.programID = tmp{3};
+    array = tmp{4}; dataT.date2 = tmp{5};
+    dataT.runNum = tmp{6}; dataT.reThreshold = tmp{7};
+    dataT.date = convertDate(dataT.date2);
     
-    % extract information about what was run from file name.
-    if length(tmp) == 6
-        [dataT.animal, dataT.eye, dataT.programID, dataT.array, dataT.date2,dataT.runNum] = deal(tmp{:});
-        % get date in a format that's useable in figure titles (ex: 09/1/2019 vs 20190901)
-        %dataT.date = convertDate(dataT.date2);
-    elseif length(tmp) == 7
-        [dataT.animal, dataT.eye, dataT.programID, dataT.array, dataT.date2,dataT.runNum,ign] = deal(tmp{:});
-        % get date in a format that's useable in figure titles (ex: 09/1/2019 vs 20190901)
-        %        dataT.date = convertDate(dataT.date2);
-    else
-        [dataT.animal, dataT.eye, dataT.programID, dataT.array, dataT.date2] = deal(tmp{:});
-        dataT.date = dataT.date2;
-    end
-    
-    if strcmp(dataT.array, 'nsp1')
+    if strcmp(array, 'nsp1')
         dataT.array = 'V1';
-    elseif strcmp(dataT.array, 'nsp2')
+    elseif strcmp(array, 'nsp2')
         dataT.array = 'V4';
     end
     %% check and adjust locations so fixation is at (0,0)
     % adjust locations so fixation is at (0,0). This will also allow us to
     % combine across runs with different locations to get full maps.
+    if contains(dataT.animal,'WU')
+        dataT.pos_x = dataT.xoffset(1,1:size(dataT.width,2)); % don't know why, but for some reason offset is reapeated twice
+        dataT.pos_y = dataT.yoffset(1,1:size(dataT.width,2));
+    end
+    
     if dataT.fix_x ~=0
         dataT.fix_xOrig = dataT.fix_x;
         dataT.fix_x = dataT.fix_x - dataT.fix_x;
@@ -75,17 +68,30 @@ for fi = 1:size(files,1)
     end
     %%
     if contains(filename, 'WU')
+        % he was run using gratings, so no filename to parse out
     else
         dataT.stimulus = nan(1,size(dataT.filename,1));
         for i = 1:size(dataT.filename,1)
             dataT.stimulus(1,i) = parseMapNoiseName(dataT.filename(i,:));
         end
     end
+    %% Plot clean vs raw PSTHs to check for timing fuckery
+    if contains(dataT.animal,'WU')        
+        plotGratingPSTH_rawVsClean (dataT,filename)
+    else
+        plotMapNoisePSTH_rawVsClean (dataT,filename)
+    end
     %%
     if location == 1
-        outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/GratMapRF/',dataT.array);
+        outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/mapping/',dataT.array);
+        if ~exist(outputDir,'dir')
+            mkdir(outputDir)
+        end
     elseif location == 0
-        outputDir =  sprintf('~/Dropbox/ArrayData/matFiles/%s/GratMapRF/',dataT.array);
+        outputDir =  sprintf('~/Dropbox/ArrayData/matFiles/%s/mapping/',dataT.array);
+        if ~exist(outputDir,'dir')
+            mkdir(outputDir)
+        end
     end
     %% add stimulus center for other programs
     if contains(filename,'WU')

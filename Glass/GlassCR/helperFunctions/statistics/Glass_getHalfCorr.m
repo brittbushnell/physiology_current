@@ -5,8 +5,8 @@ for nb = 1:1000
     %rearrange_spkcnt = permute(dataT.GlassZscore,[1 2 3 4 6 5]);
     numRepeats = size(dataT.GlassZscore,5);
     reshape_spkcnt = reshape(rearrange_spkcnt,16,numRepeats,96); 
-    sample1 = randperm(numRepeats,numRepeats/2);
-    sample2 = datasample(setdiff([1:numRepeats]',sample1),numRepeats/2,1);
+    sample1 = randperm(numRepeats,round(numRepeats/2));
+    sample2 = datasample(setdiff([1:numRepeats]',sample1),round(numRepeats/2),1);
     
     set1 = squeeze(nanmean(reshape_spkcnt(:,sample1,:),2));
     set2 = squeeze(nanmean(reshape_spkcnt(:,sample2,:),2));
@@ -16,7 +16,18 @@ end
 reliabilityIndex = median(split_half_correlation,2);
 reliabilityIndex = reliabilityIndex';
 %%
-figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/Glass/%s/stats/halfCorr/',dataT.animal, dataT.array);
+location = determineComputer;
+if location == 0
+    figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/Glass/%s/stats/halfCorr/',dataT.animal, dataT.array);
+    if ~exist(figDir,'dir')
+        mkdir(figDir)
+    end
+else
+    figDir =  sprintf( '/Local/Users/bushnell/Dropbox/Figures/%s/Glass/%s/stats/halfCorr/',dataT.animal, dataT.array);
+    if ~exist(figDir,'dir')
+        mkdir(figDir)
+    end
+end
 cd(figDir)
 %%
 figure(1)

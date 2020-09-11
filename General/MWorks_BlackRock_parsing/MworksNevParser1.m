@@ -68,9 +68,16 @@ end
 fileName = string(fileName);
 tmp = strsplit(fileName,'_');
 fileName = char(fileName);
+animal = tmp{1};
+eye = tmp{2};
+programID = tmp{3};
+array = tmp{4};
+date = tmp{5};
+runNum = tmp{6};
+threshold = tmp{7};
 
-if length(tmp) == 7 %working from rethresholded and cleaned data
-    [animal,eye,programID,array,date,~,threshold] = deal(tmp{:});
+if ~isempty(threshold)%working from rethresholded and cleaned data
+%     [animal,eye,programID,array,date,~,threshold] = deal(tmp{:});
     date = str2double(date);
     % /vnlstorage3/bushnell_arrays/nsp2/reThreshold
     if contains(programID,'grat','IgnoreCase',true)
@@ -81,7 +88,7 @@ if length(tmp) == 7 %working from rethresholded and cleaned data
         blackrockDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/png/%s/%s/',array,animal,eye);
     end
 else
-    [animal,~,programID,array,date,~] = deal(tmp{:});
+%     [animal,~,programID,array,date,~] = deal(tmp{:});
     date = str2double(date);
     if contains(animal,'WU')
         blackrockDir = sprintf('/users/bushnell/Desktop/my_vnlstorage/bushnell_arrays/%s/%s_blackrock/%s/',array,array,animal);
@@ -136,7 +143,7 @@ ns_nev_name = [blackrockDir,fileName];
 % from the nev file name to get the .mwk name:
 
 % Modifying so it will also ignore added portion for rethresholded files
- replacement = {'_nsp1', '_nsp2','_thresh30','_thresh35','_thresh40','_thresh45','_cleaned3.5ogcorrupt','.nev'};% '_cleaned4.5',,'_cleaned3.5'
+ replacement = {'_nsp1', '_nsp2','_thresh30','_thresh35','_thresh40','_thresh45','_cleaned3.5','_ogcorrupt','.nev'};% '_cleaned4.5',,'_cleaned3.5'
 for n = 1: length(replacement)
     if n > 1
         shortName = strrep(shortName, replacement{n}, '');
