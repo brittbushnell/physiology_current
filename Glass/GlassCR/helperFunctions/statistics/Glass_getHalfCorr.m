@@ -35,10 +35,10 @@ clf
 hold on
 rectangle('Position',[0.05 0 0.9 1],'FaceColor',[0.8 0.8 0.8],'EdgeColor',[0.8 0.8 0.8])
 
-plot(dataT.stimBlankChPvals(dataT.inStim == 1),reliabilityIndex(dataT.inStim == 1),'ok')
-plot(dataT.stimBlankChPvals(dataT.inStim == 0),reliabilityIndex(dataT.inStim == 0),'o','MarkerEdgeColor',[0.4 0.2 0.4])
+plot(dataT.stimBlankChPvals(dataT.inStim == 1),reliabilityIndex(dataT.inStim == 1),'o','MarkerFaceColor',[0.2 0.2 0.2],'MarkerEdgeColor',[0.2 0.2 0.2])
+plot(dataT.stimBlankChPvals(dataT.inStim == 0),reliabilityIndex(dataT.inStim == 0),'o','MarkerEdgeColor',[0.2 0.2 0.2])
 
-%ylim([0 1.05])
+ylim([-0.5 1.05])
 xlim([-0.1 1.1])
 
 set(gca,'tickdir','out','Layer','top','YTick',0:0.25:1,'XTick',0:0.2:1)

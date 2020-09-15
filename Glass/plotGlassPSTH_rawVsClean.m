@@ -4,6 +4,7 @@ location = determineComputer;
 
 %% now do the same for the raw data
 rawName = strrep(filename,'_thresh35','');
+rawName = strrep(rawName,'_ogcorrupt','');
 rawData = load(rawName);
 ndx = 1;
 for i = 1:size(rawData.filename,1)
@@ -24,13 +25,13 @@ for i = 1:size(rawData.filename,1)
 end
 %% plot stim vs blank PSTH to look for timing funkiness
 if location == 0
-    figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/%s/%s/PSTH/%s/stimVblank',cleanData.animal, cleanData.programID, cleanData.array,eye);
+    figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/%s/%s/PSTH/%s/stimVblank',cleanData.animal, cleanData.programID, cleanData.array,cleanData.eye);
     
     if ~exist(figDir,'dir')
         mkdir(figDir)
     end
 else
-    figDir =  sprintf( '/Local/Users/bushnell/Dropbox/Figures/%s/%s/%s/PSTH/%s/stimVblank',cleanData.animal, cleanData.programID, cleanData.array,eye);
+    figDir =  sprintf( '/Local/Users/bushnell/Dropbox/Figures/%s/%s/%s/PSTH/%s/stimVblank',cleanData.animal, cleanData.programID, cleanData.array,cleanData.eye);
     if ~exist(figDir,'dir')
         mkdir(figDir)
     end

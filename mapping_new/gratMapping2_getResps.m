@@ -34,9 +34,9 @@ for fi = 1:size(files,1)
     end
     %%
     if location == 1
-        outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/GratMapRF/resps',dataT.array);
+        outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/GratMapRF/resps/',dataT.array);
     elseif location == 0
-        outputDir =  sprintf('~/Dropbox/ArrayData/matFiles/%s/GratMapRF/resps',dataT.array);
+        outputDir =  sprintf('~/Dropbox/ArrayData/matFiles/%s/GratMapRF/resps/',dataT.array);
     end
     %% do stim vs blank permutation test
     stimNdx  = dataT.spatial_frequency ~=0;

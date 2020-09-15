@@ -20,10 +20,10 @@ if contains(dataT.animal,'WU')
         end
     else
         if contains(dataT.array,'V4')
-            load('WU_RE_Gratmap_nsp2_20170424_002_thresh35_info_resps');
+            load('WU_RE_Gratmap_nsp2_20170428_006_thresh35_info_resps');
             rfData = data.RE;
         else
-            load('WU_RE_Gratmap_nsp1_20170424_002_thresh35_info_resps');
+            load('WU_RE_Gratmap_nsp1_20170428_006_thresh35_info_resps');
             rfData = data.RE;
         end
     end
