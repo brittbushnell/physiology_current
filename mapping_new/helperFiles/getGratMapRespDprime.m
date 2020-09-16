@@ -19,8 +19,13 @@ blankNdx = dataT.spatial_frequency == 0;
 for ch = 1:96
     for x = 1:numXs
         for y = 1:numYs
-            xNdx = dataT.pos_x == xPos(x);
-            yNdx = dataT.pos_y == yPos(y);
+            if size(dataT.pos_x) == size(dataT.spatial_frequency)
+                xNdx = dataT.pos_x == xPos(x);
+                yNdx = dataT.pos_y == yPos(y);
+            else
+                xNdx = dataT.pos_x(1,1:size(dataT.spatial_frequency,2)) == xPos(x);
+                yNdx = dataT.pos_y(1,1:size(dataT.spatial_frequency,2)) == yPos(y);
+            end
             
             stimTrials  = stimNdx & yNdx & xNdx;
             blankTrials = blankNdx;

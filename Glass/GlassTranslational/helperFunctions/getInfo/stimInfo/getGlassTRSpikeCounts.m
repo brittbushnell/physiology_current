@@ -1,19 +1,26 @@
 function [trSpikeCount,noiseSpikeCount,blankSpikeCount,stimSpikeCount] = getGlassTRSpikeCounts(dataT)
-% set goodCh to either dataT.responsiveCh or dataT.goodCh
+% get spike counts for all unique stimuli across all channels
 
 [numOris,numDots,numDxs,numCoh,~,orientations,dots,dxs,coherences,~] = getGlassTRParameters(dataT);
 
-% trSpikeCount = nan(numOris,numCoh,numDots,numDots,96,30);
-% noiseSpikeCount = nan(numDots,numDxs,96,:);
-% blankSpikeCount = nan(96,:);
-% stimSpikeCount = nan(96,:);
+cohNdx = (dataT.coh == 1);
+dotNdx = (dataT.numDots == 400);
+dxNdx = (dataT.dx == 0.03);
+oriNdx = (dataT.rotation == 0);
+linearNdx = (dataT.type == 3);
+noiseNdx = (dataT.type == 0);
+
+linTrials = (linearNdx & dotNdx & dxNdx & oriNdx & cohNdx);
+noiseTrials = (noiseNdx & dotNdx & dxNdx);
+
+
+trSpikeCount = nan(numOris, numCoh, numDots, numDxs, 96, sum(linTrials));
+noiseSpikeCount = nan(numDots, numDxs, 96, sum(noiseTrials));
 %%
 for ch = 1:96
     startMean= 5;
     endMean  = 25;
     
-    noiseNdx = (dataT.type == 0);
-    linearNdx = (dataT.type == 3);
     blankNdx = (dataT.numDots == 0);
     stimTrials = (dataT.numDots >0);
     

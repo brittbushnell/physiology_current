@@ -69,49 +69,49 @@ for mk = 1:length(monk)
                 clear ndx
                 %%
                 for fi = 1:size(files,2)
-                     try
-                    filename = string(files{fi});
-                    
-                    if contains(stimType,'png')
-                        if contains(filename,'map','IgnoreCase',true)
-                            outputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/%s/%s/parsed/Mapping/%s/',array,stimType,animal,eye);
-                        elseif contains(filename,'glass','IgnoreCase',true)
-                            outputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/%s/%s/parsed/Glass/%s/',array,stimType,animal,eye);
-                        elseif contains(filename,'freq','IgnoreCase',true)
-                            outputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/%s/%s/parsed/RadialFrequency/%s/',array,stimType,animal,eye);
-                        elseif contains(filename,'tex','IgnoreCase',true)
-                            outputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/%s/%s/parsed/Textures/%s/',array,stimType,animal,eye);
-                        elseif contains(filename,'Pasupathy','IgnoreCase',true)
-                            outputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/%s/%s/parsed/Pasupathy/%s/',array,stimType,animal,eye);
-                        elseif contains(filename,'edge','IgnoreCase',true)
-                            outputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/%s/%s/parsed/Edge/%s/',array,stimType,animal,eye);
+                    try
+                        filename = string(files{fi});
+                        
+                        if contains(stimType,'png')
+                            if contains(filename,'map','IgnoreCase',true)
+                                outputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/%s/%s/parsed/Mapping/%s/',array,stimType,animal,eye);
+                            elseif contains(filename,'glass','IgnoreCase',true)
+                                outputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/%s/%s/parsed/Glass/%s/',array,stimType,animal,eye);
+                            elseif contains(filename,'freq','IgnoreCase',true)
+                                outputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/%s/%s/parsed/RadialFrequency/%s/',array,stimType,animal,eye);
+                            elseif contains(filename,'tex','IgnoreCase',true)
+                                outputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/%s/%s/parsed/Textures/%s/',array,stimType,animal,eye);
+                            elseif contains(filename,'Pasupathy','IgnoreCase',true)
+                                outputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/%s/%s/parsed/Pasupathy/%s/',array,stimType,animal,eye);
+                            elseif contains(filename,'edge','IgnoreCase',true)
+                                outputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/%s/%s/parsed/Edge/%s/',array,stimType,animal,eye);
+                            else
+                                outputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/%s/%s/parsed/%s/',array,stimType,animal,eye);
+                            end
                         else
-                            outputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/%s/%s/parsed/%s/',array,stimType,animal,eye);
+                            if contains (filename,'map','IgnoreCase',true)
+                                outputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/%s/%s/parsed/Mapping/%s/',array,stimType,animal,eye);
+                            else
+                                outputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/%s/%s/parsed/Gratings/%s/',array,stimType,animal,eye);
+                            end
                         end
-                    else
-                        if contains (filename,'map','IgnoreCase',true)
-                            outputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/%s/%s/parsed/Mapping/%s/',array,stimType,animal,eye);
-                        else
-                            outputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/%s/%s/parsed/Gratings/%s/',array,stimType,animal,eye);
+                        
+                        fprintf('*** analyzing %s file %d/%d ****\n',filename,fi,size(files,2));
+                        if ~exist(sprintf('%s/%s',outputDir,strrep(filename,'.mat','')),'file')
+                            if contains(filename,'__')
+                                continue
+                            else
+                                MworksNevParser1(filename,10,100,outputDir);
+                            end
                         end
-                    end
-                    
-                    fprintf('*** analyzing %s file %d/%d ****\n',filename,fi,size(files,2));
-                    if ~exist(sprintf('%s/%s',outputDir,strrep(filename,'.mat','')),'file')
-                        if contains(filename,'__')
-                            continue
-                        else
-                            MworksNevParser1(filename,10,100,outputDir);
-                        end
-                    end
-                    toc/3600;
-                    
+                        toc/3600;
+                        
                     catch ME
                         failNdx = failNdx+1;
                         fprintf('\n\n%s failed %s\n\n',filename,ME.message);
                         failedFiles{failNdx,1} = ME;
                         
-                end
+                    end
                 end
             end
         end

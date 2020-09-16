@@ -50,8 +50,9 @@ end
 for ch = 1:96
     for y = 1:numYs
         for x = 1:numXs
-            xNdx = (dataT.pos_x == xPos(x));
-            yNdx = (dataT.pos_y == yPos(y));
+            xNdx = dataT.pos_x == xPos(x);
+            yNdx = dataT.pos_y == yPos(y);
+            
             blankResp(y,x,ch,:) = mean(smoothdata(dataT.bins(blankNdx, 1:35 ,ch),'gaussian',3))./0.01;
             stimResp(y,x,ch,:) = mean(smoothdata(dataT.bins(stimNdx & xNdx & yNdx, 1:35 ,ch),'gaussian',3))./0.01;
         end

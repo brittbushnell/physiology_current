@@ -4,12 +4,12 @@ clc
 tic
 %%
 files = {
-    'WU_RE_GratingsMapRF_nsp2_20170814_002_thresh35_info';
-    'WU_LE_GratingsMapRF_nsp2_20170814_003_thresh35_info';    
-    
-    'WU_RE_GratingsMapRF_nsp1_20170814_002_thresh35_info';
-    'WU_LE_GratingsMapRF_nsp1_20170814_003_thresh35_info';
-     };
+   'WU_LE_Gratmap_nsp2_20170424_001_thresh35_info';
+   'WU_RE_Gratmap_nsp2_20170428_006_thresh35_info';
+   
+   'WU_LE_Gratmap_nsp1_20170424_001_thresh35_info';
+   'WU_RE_Gratmap_nsp1_20170428_006_thresh35_info';
+    };
 nameEnd ='resps';
 %%
 numBoot = 200;
@@ -34,16 +34,15 @@ for fi = 1:size(files,1)
     end
     %%
     if location == 1
-        outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/GratMapRF/resps',dataT.array);
+        outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/GratMapRF/resps/',dataT.array);
     elseif location == 0
-        outputDir =  sprintf('~/Dropbox/ArrayData/matFiles/%s/GratMapRF/resps',dataT.array);
+        outputDir =  sprintf('~/Dropbox/ArrayData/matFiles/%s/GratMapRF/resps/',dataT.array);
     end
     %% do stim vs blank permutation test
     stimNdx  = dataT.spatial_frequency ~=0;
     blankNdx = dataT.spatial_frequency == 0;
     
-    dataT = stimVsBlankPermutations_allStim(dataT,stimNdx,blankNdx, numBoot,holdout);
-    
+    dataT = stimVsBlankPermutations_allStim(dataT, numBoot,holdout, stimNdx, blankNdx);
     fprintf('stimulus vs blank permutaiton test done %.2f minutes \n',toc/60)
     %% get mean responses for each location
     dataT = getGratMapRespDprime(dataT, numBoot, holdout);
