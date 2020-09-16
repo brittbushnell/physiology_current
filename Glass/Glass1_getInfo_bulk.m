@@ -179,7 +179,9 @@ for an = 1:3
                     end
                     fprintf('responsive channels defined\n')                    
                     %% plot stim vs blank PSTH to look for timing funkiness
-                    plotGlassPSTH_rawVsClean(dataT,filename,goodFlag)
+                    if location == 1
+                        plotGlassPSTH_rawVsClean(dataT,filename,goodFlag) % only run on Laca b/c she has all of the raw files
+                    end
                     %% if there are not more than 15 responsive channels, save the file and move on
                     if goodFlag == 0
                         if location == 1

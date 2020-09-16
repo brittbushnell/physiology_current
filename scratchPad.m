@@ -2,8 +2,8 @@
 % Creating a saved script for it after losing info due to crashes.
 %%
 
-clear
-close all
-clc
-location = determineComputer;
+% clear
+% close all
+% clc
+% location = determineComputer;
 %%

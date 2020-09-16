@@ -17,19 +17,22 @@ for nb = 1:1000
     splitHalf(:,nb) = diag(corr(set1,set2));
 end
 reliabilityIndex = median(splitHalf,2);
-reliabilityIndex = reliabilityIndex';
 %% permute half-split
+numPerm = size(reshape_spkcnt,1);
 for boot = 1:2000
-    sample1 = randperm(numRepeats,round(numRepeats/2)); % randomly choose half of the repeats
-    sample2 = datasample(setdiff([1:numRepeats]',sample1),round(numRepeats/2),1); % find the repeats not in sample1
+    for nb = 1:1000
+    sample1 = randperm(numPerm,round(numPerm/2)); % randomly choose half of the repeats
+    sample2 = datasample(setdiff([1:numPerm]',sample1),round(numPerm/2),1); % find the repeats not in sample1
     
     set1 = squeeze(nanmean(reshape_spkcnt(sample1,:,:),2));
     set2 = squeeze(nanmean(reshape_spkcnt(sample2,:,:),2));
     
-    splitHalfPerm(:,boot) = diag(corr(set1,set2)); %96xnb
+    splitHalfPerm(:,nb) = diag(corr(set1,set2)); %96xnb
+    end
+    reliabilityIndexPerm(:,boot) = median(splitHalfPerm,2); % since the reliability index is the "true" value you're comparing against, that's the value you have to permute
 end
   %% do permutation test
- [pVals,sigChs] = glassGetPermutationStatsAndGoodCh(reliabilityIndex',splitHalfPerm);
+ [pVals,sigChs] = glassGetPermutationStatsAndGoodCh(reliabilityIndex,reliabilityIndexPerm);
  %%
  dataT.splitHalfCorr = splitHalf;
  dataT.splitHalfPerm = splitHalfPerm;
