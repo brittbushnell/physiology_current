@@ -147,14 +147,14 @@ failNdx = 1;
 %%
 for fi = 1:length(files)
     %% Get basic information about experiments
-   % try
+    try
         filename = files{fi};
         dataT = load(filename);
         
         tmp = strsplit(filename,'_');
         
         aMap = getBlackrockArrayMap(filename);
-        animal = tmp{1};  eye = tmp{2}; programID = tmp{3}; array = tmp{4}; date2 = tmp{5};
+        animal = tmp{1};  eye = tmp{2}; dataT.programID = tmp{3}; array = tmp{4}; date2 = tmp{5};
         runNum = tmp{6}; reThreshold = tmp{7}; date = convertDate(date2);
         
         if strcmp(array, 'nsp1')
@@ -185,9 +185,7 @@ for fi = 1:length(files)
             dataT.sample(1,ndx)  = sample;
             ndx = ndx+1;
         end
-        
-        %[numTypes,numDots,numDxs,numCoh,numSamp,types,dots,dxs,coherences,samples] = getGlassParameters(dataT);
-        
+                
         
         %%
         if sum(ismember(dataT.numDots,100)) ~=0 % if 100 and 0.01 were run, remove them.
@@ -251,11 +249,25 @@ for fi = 1:length(files)
             end
         end
         %% save data
-        
         if location == 1
-            outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/Glass/info/',dataT.array);
+            if sum(dataT.responsiveCh) >= 15
+                outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/Glass/info/good/',dataT.array);
+            else
+                outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/Glass/info/bad/',dataT.array);
+            end
+            
+            if ~exist(outputDir, 'dir')
+                mkdir(outputDir)
+            end
         elseif location == 0
-            outputDir =  sprintf('~/Dropbox/ArrayData/matFiles/%s/Glass/info/',dataT.array);
+            if sum(dataT.responsiveCh) >= 15
+                outputDir =  sprintf('~/Dropbox/ArrayData/matFiles/%s/Glass/info/good/',dataT.array);
+            else
+                outputDir =  sprintf('~/Dropbox/ArrayData/matFiles/%s/Glass/info/good/',dataT.array);
+            end
+            if ~exist(outputDir, 'dir')
+                mkdir(outputDir)
+            end
         end
         
         if contains(filename,'LE')
@@ -269,12 +281,12 @@ for fi = 1:length(files)
         saveName = [outputDir filename '_' nameEnd '.mat'];
         save(saveName,'data');
         fprintf('%s saved\n', saveName)
-%     catch ME
-%         fprintf('%s did not work. \nError message: %s \n',filename,ME.message)
-%         failedFiles{failNdx} = filename;
-%         failedME{failNdx} = ME;
-%         failNdx = failNdx+1;
-%     end
+    catch ME
+        fprintf('%s did not work. \nError message: %s \n',filename,ME.message)
+        failedFiles{failNdx} = filename;
+        failedME{failNdx} = ME;
+        failNdx = failNdx+1;
+    end
 end
 failedFiles
 toc

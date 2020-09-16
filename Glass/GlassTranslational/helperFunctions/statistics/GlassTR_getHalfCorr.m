@@ -18,16 +18,16 @@ reliabilityIndex = reliabilityIndex';
 %%
 location = determineComputer;
 if location == 0
-    figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/GlassTR/%s/stats/halfCorr/',dataT.animal, dataT.array);
+    figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/%s/%s/stats/halfCorr/',dataT.animal, dataT.programID, dataT.array);
 else
-    figDir =  sprintf( '/Local/Users/bushnell/Dropbox/Figures/%s/GlassTR/%s/stats/halfCorr/',dataT.animal, dataT.array);
+    figDir =  sprintf( '/Local/Users/bushnell/Dropbox/Figures/%s/%s/%s/stats/halfCorr/',dataT.animal, dataT.programID, dataT.array);
 end
 cd(figDir)
 %%
 figure(1)
 clf
 hold on
-rectangle('Position',[0.05 0 0.9 1],'FaceColor',[0.8 0.8 0.8],'EdgeColor',[0.8 0.8 0.8])
+rectangle('Position',[0.05 -0.25 0.9 1.25],'FaceColor',[0.8 0.8 0.8],'EdgeColor',[0.8 0.8 0.8])
 
 plot(dataT.stimBlankChPvals(dataT.inStim == 1),reliabilityIndex(dataT.inStim == 1),'o','MarkerFaceColor',[0.2 0.2 0.2],'MarkerEdgeColor',[0.2 0.2 0.2])
 plot(dataT.stimBlankChPvals(dataT.inStim == 0),reliabilityIndex(dataT.inStim == 0),'o','MarkerEdgeColor',[0.2 0.2 0.2])

@@ -55,7 +55,7 @@ rfQuadrant = nan(1,96);
 for ch = 1:96
     rfX = rfParams{ch}(1);
     rfY = rfParams{ch}(2);
-    fprintf('ch %d (%.1f, %.1f)\n', ch, rfX, rfY)
+    %fprintf('ch %d (%.1f, %.1f)\n', ch, rfX, rfY)
     
     if rfX > 0
         if rfY > 0  % RF is in the top right quadrant

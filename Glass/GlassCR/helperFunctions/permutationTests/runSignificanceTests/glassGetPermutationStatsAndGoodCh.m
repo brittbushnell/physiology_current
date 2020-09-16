@@ -2,12 +2,13 @@ function [stimBlankPval,gCh] = glassGetPermutationStatsAndGoodCh(realData,permDa
 % glassGetPermutationStats(realData,permData)
 %
 % INPUT:
-%  data matrices of glass pattern stimuli responses that are organized by (dt,dx,ch)
+%  realData: 96 element vector of measured values
+%  permData: 96xboot matrix where the columns are the bootstrapped values
 %
 % OUTPUT:
 %  stimBlankPval
-%     A (2,2,96) matrix of p-values from the permutation test comparing the
-%     real d' against the distribution of permuted d's.
+%     A vector of p-values from the permutation test comparing the
+%     real value against the distribution of permuted va;ues.
 %
 %  gCh
 %    A (1,96) vector of logicals that indicates if a channel is visually
