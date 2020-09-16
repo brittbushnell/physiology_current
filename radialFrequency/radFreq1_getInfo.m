@@ -97,6 +97,6 @@ for fi = 1:length(files)
     end
     
     saveName = [outputDir filename '_' nameEnd '.mat'];
-    save(saveName,'data');
-    fprintf('%s saved\n\n',saveName)
+   % save(saveName,'data');
+   % fprintf('%s saved\n\n',saveName)
 end
