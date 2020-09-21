@@ -1,5 +1,8 @@
 function plotGlassTR_spikeCounts(dataT)
-figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/GlassTR/%s/distributions/',dataT.animal, dataT.array);
+figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/%s/%s/distributions/',dataT.animal, dataT.programID,dataT.array);
+    if ~exist(figDir,'dir')
+        mkdir(figDir)
+    end
 cd(figDir)
 
 folder = 'spikeCounts';

@@ -104,7 +104,7 @@ for an = 1:3
             %%
             for fi = 1:length(files)
                 %% Get basic information about experiments
-              %  try
+                try
                     
                     filename = files{fi};
                     
@@ -216,7 +216,8 @@ for an = 1:3
                         [dataT.rfQuadrant] = getRFsinStim(dataT);
                         dataT.inStim = ~isnan(dataT.rfQuadrant); % want all channels whos RF center is within the stimulus bounds to be 1.
                         dataT.goodCh = dataT.responsiveCh & dataT.inStim;
-                        fprintf('%d channels in the stimulus bounds \n%d responsive channels\n',sum(dataT.goodCh),sum(dataT.responsiveCh))
+                        
+                        fprintf('%d channels in the stimulus bounds \n%d responsive channels\n%d responsive channels within the stimulus boundaries\n',sum(dataT.inStim),sum(dataT.responsiveCh),sum(dataT.goodCh))
                         %% get spike counts, Zscore, and split half correlations
                         if contains(dataT.programID,'TR')
                             [dataT.GlassTRSpikeCount,dataT.NoiseTRSpikeCount,dataT.BlankTRSpikeCount,dataT.AllStimTRSpikeCount] = getGlassTRSpikeCounts(dataT);
@@ -226,7 +227,7 @@ for an = 1:3
                         else
                             [dataT.GlassSpikeCount,dataT.NoiseSpikeCount,dataT.BlankSpikeCount,dataT.AllStimSpikeCount] = getGlassCRSpikeCounts(dataT);
                             [dataT.GlassZscore,dataT.GlassAllStimZscore] = getGlassStimZscore(dataT);
-                            [dataT.reliabilityIndex,dataT.split_half_correlation] = Glass_getHalfCorr(dataT);
+%                             [dataT.reliabilityIndex,dataT.split_half_correlation] = Glass_getHalfCorr(dataT);
                             dataT = Glass_getHalfCorrPerm(dataT);
                         end
                         fprintf('spike counts done, zscores computed, split-halves correlated \n')
@@ -265,12 +266,12 @@ for an = 1:3
                         save(saveName,'data');
                         fprintf('%s saved\n  run time: %.2f minutes\n', saveName, toc/60)
                     end
-%                 catch ME
-%                     fprintf('%s did not work. \nError message: %s \n',filename,ME.message)
-%                     failNdx = failNdx+1;
-%                     failedFiles{failNdx,1} = filename;
-%                     failedME{failNdx,1} = ME;
-%                 end
+                catch ME
+                    fprintf('%s did not work. \nError message: %s \n',filename,ME.message)
+                    failNdx = failNdx+1;
+                    failedFiles{failNdx,1} = filename;
+                    failedME{failNdx,1} = ME;
+                end
                 clear dataT
             end
         end

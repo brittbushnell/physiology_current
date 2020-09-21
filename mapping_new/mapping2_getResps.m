@@ -5,17 +5,17 @@ tic
 %%
 % WU runs on a different program
 files = {
-    'WV_LE_MapNoise_nsp2_20190204_002_thresh35_info';
-    'WV_RE_MapNoise_nsp2_20190205_001_thresh35_info';
+    'WV_LE_MapNoise_nsp2_20190130_all_thresh35_info';
+    'WV_RE_MapNoise_nsp2_20190130_all_thresh35_info';
     
-    'WV_LE_MapNoise_nsp1_20190204_002_thresh35_info';
-    'WV_RE_MapNoise_nsp1_20190205_001_thresh35_info';
+    'WV_LE_MapNoise_nsp1_20190130_all_thresh35_info';
+    'WV_RE_MapNoise_nsp1_20190130_all_thresh35_info';
     
-    'XT_LE_mapNoiseRight_nsp2_20181120_002_thresh35_info';
-    'XT_RE_mapNoiseRight_nsp2_20181026_001_thresh35_info';
+    'XT_LE_mapNoiseRight_nsp2_20181120_all_thresh35_info';
+    'XT_RE_mapNoiseRight_nsp2_20181026_all_thresh35_info';
     
-    'XT_LE_mapNoiseRight_nsp1_20181120_002_thresh35_info';
-    'XT_RE_mapNoiseRight_nsp1_20181026_001_thresh35_info';
+    'XT_LE_mapNoiseRight_nsp1_20181120_all_thresh35_info';
+    'XT_RE_mapNoiseRight_nsp1_20181026_all_thresh35_info';
     };
 nameEnd = 'resps';
 %%
@@ -41,9 +41,15 @@ for fi = 1:size(files,1)
     end
     %%
     if location == 1
-        outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/GratMapRF/',dataT.array);
+        outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/%s/',dataT.array,dataT.programID);
+        if ~exist(outputDir,'dir')
+            mkdir(outputDir)
+        end
     elseif location == 0
-        outputDir =  sprintf('~/Dropbox/ArrayData/matFiles/%s/GratMapRF/',dataT.array);
+        outputDir =  sprintf('~/Dropbox/ArrayData/matFiles/%s/%s/',dataT.array,dataT.programID);
+        if ~exist(outputDir,'dir')
+            mkdir(outputDir)
+        end
     end
     %% do stim vs blank permutation test
     if contains(dataT.animal,'WU')
@@ -53,6 +59,7 @@ for fi = 1:size(files,1)
         stimNdx = (dataT.stimulus == 1);
         blankNdx = (dataT.stimulus == 0);
     end
+    
     [dataT] = stimVsBlankPermutations_allStim(dataT, numBoot,holdout,stimNdx,blankNdx);
     fprintf('stimulus vs blank permutaiton test done %.2f hours \n',toc/3600)
     %% determine good channels
@@ -68,14 +75,20 @@ for fi = 1:size(files,1)
     %% get receptive field centers and boundaries
     dataT = getReceptiveFields(dataT);
     %% plot location specific responses
-    %  plotMapping_locHeatMapbyCh(dataT)
+    % plotMapping_locHeatMapbyCh(dataT)
     % plotMappingPSTHs_visualResponsesChs(dataT,0)
-    %    dataT = plotArrayReceptiveFields(dataT);
+    % dataT = plotArrayReceptiveFields(dataT);
     %%
     if location == 1
         outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/GratMapRF/',dataT.array);
+        if ~exist(outputDir,'dir')
+            mkdir(outputDir)
+        end
     elseif location == 0
         outputDir =  sprintf('~/Dropbox/ArrayData/matFiles/%s/GratMapRF/',dataT.array);
+        if ~exist(outputDir,'dir')
+            mkdir(outputDir)
+        end
     end
     %% make structures for each eye and save .mat file
     
