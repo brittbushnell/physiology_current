@@ -166,7 +166,8 @@ for an = 1:3
                     end
                     
                     dataT.amap = aMap;
-                    
+                    %% convert dx to a meaningful measurement
+                    dataT.dxDeg = 8.*dataT.dx;
                     %% determine reponsive channels
                     dataT = GlassStimVsBlankPermutations_allStim(dataT,numPerm,holdout);
                     [dataT.stimBlankChPvals,dataT.responsiveCh] = glassGetPermutationStatsAndGoodCh(dataT.allStimBlankDprime,dataT.allStimBlankDprimeBootPerm);
