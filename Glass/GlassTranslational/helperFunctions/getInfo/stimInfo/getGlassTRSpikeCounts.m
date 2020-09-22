@@ -7,22 +7,23 @@ cohNdx = (dataT.coh == 1);
 dotNdx = (dataT.numDots == 400);
 dxNdx = (dataT.dx == 0.03);
 oriNdx = (dataT.rotation == 0);
+
 linearNdx = (dataT.type == 3);
 noiseNdx = (dataT.type == 0);
+blankNdx = (dataT.numDots == 0);
+stimTrials = (dataT.numDots >0);
 
 linTrials = (linearNdx & dotNdx & dxNdx & oriNdx & cohNdx);
 noiseTrials = (noiseNdx & dotNdx & dxNdx);
 
 
-trSpikeCount = nan(numOris, numCoh, numDots, numDxs, 96, sum(linTrials));
-noiseSpikeCount = nan(numDots, numDxs, 96, sum(noiseTrials));
+trSpikeCount = nan(numOris, numCoh, numDots, numDxs, 96, sum(linTrials)+5);
+noiseSpikeCount = nan(numDots, numDxs, 96, sum(noiseTrials)+5);
 %%
 for ch = 1:96
     startMean= 5;
     endMean  = 25;
     
-    blankNdx = (dataT.numDots == 0);
-    stimTrials = (dataT.numDots >0);
     
     blankSpikeCount(ch,:) = sum(dataT.bins(blankNdx, startMean:endMean, ch),2);
     stimSpikeCount(ch,:) = sum(dataT.bins(stimTrials,(startMean:endMean) ,ch),2);
@@ -40,10 +41,10 @@ for ch = 1:96
                     noiseTrials = (noiseNdx & dotNdx & dxNdx);
                     
                     
-                    trSpikeCount(or,co,ndot,dx,ch,:) = sum(dataT.bins(linTrials, (startMean:endMean) ,ch),2);
+                    trSpikeCount(or,co,ndot,dx,ch,1:sum(linTrials)) = sum(dataT.bins(linTrials, (startMean:endMean) ,ch),2);
                     
                     if co == 1 && or == 1
-                        noiseSpikeCount(ndot,dx,ch,:) = sum(dataT.bins(noiseTrials, startMean:endMean, ch),2);
+                        noiseSpikeCount(ndot,dx,ch,1:sum(noiseTrials)) = sum(dataT.bins(noiseTrials, startMean:endMean, ch),2);
                     end
                 end
             end
@@ -51,7 +52,7 @@ for ch = 1:96
     end
 end
 
-
+%%
 dataT.translationalSpikeCount = trSpikeCount;
 dataT.stimSpikeCount = stimSpikeCount;
 dataT.noiseSpikeCount = noiseSpikeCount;

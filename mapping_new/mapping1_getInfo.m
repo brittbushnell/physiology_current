@@ -4,22 +4,22 @@ clc
 %%
 
 files = {
-%    'WV_LE_MapNoise_nsp2_20190204_002_thresh35';
-%    'WV_RE_MapNoise_nsp2_20190205_001_thresh35';
-%    
-%    'WV_LE_MapNoise_nsp1_20190204_002_thresh35';
-%    'WV_RE_MapNoise_nsp1_20190205_001_thresh35';
-%    
-%    'XT_LE_mapNoiseRight_nsp2_20181120_002_thresh35';
-%    'XT_RE_mapNoiseRight_nsp2_20181026_001_thresh35';
-%    
-%    'XT_LE_mapNoiseRight_nsp1_20181120_002_thresh35';
-%    'XT_RE_mapNoiseRight_nsp1_20181026_001_thresh35';
+   'WV_LE_MapNoise_nsp2_20190130_all_thresh35';
+   'WV_RE_MapNoise_nsp2_20190130_all_thresh35';
+   
+   'WV_LE_MapNoise_nsp1_20190130_all_thresh35';
+   'WV_RE_MapNoise_nsp1_20190130_all_thresh35';
+   
+   'XT_LE_mapNoiseRight_nsp2_20181120_all_thresh35';
+   'XT_RE_mapNoiseRight_nsp2_20181026_all_thresh35';
+   
+   'XT_LE_mapNoiseRight_nsp1_20181120_all_thresh35';
+   'XT_RE_mapNoiseRight_nsp1_20181026_all_thresh35';
     
-   'WU_LE_Gratmap_nsp2_20170424_001_thresh35';
+   'WU_LE_Gratmap_nsp2_20170428_all_thresh35';
    'WU_RE_Gratmap_nsp2_20170428_006_thresh35';
    
-   'WU_LE_Gratmap_nsp1_20170424_001_thresh35';
+   'WU_LE_Gratmap_nsp1_20170428_all_thresh35';
    'WU_RE_Gratmap_nsp1_20170428_006_thresh35';
 };
 nameEnd = 'info';
@@ -49,7 +49,7 @@ for fi = 1:size(files,1)
     %% check and adjust locations so fixation is at (0,0)
     % adjust locations so fixation is at (0,0). This will also allow us to
     % combine across runs with different locations to get full maps.
-    if contains(dataT.animal,'WU')
+    if contains(dataT.animal,'WU') && ~contains(dataT.runNum,'all')
         dataT.pos_x = dataT.xoffset(1,1:size(dataT.width,2)); % don't know why, but for some reason offset is reapeated twice
         dataT.pos_y = dataT.yoffset(1,1:size(dataT.width,2));
     end
@@ -76,11 +76,11 @@ for fi = 1:size(files,1)
         end
     end
     %% Plot clean vs raw PSTHs to check for timing fuckery
-    if contains(dataT.animal,'WU')        
-        plotGratingPSTH_rawVsClean (dataT,filename)
-    else
-        plotMapNoisePSTH_rawVsClean (dataT,filename)
-    end
+%     if contains(dataT.animal,'WU')        
+%         plotGratingPSTH_rawVsClean (dataT,filename)
+%     else
+%         plotMapNoisePSTH_rawVsClean (dataT,filename)
+%     end
     %%
     if location == 1
         outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/mapping/',dataT.array);
