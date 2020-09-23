@@ -58,7 +58,7 @@ cd(figDir)
 figure(1)
 clf
 hold on
-rectangle('Position',[-0.1 0.05 1.4 0.9],'FaceColor',[0.8 0.8 0.8],'EdgeColor',[0.8 0.8 0.8])
+rectangle('Position',[-0.1 0.05 1.4 1.5],'FaceColor',[0.8 0.8 0.8],'EdgeColor',[0.8 0.8 0.8])
 rectangle('Position',[0.05 -0.1 0.9 1.5],'FaceColor',[0.8 0.8 0.8],'EdgeColor',[0.8 0.8 0.8])
 
 plot([-0.1 1.1], [0.05 0.05], '--b')

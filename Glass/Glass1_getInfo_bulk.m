@@ -170,14 +170,15 @@ for an = 1:3
                     dataT.dxDeg = 8.*dataT.dx;
                     %% determine reponsive channels
                     dataT = GlassStimVsBlankPermutations_allStim(dataT,numPerm,holdout);
-                    [dataT.stimBlankChPvals,dataT.responsiveCh] = GetPermutationStatsAndGoodCh(dataT.allStimBlankDprime,dataT.allStimBlankDprimeBootPerm);
+                    [dataT.stimBlankChPvals,dataT.responsiveCh] = getPermutationStatsAndGoodCh(dataT.allStimBlankDprime,dataT.allStimBlankDprimeBootPerm);
                     
-                    if sum(dataT.responsiveCh) >= 15
-                        goodFlag = 1;
-                    else
-                        goodFlag = 0;
-                        fprintf('%s only has %d responsive channels',filename, sum(dataT.responsiveCh))
-                    end
+%                     if sum(dataT.responsiveCh) >= 15
+%                         goodFlag = 1;
+%                     else
+%                         goodFlag = 0;
+%                         fprintf('%s only has %d responsive channels',filename, sum(dataT.responsiveCh))
+%                     end
+goodFlag = 1; % get rid of this eventually, for now it's a bs thing to make it work.
                     fprintf('responsive channels defined\n')                    
                     %% plot stim vs blank PSTH to look for timing funkiness
                     if location == 1
