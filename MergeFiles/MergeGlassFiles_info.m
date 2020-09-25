@@ -6,21 +6,21 @@ clc
 %{'WU_LE_GlassTR_nsp1_20170822_002_thresh35.mat'} % leaving this file out because there's something really messed up with the V4 version.
 % files = {'WU_LE_GlassTR_nsp1_20170824_001_thresh35_info';
 %          'WU_LE_GlassTR_nsp1_20170825_002_thresh35_info'};
-% newName = 'WU_LE_GlassTR_nsp1_Aug2017_all_thresh35_info';
+% newName ='WU_LE_GlassTR_nsp1_Aug2017_all_thresh35_info';
 
-files = {'WU_LE_GlassTR_nsp2_20170824_001_thresh35_info';
-    'WU_LE_GlassTR_nsp2_20170825_002_thresh35_info'};
-newName = 'WU_LE_GlassTR_nsp2_Aug2017_all_thresh35_info';
+% files = {'WU_LE_GlassTR_nsp2_20170824_001_thresh35_info';
+%          'WU_LE_GlassTR_nsp2_20170825_002_thresh35_info'};
+% newName ='WU_LE_GlassTR_nsp2_Aug2017_all_thresh35_info';
 
 % files = {'WU_LE_Glass_nsp1_20170817_001_thresh35_info';
 %          'WU_LE_Glass_nsp1_20170821_002_thresh35_info';
 %          'WU_LE_Glass_nsp1_20170822_001_thresh35_info'};
-% newName = 'WU_LE_Glass_nsp1_Aug2017_all_thresh35_info';
+% newName ='WU_LE_Glass_nsp1_Aug2017_all_thresh35_info';
 %
-% files = {'WU_LE_Glass_nsp2_20170817_001_thresh35_info';
-%          'WU_LE_Glass_nsp2_20170821_002_thresh35_info';
-%          'WU_LE_Glass_nsp2_20170822_001_thresh35_info'};
-% newName = 'WU_LE_Glass_nsp2_Aug2017_all_thresh35_info';
+files = {'WU_LE_Glass_nsp2_20170817_001_thresh35_info';
+    'WU_LE_Glass_nsp2_20170821_002_thresh35_info';
+    'WU_LE_Glass_nsp2_20170822_001_thresh35_info'};
+newName ='WU_LE_Glass_nsp2_Aug2017_all_thresh35_info';
 
 %%
 location = determineComputer;
@@ -69,16 +69,62 @@ arrayReceptiveFieldParams = [];
 rfQuadrant  = [];
 inStim = [];
 
+GlassTRSpikeCount = [];
+NoiseTRSpikeCount = [];
+BlankTRSpikeCount = [];
+AllStimTRSpikeCount = [];
+GlassTRZscore = [];
+
+GlassSpikeCount = [];
+NoiseSpikeCount = [];
+conSpikeCount = [];
+radSpikeCount = [];
+BlankSpikeCount = [];
+AllStimSpikeCount = [];
+GlassZscore = [];
+%%
 for i = 1:length(dataTComp)
     bT     = dataTComp{i}.bins;
     fnm    = dataTComp{i}.filename;
     fx     = dataTComp{i}.fix_x;
     fy     = dataTComp{i}.fix_y;
-    rot    = dataTComp{i}.rotation;
     stmOn  = dataTComp{i}.stimOn;
     stmOff = dataTComp{i}.stimOff;
     xPos = dataTComp{i}.pos_x;
     yPos = dataTComp{i}.pos_y;
+    
+    if contains(dataTComp{1}.programID,'TR')
+        rot    = dataTComp{i}.rotation;
+        gSC = dataTComp{i}.GlassTRSpikeCount;
+        nSC = dataTComp{i}.NoiseTRSpikeCount;
+        bSC = dataTComp{i}.BlankTRSpikeCount;
+        aSC = dataTComp{i}.AllStimTRSpikeCount;
+        gZ  = dataTComp{i}.GlassTRZscore;
+        
+        rotation = [rotation,rot];
+        GlassTRSpikeCount = cat(6,GlassTRSpikeCount,gSC);
+        NoiseTRSpikeCount = cat(4,NoiseTRSpikeCount,nSC);
+        BlankTRSpikeCount = cat(2,BlankTRSpikeCount,bSC);
+        AllStimTRSpikeCount = cat(2,AllStimTRSpikeCount,aSC);
+        GlassTRZscore = cat(6,GlassTRZscore,gZ);
+        
+    else
+       % gSC = dataTComp{i}.GlassSpikeCount;
+        cSC = dataTComp{i}.conSpikeCount;
+        rSC = dataTComp{i}.radSpikeCount;
+        nSC = dataTComp{i}.noiseSpikeCount;
+        bSC = dataTComp{i}.blankSpikeCount;
+        aSC = dataTComp{i}.AllStimSpikeCount;
+        gZ  = dataTComp{i}.GlassAllStimZscore;
+        
+        %GlassSpikeCount = cat(5,GlassSpikeCount,gSC);
+        NoiseSpikeCount = cat(5,NoiseSpikeCount,nSC);
+        BlankSpikeCount = cat(2,BlankSpikeCount,bSC);
+        AllStimSpikeCount = cat(2,AllStimSpikeCount,aSC);
+        conSpikeCount = cat(5,conSpikeCount,cSC);
+        radSpikeCount = cat(5,radSpikeCount,rSC);
+        GlassZscore = cat(2,GlassZscore,gZ);
+    end
     
     tps  = dataTComp{i}.type;
     ndt  = dataTComp{i}.numDots;
@@ -92,12 +138,18 @@ for i = 1:length(dataTComp)
     inRF = dataTComp{i}.inStim;
     
     bins = cat(1, bins, bT);
+    filename = cat(1, filename, fnm);
+    
+    if contains(dataTComp{1}.programID,'TR')
+        
+    else
+        
+    end
+    
     fix_x = [fix_x, fx];
     fix_y = [fix_y, fy];
-    rotation = [rotation,rot];
     stimOn = [stimOn, stmOn];
     stimOff = [stimOff, stmOff];
-    filename = cat(1, filename, fnm);
     pos_x = [pos_x, xPos];
     pos_y = [pos_y, yPos];
     
@@ -142,11 +194,19 @@ if ~exist(saveDir,'dir')
 end
 cd(saveDir)
 %%
-
-save(newName,'bins','fix_x','fix_y','rotation','stimOn','stimOff','filename',...
-    'animal','eye','programID','array','amap',...
-    'pos_x','pos_y','type','numDots','dx','coh','sample','dxDeg',...
-    'chReceptiveFieldParams','arrayReceptiveFieldParams','rfQuadrant','inStim')
+if contains(programID,'TR')
+    save(newName,'bins','fix_x','fix_y','rotation','stimOn','stimOff','filename',...
+        'animal','eye','programID','array','amap',...
+        'pos_x','pos_y','type','numDots','dx','coh','sample','dxDeg',...
+        'chReceptiveFieldParams','arrayReceptiveFieldParams','rfQuadrant','inStim',...
+        'GlassTRSpikeCount','NoiseTRSpikeCount','BlankTRSpikeCount','AllStimTRSpikeCount','GlassTRZscore')
+else
+       save(newName,'bins','fix_x','fix_y','rotation','stimOn','stimOff','filename',...
+        'animal','eye','programID','array','amap',...
+        'pos_x','pos_y','type','numDots','dx','coh','sample','dxDeg',...
+        'chReceptiveFieldParams','arrayReceptiveFieldParams','rfQuadrant','inStim',...
+        'NoiseSpikeCount','conSpikeCount','radSpikeCount','BlankSpikeCount','AllStimSpikeCount','GlassZscore') 
+end
 fprintf('file %s done \n', newName)
 
 

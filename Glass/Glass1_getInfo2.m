@@ -5,16 +5,16 @@ tic
 %%
 monks = {
     'WU';
-    'WV';
-    'XT';
+%     'WV';
+%     'XT';
     };
 ez = {
     'LE';
-   'RE';
+ %  'RE';
     };
 brArray = {
     'V4';
-   'V1';
+  % 'V1';
     };
 %%
 nameEnd = 'info';
@@ -171,10 +171,10 @@ for fi = 1:length(files)
         %% get spike counts, Zscore, and split half correlations
         if contains(dataT.programID,'TR')
             [dataT.GlassTRSpikeCount,dataT.NoiseTRSpikeCount,dataT.BlankTRSpikeCount,dataT.AllStimTRSpikeCount] = getGlassTRSpikeCounts(dataT);
-            [dataT.GlassTRZscore,dataT.GlassAllStimTRZscore] = getGlassStimZscore(dataT);
+            [dataT.GlassTRZscore,dataT.GlassAllStimTRZscore] = getGlassTRStimZscore(dataT);
         else
-            [dataT.GlassSpikeCount,dataT.NoiseSpikeCount,dataT.BlankSpikeCount,dataT.AllStimSpikeCount] = getGlassCRSpikeCounts(dataT);
-            [dataT.GlassZscore,dataT.GlassAllStimZscore] = getGlassStimZscore(dataT);
+            [dataT.radSpikeCount,dataT.conSpikeCount, dataT.noiseSpikeCount,dataT.blankSpikeCount,dataT.AllStimSpikeCount] = getGlassCRSpikeCounts(dataT);
+            [dataT.conZscore, dataT.radZscore, dataT.noiseZscore, dataT.GlassAllStimZscore] = getGlassStimZscore(dataT);
         end
        % fprintf('spike counts done, zscores computed\n')
         %% optional plots

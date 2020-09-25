@@ -42,9 +42,23 @@ for fi = 1:length(files)
             numRepeats = size(dataT.GlassTRZscore,6);
             zScoreReshape = reshape(zScored_chLast,64,numRepeats,96); % reshape into a vector. 64 = number of conditions.
         else
-            zScored_chLast = permute(dataT.GlassZscore,[1 2 3 5 4]);% rearrange so number of channels is the last thing.
-            numRepeats = size(dataT.GlassZscore,5);
-            zScoreReshape = reshape(zScored_chLast,16,numRepeats,96); % reshape into a vector. 16 = number of conditions.
+            conZchLast = permute(dataT.conZscore,[1 2 3 5 4]);
+            numRepeats = size(dataT.conZscore,5);
+            conReshape = reshape(conZchLast,16,numRepeats,96);
+            
+            radZchLast = permute(dataT.radZscore,[1 2 3 5 4]);
+            numRepeats = size(dataT.radZscore,5);
+            radReshape = reshape(radZchLast,16,numRepeats,96);            
+            
+            nozZchLast = permute(dataT.noiseZscore,[1 2 3 5 4]);
+            numRepeats = size(dataT.noiseZscore,5);
+            nozReshape = reshape(nozZchLast,16,numRepeats,96);
+            
+            zScoreReshape = cat(2,conReshape,radReshape,nozReshape);
+
+%             zScored_chLast = permute(dataT.GlassZscore,[1 2 3 5 4]);% rearrange so number of channels is the last thing.
+%             numRepeats = size(dataT.GlassZscore,5);
+%             zScoreReshape = reshape(zScored_chLast,16,numRepeats,96); % reshape into a vector. 16 = number of conditions.
         end
     
 %     if contains(dataT.programID,'TR')

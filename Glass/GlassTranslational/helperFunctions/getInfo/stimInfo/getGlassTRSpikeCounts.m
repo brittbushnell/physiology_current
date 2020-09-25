@@ -51,9 +51,3 @@ for ch = 1:96
         end
     end
 end
-
-%%
-dataT.translationalSpikeCount = trSpikeCount;
-dataT.stimSpikeCount = stimSpikeCount;
-dataT.noiseSpikeCount = noiseSpikeCount;
-dataT.blankSpikeCount = blankSpikeCount;
