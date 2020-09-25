@@ -54,25 +54,54 @@ else
     end
 end
 cd(figDir)
+%% determine how many channels fall within each subsection of the figure
+%    1 | 2 | 3
+%   ----------- 
+%    4 | 5 | 6
+%   -----------
+%    7 | 8 | 9
+responsePvals = dataT.stimBlankChPvals;
+
+n1 = sum((responsePvals<=0.05 & pVals>=0.95));
+n2 = sum((responsePvals>0.05 & responsePvals<0.95 & pVals>=0.95));
+n3 = sum((responsePvals>=0.95 & pVals>=0.95));
+
+n4 = sum((responsePvals<=0.05 & pVals>0.05 & pVals<0.95));
+n5 = sum((responsePvals>0.05 & responsePvals<0.95 &  pVals>0.05 & pVals<0.95));
+n6 = sum((responsePvals>=0.95 &  pVals>0.05 & pVals<0.95));
+
+n7 = sum((responsePvals<=0.05 & pVals<=0.05));
+n8 = sum((responsePvals>0.05 & responsePvals<0.95 & pVals<=0.05));
+n9 = sum((responsePvals>=0.95 & pVals<=0.05));
 %%
 figure(1)
 clf
 hold on
-rectangle('Position',[-0.1 0.05 1.4 1.5],'FaceColor',[0.8 0.8 0.8],'EdgeColor',[0.8 0.8 0.8])
-rectangle('Position',[0.05 -0.1 0.9 1.5],'FaceColor',[0.8 0.8 0.8],'EdgeColor',[0.8 0.8 0.8])
+%rectangle('Position',[-0.1 0.95 1.4 0.7],'FaceColor',[0.8 0.8 0.8],'EdgeColor',[0.8 0.8 0.8]) %[x y w h]
+rectangle('Position',[0.05 0.05 0.9 0.9],'FaceColor',[0.8 0.8 0.8],'EdgeColor',[0.8 0.8 0.8])
 
 plot([-0.1 1.1], [0.05 0.05], '--b')
 plot([-0.1 1.1], [0.95 0.95], '--b')
 plot([0.05 0.05], [-0.1 1.1], '--b')
 plot([0.95 0.95], [-0.1 1.1], '--b')
-ylim([-0.1 1.1])
-xlim([-0.1 1.1])
 
-plot(dataT.stimBlankChPvals(dataT.inStim == 1),pVals(dataT.inStim == 1),'o','MarkerFaceColor',[0.2 0.2 0.2],'MarkerEdgeColor',[0.2 0.2 0.2])
-plot(dataT.stimBlankChPvals(dataT.inStim == 0),pVals(dataT.inStim == 0),'o','MarkerEdgeColor',[0.2 0.2 0.2])
+plot(responsePvals(dataT.inStim == 1),pVals(dataT.inStim == 1),'o','MarkerFaceColor',[0.2 0.2 0.2],'MarkerEdgeColor',[0.2 0.2 0.2])
+plot(responsePvals(dataT.inStim == 0),pVals(dataT.inStim == 0),'o','MarkerEdgeColor',[0.2 0.2 0.2])
+ylim([-0.05 1.05])
+xlim([-0.05 1.05])
 
-ylim([-0.1 1.1])
-xlim([-0.1 1.1])
+text(-0.03, 0.97, sprintf('n = %d',n1))
+text(0.07, 0.97, sprintf('n = %d',n2))
+text(0.97, 0.97, sprintf('n = %d',n3))
+
+text(-0.03, 0.07, sprintf('n = %d',n4))
+text(0.07, 0.07, sprintf('n = %d',n5))
+text(0.97, 0.07, sprintf('n = %d',n6))
+
+text(-0.03, -0.03, sprintf('n = %d',n7))
+text(0.07, -0.03, sprintf('n = %d',n8))
+text(0.97, -0.03, sprintf('n = %d',n9))
+
 
 set(gca,'tickdir','out','Layer','top','YTick',0:0.25:1,'XTick',0:0.2:1)
 

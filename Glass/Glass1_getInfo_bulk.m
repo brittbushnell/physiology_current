@@ -19,6 +19,20 @@ close all
 clc
 tic
 %%
+monks = {
+    'WU';
+%     'WV';
+%     'XT';
+    };
+ez = {
+    'LE';
+%     'RE';
+    };
+brArray = {
+    'V4';
+%     'V1';
+    };
+%%
 nameEnd = 'info';
 numPerm = 2000;
 numBoot = 200;
@@ -29,26 +43,12 @@ location = determineComputer;
 failedFiles = {};
 failNdx = 0;
 %%
-for an = 1:3
-    if an == 1
-        monk = 'WU';
-    elseif an == 2
-        monk = 'WV';
-    else
-        monk = 'XT';
-    end
-    for ey = 1:2
-        if ey == 1
-            eye = 'LE';
-        else
-            eye = 'RE';
-        end
-        for ar = 1:2
-            if ar == 1
-                area = 'V4';
-            else
-                area = 'V1';
-            end
+for an = 1:length(monks)
+    monk = monks{an};
+    for ey = 1:length(ez)
+        eye = ez{ey};
+        for ar = 1:length(brArray)
+            area = brArray{ar};
             %%
             if location == 0
                 dataDir = sprintf('~/Dropbox/ArrayData/matFiles/reThreshold/png/%s/%s/Glass/%s/',monk,area,eye);
@@ -87,7 +87,6 @@ for an = 1:3
                 filesT(strcmp(shortName,filesT)) = [];
             end
             
-            
             files = cat(1,filesC,filesT);
             
             if location == 0
@@ -107,7 +106,6 @@ for an = 1:3
                 try
                     
                     filename = files{fi};
-                    
                     dataT = load(filename);
                     
                     aMap = getBlackrockArrayMap(filename);
@@ -171,103 +169,94 @@ for an = 1:3
                     %% determine reponsive channels
                     dataT = GlassStimVsBlankPermutations_allStim(dataT,numPerm,holdout);
                     [dataT.stimBlankChPvals,dataT.responsiveCh] = getPermutationStatsAndGoodCh(dataT.allStimBlankDprime,dataT.allStimBlankDprimeBootPerm);
-                    
-%                     if sum(dataT.responsiveCh) >= 15
-%                         goodFlag = 1;
-%                     else
-%                         goodFlag = 0;
-%                         fprintf('%s only has %d responsive channels',filename, sum(dataT.responsiveCh))
-%                     end
-goodFlag = 1; % get rid of this eventually, for now it's a bs thing to make it work.
-                    fprintf('responsive channels defined\n')                    
+                    fprintf('responsive channels defined\n')
                     %% plot stim vs blank PSTH to look for timing funkiness
                     if location == 1
                         plotGlassPSTH_rawVsClean(dataT,filename,goodFlag) % only run on Laca b/c she has all of the raw files
                     end
                     %% if there are not more than 15 responsive channels, save the file and move on
-                    if goodFlag == 0
-                        if location == 1
-                            outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/Glass/info/bad/',dataT.array);
-                            if ~exist(outputDir, 'dir')
-                                mkdir(outputDir)
-                            end
-                        elseif location == 0
-                            outputDir =  sprintf('~/Dropbox/ArrayData/matFiles/%s/Glass/info/good/',dataT.array);
-                            if ~exist(outputDir, 'dir')
-                                mkdir(outputDir)
-                            end
+                    if location == 1
+                        outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/Glass/info/bad/',dataT.array);
+                        if ~exist(outputDir, 'dir')
+                            mkdir(outputDir)
                         end
-                        
-                        if contains(filename,'LE')
-                            data.LE = dataT;
-                            data.RE = [];
-                        else
-                            data.RE = dataT;
-                            data.LE = [];
+                    elseif location == 0
+                        outputDir =  sprintf('~/Dropbox/ArrayData/matFiles/%s/Glass/info/good/',dataT.array);
+                        if ~exist(outputDir, 'dir')
+                            mkdir(outputDir)
                         end
-                        
-                        saveName = [outputDir filename '_' nameEnd '_bad' '.mat'];
-                        save(saveName,'data');
-                        fprintf('%s saved\n  run time: %.2f minutes', saveName, toc/60)
-                        
-                    else
-                        %% get receptive field parameters
-                        % RF center is relative to fixation, not center of the monitor.
-                        dataT = callReceptiveFieldParameters(dataT);
-                        %% find channels whose receptive fields are within the stimulus bounds
-                        [dataT.rfQuadrant] = getRFsinStim(dataT);
-                        dataT.inStim = ~isnan(dataT.rfQuadrant); % want all channels whos RF center is within the stimulus bounds to be 1.
-                        dataT.goodCh = dataT.responsiveCh & dataT.inStim;
-                        
-                        fprintf('%d channels in the stimulus bounds \n%d responsive channels\n%d responsive channels within the stimulus boundaries\n',sum(dataT.inStim),sum(dataT.responsiveCh),sum(dataT.goodCh))
-                        %% get spike counts, Zscore, and split half correlations
-                        if contains(dataT.programID,'TR')
-                            [dataT.GlassTRSpikeCount,dataT.NoiseTRSpikeCount,dataT.BlankTRSpikeCount,dataT.AllStimTRSpikeCount] = getGlassTRSpikeCounts(dataT);
-                            [dataT.GlassTRZscore,dataT.GlassAllStimTRZscore] = getGlassStimZscore(dataT);
-                            %[dataT.reliabilityIndex,dataT.splitHalfCorrBoots] = GlassTR_getHalfCorr(dataT);
-                            dataT = GlassTR_getHalfCorrPerm(dataT);
-                        else
-                            [dataT.GlassSpikeCount,dataT.NoiseSpikeCount,dataT.BlankSpikeCount,dataT.AllStimSpikeCount] = getGlassCRSpikeCounts(dataT);
-                            [dataT.GlassZscore,dataT.GlassAllStimZscore] = getGlassStimZscore(dataT);
-%                             [dataT.reliabilityIndex,dataT.split_half_correlation] = Glass_getHalfCorr(dataT);
-                            dataT = Glass_getHalfCorrPerm(dataT);
-                        end
-                        fprintf('spike counts done, zscores computed, split-halves correlated \n')
-                        %% plot PSTH showing what chns are included and what isn't
-                        plotGlassPSTH_inclusionMet(dataT)
-                        %% optional plots
-                        if plotFlag == 1
-                            if contains(dataT.programID,'TR')
-                                plotGlassTR_spikeCounts(dataT)
-                            else
-                                
-                            end
-                        end
-                        %% save good data
-                        if location == 1
-                            outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/Glass/info/good/',dataT.array);
-                            if ~exist(outputDir, 'dir')
-                                mkdir(outputDir)
-                            end
-                        elseif location == 0
-                            outputDir =  sprintf('~/Dropbox/ArrayData/matFiles/%s/Glass/info/good/',dataT.array);
-                            if ~exist(outputDir, 'dir')
-                                mkdir(outputDir)
-                            end
-                        end
-                        
-                        if contains(filename,'LE')
-                            data.LE = dataT;
-                            data.RE = [];
-                        else
-                            data.RE = dataT;
-                            data.LE = [];
-                        end
-                        
-                        saveName = [outputDir filename '_' nameEnd '.mat'];
-                        save(saveName,'data');
-                        fprintf('%s saved\n  run time: %.2f minutes\n', saveName, toc/60)
                     end
+                    
+                    if contains(filename,'LE')
+                        data.LE = dataT;
+                        data.RE = [];
+                    else
+                        data.RE = dataT;
+                        data.LE = [];
+                    end
+                    
+                    saveName = [outputDir filename '_' nameEnd '_bad' '.mat'];
+                    save(saveName,'data');
+                    fprintf('%s saved\n  run time: %.2f minutes', saveName, toc/60)
+                    
+                    %% get receptive field parameters
+                    % RF center is relative to fixation, not center of the monitor.
+                    dataT = callReceptiveFieldParameters(dataT);
+                    %% find channels whose receptive fields are within the stimulus bounds
+                    [dataT.rfQuadrant] = getRFsinStim(dataT);
+                    dataT.inStim = ~isnan(dataT.rfQuadrant); % want all channels whos RF center is within the stimulus bounds to be 1.
+                    
+                    fprintf('%d channels in the stimulus bounds \n%d responsive channels\n%d responsive channels within the stimulus boundaries\n',sum(dataT.inStim),sum(dataT.responsiveCh),sum(dataT.responsiveCh & dataT.inStim))
+                    %% get spike counts, Zscore, and split half correlations
+                    if contains(dataT.programID,'TR')
+                        [dataT.GlassTRSpikeCount,dataT.NoiseTRSpikeCount,dataT.BlankTRSpikeCount,dataT.AllStimTRSpikeCount] = getGlassTRSpikeCounts(dataT);
+                        [dataT.GlassTRZscore,dataT.GlassAllStimTRZscore] = getGlassStimZscore(dataT);
+                        %[dataT.reliabilityIndex,dataT.splitHalfCorrBoots] = GlassTR_getHalfCorr(dataT);
+                        dataT = GlassTR_getHalfCorrPerm(dataT);
+                    else
+                        [dataT.GlassSpikeCount,dataT.NoiseSpikeCount,dataT.BlankSpikeCount,dataT.AllStimSpikeCount] = getGlassCRSpikeCounts(dataT);
+                        [dataT.GlassZscore,dataT.GlassAllStimZscore] = getGlassStimZscore(dataT);
+                        %                             [dataT.reliabilityIndex,dataT.split_half_correlation] = Glass_getHalfCorr(dataT);
+                        dataT = Glass_getHalfCorrPerm(dataT);
+                    end
+                    fprintf('spike counts done, zscores computed, split-halves correlated \n')
+                    %% plot PSTH showing what chns are included and what isn't
+                    plotGlassPSTH_inclusionMet(dataT)
+                    %% Define truly good channels that pass either the visually responsive OR split-half reliability metric
+                    dataT.goodCh = logical(dataT.responsiveCh) | logical(dataT.splitHalfSigChs);
+                    %% optional plots
+                    if plotFlag == 1
+                        if contains(dataT.programID,'TR')
+                            plotGlassTR_spikeCounts(dataT)
+                        else
+                            
+                        end
+                    end
+                    %% save good data
+                    if location == 1
+                        outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/Glass/info/',dataT.array);
+                        if ~exist(outputDir, 'dir')
+                            mkdir(outputDir)
+                        end
+                    elseif location == 0
+                        outputDir =  sprintf('~/Dropbox/ArrayData/matFiles/%s/Glass/info/',dataT.array);
+                        if ~exist(outputDir, 'dir')
+                            mkdir(outputDir)
+                        end
+                    end
+                    
+                    if contains(filename,'LE')
+                        data.LE = dataT;
+                        data.RE = [];
+                    else
+                        data.RE = dataT;
+                        data.LE = [];
+                    end
+                    
+                    saveName = [outputDir filename '_' nameEnd '.mat'];
+                    save(saveName,'data');
+                    fprintf('%s saved\n  run time: %.2f minutes\n', saveName, toc/60)
+                    
                 catch ME
                     fprintf('%s did not work. \nError message: %s \n',filename,ME.message)
                     failNdx = failNdx+1;

@@ -56,8 +56,10 @@ cleanData.numDots = cleanNumDots;
 cleanData.dx = cleanDx;
 cleanData.coh = cleanCoh;
 cleanData.sample = cleanSample;
-% cleanData.stimOrder = cleanStimOrder;
 cleanData.programID = data.programID;
-% cleanData.runNum = data.runNum;
-% cleanData.fix_x = data.fix_x;
-% cleanData.fix_y = data.fix_y;
+cleanData.animal = data.animal;
+
+if ~contains(data.animal, 'WU')
+    cleanData.fix_x = data.fix_x;
+    cleanData.fix_y = data.fix_y;
+end

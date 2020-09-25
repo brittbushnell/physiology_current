@@ -2,10 +2,7 @@ function [dataT] = Glass_getHalfCorrPerm(dataT)
 %% Get real half-split correlations
 splitHalf = nan(96,1000);
 splitHalfPerm = nan(96,2000);
-    rearrange_spkcnt = permute(dataT.GlassSpikeCount,[1 2 3 5 4]);% rearrange so number of channels is the last thing.
-    %rearrange_spkcnt = permute(dataT.GlassZscore,[1 2 3 4 6 5]);
-    numRepeats = size(dataT.GlassZscore,5);
-    reshape_spkcnt = reshape(rearrange_spkcnt,16,numRepeats,96); 
+
 for nb = 1:1000
 
     sample1 = randperm(numRepeats,round(numRepeats/2));

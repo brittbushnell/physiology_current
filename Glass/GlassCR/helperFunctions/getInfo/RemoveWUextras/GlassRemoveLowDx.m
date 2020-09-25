@@ -57,9 +57,12 @@ cleandataT.coh = cleanCoh;
 cleandataT.sample = cleanSample;
 cleandataT.programID = dataT.programID;
 %cleandataT.stimOrder = cleanStimOrder;
-% cleandataT.fix_x = dataT.fix_x;
-% cleandataT.fix_y = dataT.fix_y;
+cleandataT.animal = dataT.animal;
 
+if ~contains(dataT.animal, 'WU')
+    cleandataT.fix_x = dataT.fix_x;
+    cleandataT.fix_y = dataT.fix_y;
+end
 if contains(dataT.programID,'TR')
     cleandataT.rotation = cleanRotation;
 end

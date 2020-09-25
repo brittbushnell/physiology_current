@@ -1,329 +1,30 @@
 clear all
 close all
 clc
-%% V4
-% % %WU
-% % %AE
-% files = {
-%     'WU_RE_Glass_nsp2_20170818_002';...       %5 reps
-%     'WU_RE_Glass_nsp2_20170818_001';...       %5 reps
-%    };
-% newName = 'WU_RE_Glass_nsp2_20170818_all';
-% %%     %WV
-% %     %AE
-% %     'WV_RE_glassCoh_nsp2_20190404_003';...   %10 reps
-% %     'WV_RE_glassCoh_nsp2_20190404_002';...   %10 reps
-% %     };
-% % newName = 'WV_RE_glassCoh_nsp2_20190404_all';
-% %     %FE
-% %     'WV_LE_GlassCoh_nsp2_20190402_002';...   %10 reps
-% %     'WV_LE_glassCoh_nsp2_20190402_003';...   %4 reps
-% %     'WV_LE_GlassCoh_nsp2_20190402_004';...   %1 reps
-% %     };
-% % newName = 'WV_LE_GlassCoh_nsp2_20190402_all';
-% %
-% %     'WV_LE_glassCoh_nsp2_20190403_002';...   %8 reps
-% %     'WV_LE_glassCoh_nsp2_20190403_001';...   %5 reps
-% %     };
-% % newName = 'WV_LE_glassCoh_nsp2_20190403_all';
-%
-%     %FE smaller diameter stimulus
-% %     'WV_LE_glassCohSmall_nsp2_20190425_001';...  %10 reps
-% %     'WV_LE_glassCohSmall_nsp2_20190425_002';...  %5 reps
-% %     'WV_LE_glassCohSmall_nsp2_20190425_003';...  %2 reps
-% %     };
-% % newName = 'WV_LE_glassCohSmall_nsp2_20190425_all';
-%
-% %     %AE smaller diameter stimulus
-% %     'WV_RE_glassCohSmall_nsp2_20190423_002';... %10 reps
-% %     'WV_RE_glassCohSmall_nsp2_20190423_001';... %10 reps
-% %     };
-% % newName = 'WV_RE_glassCohSmall_nsp2_20190423_all';
-%
-% %     %XT %%%
-%     %RE
-% %     'XT_RE_GlassCoh_nsp2_20190321_002';...  %15 reps
-% %     'XT_RE_GlassCoh_nsp2_20190321_003';...  %9 reps
-% %     };
-% % newName = 'XT_RE_GlassCoh_nsp2_20190321_all';
-%
-% %     %LE
-% %     'XT_LE_GlassCoh_nsp2_20190325_001';...  %15 reps
-% %     'XT_LE_GlassCoh_nsp2_20190325_002';...  %9 reps
-% %     'XT_LE_GlassCoh_nsp2_20190325_004';...  %2 reps
-% %     };
-% % newName = 'XT_LE_GlassCoh_nsp2_20190325_all';
-%
-% %     %RE high coh only
-% %     'XT_RE_Glass_nsp2_20190123_008';...   %17 reps
-% %     'XT_RE_Glass_nsp2_20190123_006';...   %14 reps
-% %     'XT_RE_Glass_nsp2_20190123_005';...   %8 reps
-% %     'XT_RE_Glass_nsp2_20190123_003';...  %4 reps
-% %     };
-% % newName = 'XT_RE_Glass_nsp2_20190123_all';
-%
-% %     %LE high coh only
-% %     'XT_LE_Glass_nsp2_20190123_001';...   %15 reps
-% %     'XT_LE_Glass_nsp2_20190123_002';...   %15 reps
-% %     };
-% % newName = 'XT_LE_Glass_nsp2_20190123_all';
-%
-%     'XT_LE_Glass_nsp2_20190124_002';...   %15 reps
-%     'XT_LE_Glass_nsp2_20190124_001';...   %9 reps
-%     'XT_LE_Glass_nsp2_20190124_003';   %6 reps
-% };
-% newName = 'XT_LE_Glass_nsp2_20190124_all';
+%%
+saveDir = '/Users/brittany/Dropbox/ArrayData/matFiles/reThreshold/listMatrices/Glass'
 
-%% V1
-% %WU
-% %AE
-% files = {
-%         'WU_RE_Glass_nsp1_20170818_002';...       %5 reps
-%         'WU_RE_Glass_nsp1_20170818_001';...       %5 reps
-%        };
-%     newName = 'WU_RE_Glass_nsp1_20170818_all';
-%%     %WV
-%     %AE
-%     'WV_RE_glassCoh_nsp1_20190404_003';...   %10 reps
-%     'WV_RE_glassCoh_nsp1_20190404_002';...   %10 reps
-%     };
-% newName = 'WV_RE_glassCoh_nsp1_20190404_all';
+%% WU 
 
-%     %FE
-%     'WV_LE_GlassCoh_nsp1_20190402_002';...   %10 reps
-%     'WV_LE_glassCoh_nsp1_20190402_003';...   %4 reps
-%     'WV_LE_GlassCoh_nsp1_20190402_004';...   %1 reps
-%     };
-% newName = 'WV_LE_GlassCoh_nsp1_20190402_all';
+    %{'WU_LE_GlassTR_nsp1_20170822_002_thresh35.mat'} % leaving this file out because there's something really messed up with the V4 version.
+% files = {'WU_LE_GlassTR_nsp1_20170824_001_thresh35_info';
+%          'WU_LE_GlassTR_nsp1_20170825_002_thresh35_info'};
+% newName = 'WU_LE_GlassTR_nsp1_Aug2017_all_thresh35_info';
 
-%     'WV_LE_glassCoh_nsp1_20190403_002';...   %8 reps
-%     'WV_LE_glassCoh_nsp1_20190403_001';...   %5 reps
-%     };
-% newName = 'WV_LE_glassCoh_nsp1_20190403_all';
+files = {'WU_LE_GlassTR_nsp2_20170824_001_thresh35_info';
+         'WU_LE_GlassTR_nsp2_20170825_002_thresh35_info'};
+newName = 'WU_LE_GlassTR_nsp2_Aug2017_all_thresh35_info';
+    
+% files = {'WU_LE_Glass_nsp1_20170817_001_thresh35_info';
+%          'WU_LE_Glass_nsp1_20170821_002_thresh35_info';
+%          'WU_LE_Glass_nsp1_20170822_001_thresh35_info'};
+% newName = 'WU_LE_Glass_nsp1_Aug2017_all_thresh35_info';
+% 
+% files = {'WU_LE_Glass_nsp2_20170817_001_thresh35_info';
+%          'WU_LE_Glass_nsp2_20170821_002_thresh35_info';
+%          'WU_LE_Glass_nsp2_20170822_001_thresh35_info'};
+% newName = 'WU_LE_Glass_nsp2_Aug2017_all_thresh35_info';
 
-%FE smaller diameter stimulus
-%     'WV_LE_glassCohSmall_nsp1_20190425_001';...  %10 reps
-%     'WV_LE_glassCohSmall_nsp1_20190425_002';...  %5 reps
-%     'WV_LE_glassCohSmall_nsp1_20190425_003';...  %2 reps
-%     };
-% newName = 'WV_LE_glassCohSmall_nsp1_20190425_all';
-
-%     %AE smaller diameter stimulus
-%     'WV_RE_glassCohSmall_nsp1_20190423_002';... %10 reps
-%     'WV_RE_glassCohSmall_nsp1_20190423_001';... %10 reps
-%     };
-% newName = 'WV_RE_glassCohSmall_nsp1_20190423_all';
-
-%% XT %%%
-%RE
-%     'XT_RE_GlassCoh_nsp1_20190321_002';...  %15 reps
-%     'XT_RE_GlassCoh_nsp1_20190321_003';...  %9 reps
-%     };
-% newName = 'XT_RE_GlassCoh_nsp1_20190321_all';
-
-%     %LE
-%     'XT_LE_GlassCoh_nsp1_20190325_001';...  %15 reps
-%     'XT_LE_GlassCoh_nsp1_20190325_002';...  %9 reps
-%     'XT_LE_GlassCoh_nsp1_20190325_004';...  %2 reps
-%     };
-% newName = 'XT_LE_GlassCoh_nsp1_20190325_all';
-
-%     %RE high coh only
-%     'XT_RE_Glass_nsp1_20190123_008';...   %17 reps
-%     'XT_RE_Glass_nsp1_20190123_006';...   %14 reps
-%     'XT_RE_Glass_nsp1_20190123_005';...   %8 reps
-%     'XT_RE_Glass_nsp1_20190123_003';...  %4 reps
-%     };
-% newName = 'XT_RE_Glass_nsp1_20190123_all';
-
-%     %LE high coh only
-%     'XT_LE_Glass_nsp1_20190123_001';...   %15 reps
-%     'XT_LE_Glass_nsp1_20190123_002';...   %15 reps
-%     };
-% newName = 'XT_LE_Glass_nsp1_20190123_all';
-
-%     'XT_LE_Glass_nsp1_20190124_002';...   %15 reps
-%     'XT_LE_Glass_nsp1_20190124_001';...   %9 reps
-%     'XT_LE_Glass_nsp1_20190124_003';   %6 reps
-% };
-% newName = 'XT_LE_Glass_nsp1_20190124_all';
-
-
-%% GlassTR
-%  files = {
-%     'WU_RE_GlassTR_nsp1_20170828_003';...
-%     'WU_RE_GlassTR_nsp1_20170828_002';...
-%     };
-% newName = 'WU_RE_GlassTR_nsp1_20170828_all';
-
-% files = {
-% 'WU_RE_GlassTR_nsp2_20170828_003';...
-%     'WU_RE_GlassTR_nsp2_20170828_002';...
-%     };
-% newName = 'WU_RE_GlassTR_nsp2_20170828_all';
-
-% XT
-% files = {
-%         'XT_RE_GlassTR_nsp2_20190125_002';...
-%         'XT_RE_GlassTR_nsp2_20190125_003';...
-%         'XT_RE_GlassTR_nsp2_20190125_004';...
-%         'XT_RE_GlassTR_nsp2_20190125_005';...
-%     };
-% newName = 'XT_RE_GlassTR_nsp2_20190125_all';
-%
-files = {
-        'XT_RE_GlassTR_nsp2_20190128_001';...
-        'XT_RE_GlassTR_nsp2_20190128_002';...
-    };
-    newName = 'XT_RE_GlassTR_nsp2_20190128_all';
-%
-%     files = {
-%         'XT_LE_GlassTR_nsp2_20190130_001';...
-%         'XT_LE_GlassTR_nsp2_20190130_002';...
-%         'XT_LE_GlassTR_nsp2_20190130_003';...
-%         'XT_LE_GlassTR_nsp2_20190130_004';...
-%     };
-%     newName = 'XT_LE_GlassTR_nsp2_20190130_all';
-%
-%     files = {
-%         'XT_RE_GlassTR_nsp1_20190125_002';...
-%         'XT_RE_GlassTR_nsp1_20190125_003';...
-%         'XT_RE_GlassTR_nsp1_20190125_004';...
-%         'XT_RE_GlassTR_nsp1_20190125_005';...
-%     };
-%     newName = 'XT_RE_GlassTR_nsp1_20190125_all';
-%
-%     files = {
-%         'XT_RE_GlassTR_nsp1_20190128_001';...
-%         'XT_RE_GlassTR_nsp1_20190128_002';...
-%     };
-%     newName = 'XT_RE_GlassTR_nsp1_20190128_all';
-%
-%     files = {
-%         'XT_LE_GlassTR_nsp1_20190130_001';...
-%         'XT_LE_GlassTR_nsp1_20190130_002';...
-%         'XT_LE_GlassTR_nsp1_20190130_003';...
-%         'XT_LE_GlassTR_nsp1_20190130_004';...
-%     };
-%    newName = 'XT_LE_GlassTR_nsp1_20190130_all';
-
-% files = {
-%         'XT_RE_GlassTRCoh_nsp2_20190322_002';...
-%         'XT_RE_GlassTRCoh_nsp2_20190322_003';...
-%         'XT_RE_GlassTRCoh_nsp2_20190322_004';...
-%         };
-%     newName = 'XT_RE_GlassTRCoh_nsp2_20190322_all';
-%
-%     files = {
-%         'XT_RE_GlassTRCoh_nsp2_20190324_002';...
-%         'XT_RE_GlassTRCoh_nsp2_20190324_003';...
-%         'XT_RE_GlassTRCoh_nsp2_20190324_004';...
-%         };
-%     newName = 'XT_RE_GlassTRCoh_nsp2_20190324_all'
-
-% files = {
-%         'XT_RE_GlassTRCoh_nsp1_20190322_002';...
-%         'XT_RE_GlassTRCoh_nsp1_20190322_003';...
-%         'XT_RE_GlassTRCoh_nsp1_20190322_004';...
-%         };
-%     newName = 'XT_RE_GlassTRCoh_nsp1_20190322_all';
-%
-%     files = {
-%         'XT_RE_GlassTRCoh_nsp1_20190324_002';...
-%         'XT_RE_GlassTRCoh_nsp1_20190324_003';...
-%         'XT_RE_GlassTRCoh_nsp1_20190324_004';...
-%         };
-%     newName = 'XT_RE_GlassTRCoh_nsp1_20190324_all'
-%% WV
-% files = {
-%         'WV_RE_glassTRCoh_nsp2_20190409_001';...
-%         'WV_RE_glassTRCoh_nsp2_20190409_002';...
-%     };
-% newName = 'WV_RE_GlassTRCoh_nsp2_20190409_all';
-%
-% files = {
-%         'WV_RE_glassTRCoh_nsp2_20190410_001';...
-%         'WV_RE_glassTRCoh_nsp2_20190410_002';...
-% };
-% newName = 'WV_RE_GlassTRCoh_nsp2_20190410_all';
-%
-% files = {
-%         'WV_LE_glassTRCoh_nsp2_20190415_001';...
-%         'WV_LE_glassTRCoh_nsp2_20190415_002';...
-%     };
-% newName = 'WV_LE_GlassTRCoh_nsp2_20190415_all';
-%
-% files = {
-%         'WV_LE_glassTRCoh_nsp2_20190416_001';...
-%         'WV_LE_glassTRCoh_nsp2_20190416_002';...
-%         'WV_LE_glassTRCoh_nsp2_20190416_003';...
-%     };
-% newName = 'WV_LE_glassTRCoh_nsp2_20190416_all';
-%
-% files = {
-%         'WV_LE_glassTRCoh_nsp2_20190417_001';...
-%         'WV_LE_glassTRCoh_nsp2_20190417_002';...
-%     };
-% newName = 'WV_LE_GlassTRCoh_nsp2_20190417_all';
-%
-% files = {
-%         'WV_RE_glassTRCoh_nsp1_20190409_001';...
-%         'WV_RE_glassTRCoh_nsp1_20190409_002';...
-%     };
-% newName = 'WV_RE_GlassTRCoh_nsp1_20190409_all';
-%
-% files = {
-%         'WV_RE_glassTRCoh_nsp1_20190410_001';...
-%         'WV_RE_glassTRCoh_nsp1_20190410_002';...
-% };
-% newName = 'WV_RE_GlassTRCoh_nsp1_20190410_all';
-%
-% files = {
-%         'WV_LE_glassTRCoh_nsp1_20190415_001';...
-%         'WV_LE_glassTRCoh_nsp1_20190415_002';...
-%     };
-% newName = 'WV_LE_GlassTRCoh_nsp1_20190415_all';
-%
-% files = {
-%         'WV_LE_glassTRCoh_nsp1_20190416_001';...
-%         'WV_LE_glassTRCoh_nsp1_20190416_002';...
-%         'WV_LE_glassTRCoh_nsp1_20190416_003';...
-%     };
-% newName = 'WV_LE_glassTRCoh_nsp1_20190416_all';
-%
-% files = {
-%         'WV_LE_glassTRCoh_nsp1_20190417_001';...
-%         'WV_LE_glassTRCoh_nsp1_20190417_002';...
-%     };
-% newName = 'WV_LE_GlassTRCoh_nsp1_20190417_all';
-%% XX
-% files = {
-%      'XX_LE_Glass_20200210_001_nsp1';
-%     'XX_LE_Glass_20200210_002_nsp1';
-%     'XX_LE_Glass_20200210_003_nsp1';
-%     };
-% newName = 'XX_LE_Glass_nsp1_20200210_all';
-
-% files = {
-%      'XX_LE_Glass_20200210_001_nsp2';
-%     'XX_LE_Glass_20200210_002_nsp2';
-%     'XX_LE_Glass_20200210_003_nsp2';
-%     };
-% newName = 'XX_LE_Glass_nsp2_20200210_all';
-
-% files = {
-%     'XX_RE_Glass_20200211_001_nsp1';
-%     'XX_RE_Glass_20200211_002_nsp1';
-%     'XX_RE_Glass_20200211_003_nsp1';
-%     };
-% newName = 'XX_RE_Glass_nsp1_20200211_all';
-
-% files = {
-%     'XX_RE_Glass_20200211_001_nsp2';
-%     'XX_RE_Glass_20200211_002_nsp2';
-%     'XX_RE_Glass_20200211_003_nsp2';
-%     };
-% newName = 'XX_RE_Glass_nsp2_20200211_all';
 %%
 location = determineComputer;
 for fi = 1:size(files,1)
@@ -385,21 +86,26 @@ end
 %% save new matrix
 if contains(files(1,:),'V1') || contains(files(1,:),'nsp1')
     if location == 3
-        cd /home/bushnell/matFiles/V1/
+        saveDir = '/home/bushnell/matFiles/V1/';
     elseif location == 1
-        cd ~/bushnell-local/Dropbox/ArrayData/matFiles/V1/Glass/mergedMats/
+        saveDir = '~/bushnell-local/Dropbox/ArrayData/matFiles/V1/Glass/mergedMats/';
     elseif location  == 0
-        cd ~/Dropbox/ArrayData/matFiles/V1/Glass/mergedMats/
+        saveDir = '~/Dropbox/ArrayData/matFiles/V1/Glass/mergedMats/';
     end
 else
     if location == 3
-        cd  /home/bushnell/matFiles/V4/
+        saveDir =  '/home/bushnell/matFiles/V4/';
     elseif location  == 1
-        cd ~/bushnell-local/Dropbox/ArrayData/matFiles/V4/Glass/mergedMats/
+        saveDir = '~/bushnell-local/Dropbox/ArrayData/matFiles/V4/Glass/mergedMats/';
     elseif location  == 0
-        cd ~/Dropbox/ArrayData/matFiles/V4/Glass/mergedMats/
+        saveDir = '~/Dropbox/ArrayData/matFiles/V4/Glass/mergedMats/';
     end
 end
+
+if ~exist(saveDir,'dir')
+    mkdir(saveDir)
+end
+
 save(newName,'bins','fix_x','fix_y','rotation','size_x','stimOn','stimOff','t_stim','filename',...
     'pos_x','pos_y')
 fprintf('file %s done \n', newName)
