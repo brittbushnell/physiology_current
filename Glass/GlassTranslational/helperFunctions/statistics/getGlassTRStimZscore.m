@@ -7,14 +7,14 @@ function [GlassEachStimZscore,GlassAllStimZscore] = getGlassTRStimZscore(dataT)
 
 for ch = 1:96
     allSpikes = squeeze(dataT.AllStimTRSpikeCount(ch,:));
-    GlassAllStimZscore(ch,:) = zscore(allSpikes);
+    GlassAllStimZscore(ch,:) = zscore(allSpikes,0,'all');
     for dt = 1:numDots
         for dx = 1:numDxs
             for co = 1:numCoh
                 for or = 1:numOris
                     spikes = squeeze(dataT.GlassTRSpikeCount(or,co,dt,dx,ch,:));
                     spikes(isnan(spikes)) = [];
-                    GlassEachStimZscore(or,co,dt,dx,ch,:) = zscore(spikes);
+                    GlassEachStimZscore(or,co,dt,dx,ch,:) = zscore(spikes,0,'all');
                 end
             end
         end

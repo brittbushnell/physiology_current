@@ -5,6 +5,7 @@ tic
 %%
 files = {
     'WU_LE_GlassTR_nsp2_Aug2017_all_thresh35_info';
+    'WU_LE_Glass_nsp2_Aug2017_all_thresh35_info';
     };
 %%
 nameEnd = 'goodRuns';
@@ -36,11 +37,10 @@ for fi = 1:length(files)
     [dataT.stimBlankChPvals,dataT.responsiveCh] = getPermutationStatsAndGoodCh(dataT.allStimBlankDprime,dataT.allStimBlankDprimeBootPerm);
     fprintf('responsive channels defined\n')
     %% do split half correlations and permutations
-    %  DEBUG Z SCORES
         if contains(dataT.programID,'TR')
             zScored_chLast = permute(dataT.GlassTRZscore,[1 2 3 4 6 5]);% rearrange so number of channels is the last thing.
             numRepeats = size(dataT.GlassTRZscore,6);
-            zScoreReshape = reshape(zScored_chLast,64,numRepeats,96); % reshape into a vector. 64 = number of conditions.
+            zScoreReshape = reshape(zScored_chLast,64,numRepeats,96); % reshape 64 = number of conditions.
         else
             conZchLast = permute(dataT.conZscore,[1 2 3 5 4]);
             numRepeats = size(dataT.conZscore,5);
@@ -55,26 +55,37 @@ for fi = 1:length(files)
             nozReshape = reshape(nozZchLast,16,numRepeats,96);
             
             zScoreReshape = cat(2,conReshape,radReshape,nozReshape);
-
-%             zScored_chLast = permute(dataT.GlassZscore,[1 2 3 5 4]);% rearrange so number of channels is the last thing.
-%             numRepeats = size(dataT.GlassZscore,5);
-%             zScoreReshape = reshape(zScored_chLast,16,numRepeats,96); % reshape into a vector. 16 = number of conditions.
         end
-    
-%     if contains(dataT.programID,'TR')
-%         zScored_chLast = permute(dataT.GlassTRSpikeCount,[1 2 3 4 6 5]);% rearrange so number of channels is the last thing.
-%         numRepeats = size(dataT.GlassTRSpikeCount,6);
-%         zScoreReshape = reshape(zScored_chLast,64,numRepeats,96); % reshape into a vector. 64 = number of conditions.
-%     else
-%         zScored_chLast = permute(dataT.GlassSpikeCount,[1 2 3 5 4]);% rearrange so number of channels is the last thing.
-%         numRepeats = size(dataT.GlassSpikeCount,5);
-%         zScoreReshape = reshape(zScored_chLast,16,numRepeats,96); % reshape into a vector. 16 = number of conditions.
-%     end
+   % version using spike counts instead of zscore 
+    if contains(dataT.programID,'TR')
+        spikeCount_chLast = permute(dataT.GlassTRSpikeCount,[1 2 3 4 6 5]);% rearrange so number of channels is the last thing.
+        numRepeats = size(dataT.GlassTRSpikeCount,6);
+        spikeCountReshape = reshape(spikeCount_chLast,64,numRepeats,96); % reshape into a vector. 64 = number of conditions.
+    else
+        % fill this in with the appropriately named things
+        conSCchLast = permute(dataT.con,[1 2 3 5 4]);
+        numRepeats = size(dataT.conZscore,5);
+        conSCReshape = reshape(conZchLast,16,numRepeats,96);
+        
+        radZchLast = permute(dataT.radZscore,[1 2 3 5 4]);
+        numRepeats = size(dataT.radZscore,5);
+        radReshape = reshape(radZchLast,16,numRepeats,96);
+        
+        nozZchLast = permute(dataT.noiseZscore,[1 2 3 5 4]);
+        numRepeats = size(dataT.noiseZscore,5);
+        nozReshape = reshape(nozZchLast,16,numRepeats,96);
+        
+        zScoreReshape = cat(2,conReshape,radReshape,nozReshape);
+    end
     %%
-    [dataT.reliabilityIndex, dataT.reliabilityPvals,dataT.reliabilitySigChs,dataT.reliabilityIndexPerm] = getHalfCorrPerm(zScoreReshape);
+    [dataT.zScoreReliabilityIndex, dataT.zScoreReliabilityPvals,dataT.zScoreSplitHalfSigChs,dataT.zScoreReliabilityIndexPerm] = getHalfCorrPerm(zScoreReshape);
+    [dataT.spikeCountReliabilityIndex, dataT.spikeCountReliabilityPvals,dataT.spikeCountSplitHalfSigChs,dataT.spikeCountReliabilityIndexPerm] = getHalfCorrPerm(spikeCountReshape);
     
-    %% plot inclusion criteria by ch
-    plotResponsePvalsVSreliabilityPvals(dataT.stimBlankChPvals, dataT.reliabilityPvals)
+    % 
+    plotResponsePvalsVSreliabilityPvals(dataT.stimBlankChPvals, dataT.zScoreReliabilityPvals)
+    plotResponsePvalsVSreliabilityPvals(dataT.stimBlankChPvals, dataT.spikeCountReliabilityPvals)
+    fprintf('Split-Half correlations computed and permuted %.2f minutes',toc/60)
+    %%
     if location == 0
         figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/%s/%s/stats/halfCorr/',dataT.animal, dataT.programID, dataT.array);
         if ~exist(figDir,'dir')
@@ -91,7 +102,7 @@ for fi = 1:length(files)
     figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_HalfSplitPermTest_',dataT.date2,'_',dataT.runNum,'.pdf'];
     print(figure(2), figName,'-dpdf','-fillpage')
     %% plot PSTH showing what chns are included and what isn't
-    plotGlassPSTH_inclusionMet(dataT)
+%    plotGlassPSTH_inclusionMet(dataT)
     %% Define truly good channels that pass either the visually responsive OR split-half reliability metric
     dataT.goodCh = logical(dataT.responsiveCh) | logical(dataT.splitHalfSigChs);
     %% save good data

@@ -97,11 +97,12 @@ for perm = 1:numPerm
     end
     reliabilityIndexPerm(:,perm) = nanmedian(splitHalfPerm,2); % since the reliability index is the "true" value you're comparing against, that's the value you have to permute
 end
+toc
 %% do permutation test
 [pVals,sigChs] = glassGetPermutationStatsAndGoodCh(reliabilityIndex,reliabilityIndexPerm,1);
 %% sanity check figure
 if plotFlag == 1
-    figure(1)
+    figure%(1)
     clf
     pos = get(gcf,'Position');
     set(gcf,'Position',[pos(1) pos(2) 1200 900])
@@ -110,7 +111,7 @@ if plotFlag == 1
     for ch = 1:96
         subplot(10,10,ch)
         hold on
-        histogram(reliabilityIndexPerm(ch,:),8,'FaceColor','b','EdgeColor',[0.5 0.5 0.5],'EdgeAlpha',0.3,'Normalization','probability')
+        histogram(reliabilityIndexPerm(ch,:),10,'FaceColor','b','EdgeColor',[0.5 0.5 0.5],'EdgeAlpha',0.3,'Normalization','probability')
         plot([reliabilityIndex(ch), reliabilityIndex(ch)], [0, 0.7],'-r')
         %xlim([-0.1 0.55])
         ylim([0 1])
