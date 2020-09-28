@@ -8,19 +8,19 @@ clc
 %          'WU_LE_GlassTR_nsp1_20170825_002_thresh35_info'};
 % newName ='WU_LE_GlassTR_nsp1_Aug2017_all_thresh35_info';
 
-files = {'WU_LE_GlassTR_nsp2_20170824_001_thresh35_info';
-         'WU_LE_GlassTR_nsp2_20170825_002_thresh35_info'};
-newName ='WU_LE_GlassTR_nsp2_Aug2017_all_thresh35_info';
+% files = {'WU_LE_GlassTR_nsp2_20170824_001_thresh35_info';
+%          'WU_LE_GlassTR_nsp2_20170825_002_thresh35_info'};
+% newName ='WU_LE_GlassTR_nsp2_Aug2017_all_thresh35_info';
 
 % files = {'WU_LE_Glass_nsp1_20170817_001_thresh35_info';
 %          'WU_LE_Glass_nsp1_20170821_002_thresh35_info';
 %          'WU_LE_Glass_nsp1_20170822_001_thresh35_info'};
 % newName ='WU_LE_Glass_nsp1_Aug2017_all_thresh35_info';
 %
-% files = {'WU_LE_Glass_nsp2_20170817_001_thresh35_info';
-%     'WU_LE_Glass_nsp2_20170821_002_thresh35_info';
-%     'WU_LE_Glass_nsp2_20170822_001_thresh35_info'};
-% newName ='WU_LE_Glass_nsp2_Aug2017_all_thresh35_info';
+files = {'WU_LE_Glass_nsp2_20170817_001_thresh35_info';
+    'WU_LE_Glass_nsp2_20170821_002_thresh35_info';
+    'WU_LE_Glass_nsp2_20170822_001_thresh35_info'};
+newName ='WU_LE_Glass_nsp2_Aug2017_all_thresh35_info';
 
 %%
 location = determineComputer;
@@ -82,6 +82,9 @@ radSpikeCount = [];
 BlankSpikeCount = [];
 AllStimSpikeCount = [];
 GlassZscore = [];
+conZscore = [];
+radZscore = [];
+noiseZscore = [];
 %%
 for i = 1:length(dataTComp)
     bT     = dataTComp{i}.bins;
@@ -116,6 +119,9 @@ for i = 1:length(dataTComp)
         bSC = dataTComp{i}.blankSpikeCount;
         aSC = dataTComp{i}.AllStimSpikeCount;
         gZ  = dataTComp{i}.GlassAllStimZscore;
+        cZ  = dataTComp{i}.conZscore;
+        rZ  = dataTComp{i}.radZscore;
+        nZ  = dataTComp{i}.noiseZscore;
         
         %GlassSpikeCount = cat(5,GlassSpikeCount,gSC);
         NoiseSpikeCount = cat(5,NoiseSpikeCount,nSC);
@@ -124,6 +130,9 @@ for i = 1:length(dataTComp)
         conSpikeCount = cat(5,conSpikeCount,cSC);
         radSpikeCount = cat(5,radSpikeCount,rSC);
         GlassZscore = cat(2,GlassZscore,gZ);
+        conZscore   = cat(5,conZscore,cZ);
+        radZscore   = cat(5,radZscore,rZ);
+        noiseZscore = cat(5,noiseZscore,nZ);
     end
     
     tps  = dataTComp{i}.type;
@@ -205,7 +214,8 @@ else
         'animal','eye','programID','array','amap',...
         'pos_x','pos_y','type','numDots','dx','coh','sample','dxDeg',...
         'chReceptiveFieldParams','arrayReceptiveFieldParams','rfQuadrant','inStim',...
-        'NoiseSpikeCount','conSpikeCount','radSpikeCount','BlankSpikeCount','AllStimSpikeCount','GlassZscore') 
+        'NoiseSpikeCount','conSpikeCount','radSpikeCount','BlankSpikeCount','AllStimSpikeCount',...
+        'conZscore','radZscore','noiseZscore','GlassZscore') 
 end
 fprintf('file %s done \n', newName)
 

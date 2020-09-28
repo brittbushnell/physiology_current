@@ -63,19 +63,19 @@ for fi = 1:length(files)
         spikeCountReshape = reshape(spikeCount_chLast,64,numRepeats,96); % reshape into a vector. 64 = number of conditions.
     else
         % fill this in with the appropriately named things
-        conSCchLast = permute(dataT.con,[1 2 3 5 4]);
-        numRepeats = size(dataT.conZscore,5);
-        conSCReshape = reshape(conZchLast,16,numRepeats,96);
+        conSCchLast = permute(dataT.conSpikeCount,[1 2 3 5 4]);
+        numRepeats = size(dataT.conSpikeCount,5);
+        conSCReshape = reshape(conSCchLast,16,numRepeats,96);
         
-        radZchLast = permute(dataT.radZscore,[1 2 3 5 4]);
-        numRepeats = size(dataT.radZscore,5);
-        radReshape = reshape(radZchLast,16,numRepeats,96);
+        radSCchLast = permute(dataT.radSpikeCount,[1 2 3 5 4]);
+        numRepeats = size(dataT.radSpikeCount,5);
+        radSCReshape = reshape(radSCchLast,16,numRepeats,96);
         
-        nozZchLast = permute(dataT.noiseZscore,[1 2 3 5 4]);
-        numRepeats = size(dataT.noiseZscore,5);
-        nozReshape = reshape(nozZchLast,16,numRepeats,96);
+        nozSCchLast = permute(dataT.nozSpikeCount,[1 2 3 5 4]);
+        numRepeats = size(dataT.nozSpikeCount,5);
+        nozSCReshape = reshape(nozSCchLast,16,numRepeats,96);
         
-        zScoreReshape = cat(2,conReshape,radReshape,nozReshape);
+        spikeCountReshape = cat(2,conReshape,radReshape,nozReshape);
     end
     %%
     [dataT.zScoreReliabilityIndex, dataT.zScoreReliabilityPvals,dataT.zScoreSplitHalfSigChs,dataT.zScoreReliabilityIndexPerm] = getHalfCorrPerm(zScoreReshape);
