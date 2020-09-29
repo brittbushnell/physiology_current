@@ -8,20 +8,19 @@ clc
 %          'WU_LE_GlassTR_nsp1_20170825_002_thresh35_info'};
 % newName ='WU_LE_GlassTR_nsp1_Aug2017_all_thresh35_info';
 
-% files = {'WU_LE_GlassTR_nsp2_20170824_001_thresh35_info';
-%          'WU_LE_GlassTR_nsp2_20170825_002_thresh35_info'};
-% newName ='WU_LE_GlassTR_nsp2_Aug2017_all_thresh35_info';
-
 % files = {'WU_LE_Glass_nsp1_20170817_001_thresh35_info';
 %          'WU_LE_Glass_nsp1_20170821_002_thresh35_info';
 %          'WU_LE_Glass_nsp1_20170822_001_thresh35_info'};
 % newName ='WU_LE_Glass_nsp1_Aug2017_all_thresh35_info';
 %
-files = {'WU_LE_Glass_nsp2_20170817_001_thresh35_info';
-    'WU_LE_Glass_nsp2_20170821_002_thresh35_info';
-    'WU_LE_Glass_nsp2_20170822_001_thresh35_info'};
-newName ='WU_LE_Glass_nsp2_Aug2017_all_thresh35_info';
+% files = {'WU_LE_Glass_nsp2_20170817_001_thresh35_info';
+%     'WU_LE_Glass_nsp2_20170821_002_thresh35_info';
+%     'WU_LE_Glass_nsp2_20170822_001_thresh35_info'};
+% newName ='WU_LE_Glass_nsp2_Aug2017_all_thresh35_info';
 
+files = {'WU_LE_GlassTR_nsp2_20170824_001_thresh35_info';
+         'WU_LE_GlassTR_nsp2_20170825_002_thresh35_info'};
+newName ='WU_LE_GlassTR_nsp2_Aug2017_all_thresh35_info';
 %%
 location = determineComputer;
 for fi = 1:size(files,1)
