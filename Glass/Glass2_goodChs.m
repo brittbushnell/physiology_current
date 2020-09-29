@@ -4,7 +4,7 @@ clc
 tic
 %%
 files = {
-    'WU_LE_GlassTR_nsp2_Aug2017_all_thresh35_info';
+   % 'WU_LE_GlassTR_nsp2_Aug2017_all_thresh35_info';
     'WU_LE_Glass_nsp2_Aug2017_all_thresh35_info';
     };
 %%
@@ -71,21 +71,22 @@ for fi = 1:length(files)
         numRepeats = size(dataT.radSpikeCount,5);
         radSCReshape = reshape(radSCchLast,16,numRepeats,96);
         
-        nozSCchLast = permute(dataT.nozSpikeCount,[1 2 3 5 4]);
-        numRepeats = size(dataT.nozSpikeCount,5);
+        nozSCchLast = permute(dataT.NoiseSpikeCount,[1 2 3 5 4]);
+        numRepeats = size(dataT.NoiseSpikeCount,5);
         nozSCReshape = reshape(nozSCchLast,16,numRepeats,96);
         
         spikeCountReshape = cat(2,conReshape,radReshape,nozReshape);
     end
     %%
     [dataT.zScoreReliabilityIndex, dataT.zScoreReliabilityPvals,dataT.zScoreSplitHalfSigChs,dataT.zScoreReliabilityIndexPerm] = getHalfCorrPerm(zScoreReshape);
-    [dataT.spikeCountReliabilityIndex, dataT.spikeCountReliabilityPvals,dataT.spikeCountSplitHalfSigChs,dataT.spikeCountReliabilityIndexPerm] = getHalfCorrPerm(spikeCountReshape);
+ %   [dataT.spikeCountReliabilityIndex, dataT.spikeCountReliabilityPvals,dataT.spikeCountSplitHalfSigChs,dataT.spikeCountReliabilityIndexPerm] = getHalfCorrPerm(spikeCountReshape);
     
     % 
     plotResponsePvalsVSreliabilityPvals(dataT.stimBlankChPvals, dataT.zScoreReliabilityPvals)
-    plotResponsePvalsVSreliabilityPvals(dataT.stimBlankChPvals, dataT.spikeCountReliabilityPvals)
+  %  plotResponsePvalsVSreliabilityPvals(dataT.stimBlankChPvals, dataT.spikeCountReliabilityPvals)
     fprintf('Split-Half correlations computed and permuted %.2f minutes',toc/60)
     %%
+    filePartInfo = strsplit(filename,'_');
     if location == 0
         figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/%s/%s/stats/halfCorr/',dataT.animal, dataT.programID, dataT.array);
         if ~exist(figDir,'dir')
@@ -99,12 +100,12 @@ for fi = 1:length(files)
     end
     cd(figDir)
     
-    figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_HalfSplitPermTest_',dataT.date2,'_',dataT.runNum,'.pdf'];
+    figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_HalfSplitPermTest_',filePartInfo{5},'_',filePartInfo{6},'.pdf'];
     print(figure(2), figName,'-dpdf','-fillpage')
     %% plot PSTH showing what chns are included and what isn't
 %    plotGlassPSTH_inclusionMet(dataT)
     %% Define truly good channels that pass either the visually responsive OR split-half reliability metric
-    dataT.goodCh = logical(dataT.responsiveCh) | logical(dataT.splitHalfSigChs);
+    dataT.goodCh = logical(dataT.responsiveCh) | logical(dataT.zScoreSplitHalfSigChs);
     %% save good data
     if location == 1
         outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/Glass/goodChs/',dataT.array);
