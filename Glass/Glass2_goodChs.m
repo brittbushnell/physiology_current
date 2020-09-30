@@ -4,8 +4,8 @@ clc
 tic
 %%
 files = {
-    'WU_LE_GlassTR_nsp2_Aug2017_all_thresh35_info';
-    'WU_LE_Glass_nsp2_Aug2017_all_thresh35_info';
+%     'WU_LE_GlassTR_nsp2_Aug2017_all_thresh35_info';
+%     'WU_LE_Glass_nsp2_Aug2017_all_thresh35_info';
     'WU_RE_GlassTR_nsp2_Aug2017_all_thresh35_info';
     'WU_RE_Glass_nsp2_Aug2017_all_thresh35_info';
     
@@ -87,13 +87,27 @@ for fi = 1:length(files)
     %%
     [dataT.zScoreReliabilityIndex, dataT.zScoreReliabilityPvals,dataT.zScoreSplitHalfSigChs,dataT.zScoreReliabilityIndexPerm] = getHalfCorrPerm(zScoreReshape);
  %   [dataT.spikeCountReliabilityIndex, dataT.spikeCountReliabilityPvals,dataT.spikeCountSplitHalfSigChs,dataT.spikeCountReliabilityIndexPerm] = getHalfCorrPerm(spikeCountReshape);
+        filePartInfo = strsplit(filename,'_');
+    if location == 0
+        figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/%s/%s/stats/halfCorr/',dataT.animal, dataT.programID, dataT.array);
+        if ~exist(figDir,'dir')
+            mkdir(figDir)
+        end
+    else
+        figDir =  sprintf( '/Local/Users/bushnell/Dropbox/Figures/%s/%s/%s/stats/halfCorr/',dataT.animal, dataT.programID, dataT.array);
+        if ~exist(figDir,'dir')
+            mkdir(figDir)
+        end
+    end
+    cd(figDir)
     
+    figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_HalfSplitPermTestDist_',filePartInfo{3},'_',filePartInfo{5},'_',filePartInfo{6},'.pdf'];
+    print(figure(1), figName,'-dpdf','-fillpage')
     %% 
     plotResponsePvalsVSreliabilityPvals(dataT.stimBlankChPvals, dataT.zScoreReliabilityPvals,dataT)
   %  plotResponsePvalsVSreliabilityPvals(dataT.stimBlankChPvals, dataT.spikeCountReliabilityPvals)
     fprintf('Split-Half correlations computed and permuted %.2f minutes\n',toc/60)
     %%
-    filePartInfo = strsplit(filename,'_');
     if location == 0
         figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/%s/%s/stats/halfCorr/',dataT.animal, dataT.programID, dataT.array);
         if ~exist(figDir,'dir')
