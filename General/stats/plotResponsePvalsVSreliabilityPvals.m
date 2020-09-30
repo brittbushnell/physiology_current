@@ -1,4 +1,4 @@
-function plotResponsePvalsVSreliabilityPvals(responsePvals,reliabilityPvals)
+function plotResponsePvalsVSreliabilityPvals(responsePvals,reliabilityPvals,dataT)
 %
 % This function will plot the pvalues from the responsivity permutation
 % test on the x axis, and the split half correlation on the y axis.
@@ -60,5 +60,5 @@ set(gca,'tickdir','out','Layer','top','YTick',0:0.25:1,'XTick',0:0.2:1)
 xlabel('Visual response permutation p-value','FontAngle','italic','FontSize',12)
 ylabel('Half-Split permutation p-value','FontAngle','italic','FontSize',12)
 
-title({'Half-split p-value vs visual response p-value';...
+title({sprintf('%s %s %s %s Half-split p-value vs visual response p-value', dataT.animal, dataT.eye, dataT.array, dataT.programID);...
        'data in gray areas are excluded'},'FontAngle','italic','FontSize',14)
