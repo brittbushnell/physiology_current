@@ -28,7 +28,7 @@ n7 = sum((responsePvals<=0.05 & reliabilityPvals<=0.05));
 n8 = sum((responsePvals>0.05 & responsePvals<0.95 & reliabilityPvals<=0.05));
 n9 = sum((responsePvals>=0.95 & reliabilityPvals<=0.05));
 %%
-figure%(2)
+figure(2)
 clf
 hold on
 rectangle('Position',[0.05 0.05 0.9 1.3],'FaceColor',[0.8 0.8 0.8],'EdgeColor',[0.8 0.8 0.8])

@@ -88,10 +88,10 @@ for fi = 1:length(files)
     [dataT.zScoreReliabilityIndex, dataT.zScoreReliabilityPvals,dataT.zScoreSplitHalfSigChs,dataT.zScoreReliabilityIndexPerm] = getHalfCorrPerm(zScoreReshape);
  %   [dataT.spikeCountReliabilityIndex, dataT.spikeCountReliabilityPvals,dataT.spikeCountSplitHalfSigChs,dataT.spikeCountReliabilityIndexPerm] = getHalfCorrPerm(spikeCountReshape);
     
-    % 
-    plotResponsePvalsVSreliabilityPvals(dataT.stimBlankChPvals, dataT.zScoreReliabilityPvals)
+    %% 
+    plotResponsePvalsVSreliabilityPvals(dataT.stimBlankChPvals, dataT.zScoreReliabilityPvals,dataT)
   %  plotResponsePvalsVSreliabilityPvals(dataT.stimBlankChPvals, dataT.spikeCountReliabilityPvals)
-    fprintf('Split-Half correlations computed and permuted %.2f minutes',toc/60)
+    fprintf('Split-Half correlations computed and permuted %.2f minutes\n',toc/60)
     %%
     filePartInfo = strsplit(filename,'_');
     if location == 0
@@ -107,7 +107,7 @@ for fi = 1:length(files)
     end
     cd(figDir)
     
-    figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_HalfSplitPermTest_',filePartInfo{5},'_',filePartInfo{6},'.pdf'];
+    figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_HalfSplitPermTest_',filePartInfo{3},'_',filePartInfo{5},'_',filePartInfo{6},'.pdf'];
     print(figure(2), figName,'-dpdf','-fillpage')
     %% plot PSTH showing what chns are included and what isn't
 %    plotGlassPSTH_inclusionMet(dataT)
