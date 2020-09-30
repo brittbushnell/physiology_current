@@ -4,8 +4,15 @@ clc
 tic
 %%
 files = {
-   % 'WU_LE_GlassTR_nsp2_Aug2017_all_thresh35_info';
+    'WU_LE_GlassTR_nsp2_Aug2017_all_thresh35_info';
     'WU_LE_Glass_nsp2_Aug2017_all_thresh35_info';
+    'WU_RE_GlassTR_nsp2_Aug2017_all_thresh35_info';
+    'WU_RE_Glass_nsp2_Aug2017_all_thresh35_info';
+    
+    'WU_LE_GlassTR_nsp1_Aug2017_all_thresh35_info';
+    'WU_LE_Glass_nsp1_Aug2017_all_thresh35_info';
+    'WU_RE_GlassTR_nsp1_Aug2017_all_thresh35_info';
+    'WU_RE_Glass_nsp1_Aug2017_all_thresh35_info';
     };
 %%
 nameEnd = 'goodRuns';

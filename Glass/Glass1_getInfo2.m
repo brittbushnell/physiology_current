@@ -10,11 +10,11 @@ monks = {
     };
 ez = {
     'LE';
- %  'RE';
+  'RE';
     };
 brArray = {
     'V4';
-  % 'V1';
+   'V1';
     };
 %%
 nameEnd = 'info';
