@@ -4,15 +4,15 @@ clc
 tic
 %%
 files = {
-%     'WU_LE_GlassTR_nsp2_Aug2017_all_thresh35_info';
-%     'WU_LE_Glass_nsp2_Aug2017_all_thresh35_info';
-    'WU_RE_GlassTR_nsp2_Aug2017_all_thresh35_info';
-    'WU_RE_Glass_nsp2_Aug2017_all_thresh35_info';
-    
-    'WU_LE_GlassTR_nsp1_Aug2017_all_thresh35_info';
-    'WU_LE_Glass_nsp1_Aug2017_all_thresh35_info';
-    'WU_RE_GlassTR_nsp1_Aug2017_all_thresh35_info';
-    'WU_RE_Glass_nsp1_Aug2017_all_thresh35_info';
+        'WU_LE_GlassTR_nsp2_Aug2017_all_thresh35_info';
+        'WU_LE_Glass_nsp2_Aug2017_all_thresh35_info';
+%     'WU_RE_GlassTR_nsp2_Aug2017_all_thresh35_info';
+%     'WU_RE_Glass_nsp2_Aug2017_all_thresh35_info';
+%     
+%     'WU_LE_GlassTR_nsp1_Aug2017_all_thresh35_info';
+%     'WU_LE_Glass_nsp1_Aug2017_all_thresh35_info';
+%     'WU_RE_GlassTR_nsp1_Aug2017_all_thresh35_info';
+%     'WU_RE_Glass_nsp1_Aug2017_all_thresh35_info';
     };
 %%
 nameEnd = 'goodRuns';
@@ -43,88 +43,51 @@ for fi = 1:length(files)
     dataT = GlassStimVsBlankPermutations_allStim(dataT,numPerm,holdout);
     [dataT.stimBlankChPvals,dataT.responsiveCh] = getPermutationStatsAndGoodCh(dataT.allStimBlankDprime,dataT.allStimBlankDprimeBootPerm);
     fprintf('responsive channels defined\n')
-    %% do split half correlations and permutations
-        if contains(dataT.programID,'TR')
-            zScored_chLast = permute(dataT.GlassTRZscore,[1 2 3 4 6 5]);% rearrange so number of channels is the last thing.
-            numRepeats = size(dataT.GlassTRZscore,6);
-            zScoreReshape = reshape(zScored_chLast,64,numRepeats,96); % reshape 64 = number of conditions.
-        else
-            conZchLast = permute(dataT.conZscore,[1 2 3 5 4]);
-            numRepeats = size(dataT.conZscore,5);
-            conReshape = reshape(conZchLast,16,numRepeats,96);
-            
-            radZchLast = permute(dataT.radZscore,[1 2 3 5 4]);
-            numRepeats = size(dataT.radZscore,5);
-            radReshape = reshape(radZchLast,16,numRepeats,96);            
-            
-            nozZchLast = permute(dataT.noiseZscore,[1 2 3 5 4]);
-            numRepeats = size(dataT.noiseZscore,5);
-            nozReshape = reshape(nozZchLast,16,numRepeats,96);
-            
-            zScoreReshape = cat(2,conReshape,radReshape,nozReshape);
-        end
-   % version using spike counts instead of zscore 
+    %% setup for split-half
     if contains(dataT.programID,'TR')
-        spikeCount_chLast = permute(dataT.GlassTRSpikeCount,[1 2 3 4 6 5]);% rearrange so number of channels is the last thing.
-        numRepeats = size(dataT.GlassTRSpikeCount,6);
-        spikeCountReshape = reshape(spikeCount_chLast,64,numRepeats,96); % reshape into a vector. 64 = number of conditions.
+        zScored_chLast = permute(dataT.GlassTRZscore,[1 2 3 4 6 5]);% rearrange so number of channels is the last thing.
+        numRepeats = size(dataT.GlassTRZscore,6);
+        zScoreReshape = reshape(zScored_chLast,64,numRepeats,96); % reshape 64 = number of conditions.
     else
-        % fill this in with the appropriately named things
-        conSCchLast = permute(dataT.conSpikeCount,[1 2 3 5 4]);
-        numRepeats = size(dataT.conSpikeCount,5);
-        conSCReshape = reshape(conSCchLast,16,numRepeats,96);
+        conZchLast = permute(dataT.conZscore,[1 2 3 5 4]);
+        numRepeats = size(dataT.conZscore,5);
+        conReshape = reshape(conZchLast,16,numRepeats,96);
         
-        radSCchLast = permute(dataT.radSpikeCount,[1 2 3 5 4]);
-        numRepeats = size(dataT.radSpikeCount,5);
-        radSCReshape = reshape(radSCchLast,16,numRepeats,96);
+        radZchLast = permute(dataT.radZscore,[1 2 3 5 4]);
+        numRepeats = size(dataT.radZscore,5);
+        radReshape = reshape(radZchLast,16,numRepeats,96);
         
-        nozSCchLast = permute(dataT.NoiseSpikeCount,[1 2 3 5 4]);
-        numRepeats = size(dataT.NoiseSpikeCount,5);
-        nozSCReshape = reshape(nozSCchLast,16,numRepeats,96);
+        nozZchLast = permute(dataT.noiseZscore,[1 2 3 5 4]);
+        numRepeats = size(dataT.noiseZscore,5);
+        nozReshape = reshape(nozZchLast,16,numRepeats,96);
         
-        spikeCountReshape = cat(2,conReshape,radReshape,nozReshape);
+        zScoreReshape = cat(2,conReshape,radReshape,nozReshape);
     end
-    %%
-    [dataT.zScoreReliabilityIndex, dataT.zScoreReliabilityPvals,dataT.zScoreSplitHalfSigChs,dataT.zScoreReliabilityIndexPerm] = getHalfCorrPerm(zScoreReshape);
- %   [dataT.spikeCountReliabilityIndex, dataT.spikeCountReliabilityPvals,dataT.spikeCountSplitHalfSigChs,dataT.spikeCountReliabilityIndexPerm] = getHalfCorrPerm(spikeCountReshape);
-        filePartInfo = strsplit(filename,'_');
-    if location == 0
-        figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/%s/%s/stats/halfCorr/',dataT.animal, dataT.programID, dataT.array);
-        if ~exist(figDir,'dir')
-            mkdir(figDir)
-        end
-    else
-        figDir =  sprintf( '/Local/Users/bushnell/Dropbox/Figures/%s/%s/%s/stats/halfCorr/',dataT.animal, dataT.programID, dataT.array);
-        if ~exist(figDir,'dir')
-            mkdir(figDir)
-        end
-    end
-    cd(figDir)
-    
-    figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_HalfSplitPermTestDist_',filePartInfo{3},'_',filePartInfo{5},'_',filePartInfo{6},'.pdf'];
-    print(figure(1), figName,'-dpdf','-fillpage')
-    %% 
-    plotResponsePvalsVSreliabilityPvals(dataT.stimBlankChPvals, dataT.zScoreReliabilityPvals,dataT)
-  %  plotResponsePvalsVSreliabilityPvals(dataT.stimBlankChPvals, dataT.spikeCountReliabilityPvals)
+     %% do split half correlations and permutations
+    [dataT.zScoreReliabilityIndex, dataT.zScoreReliabilityPvals,dataT.zScoreSplitHalfSigChs,dataT.zScoreReliabilityIndexPerm] = getHalfCorrPerm(zScoreReshape,filename);
+    plotResponsePvalsVSreliabilityPvals(dataT.stimBlankChPvals, dataT.zScoreReliabilityPvals,filename)
     fprintf('Split-Half correlations computed and permuted %.2f minutes\n',toc/60)
-    %%
-    if location == 0
-        figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/%s/%s/stats/halfCorr/',dataT.animal, dataT.programID, dataT.array);
-        if ~exist(figDir,'dir')
-            mkdir(figDir)
-        end
-    else
-        figDir =  sprintf( '/Local/Users/bushnell/Dropbox/Figures/%s/%s/%s/stats/halfCorr/',dataT.animal, dataT.programID, dataT.array);
-        if ~exist(figDir,'dir')
-            mkdir(figDir)
-        end
-    end
-    cd(figDir)
-    
-    figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_HalfSplitPermTest_',filePartInfo{3},'_',filePartInfo{5},'_',filePartInfo{6},'.pdf'];
-    print(figure(2), figName,'-dpdf','-fillpage')
-    %% plot PSTH showing what chns are included and what isn't
-%    plotGlassPSTH_inclusionMet(dataT)
+    %% spike counts instead of zscore
+%     if contains(dataT.programID,'TR')
+%         spikeCount_chLast = permute(dataT.GlassTRSpikeCount,[1 2 3 4 6 5]);% rearrange so number of channels is the last thing.
+%         numRepeats = size(dataT.GlassTRSpikeCount,6);
+%         spikeCountReshape = reshape(spikeCount_chLast,64,numRepeats,96); % reshape into a vector. 64 = number of conditions.
+%     else
+%         % fill this in with the appropriately named things
+%         conSCchLast = permute(dataT.conSpikeCount,[1 2 3 5 4]);
+%         numRepeats = size(dataT.conSpikeCount,5);
+%         conSCReshape = reshape(conSCchLast,16,numRepeats,96);
+%         
+%         radSCchLast = permute(dataT.radSpikeCount,[1 2 3 5 4]);
+%         numRepeats = size(dataT.radSpikeCount,5);
+%         radSCReshape = reshape(radSCchLast,16,numRepeats,96);
+%         
+%         nozSCchLast = permute(dataT.NoiseSpikeCount,[1 2 3 5 4]);
+%         numRepeats = size(dataT.NoiseSpikeCount,5);
+%         nozSCReshape = reshape(nozSCchLast,16,numRepeats,96);
+%         
+%         spikeCountReshape = cat(2,conReshape,radReshape,nozReshape);
+%     end
     %% Define truly good channels that pass either the visually responsive OR split-half reliability metric
     dataT.goodCh = logical(dataT.responsiveCh) | logical(dataT.zScoreSplitHalfSigChs);
     %% save good data
@@ -159,6 +122,6 @@ for fi = 1:length(files)
     %         failedFiles{failNdx,1} = filename;
     %         failedME{failNdx,1} = ME;
     %     end
-    
-    clear dataT
+    %% clean up workspace
+    clearvars -except files fi nameEnd numPerm failedFiles failNdx numBoot location
 end

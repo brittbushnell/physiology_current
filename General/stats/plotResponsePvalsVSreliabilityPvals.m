@@ -1,4 +1,4 @@
-function plotResponsePvalsVSreliabilityPvals(responsePvals,reliabilityPvals,dataT)
+function plotResponsePvalsVSreliabilityPvals(responsePvals,reliabilityPvals,filename)
 %
 % This function will plot the pvalues from the responsivity permutation
 % test on the x axis, and the split half correlation on the y axis.
@@ -28,7 +28,7 @@ n7 = sum((responsePvals<=0.05 & reliabilityPvals<=0.05));
 n8 = sum((responsePvals>0.05 & responsePvals<0.95 & reliabilityPvals<=0.05));
 n9 = sum((responsePvals>=0.95 & reliabilityPvals<=0.05));
 %%
-figure(2)
+figure%(2)
 clf
 hold on
 rectangle('Position',[0.05 0.05 0.9 1.3],'FaceColor',[0.8 0.8 0.8],'EdgeColor',[0.8 0.8 0.8])
@@ -60,5 +60,23 @@ set(gca,'tickdir','out','Layer','top','YTick',0:0.25:1,'XTick',0:0.2:1)
 xlabel('Visual response permutation p-value','FontAngle','italic','FontSize',12)
 ylabel('Half-Split permutation p-value','FontAngle','italic','FontSize',12)
 
-title({sprintf('%s %s %s %s Half-split p-value vs visual response p-value', dataT.animal, dataT.eye, dataT.array, dataT.programID);...
-       'data in gray areas are excluded'},'FontAngle','italic','FontSize',14)
+title({sprintf('%s %s %s %s Half-split p-value vs visual response p-value', filePartInfo{1}, filePartInfo{2}, filePartInfo{4}, filePartInfo{3});...
+    'data in gray areas are excluded'},'FontAngle','italic','FontSize',14)
+%% save
+%
+filePartInfo = strsplit(filename,'_');
+if location == 0
+    figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/%s/%s/stats/halfCorr/zones/',filePartInfo{1}, filePartInfo{3}, filePartInfo{4});
+    if ~exist(figDir,'dir')
+        mkdir(figDir)
+    end
+else
+    figDir =  sprintf( '/Local/Users/bushnell/Dropbox/Figures/%s/%s/%s/stats/halfCorr/zones/',filePartInfo{1}, filePartInfo{3}, filePartInfo{4});
+    if ~exist(figDir,'dir')
+        mkdir(figDir)
+    end
+end
+cd(figDir)
+
+figName = [filePartInfo{1},'_',filePartInfo{2},'_',filePartInfo{4},'_reliableVvisual_',filePartInfo{3},'_',filePartInfo{5},'_',filePartInfo{6},'.pdf'];
+print(gcf, figName,'-dpdf','-fillpage')

@@ -37,30 +37,40 @@ function [reliabilityIndex, pVals,sigChs,reliabilityIndexPerm] = getHalfCorrPerm
 %
 %
 %  Brittany Bushnell 9/24/2020
+%
+%  Edited 9/30/2020
+%    Added FILENAME as a second required input that will be used for making
+%    the figure titles and saving the figures.   (BB)
 %%
 switch nargin
     case 0
-        error ('Must pass in your data matrix at a minimum')
+        error ('Must pass in your data matrix and filename at a minimum')
     case 1
-        conditionZscores = varargin{1};
-        numPerm = 2000;
-        numBoot = 1000;
-        plotFlag = 1;
+        error ('Must pass in your data matrix and filename at a minimum')
     case 2
         conditionZscores = varargin{1};
-        numPerm = varargin{2};
+        filename = varargin{2};
+        numPerm = 2000;
         numBoot = 1000;
         plotFlag = 1;
     case 3
         conditionZscores = varargin{1};
-        numPerm = varargin{2};
-        numBoot = varargin{3};
+        filename = varargin{2};
+        numPerm = varargin{3};
+        numBoot = 1000;
         plotFlag = 1;
     case 4
         conditionZscores = varargin{1};
-        numPerm = varargin{2};
-        numBoot = varargin{3};
-        plotFlag = varargin{4};
+        filename = varargin{2};
+        numPerm = varargin{3};
+        numBoot = varargin{4};
+        plotFlag = 1;
+    case 5
+        conditionZscores = varargin{1};
+        filename = varargin{2};
+        numPerm = varargin{3};
+        numBoot = varargin{4};
+        plotFlag = varargin{5};
 end
 
 if ndims(conditionZscores) ~= 3
@@ -100,7 +110,7 @@ end
 toc
 %% do permutation test
 [pVals,sigChs] = glassGetPermutationStatsAndGoodCh(reliabilityIndex,reliabilityIndexPerm,1);
-%% sanity check figure
+%% sanity check figures
 if plotFlag == 1
     figure%(1)
     clf
@@ -109,10 +119,12 @@ if plotFlag == 1
     set(gcf,'PaperOrientation','Landscape');
     
     for ch = 1:96
+        pValCh = pVals(ch);
         subplot(10,10,ch)
         hold on
         histogram(reliabilityIndexPerm(ch,:),10,'FaceColor','b','EdgeColor',[0.5 0.5 0.5],'EdgeAlpha',0.3,'Normalization','probability')
         plot([reliabilityIndex(ch), reliabilityIndex(ch)], [0, 0.7],'-r')
+        text((0.1),0.65,sprintf('p %.2f',pValCh))
         %xlim([-0.1 0.55])
         ylim([0 1])
         t = title(ch);
@@ -126,4 +138,21 @@ if plotFlag == 1
         end
     end
     suptitle('reliability index permutation distributions vs observed (red line)')
+    %%
+    filePartInfo = strsplit(filename,'_');
+    if location == 0
+        figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/%s/%s/stats/halfCorr/dist/',filePartInfo{1}, filePartInfo{3}, filePartInfo{4});
+        if ~exist(figDir,'dir')
+            mkdir(figDir)
+        end
+    else
+        figDir =  sprintf( '/Local/Users/bushnell/Dropbox/Figures/%s/%s/%s/stats/halfCorr/dist/',filePartInfo{1}, filePartInfo{3}, filePartInfo{4});
+        if ~exist(figDir,'dir')
+            mkdir(figDir)
+        end
+    end
+    cd(figDir)
+    
+    figName = [filePartInfo{1},'_',filePartInfo{2},'_',filePartInfo{4},'_splitHalfPermDist_',filePartInfo{3},'_',filePartInfo{5},'_',filePartInfo{6},'.pdf'];
+    print(gcf, figName,'-dpdf','-fillpage')
 end

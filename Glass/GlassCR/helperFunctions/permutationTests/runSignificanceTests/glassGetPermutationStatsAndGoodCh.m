@@ -4,9 +4,9 @@ function [stimBlankPval,gCh] = glassGetPermutationStatsAndGoodCh(varargin)
 % INPUT:
 %  realData: 96 element vector of measured values
 %  permData: 96xboot matrix where the columns are the bootstrapped values
-%  numTails: optional input that specifies if you want to run a one or two tailed significance test.  
+%  numTails: optional input that specifies if you want to run a one or two tailed significance test.
 %     The default is two-tailed.
-% 
+%
 % OUTPUT:
 %  stimBlankPval
 %     A vector of p-values from the permutation test comparing the
