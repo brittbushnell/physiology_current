@@ -28,6 +28,7 @@ n7 = sum((responsePvals<=0.05 & reliabilityPvals<=0.05));
 n8 = sum((responsePvals>0.05 & responsePvals<0.95 & reliabilityPvals<=0.05));
 n9 = sum((responsePvals>=0.95 & reliabilityPvals<=0.05));
 %%
+filePartInfo = strsplit(filename,'_');
 figure%(2)
 clf
 hold on
@@ -63,8 +64,7 @@ ylabel('Half-Split permutation p-value','FontAngle','italic','FontSize',12)
 title({sprintf('%s %s %s %s Half-split p-value vs visual response p-value', filePartInfo{1}, filePartInfo{2}, filePartInfo{4}, filePartInfo{3});...
     'data in gray areas are excluded'},'FontAngle','italic','FontSize',14)
 %% save
-%
-filePartInfo = strsplit(filename,'_');
+location = determineComputer;
 if location == 0
     figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/%s/%s/stats/halfCorr/zones/',filePartInfo{1}, filePartInfo{3}, filePartInfo{4});
     if ~exist(figDir,'dir')

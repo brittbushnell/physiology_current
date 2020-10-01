@@ -42,6 +42,7 @@ function [reliabilityIndex, pVals,sigChs,reliabilityIndexPerm] = getHalfCorrPerm
 %    Added FILENAME as a second required input that will be used for making
 %    the figure titles and saving the figures.   (BB)
 %%
+splitTic = tic;
 switch nargin
     case 0
         error ('Must pass in your data matrix and filename at a minimum')
@@ -92,7 +93,7 @@ for boot = 1:numBoot
     splitHalf(:,boot) = diag(corr(set1,set2)); %96xnb
 end
 reliabilityIndex = nanmedian(splitHalf,2);
-
+fprintf('% minutes to do real reliability indices\n',toc(splitTic));
 %% get permutations
 numCond = size(conditionZscores,1);
 for perm = 1:numPerm
@@ -107,7 +108,7 @@ for perm = 1:numPerm
     end
     reliabilityIndexPerm(:,perm) = nanmedian(splitHalfPerm,2); % since the reliability index is the "true" value you're comparing against, that's the value you have to permute
 end
-toc
+fprintf('% minutes to do permuted reliability indices\n',toc(splitTic));
 %% do permutation test
 [pVals,sigChs] = glassGetPermutationStatsAndGoodCh(reliabilityIndex,reliabilityIndexPerm,1);
 %% sanity check figures
@@ -139,6 +140,7 @@ if plotFlag == 1
     end
     suptitle('reliability index permutation distributions vs observed (red line)')
     %%
+    location = determineComputer;
     filePartInfo = strsplit(filename,'_');
     if location == 0
         figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/%s/%s/stats/halfCorr/dist/',filePartInfo{1}, filePartInfo{3}, filePartInfo{4});

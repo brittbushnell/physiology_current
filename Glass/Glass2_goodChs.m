@@ -123,5 +123,5 @@ for fi = 1:length(files)
     %         failedME{failNdx,1} = ME;
     %     end
     %% clean up workspace
-    clearvars -except files fi nameEnd numPerm failedFiles failNdx numBoot location
+    clearvars -except files fi nameEnd numPerm failedFiles failNdx numBoot location holdout
 end
