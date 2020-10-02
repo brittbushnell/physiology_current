@@ -7,7 +7,22 @@ function plotResponsePvalsVSreliabilityPvals(responsePvals,reliabilityPvals,file
 % bottom left of each section indicates the number of data points that lie
 % within that square. 
 %
+%  INPUT
+%    ResponsePvals: vector of p-values from stimulus vs blank permutation
+%    test
+%
+%    ReliabilityPvals: vector of p-values from the reliability test
+%
+%    filename: name of the file being analyzed. This is used for making the
+%    figure title and determining where to save the data
+%
+%
 % Brittany Bushnell 9/24/2020
+%
+% Edited 10/1/2020
+%
+%  Added bit of text at the top to indicate how many channels will be
+%  included. BB
 %% determine how many channels fall within each subsection of the figure
 %    1 | 2 | 3
 %   ----------- 
@@ -27,6 +42,7 @@ n6 = sum((responsePvals>=0.95 &  reliabilityPvals>0.05 & reliabilityPvals<0.95))
 n7 = sum((responsePvals<=0.05 & reliabilityPvals<=0.05));
 n8 = sum((responsePvals>0.05 & responsePvals<0.95 & reliabilityPvals<=0.05));
 n9 = sum((responsePvals>=0.95 & reliabilityPvals<=0.05));
+numInclude = n1+n3+n4+n6+n7+n8+n9;
 %%
 filePartInfo = strsplit(filename,'_');
 figure%(2)
@@ -55,6 +71,7 @@ text(-0.03, -0.03, sprintf('n = %d',n7))
 text(0.07, -0.03, sprintf('n = %d',n8))
 text(0.97, -0.03, sprintf('n = %d',n9))
 
+text(0.75, 1.1, sprintf('%d channels included', numInclude))
 
 set(gca,'tickdir','out','Layer','top','YTick',0:0.25:1,'XTick',0:0.2:1)
 
