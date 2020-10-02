@@ -201,6 +201,24 @@ eye = dataTComp{1}.eye;
 programID = dataTComp{1}.programID;
 array = dataTComp{1}.array;
 amap = dataTComp{1}.amap;
+%% sanity check figures
+figure
+clf
+pos = get(gcf,'Position');
+set(gcf,'Position',[pos(1) pos(2) 1200 900])
+set(gcf,'PaperOrientation','Landscape');
+
+subplot(1,2,1)
+% spike counts across sessions
+if contains(newName,'TR')
+for ses = 1:length(dataTComp)
+    spikes = dataTComp{ses}.
+end
+else
+    
+end
+subplot(1,2,2)
+% zscore across sessions
 %% save new matrix
 if contains(files(1,:),'V1') || contains(files(1,:),'nsp1')
     if location == 3
