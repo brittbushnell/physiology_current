@@ -50,4 +50,5 @@ for ch = 1:96
     end
 end
 %%
-eachStimSpikeCount = cat(5,conSpikeCount, radSpikeCount, noiseSpikeCount);
+% not sure why I added this...maybe to compare dt,dx independent of type??
+% eachStimSpikeCount = cat(5,conSpikeCount, radSpikeCount, noiseSpikeCount);

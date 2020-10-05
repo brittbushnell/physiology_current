@@ -18,12 +18,11 @@ noiseTrials = (noiseNdx & dotNdx & dxNdx);
 
 
 trSpikeCount = nan(numOris, numCoh, numDots, numDxs, 96, sum(linTrials)+5);
-noiseSpikeCount = nan(numDots, numDxs, 96, sum(noiseTrials)+5);
+noiseSpikeCount = nan(numOris, numCoh,numDots, numDxs, 96, sum(noiseTrials)+5); % even though they're largely not applicable, need noise matrix to be the same size as the stimulus one for concatenating
 %%
 for ch = 1:96
     startMean= 5;
     endMean  = 25;
-    
     
     blankSpikeCount(ch,:) = sum(dataT.bins(blankNdx, startMean:endMean, ch),2);
     stimSpikeCount(ch,:) = sum(dataT.bins(stimTrials,(startMean:endMean) ,ch),2);
@@ -44,7 +43,7 @@ for ch = 1:96
                     trSpikeCount(or,co,ndot,dx,ch,1:sum(linTrials)) = sum(dataT.bins(linTrials, (startMean:endMean) ,ch),2);
                     
                     if co == 1 && or == 1
-                        noiseSpikeCount(ndot,dx,ch,1:sum(noiseTrials)) = sum(dataT.bins(noiseTrials, startMean:endMean, ch),2);
+                        noiseSpikeCount(or,co,ndot,dx,ch,1:sum(noiseTrials)) = sum(dataT.bins(noiseTrials, startMean:endMean, ch),2);
                     end
                 end
             end

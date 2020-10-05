@@ -17,7 +17,7 @@ function [dp] = simpleDiscrim(X1,X2)
 %       negative d' indicates the first stimulus is stronger.  
 %
 if size(X1) ~= size(X2)
-    fprintf('different size inputs to simpleDiscrim\n')
+    %fprintf('different size inputs to simpleDiscrim\n')
 end
 
 dp = (nanmean(X2) - nanmean(X1)) ./ sqrt( (nanvar(X2) + nanvar(X1))./2 );

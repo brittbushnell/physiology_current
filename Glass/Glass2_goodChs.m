@@ -40,14 +40,21 @@ for fi = 1:length(files)
         end
     end
     %% determine reponsive channels
-    dataT = GlassStimVsBlankPermutations_allStim(dataT,numPerm,holdout);
-    [dataT.stimBlankChPvals,dataT.responsiveCh] = getPermutationStatsAndGoodCh(dataT.allStimBlankDprime,dataT.allStimBlankDprimeBootPerm);
+    %dataT = GlassStimVsBlankPermutations_allStim(dataT,numPerm,holdout);
+    [dataT.allStimBlankDprime, dataT.allStimBlankDprimeBootPerm, dataT.stimBlankDprimePerm, dataT.stimBlankSDPerm] = StimVsBlankPermutations_allStim_zScore(dataT.allStimZscore,dataT.blankZscore);
+    [dataT.stimBlankChPvals, dataT.responsiveCh] = getPermutationStatsAndGoodCh(dataT.allStimBlankDprime,dataT.allStimBlankDprimeBootPerm);
     fprintf('responsive channels defined\n')
     %% setup for split-half
     if contains(dataT.programID,'TR')
-        zScored_chLast = permute(dataT.GlassTRZscore,[1 2 3 4 6 5]);% rearrange so number of channels is the last thing.
+        GlassChLast = permute(dataT.GlassTRZscore,[1 2 3 4 6 5]);% rearrange so number of channels is the last thing.
         numRepeats = size(dataT.GlassTRZscore,6);
-        zScoreReshape = reshape(zScored_chLast,64,numRepeats,96); % reshape 64 = number of conditions.
+        GlassReshape = reshape(GlassChLast,64,numRepeats,96); % reshape 64 = number of conditions.
+        
+        nozChLast = permute(dataT.noiseZscore,[1 2 3 4 6 5]);% rearrange so number of channels is the last thing.
+        numRepeats = size(dataT.noiseZscore,6);
+        nozReshape = reshape(nozChLast,64,numRepeats,96); % reshape 64 = number of conditions.
+        
+        zScoreReshape = cat(2,GlassReshape,nozReshape); % reshape 64 = number of conditions.
     else
         conZchLast = permute(dataT.conZscore,[1 2 3 5 4]);
         numRepeats = size(dataT.conZscore,5);

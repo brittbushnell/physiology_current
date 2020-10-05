@@ -4,9 +4,9 @@ clc
 tic
 %%
 monks = {
-    'WU';
-%     'WV';
-%     'XT';
+ %   'WU';
+     'WV';
+     'XT';
     };
 ez = {
     'LE';
@@ -159,9 +159,9 @@ for fi = 1:length(files)
         %% convert dx to a meaningful measurement
         dataT.dxDeg = 8.*dataT.dx;
         %% plot stim vs blank PSTH to look for timing funkiness
-        if location == 1
-            plotGlassPSTH_rawVsClean(dataT,filename) % only run on Laca b/c she has all of the raw files
-        end
+%         if location == 1
+%             plotGlassPSTH_rawVsClean(dataT,filename) % only run on Laca b/c she has all of the raw files
+%         end
         %% get receptive field parameters
         % RF center is relative to fixation, not center of the monitor.
         dataT = callReceptiveFieldParameters(dataT);
@@ -170,21 +170,21 @@ for fi = 1:length(files)
         dataT.inStim = ~isnan(dataT.rfQuadrant); % want all channels whos RF center is within the stimulus bounds to be 1.
         %% get spike counts, Zscore, and split half correlations
         if contains(dataT.programID,'TR')
-            [dataT.GlassTRSpikeCount,dataT.NoiseTRSpikeCount,dataT.BlankTRSpikeCount,dataT.AllStimTRSpikeCount] = getGlassTRSpikeCounts(dataT);
-            [dataT.GlassTRZscore,dataT.GlassAllStimTRZscore] = getGlassTRStimZscore(dataT);
+            [dataT.GlassTRSpikeCount,dataT.noiseSpikeCount,dataT.blankSpikeCount,dataT.allStimSpikeCount] = getGlassTRSpikeCounts(dataT);
+            [dataT.GlassTRZscore,dataT.allStimZscore, dataT.blankZscore, dataT.noiseZscore] = getGlassTRStimZscore(dataT);
         else
-            [dataT.radSpikeCount,dataT.conSpikeCount, dataT.noiseSpikeCount,dataT.blankSpikeCount,dataT.AllStimSpikeCount] = getGlassCRSpikeCounts(dataT);
-            [dataT.conZscore, dataT.radZscore, dataT.noiseZscore, dataT.GlassAllStimZscore] = getGlassStimZscore(dataT);
+            [dataT.radSpikeCount,dataT.conSpikeCount, dataT.noiseSpikeCount,dataT.blankSpikeCount,dataT.allStimSpikeCount] = getGlassCRSpikeCounts(dataT);
+            [dataT.conZscore, dataT.radZscore, dataT.noiseZscore, dataT.allStimZscore,dataT.blankZscore] = getGlassStimZscore(dataT);
         end
        % fprintf('spike counts done, zscores computed\n')
-        %% optional plots
-        if plotFlag == 1
-            if contains(dataT.programID,'TR')
-                plotGlassTR_spikeCounts(dataT)
-            else
-                
-            end
-        end
+         %% optional plots
+%         if plotFlag == 1
+%             if contains(dataT.programID,'TR')
+%                 plotGlassTR_spikeCounts(dataT)
+%             else
+%                 
+%             end
+%         end
         %% save good data
         if location == 1
             outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/Glass/info/',dataT.array);
@@ -217,6 +217,7 @@ for fi = 1:length(files)
 %         failedME{failNdx,1} = ME;
 %     end
     clear dataT
+   % clearvars -except files fi nameEnd numPerm failedFiles failNdx numBoot location holdout plotFlag
 end
         end
     end

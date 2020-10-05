@@ -1,9 +1,9 @@
-function [dataT] = StimVsBlankPermutations_allStim_zScore(varargin)
+function [realStimBlankDprime,stimBlankDprimeBootPerm,stimBlankDprimePerm, stimBlankSDPerm] = StimVsBlankPermutations_allStim_zScore(varargin)
 % This function is a modified version of 
 %
 % REQUIRED INPUTS:
-%  1) matrix of zscores to all stimuli that is organized as (trials x ch)
-%  2) matrix of zscores for blank activity organized as (trials x ch)
+%  1) matrix of zscores to all stimuli that is organized as (ch x trials)
+%  2) matrix of zscores for blank activity organized as (ch x trials)
 %  
 % OPTIONAL INPUTS:
 %  3) Number of bootstraps to run (default is 1,000)
@@ -47,7 +47,7 @@ stimBlankDprimeBootPerm = nan(96,numBoot);
 
 realStimBlankDprime = nan(1,96);
 %% concatenate zscore matrices so one big data matrix
-allZscores = cat(1,stimZscores,blankZscores);
+allZscores = [stimZscores,blankZscores];
 %% mean responses and d' to each stimulus
 % type codes 1=concentric  2=radial 0=noise  100=blank
 startMean = 5;
@@ -64,17 +64,17 @@ for ch = 1:96
 
         % subsample so we can bootstrap and use the same number of stimuli for everything.
         stim = randperm(size(allZscores,2),numStimTrials);
-        
+        blank = datasample(setdiff([1:size(allZscores,2)]',stim),numBlankTrials,1);
         %% d'
-        stimBlankBoot(1,nb)  = simpleDiscrim((blankStim2),(stim));
+        stimBlankBoot(1,nb)  = simpleDiscrim((blank),(stim));
     end
     %% simplified d' code
     stimBlankDprimePerm(1,ch)  = nanmean(stimBlankBoot);
     stimBlankSDPerm(1,ch)  = nanstd(stimBlankBoot);
     stimBlankDprimeBootPerm(ch,:) = stimBlankBoot;
     %%
-    blankReal = nansum(dataT.bins(blankTrials, startMean:endMean, ch),2);
-    stimReal = nansum(dataT.bins(stimTrials, (startMean:endMean) ,ch),2);
+    blankReal = blankZscores(ch,:);
+    stimReal = stimZscores(ch,:);
     
     realStimBlankDprime(1,ch) = simpleDiscrim(blankReal,stimReal);
 end
