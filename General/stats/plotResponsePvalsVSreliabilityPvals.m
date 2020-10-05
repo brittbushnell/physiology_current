@@ -71,7 +71,7 @@ text(-0.03, -0.03, sprintf('n = %d',n7))
 text(0.07, -0.03, sprintf('n = %d',n8))
 text(0.97, -0.03, sprintf('n = %d',n9))
 
-text(0.75, 1.1, sprintf('%d channels included', numInclude))
+text(0.75, 1.06, sprintf('%d channels included', numInclude),'FontWeight','bold')
 
 set(gca,'tickdir','out','Layer','top','YTick',0:0.25:1,'XTick',0:0.2:1)
 

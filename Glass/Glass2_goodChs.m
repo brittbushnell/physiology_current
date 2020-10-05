@@ -5,7 +5,7 @@ tic
 %%
 files = {
     % XT
-    'XT_LE_GlassTRCoh_nsp2_20190325_005_thresh35_info'; 
+    %'XT_LE_GlassTRCoh_nsp2_20190325_005_thresh35_info'; 
     'XT_LE_GlassCoh_nsp2_March2019_all_thresh35_info';
     'XT_LE_GlassTRCoh_nsp1_20190325_005_thresh35_ogcorrupt_info';
     'XT_LE_GlassCoh_nsp1_March2019_all_thresh35_info';    
@@ -52,6 +52,8 @@ for fi = 1:length(files)
     %%
     %     try
     filename = files{fi};
+    fprintf('\n *** Analyzing %s file %d/%d ***\n',filename,fi,length(files));
+    
     if contains(filename,'all') % data has been merged across sessions
         dataT = load(filename);
     else

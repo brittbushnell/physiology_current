@@ -93,7 +93,7 @@ for boot = 1:numBoot
     splitHalf(:,boot) = diag(corr(set1,set2)); %96xnb
 end
 reliabilityIndex = nanmedian(splitHalf,2);
-fprintf('% minutes to do real reliability indices\n',toc(splitTic));
+fprintf('%d minutes to do real reliability indices\n',toc(splitTic)/60)
 %% get permutations
 numCond = size(conditionZscores,1);
 for perm = 1:numPerm
@@ -108,7 +108,7 @@ for perm = 1:numPerm
     end
     reliabilityIndexPerm(:,perm) = nanmedian(splitHalfPerm,2); % since the reliability index is the "true" value you're comparing against, that's the value you have to permute
 end
-fprintf('% minutes to do permuted reliability indices\n',toc(splitTic));
+fprintf('%d minutes to do permuted reliability indices\n',toc(splitTic)/60);
 %% do permutation test
 [pVals,sigChs] = glassGetPermutationStatsAndGoodCh(reliabilityIndex,reliabilityIndexPerm,1);
 %% sanity check figures
