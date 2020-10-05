@@ -113,7 +113,7 @@ fprintf('% minutes to do permuted reliability indices\n',toc(splitTic));
 [pVals,sigChs] = glassGetPermutationStatsAndGoodCh(reliabilityIndex,reliabilityIndexPerm,1);
 %% sanity check figures
 if plotFlag == 1
-    figure%(1)
+    figure(1)
     clf
     pos = get(gcf,'Position');
     set(gcf,'Position',[pos(1) pos(2) 1200 900])

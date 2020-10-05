@@ -44,6 +44,113 @@ newName ='WU_LE_GlassTR_nsp1_Aug2017_all_thresh35_info';
 %          'WU_RE_Glass_nsp2_20170818_001_thresh35_info';
 %          'WU_RE_Glass_nsp2_20170821_001_thresh35_info'};
 % newName ='WU_RE_Glass_nsp2_Aug2017_all_thresh35_info';
+%% XT
+files = {
+    'XT_RE_GlassTRCoh_nsp2_20190322_003_thresh35_ogcorrupt_info';
+    'XT_RE_GlassTRCoh_nsp2_20190322_004_thresh35_ogcorrupt_info';
+    'XT_RE_GlassTRCoh_nsp2_20190324_001_thresh35_ogcorrupt_info';
+    'XT_RE_GlassTRCoh_nsp2_20190324_002_thresh35_ogcorrupt_info';
+    'XT_RE_GlassTRCoh_nsp2_20190324_003_thresh35_ogcorrupt_info';
+    'XT_RE_GlassTRCoh_nsp2_20190324_004_thresh35_ogcorrupt_info';
+    'XT_RE_GlassTRCoh_nsp2_20190324_001_cleaned35_info'};
+newName = 'XT_RE_GlassTRCoh_nsp2_March2019_all_cleaned35_info';
+ 
+% files = {'XT_RE_GlassCoh_nsp2_20190321_002_thresh35_info';            
+%     'XT_RE_GlassCoh_nsp2_20190321_003_thresh35_info';            
+%     'XT_RE_GlassCoh_nsp2_20190322_001_thresh35_ogcorrupt_info'};
+% newName = 'XT_RE_GlassCoh_nsp2_March2019_all_thresh35_info';
+
+% files = {'XT_RE_GlassCoh_nsp1_20190321_002_thresh35_ogcorrupt_info';
+%     'XT_RE_GlassCoh_nsp1_20190322_001_thresh35_info'};  
+% newName = 'XT_RE_GlassCoh_nsp1_March2019_all_thresh35_info';
+
+% files = {        
+%     'XT_RE_GlassTRCoh_nsp1_20190322_003_thresh35_info';        
+%     'XT_RE_GlassTRCoh_nsp1_20190322_004_thresh35_info';        
+%     'XT_RE_GlassTRCoh_nsp1_20190324_001_thresh35_info';        
+%     'XT_RE_GlassTRCoh_nsp1_20190324_002_thresh35_info';        
+%     'XT_RE_GlassTRCoh_nsp1_20190324_003_thresh35_info';        
+%     'XT_RE_GlassTRCoh_nsp1_20190324_004_thresh35_info'};
+% newName = 'XT_RE_GlassTRCoh_nsp1_March2019_all_thresh35_info';
+ 
+% files = {'XT_LE_GlassCoh_nsp1_20190324_005_thresh35_info';            
+%     'XT_LE_GlassCoh_nsp1_20190325_001_thresh35_info';            
+%     'XT_LE_GlassCoh_nsp1_20190325_002_thresh35_info';            
+%     'XT_LE_GlassCoh_nsp1_20190325_004_thresh35_info'};
+% newName = 'XT_LE_GlassCoh_nsp1_March2019_all_thresh35_info';
+
+% files = {'XT_LE_GlassCoh_nsp2_20190324_005_thresh35_ogcorrupt_info';
+%          'XT_LE_GlassCoh_nsp2_20190325_001_thresh35_ogcorrupt_info';
+%          'XT_LE_GlassCoh_nsp2_20190325_002_thresh35_ogcorrupt_info';
+%          'XT_LE_GlassCoh_nsp2_20190325_004_thresh35_ogcorrupt_info'};
+% newName = 'XT_LE_GlassCoh_nsp2_March2019_all_thresh35_info';
+ 
+% % note:glassTRcoh for XT LE was only one file, so no merging to be done there
+ %% WV
+
+% files = {'WV_LE_glassCoh_nsp1_20190402_002_thresh35_ogcorrupt_info';       
+%     'WV_LE_glassCoh_nsp1_20190402_003_thresh35_ogcorrupt_info';       
+%     'WV_LE_glassCoh_nsp1_20190403_002_thresh35_ogcorrupt_info';       
+%     'WV_LE_glassCoh_nsp1_20190404_001_thresh35_ogcorrupt_info';          
+%     'WV_LE_glassCoh_nsp1_20190402_004_thresh35_info';                 
+%     'WV_LE_glassCoh_nsp1_20190403_001_thresh35_info'};  
+%     newName = 'WV_LE_glassCoh_nsp1_April2019_all_thresh35_info';
+     
+% files = {'WV_LE_glassTRCoh_nsp1_20190411_001_thresh35_ogcorrupt_info';     
+%     'WV_LE_glassTRCoh_nsp1_20190412_001_thresh35_ogcorrupt_info';     
+%     'WV_LE_glassTRCoh_nsp1_20190415_001_thresh35_ogcorrupt_info';     
+%     'WV_LE_glassTRCoh_nsp1_20190416_001_thresh35_ogcorrupt_info';     
+%     'WV_LE_glassTRCoh_nsp1_20190416_002_thresh35_ogcorrupt_info';     
+%     'WV_LE_glassTRCoh_nsp1_20190416_003_thresh35_ogcorrupt_info';     
+%     'WV_LE_glassTRCoh_nsp1_20190417_001_thresh35_ogcorrupt_info';     
+%     'WV_LE_glassTRCoh_nsp1_20190417_002_thresh35_ogcorrupt_info';     
+%     'WV_LE_glassTRCoh_nsp1_20190415_002_thresh35_info'};    
+% newName = 'WV_LE_glassTRCoh_nsp1_April2019_all_thresh35_info';
+ 
+% files = {'WV_LE_glassCoh_nsp2_20190402_002_thresh35_info';       
+%     'WV_LE_glassCoh_nsp2_20190402_003_thresh35_info';       
+%     'WV_LE_glassCoh_nsp2_20190402_004_thresh35_info';       
+%     'WV_LE_glassCoh_nsp2_20190403_001_thresh35_info';       
+%     'WV_LE_glassCoh_nsp2_20190403_002_thresh35_info';       
+%     'WV_LE_glassCoh_nsp2_20190404_001_thresh35_info'};
+% newName = 'WV_LE_glassCoh_nsp2_April2019_all_thresh35_info';
+ 
+% files = {'WV_LE_glassTRCoh_nsp2_20190411_001_thresh35_info';     
+%     'WV_LE_glassTRCoh_nsp2_20190412_001_thresh35_info';     
+%     'WV_LE_glassTRCoh_nsp2_20190415_001_thresh35_info';     
+%     'WV_LE_glassTRCoh_nsp2_20190415_002_thresh35_info';     
+%     'WV_LE_glassTRCoh_nsp2_20190416_001_thresh35_info';     
+%     'WV_LE_glassTRCoh_nsp2_20190416_002_thresh35_info';     
+%     'WV_LE_glassTRCoh_nsp2_20190416_003_thresh35_info';     
+%     'WV_LE_glassTRCoh_nsp2_20190417_001_thresh35_info';     
+%     'WV_LE_glassTRCoh_nsp2_20190417_002_thresh35_info'};
+% newName = 'WV_LE_glassTRCoh_nsp2_April2019_all_thresh35_info';
+
+% files = {'WV_RE_glassCoh_nsp1_20190404_002_thresh35_ogcorrupt_info';    
+%     'WV_RE_glassCoh_nsp1_20190404_003_thresh35_ogcorrupt_info';     
+%     'WV_RE_glassCoh_nsp1_20190405_001_thresh35_ogcorrupt_info'}; 
+% newName = 'WV_RE_glassCoh_nsp1_April2019_all_thresh35_ogcorrupt_info';
+% 
+% files = {'WV_RE_glassTRCoh_nsp1_20190405_002_thresh35_info';             
+%     'WV_RE_glassTRCoh_nsp1_20190408_001_thresh35_info';             
+%     'WV_RE_glassTRCoh_nsp1_20190409_001_thresh35_info';             
+%     'WV_RE_glassTRCoh_nsp1_20190409_002_thresh35_info';             
+%     'WV_RE_glassTRCoh_nsp1_20190410_001_thresh35_info';             
+%     'WV_RE_glassTRCoh_nsp1_20190410_002_thresh35_info'};
+% newName = 'WV_RE_glassTRCoh_nsp1_April2019_all_thresh35_info';
+% 
+% files = {'WV_RE_glassTRCoh_nsp2_20190405_002_thresh35_ogcorrupt_info';
+%     'WV_RE_glassTRCoh_nsp2_20190408_001_thresh35_ogcorrupt_info';
+%     'WV_RE_glassTRCoh_nsp2_20190409_001_thresh35_ogcorrupt_info';
+%     'WV_RE_glassTRCoh_nsp2_20190409_002_thresh35_ogcorrupt_info';
+%     'WV_RE_glassTRCoh_nsp2_20190410_001_thresh35_ogcorrupt_info';
+%     'WV_RE_glassTRCoh_nsp2_20190410_002_thresh35_ogcorrupt_info'};
+% newName = 'WV_RE_glassTRCoh_nsp2_April2019_all_thresh35_ogcorrupt_info';
+
+% files = {'WV_RE_glassCoh_nsp2_20190404_002_thresh35_info';            
+%     'WV_RE_glassCoh_nsp2_20190404_003_thresh35_info';            
+%     'WV_RE_glassCoh_nsp2_20190405_001_thresh35_info'};
+% newName = 'WV_RE_glassCoh_nsp2_April2019_all_thresh35_info';  
 %%
 location = determineComputer;
 for fi = 1:length(files)
@@ -202,25 +309,14 @@ programID = dataTComp{1}.programID;
 array = dataTComp{1}.array;
 amap = dataTComp{1}.amap;
 %% sanity check figure
-% if contains(newName,'TR')
-%     for ses = 1:length(dataTComp)
-%         spikeStim{ses} = reshape(dataTComp{ses}.allStimTRSpikeCount,1,numel(dataTComp{ses}.allStimTRSpikeCount));
-%         zStim{ses} = reshape(dataTComp{ses}.allStimZscore,1,numel(dataTComp{ses}.allStimTRZscore));
-%         
-%         spikeBlank{ses} = reshape(dataTComp{ses}.allStimTRSpikeCount,1,numel(dataTComp{ses}.allStimTRSpikeCount));
-%         zBlank{ses} = reshape(dataTComp{ses}.blankTRzScore,1,numel(dataTComp{ses}.blankTRzScore));
-%     end
-%     clear ses;
-% else
-    for ses = 1:length(dataTComp)
-        spikeStim{ses} = reshape(dataTComp{ses}.allStimSpikeCount,1,numel(dataTComp{ses}.allStimSpikeCount));
-        zStim{ses} = reshape(dataTComp{ses}.allStimZscore,1,numel(dataTComp{ses}.allStimZscore));
-        
-        spikeBlank{ses} = reshape(dataTComp{ses}.allStimSpikeCount,1,numel(dataTComp{ses}.allStimSpikeCount));
-        zBlank{ses} = reshape(dataTComp{ses}.blankZscore,1,numel(dataTComp{ses}.blankZscore));
-    end
-    clear ses;
-% end
+for ses = 1:length(dataTComp)
+    spikeStim{ses} = reshape(dataTComp{ses}.allStimSpikeCount,1,numel(dataTComp{ses}.allStimSpikeCount));
+    zStim{ses} = reshape(dataTComp{ses}.allStimZscore,1,numel(dataTComp{ses}.allStimZscore));
+    
+    spikeBlank{ses} = reshape(dataTComp{ses}.allStimSpikeCount,1,numel(dataTComp{ses}.allStimSpikeCount));
+    zBlank{ses} = reshape(dataTComp{ses}.blankZscore,1,numel(dataTComp{ses}.blankZscore));
+end
+clear ses;
 %%
 figure(5)
 clf
@@ -290,12 +386,12 @@ suptitle(sprintf('%s %s %s %s zscores and spike counts', dataT.animal, dataT.eye
 
 location = determineComputer;
 if location == 0
-    figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/%s/%s/spikeZscoreDists/%s/%s/',dataT.animal, dataT.programID, dataT.array,dataT.eye,dataT.date2);
+    figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/%s/%s/spikeZscoreDists/%s/',dataT.animal, dataT.programID, dataT.array,dataT.eye);
     if ~exist(figDir,'dir')
         mkdir(figDir)
     end
 else
-    figDir =  sprintf( '/Local/Users/bushnell/Dropbox/Figures/%s/%s/%s/spikeZscoreDists/%s/%s/',dataT.animal, dataT.programID, dataT.array,dataT.eye,dataT.date2);
+    figDir =  sprintf( '/Local/Users/bushnell/Dropbox/Figures/%s/%s/%s/spikeZscoreDists/%s/',dataT.animal, dataT.programID, dataT.array,dataT.eye);
     if ~exist(figDir,'dir')
         mkdir(figDir)
     end
