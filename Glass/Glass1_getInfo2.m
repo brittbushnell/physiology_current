@@ -4,7 +4,7 @@ clc
 tic
 %%
 monks = {
- %   'WU';
+    'WU';
      'WV';
      'XT';
     };
@@ -87,8 +87,6 @@ for an = 1:length(monks)
 %         end
 %     end
 % end
-
-% = 'XT_RE_GlassTRCoh_nsp1_20190322_002_thresh35_info';
 %%
 for fi = 1:length(files)
     %% Get basic information about experiments

@@ -4,21 +4,21 @@ clc
 %% WU
 
 %{'WU_LE_GlassTR_nsp1_20170822_002_thresh35.mat'} % leaving this file out because there's something really messed up with the V4 version.
- 
-files = {'WU_LE_GlassTR_nsp1_20170824_001_thresh35_info';
-         'WU_LE_GlassTR_nsp1_20170825_002_thresh35_info'};
-newName ='WU_LE_GlassTR_nsp1_Aug2017_all_thresh35_info';
 
-% files = {'WU_LE_Glass_nsp1_20170817_001_thresh35_info';
-%          'WU_LE_Glass_nsp1_20170821_002_thresh35_info';
-%          'WU_LE_Glass_nsp1_20170822_001_thresh35_info'};
-% newName ='WU_LE_Glass_nsp1_Aug2017_all_thresh35_info';
+% files = {'WU_LE_GlassTR_nsp1_20170824_001_thresh35_info';
+%          'WU_LE_GlassTR_nsp1_20170825_002_thresh35_info'};
+% newName ='WU_LE_GlassTR_nsp1_Aug2017_all_thresh35_info';
+
+files = {'WU_LE_Glass_nsp1_20170817_001_thresh35_info';
+    'WU_LE_Glass_nsp1_20170821_002_thresh35_info';
+    'WU_LE_Glass_nsp1_20170822_001_thresh35_info'};
+newName ='WU_LE_Glass_nsp1_Aug2017_all_thresh35_info';
 
 % files = {'WU_LE_Glass_nsp2_20170817_001_thresh35_info';
 %          'WU_LE_Glass_nsp2_20170821_002_thresh35_info';
 %          'WU_LE_Glass_nsp2_20170822_001_thresh35_info'};
 % newName ='WU_LE_Glass_nsp2_Aug2017_all_thresh35_info';
- 
+
 % files = {'WU_LE_GlassTR_nsp2_20170824_001_thresh35_info';
 %          'WU_LE_GlassTR_nsp2_20170825_002_thresh35_info'};
 % newName ='WU_LE_GlassTR_nsp2_Aug2017_all_thresh35_info';
@@ -28,18 +28,18 @@ newName ='WU_LE_GlassTR_nsp1_Aug2017_all_thresh35_info';
 %          'WU_RE_GlassTR_nsp1_20170828_003_thresh35_info';
 %          'WU_RE_GlassTR_nsp1_20170829_001_thresh35_info'};
 % newName ='WU_RE_GlassTR_nsp1_Aug2017_all_thresh35_info';
-    
+
 % files = {'WU_RE_Glass_nsp1_20170817_002_thresh35_info';
 %          'WU_RE_Glass_nsp1_20170818_001_thresh35_info';
 %          'WU_RE_Glass_nsp1_20170821_001_thresh35_info'};
 % newName ='WU_RE_Glass_nsp1_Aug2017_all_thresh35_info';
-% 
+%
 % files = {'WU_RE_GlassTR_nsp2_20170825_001_thresh35_info';
 %          'WU_RE_GlassTR_nsp2_20170828_002_thresh35_info';
 %          'WU_RE_GlassTR_nsp2_20170828_003_thresh35_info';
 %          'WU_RE_GlassTR_nsp2_20170829_001_thresh35_info'};
 % newName ='WU_RE_GlassTR_nsp2_Aug2017_all_thresh35_info';
-    
+
 % files = {'WU_RE_Glass_nsp2_20170817_002_thresh35_info';
 %          'WU_RE_Glass_nsp2_20170818_001_thresh35_info';
 %          'WU_RE_Glass_nsp2_20170821_001_thresh35_info'};
@@ -54,28 +54,28 @@ newName ='WU_LE_GlassTR_nsp1_Aug2017_all_thresh35_info';
 %     'XT_RE_GlassTRCoh_nsp2_20190324_004_thresh35_ogcorrupt_info';
 %     'XT_RE_GlassTRCoh_nsp2_20190324_001_cleaned35_info'};
 % newName = 'XT_RE_GlassTRCoh_nsp2_March2019_all_cleaned35_info';
- 
-% files = {'XT_RE_GlassCoh_nsp2_20190321_002_thresh35_info';            
-%     'XT_RE_GlassCoh_nsp2_20190321_003_thresh35_info';            
+
+% files = {'XT_RE_GlassCoh_nsp2_20190321_002_thresh35_info';
+%     'XT_RE_GlassCoh_nsp2_20190321_003_thresh35_info';
 %     'XT_RE_GlassCoh_nsp2_20190322_001_thresh35_ogcorrupt_info'};
 % newName = 'XT_RE_GlassCoh_nsp2_March2019_all_thresh35_info';
 
 % files = {'XT_RE_GlassCoh_nsp1_20190321_002_thresh35_ogcorrupt_info';
-%     'XT_RE_GlassCoh_nsp1_20190322_001_thresh35_info'};  
+%     'XT_RE_GlassCoh_nsp1_20190322_001_thresh35_info'};
 % newName = 'XT_RE_GlassCoh_nsp1_March2019_all_thresh35_info';
 
-% files = {        
-%     'XT_RE_GlassTRCoh_nsp1_20190322_003_thresh35_info';        
-%     'XT_RE_GlassTRCoh_nsp1_20190322_004_thresh35_info';        
-%     'XT_RE_GlassTRCoh_nsp1_20190324_001_thresh35_info';        
-%     'XT_RE_GlassTRCoh_nsp1_20190324_002_thresh35_info';        
-%     'XT_RE_GlassTRCoh_nsp1_20190324_003_thresh35_info';        
+% files = {
+%     'XT_RE_GlassTRCoh_nsp1_20190322_003_thresh35_info';
+%     'XT_RE_GlassTRCoh_nsp1_20190322_004_thresh35_info';
+%     'XT_RE_GlassTRCoh_nsp1_20190324_001_thresh35_info';
+%     'XT_RE_GlassTRCoh_nsp1_20190324_002_thresh35_info';
+%     'XT_RE_GlassTRCoh_nsp1_20190324_003_thresh35_info';
 %     'XT_RE_GlassTRCoh_nsp1_20190324_004_thresh35_info'};
 % newName = 'XT_RE_GlassTRCoh_nsp1_March2019_all_thresh35_info';
- 
-% files = {'XT_LE_GlassCoh_nsp1_20190324_005_thresh35_info';            
-%     'XT_LE_GlassCoh_nsp1_20190325_001_thresh35_info';            
-%     'XT_LE_GlassCoh_nsp1_20190325_002_thresh35_info';            
+
+% files = {'XT_LE_GlassCoh_nsp1_20190324_005_thresh35_info';
+%     'XT_LE_GlassCoh_nsp1_20190325_001_thresh35_info';
+%     'XT_LE_GlassCoh_nsp1_20190325_002_thresh35_info';
 %     'XT_LE_GlassCoh_nsp1_20190325_004_thresh35_info'};
 % newName = 'XT_LE_GlassCoh_nsp1_March2019_all_thresh35_info';
 
@@ -84,55 +84,55 @@ newName ='WU_LE_GlassTR_nsp1_Aug2017_all_thresh35_info';
 %          'XT_LE_GlassCoh_nsp2_20190325_002_thresh35_ogcorrupt_info';
 %          'XT_LE_GlassCoh_nsp2_20190325_004_thresh35_ogcorrupt_info'};
 % newName = 'XT_LE_GlassCoh_nsp2_March2019_all_thresh35_info';
- 
-% % note:glassTRcoh for XT LE was only one file, so no merging to be done there
- %% WV
 
-% files = {'WV_LE_glassCoh_nsp1_20190402_002_thresh35_ogcorrupt_info';       
-%     'WV_LE_glassCoh_nsp1_20190402_003_thresh35_ogcorrupt_info';       
-%     'WV_LE_glassCoh_nsp1_20190403_002_thresh35_ogcorrupt_info';       
-%     'WV_LE_glassCoh_nsp1_20190404_001_thresh35_ogcorrupt_info';          
-%     'WV_LE_glassCoh_nsp1_20190402_004_thresh35_info';                 
-%     'WV_LE_glassCoh_nsp1_20190403_001_thresh35_info'};  
+% % note:glassTRcoh for XT LE was only one file, so no merging to be done there
+%% WV
+
+% files = {'WV_LE_glassCoh_nsp1_20190402_002_thresh35_ogcorrupt_info';
+%     'WV_LE_glassCoh_nsp1_20190402_003_thresh35_ogcorrupt_info';
+%     'WV_LE_glassCoh_nsp1_20190403_002_thresh35_ogcorrupt_info';
+%     'WV_LE_glassCoh_nsp1_20190404_001_thresh35_ogcorrupt_info';
+%     'WV_LE_glassCoh_nsp1_20190402_004_thresh35_info';
+%     'WV_LE_glassCoh_nsp1_20190403_001_thresh35_info'};
 %     newName = 'WV_LE_glassCoh_nsp1_April2019_all_thresh35_info';
-     
-% files = {'WV_LE_glassTRCoh_nsp1_20190411_001_thresh35_ogcorrupt_info';     
-%     'WV_LE_glassTRCoh_nsp1_20190412_001_thresh35_ogcorrupt_info';     
-%     'WV_LE_glassTRCoh_nsp1_20190415_001_thresh35_ogcorrupt_info';     
-%     'WV_LE_glassTRCoh_nsp1_20190416_001_thresh35_ogcorrupt_info';     
-%     'WV_LE_glassTRCoh_nsp1_20190416_002_thresh35_ogcorrupt_info';     
-%     'WV_LE_glassTRCoh_nsp1_20190416_003_thresh35_ogcorrupt_info';     
-%     'WV_LE_glassTRCoh_nsp1_20190417_001_thresh35_ogcorrupt_info';     
-%     'WV_LE_glassTRCoh_nsp1_20190417_002_thresh35_ogcorrupt_info';     
-%     'WV_LE_glassTRCoh_nsp1_20190415_002_thresh35_info'};    
+
+% files = {'WV_LE_glassTRCoh_nsp1_20190411_001_thresh35_ogcorrupt_info';
+%     'WV_LE_glassTRCoh_nsp1_20190412_001_thresh35_ogcorrupt_info';
+%     'WV_LE_glassTRCoh_nsp1_20190415_001_thresh35_ogcorrupt_info';
+%     'WV_LE_glassTRCoh_nsp1_20190416_001_thresh35_ogcorrupt_info';
+%     'WV_LE_glassTRCoh_nsp1_20190416_002_thresh35_ogcorrupt_info';
+%     'WV_LE_glassTRCoh_nsp1_20190416_003_thresh35_ogcorrupt_info';
+%     'WV_LE_glassTRCoh_nsp1_20190417_001_thresh35_ogcorrupt_info';
+%     'WV_LE_glassTRCoh_nsp1_20190417_002_thresh35_ogcorrupt_info';
+%     'WV_LE_glassTRCoh_nsp1_20190415_002_thresh35_info'};
 % newName = 'WV_LE_glassTRCoh_nsp1_April2019_all_thresh35_info';
- 
-% files = {'WV_LE_glassCoh_nsp2_20190402_002_thresh35_info';       
-%     'WV_LE_glassCoh_nsp2_20190402_003_thresh35_info';       
-%     'WV_LE_glassCoh_nsp2_20190402_004_thresh35_info';       
-%     'WV_LE_glassCoh_nsp2_20190403_001_thresh35_info';       
-%     'WV_LE_glassCoh_nsp2_20190403_002_thresh35_info';       
+
+% files = {'WV_LE_glassCoh_nsp2_20190402_002_thresh35_info';
+%     'WV_LE_glassCoh_nsp2_20190402_003_thresh35_info';
+%     'WV_LE_glassCoh_nsp2_20190402_004_thresh35_info';
+%     'WV_LE_glassCoh_nsp2_20190403_001_thresh35_info';
+%     'WV_LE_glassCoh_nsp2_20190403_002_thresh35_info';
 %     'WV_LE_glassCoh_nsp2_20190404_001_thresh35_info'};
 % newName = 'WV_LE_glassCoh_nsp2_April2019_all_thresh35_info';
- 
-% files = {'WV_LE_glassTRCoh_nsp2_20190411_001_thresh35_info';     
-%     'WV_LE_glassTRCoh_nsp2_20190412_001_thresh35_info';     
-%     'WV_LE_glassTRCoh_nsp2_20190415_001_thresh35_info';     
-%     'WV_LE_glassTRCoh_nsp2_20190415_002_thresh35_info';     
-%     'WV_LE_glassTRCoh_nsp2_20190416_001_thresh35_info';     
-%     'WV_LE_glassTRCoh_nsp2_20190416_002_thresh35_info';     
-%     'WV_LE_glassTRCoh_nsp2_20190416_003_thresh35_info';     
-%     'WV_LE_glassTRCoh_nsp2_20190417_001_thresh35_info';     
+
+% files = {'WV_LE_glassTRCoh_nsp2_20190411_001_thresh35_info';
+%     'WV_LE_glassTRCoh_nsp2_20190412_001_thresh35_info';
+%     'WV_LE_glassTRCoh_nsp2_20190415_001_thresh35_info';
+%     'WV_LE_glassTRCoh_nsp2_20190415_002_thresh35_info';
+%     'WV_LE_glassTRCoh_nsp2_20190416_001_thresh35_info';
+%     'WV_LE_glassTRCoh_nsp2_20190416_002_thresh35_info';
+%     'WV_LE_glassTRCoh_nsp2_20190416_003_thresh35_info';
+%     'WV_LE_glassTRCoh_nsp2_20190417_001_thresh35_info';
 %     'WV_LE_glassTRCoh_nsp2_20190417_002_thresh35_info'};
 % newName = 'WV_LE_glassTRCoh_nsp2_April2019_all_thresh35_info';
 
- 
- 
-% files = {'WV_RE_glassTRCoh_nsp1_20190405_002_thresh35_info';             
-%     'WV_RE_glassTRCoh_nsp1_20190408_001_thresh35_info';             
-%     'WV_RE_glassTRCoh_nsp1_20190409_001_thresh35_info';             
-%     'WV_RE_glassTRCoh_nsp1_20190409_002_thresh35_info';             
-%     'WV_RE_glassTRCoh_nsp1_20190410_001_thresh35_info';             
+
+
+% files = {'WV_RE_glassTRCoh_nsp1_20190405_002_thresh35_info';
+%     'WV_RE_glassTRCoh_nsp1_20190408_001_thresh35_info';
+%     'WV_RE_glassTRCoh_nsp1_20190409_001_thresh35_info';
+%     'WV_RE_glassTRCoh_nsp1_20190409_002_thresh35_info';
+%     'WV_RE_glassTRCoh_nsp1_20190410_001_thresh35_info';
 %     'WV_RE_glassTRCoh_nsp1_20190410_002_thresh35_info'};
 % newName = 'WV_RE_glassTRCoh_nsp1_April2019_all_thresh35_info';
 
@@ -144,10 +144,10 @@ newName ='WU_LE_GlassTR_nsp1_Aug2017_all_thresh35_info';
 %     'WV_RE_glassTRCoh_nsp2_20190410_002_thresh35_ogcorrupt_info'};
 % newName = 'WV_RE_glassTRCoh_nsp2_April2019_all_thresh35_info';
 
-% files = {'WV_RE_glassCoh_nsp2_20190404_002_thresh35_info';            
-%     'WV_RE_glassCoh_nsp2_20190404_003_thresh35_info';            
+% files = {'WV_RE_glassCoh_nsp2_20190404_002_thresh35_info';
+%     'WV_RE_glassCoh_nsp2_20190404_003_thresh35_info';
 %     'WV_RE_glassCoh_nsp2_20190405_001_thresh35_info'};
-% newName = 'WV_RE_glassCoh_nsp2_April2019_all_thresh35_info';  
+% newName = 'WV_RE_glassCoh_nsp2_April2019_all_thresh35_info';
 %%
 location = determineComputer;
 for fi = 1:length(files)
@@ -242,7 +242,7 @@ for i = 1:length(dataTComp)
         allStimZscore = cat(2,allStimZscore,aZ);
         
     else
-       % gSC = dataTComp{i}.GlassSpikeCount;
+        % gSC = dataTComp{i}.GlassSpikeCount;
         cSC = dataTComp{i}.conSpikeCount;
         rSC = dataTComp{i}.radSpikeCount;
         nSC = dataTComp{i}.noiseSpikeCount;
@@ -306,15 +306,27 @@ programID = dataTComp{1}.programID;
 array = dataTComp{1}.array;
 amap = dataTComp{1}.amap;
 %% sanity check figure
-    for ses = 1:length(dataTComp)
-        spikeStim{ses} = reshape(dataTComp{ses}.allStimSpikeCount,1,numel(dataTComp{ses}.allStimSpikeCount));
-        zStim{ses} = reshape(dataTComp{ses}.allStimZscore,1,numel(dataTComp{ses}.allStimZscore));
-        
-        spikeBlank{ses} = reshape(dataTComp{ses}.blankSpikeCount,1,numel(dataTComp{ses}.blankSpikeCount));
-        zBlank{ses} = reshape(dataTComp{ses}.blankZscore,1,numel(dataTComp{ses}.blankZscore));
+for ses = 1:length(dataTComp)
+    spikeStim{ses} = reshape(dataTComp{ses}.allStimSpikeCount,1,numel(dataTComp{ses}.allStimSpikeCount));
+    zStim{ses} = reshape(dataTComp{ses}.allStimZscore,1,numel(dataTComp{ses}.allStimZscore));
+    
+    spikeBlank{ses} = reshape(dataTComp{ses}.blankSpikeCount,1,numel(dataTComp{ses}.blankSpikeCount));
+    zBlank{ses} = reshape(dataTComp{ses}.blankZscore,1,numel(dataTComp{ses}.blankZscore));
+end
+clear ses;
+%%
+if location == 0
+    figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/%s/%s/spikeZscoreDists/%s/',dataT.animal, dataT.programID, dataT.array,dataT.eye);
+    if ~exist(figDir,'dir')
+        mkdir(figDir)
     end
-    clear ses;
-% end
+else
+    figDir =  sprintf( '/Local/Users/bushnell/Dropbox/Figures/%s/%s/%s/spikeZscoreDists/%s/',dataT.animal, dataT.programID, dataT.array,dataT.eye);
+    if ~exist(figDir,'dir')
+        mkdir(figDir)
+    end
+end
+cd(figDir)
 %%
 figure(5)
 clf
@@ -324,8 +336,8 @@ rows = length(dataTComp);
 
 ndx = 1;
 for n = 1:length(dataTComp)
-   
-    subplot(rows,2,ndx) % left column = stimulus spike counts 
+    
+    subplot(rows,2,ndx) % left column = stimulus spike counts
     hold on
     histogram(spikeBlank{n},'BinWidth',2,'Normalization','probability','FaceColor','b','FaceAlpha',0.5)
     histogram(spikeStim{n},'BinWidth',2,'Normalization','probability','FaceColor','r','FaceAlpha',0.5)
@@ -334,12 +346,12 @@ for n = 1:length(dataTComp)
     xlim([-2 80])
     ylabel({sprintf('%s %s',dataTComp{n}.date, dataTComp{n}.runNum);...
         'probability'})
-     if n == 1
-         title('spike counts','FontSize',12)
-     end
-     if n == length(dataTComp)
-         xlabel('spike count')
-     end
+    if n == 1
+        title('spike counts','FontSize',12)
+    end
+    if n == length(dataTComp)
+        xlabel('spike count')
+    end
     
     
     subplot(rows,2,ndx+1) % right column = stimulus z scores
@@ -350,32 +362,97 @@ for n = 1:length(dataTComp)
     ylim([0 0.4])
     xlim([-5 5])
     if n == 1
-         title('z scores','FontSize',12)
-         legend('blank', 'stimuli')
-     end
-     if n == length(dataTComp)
-         xlabel('z score')
-     end
-     
-        
+        title('z scores','FontSize',12)
+        legend('blank', 'stimuli')
+    end
+    if n == length(dataTComp)
+        xlabel('z score')
+    end
+    
+    
     
     ndx = ndx+2;
 end
 suptitle(sprintf('%s %s %s %s zscores and spike counts', dataT.animal, dataT.eye, dataT.array, dataT.programID))
 
-location = determineComputer;
-if location == 0
-    figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/%s/%s/spikeZscoreDists/%s/%s/',dataT.animal, dataT.programID, dataT.array,dataT.eye,dataT.date2);
-    if ~exist(figDir,'dir')
-        mkdir(figDir)
+
+figName = [dataT.animal,'_',dataT.eye,'_', dataT.array,'_',dataT.programID,'_',dataT.date2,'_spikeZscoreDist_SessionsRows','.pdf'];
+print(gcf, figName,'-dpdf','-bestfit')
+%%
+figure(6)
+clf
+pos = get(gcf,'Position');
+set(gcf,'Position',[pos(1) pos(2) 1000 700])
+
+ndx = 1;
+for n = 1:length(dataTComp)
+    
+    subplot(2,2,1) % left column = stimulus spike counts
+    hold on
+    histogram(spikeBlank{n},'BinWidth',2,'Normalization','probability','FaceAlpha',0.5)
+    histogram(spikeStim{n},'BinWidth',2,'Normalization','probability','FaceAlpha',0.5)
+    set(gca,'box','off','tickdir','out','YTick',0:0.1:0.4)
+    ylim([0 0.4])
+    xlim([-2 80])
+    ylabel( 'probability')
+    if n == 1
+        title('spike counts','FontSize',12)
     end
-else
-    figDir =  sprintf( '/Local/Users/bushnell/Dropbox/Figures/%s/%s/%s/spikeZscoreDists/%s/%s/',dataT.animal, dataT.programID, dataT.array,dataT.eye,dataT.date2);
-    if ~exist(figDir,'dir')
-        mkdir(figDir)
+    if n == length(dataTComp)
+        xlabel('spike count')
     end
+    
+    
+    subplot(2,2,2) % right column = stimulus z scores
+    hold on
+    histogram(zBlank{n},'BinWidth',0.5,'Normalization','probability','FaceAlpha',0.5)
+    histogram(zStim{n},'BinWidth',0.5,'Normalization','probability','FaceAlpha',0.5)
+    set(gca,'box','off','tickdir','out','YTick',0:0.1:0.4)
+    ylim([0 0.4])
+    xlim([-5 5])
+    if n == 1
+        title('z scores','FontSize',12)
+        
+    end
+    if n == length(dataTComp)
+        xlabel('z score')
+    end
+    
+    subplot(2,2,1) % left column = stimulus spike counts
+    hold on
+    histogram(spikeBlank{n},'BinWidth',2,'Normalization','probability','FaceAlpha',0.5)
+    histogram(spikeStim{n},'BinWidth',2,'Normalization','probability','FaceAlpha',0.5)
+    set(gca,'box','off','tickdir','out','YTick',0:0.1:0.4)
+    ylim([0 0.4])
+    xlim([-2 80])
+    ylabel( 'probability')
+    if n == 1
+        title('spike counts','FontSize',12)
+    end
+    if n == length(dataTComp)
+        xlabel('spike count')
+    end
+    
+    
+    subplot(2,2,2) % right column = stimulus z scores
+    hold on
+    histogram(zBlank{n},'BinWidth',0.5,'Normalization','probability','FaceAlpha',0.5)
+    histogram(zStim{n},'BinWidth',0.5,'Normalization','probability','FaceAlpha',0.5)
+    set(gca,'box','off','tickdir','out','YTick',0:0.1:0.4)
+    ylim([0 0.4])
+    xlim([-5 5])
+    if n == 1
+        title('z scores','FontSize',12)
+        
+    end
+    if n == length(dataTComp)
+        xlabel('z score')
+    end
+    
+    ndx = ndx+2;
 end
-cd(figDir)
+suptitle(sprintf('%s %s %s %s zscores and spike counts, all sessions one plot ', dataT.animal, dataT.eye, dataT.array, dataT.programID))
+
 
 figName = [dataT.animal,'_',dataT.eye,'_', dataT.array,'_',dataT.programID,'_',dataT.date2,'_spikeZscoreDist_allSessions','.pdf'];
 print(gcf, figName,'-dpdf','-bestfit')

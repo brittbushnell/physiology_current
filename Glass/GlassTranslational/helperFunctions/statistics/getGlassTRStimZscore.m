@@ -46,6 +46,7 @@ allZs = reshape(allStimZscore,1,numel(allStimZscore));
 histogram(allZs,30,'Normalization','probability');
 title ('z Scores across all stimuli and all chs')
 ylim([0 0.5])
+xlim([-5 5])
 
 subplot(2,2,2)
 hold on
@@ -53,6 +54,7 @@ allSpikes = reshape(dataT.allStimSpikeCount,1,numel(dataT.allStimSpikeCount));
 histogram(allSpikes,30,'Normalization','probability')
 title('spike counts across all stimuli and all chs')
 ylim([0 0.5])
+xlim([-1 80])
 
 subplot(2,2,3)
 hold on
@@ -60,6 +62,7 @@ blankZs = reshape(blankZscore,1,numel(blankZscore));
 histogram(blankZs,30,'Normalization','probability');
 title ('z Scores for blank screen across all chs')
 ylim([0 0.5])
+xlim([-5 5])
 
 subplot(2,2,4)
 hold on
@@ -67,6 +70,7 @@ blankSpikes = reshape(dataT.blankSpikeCount,1,numel(dataT.blankSpikeCount));
 histogram(blankSpikes,30,'Normalization','probability')
 title('spike counts during blank screen across all chs')
 ylim([0 0.5])
+xlim([-1 80])
 
 suptitle({sprintf('%s %s %s %s spike count and zscore distributions',dataT.animal,dataT.eye, dataT.array, dataT.programID);...
     sprintf('%s run %s',dataT.date, dataT.runNum')})
