@@ -8,7 +8,7 @@ dxNdx = (dataT.dx == 0.03);
 
 noiseNdx = (dataT.type == 0);
 blankNdx = (dataT.numDots == 0);
-stimTrials = (dataT.numDots >0);
+stimTrials = (dataT.numDots > 0);
 conNdx = (dataT.type == 1);
 radNdx = (dataT.type == 2);
 

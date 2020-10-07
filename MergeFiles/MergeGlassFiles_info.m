@@ -9,10 +9,10 @@ clc
 %          'WU_LE_GlassTR_nsp1_20170825_002_thresh35_info'};
 % newName ='WU_LE_GlassTR_nsp1_Aug2017_all_thresh35_info';
 
-files = {'WU_LE_Glass_nsp1_20170817_001_thresh35_info';
-    'WU_LE_Glass_nsp1_20170821_002_thresh35_info';
-    'WU_LE_Glass_nsp1_20170822_001_thresh35_info'};
-newName ='WU_LE_Glass_nsp1_Aug2017_all_thresh35_info';
+% files = {'WU_LE_Glass_nsp1_20170817_001_thresh35_info';
+%     'WU_LE_Glass_nsp1_20170821_002_thresh35_info';
+%     'WU_LE_Glass_nsp1_20170822_001_thresh35_info'};
+% newName ='WU_LE_Glass_nsp1_Aug2017_all_thresh35_info';
 
 % files = {'WU_LE_Glass_nsp2_20170817_001_thresh35_info';
 %          'WU_LE_Glass_nsp2_20170821_002_thresh35_info';
@@ -51,8 +51,8 @@ newName ='WU_LE_Glass_nsp1_Aug2017_all_thresh35_info';
 %     'XT_RE_GlassTRCoh_nsp2_20190324_001_thresh35_ogcorrupt_info';
 %     'XT_RE_GlassTRCoh_nsp2_20190324_002_thresh35_ogcorrupt_info';
 %     'XT_RE_GlassTRCoh_nsp2_20190324_003_thresh35_ogcorrupt_info';
-%     'XT_RE_GlassTRCoh_nsp2_20190324_004_thresh35_ogcorrupt_info';
-%     'XT_RE_GlassTRCoh_nsp2_20190324_001_cleaned35_info'};
+%     'XT_RE_GlassTRCoh_nsp2_20190324_004_thresh35_ogcorrupt_info'
+%     };
 % newName = 'XT_RE_GlassTRCoh_nsp2_March2019_all_cleaned35_info';
 
 % files = {'XT_RE_GlassCoh_nsp2_20190321_002_thresh35_info';
@@ -126,8 +126,6 @@ newName ='WU_LE_Glass_nsp1_Aug2017_all_thresh35_info';
 %     'WV_LE_glassTRCoh_nsp2_20190417_002_thresh35_info'};
 % newName = 'WV_LE_glassTRCoh_nsp2_April2019_all_thresh35_info';
 
-
-
 % files = {'WV_RE_glassTRCoh_nsp1_20190405_002_thresh35_info';
 %     'WV_RE_glassTRCoh_nsp1_20190408_001_thresh35_info';
 %     'WV_RE_glassTRCoh_nsp1_20190409_001_thresh35_info';
@@ -144,10 +142,10 @@ newName ='WU_LE_Glass_nsp1_Aug2017_all_thresh35_info';
 %     'WV_RE_glassTRCoh_nsp2_20190410_002_thresh35_ogcorrupt_info'};
 % newName = 'WV_RE_glassTRCoh_nsp2_April2019_all_thresh35_info';
 
-% files = {'WV_RE_glassCoh_nsp2_20190404_002_thresh35_info';
-%     'WV_RE_glassCoh_nsp2_20190404_003_thresh35_info';
-%     'WV_RE_glassCoh_nsp2_20190405_001_thresh35_info'};
-% newName = 'WV_RE_glassCoh_nsp2_April2019_all_thresh35_info';
+files = {'WV_RE_glassCoh_nsp2_20190404_002_thresh35_info';
+    'WV_RE_glassCoh_nsp2_20190404_003_thresh35_info';
+    'WV_RE_glassCoh_nsp2_20190405_001_thresh35_info'};
+newName = 'WV_RE_glassCoh_nsp2_April2019_all_thresh35_info';
 %%
 location = determineComputer;
 for fi = 1:length(files)
@@ -389,14 +387,13 @@ for n = 1:length(dataTComp)
     
     subplot(2,2,1) % left column = stimulus spike counts
     hold on
-    histogram(spikeBlank{n},'BinWidth',2,'Normalization','probability','FaceAlpha',0.5)
-    histogram(spikeStim{n},'BinWidth',2,'Normalization','probability','FaceAlpha',0.5)
+    histogram(spikeStim{n},'BinWidth',2,'Normalization','probability','FaceAlpha',0.3)
     set(gca,'box','off','tickdir','out','YTick',0:0.1:0.4)
     ylim([0 0.4])
     xlim([-2 80])
     ylabel( 'probability')
     if n == 1
-        title('spike counts','FontSize',12)
+        title('spike counts for all stimuli','FontSize',12)
     end
     if n == length(dataTComp)
         xlabel('spike count')
@@ -405,51 +402,45 @@ for n = 1:length(dataTComp)
     
     subplot(2,2,2) % right column = stimulus z scores
     hold on
-    histogram(zBlank{n},'BinWidth',0.5,'Normalization','probability','FaceAlpha',0.5)
-    histogram(zStim{n},'BinWidth',0.5,'Normalization','probability','FaceAlpha',0.5)
+    histogram(zStim{n},'BinWidth',0.5,'Normalization','probability','FaceAlpha',0.3)
     set(gca,'box','off','tickdir','out','YTick',0:0.1:0.4)
     ylim([0 0.4])
     xlim([-5 5])
     if n == 1
-        title('z scores','FontSize',12)
+        title('z scores for all stimuli','FontSize',12)
         
     end
     if n == length(dataTComp)
         xlabel('z score')
     end
     
-    subplot(2,2,1) % left column = stimulus spike counts
+    subplot(2,2,3) % left column = stimulus spike counts
     hold on
-    histogram(spikeBlank{n},'BinWidth',2,'Normalization','probability','FaceAlpha',0.5)
-    histogram(spikeStim{n},'BinWidth',2,'Normalization','probability','FaceAlpha',0.5)
+    histogram(spikeBlank{n},'BinWidth',2,'Normalization','probability','FaceAlpha',0.3)
     set(gca,'box','off','tickdir','out','YTick',0:0.1:0.4)
     ylim([0 0.4])
     xlim([-2 80])
     ylabel( 'probability')
     if n == 1
-        title('spike counts','FontSize',12)
+        title('spike counts for blank screen','FontSize',12)
     end
     if n == length(dataTComp)
         xlabel('spike count')
     end
     
-    
-    subplot(2,2,2) % right column = stimulus z scores
+    subplot(2,2,4) % right column = stimulus z scores
     hold on
-    histogram(zBlank{n},'BinWidth',0.5,'Normalization','probability','FaceAlpha',0.5)
-    histogram(zStim{n},'BinWidth',0.5,'Normalization','probability','FaceAlpha',0.5)
+    histogram(zBlank{n},'BinWidth',0.5,'Normalization','probability','FaceAlpha',0.3)
     set(gca,'box','off','tickdir','out','YTick',0:0.1:0.4)
     ylim([0 0.4])
     xlim([-5 5])
     if n == 1
-        title('z scores','FontSize',12)
+        title('z scores blank screen','FontSize',12)
         
     end
     if n == length(dataTComp)
         xlabel('z score')
     end
-    
-    ndx = ndx+2;
 end
 suptitle(sprintf('%s %s %s %s zscores and spike counts, all sessions one plot ', dataT.animal, dataT.eye, dataT.array, dataT.programID))
 
