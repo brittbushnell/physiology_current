@@ -29,7 +29,7 @@ for ch = 1:96
                 radSpikes = squeeze(dataT.radSpikeCount(co,dt,dx,ch,:));                
                 radZscore(co,dt,dx,ch,1:length(radSpikes)) =  (radSpikes -  chMu)/chStd; %zscore(spikes);
                 
-                if co == numCoh
+                if co == 1
                     % noise
                     nozSpikes = squeeze(dataT.noiseSpikeCount(co,dt,dx,ch,:));
                     noiseZscore(co,dt,dx,ch,1:length(nozSpikes)) =  (nozSpikes -  chMu)/chStd; %zscore(spikes);

@@ -45,15 +45,15 @@ newName ='WU_LE_GlassTR_nsp1_Aug2017_all_thresh35_info';
 %          'WU_RE_Glass_nsp2_20170821_001_thresh35_info'};
 % newName ='WU_RE_Glass_nsp2_Aug2017_all_thresh35_info';
 %% XT
-files = {
-    'XT_RE_GlassTRCoh_nsp2_20190322_003_thresh35_ogcorrupt_info';
-    'XT_RE_GlassTRCoh_nsp2_20190322_004_thresh35_ogcorrupt_info';
-    'XT_RE_GlassTRCoh_nsp2_20190324_001_thresh35_ogcorrupt_info';
-    'XT_RE_GlassTRCoh_nsp2_20190324_002_thresh35_ogcorrupt_info';
-    'XT_RE_GlassTRCoh_nsp2_20190324_003_thresh35_ogcorrupt_info';
-    'XT_RE_GlassTRCoh_nsp2_20190324_004_thresh35_ogcorrupt_info';
-    'XT_RE_GlassTRCoh_nsp2_20190324_001_cleaned35_info'};
-newName = 'XT_RE_GlassTRCoh_nsp2_March2019_all_cleaned35_info';
+% files = {
+%     'XT_RE_GlassTRCoh_nsp2_20190322_003_thresh35_ogcorrupt_info';
+%     'XT_RE_GlassTRCoh_nsp2_20190322_004_thresh35_ogcorrupt_info';
+%     'XT_RE_GlassTRCoh_nsp2_20190324_001_thresh35_ogcorrupt_info';
+%     'XT_RE_GlassTRCoh_nsp2_20190324_002_thresh35_ogcorrupt_info';
+%     'XT_RE_GlassTRCoh_nsp2_20190324_003_thresh35_ogcorrupt_info';
+%     'XT_RE_GlassTRCoh_nsp2_20190324_004_thresh35_ogcorrupt_info';
+%     'XT_RE_GlassTRCoh_nsp2_20190324_001_cleaned35_info'};
+% newName = 'XT_RE_GlassTRCoh_nsp2_March2019_all_cleaned35_info';
  
 % files = {'XT_RE_GlassCoh_nsp2_20190321_002_thresh35_info';            
 %     'XT_RE_GlassCoh_nsp2_20190321_003_thresh35_info';            
@@ -126,11 +126,8 @@ newName = 'XT_RE_GlassTRCoh_nsp2_March2019_all_cleaned35_info';
 %     'WV_LE_glassTRCoh_nsp2_20190417_002_thresh35_info'};
 % newName = 'WV_LE_glassTRCoh_nsp2_April2019_all_thresh35_info';
 
-% files = {'WV_RE_glassCoh_nsp1_20190404_002_thresh35_ogcorrupt_info';    
-%     'WV_RE_glassCoh_nsp1_20190404_003_thresh35_ogcorrupt_info';     
-%     'WV_RE_glassCoh_nsp1_20190405_001_thresh35_ogcorrupt_info'}; 
-% newName = 'WV_RE_glassCoh_nsp1_April2019_all_thresh35_ogcorrupt_info';
-% 
+ 
+ 
 % files = {'WV_RE_glassTRCoh_nsp1_20190405_002_thresh35_info';             
 %     'WV_RE_glassTRCoh_nsp1_20190408_001_thresh35_info';             
 %     'WV_RE_glassTRCoh_nsp1_20190409_001_thresh35_info';             
@@ -138,14 +135,14 @@ newName = 'XT_RE_GlassTRCoh_nsp2_March2019_all_cleaned35_info';
 %     'WV_RE_glassTRCoh_nsp1_20190410_001_thresh35_info';             
 %     'WV_RE_glassTRCoh_nsp1_20190410_002_thresh35_info'};
 % newName = 'WV_RE_glassTRCoh_nsp1_April2019_all_thresh35_info';
-% 
+
 % files = {'WV_RE_glassTRCoh_nsp2_20190405_002_thresh35_ogcorrupt_info';
 %     'WV_RE_glassTRCoh_nsp2_20190408_001_thresh35_ogcorrupt_info';
 %     'WV_RE_glassTRCoh_nsp2_20190409_001_thresh35_ogcorrupt_info';
 %     'WV_RE_glassTRCoh_nsp2_20190409_002_thresh35_ogcorrupt_info';
 %     'WV_RE_glassTRCoh_nsp2_20190410_001_thresh35_ogcorrupt_info';
 %     'WV_RE_glassTRCoh_nsp2_20190410_002_thresh35_ogcorrupt_info'};
-% newName = 'WV_RE_glassTRCoh_nsp2_April2019_all_thresh35_ogcorrupt_info';
+% newName = 'WV_RE_glassTRCoh_nsp2_April2019_all_thresh35_info';
 
 % files = {'WV_RE_glassCoh_nsp2_20190404_002_thresh35_info';            
 %     'WV_RE_glassCoh_nsp2_20190404_003_thresh35_info';            
@@ -309,14 +306,15 @@ programID = dataTComp{1}.programID;
 array = dataTComp{1}.array;
 amap = dataTComp{1}.amap;
 %% sanity check figure
-for ses = 1:length(dataTComp)
-    spikeStim{ses} = reshape(dataTComp{ses}.allStimSpikeCount,1,numel(dataTComp{ses}.allStimSpikeCount));
-    zStim{ses} = reshape(dataTComp{ses}.allStimZscore,1,numel(dataTComp{ses}.allStimZscore));
-    
-    spikeBlank{ses} = reshape(dataTComp{ses}.allStimSpikeCount,1,numel(dataTComp{ses}.allStimSpikeCount));
-    zBlank{ses} = reshape(dataTComp{ses}.blankZscore,1,numel(dataTComp{ses}.blankZscore));
-end
-clear ses;
+    for ses = 1:length(dataTComp)
+        spikeStim{ses} = reshape(dataTComp{ses}.allStimSpikeCount,1,numel(dataTComp{ses}.allStimSpikeCount));
+        zStim{ses} = reshape(dataTComp{ses}.allStimZscore,1,numel(dataTComp{ses}.allStimZscore));
+        
+        spikeBlank{ses} = reshape(dataTComp{ses}.blankSpikeCount,1,numel(dataTComp{ses}.blankSpikeCount));
+        zBlank{ses} = reshape(dataTComp{ses}.blankZscore,1,numel(dataTComp{ses}.blankZscore));
+    end
+    clear ses;
+% end
 %%
 figure(5)
 clf
@@ -327,71 +325,52 @@ rows = length(dataTComp);
 ndx = 1;
 for n = 1:length(dataTComp)
    
-    subplot(rows,4,ndx) % left column = stimulus spike counts 
-    histogram(spikeStim{n},30,'Normalization','probability')
-    set(gca,'box','off','tickdir','out')
-    ylim([0 0.5])
-    xlim([-2 100])
+    subplot(rows,2,ndx) % left column = stimulus spike counts 
+    hold on
+    histogram(spikeBlank{n},'BinWidth',2,'Normalization','probability','FaceColor','b','FaceAlpha',0.5)
+    histogram(spikeStim{n},'BinWidth',2,'Normalization','probability','FaceColor','r','FaceAlpha',0.5)
+    set(gca,'box','off','tickdir','out','YTick',0:0.1:0.4)
+    ylim([0 0.4])
+    xlim([-2 80])
     ylabel({sprintf('%s %s',dataTComp{n}.date, dataTComp{n}.runNum);...
         'probability'})
      if n == 1
-         title('stimulus spike counts')
+         title('spike counts','FontSize',12)
      end
      if n == length(dataTComp)
          xlabel('spike count')
      end
     
     
-    subplot(rows,4,ndx+1) % right column = stimulus z scores
-    histogram(zStim{n},30,'Normalization','probability')
-    set(gca,'box','off','tickdir','out')
-    ylim([0 0.5])
-    xlim([-5 20])
+    subplot(rows,2,ndx+1) % right column = stimulus z scores
+    hold on
+    histogram(zBlank{n},'BinWidth',0.5,'Normalization','probability','FaceColor','b','FaceAlpha',0.5)
+    histogram(zStim{n},'BinWidth',0.5,'Normalization','probability','FaceColor','r','FaceAlpha',0.5)
+    set(gca,'box','off','tickdir','out','YTick',0:0.1:0.4)
+    ylim([0 0.4])
+    xlim([-5 5])
     if n == 1
-         title('stimulus z scores')
+         title('z scores','FontSize',12)
+         legend('blank', 'stimuli')
      end
      if n == length(dataTComp)
          xlabel('z score')
      end
      
-    subplot(rows,4,ndx+2) % left column = stimulus spike counts 
-    histogram(spikeBlank{n},30,'Normalization','probability')
-    set(gca,'box','off','tickdir','out')
-    ylim([0 0.5])
-    xlim([-2 100])
-    
-    if n == 1
-         title('blank spike counts')
-    end
-    
-      if n == length(dataTComp)
-         xlabel('spike count')
-     end
-    subplot(rows,4,ndx+3) % right column = stimulus z scores
-    histogram(zBlank{n},30,'Normalization','probability')
-    set(gca,'box','off','tickdir','out')
-    ylim([0 0.5])
-    xlim([-5 20])
-     if n == 1
-         title('blank z scores')
-     end    
-    if n == length(dataTComp)
-         xlabel('z score')
-     end
         
     
-    ndx = ndx+4;
+    ndx = ndx+2;
 end
 suptitle(sprintf('%s %s %s %s zscores and spike counts', dataT.animal, dataT.eye, dataT.array, dataT.programID))
 
 location = determineComputer;
 if location == 0
-    figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/%s/%s/spikeZscoreDists/%s/',dataT.animal, dataT.programID, dataT.array,dataT.eye);
+    figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/%s/%s/spikeZscoreDists/%s/%s/',dataT.animal, dataT.programID, dataT.array,dataT.eye,dataT.date2);
     if ~exist(figDir,'dir')
         mkdir(figDir)
     end
 else
-    figDir =  sprintf( '/Local/Users/bushnell/Dropbox/Figures/%s/%s/%s/spikeZscoreDists/%s/',dataT.animal, dataT.programID, dataT.array,dataT.eye);
+    figDir =  sprintf( '/Local/Users/bushnell/Dropbox/Figures/%s/%s/%s/spikeZscoreDists/%s/%s/',dataT.animal, dataT.programID, dataT.array,dataT.eye,dataT.date2);
     if ~exist(figDir,'dir')
         mkdir(figDir)
     end

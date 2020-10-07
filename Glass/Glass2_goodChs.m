@@ -99,27 +99,6 @@ for fi = 1:length(files)
     [dataT.zScoreReliabilityIndex, dataT.zScoreReliabilityPvals,dataT.zScoreSplitHalfSigChs,dataT.zScoreReliabilityIndexPerm] = getHalfCorrPerm(zScoreReshape,filename);
     plotResponsePvalsVSreliabilityPvals(dataT.stimBlankChPvals, dataT.zScoreReliabilityPvals,filename)
     fprintf('Split-Half correlations computed and permuted %.2f minutes\n',toc/60)
-    %% spike counts instead of zscore
-%     if contains(dataT.programID,'TR')
-%         spikeCount_chLast = permute(dataT.GlassTRSpikeCount,[1 2 3 4 6 5]);% rearrange so number of channels is the last thing.
-%         numRepeats = size(dataT.GlassTRSpikeCount,6);
-%         spikeCountReshape = reshape(spikeCount_chLast,64,numRepeats,96); % reshape into a vector. 64 = number of conditions.
-%     else
-%         % fill this in with the appropriately named things
-%         conSCchLast = permute(dataT.conSpikeCount,[1 2 3 5 4]);
-%         numRepeats = size(dataT.conSpikeCount,5);
-%         conSCReshape = reshape(conSCchLast,16,numRepeats,96);
-%         
-%         radSCchLast = permute(dataT.radSpikeCount,[1 2 3 5 4]);
-%         numRepeats = size(dataT.radSpikeCount,5);
-%         radSCReshape = reshape(radSCchLast,16,numRepeats,96);
-%         
-%         nozSCchLast = permute(dataT.NoiseSpikeCount,[1 2 3 5 4]);
-%         numRepeats = size(dataT.NoiseSpikeCount,5);
-%         nozSCReshape = reshape(nozSCchLast,16,numRepeats,96);
-%         
-%         spikeCountReshape = cat(2,conReshape,radReshape,nozReshape);
-%     end
     %% Define truly good channels that pass either the visually responsive OR split-half reliability metric
     dataT.goodCh = logical(dataT.responsiveCh) | logical(dataT.zScoreSplitHalfSigChs);
     %% save good data
