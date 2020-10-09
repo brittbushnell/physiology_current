@@ -12,33 +12,41 @@ clf
 
 subplot(1,3,1)
 hold on
-cons = reshape(conBlankDprime,1,numel(conBlankDprime));
-histogram(cons,10)
+cons = reshape(dataT.conBlankDprime,1,numel(dataT.conBlankDprime));
+histogram(cons,10,'Normalization','probability')
+ylim([0 0.3])
 
 subplot(1,3,2)
 hold on
-rads = reshape(radBlankDprime,1,numel(radBlankDprime));
-histogram(rads,10)
+rads = reshape(dataT.radBlankDprime,1,numel(dataT.radBlankDprime));
+histogram(rads,10,'Normalization','probability')
+ylim([0 0.3])
 
 subplot(1,3,3)
 hold on
-noise = reshape(noiseBlankDprime,1,numel(noiseBlankDprime));
-histogram(noise,10)
+noise = reshape(dataT.noiseBlankDprime,1,numel(dataT.noiseBlankDprime));
+histogram(noise,10,'Normalization','probability')
+ylim([0 0.3])
 %%
 figure(2)
 clf
 
 subplot(1,3,1)
 hold on
-histogram(conBlankDprimeBoot,10)
+histogram(conBlankDprimeBoot,10,'Normalization','probability')
+title('concentric')
 
 subplot(1,3,2)
 hold on
-histogram(radBlankDprimeBoot,10)
+histogram(radBlankDprimeBoot,10,'Normalization','probability')
+title('radial')
 
 subplot(1,3,3)
 hold on
-histogram(noiseBlankDprimeBoot,10)
+noise = reshape(noiseBlankDprimeBoot,1,numel(noiseBlankDprimeBoot));
+noise(isnan(noise)) = [];
+histogram(noise,10,'Normalization','probability')
+title('noise')
 %%
 figure(3)
 clf

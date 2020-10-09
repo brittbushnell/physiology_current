@@ -1,4 +1,4 @@
-function [conBlankDprime,radBlankDprime,noiseBlankDprime] = GlassVsBlankDPrimes_zscore(dataT,numBoot, holdout)
+function [conBlankDprime,radBlankDprime,noiseBlankDprime] = GlassVsBlankDPrimes_zscore_perm(dataT,numBoot, holdout)
 % This function will compute d' for stimulus vs  blank screen based off of
 % zscored spike counts
 
@@ -27,6 +27,9 @@ for ch = 1:numCh
                     radTrials = squeeze(dataT.radZscore(co,ndot,dx,ch,:));
                     nosTrials = squeeze(dataT.noiseZscore(co,ndot,dx,ch,:));
                     
+                    stimTrials = [conTrials;radTrials;nosTrials];
+                    stimTrials(isnan(stimTrials)) = [];
+                    
                     conTrials(isnan(conTrials)) = [];
                     radTrials(isnan(radTrials)) = [];
                     nosTrials(isnan(nosTrials)) = [];
@@ -42,19 +45,14 @@ for ch = 1:numCh
                     
                     for nb = 1:numBoot
                         % subsample
-                        radNdx = randi(length(radTrials),[1,numRadTrials]);
-                        conNdx = randi(length(conTrials),[1,numConTrials]);
-                        blankNdx = randi(length(blankTrials),[1,numBlankTrials]);
-                        
-                        radStim = radTrials(radNdx);
-                        conStim = conTrials(conNdx);
-                        blankStim = blankTrials(blankNdx);
+                        radStim = randi(length(stimTrials),[1,numRadTrials]);
+                        conStim = randi(length(conTrials),[1,numConTrials]);
+                        blankStim = randi(length(blankTrials),[1,numBlankTrials]);
                         %% d'
                         conBlankDprimeBoot(nb,1) = simpleDiscrim((blankStim),(conStim));
                         radBlankDprimeBoot(nb,1) = simpleDiscrim((blankStim),(radStim));
                         if co == 1
-                            nosNdx = randi(length(nosTrials),[1,numNosTrials]);
-                            nosStim = nosTrials(nosNdx);
+                            nosStim = randi(length(nosTrials),[1,numNosTrials]);
                             noiseBlankDprimeBoot(nb,1) = simpleDiscrim((blankStim),(nosStim));
                         end
                     end
@@ -68,35 +66,3 @@ for ch = 1:numCh
         end
     end
 end
-%%
-
-figure(2)
-clf
-pos = get(gcf,'Position');
-set(gcf,'Position',[pos(1) pos(2) 1200 900])
-set(gcf,'PaperOrientation','Landscape');
-
-for ch = 1:96
- 
-    subplot(dataT.amap,10,10,ch)
-    hold on
-    if dataT.goodCh(ch) == 1
-    cons = reshape(dataT.conBlankDprime(:,:,:,ch),1,numel(dataT.conBlankDprime(:,:,:,ch)));
-    histogram(cons,'BinWidth',0.5,'Normalization','probability','FaceColor',[0.7 0 0.7],'FaceAlpha',0.4)
-    
-    rads = reshape(dataT.radBlankDprime(:,:,:,ch),1,numel(dataT.radBlankDprime(:,:,:,ch)));
-    histogram(rads,'BinWidth',0.5,'Normalization','probability','FaceColor',[0 0.6 0.2],'FaceAlpha',0.4)
-    
-    noise = reshape(dataT.noiseBlankDprime(:,:,:,ch),1,numel(dataT.noiseBlankDprime(:,:,:,ch)));
-    histogram(noise,'BinWidth',0.5,'Normalization','probability','FaceColor',[1 0.5 0.1],'FaceAlpha',0.4)
-    
-    ylim([0 1])
-    xlim([-2 6])
-    t = title(ch);
-    t.Position(2) = t.Position(2)-0.2;
-    
-    else
-        axis off
-    end
-end
-suptitle(sprintf('%s %s %s %s dPrimes for each stimulus',dataT.animal, dataT.eye, dataT.array, dataT.programID))
