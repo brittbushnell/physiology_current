@@ -4,16 +4,16 @@ clc
 tic
 %%
 monks = {
-    'WU';
+  %  'WU';
      'WV';
-     'XT';
+   %  'XT';
     };
 ez = {
-    'LE';
+    %'LE';
   'RE';
     };
 brArray = {
-    'V4';
+    %'V4';
    'V1';
     };
 %%

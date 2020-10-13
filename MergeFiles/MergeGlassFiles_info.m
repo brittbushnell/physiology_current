@@ -88,13 +88,13 @@ clc
 % % note:glassTRcoh for XT LE was only one file, so no merging to be done there
 %% WV
 
-% files = {'WV_LE_glassCoh_nsp1_20190402_002_thresh35_ogcorrupt_info';
-%     'WV_LE_glassCoh_nsp1_20190402_003_thresh35_ogcorrupt_info';
-%     'WV_LE_glassCoh_nsp1_20190403_002_thresh35_ogcorrupt_info';
-%     'WV_LE_glassCoh_nsp1_20190404_001_thresh35_ogcorrupt_info';
-%     'WV_LE_glassCoh_nsp1_20190402_004_thresh35_info';
-%     'WV_LE_glassCoh_nsp1_20190403_001_thresh35_info'};
-%     newName = 'WV_LE_glassCoh_nsp1_April2019_all_thresh35_info';
+files = {'WV_LE_glassCoh_nsp1_20190402_002_thresh35_ogcorrupt_info';
+    'WV_LE_glassCoh_nsp1_20190402_003_thresh35_ogcorrupt_info';
+    'WV_LE_glassCoh_nsp1_20190403_002_thresh35_ogcorrupt_info';
+    'WV_LE_glassCoh_nsp1_20190404_001_thresh35_ogcorrupt_info';
+    'WV_LE_glassCoh_nsp1_20190402_004_thresh35_info';
+    'WV_LE_glassCoh_nsp1_20190403_001_thresh35_info'};
+    newName = 'WV_LE_glassCoh_nsp1_April2019_all_thresh35_info';
 
 % files = {'WV_LE_glassTRCoh_nsp1_20190411_001_thresh35_ogcorrupt_info';
 %     'WV_LE_glassTRCoh_nsp1_20190412_001_thresh35_ogcorrupt_info';
@@ -142,10 +142,15 @@ clc
 %     'WV_RE_glassTRCoh_nsp2_20190410_002_thresh35_ogcorrupt_info'};
 % newName = 'WV_RE_glassTRCoh_nsp2_April2019_all_thresh35_info';
 
-files = {'WV_RE_glassCoh_nsp2_20190404_002_thresh35_info';
-    'WV_RE_glassCoh_nsp2_20190404_003_thresh35_info';
-    'WV_RE_glassCoh_nsp2_20190405_001_thresh35_info'};
-newName = 'WV_RE_glassCoh_nsp2_April2019_all_thresh35_info';
+% files = {'WV_RE_glassCoh_nsp2_20190404_002_thresh35_info';
+%     'WV_RE_glassCoh_nsp2_20190404_003_thresh35_info';
+%     'WV_RE_glassCoh_nsp2_20190405_001_thresh35_info'};
+% newName = 'WV_RE_glassCoh_nsp2_April2019_all_thresh35_info';
+
+files ={'WV_RE_glassCoh_nsp1_20190404_002_thresh35_ogcorrupt_info';
+    'WV_RE_glassCoh_nsp1_20190404_003_thresh35_ogcorrupt_info';
+    'WV_RE_glassCoh_nsp1_20190405_001_thresh35_ogcorrupt_info'};
+newName = 'WV_RE_glassCoh_nsp1_April2019_all_thresh35_info';
 %%
 location = determineComputer;
 for fi = 1:length(files)
