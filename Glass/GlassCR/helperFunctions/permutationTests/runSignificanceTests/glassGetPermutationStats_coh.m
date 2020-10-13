@@ -16,9 +16,9 @@ sig = zeros(4,2,2,96);
 %%
 for ch = 1:96
     if dataT.goodCh(ch) == 1
-        for co = 1:numCoh
-            for dx = 1:numDxs
-                for dt = 1:numDots
+        for co = 1:size(permData,1)
+            for dx = 1:size(permData,2)
+                for dt = 1:size(permData,3)
                     realDataCh = squeeze(realData(co,dt,dx,ch));
                     permDataCh = squeeze(permData(co,dt,dx,ch,:));
                     
@@ -101,17 +101,20 @@ if plotFlag == 1
             figDir =  sprintf('~/Dropbox/Figures/%s/GlassTR/%s/PermTests/%s/%s/',dataT.animal, dataT.array,dataT.eye,comp);
         end
     end
-    cd(figDir)
-    % go to date specific folder, if it doesn't exist, make it
-    folder = dataT.date2;
-    mkdir(folder)
-    cd(sprintf('%s',folder))
+    if ~exist(figDir,'dir')
+        mkdir(figDir)
+        cd(figDir)
+    end
+    %     % go to date specific folder, if it doesn't exist, make it
+    %     folder = dataT.date2;
+    %     mkdir(folder)
+    %     cd(sprintf('%s',folder))
     %% plot
     for ch = 1:96
         if dataT.goodCh(ch) == 1
-            for co = numCoh % 1:numCoh % new figure for each coherence
+            for co = 1:size(permData,1) % 1:numCoh % new figure for each coherence
                 figure(6)
-                clf   
+                clf
                 pos = get(gcf,'Position');
                 set(gcf,'Position',[pos(1) pos(2) 900 700]);
                 

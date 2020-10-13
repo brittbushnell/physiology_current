@@ -69,34 +69,3 @@ for ch = 1:numCh
     end
 end
 %%
-
-figure(2)
-clf
-pos = get(gcf,'Position');
-set(gcf,'Position',[pos(1) pos(2) 1200 900])
-set(gcf,'PaperOrientation','Landscape');
-
-for ch = 1:96
- 
-    subplot(dataT.amap,10,10,ch)
-    hold on
-    if dataT.goodCh(ch) == 1
-    cons = reshape(dataT.conBlankDprime(:,:,:,ch),1,numel(dataT.conBlankDprime(:,:,:,ch)));
-    histogram(cons,'BinWidth',0.5,'Normalization','probability','FaceColor',[0.7 0 0.7],'FaceAlpha',0.4)
-    
-    rads = reshape(dataT.radBlankDprime(:,:,:,ch),1,numel(dataT.radBlankDprime(:,:,:,ch)));
-    histogram(rads,'BinWidth',0.5,'Normalization','probability','FaceColor',[0 0.6 0.2],'FaceAlpha',0.4)
-    
-    noise = reshape(dataT.noiseBlankDprime(:,:,:,ch),1,numel(dataT.noiseBlankDprime(:,:,:,ch)));
-    histogram(noise,'BinWidth',0.5,'Normalization','probability','FaceColor',[1 0.5 0.1],'FaceAlpha',0.4)
-    
-    ylim([0 1])
-    xlim([-2 6])
-    t = title(ch);
-    t.Position(2) = t.Position(2)-0.2;
-    
-    else
-        axis off
-    end
-end
-suptitle(sprintf('%s %s %s %s dPrimes for each stimulus',dataT.animal, dataT.eye, dataT.array, dataT.programID))
