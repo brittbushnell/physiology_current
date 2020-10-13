@@ -18,14 +18,18 @@ conBlankDprime = nan(numCoh, numDots, numDxs, numCh);
 for ch = 1:numCh
     if dataT.goodCh(ch) == 1
         blankTrials = squeeze(dataT.blankZscore(ch,:))';
-     
+        
         for ndot = 1:numDots
             for dx = 1:numDxs
-                for co = 1:numCoh     
+                for co = 1:numCoh
                     
-                    conTrials = squeeze(dataT.conZscore(co,ndot,dx,ch,:)); 
-                    radTrials = squeeze(dataT.radZscore(co,ndot,dx,ch,:)); 
-                    nosTrials = squeeze(dataT.noiseZscore(co,ndot,dx,ch,:)); 
+                    conTrials = squeeze(dataT.conZscore(co,ndot,dx,ch,:));
+                    radTrials = squeeze(dataT.radZscore(co,ndot,dx,ch,:));
+                    nosTrials = squeeze(dataT.noiseZscore(co,ndot,dx,ch,:));
+                    
+                    conTrials(isnan(conTrials)) = [];
+                    radTrials(isnan(radTrials)) = [];
+                    nosTrials(isnan(nosTrials)) = [];
                     
                     numConTrials = round(size(conTrials,1)*holdout);
                     numRadTrials = round(size(radTrials,1)*holdout);
@@ -37,24 +41,31 @@ for ch = 1:numCh
                     noiseBlankDprimeBoot = nan(numBoot,1);
                     
                     for nb = 1:numBoot
-                        % subsample 
+                        % subsample
+                        radNdx = randi(length(radTrials),[1,numRadTrials]);
+                        conNdx = randi(length(conTrials),[1,numConTrials]);
+                        blankNdx = randi(length(blankTrials),[1,numBlankTrials]);
                         
-                        radStim = randperm(radTrials, numRadTrials);                       
-                        conStim = randperm(conTrials, numConTrials);                       
-                        nosStim = randperm(nosTrials, numNosTrials);
-                        blankStim = randperm(blankTrials, numBlankTrials);
+                        radStim = radTrials(radNdx);
+                        conStim = conTrials(conNdx);
+                        blankStim = blankTrials(blankNdx);
                         %% d'
                         conBlankDprimeBoot(nb,1) = simpleDiscrim((blankStim),(conStim));
                         radBlankDprimeBoot(nb,1) = simpleDiscrim((blankStim),(radStim));
-                        noiseBlankDprimeBoot(nb,1) = simpleDiscrim((blankStim),(nosStim));                        
-                    end
-                        conBlankDprime(co,ndot,dx,ch) = nanmean(conBlankDprimeBoot);
-                        radBlankDprime(co,ndot,dx,ch) = nanmean(radBlankDprimeBoot);
                         if co == 1
-                            noiseBlankDprime(co,ndot,dx,ch) = nanmean(noiseBlankDprimeBoot);
+                            nosNdx = randi(length(nosTrials),[1,numNosTrials]);
+                            nosStim = nosTrials(nosNdx);
+                            noiseBlankDprimeBoot(nb,1) = simpleDiscrim((blankStim),(nosStim));
                         end
+                    end
+                    conBlankDprime(co,ndot,dx,ch) = nanmean(conBlankDprimeBoot);
+                    radBlankDprime(co,ndot,dx,ch) = nanmean(radBlankDprimeBoot);
+                    if co == 1
+                        noiseBlankDprime(co,ndot,dx,ch) = nanmean(noiseBlankDprimeBoot);
+                    end
                 end
             end
         end
     end
 end
+%%
