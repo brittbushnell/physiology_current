@@ -1,15 +1,32 @@
-clear all
+clear
 close all
 clc
 tic
 %%
 files = {
-    'XT_LE_GlassCoh_nsp2_March2019_all_thresh35_info_goodRuns';
+    'WU_LE_Glass_nsp1_Aug2017_all_thresh35_info_goodRuns';
+    'WU_LE_Glass_nsp2_Aug2017_all_thresh35_info_goodRuns';
+    
+    'WU_RE_Glass_nsp1_Aug2017_all_thresh35_info_goodRuns';
+    'WU_RE_Glass_nsp2_Aug2017_all_thresh35_info_goodRuns';
+    
+%     'XT_RE_GlassCoh_nsp2_March2019_all_thresh35_info_goodRuns';
+%     'XT_RE_GlassCoh_nsp1_March2019_all_thresh35_info_goodRuns';
+%     'XT_RE_GlassTRCoh_nsp1_March2019_all_thresh35_info_goodRuns';
+%     
+%     'XT_LE_GlassCoh_nsp1_March2019_all_thresh35_info_goodRuns';
+%     'XT_LE_GlassCoh_nsp2_March2019_all_thresh35_info_goodRuns';
+%     
+%     'WV_LE_glassCoh_nsp1_April2019_all_thresh35_info_goodRuns';
+%     'WV_LE_glassCoh_nsp2_April2019_all_thresh35_info_goodRuns';
+%     
+%     'WV_RE_glassCoh_nsp2_April2019_all_thresh35_info_goodRuns';
+%     'WV_RE_glassCoh_nsp1_April2019_all_thresh35_info_goodRuns';
     };
 %%
 nameEnd = '';
-numPerm = 200;
-numBoot = 20;
+numPerm = 2000;
+numBoot = 200;
 subsample = 0;
 holdout = .90;
 plotFlag = 0;
@@ -20,18 +37,21 @@ location = determineComputer;
 failedFile= {};
 failedME = {};
 failNdx = 1;
+%%
 for fi = 1:size(files,1)
     %% Get basic information about experiments
-    %  try
+     try
     filename = files{fi};
     load(filename);
-    fprintf('\n*** analyzing %s \n*** file %d/%d \n', filename,fi,size(files,1))
-    
     if contains(filename,'RE')
         dataT = data.RE;
     else
         dataT = data.LE;
     end
+
+    fprintf('\n*** analyzing %s \n*** file %d/%d \n', filename,fi,size(files,1))
+    
+    
     %% test figure
     figure(3)
     clf
@@ -146,12 +166,12 @@ for fi = 1:size(files,1)
     %%
     clear dataT
     fprintf('file %s done %.2f hours \n',filename, toc/3600)
-    %     catch ME
-    %         failedFile{failNdx} = filename;
-    %         failedME{failNdx} = ME;
-    %         failNdx = failNdx+1;
-    %         fprintf('file failed \n')
-    %     end
+        catch ME
+            failedFile{failNdx} = filename;
+            failedME{failNdx} = ME;
+            failNdx = failNdx+1;
+            fprintf('file failed \n')
+        end
 end
 if failNdx >1
     saveName = [outputDir 'failedFilesGlass2_stimVblank' '.mat'];
