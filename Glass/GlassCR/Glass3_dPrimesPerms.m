@@ -25,8 +25,8 @@ files = {
     };
 %%
 nameEnd = 'stimBPerm';
-numPerm = 2000;
-numBoot = 200;
+numPerm = 1000;
+numBoot = 100;
 subsample = 0;
 holdout = .90;
 plotFlag = 0;
@@ -84,7 +84,7 @@ for fi = 1:size(files,1)
     set(gca,'box','off','tickdir','out')
     
     subplot(4,1,4)
-    noise =  reshape(dataT.noiseZscore,1,numel(dataT.noiseZscore));
+    noise =  reshape(dataT.noiseZscore(1,:,:,:,:),1,numel(dataT.noiseZscore(1,:,:,:,:)));
     histogram(noise,'BinWidth',0.5,'Normalization','probability','FaceColor',[1 0.5 0.1],'FaceAlpha',0.4)
     title('noise')
     xlim([-5 5])
@@ -123,7 +123,7 @@ for fi = 1:size(files,1)
     
     fprintf('stim vs blank tests done %d  hours \n',toc/3600)
     %% coherence permutations
-    [dataT.conNosDprime,dataT.radNosDprime,dataT.conRadDprime] = GlassVsNoiseDPrimes_zscore(dataT,numBoot, holdout);
+    [dataT.conNoiseDprime,dataT.radNoiseDprime,dataT.conRadDprime] = GlassVsNoiseDPrimes_zscore(dataT,numBoot, holdout);
     [dataT] = GlassVsNoiseDPrimes_zscore_perm(dataT,numBoot, holdout);
     
     fprintf('permuted vaules for stim vs noise done %.2f hours \n',toc/3600)

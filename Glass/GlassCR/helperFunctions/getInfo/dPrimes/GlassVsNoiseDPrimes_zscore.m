@@ -53,9 +53,7 @@ for ch = 1:numCh
                     end
                     conNosDprime(co,ndot,dx,ch) = nanmean(conNosDprimeBoot);
                     radNosDprime(co,ndot,dx,ch) = nanmean(radNosDprimeBoot);
-                    if co == 1
-                        conRadDprime(co,ndot,dx,ch) = nanmean(conRadDprimeBoot);
-                    end
+                    conRadDprime(co,ndot,dx,ch) = nanmean(conRadDprimeBoot);
                 end
             end
         end
