@@ -1,32 +1,15 @@
 function [] = plotGlass_callTriplotGray(dataT)
 location = determineComputer;
 
-if contains(dataT.animal,'WV')
     if location == 1
-        if contains(dataT.programID,'Small')
-            figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/Glass/%s/4Deg/prefStim/%s/',dataT.animal, dataT.array, dataT.eye);
-        else
-            figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/Glass/%s/8Deg/prefStim/%s/',dataT.animal, dataT.array, dataT.eye);
-        end
+        figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/Glass/%s/prefStim/%s/triplot/',dataT.animal, dataT.array, dataT.eye);
     elseif location == 0
-        if contains(dataT.programID,'Small')
-            figDir =  sprintf('~/Dropbox/Figures/%s/Glass/%s/4Deg/prefStim/%s/',dataT.animal, dataT.array, dataT.eye);
-        else
-            figDir =  sprintf('~/Dropbox/Figures/%s/Glass/%s/8Deg/prefStim/%s/',dataT.animal, dataT.array, dataT.eye);
-        end
+        figDir =  sprintf('~/Dropbox/Figures/%s/Glass/%s/prefStim/%s/triplot/',dataT.animal, dataT.array, dataT.eye);
     end
-else
-    if location == 1
-        figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/Glass/%s/prefStim/%s/',dataT.animal, dataT.array, dataT.eye);
-    elseif location == 0
-        figDir =  sprintf('~/Dropbox/Figures/%s/Glass/%s/prefStim/%s/',dataT.animal, dataT.array, dataT.eye);
-    end
+if ~exist(figDir,'dir')
+    mkdir(figDir);
 end
 cd(figDir)
-
-folder2 = 'triplot';
-mkdir(folder2)
-cd(sprintf('%s',folder2))
 %%
 [~,numDots,numDxs,~,~,~,dots,dxs,~,~] = getGlassParameters(dataT);
 %%
@@ -41,7 +24,7 @@ for dt = 1:numDots
         
         radDps = abs(squeeze(dataT.radBlankDprime(end,dt,dx,:)));
         conDps = abs(squeeze(dataT.conBlankDprime(end,dt,dx,:)));
-        nosDps = abs(squeeze(dataT.noiseBlankDprime(dt,dx,:)));
+        nosDps = abs(squeeze(dataT.noiseBlankDprime(1,dt,dx,:)));
         
         dps = [radDps,conDps,nosDps];     
         

@@ -4,27 +4,27 @@ clc
 tic
 %%
 files = {
-    'WU_LE_Glass_nsp1_Aug2017_all_thresh35_info_goodRuns';
     'WU_LE_Glass_nsp2_Aug2017_all_thresh35_info_goodRuns';
+    %     'WU_LE_Glass_nsp1_Aug2017_all_thresh35_info_goodRuns';
+    %
+    %     'WU_RE_Glass_nsp1_Aug2017_all_thresh35_info_goodRuns';
+    %     'WU_RE_Glass_nsp2_Aug2017_all_thresh35_info_goodRuns';
     
-    'WU_RE_Glass_nsp1_Aug2017_all_thresh35_info_goodRuns';
-    'WU_RE_Glass_nsp2_Aug2017_all_thresh35_info_goodRuns';
-    
-%     'XT_RE_GlassCoh_nsp2_March2019_all_thresh35_info_goodRuns';
-%     'XT_RE_GlassCoh_nsp1_March2019_all_thresh35_info_goodRuns';
-%     'XT_RE_GlassTRCoh_nsp1_March2019_all_thresh35_info_goodRuns';
-%     
-%     'XT_LE_GlassCoh_nsp1_March2019_all_thresh35_info_goodRuns';
-%     'XT_LE_GlassCoh_nsp2_March2019_all_thresh35_info_goodRuns';
-%     
-%     'WV_LE_glassCoh_nsp1_April2019_all_thresh35_info_goodRuns';
-%     'WV_LE_glassCoh_nsp2_April2019_all_thresh35_info_goodRuns';
-%     
-%     'WV_RE_glassCoh_nsp2_April2019_all_thresh35_info_goodRuns';
-%     'WV_RE_glassCoh_nsp1_April2019_all_thresh35_info_goodRuns';
+    %     'XT_RE_GlassCoh_nsp2_March2019_all_thresh35_info_goodRuns';
+    %     'XT_RE_GlassCoh_nsp1_March2019_all_thresh35_info_goodRuns';
+    %     'XT_RE_GlassTRCoh_nsp1_March2019_all_thresh35_info_goodRuns';
+    %
+    %     'XT_LE_GlassCoh_nsp1_March2019_all_thresh35_info_goodRuns';
+    %     'XT_LE_GlassCoh_nsp2_March2019_all_thresh35_info_goodRuns';
+    %
+    %     'WV_LE_glassCoh_nsp1_April2019_all_thresh35_info_goodRuns';
+    %     'WV_LE_glassCoh_nsp2_April2019_all_thresh35_info_goodRuns';
+    %
+    %     'WV_RE_glassCoh_nsp2_April2019_all_thresh35_info_goodRuns';
+    %     'WV_RE_glassCoh_nsp1_April2019_all_thresh35_info_goodRuns';
     };
 %%
-nameEnd = '';
+nameEnd = 'stimBPerm';
 numPerm = 2000;
 numBoot = 200;
 subsample = 0;
@@ -40,7 +40,7 @@ failNdx = 1;
 %%
 for fi = 1:size(files,1)
     %% Get basic information about experiments
-     try
+    %      try
     filename = files{fi};
     load(filename);
     if contains(filename,'RE')
@@ -48,7 +48,7 @@ for fi = 1:size(files,1)
     else
         dataT = data.LE;
     end
-
+    
     fprintf('\n*** analyzing %s \n*** file %d/%d \n', filename,fi,size(files,1))
     
     
@@ -93,7 +93,7 @@ for fi = 1:size(files,1)
     
     xlabel('Z score')
     ylabel('probability')
-    suptitle('zscore distributions by stimulus type')
+    suptitle(sprintf('%s %s %s zscore distributions by stimulus type',dataT.animal, dataT.eye, dataT.array))
     
     %%
     if location == 0
@@ -122,24 +122,33 @@ for fi = 1:size(files,1)
     [dataT.noiseBlankDprimePvals,dataT.noiseBlankDprimeSig] = glassGetPermutationStats_coh(dataT.noiseBlankDprime,dataT.noiseBlankDprimeBootPerm,dataT,'noise vs blank permutation test',plotHists);
     
     fprintf('stim vs blank tests done %d  hours \n',toc/3600)
-    %% get stim vs blank permutations
-    %         dataT = GlassStimVsBlankPermutations_coh(dataT, numPerm, holdout);
-    %
-    %         fprintf('permuted values for stim vs blank done %.2f hours \n',toc/3600)
-    %         %% coherence permutations
-    %         dataT = GlassStimVsNoisePermutation_coh(dataT, numBoot, holdout);
-    %         fprintf('permuted vaules for stim vs noise done %.2f hours \n',toc/3600)
-    %% get latency
-    % latency will have to be done on the raw data only, the cleaned data
-    % is not reliable enough to do latency measurements on.
+    %% coherence permutations
+    [dataT.conNosDprime,dataT.radNosDprime,dataT.conRadDprime] = GlassVsNoiseDPrimes_zscore(dataT,numBoot, holdout);
+    [dataT] = GlassVsNoiseDPrimes_zscore_perm(dataT,numBoot, holdout);
     
-    %     dataT = getLatencies_Glass(dataT,numPerm,plotFlag,holdout);
-    %     dataT = getLatencies_Glass_Permutation(dataT,numPerm,holdout);
-    %
-    %     dataT = getLatencies_Glass_byStim(dataT,numPerm,holdout);
-    %     dataT = getLatencies_Glass_byStimPermutation(dataT,numPerm,holdout);
-    %
-    %     fprintf('latencies computed %.2f hours \n',toc/3600)
+    fprintf('permuted vaules for stim vs noise done %.2f hours \n',toc/3600)
+    %% pattern vs noise and con vs rad permutation tests
+    [dataT.radNoiseDprimePvals,dataT.radNoiseDprimeSig] = glassGetPermutationStats_coh(dataT.radNoiseDprime,dataT.radNoiseDprimeBootPerm,dataT,'radial vs noise permutation test',plotHists);
+    [dataT.conNoiseDprimePvals,dataT.conNoiseDprimeSig] = glassGetPermutationStats_coh(dataT.conNoiseDprime,dataT.conNoiseDprimeBootPerm,dataT,'concentric vs noise permutation test',plotHists);
+    [dataT.conRadDprimePvals,  dataT.conRadDprimeSig]   = glassGetPermutationStats_coh(dataT.conRadDprime,  dataT.conRadDprimeBootPerm,dataT,'concentric vs radial permutation test',plotHists);
+    
+    fprintf('stim vs noise and con vs rad tests done %d  hours \n',toc/3600)
+    %% get homogeneity
+    dataT = ChiSquareHomogeneity(dataT,0.1);
+    %% rank order of stim responses
+    dataT = rankGlassSelectivitiesBlank(dataT);
+    %    dataT = numSigGlassComparisons(dataT);
+    %% plot
+    close all
+    clc
+    if plotOther == 1
+        plotGlass_GlassRankingsDistBlank(dataT) % figure 1 and 2
+        plotGlassPSTHs_stimParams_allCh(dataT)
+        plotGlass_callTriplotGray(dataT)
+        plotGlass_CoherenceResps(dataT)
+        %plotGlass3D_dPrimesVblank_grayScale(dataT) %figure 8
+    end
+    %% com
     %% save data
     if location == 1
         outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/Glass/dPrimePerm/%s/',dataT.array,dataT.animal);
@@ -166,12 +175,12 @@ for fi = 1:size(files,1)
     %%
     clear dataT
     fprintf('file %s done %.2f hours \n',filename, toc/3600)
-        catch ME
-            failedFile{failNdx} = filename;
-            failedME{failNdx} = ME;
-            failNdx = failNdx+1;
-            fprintf('file failed \n')
-        end
+    %         catch ME
+    %             failedFile{failNdx} = filename;
+    %             failedME{failNdx} = ME;
+    %             failNdx = failNdx+1;
+    %             fprintf('file failed \n')
+    %         end
 end
 if failNdx >1
     saveName = [outputDir 'failedFilesGlass2_stimVblank' '.mat'];

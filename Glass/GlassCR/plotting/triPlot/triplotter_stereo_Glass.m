@@ -103,5 +103,5 @@ br=textm(0,90,'Model 2','FontSize',12);
 tp=textm(90,90,'Model 3','FontSize',12);
 
 set(bl,'horizontalalignment','left','string',sprintf('\n\nRadial    '))
-set(br,'horizontalalignment','right','string',sprintf('\n\n       Concentric'))
+set(br,'horizontalalignment','right','string',sprintf('\n\n\n        Concentric'))
 set(tp,'horizontalalignment','center','string',sprintf('Dipole\n\n'))
