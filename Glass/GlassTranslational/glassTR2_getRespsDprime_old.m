@@ -82,6 +82,8 @@ for fi = 1:size(files,1)
         dataT = GlassTR_StimVsNoisePermutations_coh(dataT, numPerm,holdout);
         
         fprintf('stim vs noise permutations done in %.2f hours \n',toc/3600)
+        %% do permutation tests
+        
         %% get latency
 %         dataT = getLatencies_Glass(dataT,numPerm,plotFlag,holdout);
 %         dataT = getLatencies_Glass_Permutation(dataT,numPerm,holdout);

@@ -13,6 +13,10 @@ numCh = size(dataT.bins,3);
 noiseBlankDprimePerm = nan(numCoh,numDots, numDxs, numCh); %coherence is meaningless here, but all zscore matrices are the same dimensions, so keeping it that way
 radBlankDprimePerm = nan(numCoh, numDots, numDxs, numCh);
 conBlankDprimePerm = nan(numCoh, numDots, numDxs, numCh);
+
+noiseBlankDprimePermBoot = nan(numCoh,numDots, numDxs, numCh,numBoot); %coherence is meaningless here, but all zscore matrices are the same dimensions, so keeping it that way
+radBlankDprimePermBoot = nan(numCoh, numDots, numDxs, numCh,numBoot);
+conBlankDprimePermBoot = nan(numCoh, numDots, numDxs, numCh,numBoot);
 %% mean responses and d' to each stimulus
 
 for ch = 1:numCh
@@ -59,12 +63,13 @@ for ch = 1:numCh
                     conBlankDprimePerm(co,ndot,dx,ch) = nanmean(conBlankDprimeBoot);
                     radBlankDprimePerm(co,ndot,dx,ch) = nanmean(radBlankDprimeBoot);
                     
-                     conBlankDprimePermBoot(co,ndot,dx,ch,:) = conBlankDprimeBoot;
-                     radBlankDprimePermBoot(co,ndot,dx,ch,:) = radBlankDprimeBoot;
-                    
+                    conBlankDprimePermBoot(co,ndot,dx,ch,:) = conBlankDprimeBoot;
+                    radBlankDprimePermBoot(co,ndot,dx,ch,:) = radBlankDprimeBoot;
+                    clear conBlankDprimeBoot; clear radBlankDprimeBoot;
                     if co == 1
                         noiseBlankDprimePerm(co,ndot,dx,ch) = nanmean(noiseBlankDprimeBoot);
                         noiseBlankDprimePermBoot(co,ndot,dx,ch,:) = noiseBlankDprimeBoot;
+                        clear noiseBlankDprimeBoot;
                     end
                 end
             end

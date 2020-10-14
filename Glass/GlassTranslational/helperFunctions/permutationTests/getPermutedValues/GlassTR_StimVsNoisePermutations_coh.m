@@ -1,4 +1,4 @@
-function [dataT] = GlassTR_StimVsNoisePermutations_coh(dataT, numBoot,holdout)
+function [linNoiseDprimePerm, linNoiseDprimeBootPerm] = GlassTR_StimVsNoisePermutations_coh(dataT, numBoot,holdout)
 % This function will compute d' for stimulus vs  blank screen using only
 % noise and 100% coherence stimuli.
 %
@@ -11,7 +11,6 @@ numCh = size(dataT.bins,3);
 %% Make matrices of responses
 % Initialize matrices
 linNoiseDprimePerm = nan(numOris,numCoh,numDots, numDxs, numCh);
-linNoiseSDPerm = nan(numOris,numCoh,numDots, numDxs, numCh);
 linNoiseDprimeBootPerm = nan(numOris,numCoh,numDots, numDxs, numCh,numBoot);
 %% mean responses and d' to each stimulus
 % type codes 1=lincentric  2=radial 0=noise  100=blank

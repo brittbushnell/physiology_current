@@ -4,7 +4,7 @@ clc
 %% WU
 
 %{'WU_LE_GlassTR_nsp1_20170822_002_thresh35.mat'} % leaving this file out because there's something really messed up with the V4 version.
-
+% LE
 % files = {'WU_LE_GlassTR_nsp1_20170824_001_thresh35_info';
 %          'WU_LE_GlassTR_nsp1_20170825_002_thresh35_info'};
 % newName ='WU_LE_GlassTR_nsp1_Aug2017_all_thresh35_info';
@@ -20,9 +20,10 @@ clc
 % newName ='WU_LE_Glass_nsp2_Aug2017_all_thresh35_info';
 
 % files = {'WU_LE_GlassTR_nsp2_20170824_001_thresh35_info';
-%          'WU_LE_GlassTR_nsp2_20170825_002_thresh35_info'};
+%          'WU_LE_GlassTR_nsp2_20170825_002_thresh35_info';
 % newName ='WU_LE_GlassTR_nsp2_Aug2017_all_thresh35_info';
 
+% RE
 % files = {'WU_RE_GlassTR_nsp1_20170825_001_thresh35_info';
 %          'WU_RE_GlassTR_nsp1_20170828_002_thresh35_info';
 %          'WU_RE_GlassTR_nsp1_20170828_003_thresh35_info';

@@ -1,4 +1,4 @@
-function [dataT] = GlassTR_StimVsBlankPermutations_coh(dataT, numBoot,holdout)
+function [linBlankDprimePerm, noiseBlankDprimePerm, linBlankDprimeBootPerm,noiseBlankDprimeBootPerm] = GlassTR_StimVsBlankPermutations_coh(dataT, numBoot,holdout)
 % This function will compute d' for stimulus vs  blank screen using only
 % noise and 100% coherence stimuli.
 %
@@ -106,8 +106,6 @@ dataT.noiseBlankDprimePerm = noiseBlankDprimePerm;
 dataT.linBlankDprimeBootPerm = linBlankDprimeBootPerm;
 dataT.noiseBlankDprimeBootPerm = noiseBlankDprimeBootPerm;
 
-dataT.linBlankDprimeSDPerm = linBlankSDPerm;
-dataT.noiseBlankDprimeSDPerm = noiseBlankSDPerm;
 
 
 

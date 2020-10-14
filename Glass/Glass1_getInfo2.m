@@ -4,17 +4,17 @@ clc
 tic
 %%
 monks = {
-  %  'WU';
-     'WV';
-   %  'XT';
+   % 'WU';
+   %  'WV';
+     'XT';
     };
 ez = {
-    %'LE';
-  'RE';
+    'LE';
+ % 'RE';
     };
 brArray = {
-    %'V4';
-   'V1';
+   'V4';
+   %'V1';
     };
 %%
 nameEnd = 'info';
@@ -84,9 +84,9 @@ for an = 1:length(monks)
             
             clear tmp
             clear ndx
-%         end
-%     end
-% end
+        end
+    end
+end
 %%
 for fi = 1:length(files)
     %% Get basic information about experiments
@@ -215,6 +215,6 @@ for fi = 1:length(files)
     clear dataT
    % clearvars -except files fi nameEnd numPerm failedFiles failNdx numBoot location holdout plotFlag
 end
-        end
-    end
-end
+%         end
+%     end
+% end
