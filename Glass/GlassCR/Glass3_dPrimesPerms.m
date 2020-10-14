@@ -4,33 +4,32 @@ clc
 tic
 %%
 files = {
-    'WU_LE_Glass_nsp2_Aug2017_all_thresh35_info_goodRuns';
-    %     'WU_LE_Glass_nsp1_Aug2017_all_thresh35_info_goodRuns';
-    %
-    %     'WU_RE_Glass_nsp1_Aug2017_all_thresh35_info_goodRuns';
-    %     'WU_RE_Glass_nsp2_Aug2017_all_thresh35_info_goodRuns';
+   % 'WU_LE_Glass_nsp2_Aug2017_all_thresh35_info_goodRuns';
+%     'WU_LE_Glass_nsp1_Aug2017_all_thresh35_info_goodRuns';
+%     
+%     'WU_RE_Glass_nsp1_Aug2017_all_thresh35_info_goodRuns';
+%     'WU_RE_Glass_nsp2_Aug2017_all_thresh35_info_goodRuns';
+%     
+%     'XT_RE_GlassCoh_nsp2_March2019_all_thresh35_info_goodRuns';
+%     'XT_RE_GlassCoh_nsp1_March2019_all_thresh35_info_goodRuns';
     
-    %     'XT_RE_GlassCoh_nsp2_March2019_all_thresh35_info_goodRuns';
-    %     'XT_RE_GlassCoh_nsp1_March2019_all_thresh35_info_goodRuns';
-    %     'XT_RE_GlassTRCoh_nsp1_March2019_all_thresh35_info_goodRuns';
-    %
-    %     'XT_LE_GlassCoh_nsp1_March2019_all_thresh35_info_goodRuns';
-    %     'XT_LE_GlassCoh_nsp2_March2019_all_thresh35_info_goodRuns';
-    %
-    %     'WV_LE_glassCoh_nsp1_April2019_all_thresh35_info_goodRuns';
-    %     'WV_LE_glassCoh_nsp2_April2019_all_thresh35_info_goodRuns';
-    %
-    %     'WV_RE_glassCoh_nsp2_April2019_all_thresh35_info_goodRuns';
-    %     'WV_RE_glassCoh_nsp1_April2019_all_thresh35_info_goodRuns';
+    'XT_LE_GlassCoh_nsp1_March2019_all_thresh35_info_goodRuns';
+    'XT_LE_GlassCoh_nsp2_March2019_all_thresh35_info_goodRuns';
+    
+    'WV_LE_glassCoh_nsp1_April2019_all_thresh35_info_goodRuns';
+    'WV_LE_glassCoh_nsp2_April2019_all_thresh35_info_goodRuns';
+    
+    'WV_RE_glassCoh_nsp2_April2019_all_thresh35_info_goodRuns';
+    'WV_RE_glassCoh_nsp1_April2019_all_thresh35_info_goodRuns';
     };
 %%
-nameEnd = 'stimBPerm';
-numPerm = 1000;
-numBoot = 100;
+nameEnd = 'dPrime';
+numPerm = 2000;
+numBoot = 200;
 subsample = 0;
 holdout = .90;
 plotFlag = 0;
-plotHists = 1;
+plotHists = 0;
 %%
 location = determineComputer;
 
@@ -139,16 +138,15 @@ for fi = 1:size(files,1)
     dataT = rankGlassSelectivitiesBlank(dataT);
     %    dataT = numSigGlassComparisons(dataT);
     %% plot
-    close all
-    clc
-    if plotOther == 1
+%     close all
+%     clc
+%     if plotOther == 1
         plotGlass_GlassRankingsDistBlank(dataT) % figure 1 and 2
         plotGlassPSTHs_stimParams_allCh(dataT)
         plotGlass_callTriplotGray(dataT)
         plotGlass_CoherenceResps(dataT)
         %plotGlass3D_dPrimesVblank_grayScale(dataT) %figure 8
-    end
-    %% com
+%     end
     %% save data
     if location == 1
         outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/Glass/dPrimePerm/%s/',dataT.array,dataT.animal);
