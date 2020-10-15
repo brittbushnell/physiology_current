@@ -142,7 +142,9 @@ for dt = 1:numDots
                 figDir =  sprintf('~/Dropbox/Figures/%s/Glass/%s/PSTH/%s/byParam/',dataT.animal,dataT.array,dataT.eye);
             end
         end
-        
+        if ~exist(figDir,'dir')
+            mkdir(figDir)
+        end
         cd(figDir)
         print(gcf, figName,'-dpdf','-fillpage')
     end

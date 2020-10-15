@@ -12,7 +12,7 @@ for ch = 1:96
     if dataT.goodCh(ch) == 1
         dPrimes(1,:) = reshape(dataT.radBlankDprime(end,:,:,ch),1,4);
         dPrimes(2,:) = reshape(dataT.conBlankDprime(end,:,:,ch),1,4);
-        dPrimes(3,:) = reshape(dataT.noiseBlankDprime(:,:,ch),1,4);
+        dPrimes(3,:) = reshape(dataT.noiseBlankDprime(1,:,:,ch),1,4);
         dPrimeMats(:,:,ch) = dPrimes;
         condSums = sum(dPrimes);
         typeSums = sum(dPrimes,2);
