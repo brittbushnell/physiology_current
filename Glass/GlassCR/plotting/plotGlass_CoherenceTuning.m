@@ -1,38 +1,18 @@
 function [] = plotGlass_CoherenceTuning(data)
 [~,numDots,numDxs,numCoh,~,~,dots,dxs,coherences,~] = getGlassParameters(data.RE);
 location = determineComputer;
-%% save figure
-if contains(data.RE.animal,'WV')
-    if contains(data.RE.programID,'Small')
-        if location == 1
-            figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/Glass/%s/4Deg/stats/RE/',data.RE.animal,data.RE.array);
-        elseif location == 0
-            figDir =  sprintf('~/Dropbox/Figures/%s/Glass/%s/4Deg/stats/RE/',data.RE.animal,data.RE.array);
-        end
-    else
-        if location == 1
-            figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/Glass/%s/8Deg/stats/RE/',data.RE.animal,data.RE.array);
-        elseif location == 0
-            figDir =  sprintf('~/Dropbox/Figures/%s/Glass/%s/8Deg/stats/RE/',data.RE.animal,data.RE.array);
-        end
-    end
-else
-    if location == 1
-        figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/Glass/%s/stats/RE/',data.RE.animal,data.RE.array);
-    elseif location == 0
-        figDir =  sprintf('~/Dropbox/Figures/%s/Glass/%s/stats/RE/',data.RE.animal,data.RE.array);
-    end
+%% 
+if location == 1
+    figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/%s/stats/RE/coherenceTuning/',data.RE.animal,data.RE.programID,data.RE.array);
+elseif location == 0
+    figDir =  sprintf('~/Dropbox/Figures/%s/%s/%s/stats/RE/coherenceTuning/',data.RE.animal,data.RE.programID,data.RE.array);
 end
+
+if ~exist(figDir,'dir')
+    mkdir(figDir)
+end
+
 cd(figDir)
-
-folder2 = 'coherenceTuning';
-mkdir(folder2)
-cd(sprintf('%s',folder2))
-
-% go to date specific folder, if it doesn't exist, make it
-folder = data.RE.date2;
-mkdir(folder)
-cd(sprintf('%s',folder))
 %% RE plot coherences when stim v noise is significant
 %NOTE: need to plot d' on a log scale, but also want to include negative values...
 if contains(data.LE.animal,'WU')
@@ -173,10 +153,18 @@ end
 %     end
 % end
 %% plot coherences across the whole array LE
-cd ../../../LE/coherenceTuning/
-folder = data.RE.date2;
-mkdir(folder)
-cd(sprintf('%s',folder))
+if location == 1
+    figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/%s/stats/LE/coherenceTuning/',data.RE.animal,data.RE.programID,data.RE.array);
+elseif location == 0
+    figDir =  sprintf('~/Dropbox/Figures/%s/%s/%s/stats/LE/coherenceTuning/',data.RE.animal,data.RE.programID,data.RE.array);
+end
+
+if ~exist(figDir,'dir')
+    mkdir(figDir)
+end
+
+cd(figDir)
+
 %%
 for dt = 1:numDots
     for dx = 1:numDxs
