@@ -3,9 +3,9 @@ location = determineComputer;
 
 
 if location == 1
-    figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/Glass/%s/EyeComps/triplot/',data.RE.animal, data.RE.array);
+    figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/%s/EyeComps/triplot/',data.RE.animal, data.RE.programID, data.RE.array);
 elseif location == 0
-    figDir =  sprintf('~/Dropbox/Figures/%s/Glass/%s/EyeComps/triplot/',data.RE.animal, data.RE.array);
+    figDir =  sprintf('~/Dropbox/Figures/%s/%s/%s/EyeComps/triplot/',data.RE.animal, data.RE.programID, data.RE.array);
 end
 if ~exist(figDir,'dir')
     mkdir(figDir)

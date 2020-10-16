@@ -1,34 +1,46 @@
+clear all
+close all
+clc
+
 files = {
-    'WU_LE_Glass_nsp2_20170817_001_raw_2kFixPerm_Stats';...
-    'WU_RE_Glass_nsp2_20170818_all_raw_2kFixPerm_Stats';...
-    'WU_LE_Glass_nsp1_20170817_001_raw_2kFixPerm_Stats';...
-    'WU_RE_Glass_nsp1_20170818_001_raw_2kFixPerm_Stats';...
-    
-    'WV_RE_glassCoh_nsp2_20190404_all_raw_2kFixPerm_Stats';...
-    'WV_LE_GlassCoh_nsp2_20190402_all_raw_2kFixPerm_Stats';...
-    'WV_RE_glassCoh_nsp1_20190404_all_raw_2kFixPerm_Stats';...
-    'WV_LE_glassCoh_nsp1_20190403_all_raw_2kFixPerm_Stats';...
-    
-    'XT_RE_GlassCoh_nsp2_20190321_all_raw_2kFixPerm_Stats';...
-    'XT_LE_GlassCoh_nsp2_20190325_all_raw_2kFixPerm_Stats';...
-    'XT_RE_GlassCoh_nsp1_20190321_all_raw_2kFixPerm_Stats';...
-    'XT_LE_GlassCoh_nsp1_20190325_all_raw_2kFixPerm_Stats';...
+    'WU_BE_V4_Aug2017_clean_merged';
+    'WV_BE_V4_Aug2017_clean_merged';
+    'XT_BE_V4_Aug2017_clean_merged';
+    'WU_BE_V1_Aug2017_clean_merged';
+    'WV_BE_V1_Aug2017_clean_merged';
+    'XT_BE_V1_Aug2017_clean_merged';
     };
 %%
 
 for fi = 1:size(files,1)
     %% Get basic information about experiments
-    % try
     load(files{fi});
-    filename = files{fi};
-    fprintf('\n*** analyzing %s \n*** file %d/%d \n', filename,fi,size(files,1))
+    filename = files{fi};    
     
-    if contains(filename,'RE')
-        dataT = data.RE;
+    REdata = data.RE;    
+    LEdata = data.LE;
+ 
+    plotGlass_GlassRankingsDistBlank(REdata) % figure 1 and 2
+    plotGlassPSTHs_stimParams_allCh(REdata)
+    plotGlass_callTriplotGray(REdata)
+    plotGlass_CoherenceResps(REdata) 
+    plotResponsePvalsVSreliabilityPvals_inStim(REdata)
+    
+    plotGlass_GlassRankingsDistBlank(LEdata) % figure 1 and 2
+    plotGlassPSTHs_stimParams_allCh(LEdata)
+    plotGlass_callTriplotGray(LEdata)
+    plotGlass_CoherenceResps(LEdata)
+    plotResponsePvalsVSreliabilityPvals_inStim(LEdata)
+    %% binocular 
+    plotGlassChiSquareDistribution(data)
+    plotGlassPSTHs_visualResponses(data)
+    plotGlass_dPrimeScatter(data)
+    plotGlass_dPrimeScatter(data)
+    if contains(REdata.animal,'XT')
+        triplotter_stereo_Glass_BE(data,5.5)
     else
-        dataT = data.LE;
+        triplotter_stereo_Glass_BE(data,3.5)
     end
-    %plotGlassPSTHsCohType(dataT)
-plotGlassPSTHs_stimParams_allCh(dataT)
-close all
+    close all
+    clear data; clear REdata; clear LEdata;
 end

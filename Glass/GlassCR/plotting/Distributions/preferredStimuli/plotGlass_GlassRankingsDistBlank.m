@@ -3,9 +3,9 @@ function [] = plotGlass_GlassRankingsDistBlank(dataT)
 location = determineComputer;
 
 if location == 1
-    figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/Glass/%s/prefStim/%s/',dataT.animal, dataT.array, dataT.eye);
+    figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/%s/prefStim/%s/',dataT.animal,dataT.programID, dataT.array, dataT.eye);
 elseif location == 0
-    figDir =  sprintf('~/Dropbox/Figures/%s/Glass/%s/prefStim/%s/',dataT.animal, dataT.array, dataT.eye);
+    figDir =  sprintf('~/Dropbox/Figures/%s/%s/%s/prefStim/%s/',dataT.animal, dataT.programID, dataT.array, dataT.eye);
 end
 if ~exist(figDir,'dir')
     mkdir(figDir)

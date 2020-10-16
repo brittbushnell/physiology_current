@@ -1,4 +1,4 @@
-function plotResponsePvalsVSreliabilityPvals(data)
+function plotResponsePvalsVSreliabilityPvals_inStim(data)
 %
 % This function will plot the pvalues from the responsivity permutation
 % test on the x axis, and the split half correlation on the y axis.
@@ -59,8 +59,8 @@ plot([-0.1 1.1], [0.95 0.95], '--b')
 plot([0.05 0.05], [-0.1 1.1], '--b')
 plot([0.95 0.95], [-0.1 1.1], '--b')
 
-plot(responsePvals(inStim == 1),reliabilityPvals(inStim == 1),'ok')
-plot(responsePvals(inStim == 0),reliabilityPvals(inStim == 0),'o','MarkerEdgeColor','k', 'MarkerFaceColor',none)
+plot(responsePvals(inStim == 1),reliabilityPvals(inStim == 1),'ok', 'MarkerFaceColor','k')
+plot(responsePvals(inStim == 0),reliabilityPvals(inStim == 0),'ok')
 
 % plot(responsePvals,reliabilityPvals,'o','MarkerFaceColor',[0.2 0.2 0.2],'MarkerEdgeColor',[0.2 0.2 0.2])
 
@@ -86,22 +86,24 @@ set(gca,'tickdir','out','Layer','top','YTick',0:0.25:1,'XTick',0:0.2:1)
 xlabel('Visual response permutation p-value','FontAngle','italic','FontSize',12)
 ylabel('Half-Split permutation p-value','FontAngle','italic','FontSize',12)
 
-title({sprintf('%s %s %s %s Half-split p-value vs visual response p-value', filePartInfo{1}, filePartInfo{2}, filePartInfo{4}, filePartInfo{3});...
+title({sprintf('%s %s %s %s Half-split p-value vs visual response p-value', data.animal, data.eye, data.array, data.programID);...
     'data in gray areas are excluded'},'FontAngle','italic','FontSize',14)
 %% save
 location = determineComputer;
 if location == 0
-    figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/%s/%s/stats/halfCorr/zones/',filePartInfo{1}, filePartInfo{3}, filePartInfo{4});
+    figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/%s/%s/stats/halfCorr/zones/',data.animal, data.programID, data.array);
     if ~exist(figDir,'dir')
         mkdir(figDir)
     end
 else
-    figDir =  sprintf( '/Local/Users/bushnell/Dropbox/Figures/%s/%s/%s/stats/halfCorr/zones/',filePartInfo{1}, filePartInfo{3}, filePartInfo{4});
+    figDir =  sprintf( '/Local/Users/bushnell/Dropbox/Figures/%s/%s/%s/stats/halfCorr/zones/',data.animal, data.programID, data.array);
     if ~exist(figDir,'dir')
         mkdir(figDir)
     end
 end
 cd(figDir)
+
+figName = [data.animal,'_',data.eye,'_',data.array,'_',data.programID,'_reliableVvisual_inStim','.pdf']; 
 
 %figName = [filePartInfo{1},'_',filePartInfo{2},'_',filePartInfo{4},'_reliableVvisual_',filePartInfo{3},'_',filePartInfo{5},'_',filePartInfo{6},'.pdf'];
 print(gcf, figName,'-dpdf','-fillpage')

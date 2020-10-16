@@ -48,7 +48,6 @@ for dt = 1:numDots
                 dotNdx = (dataT.numDots == dots(dt));
                 dxNdx  = (dataT.dx == dxs(dx));
                 subplot(dataT.amap,10,10,ch)
-                %subplot(10,10,ch)
                 hold on;
                 
                 blankResp = nanmean(smoothdata(dataT.bins((dataT.numDots == 0), 1:35 ,ch),'gaussian',3))./0.01;
@@ -62,34 +61,18 @@ for dt = 1:numDots
                 c = plot(1:35,conResp,'color',[0.7 0 0.7 0.7],'LineWidth',1);
                 
                 yMax = max([a.YData, c.YData, n.YData r.YData])+2;
-                %             if dataT.latency(1,ch) <500
-                %                 plot([dataT.latency(1,ch) dataT.latency(1,ch)],[0 yMax],'k')
-                %             end
-                %     plot([dataT.maxBin(1,ch) dataT.maxBin(1,ch)],[0 yMax],'k:')
-                %     plot([dataT.minBin(1,ch) dataT.minBin(1,ch)],[0 yMax],'m')
-                
-
-                title(sprintf('%d',ch))
-       
-                
                 y = get(gca,'YLim');
                 yMax = max(y);
-%                text(28, yMax,sprintf('d %.2f',dataT.conBlankDprimeSimple(dt,dx,ch)),'color',[0.7 0 0.7])
- %               text(28, yMax-(yMax/5),sprintf('d %.2f',dataT.radBlankDprimeSimple(dt,dx,ch)),'color',[0 0.6 0.2])
+                
+                title(sprintf('%d',ch))
+
                 if  ismember(ch,bottomRow)
                     set(gca,'Color','none','tickdir','out')
                 else
                     set(gca,'Color','none','tickdir','out','XTickLabel',[]);
                 end
-%             else
-%                 axis off
             end
-            %             lat = (dataT.latency(1,ch)*10);
-            %             if lat > 500
-            %                 text(0.75,yMax+1,'-')
-            %             else
-            %                 text(0.75,yMax+1,num2str(lat))
-            %             end
+  
         end
         if contains(dataT.animal,'XT')
             nsubplot(10,10,10,10);
@@ -102,50 +85,28 @@ for dt = 1:numDots
         text(0,0.8,'radial','Color',[0 0.6 0.2],'FontWeight','bold','FontSize',12)
         text(0,1.1,'concentric','Color',[0.7 0 0.7],'FontWeight','bold','FontSize',12)
         
-        
-        %         goodChs = sum(dataT.goodCh);
-        %         supChs = sum(dataT.supCh);
-        %         noResp = 96-(goodChs+supChs);
-        
         theseDots = dots(dt);
-        theseDxs = dxs(dx);
+        theseDxs = dxs(dx);       
         
-
-            if contains(dataT.programID,'Small')
-                suptitle({(sprintf('%s %s %s Glass 4 degree stim vs blank vs noise raw data', dataT.animal, dataT.eye, dataT.array));...
-                    (sprintf('%d dots %.2f dx coh 100',(theseDots),(theseDxs)))})
-                figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_',dataT.programID,'_PSTH4Deg_raw_50to250_dots',num2str(theseDots),'_dx',num2str(theseDxs),'.pdf'];
-            else
-                suptitle({(sprintf('%s %s %s Glass 8 degree stim vs blank vs noise raw data', dataT.animal, dataT.eye, dataT.array));...
-                    (sprintf('%d dots %.2f dx coh 100',(theseDots),(theseDxs)))})
-                figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_',dataT.programID,'_PSTH8Deg_raw_50to250_dots',num2str(theseDots),'_dx',num2str(theseDxs),'.pdf'];
-            end
-        %% save figure
-        if contains(dataT.animal,'WV')
-            if contains(dataT.programID,'Small')
-                if location == 1
-                    figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/Glass/%s/4Deg/PSTH/%s/byParam/',dataT.animal,dataT.array,dataT.eye);
-                elseif location == 0
-                    figDir =  sprintf('~/Dropbox/Figures/%s/Glass/%s/4Deg/PSTH/%s/byParam/',dataT.animal,dataT.array,dataT.eye);
-                end
-            else
-                if location == 1
-                    figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/Glass/%s/8Deg/PSTH/%s/byParam/',dataT.animal,dataT.array,dataT.eye);
-                elseif location == 0
-                    figDir =  sprintf('~/Dropbox/Figures/%s/Glass/%s/8Deg/PSTH/%s/byParam/',dataT.animal,dataT.array,dataT.eye);
-                end
-            end
+        if contains(dataT.programID,'Small')
+            suptitle({(sprintf('%s %s %s Glass 4 degree stim vs blank vs noise raw data', dataT.animal, dataT.eye, dataT.array));...
+                (sprintf('%d dots %.2f dx coh 100',(theseDots),(theseDxs)))})
+            figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_',dataT.programID,'_PSTH4Deg_raw_50to250_dots',num2str(theseDots),'_dx',num2str(theseDxs),'.pdf'];
         else
-            if location == 1
-                figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/Glass/%s/PSTH/%s/byParam/',dataT.animal,dataT.array,dataT.eye);
-            elseif location == 0
-                figDir =  sprintf('~/Dropbox/Figures/%s/Glass/%s/PSTH/%s/byParam/',dataT.animal,dataT.array,dataT.eye);
-            end
+            suptitle({(sprintf('%s %s %s Glass 8 degree stim vs blank vs noise raw data', dataT.animal, dataT.eye, dataT.array));...
+                (sprintf('%d dots %.2f dx coh 100',(theseDots),(theseDxs)))})
+            figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_',dataT.programID,'_PSTH8Deg_raw_50to250_dots',num2str(theseDots),'_dx',num2str(theseDxs),'.pdf'];
         end
-        if ~exist(figDir,'dir')
-            mkdir(figDir)
+        %% save figure
+        if location == 1
+            figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/%s/PSTH/%s/byParam/',dataT.animal,dataT.programID,dataT.array,dataT.eye);
+        elseif location == 0
+            figDir =  sprintf('~/Dropbox/Figures/%s/%s/%s/PSTH/%s/byParam/',dataT.animal,dataT.programID,dataT.array,dataT.eye);
         end
-        cd(figDir)
-        print(gcf, figName,'-dpdf','-fillpage')
     end
+    if ~exist(figDir,'dir')
+        mkdir(figDir)
+    end
+    cd(figDir)
+    print(gcf, figName,'-dpdf','-fillpage')
 end

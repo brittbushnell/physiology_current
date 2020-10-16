@@ -86,7 +86,7 @@ xlim([-1 5])
 ylim([-1 5])
 axis square
 
-suptitle(sprintf('%s %s dPrimes for all dot, dx, coherence combinations',data.RE.animal, data.RE.programID))
+suptitle(sprintf('%s %s %s dPrimes for all dot, dx, coherence combinations',data.RE.animal, data.RE.programID, data.RE.array))
 %%
 location = determineComputer;
 
@@ -101,7 +101,7 @@ if~exist(figDir,'dir')
 end
 cd(figDir)
 
-figName = [data.RE.animal '_glassdPrimeScatters_noZZ_prefWin.pdf'];
+figName = [data.RE.animal '_glassdPrimeScatters_',data.RE.array,'.pdf'];
 set(gcf,'InvertHardCopy','off')
 print(gcf, figName, '-dpdf', '-fillpage')
     

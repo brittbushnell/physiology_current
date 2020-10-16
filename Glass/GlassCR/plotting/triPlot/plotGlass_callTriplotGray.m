@@ -1,11 +1,11 @@
 function [] = plotGlass_callTriplotGray(dataT)
 location = determineComputer;
 
-    if location == 1
-        figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/Glass/%s/prefStim/%s/triplot/',dataT.animal, dataT.array, dataT.eye);
-    elseif location == 0
-        figDir =  sprintf('~/Dropbox/Figures/%s/Glass/%s/prefStim/%s/triplot/',dataT.animal, dataT.array, dataT.eye);
-    end
+if location == 1
+    figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/%s/prefStim/%s/triplot/',dataT.animal, dataT.programID, dataT.array, dataT.eye);
+elseif location == 0
+    figDir =  sprintf('~/Dropbox/Figures/%s/%s/%s/prefStim/%s/triplot/',dataT.animal, dataT.programID, dataT.array, dataT.eye);
+end
 if ~exist(figDir,'dir')
     mkdir(figDir);
 end
@@ -42,7 +42,9 @@ for dt = 1:numDots
         ndx = ndx+1;
     end
 end
-suptitle({'Relative dPrimes against blank for concentric, radial, and random dipole Glass patterns'; sprintf('%s %s %s stimulus vs blank dPrime at 100%% coherence',dataT.animal, dataT.eye, dataT.array)})
+suptitle({'Relative dPrimes against blank for concentric, radial, and random dipole Glass patterns';...
+    sprintf('%s %s %s stimulus vs blank dPrime at 100%% coherence',dataT.animal, dataT.eye, dataT.array)})
+
 figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_triplotStereo_abs'];
 print(gcf, figName,'-dpdf','-fillpage')
 

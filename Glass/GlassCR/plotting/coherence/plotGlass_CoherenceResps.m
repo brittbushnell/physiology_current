@@ -2,6 +2,20 @@ function plotGlass_CoherenceResps(dataT)
 [~,numDots,numDxs,~,~,~,dots,dxs,coherences,~] = getGlassParameters(dataT);
 coherences = coherences *100;
 %%
+location = determineComputer;
+if location == 0
+    figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/%s/%s/cohTuning/',dataT.animal, dataT.programID, dataT.array);
+    if ~exist(figDir,'dir')
+        mkdir(figDir)
+    end
+else
+    figDir =  sprintf( '/Local/Users/bushnell/Dropbox/Figures/%s/%s/%s/cohTuning/',dataT.animal, dataT.programID, dataT.array);
+    if ~exist(figDir,'dir')
+        mkdir(figDir)
+    end
+end
+cd(figDir)
+    %%
 con = squeeze(dataT.conNoiseDprime(:,end,end,:));
 conSig = (squeeze(dataT.conNoiseDprimeSig(end,end,end,:)))';
 conGood = con(:,(dataT.goodCh & conSig));
@@ -34,7 +48,10 @@ ylim([-1 3])
 xlabel('% coherence')
 title('Radial vs dipole')
 text(0.8,2.9,sprintf('n: %d',sum(radSig)))
-suptitle(sprintf('%s %s %s dPrime vs noise as a function of coherence',dataT.animal, dataT.eye, dataT.array))
+suptitle(sprintf('%s %s %s dPrime vs noise as a function of coherence 400 dots 0.03 dx',dataT.animal, dataT.eye, dataT.array))
+
+figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_',dataT.programID,'_cohTuning_highDx_highDens','.pdf']; 
+print(gcf, figName,'-dpdf','-fillpage')
 %%
 if contains(dataT.animal,'WU')
     bottomRow = [81 83 85 88 90 92 93 96];
@@ -90,7 +107,7 @@ for dt = numDots
         suptitle({sprintf('%s %s %s dPrime as a function of coherence dots %d dx %.2f',dataT.animal, dataT.eye, dataT.array,dots(dt),dxs(dx));...
             ('p: conVnoise  gn: radVnoise')})
         
-        %figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_',dataT.programID,'_cohTuning_array_dots',num2str(dots(dt)),'_dx',num2str(dxs(dx)),'.pdf'];
-        %print(gcf, figName,'-dpdf','-fillpage')
+        figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_',dataT.programID,'_cohTuning_array_dots',num2str(dots(dt)),'_dx',num2str(dxs(dx)),'.pdf'];
+        print(gcf, figName,'-dpdf','-fillpage')
     end
 end
