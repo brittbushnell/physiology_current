@@ -26,7 +26,7 @@ nameEnd = 'stimPerm';
 numPerm = 2000;
 numBoot = 200;
 holdout = 0.90;
-plotHists = 1;
+plotHists = 0;
 %%
 location = determineComputer;
 %%
@@ -73,7 +73,7 @@ for fi = 1:size(files,1)
 
         [dataT.linBlankDprimePvals,dataT.linBlankDprimeSig] = glassTRGetPermutationStats_coh(dataT.linBlankDprime,dataT.linBlankDprimeBootPerm,dataT,'translational vs blank permutation test',plotHists);
         [dataT.noiseBlankDprimePvals,dataT.noiseBlankDprimeSig] = glassTRGetPermutationStats_coh(dataT.noiseBlankDprime,dataT.noiseBlankDprimeBootPerm,dataT,'noise translational vs blank permutation test',plotHists);
-        [dataT.linNoiseDprimePvals,dataT.linNoiseDprimeSig] = glassTRGetPermutationStats_coh(dataT.linNoiseDprime,dataT.linNoiseDprimeBootPerm,dataT,'translational vs noise permutation test',plotHists);
+        [dataT.linNoiseDprimePvals,dataT.linNoiseDprimeSig] = glassTRGetPermutationStats_coh(dataT.linNoiseDprime,dataT.linNoiseDprimePermBoot,dataT,'translational vs noise permutation test',plotHists);
 %%
                 
         %% get latency
