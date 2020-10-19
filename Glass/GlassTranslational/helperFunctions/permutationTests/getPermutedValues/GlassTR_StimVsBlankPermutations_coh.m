@@ -12,19 +12,16 @@ numCh = size(dataT.bins,3);
 %% Make matrices of responses
 % Initialize matrices
 
-linBlankDprimePerm = nan(numOris,numCoh,numDots, numDxs, numCh);
-noiseBlankDprimePerm = nan(numDots, numDxs, numCh);
+linBlankDprimePerm   = nan(numOris,numCoh,numDots, numDxs, numCh);
+noiseBlankDprimePerm = nan(numOris,numCoh,numDots, numDxs, numCh);
 
-linBlankSDPerm = nan(numOris,numCoh,numDots, numDxs, numCh);
-noiseBlankSDPerm = nan(numDots, numDxs, numCh);
-
-linBlankDprimeBootPerm = nan(numOris,numCoh,numDots, numDxs, numCh,numBoot);
-noiseBlankDprimeBootPerm=nan(numDots, numDxs, numCh,numBoot);
+linBlankDprimeBootPerm   = nan(numOris,numCoh,numDots, numDxs, numCh,numBoot);
+noiseBlankDprimeBootPerm = nan(numOris,numCoh,numDots, numDxs, numCh,numBoot);
 %% mean responses and d' to each stimulus
 % type codes 1=lincentric  2=radial 0=noise  100=blank
-
-parfor ch = 1:numCh
-    if dataT.goodCh(ch) == 1
+gch = dataT.goodCh;
+for ch = 1:96
+    if gch(ch) == 1
         startMean = 5;
         endMean = 25;
         
@@ -89,9 +86,9 @@ parfor ch = 1:numCh
                         linBlankDprimeBootPerm(or,co,ndot,dx,ch,:) = linBlankBootSimple;
                         
                         if coherences(co) == 1 && or == 1                            
-                            noiseBlankDprimePerm(ndot,dx,ch) = nanmean(noiseBlankBootSimple);                            
-                            noiseBlankSDPerm(ndot,dx,ch) = nanstd(noiseBlankBootSimple);                           
-                            noiseBlankDprimeBootPerm(ndot,dx,ch,:) = noiseBlankBootSimple;
+                            noiseBlankDprimePerm(or,co,ndot,dx,ch) = nanmean(noiseBlankBootSimple);                            
+                            noiseBlankSDPerm(or,co,ndot,dx,ch) = nanstd(noiseBlankBootSimple);                           
+                            noiseBlankDprimeBootPerm(or,co,ndot,dx,ch,:) = noiseBlankBootSimple;
                         end
                     end
                 end
