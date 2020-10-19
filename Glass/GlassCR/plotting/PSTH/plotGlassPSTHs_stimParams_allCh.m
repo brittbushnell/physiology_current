@@ -98,10 +98,18 @@ for dt = 1:numDots
             figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_',dataT.programID,'_PSTH8Deg_raw_50to250_dots',num2str(theseDots),'_dx',num2str(theseDxs),'.pdf'];
         end
         %% save figure
-        if location == 1
-            figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/%s/PSTH/%s/byParam/',dataT.animal,dataT.programID,dataT.array,dataT.eye);
-        elseif location == 0
-            figDir =  sprintf('~/Dropbox/Figures/%s/%s/%s/PSTH/%s/byParam/',dataT.animal,dataT.programID,dataT.array,dataT.eye);
+        if length(dataT.inStim) > 96
+            if location == 1
+                figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/%s/PSTH/%s/byParam/singleSession/',dataT.animal,dataT.programID,dataT.array,dataT.eye);
+            elseif location == 0
+                figDir =  sprintf('~/Dropbox/Figures/%s/%s/%s/PSTH/%s/byParam/singleSession/',dataT.animal,dataT.programID,dataT.array,dataT.eye);
+            end
+        else
+            if location == 1
+                figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/%s/PSTH/%s/byParam/',dataT.animal,dataT.programID,dataT.array,dataT.eye);
+            elseif location == 0
+                figDir =  sprintf('~/Dropbox/Figures/%s/%s/%s/PSTH/%s/byParam/',dataT.animal,dataT.programID,dataT.array,dataT.eye);
+            end
         end
     end
     if ~exist(figDir,'dir')

@@ -5,7 +5,7 @@ function plotResponsePvalsVSreliabilityPvals(data)
 % Channels that fall within the gray zone are not significant for either
 % metric and should be excluded for all subsequent analyses. Numbers at the
 % bottom left of each section indicates the number of data points that lie
-% within that square. 
+% within that square.
 %
 %  INPUT
 %    ResponsePvals: vector of p-values from stimulus vs blank permutation
@@ -29,7 +29,7 @@ reliabilityPvals = data.zScoreReliabilityPvals;
 inStim = data.inStim(1:96); % this is much larger than necessary because of merging, only need to reference the first 96 values.
 %% determine how many channels fall within each subsection of the figure
 %    1 | 2 | 3
-%   ----------- 
+%   -----------
 %    4 | 5 | 6
 %   -----------
 %    7 | 8 | 9
@@ -90,18 +90,24 @@ title({sprintf('%s %s %s %s Half-split p-value vs visual response p-value', file
     'data in gray areas are excluded'},'FontAngle','italic','FontSize',14)
 %% save
 location = determineComputer;
-if location == 0
-    figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/%s/%s/stats/halfCorr/zones/',filePartInfo{1}, filePartInfo{3}, filePartInfo{4});
-    if ~exist(figDir,'dir')
-        mkdir(figDir)
+if length(dataT.inStim) > 96 % running on a single session rather than merged data
+    if location == 0
+        figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/%s/%s/stats/halfCorr/zones/singleSession/',filePartInfo{1}, filePartInfo{3}, filePartInfo{4});
+    else
+        figDir =  sprintf( '/Local/Users/bushnell/Dropbox/Figures/%s/%s/%s/stats/halfCorr/zones/singleSession/',filePartInfo{1}, filePartInfo{3}, filePartInfo{4});
     end
 else
-    figDir =  sprintf( '/Local/Users/bushnell/Dropbox/Figures/%s/%s/%s/stats/halfCorr/zones/',filePartInfo{1}, filePartInfo{3}, filePartInfo{4});
-    if ~exist(figDir,'dir')
-        mkdir(figDir)
+    if location == 0
+        figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/%s/%s/stats/halfCorr/zones/',filePartInfo{1}, filePartInfo{3}, filePartInfo{4});
+    else
+        figDir =  sprintf( '/Local/Users/bushnell/Dropbox/Figures/%s/%s/%s/stats/halfCorr/zones/',filePartInfo{1}, filePartInfo{3}, filePartInfo{4});
     end
 end
+if ~exist(figDir,'dir')
+    mkdir(figDir)
+end
+
 cd(figDir)
 
-%figName = [filePartInfo{1},'_',filePartInfo{2},'_',filePartInfo{4},'_reliableVvisual_',filePartInfo{3},'_',filePartInfo{5},'_',filePartInfo{6},'.pdf'];
+figName = [filePartInfo{1},'_',filePartInfo{2},'_',filePartInfo{4},'_reliableVvisual_',filePartInfo{3},'_',filePartInfo{5},'_',filePartInfo{6},'.pdf'];
 print(gcf, figName,'-dpdf','-fillpage')

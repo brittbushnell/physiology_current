@@ -6,11 +6,20 @@ LEchiVals = data.LE.chiVals;
 %%
 location = determineComputer;
 
-if location == 1
-    figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/%s/stats',data.RE.animal,data.RE.programID,data.RE.array);
-elseif location == 0
-    figDir =  sprintf('~/Dropbox/Figures/%s/%s/%s/stats',data.RE.animal,data.RE.programID,data.RE.array);
+if length(dataT.inStim) > 96
+    if location == 1
+        figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/%s/stats/singleSession/',data.RE.animal,data.RE.programID,data.RE.array);
+    elseif location == 0
+        figDir =  sprintf('~/Dropbox/Figures/%s/%s/%s/stats/singleSession/',data.RE.animal,data.RE.programID,data.RE.array);
+    end
+else
+    if location == 1
+        figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/%s/stats',data.RE.animal,data.RE.programID,data.RE.array);
+    elseif location == 0
+        figDir =  sprintf('~/Dropbox/Figures/%s/%s/%s/stats',data.RE.animal,data.RE.programID,data.RE.array);
+    end
 end
+
 if ~exist(figDir,'dir')
     mkdir(figDir)
 end

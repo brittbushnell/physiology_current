@@ -35,7 +35,6 @@ for fi = 1:size(files,1)
     plotGlassChiSquareDistribution(data)
     plotGlassPSTHs_visualResponses(data)
     plotGlass_dPrimeScatter(data)
-    plotGlass_dPrimeScatter(data)
     if contains(REdata.animal,'XT')
         triplotter_stereo_Glass_BE(data,5.5)
     else

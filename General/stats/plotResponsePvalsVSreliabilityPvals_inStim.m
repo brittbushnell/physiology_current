@@ -90,17 +90,24 @@ title({sprintf('%s %s %s %s Half-split p-value vs visual response p-value', data
     'data in gray areas are excluded'},'FontAngle','italic','FontSize',14)
 %% save
 location = determineComputer;
-if location == 0
-    figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/%s/%s/stats/halfCorr/zones/',data.animal, data.programID, data.array);
-    if ~exist(figDir,'dir')
-        mkdir(figDir)
+if length(data.inStim) > 96
+    if location == 0
+        figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/%s/%s/stats/halfCorr/zones/singleSession/',data.animal, data.programID, data.array);
+    else
+        figDir =  sprintf( '/Local/Users/bushnell/Dropbox/Figures/%s/%s/%s/stats/halfCorr/zones/singleSession/',data.animal, data.programID, data.array);
     end
 else
-    figDir =  sprintf( '/Local/Users/bushnell/Dropbox/Figures/%s/%s/%s/stats/halfCorr/zones/',data.animal, data.programID, data.array);
-    if ~exist(figDir,'dir')
-        mkdir(figDir)
+    if location == 0
+        figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/%s/%s/stats/halfCorr/zones/',data.animal, data.programID, data.array);
+    else
+        figDir =  sprintf( '/Local/Users/bushnell/Dropbox/Figures/%s/%s/%s/stats/halfCorr/zones/',data.animal, data.programID, data.array);
     end
 end
+
+if ~exist(figDir,'dir')
+    mkdir(figDir)
+end
+
 cd(figDir)
 
 figName = [data.animal,'_',data.eye,'_',data.array,'_',data.programID,'_reliableVvisual_inStim','.pdf']; 

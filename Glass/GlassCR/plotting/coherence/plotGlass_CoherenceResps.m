@@ -3,17 +3,25 @@ function plotGlass_CoherenceResps(dataT)
 coherences = coherences *100;
 %%
 location = determineComputer;
-if location == 0
-    figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/%s/%s/cohTuning/',dataT.animal, dataT.programID, dataT.array);
-    if ~exist(figDir,'dir')
-        mkdir(figDir)
+if length(dataT.inStim) > 96
+    if location == 0
+        figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/%s/%s/cohTuning/singleSession/',dataT.animal, dataT.programID, dataT.array);
+    else
+        figDir =  sprintf( '/Local/Users/bushnell/Dropbox/Figures/%s/%s/%s/cohTuning/singleSession/',dataT.animal, dataT.programID, dataT.array);
     end
+    
 else
-    figDir =  sprintf( '/Local/Users/bushnell/Dropbox/Figures/%s/%s/%s/cohTuning/',dataT.animal, dataT.programID, dataT.array);
-    if ~exist(figDir,'dir')
-        mkdir(figDir)
+    if location == 0
+        figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/%s/%s/cohTuning/',dataT.animal, dataT.programID, dataT.array);
+    else
+        figDir =  sprintf( '/Local/Users/bushnell/Dropbox/Figures/%s/%s/%s/cohTuning/',dataT.animal, dataT.programID, dataT.array);
     end
 end
+
+if ~exist(figDir,'dir')
+    mkdir(figDir)
+end
+
 cd(figDir)
     %%
 con = squeeze(dataT.conNoiseDprime(:,end,end,:));

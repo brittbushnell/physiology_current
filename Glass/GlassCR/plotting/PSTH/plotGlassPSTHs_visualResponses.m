@@ -92,12 +92,20 @@ end
 suptitle((sprintf('%s %s %s stim vs blank', REdata.animal, REdata.array, REdata.programID)))
 
 %% save figure
-
-if location == 1
-    figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%/%s/PSTH/',REdata.animal,REdata.programID,REdata.array);
-elseif location == 0
-    figDir =  sprintf('~/Dropbox/Figures/%s/%/%s/PSTH/',REdata.animal,REdata.programID,REdata.array);
+if length(dataT.inStim) > 96 % running on a single session rather than merged data
+    if location == 1
+        figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%/%s/PSTH/singleSession/',REdata.animal,REdata.programID,REdata.array);
+    elseif location == 0
+        figDir =  sprintf('~/Dropbox/Figures/%s/%/%s/PSTH/singleSession/',REdata.animal,REdata.programID,REdata.array);
+    end
+else
+    if location == 1
+        figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%/%s/PSTH/',REdata.animal,REdata.programID,REdata.array);
+    elseif location == 0
+        figDir =  sprintf('~/Dropbox/Figures/%s/%/%s/PSTH/',REdata.animal,REdata.programID,REdata.array);
+    end
 end
+
 if ~exist(figDir,'dir')
     mkdir(figDir)
 end
