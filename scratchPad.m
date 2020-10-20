@@ -7,70 +7,18 @@
 % clc
 % location = determineComputer;
 %%
-figure(1)
-clf
+rfParams = dataT.rfParams;
 
-subplot(1,3,1)
-hold on
-cons = reshape(dataT.conBlankDprime,1,numel(dataT.conBlankDprime));
-histogram(cons,10,'Normalization','probability')
-ylim([0 0.3])
+stimX = [4, -4, 2];
+stimY = [4, -4, -2]; 
 
-subplot(1,3,2)
-hold on
-rads = reshape(dataT.radBlankDprime,1,numel(dataT.radBlankDprime));
-histogram(rads,10,'Normalization','probability')
-ylim([0 0.3])
-
-subplot(1,3,3)
-hold on
-noise = reshape(dataT.noiseBlankDprime,1,numel(dataT.noiseBlankDprime));
-histogram(noise,10,'Normalization','probability')
-ylim([0 0.3])
-%%
-figure(2)
-clf
-
-subplot(1,3,1)
-hold on
-histogram(conBlankDprimeBoot,10,'Normalization','probability')
-title('concentric')
-
-subplot(1,3,2)
-hold on
-histogram(radBlankDprimeBoot,10,'Normalization','probability')
-title('radial')
-
-subplot(1,3,3)
-hold on
-noise = reshape(noiseBlankDprimeBoot,1,numel(noiseBlankDprimeBoot));
-noise(isnan(noise)) = [];
-histogram(noise,10,'Normalization','probability')
-title('noise')
-%%
-figure(3)
-clf
-
-subplot(2,2,1)
-hold on
-cons = reshape(dataT.conZscore,1,numel(dataT.conZscore));
-histogram(cons,'BinWidth',0.5,'Normalization','probability')
-xlim([-5 5])
-
-subplot(2,2,2)
-hold on
-rads = reshape(dataT.radZscore,1,numel(dataT.radZscore));
-histogram(rads,'BinWidth',0.5,'Normalization','probability')
-xlim([-5 5])
-
-subplot(2,2,3)
-hold on
-noise =  reshape(dataT.noiseZscore,1,numel(dataT.noiseZscore));
-histogram(noise,'BinWidth',0.5,'Normalization','probability')
-xlim([-5 5])
-
-subplot(2,2,4)
-hold on
-blank =  reshape(dataT.blankZscore,1,numel(dataT.blankZscore));
-histogram(blank,'BinWidth',0.5,'Normalization','probability')
-xlim([-5 5])
+for ch = 1:96
+    rfX = rfParams{ch}(1);
+    rfY = rfParams{ch}(2);
+    isIn = iscircle(stimX,stimY,rfX,rfY); % 0 = in, 1 = on line, -1 = out
+    if isIn == -1
+        inStim(1,ch) = 0;
+    else
+        inStim(1,ch) = 1;
+    end
+end

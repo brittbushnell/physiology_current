@@ -2,10 +2,11 @@ function quadOris = getOrisInRFs(dataT)
 %%
 rfParams = dataT.chReceptiveFieldParams;
 
-q1 = deg2rad(dataT.prefParamsPrefOri(dataT.rfQuadrant == 1));  % This is already  limited to good channels, so no need to add another qualifier
-q2 = deg2rad(dataT.prefParamsPrefOri(dataT.rfQuadrant == 2));
-q3 = deg2rad(dataT.prefParamsPrefOri(dataT.rfQuadrant == 3));
-q4 = deg2rad(dataT.prefParamsPrefOri(dataT.rfQuadrant == 4));
+quad = dataT.rfQuadrant(1:96);
+q1 = deg2rad(dataT.prefParamsPrefOri(quad == 1));  % This is already  limited to good channels, so no need to add another qualifier
+q2 = deg2rad(dataT.prefParamsPrefOri(quad == 2));
+q3 = deg2rad(dataT.prefParamsPrefOri(quad == 3));
+q4 = deg2rad(dataT.prefParamsPrefOri(quad == 4));
 quadOris = [q1;q2;q3;q4];
 
 % remove nans
@@ -14,27 +15,58 @@ q2(isnan(q2)) = [];
 q3(isnan(q3)) = [];
 q4(isnan(q4)) = [];
 %%
+location = determineComputer;
+if length(dataT.inStim) > 96 % running on a single session rather than merged data
+    if location == 1
+        figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/%s/RF/%s/singleSession/ch/',dataT.animal,dataT.programID, dataT.array, dataT.eye);
+    elseif location == 0
+        figDir =  sprintf('~/Dropbox/Figures/%s/%s/%s/RF/%s/singleSession/ch/',dataT.animal, dataT.programID, dataT.array, dataT.eye);
+    end
+else
+    if location == 1
+        figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/%s/RF/%s/ch/',dataT.animal,dataT.programID, dataT.array, dataT.eye);
+    elseif location == 0
+        figDir =  sprintf('~/Dropbox/Figures/%s/%s/%s/RF/%s/ch/',dataT.animal, dataT.programID, dataT.array, dataT.eye);
+    end
+end
+if ~exist(figDir,'dir')
+    mkdir(figDir)
+end
+cd(figDir)
+%%
 for ch = 1:96
     if dataT.goodCh(ch) == 1
-    figure%(4)
-    clf
-    hold on    
-    draw_ellipse(rfParams{ch})
-    
-    viscircles([0,0],4,...
-        'color',[0.6 0.6 0.0]);
-    
-    plot(rfParams{ch}(1),rfParams{ch}(2),'.k','MarkerSize',14)
-    title(ch)
-    xlim([-10,10])
-    ylim([-10,10])
-    set(gca,'YAxisLocation','origin','XAxisLocation','origin',...
-        'Layer','top','FontWeight','bold','FontSize',12,'FontAngle','italic')
-    axis square
+        figure(4)
+        clf
+        hold on
+        if dataT.inStim(ch) == 1
+        draw_ellipse(rfParams{ch})
+        else
+          draw_ellipse(rfParams{ch},[0.3 0.3 0.3])  
+        end
+        
+        vs = viscircles([0,0],4,...
+            'color',[0.6 0.6 0.0]);
+        
+        plot(rfParams{ch}(1),rfParams{ch}(2),'.k','MarkerSize',14)
+        grid on;
+        
+        title(ch)
+        xlim([-10,10])
+        ylim([-10,10])
+        set(gca,'YAxisLocation','origin','XAxisLocation','origin',...
+            'Layer','top','FontWeight','bold','FontSize',12,'FontAngle','italic')
+        axis square
     end
     %pause
+    figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_RFlocRelGlassStim_ch',num2str(ch),'.pdf'];
+    print(gcf, figName,'-dpdf','-fillpage')
 end
+
+
 %%
+cd ..
+
 figure
 clf
 
@@ -166,3 +198,7 @@ t = suptitle(sprintf('%s %s %s distribution of preferred orientations based on r
     dataT.animal, dataT.eye, dataT.array));
 t.Position(2) = -0.02;
 t.FontSize = 18;
+
+
+figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_prefOriByRFlocation','.pdf'];
+print(gcf, figName,'-dpdf','-fillpage')

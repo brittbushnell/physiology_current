@@ -1,4 +1,4 @@
-function [dataT] = glassTR_getOriSelectivity2thetaNoise(dataT,numBoot,holdout)
+%function [dataT] = glassTR_getOriSelectivity2thetaNoise(dataT,numBoot,holdout)
 %{
 orientation analysis process from Smith et al 2002
 
@@ -36,17 +36,9 @@ for ch = 1:96
     if dataT.goodCh(ch) == 1
         for dt = 1:numDots
             for dx = 1:numDxs
-                for co = 1:numCoh
+                for co = 1:numCoh 
                     
-%                     SItmp = nan(numBoot,1);
-%                     oriTmp = nan(numBoot,1);
-                    
-                    for nb = 1:numBoot
-%                         respVect = nan(numOris,21);
-%                         denomVect = nan(numOris,21);
-%                         prefNum = nan(numOris,21);
-%                         prefDenom = nan(numOris,21);
-                        
+                    for nb = 1:numBoot                       
                         for or = 1:numOris
                             
                             dtNdx = (dataT.numDots == dots(dt));
@@ -59,7 +51,7 @@ for ch = 1:96
                             
                             noiseResp = mean(mean(squeeze(dataT.bins(noiseNdx2,5:25,ch))))./0.01;
                             linResp = mean(mean(squeeze((dataT.bins((stimNdx),5:25,ch)))))./0.01;
-                            baseSub = linResp;% - noiseResp;
+                            baseSub = linResp;
                             
                             % get inputs for calculating orientation
                             % selectivity
