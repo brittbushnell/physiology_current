@@ -13,8 +13,8 @@ ez = {
  % 'RE';
     };
 brArray = {
-   'V4';
-   %'V1';
+  % 'V4';
+  'V1';
     };
 %%
 nameEnd = 'info';
@@ -87,7 +87,7 @@ for an = 1:length(monks)
         end
     end
 end
-%%
+%% 
 for fi = 1:length(files)
     %% Get basic information about experiments
    % try
@@ -99,7 +99,7 @@ for fi = 1:length(files)
         
         tmp = strsplit(filename,'_');
         dataT.animal = tmp{1};  dataT.eye = tmp{2}; dataT.programID = tmp{3}; array = tmp{4};
-        dataT.date2 = tmp{5}; dataT.runNum = tmp{6}; dataT.reThreshold = tmp{7}; dataT.date = convertDate(dataT.date2);
+        dataT.date2 = tmp{5}; dataT.runNum = tmp{6}; dataT.date = convertDate(dataT.date2); %dataT.reThreshold = tmp{7};
         
         if strcmp(array, 'nsp1')
             dataT.array = 'V1';
@@ -142,7 +142,7 @@ for fi = 1:length(files)
         % add in anything that's missing from the new dataT structure.
         tmp = strsplit(filename,'_');
         dataT.animal = tmp{1};  dataT.eye = tmp{2}; dataT.programID = tmp{3}; array = tmp{4};
-        dataT.date2 = tmp{5}; dataT.runNum = tmp{6}; dataT.reThreshold = tmp{7}; dataT.date = convertDate(dataT.date2);
+        dataT.date2 = tmp{5}; dataT.runNum = tmp{6}; dataT.date = convertDate(dataT.date2); %dataT.reThreshold = tmp{7};
         
         if strcmp(array, 'nsp1')
             dataT.array = 'V1';
@@ -162,7 +162,7 @@ for fi = 1:length(files)
         % RF center is relative to fixation, not center of the monitor.
         dataT = callReceptiveFieldParameters(dataT);
         %% find channels whose receptive fields are within the stimulus bounds
-        [dataT.rfQuadrant] = getRFsinStim(dataT);
+        [dataT.rfQuadrant, dataT.rfParams, dataT.inStim] = getRFsinStim(dataT);
         dataT.inStim = ~isnan(dataT.rfQuadrant); % want all channels whos RF center is within the stimulus bounds to be 1.
         %% get spike counts, Zscore, and split half correlations
         if contains(dataT.programID,'TR')
@@ -173,14 +173,55 @@ for fi = 1:length(files)
             [dataT.conZscore, dataT.radZscore, dataT.noiseZscore, dataT.allStimZscore,dataT.blankZscore] = getGlassStimZscore(dataT);
         end
        fprintf(sprintf('spike counts done, zscores computed %d minutes \n', toc/60))
-         %% optional plots
-%         if plotFlag == 1
-%             if contains(dataT.programID,'TR')
-%                 plotGlassTR_spikeCounts(dataT)
-%             else
-%                 
-%             end
+       %%
+
+        if location == 1
+            figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%/%s/PSTH/singleSession/',dataT.animal,dataT.programID,dataT.array);
+        elseif location == 0
+            figDir =  sprintf('~/Dropbox/Figures/%s/%/%s/PSTH/singleSession/',dataT.animal,dataT.programID,dataT.array);
+        end
+
+    
+    if ~exist(figDir,'dir')
+        mkdir(figDir)
+    end
+    cd(figDir)
+    %% plot LE
+    figure;
+    clf
+    pos = get(gcf,'Position');
+    set(gcf,'Position',[pos(1) pos(2) 800 800])
+    set(gcf,'PaperOrientation','Landscape');
+    for ch = 1:96
+        
+        subplot(dataT.amap,10,10,ch)
+        hold on;
+        %dataT.goodCh(ch);
+        
+        LEcoh = (dataT.coh == 1);
+        LEnoiseCoh = (dataT.coh == 0);
+        LEcohNdx = logical(LEcoh + LEnoiseCoh);
+        
+        %if dataT.goodCh(ch) == 1
+            
+            blankResp = nanmean(smoothdata(dataT.bins((dataT.numDots == 0), 1:35 ,ch),'gaussian',3))./0.01;
+            stimResp = nanmean(smoothdata(dataT.bins((LEcohNdx), 1:35 ,ch),'gaussian',3))./0.01;
+            plot(1:35,blankResp,'Color',[0.2 0.2 0.2],'LineWidth',0.5);
+            plot(1:35,stimResp,'-k','LineWidth',2);
+            
+            title(ch)
+%         else
+%             axis off
 %         end
+        set(gca,'Color','none','tickdir','out','XTickLabel',[],'FontAngle','italic');
+        ylim([0 inf])
+    end
+    fname = strrep(filename,'_',' ');
+    suptitle({sprintf('%s %s %s %s stim vs blank', dataT.animal, dataT.array, dataT.programID, dataT.eye);...
+        sprintf(sprintf('%s',string(fname)))});
+    
+    figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_',dataT.programID,'_PSTHstimVBlank_raw'];
+    print(gcf, figName,'-dpdf','-fillpage')
         %% save good data
         if location == 1
             outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/Glass/info/',dataT.array);

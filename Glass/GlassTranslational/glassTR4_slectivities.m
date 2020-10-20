@@ -5,19 +5,19 @@ tic
 %%
 files = {
     'WU_LE_GlassTR_nsp2_Aug2017_all_thresh35_info_goodRuns_stimPerm';
-%     'WU_RE_GlassTR_nsp2_Aug2017_all_thresh35_info_goodRuns_stimPerm';
-%     'WU_LE_GlassTR_nsp1_Aug2017_all_thresh35_info_goodRuns_stimPerm';
-%     'WU_RE_GlassTR_nsp1_Aug2017_all_thresh35_info_goodRuns_stimPerm';
-%     
-%     'XT_RE_GlassTRCoh_nsp2_March2019_all_cleaned35_info_goodRuns_stimPerm';
-%     'XT_RE_GlassTRCoh_nsp1_March2019_all_thresh35_info_goodRuns_stimPerm';
-%     'XT_LE_GlassTRCoh_nsp1_20190325_005_thresh35_ogcorrupt_info_goodRuns_stimPerm';
-%     'XT_LE_GlassTRCoh_nsp2_20190325_005_thresh35_info_goodRuns_stimPerm';
-%     
-%     'WV_LE_glassTRCoh_nsp1_April2019_all_thresh35_info_goodRuns_stimPerm';
-%     'WV_LE_glassTRCoh_nsp2_April2019_all_thresh35_info_goodRuns_stimPerm';
-%     'WV_RE_glassTRCoh_nsp1_April2019_all_thresh35_info_goodRuns_stimPerm';
-%     'WV_RE_glassTRCoh_nsp2_April2019_all_thresh35_info_goodRuns_stimPerm';
+    'WU_RE_GlassTR_nsp2_Aug2017_all_thresh35_info_goodRuns_stimPerm';
+    'WU_LE_GlassTR_nsp1_Aug2017_all_thresh35_info_goodRuns_stimPerm';
+    'WU_RE_GlassTR_nsp1_Aug2017_all_thresh35_info_goodRuns_stimPerm';
+    
+    'XT_RE_GlassTRCoh_nsp2_March2019_all_cleaned35_info_goodRuns_stimPerm';
+    'XT_RE_GlassTRCoh_nsp1_March2019_all_thresh35_info_goodRuns_stimPerm';
+    'XT_LE_GlassTRCoh_nsp1_20190325_005_thresh35_ogcorrupt_info_goodRuns_stimPerm';
+    'XT_LE_GlassTRCoh_nsp2_20190325_005_thresh35_info_goodRuns_stimPerm';
+    
+    'WV_LE_glassTRCoh_nsp1_April2019_all_thresh35_info_goodRuns_stimPerm';
+    'WV_LE_glassTRCoh_nsp2_April2019_all_thresh35_info_goodRuns_stimPerm';
+    'WV_RE_glassTRCoh_nsp1_April2019_all_thresh35_info_goodRuns_stimPerm';
+    'WV_RE_glassTRCoh_nsp2_April2019_all_thresh35_info_goodRuns_stimPerm';
     };
 
 nameEnd = 'OSI';
@@ -52,10 +52,6 @@ for fi = 1:size(files,1)
     [dataT.OSIPval,dataT.OSISig] = glassGetPermutationStats_1tail(dataT.OSI, dataT.OSIperm, dataT,'translational OSI permutations',0);
     
     fprintf('computed OSI permutation tests %.2f minutes \n',toc/60)
-    %% get the preferred orientation for the preferred stimulus (density, dx)
-    [rfQuadrant,rfParams, inStim] = getRFsinStim(dataT);
-    dataT = GlassTR_bestSumDOris(dataT);
-     dataT.quadOris = getOrisInRFs(dataT);
     %%
     %plotGlassTR_tuningCurvesPolarNoise(dataT)
     %plotGlassTR_tuningCurvesPolarArray(dataT)

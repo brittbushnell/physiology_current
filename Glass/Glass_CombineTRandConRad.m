@@ -12,7 +12,10 @@ crRE = radConData.RE;
 %%
 
 
-
+    %% get the preferred orientation for the preferred stimulus (density, dx)
+    [rfQuadrant,rfParams, inStim] = getRFsinStim(dataT);
+    dataT = GlassTR_bestSumDOris(dataT);
+     dataT.quadOris = getOrisInRFs(dataT);
 
 
 

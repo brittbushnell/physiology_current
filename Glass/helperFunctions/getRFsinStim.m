@@ -32,19 +32,13 @@ else
 end
 %% make dummy plot to get stimulus bounds
 location = determineComputer;
-if length(dataT.inStim) > 96 % running on a single session rather than merged data
-    if location == 1
-        figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/%s/RF/%s/singleSession/ch/',dataT.animal,dataT.programID, dataT.array, dataT.eye);
-    elseif location == 0
-        figDir =  sprintf('~/Dropbox/Figures/%s/%s/%s/RF/%s/singleSession/ch/',dataT.animal, dataT.programID, dataT.array, dataT.eye);
-    end
-else
-    if location == 1
-        figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/%s/RF/%s/ch/',dataT.animal,dataT.programID, dataT.array, dataT.eye);
-    elseif location == 0
-        figDir =  sprintf('~/Dropbox/Figures/%s/%s/%s/RF/%s/ch/',dataT.animal, dataT.programID, dataT.array, dataT.eye);
-    end
+
+if location == 1
+    figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/%s/RF/%s/ch/',dataT.animal,dataT.programID, dataT.array, dataT.eye);
+elseif location == 0
+    figDir =  sprintf('~/Dropbox/Figures/%s/%s/%s/RF/%s/ch/',dataT.animal, dataT.programID, dataT.array, dataT.eye);
 end
+
 if ~exist(figDir,'dir')
     mkdir(figDir)
 end
@@ -102,7 +96,7 @@ end
 dataT.rfQuadrant = rfQuadrant;
 %% determine what is and is not in the circle
 stimX = [4, -4, 2];
-stimY = [4, -4, -2]; 
+stimY = [4, -4, -2];
 
 for ch = 1:96
     rfX = rfParams{ch}(1);

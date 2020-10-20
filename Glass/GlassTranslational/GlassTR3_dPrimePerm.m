@@ -34,7 +34,7 @@ failedFile= {};
 failNdx = 1;
 for fi = 1:size(files,1)
     %% Get basic information about experiments
-    %try
+    try
         load(files{fi});
         filename = files{fi};
         fprintf('\n*** analyzing %s \n*** file %d/%d \n', filename,fi,size(files,1))
@@ -96,15 +96,15 @@ for fi = 1:size(files,1)
         %%
         clear dataT
         fprintf('file done in %.2f hours \n',toc/3600)
-%     catch ME
-%         failedFile{failNdx} = filename;
-%         failedME{failNdx} = ME;
-%         failNdx = failNdx+1;
-%         fprintf('xxxxxxxxxxx\n')
-%         fprintf('file failed \n')
-%         fprintf('%s \n',ME.identifier)
-%         fprintf('xxxxxxxxxxx\n')
-%     end
+    catch ME
+        failedFile{failNdx} = filename;
+        failedME{failNdx} = ME;
+        failNdx = failNdx+1;
+        fprintf('xxxxxxxxxxx\n')
+        fprintf('file failed \n')
+        fprintf('%s \n',ME.identifier)
+        fprintf('xxxxxxxxxxx\n')
+    end
     close all
 end
 if failNdx >1
