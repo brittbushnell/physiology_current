@@ -9,7 +9,7 @@ monks = {
      'XT';
     };
 ez = {
-  %  'LE';
+   'LE';
  'RE';
     };
 brArray = {
@@ -84,9 +84,9 @@ for an = 1:length(monks)
             
             clear tmp
             clear ndx
-        end
-    end
-end
+%         end
+%     end
+% end
 %%
 files(contains(files,'TR')) = [];
 %% 
@@ -193,29 +193,20 @@ for fi = 1:length(files)
     figure;
     clf
     pos = get(gcf,'Position');
-    set(gcf,'Position',[pos(1) pos(2) 800 800])
+    set(gcf,'Position',[pos(1) pos(2) 1000 800])
     set(gcf,'PaperOrientation','Landscape');
     for ch = 1:96
         
         subplot(dataT.amap,10,10,ch)
         hold on;
-        %dataT.goodCh(ch);
         
-        LEcoh = (dataT.coh == 1);
-        LEnoiseCoh = (dataT.coh == 0);
-        LEcohNdx = logical(LEcoh + LEnoiseCoh);
+        blankResp = nanmean(smoothdata(dataT.bins((dataT.numDots == 0), 1:35 ,ch),'gaussian',3))./0.01;
+        stimResp = nanmean(smoothdata(dataT.bins((dataT.numDots > 0), 1:35 ,ch),'gaussian',3))./0.01;
+        plot(1:35,blankResp,'Color',[0.2 0.2 0.2],'LineWidth',0.5);
+        plot(1:35,stimResp,'-k','LineWidth',2);
         
-        %if dataT.goodCh(ch) == 1
-            
-            blankResp = nanmean(smoothdata(dataT.bins((dataT.numDots == 0), 1:35 ,ch),'gaussian',3))./0.01;
-            stimResp = nanmean(smoothdata(dataT.bins((LEcohNdx), 1:35 ,ch),'gaussian',3))./0.01;
-            plot(1:35,blankResp,'Color',[0.2 0.2 0.2],'LineWidth',0.5);
-            plot(1:35,stimResp,'-k','LineWidth',2);
-            
-            title(ch)
-%         else
-%             axis off
-%         end
+        title(ch)
+        
         set(gca,'Color','none','tickdir','out','XTickLabel',[],'FontAngle','italic');
         ylim([0 inf])
     end
@@ -259,6 +250,6 @@ for fi = 1:length(files)
     clear dataT
    % clearvars -except files fi nameEnd numPerm failedFiles failNdx numBoot location holdout plotFlag
 end
-%         end
-%     end
-% end
+        end
+    end
+end
