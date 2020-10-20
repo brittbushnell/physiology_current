@@ -41,6 +41,7 @@ for ch = 1:96
 end
 %% 
 figure(2)
+clf
 subplot(2,2,1)
 hold on
 allZs = reshape(allStimZscore,1,numel(allStimZscore));

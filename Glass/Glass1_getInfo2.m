@@ -9,8 +9,8 @@ monks = {
      'XT';
     };
 ez = {
-    'LE';
- % 'RE';
+  %  'LE';
+ 'RE';
     };
 brArray = {
   % 'V4';
@@ -87,6 +87,8 @@ for an = 1:length(monks)
         end
     end
 end
+%%
+files(contains(files,'TR')) = [];
 %% 
 for fi = 1:length(files)
     %% Get basic information about experiments
@@ -174,18 +176,19 @@ for fi = 1:length(files)
         end
        fprintf(sprintf('spike counts done, zscores computed %d minutes \n', toc/60))
        %%
-
-        if location == 1
-            figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%/%s/PSTH/singleSession/',dataT.animal,dataT.programID,dataT.array);
-        elseif location == 0
-            figDir =  sprintf('~/Dropbox/Figures/%s/%/%s/PSTH/singleSession/',dataT.animal,dataT.programID,dataT.array);
-        end
-
-    
-    if ~exist(figDir,'dir')
-        mkdir(figDir)
-    end
-    cd(figDir)
+       
+       if location == 1
+           figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/%s/PSTH/singleSession/',dataT.animal,dataT.programID,dataT.array);
+       elseif location == 0
+           figDir =  sprintf('~/Dropbox/Figures/%s/%s/%s/PSTH/singleSession/',dataT.animal,dataT.programID,dataT.array);
+       end
+       
+       
+       if ~exist(figDir,'dir')
+           mkdir(figDir)
+       end
+       
+       cd(figDir)
     %% plot LE
     figure;
     clf
@@ -220,7 +223,7 @@ for fi = 1:length(files)
     suptitle({sprintf('%s %s %s %s stim vs blank', dataT.animal, dataT.array, dataT.programID, dataT.eye);...
         sprintf(sprintf('%s',string(fname)))});
     
-    figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_',dataT.programID,'_PSTHstimVBlank_raw'];
+    figName = [filename,'_PSTHstimVBlank.pdf'];
     print(gcf, figName,'-dpdf','-fillpage')
         %% save good data
         if location == 1
