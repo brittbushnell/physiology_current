@@ -4,17 +4,17 @@ clc
 tic
 %%
 monks = {
-   % 'WU';
-   %  'WV';
-     'XT';
+    'WU';
+    'WV';
+    'XT';
     };
 ez = {
-  %  'LE';
- 'RE';
+    'LE';
+    'RE';
     };
 brArray = {
-  % 'V4';
-  'V1';
+    'V4';
+    'V1';
     };
 %%
 nameEnd = 'info';
@@ -84,11 +84,10 @@ for an = 1:length(monks)
             
             clear tmp
             clear ndx
-        end
-    end
-end
-%%
-files(contains(files,'TR')) = [];
+%         end
+%     end
+% end
+
 %% 
 for fi = 1:length(files)
     %% Get basic information about experiments
@@ -165,7 +164,6 @@ for fi = 1:length(files)
         dataT = callReceptiveFieldParameters(dataT);
         %% find channels whose receptive fields are within the stimulus bounds
         [dataT.rfQuadrant, dataT.rfParams, dataT.inStim] = getRFsinStim(dataT);
-        dataT.inStim = ~isnan(dataT.rfQuadrant); % want all channels whos RF center is within the stimulus bounds to be 1.
         %% get spike counts, Zscore, and split half correlations
         if contains(dataT.programID,'TR')
             [dataT.GlassTRSpikeCount,dataT.noiseSpikeCount,dataT.blankSpikeCount,dataT.allStimSpikeCount] = getGlassTRSpikeCounts(dataT);
@@ -175,19 +173,16 @@ for fi = 1:length(files)
             [dataT.conZscore, dataT.radZscore, dataT.noiseZscore, dataT.allStimZscore,dataT.blankZscore] = getGlassStimZscore(dataT);
         end
        fprintf(sprintf('spike counts done, zscores computed %d minutes \n', toc/60))
-       %%
-       
+       %%    
        if location == 1
            figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/%s/PSTH/singleSession/',dataT.animal,dataT.programID,dataT.array);
        elseif location == 0
            figDir =  sprintf('~/Dropbox/Figures/%s/%s/%s/PSTH/singleSession/',dataT.animal,dataT.programID,dataT.array);
        end
        
-       
        if ~exist(figDir,'dir')
            mkdir(figDir)
        end
-       
        cd(figDir)
     %% plot LE
     figure;
@@ -199,23 +194,18 @@ for fi = 1:length(files)
         
         subplot(dataT.amap,10,10,ch)
         hold on;
-        %dataT.goodCh(ch);
         
         LEcoh = (dataT.coh == 1);
         LEnoiseCoh = (dataT.coh == 0);
         LEcohNdx = logical(LEcoh + LEnoiseCoh);
         
-        %if dataT.goodCh(ch) == 1
-            
-            blankResp = nanmean(smoothdata(dataT.bins((dataT.numDots == 0), 1:35 ,ch),'gaussian',3))./0.01;
-            stimResp = nanmean(smoothdata(dataT.bins((LEcohNdx), 1:35 ,ch),'gaussian',3))./0.01;
-            plot(1:35,blankResp,'Color',[0.2 0.2 0.2],'LineWidth',0.5);
-            plot(1:35,stimResp,'-k','LineWidth',2);
-            
-            title(ch)
-%         else
-%             axis off
-%         end
+        blankResp = nanmean(smoothdata(dataT.bins((dataT.numDots == 0), 1:35 ,ch),'gaussian',3))./0.01;
+        stimResp = nanmean(smoothdata(dataT.bins((LEcohNdx), 1:35 ,ch),'gaussian',3))./0.01;
+        plot(1:35,blankResp,'Color',[0.2 0.2 0.2],'LineWidth',0.5);
+        plot(1:35,stimResp,'-k','LineWidth',2);
+        
+        title(ch)
+        
         set(gca,'Color','none','tickdir','out','XTickLabel',[],'FontAngle','italic');
         ylim([0 inf])
     end
@@ -225,8 +215,8 @@ for fi = 1:length(files)
     
     figName = [filename,'_PSTHstimVBlank.pdf'];
     print(gcf, figName,'-dpdf','-fillpage')
-        %% save good data
-        if location == 1
+    %% save good data
+    if location == 1
             outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/Glass/info/',dataT.array);
             if ~exist(outputDir, 'dir')
                 mkdir(outputDir)
@@ -257,8 +247,7 @@ for fi = 1:length(files)
 %         failedME{failNdx,1} = ME;
 %     end
     clear dataT
-   % clearvars -except files fi nameEnd numPerm failedFiles failNdx numBoot location holdout plotFlag
 end
-%         end
-%     end
-% end
+        end
+    end
+end

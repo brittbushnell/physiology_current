@@ -4,31 +4,22 @@ function [rfQuadrant,rfParams, inStim] = getRFsinStim(dataT)
 % receptive fields within each quadrant.
 %
 %
-% TO DO:
-%    - for each quadrant add in the proportion of those channels that
-%    prefer radial or concentric
 
 %%
 glassX = unique(dataT.pos_x);
 glassY = unique(dataT.pos_y);
 rfParams = dataT.chReceptiveFieldParams;
 
-if glassX ~= 0
-    glassX2 = glassX - glassX;
+if glassX ~= 0  
     for ch = 1:96
         rfParams{ch}(1) = rfParams{ch}(1) - glassX;
     end
-else
-    glassX2 = glassX;
 end
 
 if glassY ~= 0
-    glassY2 = glassY - glassY;
     for ch = 1:96
         rfParams{ch}(2) = rfParams{ch}(2) - glassY;
     end
-else
-    glassY2 = glassY;
 end
 %% make dummy plot to get stimulus bounds
 location = determineComputer;
@@ -49,9 +40,10 @@ vs = viscircles([0,0],4,...
     'color',[0.6 0.6 0.0]);
 xlim([-10,10])
 ylim([-10,10])
-
-%close(figure(80)) % don't actually need to see it, just want to have the vs info
-
+stimX = vs.get.Children(2).XData;
+stimY = vs.get.Children(2).YData;
+%close(figure(80)) % don't actually need to see it, just want to have the
+%vs info which gives us the x and y coordiantes of the circle.
 %% determine what quadrant of the stimulus the receptive field is in
 
 % glassAngles = 1 means the receptive field is in either top right or
@@ -67,17 +59,12 @@ ylim([-10,10])
 %                    3 | 4
 %
 
-stimX = vs.get.Children(2).XData;
-stimY = vs.get.Children(2).YData;
-
 rfQuadrant = nan(1,96);
 inStim = zeros(1,96);
 
 for ch = 1:96
     rfX = rfParams{ch}(1);
     rfY = rfParams{ch}(2);
-    %fprintf('ch %d (%.1f, %.1f)\n', ch, rfX, rfY)
-    
     if rfX > 0
         if rfY > 0  % RF is in the top right quadrant (+,+)
             rfQuadrant(ch) = 1;
@@ -91,20 +78,67 @@ for ch = 1:96
             rfQuadrant(ch) = 3;
         end
     end
-    fprintf('ch %d quadrant %d   (%.1f, %.1f)\n',ch, rfQuadrant(ch), rfX, rfY)
-end
-dataT.rfQuadrant = rfQuadrant;
-%% determine what is and is not in the circle
-stimX = [4, -4, 2];
-stimY = [4, -4, -2];
-
-for ch = 1:96
-    rfX = rfParams{ch}(1);
-    rfY = rfParams{ch}(2);
-    isIn = iscircle(stimX,stimY,rfX,rfY); % 0 = in, 1 = on line, -1 = out
-    if isIn == -1
-        inStim(1,ch) = 0;
+    inStim(1,ch) = sum(inpolygon(rfX,rfY,stimX,stimY) & ((rfX-0).^2+(rfY-0).^2 <= 4^2));
+    
+    figure(4)
+    clf
+    hold on
+    if inStim(ch) == 1
+        draw_ellipse(rfParams{ch})
     else
-        inStim(1,ch) = 1;
+        draw_ellipse(rfParams{ch},[0.3 0.3 0.3])
     end
+    
+    viscircles([0,0],4,...
+        'color',[0.6 0.6 0.0]);
+    
+    plot(rfX,rfY,'.k','MarkerSize',14)
+    grid on;
+    
+    title({sprintf('%s %s %s %s',dataT.animal, dataT.eye, dataT.array, dataT.programID);...
+        sprintf('ch %d quadrant %d',ch,rfQuadrant(ch))})
+    xlim([-10,10])
+    ylim([-10,10])
+    set(gca,'YAxisLocation','origin','XAxisLocation','origin',...
+        'Layer','top','FontWeight','bold','FontSize',12,'FontAngle','italic')
+    axis square
+    
+    figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_RFlocRelGlassStim_ch',num2str(ch),'.pdf'];
+    print(gcf, figName,'-dpdf','-fillpage')
+    
 end
+%% plot all receptive fields on one figure
+cd ../
+figure(5)
+clf
+for ch = 1:96
+    
+    hold on
+    if inStim(ch) == 1
+        draw_ellipse(rfParams{ch})
+    else
+        draw_ellipse(rfParams{ch},[0.3 0.3 0.3])
+    end
+    
+    viscircles([0,0],4,...
+        'color',[0.6 0.6 0.0]);
+    
+    grid on;
+    
+    xlim([-10,10])
+    ylim([-10,10])
+    set(gca,'YAxisLocation','origin','XAxisLocation','origin',...
+        'Layer','top','FontWeight','bold','FontSize',12,'FontAngle','italic')
+    axis square
+    
+    
+end
+text(9, 9.5, sprintf('n %d',sum(rfQuadrant==1)))
+text(-9.5, 9.5, sprintf('n %d',sum(rfQuadrant==2)))
+text(-9.5, -9.5, sprintf('n %d',sum(rfQuadrant==3)))
+text(9, -9.5, sprintf('n %d',sum(rfQuadrant==4)))
+
+title(sprintf('%s %s %s %s',dataT.animal, dataT.eye, dataT.array, dataT.programID))
+
+figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_RFlocRelGlassStim_ch',num2str(ch),'.pdf'];
+print(gcf, figName,'-dpdf','-fillpage')

@@ -2,16 +2,14 @@ function [data] = plotGlassTR_prefOriDist_BE_bestDprimeSum(data)
 %% 
 location = determineComputer;
 if location == 1
-    figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/GlassTR/%s/EyeComps/prefOri/',data.RE.animal, data.RE.array);
+    figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/%s/EyeComps/prefOri/',data.RE.animal, data.RE.programID, data.RE.array);
 elseif location == 0
-    figDir =  sprintf('~/Dropbox/Figures/%s/GlassTR/%s/EyeComps/prefOri/',data.RE.animal, data.RE.array);
+    figDir =  sprintf('~/Dropbox/Figures/%s/%s/%s/EyeComps/prefOri/',data.RE.animal, data.RE.programID, data.RE.array);
 end
-
+if ~exist(figDir,'dir')
+    mkdir(figDir)
+end
 cd(figDir)
-% go to date specific folder, if it doesn't exist, make it
-folder = data.RE.date2;
-mkdir(folder)
-cd(sprintf('%s',folder))
 %%
 pOrisR = nan(96,1);
 pOrisL = nan(96,1);
@@ -21,13 +19,13 @@ SIL = nan(96,1);
 vSumRE = nan(2,2,96);
 vSumLE = nan(2,2,96);
 
-if contains(data.RE.animal, 'XT')
-    dpRE = squeeze(data.RE.linBlankDprime(:,end,2:end,2:end,:)); % orientation, coherence, dots, dx, ch
-    dpLE = squeeze(data.LE.linBlankDprime(:,end,2:end,2:end,:)); 
-else
+% if contains(data.RE.animal, 'XT')
+%     dpRE = squeeze(data.RE.linBlankDprime(:,end,2:end,2:end,:)); % orientation, coherence, dots, dx, ch
+%     dpLE = squeeze(data.LE.linBlankDprime(:,end,2:end,2:end,:)); 
+% else
     dpRE = squeeze(data.RE.linBlankDprime(:,end,:,:,:)); 
     dpLE = squeeze(data.LE.linBlankDprime(:,end,:,:,:)); 
-end
+% end
 
 
 
@@ -40,13 +38,9 @@ for dt = 1:2
     end
 end
 %%
-if contains(data.RE.animal,'XT')
-    pOris = squeeze(data.RE.prefOri2thetaNoise(end,2:end,2:end,:)); % get the preferred orientations for all 100% coherence stimuli
-    rSI = squeeze(data.RE.OriSelectIndex2thetaNoise(end,2:end,2:end,:));
-else
-    pOris = squeeze(data.RE.prefOri2thetaNoise(end,:,:,:)); % get the preferred orientations for all 100% coherence stimuli
-    rSI = squeeze(data.RE.OriSelectIndex2thetaNoise(end,:,:,:));
-end
+pOris = squeeze(data.RE.prefOri(end,:,:,:)); % get the preferred orientations for all 100% coherence stimuli
+rSI = squeeze(data.RE.OSI(end,:,:,:));
+
 siA = [squeeze(vSumRE(1,1,:)),squeeze(vSumRE(1,2,:)),squeeze(vSumRE(2,1,:)),squeeze(vSumRE(2,2,:))]; % rearrange the dPrimess so each row is a ch and each dt,dx is a column
 [~,indR] = max(siA,[],2);% get the indices for the dt,dx that gives the highest summed d'
 
@@ -82,13 +76,9 @@ cirMuR = circ_mean(deg2rad(SIR2(:)*2))/2;
 cirMuR2 = cirMuR+pi;
 
 % LE
-if contains(data.LE.animal,'XT')
-    pOris = squeeze(data.LE.prefOri2thetaNoise(end,2:end,2:end,:)); % get the preferred orientations for all 100% coherence stimuli
-    lSI = squeeze(data.LE.OriSelectIndex2thetaNoise(end,:,:,:));
-else
-    pOris = squeeze(data.LE.prefOri2thetaNoise(end,:,:,:)); % get the preferred orientations for all 100% coherence stimuli
-    lSI = squeeze(data.LE.OriSelectIndex2thetaNoise(end,:,:,:));
-end
+
+pOris = squeeze(data.LE.prefOri(end,:,:,:)); % get the preferred orientations for all 100% coherence stimuli
+lSI = squeeze(data.LE.OSI(end,:,:,:));
 siA = [squeeze(vSumLE(1,1,:)),squeeze(vSumLE(1,2,:)),squeeze(vSumLE(2,1,:)),squeeze(vSumLE(2,2,:))];
 [~,indL] = max(siA,[],2);
 
@@ -222,10 +212,6 @@ folder = 'OSI';
 mkdir(folder)
 cd(sprintf('%s',folder))
 
-folder = data.RE.date2;
-mkdir(folder)
-cd(sprintf('%s',folder))
-
 figure
 clf
 pos = get(gcf,'Position');
@@ -270,8 +256,7 @@ ylabel('probability','FontSize',12)
 xlabel('OSI','FontSize',12)
 title(sprintf('%s RE',data.RE.animal))
 
-suptitle({sprintf('%s %s distribtion of OSIs for each ch greatest norm dPrime',data.RE.animal, data.RE.array);...
-    sprintf('%s run %s',data.RE.date,data.RE.runNum)});
+suptitle(sprintf('%s %s distribtion of OSIs for each ch greatest norm dPrime',data.RE.animal, data.RE.array));
 
 figName = [data.RE.animal,'_',data.RE.array,'_BE_OSIdist_bestDprime','.pdf'];
 print(gcf, figName,'-dpdf','-fillpage')
