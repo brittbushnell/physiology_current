@@ -7,11 +7,8 @@ pOrisR = nan(96,1);
 SIR = nan(96,1);
 prefParamResps = nan(numOris,96);
 %%
-if contains(dataT.animal, 'XT')
-    dp = squeeze(dataT.linBlankDprime(:,end,2:end,2:end,:)); % orientation, coherence, dots, dx, ch
-else
-    dp = squeeze(dataT.linBlankDprime(:,end,:,:,:)); 
-end
+
+dp = squeeze(dataT.linBlankDprime(:,end,:,:,:)); % limit to 100% coherence.  
 
 for dt = 1:2
     for dx = 1:2
@@ -20,13 +17,10 @@ for dt = 1:2
     end
 end
 
-if contains(dataT.animal,'XT')
-    pOris = squeeze(dataT.prefOri(end,2:end,2:end,:)); % get the preferred orientations for all 100% coherence stimuli
-    rSI = squeeze(dataT.OSI(end,2:end,2:end,:));
-else
-    pOris = squeeze(dataT.prefOri(end,:,:,:)); % get the preferred orientations for all 100% coherence stimuli
-    rSI = squeeze(dataT.OSI(end,:,:,:));
-end
+
+pOris = squeeze(dataT.prefOri(end,:,:,:)); % get the preferred orientations for all 100% coherence stimuli
+rSI = squeeze(dataT.OSI(end,:,:,:));
+
 siA = [squeeze(vSum(1,1,:)),squeeze(vSum(1,2,:)),squeeze(vSum(2,1,:)),squeeze(vSum(2,2,:))]; % rearrange the dPrimess so each row is a ch and each dt,dx is a column
 [~,indR] = max(siA,[],2);% get the indices for the dt,dx that gives the highest summed d' vSum
 
@@ -75,3 +69,4 @@ dataT.prefParamRespsBaseSub = prefParamRespsBaseSub;
 dataT.prefParamMuOriDist = cirMu;
 dataT.prefParamSI = SIR;
 dataT.prefParamsPrefOri = pOris2;
+dataT.prefParamsIndex = indR; % refers to dt,dx indices so 1 = (1,1) 2 = (1,2) 3 = (2,1) 4 = (2,2)

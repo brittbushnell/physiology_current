@@ -7,18 +7,8 @@
 % clc
 % location = determineComputer;
 %%
-rfParams = dataT.rfParams;
-
-stimX = [4, -4, 2];
-stimY = [4, -4, -2]; 
-
+chRanks = nan(3,96);
+prefParams = trLE.prefParamsIndex;
 for ch = 1:96
-    rfX = rfParams{ch}(1);
-    rfY = rfParams{ch}(2);
-    isIn = iscircle(stimX,stimY,rfX,rfY); % 0 = in, 1 = on line, -1 = out
-    if isIn == -1
-        inStim(1,ch) = 0;
-    else
-        inStim(1,ch) = 1;
-    end
+    chRanks(:,ch) = crLE.dPrimeRankBlank{prefParams(ch)}(:,ch);
 end

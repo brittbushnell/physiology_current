@@ -9,8 +9,8 @@ trData = data;
 clear data;
 
 load('WU_BE_V4_Aug2017_clean_merged');
-crLE = data.LE;
-crRE = data.RE;
+conRadLE = data.LE;
+conRadRE = data.RE;
 conRadData = data;
 clear data
 %%  get correct receptive field information
@@ -22,12 +22,12 @@ trLE.quadOris = getOrisInRFs(trLE);
 trRE = GlassTR_bestSumDOris(trRE);
 trRE.quadOris = getOrisInRFs(trRE);
 
-[crLE.rfQuadrant, crLE.rfParams, crLE.inStim] = getRFsinStim(crLE);
-[crRE.rfQuadrant, crRE.rfParams, cRE.inStim] = getRFsinStim(crRE);
-%% get the preferred orientation for the preferred stimulus (density, dx)
-
-
+[conRadLE.rfQuadrant, conRadLE.rfParams, conRadLE.inStim] = getRFsinStim(conRadLE);
+[conRadRE.rfQuadrant, conRadRE.rfParams, conRadE.inStim] = getRFsinStim(conRadRE);
+%% get the preferred density dx for concentric and radial
+% tr.prefParamsIndex refers to dt,dx indices so 1 = (1,1) 2 = (1,2) 3 = (2,1) 4 = (2,2)
 
 %% concentric vs radial preference as a function of receptive field location on stimulus
 
 
+%% save combined data
