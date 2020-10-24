@@ -3,16 +3,93 @@ close all
 clc
 tic
 %%
-files = {
-    'WU_LE_RadFreqLoc1_nsp2_20170626_002_thresh35'
-};
+monks = {
+    'WU';
+    'WV';
+    'XT';
+    };
+ez = {
+    'LE';
+    'RE';
+    };
+brArray = {
+    %'V4';
+    'V1';
+    };
 %%
+location = determineComputer;
 nameEnd = 'info';
 numPerm = 2000;
 numBoot = 200;
 holdout = 0.9;
+saveData = 0;
 
 plotFlag = 0;
+%%
+for an = 1:length(monks)
+    monk = monks{an};
+    for ey = 1:length(ez)
+        eye = ez{ey};
+        for ar = 1:length(brArray)
+            area = brArray{ar};
+            %%
+            if location == 0
+                dataDir = sprintf('~/Dropbox/ArrayData/matFiles/reThreshold/png/%s/%s/RadialFrequency/%s/',monk,area,eye);
+            else
+                dataDir = sprintf('/Local/Users/bushnell/Dropbox/ArrayData/matFiles/reThreshold/png/%s/%s/RadialFrequency/%s/',monk,area,eye);
+            end
+            cd(dataDir);
+            
+            tmp = dir;
+            ndx = 1;
+            corNdx = 1;
+            filesT = {};
+            filesC = {};
+            %%
+            for t = 1:size(tmp,1)
+                if contains(tmp(t).name,'.mat')
+                    if contains(tmp(t).name,'_og')
+                        % make a list of all of the files that have
+                        % been realigned
+                        filesC{corNdx,1} = tmp(t).name;
+                        corNdx = corNdx+1;
+                    else
+                        % list of un-aligned files
+                        filesT{ndx,1} = tmp(t).name;
+                        ndx = ndx+1;
+                    end
+                end
+            end
+            
+            for c = 1:length(filesC)
+                shortName = strrep(filesC{c,1},'_ogcorrupt','');
+                %remove from the list any _thresh35 files that were
+                %later realigned.  No reason to run through everything
+                %on all of them.
+                filesT(strcmp(shortName,filesT)) = [];
+            end
+            if isempty(filesC)
+                files = filesT;
+            elseif isempty(filesT)
+                files = filesC;
+            else
+                files = cat(1,filesC,filesT);
+            end
+            
+            if location == 0
+                listDir ='~/Dropbox/ArrayData/matFiles/reThreshold/listMatrices/Glass/';
+            else
+                listDir = '/Local/Users/bushnell/Dropbox/ArrayData/matFiles/reThreshold/listMatrices/Glass/';
+            end
+            
+            mtxSaveName = [listDir,monk,'_',eye,'_',area,'_Glass_','FileList.mat'];
+            save(mtxSaveName,'files')
+            
+            clear tmp
+            clear ndx
+            %         end
+            %     end
+            % end
 %%
 location = determineComputer;
 failedFiles = {};
@@ -52,41 +129,79 @@ for fi = 1:length(files)
     dataT.pos_x = dataT.pos_x';
     dataT.pos_y = dataT.pos_y';
     dataT.size_x = dataT.size_x';
-
-    dataT.amap = getBlackrockArrayMap(files(1,:));
-    %% Plot clean vs raw PSTH to check for misalignments  
-    plotRadialPSTH_rawVsClean(dataT,filename) % need to send in filename as well so it can find the raw file
-    %% Find visually responisve channels
-    stimNdx = dataT.rf ~= 10000;
-    blankNdx = dataT.rf == 10000;
-    dataT = stimVsBlankPermutations_allStim(dataT, numBoot, holdout, stimNdx, blankNdx);
-    [dataT.stimBlankPval,dataT.responsiveChannels] = getPermutationStatsAndGoodCh(dataT.allStimBlankDprime,dataT.allStimBlankDprimeBootPerm);
-    fprintf('responsive channel permutations done in %.2f minutes\n',toc/60)
-    %% get mean response, spike count, and zscore to each stimulus
-    % Calling the desired values: RFspikeCount{ch}(desired meausre,stim#)
-    %  If you want to get the spike counts or zscores, then the desired
-    %  measure is 9:end. If you want overall mean response to descriptive
-    %  statistics based on response rate then:
-    %        end-3 mean response
-    %        end-2 median response
-    %        end-1 standard error
-
-    [RFStimResps,blankResps,stimResps] = parseRadFreqStimResp(dataT);
-    [RFspikeCount,blankSpikeCount,RFzScore,blankZscore] = getRadFreqSpikeCountZscore(dataT, stimResps);
     
-        %% save data
+    dataT.amap = getBlackrockArrayMap(files(1,:));
+    %% Plot clean vs raw PSTH to check for misalignments
+    % plotRadialPSTH_rawVsClean(dataT,filename) % need to send in filename as well so it can find the raw file
+    if location == 1
+        figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/%s/PSTH/singleSession/',dataT.animal,dataT.programID,dataT.array);
+    elseif location == 0
+        figDir =  sprintf('~/Dropbox/Figures/%s/%s/%s/PSTH/singleSession/',dataT.animal,dataT.programID,dataT.array);
+    end
+    
+    if ~exist(figDir,'dir')
+        mkdir(figDir)
+    end
+    cd(figDir)
+    %% plot LE
+    figure;
+    clf
+    pos = get(gcf,'Position');
+    set(gcf,'Position',[pos(1) pos(2) 1000 800])
+    set(gcf,'PaperOrientation','Landscape');
+    for ch = 1:96
         
-        if location == 1
-            outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/radialFrequency/info/',dataT.array);
-            if ~exist(outputDir,'dir')
-                mkdir(outputDir)
-            end
-        elseif location == 0
-            outputDir =  sprintf('~/Dropbox/ArrayData/matFiles/%s/radialFrequency/info/',dataT.array);
-            if ~exist(outputDir,'dir')
-                mkdir(outputDir)
-            end
+        subplot(dataT.amap,10,10,ch)
+        hold on;
+        
+        blankResp = nanmean(smoothdata(dataT.bins((dataT.rf == 10000), 1:35 ,ch),'gaussian',3))./0.01;
+        stimResp = nanmean(smoothdata(dataT.bins((dataT.rf ~= 10000), 1:35 ,ch),'gaussian',3))./0.01;
+        plot(1:35,blankResp,'Color',[0.2 0.2 0.2],'LineWidth',0.5);
+        plot(1:35,stimResp,'-k','LineWidth',2);
+        
+        title(ch)
+        
+        set(gca,'Color','none','tickdir','out','XTickLabel',[],'FontAngle','italic');
+        ylim([0 inf])
+    end
+    
+    fname = strrep(filename,'_',' ');
+    suptitle({sprintf('%s %s %s %s stim vs blank', dataT.animal, dataT.array, dataT.programID, dataT.eye);...
+        sprintf(sprintf('%s',string(fname)))});
+    
+    fname2 = strrep(filename,'.mat','');
+    figName = [fname2,'_PSTHstimVBlank.pdf'];
+    print(gcf, figName,'-dpdf','-fillpage')
+    %% Find visually responisve channels
+%     stimNdx = dataT.rf ~= 10000;
+%     blankNdx = dataT.rf == 10000;
+%     dataT = stimVsBlankPermutations_allStim(dataT, numBoot, holdout, stimNdx, blankNdx);
+%     [dataT.stimBlankPval,dataT.responsiveChannels] = getPermutationStatsAndGoodCh(dataT.allStimBlankDprime,dataT.allStimBlankDprimeBootPerm);
+%     fprintf('responsive channel permutations done in %.2f minutes\n',toc/60)
+%     %% get mean response, spike count, and zscore to each stimulus
+%     % Calling the desired values: RFspikeCount{ch}(desired meausre,stim#)
+%     %  If you want to get the spike counts or zscores, then the desired
+%     %  measure is 9:end. If you want overall mean response to descriptive
+%     %  statistics based on response rate then:
+%     %        end-3 mean response
+%     %        end-2 median response
+%     %        end-1 standard error
+%     
+%     [RFStimResps,blankResps,stimResps] = parseRadFreqStimResp(dataT);
+%     [RFspikeCount,blankSpikeCount,RFzScore,blankZscore] = getRadFreqSpikeCountZscore(dataT, stimResps);
+    %% save data
+    
+    if location == 1
+        outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/radialFrequency/info/',dataT.array);
+        if ~exist(outputDir,'dir')
+            mkdir(outputDir)
         end
+    elseif location == 0
+        outputDir =  sprintf('~/Dropbox/ArrayData/matFiles/%s/radialFrequency/info/',dataT.array);
+        if ~exist(outputDir,'dir')
+            mkdir(outputDir)
+        end
+    end
     
     if contains(filename,'LE')
         data.LE = dataT;
@@ -97,6 +212,13 @@ for fi = 1:length(files)
     end
     
     saveName = [outputDir filename '_' nameEnd '.mat'];
-   % save(saveName,'data');
-   % fprintf('%s saved\n\n',saveName)
+    if saveData == 1
+        save(saveName,'data');
+        fprintf('%s saved\n\n',saveName)
+    else
+        fprintf('%s done running, not saved \n\n',fname)
+    end
+end
+        end
+    end
 end
