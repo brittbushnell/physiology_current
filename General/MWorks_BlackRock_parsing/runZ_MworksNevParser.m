@@ -27,7 +27,7 @@ monks = {
     };
 ez = {
     'LE';
-    % 'RE';
+     'RE';
     };
 brArray = {
     % 'V4';

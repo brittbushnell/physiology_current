@@ -7,8 +7,8 @@
 % clc
 % location = determineComputer;
 %%
-chRanks = nan(3,96);
-prefParams = trLE.prefParamsIndex;
-for ch = 1:96
-    chRanks(:,ch) = crLE.dPrimeRankBlank{prefParams(ch)}(:,ch);
-end
+figure(12)
+clf
+rad1 = deg2rad(135);
+rad2 = rad1+pi;
+polarplot([deg2rad(315) 0 deg2rad(135)],[0.4 0 0.4],'--','color',[0 0.6 0.2])
