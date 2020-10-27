@@ -16,6 +16,7 @@ brArray = {
     %'V4';
     'V1';
     };
+useRaw = 1;
 %%
 location = determineComputer;
 nameEnd = 'info';
@@ -33,11 +34,16 @@ for an = 1:length(monks)
         for ar = 1:length(brArray)
             area = brArray{ar};
             %%
+         if useRaw == 0   
             if location == 0
                 dataDir = sprintf('~/Dropbox/ArrayData/matFiles/reThreshold/png/%s/%s/RadialFrequency/%s/',monk,area,eye);
             else
                 dataDir = sprintf('/Local/Users/bushnell/Dropbox/ArrayData/matFiles/reThreshold/png/%s/%s/RadialFrequency/%s/',monk,area,eye);
             end
+         else
+            dataDir = sprintf('/Local/Users/bushnell/Dropbox/ArrayData/matFiles/unsorted/%s/',monk);
+         end
+         
             cd(dataDir);
             
             tmp = dir;
@@ -47,7 +53,7 @@ for an = 1:length(monks)
             filesC = {};
             %%
             for t = 1:size(tmp,1)
-                if contains(tmp(t).name,'.mat')
+                if contains(tmp(t).name,'.mat') && contains(tmp(t).name,'freq','IgnoreCase',true)
                     if contains(tmp(t).name,'_og')
                         % make a list of all of the files that have
                         % been realigned
@@ -76,14 +82,14 @@ for an = 1:length(monks)
                 files = cat(1,filesC,filesT);
             end
             
-            if location == 0
-                listDir ='~/Dropbox/ArrayData/matFiles/reThreshold/listMatrices/Glass/';
-            else
-                listDir = '/Local/Users/bushnell/Dropbox/ArrayData/matFiles/reThreshold/listMatrices/Glass/';
-            end
-            
-            mtxSaveName = [listDir,monk,'_',eye,'_',area,'_Glass_','FileList.mat'];
-            save(mtxSaveName,'files')
+%             if location == 0
+%                 listDir ='~/Dropbox/ArrayData/matFiles/reThreshold/listMatrices/Glass/';
+%             else
+%                 listDir = '/Local/Users/bushnell/Dropbox/ArrayData/matFiles/reThreshold/listMatrices/Glass/';
+%             end
+%             
+%             mtxSaveName = [listDir,monk,'_',eye,'_',area,'_Glass_','FileList.mat'];
+%             save(mtxSaveName,'files')
             
             clear tmp
             clear ndx
@@ -96,13 +102,14 @@ failedFiles = {};
 failNdx = 1;
 %%
 for fi = 1:length(files)
+    try
     %% get basic information about what was run overall, and for each trial.
     filename = files{fi};
     dataT = load(filename);
     
     tmp = strsplit(filename,'_');
     dataT.animal = tmp{1};  dataT.eye = tmp{2}; dataT.programID = tmp{3}; dataT.array = tmp{4}; dataT.date2 = tmp{5};
-    dataT.runNum = tmp{6}; dataT.reThreshold = tmp{7}; dataT.date = convertDate(dataT.date2);
+    dataT.runNum = tmp{6};  dataT.date = convertDate(dataT.date2); % dataT.reThreshold = tmp{7};
     
     if strcmp(dataT.array, 'nsp1')
         array = 'V1';
@@ -144,7 +151,7 @@ for fi = 1:length(files)
     end
     cd(figDir)
     %% plot LE
-    figure;
+    figure(1);
     clf
     pos = get(gcf,'Position');
     set(gcf,'Position',[pos(1) pos(2) 1000 800])
@@ -218,6 +225,8 @@ for fi = 1:length(files)
     else
         fprintf('%s done running, not saved \n\n',fname)
     end
+    catch
+end
 end
         end
     end

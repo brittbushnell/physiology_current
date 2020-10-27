@@ -4,8 +4,8 @@ clc
 tic
 %%
 monks = {
-    'WU';
-    'WV';
+   % 'WU';
+   % 'WV';
     'XT';
     };
 ez = {
@@ -13,11 +13,11 @@ ez = {
     'RE';
     };
 brArray = {
-    'V4';
+   % 'V4';
     'V1';
     };
 %%
-nameEnd = 'info';
+nameEnd = 'info2';
 numPerm = 2000;
 numBoot = 200;
 holdout = 0.9;
@@ -71,8 +71,13 @@ for an = 1:length(monks)
                 filesT(strcmp(shortName,filesT)) = [];
             end
             
-            files = cat(1,filesC,filesT);
-            
+            if isempty(filesT)
+                files = filesC;
+            elseif isempty(filesC)
+                files = filesT;
+            else
+                files = cat(1,filesC,filesT);
+            end
             if location == 0
                 listDir ='~/Dropbox/ArrayData/matFiles/reThreshold/listMatrices/Glass/';
             else
@@ -209,7 +214,7 @@ for an = 1:length(monks)
                 suptitle({sprintf('%s %s %s %s stim vs blank', dataT.animal, dataT.array, dataT.programID, dataT.eye);...
                     sprintf(sprintf('%s',string(fname)))});
                 
-                figName = [filename,'_PSTHstimVBlank.pdf'];
+                figName = [filename,'_PSTHstimVBlank_realign2.pdf'];
                 print(gcf, figName,'-dpdf','-fillpage')
                 %% save good data
                 if location == 1

@@ -22,8 +22,8 @@ tic;
 %% figure out what you're running
 monks = {
     % 'WU';
-    %  'WV';
-    'XT';
+      'WV';
+    %'XT';
     };
 ez = {
     'LE';
@@ -91,13 +91,13 @@ for an = 1:length(monks)
                     end
                     
                     fprintf('*** analyzing %s file %d/%d ****\n',filename,fi,size(files,2));
-                    if ~exist(sprintf('%s/%s',outputDir,strrep(filename,'.mat','')),'file')
+                    %if ~exist(sprintf('%s/%s',outputDir,strrep(filename,'.mat','')),'file')
                         if contains(filename,'__')
                             continue
                         else
                             MworksNevParser1(filename,10,100,outputDir);
                         end
-                    end
+                    %end
                     toc/3600;
                     
                 catch ME

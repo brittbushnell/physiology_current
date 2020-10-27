@@ -2,19 +2,19 @@ clear
 close all
 clc
 %%
-load('WV_BE_GlassTRCoh_V4_cleanMerged');
+load('WV_BE_GlassTRCoh_V1_cleanMerged');
 trLE = data.LE;
 trRE = data.RE;
 trData = data;
 clear data;
 
-load('WV_BE_V4_Glass_Aug2017_clean_merged');
+load('WV_BE_V1_Glass_Aug2017_clean_merged');
 conRadLE = data.LE;
 conRadRE = data.RE;
 conRadData = data;
 clear data
 
-newName = 'WU_BE_V1_bothGlass_cleanMerged';
+newName = 'WV_BE_V1_bothGlass_cleanMerged';
 %%  get correct receptive field information
 [trLE.rfQuadrant, trLE.rfParams, trLE.inStim] = getRFsinStim(trLE);
 trLE = GlassTR_bestSumDOris(trLE);
