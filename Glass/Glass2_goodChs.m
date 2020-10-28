@@ -38,9 +38,8 @@ files = {
     %     'WU_RE_Glass_nsp1_Aug2017_all_thresh35_info';
     % XT files after second cleaning
     %     'XT_LE_GlassTR_nsp1_Jan2019_all_thresh35_info2';
-    'XT_LE_Glass_nsp1_Jan2019_all_thresh35_info2';
-    
     'XT_RE_GlassTR_nsp1_Jan2019_all_thresh35_info2';
+    'XT_LE_Glass_nsp1_Jan2019_all_thresh35_info2';
     'XT_RE_Glass_nsp1_Jan2019_all_thresh35_info2';
     };
 %%
