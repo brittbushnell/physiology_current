@@ -4,9 +4,9 @@ clc
 tic
 %%
 monks = {
-    'WU';
+   % 'WU';
     'WV';
-    'XT';
+    %'XT';
     };
 ez = {
     'LE';
@@ -16,14 +16,14 @@ brArray = {
     %'V4';
     'V1';
     };
-useRaw = 1;
+useRaw = 0;
 %%
 location = determineComputer;
-nameEnd = 'info';
+nameEnd = 'info2';
 numPerm = 2000;
 numBoot = 200;
 holdout = 0.9;
-saveData = 0;
+saveData = 1;
 
 plotFlag = 0;
 %%
@@ -177,7 +177,7 @@ for fi = 1:length(files)
         sprintf(sprintf('%s',string(fname)))});
     
     fname2 = strrep(filename,'.mat','');
-    figName = [fname2,'_PSTHstimVBlank.pdf'];
+    figName = [fname2,'_PSTHstimVBlank_reClean.pdf'];
     print(gcf, figName,'-dpdf','-fillpage')
     %% Find visually responisve channels
 %     stimNdx = dataT.rf ~= 10000;
