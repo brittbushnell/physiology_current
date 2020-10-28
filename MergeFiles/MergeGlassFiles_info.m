@@ -87,15 +87,46 @@ clc
 % newName = 'XT_LE_GlassCoh_nsp2_March2019_all_thresh35_info';
 
 % % note:glassTRcoh for XT LE was only one file, so no merging to be done there
+
+%% XT re-cleaned files
+files = {
+        'XT_RE_GlassTR_nsp1_20190128_002_thresh35_ogcorrupt_info2';
+    'XT_RE_GlassTR_nsp1_20190128_001_thresh35_ogcorrupt_info2';
+    'XT_RE_GlassTR_nsp1_20190125_005_thresh35_ogcorrupt_info2';
+    'XT_RE_GlassTR_nsp1_20190125_003_thresh35_ogcorrupt_info2';
+    'XT_RE_GlassTR_nsp1_20190125_002_thresh35_ogcorrupt_info2';
+};
+newName = 'XT_RE_GlassTR_nsp1_Jan2019_all_thresh35_info2';
+
+% files = {
+%     'XT_LE_GlassTR_nsp1_20190130_004_thresh35_ogcorrupt_info2';
+%     'XT_LE_GlassTR_nsp1_20190130_003_thresh35_ogcorrupt_info2';
+%     'XT_LE_GlassTR_nsp1_20190130_002_thresh35_ogcorrupt_info2';
+%     'XT_LE_GlassTR_nsp1_20190130_001_thresh35_ogcorrupt_info2';
+%     };
+% newName = 'XT_LE_GlassTR_nsp1_Jan2019_all_thresh35_info2';
+ 
+% files = {
+%  'XT_RE_Glass_nsp1_20190124_005_thresh35_ogcorrupt_info2';
+%  'XT_RE_Glass_nsp1_20190123_007_thresh35_ogcorrupt_info2';
+% };
+% newName = 'XT_RE_Glass_nsp1_Jan2019_all_thresh35_info2';
+ 
+% files = {
+%     'XT_LE_Glass_nsp1_20190124_003_thresh35_ogcorrupt_info2';
+%     'XT_LE_Glass_nsp1_20190124_002_thresh35_ogcorrupt_info2';
+%     'XT_LE_Glass_nsp1_20190124_001_thresh35_ogcorrupt_info2';
+% };
+% newName = 'XT_LE_Glass_nsp1_Jan2019_all_thresh35_info2';
 %% WV
 
-files = {'WV_LE_glassCoh_nsp1_20190402_002_thresh35_ogcorrupt_info';
-    'WV_LE_glassCoh_nsp1_20190402_003_thresh35_ogcorrupt_info';
-    'WV_LE_glassCoh_nsp1_20190403_002_thresh35_ogcorrupt_info';
-    'WV_LE_glassCoh_nsp1_20190404_001_thresh35_ogcorrupt_info';
-    'WV_LE_glassCoh_nsp1_20190402_004_thresh35_info';
-    'WV_LE_glassCoh_nsp1_20190403_001_thresh35_info'};
-    newName = 'WV_LE_glassCoh_nsp1_April2019_all_thresh35_info';
+% files = {'WV_LE_glassCoh_nsp1_20190402_002_thresh35_ogcorrupt_info';
+%     'WV_LE_glassCoh_nsp1_20190402_003_thresh35_ogcorrupt_info';
+%     'WV_LE_glassCoh_nsp1_20190403_002_thresh35_ogcorrupt_info';
+%     'WV_LE_glassCoh_nsp1_20190404_001_thresh35_ogcorrupt_info';
+%     'WV_LE_glassCoh_nsp1_20190402_004_thresh35_info';
+%     'WV_LE_glassCoh_nsp1_20190403_001_thresh35_info'};
+%     newName = 'WV_LE_glassCoh_nsp1_April2019_all_thresh35_info';
 
 % files = {'WV_LE_glassTRCoh_nsp1_20190411_001_thresh35_ogcorrupt_info';
 %     'WV_LE_glassTRCoh_nsp1_20190412_001_thresh35_ogcorrupt_info';
@@ -148,10 +179,10 @@ files = {'WV_LE_glassCoh_nsp1_20190402_002_thresh35_ogcorrupt_info';
 %     'WV_RE_glassCoh_nsp2_20190405_001_thresh35_info'};
 % newName = 'WV_RE_glassCoh_nsp2_April2019_all_thresh35_info';
 
-files ={'WV_RE_glassCoh_nsp1_20190404_002_thresh35_ogcorrupt_info';
-    'WV_RE_glassCoh_nsp1_20190404_003_thresh35_ogcorrupt_info';
-    'WV_RE_glassCoh_nsp1_20190405_001_thresh35_ogcorrupt_info'};
-newName = 'WV_RE_glassCoh_nsp1_April2019_all_thresh35_info';
+% files ={'WV_RE_glassCoh_nsp1_20190404_002_thresh35_ogcorrupt_info';
+%     'WV_RE_glassCoh_nsp1_20190404_003_thresh35_ogcorrupt_info';
+%     'WV_RE_glassCoh_nsp1_20190405_001_thresh35_ogcorrupt_info'};
+% newName = 'WV_RE_glassCoh_nsp1_April2019_all_thresh35_info';
 %%
 location = determineComputer;
 for fi = 1:length(files)
@@ -172,7 +203,10 @@ for fi = 1:length(files)
     %             dataT.bins = dataT.binsV1;
     %         end
     %     end
-    
+       if contains(filename,'XT')
+            dataT.fix_x = -1;
+            dataT.fix_y = 1;
+       end
     dataTComp{fi} = dataT;
 end
 %% Concatenate sections
