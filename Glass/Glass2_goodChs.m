@@ -36,15 +36,17 @@ files = {
     %     'WU_LE_Glass_nsp1_Aug2017_all_thresh35_info';
     %     'WU_RE_GlassTR_nsp1_Aug2017_all_thresh35_info';
     %     'WU_RE_Glass_nsp1_Aug2017_all_thresh35_info';
-   % 'XT_LE_GlassCoh_nsp1_20190324_005_thresh35_info';
-    'XT_LE_GlassCoh_nsp1_20190325_001_thresh35_info';
-    'XT_LE_GlassCoh_nsp1_20190325_002_thresh35_info';
-    'XT_LE_GlassCoh_nsp1_20190325_004_thresh35_info';
+    % XT files after second cleaning
+    %     'XT_LE_GlassTR_nsp1_Jan2019_all_thresh35_info2';
+    'XT_LE_Glass_nsp1_Jan2019_all_thresh35_info2';
+    
+    'XT_RE_GlassTR_nsp1_Jan2019_all_thresh35_info2';
+    'XT_RE_Glass_nsp1_Jan2019_all_thresh35_info2';
     };
 %%
 nameEnd = 'goodRuns';
-numPerm = 2000;
-numBoot = 1000;
+numPerm = 200;
+numBoot = 100;
 holdout = 0.9;
 
 plotFlag = 0;
@@ -77,26 +79,44 @@ for fi = 1:length(files)
     if contains(dataT.programID,'TR')
         GlassChLast = permute(dataT.GlassTRZscore,[1 2 3 4 6 5]);% rearrange so number of channels is the last thing.
         numRepeats = size(dataT.GlassTRZscore,6);
-        GlassReshape = reshape(GlassChLast,64,numRepeats,96); % reshape 64 = number of conditions.
+        if contains(filename,'Coh','IgnoreCase',true)
+            GlassReshape = reshape(GlassChLast,64,numRepeats,96);
+        else
+            GlassReshape = reshape(GlassChLast,16,numRepeats,96); 
+        end
         
-        nozChLast = permute(dataT.noiseZscore,[1 2 3 4 6 5]);% rearrange so number of channels is the last thing.
+        nozChLast = permute(dataT.noiseZscore,[1 2 3 4 6 5]);
         numRepeats = size(dataT.noiseZscore,6);
-        nozReshape = reshape(nozChLast,64,numRepeats,96); % reshape 64 = number of conditions.
+        if contains(filename,'Coh','IgnoreCase',true)
+            nozReshape = reshape(nozChLast,64,numRepeats,96);
+        else
+            nozReshape = reshape(nozChLast,16,numRepeats,96); 
+        end
+        zScoreReshape = cat(2,GlassReshape,nozReshape);  
         
-        zScoreReshape = cat(2,GlassReshape,nozReshape); % reshape 64 = number of conditions.
     else
-        conZchLast = permute(dataT.conZscore,[1 2 3 5 4]);
+        conZchLast = squeeze(permute(dataT.conZscore,[1 2 3 5 4]));
         numRepeats = size(dataT.conZscore,5);
-        conReshape = reshape(conZchLast,16,numRepeats,96);
-        
+        if contains(filename,'Coh','IgnoreCase',true)
+            conReshape = reshape(conZchLast,16,numRepeats,96);
+        else
+            conReshape = reshape(conZchLast,4,numRepeats,96);
+        end
         radZchLast = permute(dataT.radZscore,[1 2 3 5 4]);
         numRepeats = size(dataT.radZscore,5);
-        radReshape = reshape(radZchLast,16,numRepeats,96);
         
+        if contains(filename,'Coh','IgnoreCase',true)
+            radReshape = reshape(radZchLast,16,numRepeats,96);
+        else
+            radReshape = reshape(radZchLast,4,numRepeats,96);
+        end
         nozZchLast = permute(dataT.noiseZscore,[1 2 3 5 4]);
         numRepeats = size(dataT.noiseZscore,5);
-        nozReshape = reshape(nozZchLast,16,numRepeats,96);
-        
+        if contains(filename,'Coh','IgnoreCase',true)
+            nozReshape = reshape(nozZchLast,16,numRepeats,96);
+        else
+            nozReshape = reshape(nozZchLast,4,numRepeats,96);
+        end
         zScoreReshape = cat(2,conReshape,radReshape,nozReshape);
     end
     %% do split half correlations and permutations
@@ -155,8 +175,7 @@ for fi = 1:length(files)
         ylim([0 inf])
     end
     
-    suptitle({sprintf('%s %s %s %s stim vs blank', dataT.animal, dataT.array, dataT.programID, dataT.eye);...
-        sprintf(sprintf('%s run %s', dataT.date, dataT.runNum))});
+    suptitle(sprintf('%s %s %s %s stim vs blank', dataT.animal, dataT.array, dataT.programID, dataT.eye));
     
     figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_',dataT.programID,'_PSTHstimVBlank'];
     print(gcf, figName,'-dpdf','-fillpage')
