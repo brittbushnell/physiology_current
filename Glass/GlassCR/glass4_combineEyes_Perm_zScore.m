@@ -16,9 +16,9 @@ newName = 'WU_BE_V4_Glass_Aug2017_clean_merged';
 % newName = 'XT_BE_V4_Glass_Aug2017_clean_merged';
  
 % V1
-LEfile = 'WU_LE_Glass_nsp1_Aug2017_all_thresh35_info_goodRuns_dPrime';
-REfile = 'WU_RE_Glass_nsp1_Aug2017_all_thresh35_info_goodRuns_dPrime';
-newName = 'WU_BE_V1_Glass_Aug2017_clean_merged';
+% LEfile = 'WU_LE_Glass_nsp1_Aug2017_all_thresh35_info_goodRuns_dPrime';
+% REfile = 'WU_RE_Glass_nsp1_Aug2017_all_thresh35_info_goodRuns_dPrime';
+% newName = 'WU_BE_V1_Glass_Aug2017_clean_merged';
  
 % LEfile = 'WV_LE_glassCoh_nsp1_April2019_all_thresh35_info_goodRuns_dPrime';
 % REfile = 'WV_RE_glassCoh_nsp1_April2019_all_thresh35_info_goodRuns_dPrime';

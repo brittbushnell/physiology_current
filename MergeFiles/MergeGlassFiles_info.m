@@ -9,10 +9,10 @@ clc
 %          'WU_LE_GlassTR_nsp1_20170825_002_thresh35_info'};
 % newName ='WU_LE_GlassTR_nsp1_Aug2017_all_thresh35_info';
 
-% files = {'WU_LE_Glass_nsp1_20170817_001_thresh35_info';
-%     'WU_LE_Glass_nsp1_20170821_002_thresh35_info';
-%     'WU_LE_Glass_nsp1_20170822_001_thresh35_info'};
-% newName ='WU_LE_Glass_nsp1_Aug2017_all_thresh35_info';
+files = {'WU_LE_Glass_nsp1_20170817_001_thresh35_info';
+    'WU_LE_Glass_nsp1_20170821_002_thresh35_info';
+    'WU_LE_Glass_nsp1_20170822_001_thresh35_info'};
+newName ='WU_LE_Glass_nsp1_Aug2017_all_thresh35_info';
 
 % files = {'WU_LE_Glass_nsp2_20170817_001_thresh35_info';
 %          'WU_LE_Glass_nsp2_20170821_002_thresh35_info';
@@ -89,14 +89,14 @@ clc
 % % note:glassTRcoh for XT LE was only one file, so no merging to be done there
 
 %% XT re-cleaned files
-files = {
-        'XT_RE_GlassTR_nsp1_20190128_002_thresh35_ogcorrupt_info2';
-    'XT_RE_GlassTR_nsp1_20190128_001_thresh35_ogcorrupt_info2';
-    'XT_RE_GlassTR_nsp1_20190125_005_thresh35_ogcorrupt_info2';
-    'XT_RE_GlassTR_nsp1_20190125_003_thresh35_ogcorrupt_info2';
-    'XT_RE_GlassTR_nsp1_20190125_002_thresh35_ogcorrupt_info2';
-};
-newName = 'XT_RE_GlassTR_nsp1_Jan2019_all_thresh35_info2';
+% files = {
+%         'XT_RE_GlassTR_nsp1_20190128_002_thresh35_ogcorrupt_info2';
+%     'XT_RE_GlassTR_nsp1_20190128_001_thresh35_ogcorrupt_info2';
+%     'XT_RE_GlassTR_nsp1_20190125_005_thresh35_ogcorrupt_info2';
+%     'XT_RE_GlassTR_nsp1_20190125_003_thresh35_ogcorrupt_info2';
+%     'XT_RE_GlassTR_nsp1_20190125_002_thresh35_ogcorrupt_info2';
+% };
+% newName = 'XT_RE_GlassTR_nsp1_Jan2019_all_thresh35_info2';
 
 % files = {
 %     'XT_LE_GlassTR_nsp1_20190130_004_thresh35_ogcorrupt_info2';

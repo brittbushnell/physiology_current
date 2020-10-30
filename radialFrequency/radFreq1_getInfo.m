@@ -4,26 +4,26 @@ clc
 tic
 %%
 monks = {
-   % 'WU';
+    'WU';
     'WV';
-    %'XT';
+    'XT';
     };
 ez = {
     'LE';
     'RE';
     };
 brArray = {
-    %'V4';
+    'V4';
     'V1';
     };
 useRaw = 0;
 %%
 location = determineComputer;
-nameEnd = 'info2';
+nameEnd = 'info';
 numPerm = 2000;
 numBoot = 200;
 holdout = 0.9;
-saveData = 1;
+saveData = 0;
 
 plotFlag = 0;
 %%
@@ -82,20 +82,11 @@ for an = 1:length(monks)
                 files = cat(1,filesC,filesT);
             end
             
-%             if location == 0
-%                 listDir ='~/Dropbox/ArrayData/matFiles/reThreshold/listMatrices/Glass/';
-%             else
-%                 listDir = '/Local/Users/bushnell/Dropbox/ArrayData/matFiles/reThreshold/listMatrices/Glass/';
-%             end
-%             
-%             mtxSaveName = [listDir,monk,'_',eye,'_',area,'_Glass_','FileList.mat'];
-%             save(mtxSaveName,'files')
-            
             clear tmp
             clear ndx
-            %         end
-            %     end
-            % end
+                    end
+                end
+            end
 %%
 location = determineComputer;
 failedFiles = {};
@@ -112,9 +103,9 @@ for fi = 1:length(files)
     dataT.runNum = tmp{6};  dataT.date = convertDate(dataT.date2); % dataT.reThreshold = tmp{7};
     
     if strcmp(dataT.array, 'nsp1')
-        array = 'V1';
+        dataT.array = 'V1';
     elseif strcmp(dataT.array, 'nsp2')
-        array = 'V4';
+        dataT.array = 'V4';
     end
         
     % all of the other unique parameters are stored in the file name and need
@@ -138,8 +129,8 @@ for fi = 1:length(files)
     dataT.size_x = dataT.size_x';
     
     dataT.amap = getBlackrockArrayMap(files(1,:));
-    %% Plot clean vs raw PSTH to check for misalignments
-    % plotRadialPSTH_rawVsClean(dataT,filename) % need to send in filename as well so it can find the raw file
+    %
+    %% Plot PSTH
     if location == 1
         figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/%s/PSTH/singleSession/',dataT.animal,dataT.programID,dataT.array);
     elseif location == 0
@@ -177,25 +168,10 @@ for fi = 1:length(files)
         sprintf(sprintf('%s',string(fname)))});
     
     fname2 = strrep(filename,'.mat','');
-    figName = [fname2,'_PSTHstimVBlank_reClean.pdf'];
-    print(gcf, figName,'-dpdf','-fillpage')
-    %% Find visually responisve channels
-%     stimNdx = dataT.rf ~= 10000;
-%     blankNdx = dataT.rf == 10000;
-%     dataT = stimVsBlankPermutations_allStim(dataT, numBoot, holdout, stimNdx, blankNdx);
-%     [dataT.stimBlankPval,dataT.responsiveChannels] = getPermutationStatsAndGoodCh(dataT.allStimBlankDprime,dataT.allStimBlankDprimeBootPerm);
-%     fprintf('responsive channel permutations done in %.2f minutes\n',toc/60)
-%     %% get mean response, spike count, and zscore to each stimulus
-%     % Calling the desired values: RFspikeCount{ch}(desired meausre,stim#)
-%     %  If you want to get the spike counts or zscores, then the desired
-%     %  measure is 9:end. If you want overall mean response to descriptive
-%     %  statistics based on response rate then:
-%     %        end-3 mean response
-%     %        end-2 median response
-%     %        end-1 standard error
-%     
-%     [RFStimResps,blankResps,stimResps] = parseRadFreqStimResp(dataT);
-%     [RFspikeCount,blankSpikeCount,RFzScore,blankZscore] = getRadFreqSpikeCountZscore(dataT, stimResps);
+    figName = [fname2,'_PSTHstimVBlank.pdf'];
+    %print(gcf, figName,'-dpdf','-fillpage')
+    %% get spike counts and z scores
+    
     %% save data
     
     if location == 1
@@ -226,8 +202,8 @@ for fi = 1:length(files)
         fprintf('%s done running, not saved \n\n',fname)
     end
     catch
-end
-end
-        end
     end
 end
+%         end
+%     end
+% end

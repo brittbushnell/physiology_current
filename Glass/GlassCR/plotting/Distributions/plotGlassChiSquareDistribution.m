@@ -6,7 +6,7 @@ LEchiVals = data.LE.chiVals;
 %%
 location = determineComputer;
 
-if length(dataT.inStim) > 96
+if length(data.RE.chReceptiveFieldParams) > 96
     if location == 1
         figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/%s/stats/singleSession/',data.RE.animal,data.RE.programID,data.RE.array);
     elseif location == 0
