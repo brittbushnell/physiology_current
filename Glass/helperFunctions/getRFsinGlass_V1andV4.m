@@ -105,10 +105,10 @@ for ch = 1:96
     
     hold on
     if V1data.goodCh(ch) == 1
-        draw_ellipse(V1rfParams{ch},[0.8 0 0])
+        draw_ellipse(V1rfParams{ch},[0.8 0 0.6])
     end
     if V4data.goodCh(ch) == 1
-        draw_ellipse(V4rfParams{ch},[0.2 0.2 1])
+        draw_ellipse(V4rfParams{ch},[0.2 0.4 1])
         
     end
     grid on;
@@ -142,20 +142,19 @@ title(sprintf('%s %s receptive field boundaries relative to Glass pattern stimul
 figName = [V1data.animal,'_',V1data.eye,'_V1andV4_RFlocRelGlassStim','.pdf'];
 print(gcf, figName,'-dpdf','-fillpage')
 %%
-figure%(6)
+figure(6)
 clf
 for ch = 1:96
     
     hold on
     if V1data.goodCh(ch) == 1
-        plot(V1rfParams{ch}(1),V1rfParams{ch}(2),'o','MarkerEdgeColor',[0.8 0 0],'MarkerSize',8,'LineWidth',1.5)
+       scatter(V1rfParams{ch}(1),V1rfParams{ch}(2),35,[0.8 0 0.6],'filled','MarkerFaceAlpha',0.7);
     end
     if V4data.goodCh(ch) == 1
-        plot(V4rfParams{ch}(1),V4rfParams{ch}(2),'o','MarkerEdgeColor',[0.2 0.2 1],'MarkerSize',8,'LineWidth',1.5)
+        scatter(V4rfParams{ch}(1),V4rfParams{ch}(2),35,[0.2 0.4 1],'filled','MarkerFaceAlpha',0.7);
     end
     
     grid on;
-    
     xlim([-10,10])
     ylim([-10,10])
     set(gca,'YAxisLocation','origin','XAxisLocation','origin',...

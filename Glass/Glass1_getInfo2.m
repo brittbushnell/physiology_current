@@ -5,8 +5,8 @@ tic
 %%
 monks = {
     % 'WU';
-    % 'WV';
-    'XT';
+   'WV';
+  %  'XT';
     };
 ez = {
     'LE';
@@ -168,7 +168,7 @@ for fi = 2:length(files)
     % RF center is relative to fixation, not center of the monitor.
     dataT = callReceptiveFieldParameters(dataT);
     %% find channels whose receptive fields are within the stimulus bounds
-    [dataT.rfQuadrant, dataT.rfParams, dataT.inStim] = getRFsinGlass(dataT);
+    %[dataT.rfQuadrant, dataT.rfParams, dataT.inStim] = getRFsinGlass(dataT);
     %% get spike counts and Zscores
     if contains(dataT.programID,'TR')
         [dataT.GlassTRSpikeCount,dataT.noiseSpikeCount,dataT.blankSpikeCount,dataT.allStimSpikeCount] = getGlassTRSpikeCounts(dataT);
