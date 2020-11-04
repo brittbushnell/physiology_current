@@ -36,16 +36,17 @@ files = {
     %     'WU_LE_Glass_nsp1_Aug2017_all_thresh35_info';
     %     'WU_RE_GlassTR_nsp1_Aug2017_all_thresh35_info';
     %     'WU_RE_Glass_nsp1_Aug2017_all_thresh35_info';
-    % XT files after second cleaning
-    %     'XT_LE_GlassTR_nsp1_Jan2019_all_thresh35_info2';
-    'XT_RE_GlassTR_nsp1_Jan2019_all_thresh35_info2';
+    
+    %% XT files after second cleaning
+   % 'XT_LE_GlassTR_nsp1_Jan2019_all_thresh35_info2';
+   % 'XT_RE_GlassTR_nsp1_Jan2019_all_thresh35_info2';
     'XT_LE_Glass_nsp1_Jan2019_all_thresh35_info2';
     'XT_RE_Glass_nsp1_Jan2019_all_thresh35_info2';
     };
 %%
 nameEnd = 'goodRuns';
-numPerm = 200;
-numBoot = 100;
+numPerm = 2000;
+numBoot = 1000;
 holdout = 0.9;
 
 plotFlag = 0;
@@ -72,7 +73,7 @@ for fi = 1:length(files)
     %% determine reponsive channels
     %dataT = GlassStimVsBlankPermutations_allStim(dataT,numPerm,holdout);
     [dataT.allStimBlankDprime, dataT.allStimBlankDprimeBootPerm, dataT.stimBlankDprimePerm, dataT.stimBlankSDPerm] = StimVsBlankPermutations_allStim_zScore(dataT.allStimZscore,dataT.blankZscore);
-    [dataT.stimBlankChPvals, dataT.responsiveCh] = getPermutationStatsAndGoodCh(dataT.allStimBlankDprime,dataT.allStimBlankDprimeBootPerm);
+    [dataT.stimBlankChPvals, dataT.responsiveCh] = getPermutationStatsAndGoodCh(dataT.allStimBlankDprime,dataT.allStimBlankDprimeBootPerm,2,1);
     fprintf('responsive channels defined\n')
     %% setup for split-half
     if contains(dataT.programID,'TR')
@@ -101,7 +102,8 @@ for fi = 1:length(files)
         else
             conReshape = reshape(conZchLast,4,numRepeats,96);
         end
-        radZchLast = permute(dataT.radZscore,[1 2 3 5 4]);
+        
+        radZchLast = squeeze(permute(dataT.radZscore,[1 2 3 5 4]));
         numRepeats = size(dataT.radZscore,5);
         
         if contains(filename,'Coh','IgnoreCase',true)
@@ -109,7 +111,8 @@ for fi = 1:length(files)
         else
             radReshape = reshape(radZchLast,4,numRepeats,96);
         end
-        nozZchLast = permute(dataT.noiseZscore,[1 2 3 5 4]);
+        
+        nozZchLast = squeeze(permute(dataT.noiseZscore,[1 2 3 5 4]));
         numRepeats = size(dataT.noiseZscore,5);
         if contains(filename,'Coh','IgnoreCase',true)
             nozReshape = reshape(nozZchLast,16,numRepeats,96);

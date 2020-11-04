@@ -276,7 +276,7 @@ for i = 1:length(dataTComp)
         allStimSpikeCount = cat(2,allStimSpikeCount,aSC);
         GlassTRZscore = cat(6,GlassTRZscore,gZ);
         noiseZscore = cat(6,noiseZscore,nZ);
-        blankZscore = cat(2, blankZscore,bz);
+        blankZscore = cat(2,blankZscore,bz);
         allStimZscore = cat(2,allStimZscore,aZ);
         
     else

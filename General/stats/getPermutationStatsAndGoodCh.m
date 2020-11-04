@@ -28,15 +28,25 @@ switch nargin
         realData = varargin{1};
         permData = varargin{2};
         numTails = 2;
+        plotFlag = 0;
     case 3
         realData = varargin{1};
         permData = varargin{2};
         numTails = varargin{3};
+        plotFlag = 0;
+    case 4
+        realData = varargin{1};
+        permData = varargin{2};
+        numTails = varargin{3};
+        plotFlag = varargin{4};
 end
 %%
 stimBlankPval = zeros(1,96);
 gCh = zeros(1,96);
 %%
+    if plotFlag == 1
+        fprintf('\n permutation distribution figures are not automatically saved\n')
+    end
 for ch = 1:96
     realDataCh = squeeze(realData(ch));
     permDataCh = squeeze(permData(ch,:));
@@ -51,5 +61,28 @@ for ch = 1:96
         if (stimBlankPval(ch) < 0.05) % one tailed test
             gCh(ch) = 1;
         end
+    end
+    if plotFlag == 1
+        figure(1)
+        clf
+        hold on
+        histogram(permDataCh,7,'FaceColor',[0 0.6 0.2],'Normalization','probability');
+        ylim([0 0.6])
+        plot([realDataCh realDataCh],[0 0.35],'r-','LineWidth',2)
+        
+        plot(realDataCh,0.5,'rv','markerfacecolor','r','markeredgecolor','w','MarkerSize',10);
+        plot(nanmean(permDataCh),0.5,'v','markerfacecolor',[0 0.6 0.2],'markeredgecolor','w','MarkerSize',10);
+        set(gca,'color','none','tickdir','out','box','off')  
+        
+%         xlims = get(gca,'XLim')
+%         xMin = xlims(1);
+        xlim([ -0.4 1.6])
+        text((-0.2),0.59,sprintf('p %.3f',stimBlankPval(ch)),'fontSize',9)
+        text(realDataCh,0.56,sprintf('%.3f',realDataCh),'color',[1 0 0],'fontSize',9)
+        text(nanmean(permDataCh),0.54,sprintf('%.3f',nanmean(permDataCh)),'color',[0 0.6 0.2],'fontSize',9)
+        
+        title(sprintf('ch %d',ch))
+        
+        pause(0.2)
     end
 end

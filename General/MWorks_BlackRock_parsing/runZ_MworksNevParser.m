@@ -21,8 +21,8 @@ tic;
 %stimType = 'grat';
 %% figure out what you're running
 monks = {
-    % 'WU';
-    'WV';
+     'WU';
+    %'WV';
     %'XT';
     };
 ez = {
@@ -30,10 +30,10 @@ ez = {
     'RE';
     };
 brArray = {
-    % 'V4';
+    'nsp2';
     'nsp1';
     };
-stimType = 'png';
+stimType = 'gratings';%'png';%'gratings'
 %%
 
 failNdx = 0;
@@ -65,7 +65,7 @@ for an = 1:length(monks)
     end
 end
 %%
-for fi = 63:size(files,2)
+for fi = 1:size(files,2)
     try
         filename = string(files{fi});
         

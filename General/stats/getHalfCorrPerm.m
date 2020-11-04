@@ -113,19 +113,19 @@ fprintf('%d minutes to do permuted reliability indices\n',toc(splitTic)/60);
 [pVals,sigChs] = glassGetPermutationStatsAndGoodCh(reliabilityIndex,reliabilityIndexPerm,1);
 %% sanity check figures
 if plotFlag == 1
-    figure(1)
+    figure%(1)
     clf
     pos = get(gcf,'Position');
     set(gcf,'Position',[pos(1) pos(2) 1200 900])
     set(gcf,'PaperOrientation','Landscape');
     
     for ch = 1:96
-        pValCh = pVals(ch);
+%         pValCh = pVals(ch);
         subplot(10,10,ch)
         hold on
         histogram(reliabilityIndexPerm(ch,:),10,'FaceColor','b','EdgeColor',[0.5 0.5 0.5],'EdgeAlpha',0.3,'Normalization','probability')
         plot([reliabilityIndex(ch), reliabilityIndex(ch)], [0, 0.7],'-r')
-        text((0.1),0.65,sprintf('p %.2f',pValCh))
+%         text((0.1),0.65,sprintf('p %.2f',pValCh))
         %xlim([-0.1 0.55])
         ylim([0 1])
         t = title(ch);
