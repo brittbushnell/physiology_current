@@ -4,11 +4,11 @@ clc
 tic
 %%
 files = {
-    'WU_LE_Gratmap_nsp2_20170428_all_thresh35_info';
-    'WU_RE_Gratmap_nsp2_20170428_006_thresh35_info';
+    'WU_RE_GratingsMapRF_nsp2_20170814_002_thresh35_info';
+    'WU_LE_GratingsMapRF_nsp2_20170814_003_thresh35_info';    
     
-    'WU_LE_Gratmap_nsp1_20170428_all_thresh35_info';
-    'WU_RE_Gratmap_nsp1_20170428_006_thresh35_info';
+    'WU_RE_GratingsMapRF_nsp1_20170814_002_thresh35_info';
+    'WU_LE_GratingsMapRF_nsp1_20170814_003_thresh35_info';
     };
 nameEnd ='resps';
 %%
@@ -35,14 +35,12 @@ for fi = 1:size(files,1)
     %%
     if location == 1
         outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/GratMapRF/resps/',dataT.array);
-        if ~exist(outputDir,'dir')
-            mkdir(outputDir)
-        end
     elseif location == 0
         outputDir =  sprintf('~/Dropbox/ArrayData/matFiles/%s/GratMapRF/resps/',dataT.array);
-        if ~exist(outputDir,'dir')
-            mkdir(outputDir)
-        end
+    end
+    
+    if ~exist(outputDir,'dir')
+        mkdir(outputDir)
     end
     %% do stim vs blank permutation test
     stimNdx  = dataT.spatial_frequency ~=0;
@@ -52,6 +50,7 @@ for fi = 1:size(files,1)
     fprintf('stimulus vs blank permutaiton test done %.2f minutes \n',toc/60)
     %% get mean responses for each location
     dataT = getGratMapRespDprime(dataT, numBoot, holdout);
+%     plotMappingPSTHs_visualResponsesChs(dataT,0)
     fprintf('responses by location computed %.2f minutes \n',toc/60)
     %% get receptive field centers and boundaries
     dataT = getReceptiveFields(dataT);

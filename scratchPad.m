@@ -6,37 +6,38 @@
 % close all
 % clc
 % location = determineComputer;
+
 %%
+% set all LE receptive fields to (0,0);
+LEv1x = zeros(1,96);
+LEv1y = zeros(1,96);
+
+LEv4x = zeros(1,96);
+LEv4y = zeros(1,96);
+
 for ch = 1:96
-    
-    hold on
-    if V1dataRE.goodCh(ch) == 1
-       scatter(V1rfParamsRE{ch}(1),V1rfParamsRE{ch}(2),35,[0.8 0 0.6],'filled','MarkerFaceAlpha',0.7);
-    end
-    if V4dataRE.goodCh(ch) == 1
-        scatter(V4rfParamsRE{ch}(1),V4rfParamsRE{ch}(2),35,[0.2 0.4 1],'filled','MarkerFaceAlpha',0.7);
-    end
-    
-    grid on;
+REv1x(ch) = V1rfParamsRE
+
+
+
+end
+
+
+
+
+
+
+
+
+%%
+figure
+hold on
+plot(0,0,'ob')
+plot([0,-3],[0 -3],'-k')
+
     xlim([-10,10])
     ylim([-10,10])
+    grid on;
     set(gca,'YAxisLocation','origin','XAxisLocation','origin',...
         'Layer','top','FontWeight','bold','FontSize',14,'FontAngle','italic')
-    axis square  
-end
-viscircles([StimXcenter,StimYcenter],4,...
-    'color','k');
-plot(fixX, fixY,'ok','MarkerFaceColor','k','MarkerSize',9)
-
-text(8, 9.7, sprintf('V1 n %d',sum(V1rfQuadrantRE==1)),'FontSize',12)
-text(-9.5, 9.7, sprintf('V1 n %d',sum(V1rfQuadrantRE==2)),'FontSize',12)
-text(-9.5, -9.25, sprintf('V1 n %d',sum(V1rfQuadrantRE==3)),'FontSize',12)
-text(8, -9.25, sprintf('V1 n %d',sum(V1rfQuadrantRE==4)),'FontSize',12)
-
-text(8, 9.25, sprintf('V4 n %d',sum(V4rfQuadrantRE==1)),'FontSize',12)
-text(-9.5, 9.25, sprintf('V4 n %d',sum(V4rfQuadrantRE==2)),'FontSize',12)
-text(-9.5, -9.7, sprintf('V4 n %d',sum(V4rfQuadrantRE==3)),'FontSize',12)
-text(8, -9.7, sprintf('V4 n %d',sum(V4rfQuadrantRE==4)),'FontSize',12)
-
-text(-1, 9.7,'V1','Color',[0.8 0 0.6],'FontWeight','Bold','FontSize',14)
-text(0.6, 9.7,'V4','Color',[0.2 0.4 1],'FontWeight','Bold','FontSize',14)
+    axis square 

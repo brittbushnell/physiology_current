@@ -28,9 +28,10 @@ folder = 'byChannel';
 mkdir(folder)
 cd(sprintf('%s',folder))
 %% get maximum responses for each channel
-stimNdx = (dataT.stimulus == 1);
-blankNdx = (dataT.stimulus == 0);
-
+% stimNdx = (dataT.stimulus == 1);
+% blankNdx = (dataT.stimulus == 0);
+stimNdx = (dataT.spatial_frequency > 0);
+blankNdx = (dataT.spatial_frequency == 0);
 for ch = 1:96
     for y = 1:numYs
         for x = 1:numXs

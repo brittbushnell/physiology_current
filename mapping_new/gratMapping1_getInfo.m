@@ -70,7 +70,6 @@ for fi = 1:size(files,1)
         dataT.fixYGlass = 1;
     end
     
-        
     if ~contains(filename,'all')
         dataT.pos_x = dataT.xoffset;
         dataT.pos_y = dataT.yoffset;

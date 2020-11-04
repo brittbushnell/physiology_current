@@ -284,3 +284,265 @@ suptitle(sprintf('%s receptive field centers relative to Glass pattern stimuli',
 
 figName = [V1dataLE.animal,'_BE_V1andV4_RFcenterRelGlassStim.pdf'];
 print(gcf, figName,'-dpdf','-fillpage')
+%% plot binocular sites for V1 and V4
+diffV1 = nan(1,96);
+diffV4 = nan(1,96);
+
+%%
+figure(7)
+clf
+pos = get(gcf,'Position');
+set(gcf,'Position',[pos(1) pos(2) 800 800])
+set(gcf,'PaperOrientation','Landscape');
+
+s = subplot(2,2,1); % V1
+hold on
+
+s.Position(3) = s.Position(3) +0.015;
+
+nch = 0;
+for ch = 1:96
+    
+    hold on
+    if V1dataRE.goodCh(ch) == 1 && V1dataLE.goodCh(ch) == 1
+       REx = V1rfParamsRE{ch}(1);
+       REy = V1rfParamsRE{ch}(2);
+       
+       LEx = V1rfParamsLE{ch}(1);
+       LEy = V1rfParamsLE{ch}(2);
+       
+       scatter(REx,REy,35,'r','MarkerFaceAlpha',0.7);
+       scatter(LEx,LEy,35,'b','MarkerFaceAlpha',0.7);
+       plot([REx,LEx],[REy,LEy],'k-')
+       
+       diffV1(ch) = sqrt(((LEx-REx)^2)+((LEy-LEy)^2));
+       nch = nch +1;
+    end
+
+    xlim([-10,10])
+    ylim([-10,10])
+    grid on;
+    set(gca,'YAxisLocation','origin','XAxisLocation','origin',...
+        'Layer','top','FontWeight','bold','FontSize',14,'FontAngle','italic')
+    axis square  
+end
+title('V1 binocular units')
+text(8.5,9,sprintf('n %d',nch),'FontWeight','normal')    
+
+s = subplot(2,2,2); % V4
+hold on
+s.Position(3) = s.Position(3) +0.015;
+nch = 0;
+for ch = 1:96
+    
+    hold on
+    if V4dataRE.goodCh(ch) == 1 && V4dataLE.goodCh(ch) == 1
+       REx = V4rfParamsRE{ch}(1);
+       REy = V4rfParamsRE{ch}(2);
+       
+       LEx = V4rfParamsLE{ch}(1);
+       LEy = V4rfParamsLE{ch}(2);
+       
+       scatter(REx,REy,35,'r','MarkerFaceAlpha',0.7);
+       scatter(LEx,LEy,35,'b','MarkerFaceAlpha',0.7);
+       plot([REx,LEx],[REy,LEy],'k-')
+       dTmp = sqrt(((LEx-REx)^2)+((LEy-LEy)^2));
+%        if
+%        diffV4(ch) = dTmp;
+       
+       nch = nch+1;
+    end
+
+    xlim([-10,10])
+    ylim([-10,10])
+    grid on;
+    set(gca,'YAxisLocation','origin','XAxisLocation','origin',...
+        'Layer','top','FontWeight','bold','FontSize',14,'FontAngle','italic')
+    axis square  
+end
+title('V4 binocular units')
+text(8.5,9,sprintf('n %d',nch),'FontWeight','normal')
+
+s = subplot(2,2,3); % V1
+hold on
+s.Position(2) = s.Position(2) +0.06;
+s.Position(3) = s.Position(3) +0.015;
+nch = 0;
+for ch = 1:96
+    
+    hold on
+    if V1dataRE.goodCh(ch) == 1 && V1dataLE.goodCh(ch) == 1
+       REx = V1rfParamsRE{ch}(1);
+       REy = V1rfParamsRE{ch}(2);
+       
+       LEx = V1rfParamsLE{ch}(1);
+       LEy = V1rfParamsLE{ch}(2);
+       
+      % scatter(REx,REy,35,'r','MarkerFaceAlpha',0.7);
+       %scatter(LEx,LEy,35,'b','MarkerFaceAlpha',0.7);
+       plot([REx,LEx],[REy,LEy],'k-')
+       
+       diffV1(ch) = sqrt(((LEx-REx)^2)+((LEy-LEy)^2));
+       nch = nch +1;
+    end
+
+    xlim([-10,10])
+    ylim([-10,10])
+    grid on;
+    set(gca,'YAxisLocation','origin','XAxisLocation','origin',...
+        'Layer','top','FontWeight','bold','FontSize',14,'FontAngle','italic')
+    axis square  
+end
+
+s = subplot(2,2,4); % V4
+hold on
+s.Position(2) = s.Position(2) +0.06;
+s.Position(3) = s.Position(3) +0.015;
+nch = 0;
+for ch = 1:96
+    
+    hold on
+    if V4dataRE.goodCh(ch) == 1 && V4dataLE.goodCh(ch) == 1
+       REx = V4rfParamsRE{ch}(1);
+       REy = V4rfParamsRE{ch}(2);
+       
+       LEx = V4rfParamsLE{ch}(1);
+       LEy = V4rfParamsLE{ch}(2);
+       
+      % scatter(REx,REy,35,'r','MarkerFaceAlpha',0.7);
+       %scatter(LEx,LEy,35,'b','MarkerFaceAlpha',0.7);
+       plot([REx,LEx],[REy,LEy],'k-')
+       dTmp = sqrt(((LEx-REx)^2)+((LEy-LEy)^2));
+%        if
+%        diffV4(ch) = dTmp;
+       
+       nch = nch+1;
+    end
+
+    xlim([-10,10])
+    ylim([-10,10])
+    grid on;
+    set(gca,'YAxisLocation','origin','XAxisLocation','origin',...
+        'Layer','top','FontWeight','bold','FontSize',14,'FontAngle','italic')
+    axis square  
+end
+suptitle(sprintf('%s receptive field centers LE blue RE red',V4dataLE.animal))
+%% monocular only
+figure(8)
+clf
+pos = get(gcf,'Position');
+set(gcf,'Position',[pos(1) pos(2) 800 800])
+set(gcf,'PaperOrientation','Landscape');
+
+s = subplot(2,2,1); % V1
+hold on
+% s.Position(1) = s.Position(1) - 0.02;
+% s.Position(2) = s.Position(2) - 0.02;
+ s.Position(3) = s.Position(3) + 0.015;
+nch = 0;
+for ch = 1:96
+    
+    hold on
+    if V1dataRE.goodCh(ch) == 0 && V1dataLE.goodCh(ch) == 1       
+       LEx = V1rfParamsLE{ch}(1);
+       LEy = V1rfParamsLE{ch}(2);
+       
+       scatter(LEx,LEy,35,'b','MarkerFaceAlpha',0.7);
+       nch = nch+1;
+    end
+
+    xlim([-10,10])
+    ylim([-10,10])
+    grid on;
+    set(gca,'YAxisLocation','origin','XAxisLocation','origin',...
+        'Layer','top','FontWeight','bold','FontSize',14,'FontAngle','italic')
+    axis square  
+end
+title('V1 LE monocular units')
+text(8.5,9,sprintf('n %d',nch),'FontWeight','normal')    
+
+
+s = subplot(2,2,2); % V1
+hold on
+% s.Position(1) = s.Position(1) + 0.02;
+% s.Position(2) = s.Position(2) - 0.02;
+s.Position(3) = s.Position(3) + 0.03;
+
+nch = 0;
+for ch = 1:96
+    
+    hold on
+    if V1dataRE.goodCh(ch) == 1 && V1dataLE.goodCh(ch) == 0     
+       REx = V1rfParamsRE{ch}(1);
+       REy = V1rfParamsRE{ch}(2);
+       
+       scatter(REx,REy,35,'r','MarkerFaceAlpha',0.7);
+       nch = nch+1;
+    end
+
+    xlim([-10,10])
+    ylim([-10,10])
+    grid on;
+    set(gca,'YAxisLocation','origin','XAxisLocation','origin',...
+        'Layer','top','FontWeight','bold','FontSize',14,'FontAngle','italic')
+    axis square  
+end
+title('V1 RE monocular units')
+text(8.5,9,sprintf('n %d',nch),'FontWeight','normal')
+
+s = subplot(2,2,3); % V1
+hold on
+% s.Position(1) = s.Position(1) - 0.02;
+% s.Position(2) = s.Position(2) - 0.02;
+s.Position(3) = s.Position(3) + 0.015;
+nch = 0;
+for ch = 1:96
+    
+    hold on
+    if V4dataRE.goodCh(ch) == 0 && V4dataLE.goodCh(ch) == 1       
+       LEx = V4rfParamsLE{ch}(1);
+       LEy = V4rfParamsLE{ch}(2);
+       
+       scatter(LEx,LEy,35,'b','MarkerFaceAlpha',0.7);
+       nch = nch+1;
+    end
+
+    xlim([-10,10])
+    ylim([-10,10])
+    grid on;
+    set(gca,'YAxisLocation','origin','XAxisLocation','origin',...
+        'Layer','top','FontWeight','bold','FontSize',14,'FontAngle','italic')
+    axis square  
+end
+title('V4 LE monocular units')
+    
+text(8.5,9,sprintf('n %d',nch),'FontWeight','normal')
+s = subplot(2,2,4); % V1
+hold on
+% s.Position(1) = s.Position(1) + 0.02;
+% s.Position(2) = s.Position(2) - 0.02;
+s.Position(3) = s.Position(3) + 0.03;
+nch = 0;
+for ch = 1:96
+    
+    hold on
+    if V4dataRE.goodCh(ch) == 1 && V4dataLE.goodCh(ch) == 0    
+       nch = nch+1;
+       REx = V4rfParamsRE{ch}(1);
+       REy = V4rfParamsRE{ch}(2);
+       
+       scatter(REx,REy,35,'r','MarkerFaceAlpha',0.7);
+    end
+    
+    
+    xlim([-10,10])
+    ylim([-10,10])
+    grid on;
+    set(gca,'YAxisLocation','origin','XAxisLocation','origin',...
+        'Layer','top','FontWeight','bold','FontSize',14,'FontAngle','italic')
+    axis square  
+end
+title('V4 RE monocular units')
+text(8.5,9,sprintf('n %d',nch),'FontWeight','normal')
+
+suptitle(sprintf('%s receptive field centers LE blue RE red',V4dataLE.animal))

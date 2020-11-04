@@ -34,7 +34,6 @@ if fixY ~= 0
 else
     yPosRelFix = yPos;
 end
-%yPos = sort(yPos,'descend');
 
 numXs = length(xPos);
 numYs = length(yPos);
