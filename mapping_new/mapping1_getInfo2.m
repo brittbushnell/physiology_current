@@ -52,6 +52,7 @@ for an = 1:length(monks)
                     if contains(tmp(t).name,'_og')
                         % make a list of all of the files that have
                         % been realigned
+                        
                         filesC{corNdx,1} = tmp(t).name;
                         corNdx = corNdx+1;
                     else
@@ -95,12 +96,12 @@ for an = 1:length(monks)
     end
 end
 %%
-for fi = 1:size(files,1)
+for fi = 1:length(files)
     %% Get basic information about experiments
     % try
     filename = files{fi};
     dataT = load(filename);
-    
+    filename = strrep(filename,'.mat','');
     dataT.amap = getBlackrockArrayMap(filename);
     tmp = strsplit(filename,'_');
     dataT.animal = tmp{1};  dataT.eye = tmp{2}; dataT.programID = tmp{3};
@@ -142,6 +143,12 @@ for fi = 1:size(files,1)
             dataT.stimulus(1,i) = parseMapNoiseName(dataT.filename(i,:));
         end
     end
+    %% Get spike counts and zscores
+    if contains(filename,'WU')
+         [dataT.blankSpikeCount, dataT.stimSpikeCount, dataT.stimSpikeCountAllLoc, dataT.blankZscore, dataT.stimZscore,dataT.stimZscoreAllLoc] = getGratMapSpikeCountZscores(dataT,filename);
+    else
+        
+    end
     %% Plot clean vs raw PSTHs to check for timing fuckery
     %     if contains(dataT.animal,'WU')
     %         plotGratingPSTH_rawVsClean (dataT,filename)
@@ -158,7 +165,6 @@ for fi = 1:size(files,1)
     if ~exist(outputDir,'dir')
         mkdir(outputDir)
     end
-%% Get spike counts and zscores
     %% make structures for each eye and save  file
     
     if contains(filename,'LE')
@@ -183,7 +189,7 @@ end
 %         end
 %     end
 % end
-
+toc/60
 
 
 
