@@ -63,13 +63,8 @@ for ch = 1:96
     nx = 1;
     for y = 1:numYs
         for x = 1:numXs
-            if size(dataT.pos_x) == size(dataT.spatial_frequency)
-                xNdx = dataT.pos_x == xPos(x);
-                yNdx = dataT.pos_y == yPos(y);
-            else
-                xNdx = dataT.pos_x(1,1:size(dataT.spatial_frequency,2)) == xPos(x);
-                yNdx = dataT.pos_y(1,1:size(dataT.spatial_frequency,2)) == yPos(y);
-            end
+            xNdx = dataT.pos_x == xPos(x);
+            yNdx = dataT.pos_y == yPos(y);
             
             stimTrials  = stimNdx & yNdx & xNdx;
             

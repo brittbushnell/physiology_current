@@ -227,7 +227,7 @@ if contains(programID,'grat','IgnoreCase',true) || contains(programID,'edge','Ig
         'o_temporal_frequency', 'overlay','current_phase', 'width', 'grating',...
         'type', 'contrast', 'opacity', 'o_current_phase',  'start_time', 'yoffset',...
         'o_direction', 'rotation', 'xoffset','spatial_frequency', 'name',...
-        'mask', 'o_rotation', 'o_spatial_frequency', 'action','xoffset','yoffset'};
+        'mask', 'o_rotation', 'o_spatial_frequency', 'action'};
 else
     stim_var_names = {'pos_x','pos_y','filename','size_x','action','rotation'};
 end
@@ -295,6 +295,11 @@ else % stimulus is a png image
     end
 end
 sprintf('stim shown: %i', n_stim)
+
+if size(xoffset,2) ~= size(spatial_frequency,2)
+    fprintf('ERROR: size of xoffset does not match other variables')
+    keyboard
+end
 %% binning electrophysiology data
 bins = zeros(n_stim, pointsKeep, numCh);
 tic

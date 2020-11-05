@@ -64,8 +64,20 @@ for an = 1:length(monks)
         end
     end
 end
+
+if contains(stimType,'grat','IgnoreCase',true)
+    files(contains(files,'Contour','IgnoreCase',true)) = [];
+end
 %%
-for fi = 1:size(files,2)
+% files = {
+%     'WU_LE_Gratmap_nsp1_20170428_004_thresh35'
+%     };
+% stimType = 'grat';
+% array = 'nsp1';
+% animal = 'WU';
+% eye = 'LE';
+%%
+for fi = 1:length(files)
     try
         filename = string(files{fi});
         
