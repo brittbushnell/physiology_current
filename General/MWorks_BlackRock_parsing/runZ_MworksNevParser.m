@@ -21,8 +21,8 @@ tic;
 %stimType = 'grat';
 %% figure out what you're running
 monks = {
-     'WU';
-    %'WV';
+    % 'WU';
+    'WV';
     %'XT';
     };
 ez = {
@@ -30,10 +30,10 @@ ez = {
     'RE';
     };
 brArray = {
-    'nsp2';
+    %'nsp2';
     'nsp1';
     };
-stimType = 'gratings';%'png';%'gratings'
+stimType = 'png';%'gratings'
 %%
 
 failNdx = 0;
