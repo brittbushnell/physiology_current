@@ -27,18 +27,20 @@ numYs = length(yPos);
 %%
 stimNdx  = dataT.spatial_frequency ~=0;
 blankNdx = dataT.spatial_frequency == 0;
-xNdx = (dataT.pos_x == xPos(2));
-yNdx = (dataT.pos_y == xPos(2));
+xNdx = dataT.pos_x == xPos(2);
+yNdx = dataT.pos_y == yPos(2);
+stimTrials = stimNdx & yNdx & xNdx;
 
-numStimTrialsLoc = sum(stimNdx & xNdx & yNdx)+5;
-numBlankTrials = sum(blankNdx)+5;
+numStimTrialsLoc = sum(stimTrials)+10;
+
+numBlankTrials = sum(blankNdx)+10;
 
 stimSpikeCount = nan(numYs,numXs, 96, numStimTrialsLoc);
-stimSpikeCountAllLoc = nan(96,sum(stimNdx)+5);
+stimSpikeCountAllLoc = nan(96,sum(stimNdx)+10);
 blankSpikeCount = nan(96,numBlankTrials);
 
 stimZscore = nan(numYs,numXs, 96, numStimTrialsLoc);
-stimZscoreAllLoc = nan(96,sum(stimNdx)+5);
+stimZscoreAllLoc = nan(96,sum(stimNdx)+10);
 blankZscore = nan(96,numBlankTrials);
 %%
 for ch = 1:96
@@ -73,6 +75,7 @@ for ch = 1:96
                 stimSpikeCount(y,x,ch,1:sum(stimTrials)) = spikes;
                 stimZscore(y,x,ch,1:sum(stimTrials)) = (spikes -  chMu)/chStd;
             end
+        
             %%
             subplot(numYs, numXs, nx)
             hold on

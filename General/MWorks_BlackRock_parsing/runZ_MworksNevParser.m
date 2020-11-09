@@ -21,8 +21,8 @@ tic;
 %stimType = 'grat';
 %% figure out what you're running
 monks = {
-    % 'WU';
-    'WV';
+     'WU';
+    %'WV';
     %'XT';
     };
 ez = {
@@ -30,10 +30,10 @@ ez = {
     'RE';
     };
 brArray = {
-    %'nsp2';
+   % 'nsp2';
     'nsp1';
     };
-stimType = 'png';%'gratings'
+stimType = 'gratings';%'png';
 %%
 
 failNdx = 0;
@@ -53,7 +53,7 @@ for an = 1:length(monks)
             %%
             for t = 1:size(tmp,1)
                 if contains(tmp(t).name,'thresh')
-                    if ~contains(tmp(t).name,'bar','IgnoreCase',true) % ignore bar map files
+                    if ~contains(tmp(t).name,'bar','IgnoreCase',true)  % ignore bar map files
                         files{ndx} = tmp(t).name;
                         ndx = ndx+1;
                     end
@@ -78,7 +78,7 @@ end
 % eye = 'LE';
 %%
 for fi = 1:length(files)
-    try
+     try
         filename = string(files{fi});
         
         if contains(stimType,'png')
@@ -117,8 +117,9 @@ for fi = 1:length(files)
         
     catch ME
         failNdx = failNdx+1;
-        fprintf('\n\n%s failed %s\n\n',filename,ME.message);
-        failedFiles{failNdx,1} = ME;
+        fprintf('\n\n****** %s failed %s ******\n\n',filename,ME.message);
+        failedFiles{failNdx,1} = filename;
+        failedFiles{failNdx,2} = ME.message;
         
     end
 end

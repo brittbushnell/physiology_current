@@ -296,9 +296,11 @@ else % stimulus is a png image
 end
 sprintf('stim shown: %i', n_stim)
 
-if size(xoffset,2) ~= size(spatial_frequency,2)
-    fprintf('ERROR: size of xoffset does not match other variables')
-    keyboard
+if contains(programID,'grat','IgnoreCase',true) || contains(programID,'edge','IgnoreCase',true)
+    if size(xoffset,2) ~= size(spatial_frequency,2)
+        fprintf('ERROR: size of xoffset does not match other variables')
+        keyboard
+    end
 end
 %% binning electrophysiology data
 bins = zeros(n_stim, pointsKeep, numCh);
