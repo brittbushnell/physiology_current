@@ -5,19 +5,19 @@ tic
 %%
 monks = {
     'WU';
-    % 'WV';
-    % 'XT';
+    'WV';
+    'XT';
     };
 ez = {
     'LE';
-    % 'RE';
+    'RE';
     };
 brArray = {
-    % 'V4';
+    'V4';
     'V1';
     };
 %%
-nameEnd = 'info2';
+nameEnd = 'info3';
 numPerm = 2000;
 numBoot = 200;
 holdout = 0.9;
@@ -27,6 +27,10 @@ location = determineComputer;
 failedFiles = {};
 failNdx = 0;
 %%
+ndx = 1;
+corNdx = 1;
+filesT = {};
+filesC = {};
 for an = 1:length(monks)
     monk = monks{an};
     for ey = 1:length(ez)
@@ -42,10 +46,7 @@ for an = 1:length(monks)
             cd(dataDir);
             
             tmp = dir;
-            ndx = 1;
-            corNdx = 1;
-            filesT = {};
-            filesC = {};
+
             %%
             for t = 1:size(tmp,1)
                 if contains(tmp(t).name,'.mat')
@@ -91,7 +92,6 @@ for an = 1:length(monks)
             save(mtxSaveName,'files')
             
             clear tmp
-            clear ndx
         end
     end
 end

@@ -87,8 +87,6 @@ for an = 1:length(monks)
             mtxSaveName = [listDir,monk,'_',eye,'_',area,'_Glass_','FileList.mat'];
             save(mtxSaveName,'files')
             
-            clear tmp
-            clear ndx
         end
     end
 end
