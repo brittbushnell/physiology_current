@@ -4,9 +4,9 @@ function [stimBlankPval,gCh] = getPermutationStatsAndGoodCh(varargin)
 % INPUT:
 %  realData: 96 element vector of measured values
 %  permData: 96xboot matrix where the columns are the bootstrapped values
-%  numTails: optional input that specifies if you want to run a one or two tailed significance test.  
+%  numTails: optional input that specifies if you want to run a one or two tailed significance test.
 %     The default is two-tailed.
-% 
+%
 % OUTPUT:
 %  stimBlankPval
 %     A vector of p-values from the permutation test comparing the
@@ -44,9 +44,20 @@ end
 stimBlankPval = zeros(1,96);
 gCh = zeros(1,96);
 %%
-    if plotFlag == 1
-        fprintf('\n permutation distribution figures are not automatically saved\n')
+if plotFlag == 1
+    fprintf('\n permutation distribution figures are automatically saved\n')
+    
+    location = determineComputer;
+    if location == 0
+        figDir =   '/Users/brittany/Dropbox/Figures/goodChPermTempStorage/';
+    else
+        figDir =  '/Local/Users/bushnell/Dropbox/Figures/goodChPermTempStorage/';
     end
+    if ~exist(figDir,'dir')
+        mkdir(figDir)
+    end
+    cd(figDir)
+end
 for ch = 1:96
     realDataCh = squeeze(realData(ch));
     permDataCh = squeeze(permData(ch,:));
@@ -72,17 +83,19 @@ for ch = 1:96
         
         plot(realDataCh,0.5,'rv','markerfacecolor','r','markeredgecolor','w','MarkerSize',10);
         plot(nanmean(permDataCh),0.5,'v','markerfacecolor',[0 0.6 0.2],'markeredgecolor','w','MarkerSize',10);
-        set(gca,'color','none','tickdir','out','box','off')  
-        
-%         xlims = get(gca,'XLim')
-%         xMin = xlims(1);
-        xlim([ -0.4 1.6])
+        set(gca,'color','none','tickdir','out','box','off')
+
+%         xlim([ -0.5 3])
         text((-0.2),0.59,sprintf('p %.3f',stimBlankPval(ch)),'fontSize',9)
         text(realDataCh,0.56,sprintf('%.3f',realDataCh),'color',[1 0 0],'fontSize',9)
         text(nanmean(permDataCh),0.54,sprintf('%.3f',nanmean(permDataCh)),'color',[0 0.6 0.2],'fontSize',9)
         
         title(sprintf('ch %d',ch))
         
-        pause(0.2)
+        figName = ['allStimPermTest_ch',num2str(ch),'.pdf'];
+        print(gcf, figName,'-dpdf','-bestfit')
     end
 end
+
+
+

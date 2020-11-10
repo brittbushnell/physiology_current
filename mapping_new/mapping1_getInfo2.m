@@ -117,9 +117,9 @@ for fi = 1:length(files)
     %% check and adjust locations so fixation is at (0,0)
     % adjust locations so fixation is at (0,0). This will also allow us to
     % combine across runs with different locations to get full maps.
-    if contains(dataT.animal,'WU') && ~contains(dataT.runNum,'all')
-        dataT.pos_x = dataT.xoffset(1,1:size(dataT.width,2)); % don't know why, but for some reason offset is reapeated twice
-        dataT.pos_y = dataT.yoffset(1,1:size(dataT.width,2));
+    if contains(dataT.animal,'WU') 
+        dataT.pos_x = dataT.xoffset; % renaming so it's consistent with the rest of the mapping programs
+        dataT.pos_y = dataT.yoffset;
     end
     
     if dataT.fix_x ~=0

@@ -1,4 +1,4 @@
-function [reliabilityIndex, pVals,sigChs,reliabilityIndexPerm] = getHalfCorrPerm(varargin)
+function [reliabilityIndex, pVals,sigChs,reliabilityIndexPerm] = getHalfCorrPerm_10Reps(varargin)
 %  This function will do the split half correlation tests as well as the
 %  permutation test to check for significant reliability across
 %  runs/sessions/days depending on what you put into it.
@@ -82,7 +82,6 @@ splitHalf = nan(96,numBoot);
 splitHalfPerm = nan(96,numBoot);
 reliabilityIndexPerm = nan(96,numPerm);
 numRepeats = size(conditionZscores,2);
-
 for boot = 1:numBoot
     sample1 = randperm(numRepeats,round(numRepeats/2)); % randomly choose half of the repeats
     sample2 = datasample(setdiff([1:numRepeats]',sample1),round(numRepeats/2),1); % find the repeats not in sample1
@@ -98,11 +97,14 @@ fprintf('%d minutes to do real reliability indices\n',toc(splitTic)/60)
 numCond = size(conditionZscores,1);
 for perm = 1:numPerm
     for boot = 1:(numBoot/2)
-        sample1 = randperm(numCond,round(numCond/2)); % randomly choose half of the repeats
-        sample2 = datasample(setdiff([1:numCond]',sample1),round(numCond/2),1); % find the repeats not in sample1
+        sampleCond1 = randperm(numCond,round(numCond/2)); % randomly choose half of the repeats
+        sampleCond2 = datasample(setdiff([1:numCond]',sampleCond1),round(numCond/2),1); % find the repeats not in sample1
         
-        set1 = squeeze(nanmean(conditionZscores(sample1,:,:),2));
-        set2 = squeeze(nanmean(conditionZscores(sample2,:,:),2));
+        sampleReps1 = randperm(numRepeats,10); % randomly choose half of the repeats
+        sampleReps2 = datasample(setdiff([1:numRepeats]',sample1),10,1); % find the repeats not in sample1
+        
+        set1 = squeeze(nanmean(conditionZscores(sampleCond1,sampleReps1,:),2));
+        set2 = squeeze(nanmean(conditionZscores(sampleCond2,sampleReps2,:),2));
         
         splitHalfPerm(:,boot) = diag(corr(set1,set2)); %96xnb
     end
@@ -120,12 +122,12 @@ if plotFlag == 1
     set(gcf,'PaperOrientation','Landscape');
     
     for ch = 1:96
-        %         pValCh = pVals(ch);
+%         pValCh = pVals(ch);
         subplot(10,10,ch)
         hold on
         histogram(reliabilityIndexPerm(ch,:),10,'FaceColor','b','EdgeColor',[0.5 0.5 0.5],'EdgeAlpha',0.3,'Normalization','probability')
         plot([reliabilityIndex(ch), reliabilityIndex(ch)], [0, 0.7],'-r')
-        %         text((0.1),0.65,sprintf('p %.2f',pValCh))
+%         text((0.1),0.65,sprintf('p %.2f',pValCh))
         %xlim([-0.1 0.55])
         ylim([0 1])
         t = title(ch);
@@ -139,21 +141,24 @@ if plotFlag == 1
         end
     end
     suptitle({'Reliability index permutation distributions vs observed (red line)';...
-        'Permutating conditions'})
+        'Permutating conditions and repeats'})
     %%
     location = determineComputer;
     filePartInfo = strsplit(filename,'_');
     if location == 0
         figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/%s/%s/stats/halfCorr/dist/',filePartInfo{1}, filePartInfo{3}, filePartInfo{4});
+        if ~exist(figDir,'dir')
+            mkdir(figDir)
+        end
     else
         figDir =  sprintf( '/Local/Users/bushnell/Dropbox/Figures/%s/%s/%s/stats/halfCorr/dist/',filePartInfo{1}, filePartInfo{3}, filePartInfo{4});
-    end
-    if ~exist(figDir,'dir')
-        mkdir(figDir)
+        if ~exist(figDir,'dir')
+            mkdir(figDir)
+        end
     end
     cd(figDir)
     
-    figName = [filePartInfo{1},'_',filePartInfo{2},'_',filePartInfo{4},'_splitHalfPermDist_',filePartInfo{3},'_',filePartInfo{5},'_',filePartInfo{6},'.pdf'];
+    figName = [filePartInfo{1},'_',filePartInfo{2},'_',filePartInfo{4},'_splitHalfPermDist_subConSubReps',filePartInfo{3},'_',filePartInfo{5},'_',filePartInfo{6},'.pdf'];
     print(gcf, figName,'-dpdf','-fillpage')
     %%
     figure%(1)
@@ -163,12 +168,12 @@ if plotFlag == 1
     set(gcf,'PaperOrientation','Landscape');
     
     for ch = 1:96
-        %         pValCh = pVals(ch);
+%         pValCh = pVals(ch);
         subplot(10,10,ch)
         hold on
         histogram(splitHalf(ch,:),10,'FaceColor','b','EdgeColor',[0.5 0.5 0.5],'EdgeAlpha',0.3,'Normalization','probability')
         plot([reliabilityIndex(ch), reliabilityIndex(ch)], [0, 0.7],'-r')
-        %         text((0.1),0.65,sprintf('p %.2f',pValCh))
+%         text((0.1),0.65,sprintf('p %.2f',pValCh))
         %xlim([-0.1 0.55])
         ylim([0 1])
         t = title(ch);
@@ -182,7 +187,22 @@ if plotFlag == 1
         end
     end
     suptitle('Split-half correlations distributions and reliability index (red line)')
+    %%
+    location = determineComputer;
+    filePartInfo = strsplit(filename,'_');
+    if location == 0
+        figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/%s/%s/stats/halfCorr/dist/',filePartInfo{1}, filePartInfo{3}, filePartInfo{4});
+        if ~exist(figDir,'dir')
+            mkdir(figDir)
+        end
+    else
+        figDir =  sprintf( '/Local/Users/bushnell/Dropbox/Figures/%s/%s/%s/stats/halfCorr/dist/',filePartInfo{1}, filePartInfo{3}, filePartInfo{4});
+        if ~exist(figDir,'dir')
+            mkdir(figDir)
+        end
+    end
+    cd(figDir)
     
-    figName = [filePartInfo{1},'_',filePartInfo{2},'_',filePartInfo{4},'_splitHalfRealDist_',filePartInfo{3},'_',filePartInfo{5},'_',filePartInfo{6},'.pdf'];
+    figName = [filePartInfo{1},'_',filePartInfo{2},'_',filePartInfo{4},'_splitHalfRealDist_subConSubReps',filePartInfo{3},'_',filePartInfo{5},'_',filePartInfo{6},'.pdf'];
     print(gcf, figName,'-dpdf','-fillpage')
 end

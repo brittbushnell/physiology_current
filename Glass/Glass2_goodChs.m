@@ -40,13 +40,14 @@ files = {
     %% XT files after second cleaning
    % 'XT_LE_GlassTR_nsp1_Jan2019_all_thresh35_info2';
    % 'XT_RE_GlassTR_nsp1_Jan2019_all_thresh35_info2';
-    'XT_LE_Glass_nsp1_Jan2019_all_thresh35_info2';
-    'XT_RE_Glass_nsp1_Jan2019_all_thresh35_info2';
-    };
+%     'XT_LE_Glass_nsp1_Jan2019_all_thresh35_info2';
+%     'XT_RE_Glass_nsp1_Jan2019_all_thresh35_info2';
+'XT_RE_Glass_nsp1_20190124_005_thresh35_ogcorrupt_info3'
+};
 %%
 nameEnd = 'goodRuns';
-numPerm = 2000;
-numBoot = 1000;
+numPerm = 200;
+numBoot = 200;
 holdout = 0.9;
 
 plotFlag = 0;
@@ -93,42 +94,20 @@ for fi = 1:length(files)
             nozReshape = reshape(nozChLast,16,numRepeats,96); 
         end
         zScoreReshape = cat(2,GlassReshape,nozReshape);  
-        
+  %%      
     else
-        conZchLast = squeeze(permute(dataT.conZscore,[1 2 3 5 4]));
-        numRepeats = size(dataT.conZscore,5);
-        if contains(filename,'Coh','IgnoreCase',true)
-            conReshape = reshape(conZchLast,16,numRepeats,96);
-        else
-            conReshape = reshape(conZchLast,4,numRepeats,96);
-        end
-        
-        radZchLast = squeeze(permute(dataT.radZscore,[1 2 3 5 4]));
-        numRepeats = size(dataT.radZscore,5);
-        
-        if contains(filename,'Coh','IgnoreCase',true)
-            radReshape = reshape(radZchLast,16,numRepeats,96);
-        else
-            radReshape = reshape(radZchLast,4,numRepeats,96);
-        end
-        
-        nozZchLast = squeeze(permute(dataT.noiseZscore,[1 2 3 5 4]));
-        numRepeats = size(dataT.noiseZscore,5);
-        if contains(filename,'Coh','IgnoreCase',true)
-            nozReshape = reshape(nozZchLast,16,numRepeats,96);
-        else
-            nozReshape = reshape(nozZchLast,4,numRepeats,96);
-        end
-        zScoreReshape = cat(2,conReshape,radReshape,nozReshape);
+        glassZchLast = permute(dataT.glassZscore,[1 2 3 4 6 5]);% rearrange so number of channels is the last thing.
+        zScoreReshape = reshape(glassZchLast,12,size(glassZchLast,5),96);
     end
     %% do split half correlations and permutations
     [dataT.zScoreReliabilityIndex, dataT.zScoreReliabilityPvals,dataT.zScoreSplitHalfSigChs,dataT.zScoreReliabilityIndexPerm] = getHalfCorrPerm(zScoreReshape,filename);
-    plotResponsePvalsVSreliabilityPvals_inStim(dataT)
+%     plotResponsePvalsVSreliabilityPvals_inStim(dataT)
+plotResponsePvalsVSreliabilityPvals(dataT)
     fprintf('Split-Half correlations computed and permuted %.2f minutes\n',toc/60)
     %% Define truly good channels that pass either the visually responsive OR split-half reliability metric
     dataT.goodCh = logical(dataT.responsiveCh) | logical(dataT.zScoreSplitHalfSigChs);
     %% plot PSTHs
-    if length(dataT.inStim) > 96 % running on a single session rather than merged data
+    if ~contains(filename,'all') % running on a single session rather than merged data
         if location == 1
             figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%/%s/PSTH/singleSession/',dataT.animal,dataT.programID,dataT.array);
         elseif location == 0

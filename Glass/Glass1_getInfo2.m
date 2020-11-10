@@ -4,20 +4,20 @@ clc
 tic
 %%
 monks = {
-    % 'WU';
-   'WV';
-  %  'XT';
+%     'WU';
+%     'WV';
+    'XT';
     };
 ez = {
     'LE';
     'RE';
     };
 brArray = {
-    % 'V4';
+    %'V4';
     'V1';
     };
 %%
-nameEnd = 'info2';
+nameEnd = 'info3';
 numPerm = 2000;
 numBoot = 200;
 holdout = 0.9;
@@ -27,6 +27,10 @@ location = determineComputer;
 failedFiles = {};
 failNdx = 0;
 %%
+ndx = 1;
+corNdx = 1;
+filesT = {};
+filesC = {};
 for an = 1:length(monks)
     monk = monks{an};
     for ey = 1:length(ez)
@@ -42,10 +46,6 @@ for an = 1:length(monks)
             cd(dataDir);
             
             tmp = dir;
-            ndx = 1;
-            corNdx = 1;
-            filesT = {};
-            filesC = {};
             %%
             for t = 1:size(tmp,1)
                 if contains(tmp(t).name,'.mat')
@@ -94,7 +94,7 @@ for an = 1:length(monks)
 end
 
 %%
-for fi = 2:length(files)
+for fi = 1:length(files)
     %% Get basic information about experiments
     % try
     
@@ -144,7 +144,7 @@ for fi = 2:length(files)
         dataT = GlassRemoveLowDx(dataT);
         dataT = GlassRemoveLowDots(dataT);
     end
-    % dataT.stimOrder = getStimPresentationOrder(dataT);
+
     % add in anything that's missing from the new dataT structure.
     tmp = strsplit(filename,'_');
     dataT.animal = tmp{1};  dataT.eye = tmp{2}; dataT.programID = tmp{3}; array = tmp{4};
@@ -167,15 +167,15 @@ for fi = 2:length(files)
     %% get receptive field parameters
     % RF center is relative to fixation, not center of the monitor.
     dataT = callReceptiveFieldParameters(dataT);
-    %% find channels whose receptive fields are within the stimulus bounds
-    %[dataT.rfQuadrant, dataT.rfParams, dataT.inStim] = getRFsinGlass(dataT);
     %% get spike counts and Zscores
     if contains(dataT.programID,'TR')
         [dataT.GlassTRSpikeCount,dataT.noiseSpikeCount,dataT.blankSpikeCount,dataT.allStimSpikeCount] = getGlassTRSpikeCounts(dataT);
         [dataT.GlassTRZscore,dataT.allStimZscore, dataT.blankZscore, dataT.noiseZscore] = getGlassTRStimZscore(dataT);
     else
-        [dataT.radSpikeCount,dataT.conSpikeCount, dataT.noiseSpikeCount,dataT.blankSpikeCount,dataT.allStimSpikeCount] = getGlassCRSpikeCounts(dataT);
-        [dataT.conZscore, dataT.radZscore, dataT.noiseZscore, dataT.allStimZscore,dataT.blankZscore] = getGlassStimZscore(dataT);
+%         [dataT.radSpikeCount,dataT.conSpikeCount, dataT.noiseSpikeCount,dataT.blankSpikeCount,dataT.allStimSpikeCount] = getGlassCRSpikeCounts(dataT);
+%         [dataT.conZscore, dataT.radZscore, dataT.noiseZscore, dataT.allStimZscore,dataT.blankZscore] = getGlassStimZscore(dataT);
+        [dataT.radSpikeCount,dataT.conSpikeCount, dataT.noiseSpikeCount,dataT.blankSpikeCount,dataT.allStimSpikeCount,dataT.glassSpikeCount] = getGlassCRSpikeCounts_type(dataT);
+        [dataT.conZscore, dataT.radZscore, dataT.noiseZscore, dataT.allStimZscore,dataT.blankZscore, dataT.glassZscore] = getGlassStimZscore_type(dataT);
     end
     fprintf(sprintf('spike counts done, zscores computed %d minutes \n', toc/60))
     %%
@@ -189,7 +189,7 @@ for fi = 2:length(files)
         mkdir(figDir)
     end
     cd(figDir)
-    %% plot LE
+    %% plot stim V blank PSTH
     figure;
     clf
     pos = get(gcf,'Position');
@@ -216,19 +216,49 @@ for fi = 2:length(files)
     
     figName = [filename,'_PSTHstimVBlank_realign2.pdf'];
     print(gcf, figName,'-dpdf','-fillpage')
+    %% plot con, rad, noise vs blank
+        figure;
+    clf
+    pos = get(gcf,'Position');
+    set(gcf,'Position',[pos(1) pos(2) 1000 1200])
+    set(gcf,'PaperOrientation','Landscape');
+    for ch = 1:96
+        
+        subplot(dataT.amap,10,10,ch)
+        hold on;
+        
+        blankResp = nanmean(smoothdata(dataT.bins((dataT.numDots == 0), 1:35 ,ch),'gaussian',3))./0.01;
+        conResp = nanmean(smoothdata(dataT.bins((dataT.type == 1), 1:35 ,ch),'gaussian',3))./0.01;
+        radResp = nanmean(smoothdata(dataT.bins((dataT.type == 2), 1:35 ,ch),'gaussian',3))./0.01;
+        nozResp = nanmean(smoothdata(dataT.bins((dataT.type == 0), 1:35 ,ch),'gaussian',3))./0.01;
+        conNoz = conResp - nozResp;
+        radNoz = radResp - nozResp;
+        
+        %plot(1:35,blankResp,'Color',[0.2 0.2 0.2],'LineWidth',0.5);
+        plot(1:35,conNoz,'-','color',[0.7 0 0.7],'LineWidth',0.75);
+        plot(1:35,radNoz,'-','color',[0 0.6 0.2],'LineWidth',0.75);
+%         plot(1:35,nozResp,'-','color',[1 0.5 0.1],'LineWidth',0.75);
+        
+        title(ch)
+        
+        set(gca,'Color','none','tickdir','out','XTickLabel',[],'FontAngle','italic');
+        ylim([0 inf])
+    end
+    fname = strrep(filename,'_',' ');
+    suptitle({sprintf('%s %s %s %s (pattern - noise) PSTH', dataT.animal, dataT.array, dataT.programID, dataT.eye);...
+        sprintf(sprintf('%s',string(fname)))});
+    
+    figName = [filename,'_PSTH_stimSubNoise_realign2.pdf'];
+    print(gcf, figName,'-dpdf','-fillpage')
     %% save good data
     if location == 1
         outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/Glass/info/',dataT.array);
-        if ~exist(outputDir, 'dir')
-            mkdir(outputDir)
-        end
     elseif location == 0
         outputDir =  sprintf('~/Dropbox/ArrayData/matFiles/%s/Glass/info/',dataT.array);
-        if ~exist(outputDir, 'dir')
-            mkdir(outputDir)
-        end
     end
-    
+    if ~exist(outputDir, 'dir')
+        mkdir(outputDir)
+    end
     if contains(filename,'LE')
         data.LE = dataT;
         data.RE = [];

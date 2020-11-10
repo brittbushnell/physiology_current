@@ -26,10 +26,9 @@ function plotResponsePvalsVSreliabilityPvals(data)
 %%
 responsePvals = data.stimBlankChPvals;
 reliabilityPvals = data.zScoreReliabilityPvals;
-inStim = data.inStim(1:96); % this is much larger than necessary because of merging, only need to reference the first 96 values.
 %% determine how many channels fall within each subsection of the figure
 %    1 | 2 | 3
-%   -----------
+%   -----------b
 %    4 | 5 | 6
 %   -----------
 %    7 | 8 | 9
@@ -59,8 +58,8 @@ plot([-0.1 1.1], [0.95 0.95], '--b')
 plot([0.05 0.05], [-0.1 1.1], '--b')
 plot([0.95 0.95], [-0.1 1.1], '--b')
 
-plot(responsePvals(inStim == 1),reliabilityPvals(inStim == 1),'ok')
-plot(responsePvals(inStim == 0),reliabilityPvals(inStim == 0),'o','MarkerEdgeColor','k', 'MarkerFaceColor',none)
+
+plot(responsePvals,reliabilityPvals,'o','MarkerEdgeColor','k', 'MarkerFaceColor','k')
 
 % plot(responsePvals,reliabilityPvals,'o','MarkerFaceColor',[0.2 0.2 0.2],'MarkerEdgeColor',[0.2 0.2 0.2])
 
@@ -86,28 +85,22 @@ set(gca,'tickdir','out','Layer','top','YTick',0:0.25:1,'XTick',0:0.2:1)
 xlabel('Visual response permutation p-value','FontAngle','italic','FontSize',12)
 ylabel('Half-Split permutation p-value','FontAngle','italic','FontSize',12)
 
-title({sprintf('%s %s %s %s Half-split p-value vs visual response p-value', filePartInfo{1}, filePartInfo{2}, filePartInfo{4}, filePartInfo{3});...
+title({sprintf('%s %s %s %s split half p-value vs visual response p-value', data.animal, data.eye, data.programID, data.array);...
     'data in gray areas are excluded'},'FontAngle','italic','FontSize',14)
 %% save
 location = determineComputer;
-if length(dataT.inStim) > 96 % running on a single session rather than merged data
-    if location == 0
-        figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/%s/%s/stats/halfCorr/zones/singleSession/',filePartInfo{1}, filePartInfo{3}, filePartInfo{4});
-    else
-        figDir =  sprintf( '/Local/Users/bushnell/Dropbox/Figures/%s/%s/%s/stats/halfCorr/zones/singleSession/',filePartInfo{1}, filePartInfo{3}, filePartInfo{4});
-    end
+
+if location == 0
+    figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/%s/%s/stats/halfCorr/zones/',data.animal, data.array, data.programID);
 else
-    if location == 0
-        figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/%s/%s/stats/halfCorr/zones/',filePartInfo{1}, filePartInfo{3}, filePartInfo{4});
-    else
-        figDir =  sprintf( '/Local/Users/bushnell/Dropbox/Figures/%s/%s/%s/stats/halfCorr/zones/',filePartInfo{1}, filePartInfo{3}, filePartInfo{4});
-    end
+    figDir =  sprintf( '/Local/Users/bushnell/Dropbox/Figures/%s/%s/%s/stats/halfCorr/zones/',data.animal, data.array, data.programID);
 end
+
 if ~exist(figDir,'dir')
     mkdir(figDir)
 end
 
 cd(figDir)
 
-figName = [filePartInfo{1},'_',filePartInfo{2},'_',filePartInfo{4},'_reliableVvisual_',filePartInfo{3},'_',filePartInfo{5},'_',filePartInfo{6},'.pdf'];
+figName = [data.animal,'_',data.eye,'_',data.programID,'_reliableVvisual_',data.array,'_',data.date2,'.pdf'];
 print(gcf, figName,'-dpdf','-fillpage')
