@@ -5,51 +5,55 @@ tic
 %%
 % WU runs on a different program
 files = {
-    'WV_LE_MapNoise_nsp2_20190130_all_thresh35_info';
-    'WV_RE_MapNoise_nsp2_20190130_all_thresh35_info';
-    
-    'WV_LE_MapNoise_nsp1_20190130_all_thresh35_info';
-    'WV_RE_MapNoise_nsp1_20190130_all_thresh35_info';
-    
-    'XT_LE_mapNoiseRight_nsp2_20181120_all_thresh35_info';
-    'XT_RE_mapNoiseRight_nsp2_20181026_all_thresh35_info';
-    
-    'XT_LE_mapNoiseRight_nsp1_20181120_all_thresh35_info';
-    'XT_RE_mapNoiseRight_nsp1_20181026_all_thresh35_info';
+%     'WV_LE_MapNoise_nsp2_20190130_all_thresh35_info';
+%     'WV_RE_MapNoise_nsp2_20190130_all_thresh35_info';
+%     
+%     'WV_LE_MapNoise_nsp1_20190130_all_thresh35_info';
+%     'WV_RE_MapNoise_nsp1_20190130_all_thresh35_info';
+%     
+%     'XT_LE_mapNoiseRight_nsp2_20181120_all_thresh35_info';
+%     'XT_RE_mapNoiseRight_nsp2_20181026_all_thresh35_info';
+%     
+%     'XT_LE_mapNoiseRight_nsp1_20181120_all_thresh35_info';
+%     'XT_RE_mapNoiseRight_nsp1_20181026_all_thresh35_info';
+
+'WV_RE_MapNoise_nsp1_Jan2019_all_thresh35_info';
     };
 nameEnd = 'resps';
 %%
-numBoot = 200;
 numPerm = 2000;
+numBoot = 200;
 holdout = .90;
 plotFlag = 0; % 0 if you don't want to plot anything.
 %%
 location = determineComputer;
 failedFiles = {};
 failNdx = 1;
-
+%%
 for fi = 1:size(files,1)
     %% Get basic information about experiments
     %try
     filename = files{fi};
     fprintf('\n*** analyzing %s \n*** file %d/%d \n', filename,fi,size(files,1))
-    load(filename);
-    if contains(filename,'RE')
-        dataT = data.RE;
+    
+    if ~contains(filename,'all')
+        load(filename);
+        if contains(filename,'RE')
+            dataT = data.RE;
+        else
+            dataT = data.LE;
+        end
     else
-        dataT = data.LE;
+        dataT =load(filename);
     end
     %%
     if location == 1
         outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/%s/',dataT.array,dataT.programID);
-        if ~exist(outputDir,'dir')
-            mkdir(outputDir)
-        end
     elseif location == 0
         outputDir =  sprintf('~/Dropbox/ArrayData/matFiles/%s/%s/',dataT.array,dataT.programID);
-        if ~exist(outputDir,'dir')
-            mkdir(outputDir)
-        end
+    end
+    if ~exist(outputDir,'dir')
+        mkdir(outputDir)
     end
     %% do stim vs blank permutation test
     if contains(dataT.animal,'WU')

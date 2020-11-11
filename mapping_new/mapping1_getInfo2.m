@@ -6,7 +6,7 @@ tic
 monks = {
     %'WU';
     'WV';
-    'XT';
+   % 'XT';
     };
 ez = {
     'LE';
