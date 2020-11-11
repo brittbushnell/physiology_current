@@ -66,17 +66,22 @@ for fi = 1:size(files,1)
     
     [dataT] = stimVsBlankPermutations_allStim(dataT, numBoot,holdout,stimNdx,blankNdx);
     fprintf('stimulus vs blank permutaiton test done %.2f hours \n',toc/3600)
-    %% determine good channels
-    [dataT.stimBlankPval,dataT.goodCh] = getPermutationStatsAndGoodCh(dataT.allStimBlankDprime,dataT.allStimBlankDprimeBootPerm);
+    %% determine visual channels
+    [dataT.stimBlankPval,dataT.reponsiveCh] = getPermutationStatsAndGoodCh(dataT.allStimBlankDprime,dataT.allStimBlankDprimeBootPerm);
     
     fprintf('determination of visually responsive channels done %.2f hours \n',toc/3600)
+    %% reliability
     %% plot PSTHs
     if plotFlag == 1
         plotMappingPSTHs_visualResponses(dataT)
     end
     %% get mean responses per location
+    % If I still need this, update to work from the zscores, not mean
+    % responses.
     dataT = getMapNoiseRespDprime(dataT, numBoot, holdout);
     %% get receptive field centers and boundaries
+    % verify 1) using z-scores  2)  using (y,x) for mapping receptive
+    % fields.
     dataT = getReceptiveFields(dataT);
     %% plot location specific responses
     % plotMapping_locHeatMapbyCh(dataT)
