@@ -25,8 +25,14 @@ numYs = length(yPos);
 %%
 % need to be y,x to plot properly
 %%
-stimNdx  = dataT.spatial_frequency ~=0;
-blankNdx = dataT.spatial_frequency == 0;
+if contains(dataT.programID,'grat','IgnoreCase',true)
+    stimNdx  = dataT.spatial_frequency ~=0;
+    blankNdx = dataT.spatial_frequency == 0;
+else
+    stimNdx  = dataT.stimulus ~=0;
+    blankNdx = dataT.stimulus == 0;
+end
+
 xNdx = dataT.pos_x == xPos(2);
 yNdx = dataT.pos_y == yPos(2);
 stimTrials = stimNdx & yNdx & xNdx;

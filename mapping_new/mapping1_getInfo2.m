@@ -4,7 +4,7 @@ clc
 tic
 %%
 monks = {
-    'WU';
+    %'WU';
     'WV';
     'XT';
     };
@@ -38,15 +38,22 @@ for an = 1:length(monks)
         for ar = 1:length(brArray)
             area = brArray{ar};
             %%
-            if location == 0
-                dataDir = sprintf('~/Dropbox/ArrayData/matFiles/reThreshold/gratings/%s/%s/Mapping/%s/',monk,area,eye);
+            if contains(monk,'WU')
+                if location == 0
+                    dataDir = sprintf('~/Dropbox/ArrayData/matFiles/reThreshold/gratings/%s/%s/Mapping/%s/',monk,area,eye);
+                else
+                    dataDir = sprintf('/Local/Users/bushnell/Dropbox/ArrayData/matFiles/reThreshold/gratings/%s/%s/Mapping/%s/',monk,area,eye);
+                end
             else
-                dataDir = sprintf('/Local/Users/bushnell/Dropbox/ArrayData/matFiles/reThreshold/gratings/%s/%s/Mapping/%s/',monk,area,eye);
+                if location == 0
+                    dataDir = sprintf('~/Dropbox/ArrayData/matFiles/reThreshold/png/%s/%s/Mapping/%s/',monk,area,eye);
+                else
+                    dataDir = sprintf('/Local/Users/bushnell/Dropbox/ArrayData/matFiles/reThreshold/png/%s/%s/Mapping/%s/',monk,area,eye);
+                end
             end
             cd(dataDir);
             
             tmp = dir;
-
             %%
             for t = 1:size(tmp,1)
                 if contains(tmp(t).name,'.mat')
@@ -144,17 +151,7 @@ for fi = 1:length(files)
         end
     end
     %% Get spike counts and zscores
-    if contains(filename,'WU')
-         [dataT.blankSpikeCount, dataT.stimSpikeCount, dataT.stimSpikeCountAllLoc, dataT.blankZscore, dataT.stimZscore,dataT.stimZscoreAllLoc] = getGratMapSpikeCountZscores(dataT,filename);
-    else
-        
-    end
-    %% Plot clean vs raw PSTHs to check for timing fuckery
-    %     if contains(dataT.animal,'WU')
-    %         plotGratingPSTH_rawVsClean (dataT,filename)
-    %     else
-    %         plotMapNoisePSTH_rawVsClean (dataT,filename)
-    %     end
+    [dataT.blankSpikeCount, dataT.stimSpikeCount, dataT.stimSpikeCountAllLoc, dataT.blankZscore, dataT.stimZscore,dataT.stimZscoreAllLoc] = getGratMapSpikeCountZscores(dataT,filename);
     %%
     if location == 1
         outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/mapping/',dataT.array);
@@ -179,17 +176,20 @@ for fi = 1:length(files)
     save(saveName,'data');
     fprintf('%s saved\n', saveName)
     %         catch ME
-    %             fprintf('\n%s did not work. \nError message: %s \n\n',filename,ME.message)
-    %             failedFiles{failNdx} = filename;
-    %             failedME{failNdx} = ME;
     %             failNdx = failNdx+1;
+    %             fprintf('\n%s did not work. \nError message: %s \n\n',filename,ME.message)
+    %             failedFiles{failNdx,1} = filename;
+    %             failedFiles{failNdx,2} = ME.message;
+    %             failedME{failNdx} = ME;
+    %             
     %         end
 end
+frintf('\n\n*** Mapping1 done in %.2f minutes. %s files failed at some point***',toc/60,failNdx)
 %failedFiles
 %         end
 %     end
 % end
-toc/60
+
 
 
 
