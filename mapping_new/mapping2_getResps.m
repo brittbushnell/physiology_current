@@ -57,14 +57,14 @@ for fi = 1:size(files,1)
     end
     %% do stim vs blank permutation test
     if contains(dataT.animal,'WU')
-        stimNdx = (dataT.spatial_frequency > 0);
-        blankNdx = (dataT.spatial_frequency == 0);
-    else
-        stimNdx = (dataT.stimulus == 1);
-        blankNdx = (dataT.stimulus == 0);
+        error('ya gotta enter the correct info for what is the stim and blank mtx, silly Billy')
+%         stimMtx = [];
+%         blankMtx = [];
+    else      
+        stimMtx = dataT.stimZscoreAllLoc';
+        blankMtx = dataT.blankZscore';
     end
-    
-    [dataT] = stimVsBlankPermutations_allStim(dataT, numBoot,holdout,stimNdx,blankNdx);
+[realStimBlankDprime ,stimBlankDprimePermBoot, stimBlankDprimeMuPerm,stimBlankSDPerm] = stimVsBlankPerm_allStim_zScore(blankMtx,stimMtx, numBoot,holdout);
     fprintf('stimulus vs blank permutaiton test done %.2f hours \n',toc/3600)
     %% determine visual channels
     [dataT.stimBlankPval,dataT.reponsiveCh] = getPermutationStatsAndGoodCh(dataT.allStimBlankDprime,dataT.allStimBlankDprimeBootPerm);
