@@ -34,13 +34,13 @@ clc
 %     };
 % newName = 'WV_LE_MapNoise_nsp1_20190130_all_thresh35';
 %
-files = {
-    'WV_RE_MapNoise_nsp1_20190130_003_thresh35_ogcorrupt_info3'         ;
-    'WV_RE_MapNoise_nsp1_20190130_004_thresh35_ogcorrupt_info3'         ;
-    'WV_RE_MapNoise_nsp1_20190201_001_thresh35_ogcorrupt_info3'         ;
-    'WV_RE_MapNoise_nsp1_20190205_001_thresh35_ogcorrupt_info3'         ;
-    };
-newName = 'WV_RE_MapNoise_nsp1_Jan2019_all_thresh35_info';
+% files = {
+%     'WV_RE_MapNoise_nsp1_20190130_003_thresh35_ogcorrupt_info3'         ;
+%     'WV_RE_MapNoise_nsp1_20190130_004_thresh35_ogcorrupt_info3'         ;
+%     'WV_RE_MapNoise_nsp1_20190201_001_thresh35_ogcorrupt_info3'         ;
+%     'WV_RE_MapNoise_nsp1_20190205_001_thresh35_ogcorrupt_info3'         ;
+%     };
+% newName = 'WV_RE_MapNoise_nsp1_Jan2019_all_thresh35_info';
 %% XT
 
 % V4

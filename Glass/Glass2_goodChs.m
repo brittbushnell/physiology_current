@@ -38,12 +38,12 @@ files = {
     %     'WU_RE_Glass_nsp1_Aug2017_all_thresh35_info';
     
     %% XT files after second cleaning
-   % 'XT_LE_GlassTR_nsp1_Jan2019_all_thresh35_info2';
-   % 'XT_RE_GlassTR_nsp1_Jan2019_all_thresh35_info2';
-%     'XT_LE_Glass_nsp1_Jan2019_all_thresh35_info2';
-%     'XT_RE_Glass_nsp1_Jan2019_all_thresh35_info2';
-'XT_RE_Glass_nsp1_20190124_005_thresh35_ogcorrupt_info3'
-};
+    % 'XT_LE_GlassTR_nsp1_Jan2019_all_thresh35_info2';
+    % 'XT_RE_GlassTR_nsp1_Jan2019_all_thresh35_info2';
+    %     'XT_LE_Glass_nsp1_Jan2019_all_thresh35_info2';
+    %     'XT_RE_Glass_nsp1_Jan2019_all_thresh35_info2';
+    'XT_RE_Glass_nsp1_20190124_005_thresh35_ogcorrupt_info3'
+    };
 %%
 nameEnd = 'goodRuns';
 numPerm = 200;
@@ -83,7 +83,7 @@ for fi = 1:length(files)
         if contains(filename,'Coh','IgnoreCase',true)
             GlassReshape = reshape(GlassChLast,64,numRepeats,96);
         else
-            GlassReshape = reshape(GlassChLast,16,numRepeats,96); 
+            GlassReshape = reshape(GlassChLast,16,numRepeats,96);
         end
         
         nozChLast = permute(dataT.noiseZscore,[1 2 3 4 6 5]);
@@ -91,18 +91,18 @@ for fi = 1:length(files)
         if contains(filename,'Coh','IgnoreCase',true)
             nozReshape = reshape(nozChLast,64,numRepeats,96);
         else
-            nozReshape = reshape(nozChLast,16,numRepeats,96); 
+            nozReshape = reshape(nozChLast,16,numRepeats,96);
         end
-        zScoreReshape = cat(2,GlassReshape,nozReshape);  
-  %%      
+        zScoreReshape = cat(2,GlassReshape,nozReshape);
+        %%
     else
         glassZchLast = permute(dataT.glassZscore,[1 2 3 4 6 5]);% rearrange so number of channels is the last thing.
         zScoreReshape = reshape(glassZchLast,12,size(glassZchLast,5),96);
     end
     %% do split half correlations and permutations
     [dataT.zScoreReliabilityIndex, dataT.zScoreReliabilityPvals,dataT.zScoreSplitHalfSigChs,dataT.zScoreReliabilityIndexPerm] = getHalfCorrPerm(zScoreReshape,filename);
-%     plotResponsePvalsVSreliabilityPvals_inStim(dataT)
-plotResponsePvalsVSreliabilityPvals(dataT)
+    %     plotResponsePvalsVSreliabilityPvals_inStim(dataT)
+    plotResponsePvalsVSreliabilityPvals(dataT)
     fprintf('Split-Half correlations computed and permuted %.2f minutes\n',toc/60)
     %% Define truly good channels that pass either the visually responsive OR split-half reliability metric
     dataT.goodCh = logical(dataT.responsiveCh) | logical(dataT.zScoreSplitHalfSigChs);

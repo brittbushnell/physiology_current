@@ -4,9 +4,9 @@ clc
 tic
 %%
 monks = {
-    %'WU';
+    'WU';
     'WV';
-   % 'XT';
+    'XT';
     };
 ez = {
     'LE';
@@ -80,26 +80,36 @@ for an = 1:length(monks)
             end
             
             if isempty(filesT)
-                files = filesC;
+                list = filesC;
             elseif isempty(filesC)
-                files = filesT;
+                list = filesT;
             else
-                files = cat(1,filesC,filesT);
+                list = cat(1,filesC,filesT);
             end
-            if location == 0
-                listDir ='~/Dropbox/ArrayData/matFiles/reThreshold/listMatrices/Mapping/';
-            else
-                listDir = '/Local/Users/bushnell/Dropbox/ArrayData/matFiles/reThreshold/listMatrices/Mapping/';
-            end
-            
-            if ~exist(listDir,'dir')
-                mkdir(listDir)
-            end
-            mtxSaveName = [listDir,monk,'_',eye,'_',area,'_Glass_','FileList.mat'];
-            save(mtxSaveName,'files')
             
             clear tmp
         end
+    end
+end
+%%
+if location == 0
+    listDir ='~/Dropbox/ArrayData/matFiles/reThreshold/listMatrices/Mapping/';
+else
+    listDir = '/Local/Users/bushnell/Dropbox/ArrayData/matFiles/reThreshold/listMatrices/Mapping/';
+end
+
+if ~exist(listDir,'dir')
+    mkdir(listDir)
+end
+mtxSaveName = [listDir,monk,'_',eye,'_',area,'_Glass_','FileList.mat'];
+save(mtxSaveName,'list')
+%% very cludgy way to get rid of empty cells
+files = {};
+ndx = 1;
+for i = 1:length(list)
+    if ~isempty(list{i})
+        files{ndx,1} = list{i};
+        ndx = ndx+1;
     end
 end
 %%
