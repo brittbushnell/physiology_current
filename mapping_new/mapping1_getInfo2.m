@@ -115,7 +115,7 @@ end
 %%
 for fi = 1:length(files)
     %% Get basic information about experiments
-    % try
+     try
     filename = files{fi};
     dataT = load(filename);
     filename = strrep(filename,'.mat','');
@@ -185,16 +185,16 @@ for fi = 1:length(files)
     saveName = [outputDir filename '_' nameEnd ''];
     save(saveName,'data');
     fprintf('%s saved\n', saveName)
-    %         catch ME
-    %             failNdx = failNdx+1;
-    %             fprintf('\n%s did not work. \nError message: %s \n\n',filename,ME.message)
-    %             failedFiles{failNdx,1} = filename;
-    %             failedFiles{failNdx,2} = ME.message;
-    %             failedME{failNdx} = ME;
-    %             
-    %         end
+            catch ME
+                failNdx = failNdx+1;
+                fprintf('\n%s did not work. \nError message: %s \n\n',filename,ME.message)
+                failedFiles{failNdx,1} = filename;
+                failedFiles{failNdx,2} = ME.message;
+                failedME{failNdx} = ME;
+                
+            end
 end
-frintf('\n\n*** Mapping1 done in %.2f minutes. %s files failed at some point***',toc/60,failNdx)
+fprintf('\n\n*** Mapping1 done in %.2f minutes. %s files failed at some point***',toc/60,failNdx)
 %failedFiles
 %         end
 %     end
