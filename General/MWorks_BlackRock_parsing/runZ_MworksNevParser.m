@@ -21,22 +21,26 @@ tic;
 %stimType = 'grat';
 %% figure out what you're running
 monks = {
-     'WU';
+    % 'WU';
     %'WV';
-    %'XT';
+    'XT';
     };
 ez = {
     'LE';
     'RE';
     };
 brArray = {
-   % 'nsp2';
+    'nsp2';
     'nsp1';
     };
-stimType = 'gratings';%'png';
+stimType = 'png';
+% stimType = 'gratings';
 %%
 
 failNdx = 0;
+
+ndx = 1;
+files = {};
 for an = 1:length(monks)
     animal = monks{an};
     for ey = 1:length(ez)
@@ -48,8 +52,6 @@ for an = 1:length(monks)
             
             cd(inputDir);
             tmp = dir;
-            ndx = 1;
-            files = {};
             %%
             for t = 1:size(tmp,1)
                 if contains(tmp(t).name,'thresh')
@@ -60,7 +62,7 @@ for an = 1:length(monks)
                 end
             end
             clear tmp
-            clear ndx
+%             clear ndx
         end
     end
 end
