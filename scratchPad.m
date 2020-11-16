@@ -8,52 +8,160 @@
 % location = determineComputer;
 
 %%
-con = reshape(dataT.conSpikeCount,1,numel(dataT.conSpikeCount));
-rad = reshape(dataT.radSpikeCount,1,numel(dataT.radSpikeCount));
-noz = reshape(dataT.noiseSpikeCount,1,numel(dataT.noiseSpikeCount));
+    %%
+    
+    'WU_LE_GratingsMapRF_nsp2_20170426_003_thresh35_info3'              ;
+    'WU_LE_GratingsMapRF_nsp2_20170620_001_thresh35_info3'              ;
+    'WU_LE_GratingsMapRF_nsp2_20170814_003_thresh35_info3'              ;
+    
+    'WU_LE_Gratmap2_nsp2_20170428_005_thresh35_info3'                   ;
+    'WU_LE_Gratmap_nsp2_20170215_002_thresh35_info3'                    ;
+    'WU_LE_Gratmap_nsp2_20170215_003_thresh35_info3'                    ;
+    'WU_LE_Gratmap_nsp2_20170215_004_thresh35_info3'                    ;
+    'WU_LE_Gratmap_nsp2_20170424_001_thresh35_info3'                    ;
+    'WU_LE_Gratmap_nsp2_20170428_003_thresh35_info3'                    ;
+    'WU_LE_Gratmap_nsp2_20170428_004_thresh35_info3'                    ;
+    'WU_LE_Gratmap_nsp2_20170504_007_thresh35_info3'                    ;
+    
+    'WU_LE_GratingsMapRF_nsp1_20170426_003_thresh35_info3'              ;
+    'WU_LE_GratingsMapRF_nsp1_20170814_003_thresh35_info3'              ;
+    
+    'WU_LE_Gratmap2_nsp1_20170428_005_thresh35_info3'                   ;
+    'WU_LE_Gratmap_nsp1_20170216_008_thresh35_info3'                    ;
+    'WU_LE_Gratmap_nsp1_20170216_009_thresh35_info3'                    ;
+    'WU_LE_Gratmap_nsp1_20170216_010_thresh35_info3'                    ;
+    'WU_LE_Gratmap_nsp1_20170221_001_thresh35_info3'                    ;
+    'WU_LE_Gratmap_nsp1_20170424_001_thresh35_info3'                    ;
+    'WU_LE_Gratmap_nsp1_20170428_003_thresh35_info3'                    ;
+    'WU_LE_Gratmap_nsp1_20170428_004_thresh35_info3'                    ;
+    
+    'WU_RE_GratingsMapRF_nsp2_20170426_001_thresh35_info3'              ;
+    'WU_RE_GratingsMapRF_nsp2_20170427_001_thresh35_info3'              ;
+    'WU_RE_GratingsMapRF_nsp2_20170427_002_thresh35_info3'              ;
+    'WU_RE_GratingsMapRF_nsp2_20170814_001_thresh35_info3'              ;
+    'WU_RE_GratingsMapRF_nsp2_20170814_002_thresh35_info3'              ;
+    'WU_RE_GratingsMapRF_nsp2_20170815_001_thresh35_info3'              ;
+    
+    'WU_RE_Gratmap2_nsp2_20170428_007_thresh35_info3'                   ;
+    'WU_RE_Gratmap_nsp2_20170424_002_thresh35_info3'                    ;
+    'WU_RE_Gratmap_nsp2_20170428_006_thresh35_info3'                    ;
+    'WU_RE_Gratmap_nsp2_20170504_002_thresh35_info3'                    ;
+    'WU_RE_Gratmap_nsp2_20170504_004_thresh35_info3'                    ;
+    
+    'WU_LE_GratingsMapRF_nsp1_20170426_003_thresh35_info3'              ;
+    'WU_LE_GratingsMapRF_nsp1_20170814_003_thresh35_info3'              ;
+    
+    'WU_LE_GratingsMapRF_nsp2_20170426_003_thresh35_info3'              ;
+    'WU_LE_GratingsMapRF_nsp2_20170620_001_thresh35_info3'              ;
+    
+    'WU_LE_Gratmap2_nsp1_20170428_005_thresh35_info3'                   ;
+    'WU_LE_Gratmap2_nsp2_20170428_005_thresh35_info3'                   ;
+    'WU_LE_Gratmap_nsp1_20170216_008_thresh35_info3'                    ;
+    'WU_LE_Gratmap_nsp1_20170216_009_thresh35_info3'                    ;
+    'WU_LE_Gratmap_nsp1_20170216_010_thresh35_info3'                    ;
+    'WU_LE_Gratmap_nsp1_20170221_001_thresh35_info3'                    ;
+    'WU_LE_Gratmap_nsp1_20170424_001_thresh35_info3'                    ;
+    'WU_LE_Gratmap_nsp1_20170428_003_thresh35_info3'                    ;
+    'WU_LE_Gratmap_nsp1_20170428_004_thresh35_info3'                    ;
+    'WU_LE_Gratmap_nsp2_20170215_002_thresh35_info3'                    ;
+    'WU_LE_Gratmap_nsp2_20170215_003_thresh35_info3'                    ;
+    'WU_LE_Gratmap_nsp2_20170215_004_thresh35_info3'                    ;
+    'WU_LE_Gratmap_nsp2_20170424_001_thresh35_info3'                    ;
+    'WU_LE_Gratmap_nsp2_20170428_003_thresh35_info3'                    ;
+    'WU_LE_Gratmap_nsp2_20170428_004_thresh35_info3'                    ;
+    'WU_LE_Gratmap_nsp2_20170504_007_thresh35_info3'                    ;
+    
+    'WU_RE_GratingsMapRF_nsp1_20170426_001_thresh35_info3'              ;
+    'WU_RE_GratingsMapRF_nsp1_20170427_001_thresh35_info3'              ;
+    'WU_RE_GratingsMapRF_nsp1_20170427_002_thresh35_info3'              ;
+    'WU_RE_GratingsMapRF_nsp1_20170814_001_thresh35_info3'              ;
+    'WU_RE_GratingsMapRF_nsp1_20170814_002_thresh35_info3'              ;
+    'WU_RE_GratingsMapRF_nsp1_20170815_001_thresh35_info3'              ;
+    
+    'WU_RE_GratingsMapRF_nsp2_20170426_001_thresh35_info3'              ;
+    'WU_RE_GratingsMapRF_nsp2_20170427_001_thresh35_info3'              ;
+    'WU_RE_GratingsMapRF_nsp2_20170427_002_thresh35_info3'              ;
+    'WU_RE_GratingsMapRF_nsp2_20170814_001_thresh35_info3'              ;
+    'WU_RE_GratingsMapRF_nsp2_20170814_002_thresh35_info3'              ;
+    'WU_RE_GratingsMapRF_nsp2_20170815_001_thresh35_info3'              ;
+    
+    'WU_RE_Gratmap2_nsp1_20170428_007_thresh35_info3'                   ;
+    'WU_RE_Gratmap2_nsp2_20170428_007_thresh35_info3'                   ;
+    'WU_RE_Gratmap_nsp1_20170216_005_thresh35_info3'                    ;
+    'WU_RE_Gratmap_nsp1_20170216_006_thresh35_info3'                    ;
+    'WU_RE_Gratmap_nsp1_20170216_007_thresh35_info3'                    ;
+    'WU_RE_Gratmap_nsp1_20170428_006_thresh35_info3'                    ;
+    'WU_RE_Gratmap_nsp2_20170424_002_thresh35_info3'                    ;
+    'WU_RE_Gratmap_nsp2_20170428_006_thresh35_info3'                    ;
+    'WU_RE_Gratmap_nsp2_20170504_002_thresh35_info3'                    ;
+    'WU_RE_Gratmap_nsp2_20170504_004_thresh35_info3'                    ;
+    
 
-conZ = reshape(dataT.conZscore,1,numel(dataT.conZscore));
-radZ = reshape(dataT.radZscore,1,numel(dataT.radZscore));
-nozZ = reshape(dataT.noiseZscore,1,numel(dataT.noiseZscore));
+    
+    %%
+    'XT_LE_mapNoiseRight_nsp1_20181105_003_thresh35_ogcorrupt_info3'    ;
+    'XT_LE_mapNoiseRight_nsp1_20181105_004_thresh35_ogcorrupt_info3'    ;
+    'XT_LE_mapNoiseRight_nsp1_20181120_001_thresh35_ogcorrupt_info3'    ;
+    'XT_LE_mapNoiseRight_nsp1_20181120_002_thresh35_ogcorrupt_info3'    ;
+    'XT_LE_mapNoiseRight_nsp1_20181120_003_thresh35_ogcorrupt_info3'    ;
+    'XT_LE_mapNoiseRight_nsp1_20181127_001_thresh35_ogcorrupt_info3'    ;
+   
+    'XT_LE_mapNoise_nsp1_20181025_001_thresh35_ogcorrupt_info3'         ;
+    
+    'XT_RE_mapNoiseLeft_nsp1_20181026_001_thresh35_ogcorrupt_info3'     ;
+    
+    'XT_RE_mapNoiseRight_nsp1_20181026_001_thresh35_ogcorrupt_info3'    ;
+    'XT_RE_mapNoiseRight_nsp1_20181026_003_thresh35_ogcorrupt_info3'    ;
+    'XT_RE_mapNoiseRight_nsp1_20181119_001_thresh35_ogcorrupt_info3'    ;
 
+    'XT_RE_mapNoise_nsp1_20181024_004_thresh35_ogcorrupt_info3'         ;
 
-figure(5)
-clf
-subplot(3,2,1)
-hold on
-histogram(noz,'BinWidth',4,'Normalization','probability','FaceColor',[0.6 0.6 0.6],'FaceAlpha',0.25)
-histogram(con,'BinWidth',4,'Normalization','probability','FaceColor',[0.6 0 0.6],'FaceAlpha',0.25)
+    'XT_LE_mapNoiseRight_nsp2_20181105_003_thresh35_info3'              ;
+    'XT_LE_mapNoiseRight_nsp2_20181105_004_thresh35_info3'              ;
+    'XT_LE_mapNoiseRight_nsp2_20181120_001_thresh35_info3'              ;
+    'XT_LE_mapNoiseRight_nsp2_20181120_002_thresh35_info3'              ;
+    'XT_LE_mapNoiseRight_nsp2_20181120_003_thresh35_info3'              ;
+    'XT_LE_mapNoiseRight_nsp2_20181127_001_thresh35_info3'              ;
+    
+    'XT_LE_mapNoise_nsp2_20181023_002_thresh35_info3'                   ;
+    'XT_LE_mapNoise_nsp2_20181025_001_thresh35_info3'                   ;
+    
+    'XT_LE_mapNoise_nsp1_20181023_001_thresh35_info3'                   ;
+    'XT_LE_mapNoise_nsp1_20181023_002_thresh35_info3'                   ;
+    
+    'XT_RE_mapNoiseLeft_nsp2_20181026_001_thresh35_info3'               ;
+    
+    'XT_RE_mapNoiseRight_nsp2_20181026_001_thresh35_info3'              ;
+    'XT_RE_mapNoiseRight_nsp2_20181026_003_thresh35_info3'              ;
+    'XT_RE_mapNoiseRight_nsp2_20181119_001_thresh35_info3'              ;
+    
+    'XT_RE_mapNoise_nsp2_20181024_001_thresh35_info3'                   ;
+    'XT_RE_mapNoise_nsp2_20181024_002_thresh35_info3'                   ;
+    'XT_RE_mapNoise_nsp2_20181024_003_thresh35_info3'                   ;
+    
+    'XT_LE_mapNoiseRight_nsp2_20181105_003_thresh35_info3'              ;
+    'XT_LE_mapNoiseRight_nsp2_20181105_004_thresh35_info3'              ;
+    'XT_LE_mapNoiseRight_nsp2_20181120_001_thresh35_info3'              ;
+    'XT_LE_mapNoiseRight_nsp2_20181120_002_thresh35_info3'              ;
+    'XT_LE_mapNoiseRight_nsp2_20181120_003_thresh35_info3'              ;
+    'XT_LE_mapNoiseRight_nsp2_20181127_001_thresh35_info3'              ;
+    
+    'XT_LE_mapNoise_nsp1_20181023_001_thresh35_info3'                   ;
+    'XT_LE_mapNoise_nsp1_20181023_002_thresh35_info3'                   ;
+    
+    'XT_LE_mapNoise_nsp2_20181023_002_thresh35_info3'                   ;
+    'XT_LE_mapNoise_nsp2_20181025_001_thresh35_info3'                   ;
+    
+    'XT_RE_mapNoiseLeft_nsp2_20181026_001_thresh35_info3'               ;
 
-ylim([0, 0.4])
-title('noise spike count')
-
-subplot(3,2,3)
-hold on
-histogram(con,'BinWidth',4,'Normalization','probability','FaceColor',[0.6 0 0.6],'FaceAlpha',0.25)
-ylim([0, 0.4])
-title('concentric')
-
-subplot(3,2,5)
-hold on
-histogram(rad,'BinWidth',4,'Normalization','probability','FaceColor',[0.1 0.6 0.3],'FaceAlpha',0.25)
-ylim([0, 0.4])
-title('radial')
-
-subplot(3,2,2)
-hold on
-histogram(nozZ,'BinWidth',0.25,'Normalization','probability','FaceColor',[0.6 0.6 0.6],'FaceAlpha',0.25)
-
-histogram(conZ,'BinWidth',0.25,'Normalization','probability','FaceColor',[0.7 0 0.7],'FaceAlpha',0.25)
-
-histogram(radZ,'BinWidth',0.25,'Normalization','probability','FaceColor',[0.1 0.6 0.3],'FaceAlpha',0.25)
-
-title('zscore')
-legend('noise','con','rad')
-%%
-randRep = randi(length(con),[1,200]);
-figure(4)
-hold on
-plot(con(randRep),'o','color',[0.7 0 0.7])
-plot(rad(randRep),'o','color',[0.1 0.4 0.3])
-plot(noz(randRep),'o','color',[0.7 0.7 0.7])
-grid on 
+    'XT_RE_mapNoiseRight_nsp2_20181026_001_thresh35_info3'              ;
+    'XT_RE_mapNoiseRight_nsp2_20181026_003_thresh35_info3'              ;
+    'XT_RE_mapNoiseRight_nsp2_20181119_001_thresh35_info3'              ;
+    
+    'XT_RE_mapNoise_nsp1_20181024_001_thresh35_info3'                   ;
+    'XT_RE_mapNoise_nsp1_20181024_002_thresh35_info3'                   ;
+    'XT_RE_mapNoise_nsp1_20181024_003_thresh35_info3'                   ;
+    
+    'XT_RE_mapNoise_nsp2_20181024_001_thresh35_info3'                   ;
+    'XT_RE_mapNoise_nsp2_20181024_002_thresh35_info3'                   ;
+    'XT_RE_mapNoise_nsp2_20181024_003_thresh35_info3'                   ;

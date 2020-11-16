@@ -4,8 +4,8 @@ clc
 tic
 %%
 monks = {
-%     'WU';
-%     'WV';
+    'WU';
+    'WV';
     'XT';
     };
 ez = {
@@ -94,7 +94,7 @@ end
 %%
 for fi = 1:length(files)
     %% Get basic information about experiments
-    % try
+     try
     
     filename = files{fi};
     dataT = load(filename);
@@ -188,7 +188,7 @@ for fi = 1:length(files)
     end
     cd(figDir)
     %% plot stim V blank PSTH
-    figure;
+    figure(1);
     clf
     pos = get(gcf,'Position');
     set(gcf,'Position',[pos(1) pos(2) 1000 800])
@@ -215,7 +215,7 @@ for fi = 1:length(files)
     figName = [filename,'_PSTHstimVBlank_realign2.pdf'];
     print(gcf, figName,'-dpdf','-fillpage')
     %% plot con, rad, noise vs blank
-        figure;
+    figure(2)
     clf
     pos = get(gcf,'Position');
     set(gcf,'Position',[pos(1) pos(2) 1000 1200])
@@ -232,10 +232,8 @@ for fi = 1:length(files)
         conNoz = conResp - nozResp;
         radNoz = radResp - nozResp;
         
-        %plot(1:35,blankResp,'Color',[0.2 0.2 0.2],'LineWidth',0.5);
         plot(1:35,conNoz,'-','color',[0.7 0 0.7],'LineWidth',0.75);
         plot(1:35,radNoz,'-','color',[0 0.6 0.2],'LineWidth',0.75);
-%         plot(1:35,nozResp,'-','color',[1 0.5 0.1],'LineWidth',0.75);
         
         title(ch)
         
@@ -269,12 +267,12 @@ for fi = 1:length(files)
     save(saveName,'data');
     fprintf('%s saved\n  run time: %.2f minutes\n\n', saveName, toc/60)
     
-    %     catch ME
-    %         fprintf('%s did not work. \nError message: %s \n',filename,ME.message)
-    %         failNdx = failNdx+1;
-    %         failedFiles{failNdx,1} = filename;
-    %         failedME{failNdx,1} = ME;
-    %     end
+        catch ME
+            fprintf('%s did not work. \nError message: %s \n',filename,ME.message)
+            failNdx = failNdx+1;
+            failedFiles{failNdx,1} = filename;
+            failedME{failNdx,1} = ME;
+        end
     clear dataT
 end
 %         end

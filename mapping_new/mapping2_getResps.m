@@ -5,19 +5,20 @@ tic
 %%
 % WU runs on a different program
 files = {
-    %     'WV_LE_MapNoise_nsp2_20190130_all_thresh35_info';
-    %     'WV_RE_MapNoise_nsp2_20190130_all_thresh35_info';
-    %
-    %     'WV_LE_MapNoise_nsp1_20190130_all_thresh35_info';
-    %     'WV_RE_MapNoise_nsp1_20190130_all_thresh35_info';
-    %
-    %     'XT_LE_mapNoiseRight_nsp2_20181120_all_thresh35_info';
-    %     'XT_RE_mapNoiseRight_nsp2_20181026_all_thresh35_info';
-    %
-    %     'XT_LE_mapNoiseRight_nsp1_20181120_all_thresh35_info';
-    %     'XT_RE_mapNoiseRight_nsp1_20181026_all_thresh35_info';
+    'WV_LE_MapNoise_nsp2_20190130_all_thresh35_info3';
+    'WV_RE_MapNoise_nsp2_20190130_all_thresh35_info3';
+    'WV_LE_MapNoise_nsp1_20190130_all_thresh35_info3';
+    'WV_RE_MapNoise_nsp1_Jan2019_all_thresh35_info3';
     
-    'WV_RE_MapNoise_nsp1_Jan2019_all_thresh35_info';
+    'WU_LE_GratmapRF_nsp2_April2017_all_thresh35';
+    'WU_RE_GratmapRF_nsp2_April2017_all_thresh35';
+    'WU_LE_GratmapRF_nsp1_April2017_all_thresh35';
+    'WU_RE_GratmapRF_nsp1_April2017_all_thresh35';
+    
+    'XT_RE_mapNoise_nsp1_Oct2018_all_thresh35';
+    'XT_LE_mapNoise_nsp1_Oct2018_all_thresh35';
+    'XT_RE_mapNoiseRight_nsp2_Nov2018_all_thresh35';
+    'XT_LE_mapNoiseRight_nsp2_Nov2018_all_thresh35';
     };
 nameEnd = 'resps';
 %%
@@ -85,9 +86,9 @@ for fi = 1:size(files,1)
     %%
     location = determineComputer;
     if location == 1
-        figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/RF/%s/ch/',V1data.animal,V1data.programID, V1data.eye);
+        figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/RF/%s/ch/',dataT.animal,dataT.programID, dataT.eye);
     elseif location == 0
-        figDir =  sprintf('~/Dropbox/Figures/%s/%s/RF/%s/ch/',V1data.animal, V1data.programID, V1data.eye);
+        figDir =  sprintf('~/Dropbox/Figures/%s/%s/RF/%s/ch/',dataT.animal, dataT.programID, dataT.eye);
     end
     
     if ~exist(figDir,'dir')
@@ -99,9 +100,11 @@ for fi = 1:size(files,1)
     clf
     hold on
     for ch = 1:96
-        
-        scatter(dataT.chReceptiveFieldParams{ch}(1),dataT.chReceptiveFieldParams{ch}(2),35,[0.2 0.4 1],'filled','MarkerFaceAlpha',0.7);
-        
+        if contains(filename,'RE')
+            scatter(dataT.chReceptiveFieldParams{ch}(1),dataT.chReceptiveFieldParams{ch}(2),35,[0.8 0 0.6],'filled','MarkerFaceAlpha',0.7);
+        else
+            scatter(dataT.chReceptiveFieldParams{ch}(1),dataT.chReceptiveFieldParams{ch}(2),35,[0.2 0.4 1],'filled','MarkerFaceAlpha',0.7);
+        end
         grid on;
         xlim([-10,10])
         ylim([-10,10])
@@ -110,7 +113,7 @@ for fi = 1:size(files,1)
         axis square
     end
     
-    plot(fixX, fixY,'ok','MarkerFaceColor','k','MarkerSize',9)
+    plot(dataT.fix_x, dataT.fix_y,'ok','MarkerFaceColor','k','MarkerSize',8)
     title(sprintf('%s %s %s recepive field centers',dataT.animal, dataT.array, dataT.eye),'FontSize',14,'FontWeight','Bold')
     %%
     if location == 1
