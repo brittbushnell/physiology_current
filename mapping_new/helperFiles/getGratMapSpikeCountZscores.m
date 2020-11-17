@@ -68,6 +68,10 @@ for ch = 1:96
     stimZscoreAllLoc(ch,1:sum(stimNdx)) = (chStimSpikes - chMu) / chStd;
     blankZscore(ch,1:sum(blankNdx)) = (chBlankSpikes - chMu) / chStd;
     
+    if sum(isnan(chBlankSpikes)) == numel(chStimSpikes)
+        keyboard
+    end
+    
     nx = 1;
     for y = 1:numYs
         for x = 1:numXs
@@ -97,43 +101,43 @@ for ch = 1:96
     suptitle({sprintf('%s %s %s %s channel %d',dataT.animal, dataT.array, dataT.eye,dataT.programID, ch);...
         sprintf('%s run %s',dataT.date,dataT.runNum)})
     figName = [fname,'_PSTHbyLocationCh',num2str(ch),'.pdf'];
-    print(gcf, figName,'-dpdf','-fillpage')
+%     print(gcf, figName,'-dpdf','-fillpage')
 end
-%%
-if location == 1
-    figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/Mapping/%s/zScore/',dataT.animal,dataT.array);
-elseif location == 0
-    figDir =  sprintf('~/Dropbox/Figures/%s/Mapping/%s/zScore/',dataT.animal,dataT.array);
-end
-if ~exist(figDir,'dir')
-    mkdir(figDir)
-end
-cd(figDir)
-
-for ch = 1:96
-    figure(2)
-    clf
-    pos = get(gcf,'Position');
-    set(gcf,'Position',[pos(1) pos(2) 800 800])
-    set(gcf,'PaperOrientation','Landscape');
-    
-    nx = 1;
-    for y = 1:numYs
-        for x = 1:numXs
-            
-            subplot(numYs, numXs, nx)
-            hold on
-            
-            zS = squeeze(stimZscore(y,x,ch,:));
-            histogram(zS,'BinWidth',0.25,'Normalization','probability')
-            title(sprintf('(%.1f,%.1f)',xPos(x),yPos(y)))
-            ylim([0 0.5])
-            xlim([-2 5])
-            nx = nx+1;
-        end
-    end
-    suptitle({sprintf('%s %s %s %s channel %d',dataT.animal, dataT.array, dataT.eye,dataT.programID, ch);...
-        sprintf('%s run %s',dataT.date,dataT.runNum)})
-    figName = [fname,'_zScoresByLocationCh',num2str(ch),'.pdf'];
-    print(gcf, figName,'-dpdf','-fillpage')
-end
+%
+% if location == 1
+%     figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/Mapping/%s/zScore/',dataT.animal,dataT.array);
+% elseif location == 0
+%     figDir =  sprintf('~/Dropbox/Figures/%s/Mapping/%s/zScore/',dataT.animal,dataT.array);
+% end
+% if ~exist(figDir,'dir')
+%     mkdir(figDir)
+% end
+% cd(figDir)
+% 
+% for ch = 1:96
+%     figure(2)
+%     clf
+%     pos = get(gcf,'Position');
+%     set(gcf,'Position',[pos(1) pos(2) 800 800])
+%     set(gcf,'PaperOrientation','Landscape');
+%     
+%     nx = 1;
+%     for y = 1:numYs
+%         for x = 1:numXs
+%             
+%             subplot(numYs, numXs, nx)
+%             hold on
+%             
+%             zS = squeeze(stimZscore(y,x,ch,:));
+%             histogram(zS,'BinWidth',0.25,'Normalization','probability')
+%             title(sprintf('(%.1f,%.1f)',xPos(x),yPos(y)))
+%             ylim([0 0.5])
+%             xlim([-2 5])
+%             nx = nx+1;
+%         end
+%     end
+%     suptitle({sprintf('%s %s %s %s channel %d',dataT.animal, dataT.array, dataT.eye,dataT.programID, ch);...
+%         sprintf('%s run %s',dataT.date,dataT.runNum)})
+%     figName = [fname,'_zScoresByLocationCh',num2str(ch),'.pdf'];
+% %     print(gcf, figName,'-dpdf','-fillpage')
+% end

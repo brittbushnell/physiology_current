@@ -30,8 +30,12 @@ end
 
 %% Get receptive field information
 arrayRF = nanmean(locZscores,3); % want hot spot of the entire array, so mean across channels
-[params,rhat,errorsum,fullArray] = fit_gaussianrf_z(xPosRelFix,yPosRelFix,arrayRF);
 
+saveName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_rfInputs.mat'];
+save(saveName,'xPosRelFix','yPosRelFix','arrayRF','locZscores');
+fprintf('%s saved\n', saveName)
+
+[params,rhat,errorsum,fullArray] = fit_gaussianrf_z(xPosRelFix,yPosRelFix,arrayRF);
 %%
 
 for ch = 1:96
