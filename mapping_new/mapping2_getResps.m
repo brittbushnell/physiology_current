@@ -14,17 +14,12 @@ files = {
 %     'XT_LE_mapNoise_nsp1_Oct2018_all_thresh35';
 %     'XT_RE_mapNoise_nsp1_Oct2018_all_thresh35';
       
-'WU_LE_GratingsMapRF_nsp1_20170814_003_thresh35_info3';
-'WU_RE_GratmapRF_nsp1_Aug2017_all_thresh35';
 
-'WU_LE_GratingsMapRF_nsp2_20170814_003_thresh35_info3';
-'WU_RE_GratmapRF_nsp2_Aug2017_all_thresh35';
+% 'WU_LE_GratingsMapRF_nsp2_20170814_003_thresh35_info3';
+% 'WU_RE_GratmapRF_nsp2_Aug2017_all_thresh35';
 
 'WU_LE_GratingsMapRF_nsp1_20170426_003_thresh35_info3';
 'WU_RE_GratmapRF_nsp1_April2017_all_thresh35';
-
-'WU_LE_GratingsMapRF_nsp2_20170426_003_thresh35_info3';
-'WU_RE_GratmapRF_nsp2_April2017_all_thresh35';
 };
 nameEnd = 'resps';
 %%
@@ -88,7 +83,7 @@ for fi = 1:length(files)
         end
         cd(figDir)
         %%
-        figure(6)
+        figure%(6)
         clf
         hold on
         for ch = 1:96
