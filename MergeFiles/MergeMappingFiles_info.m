@@ -78,31 +78,38 @@ newName = 'WV_LE_MapNoise_nsp2_Jan2019_all_thresh35_info3';
 % newName = 'WU_LE_GratmapRF_nsp2_April2017_all_thresh35';
 
 % files = {
-%     'WU_RE_GratingsMapRF_nsp2_20170426_001_thresh35_info3';
-%     'WU_RE_GratingsMapRF_nsp2_20170427_001_thresh35_info3';
-%     'WU_RE_GratingsMapRF_nsp2_20170427_002_thresh35_info3';
-% 
-% %     'WU_RE_GratingsMapRF_nsp2_20170814_001_thresh35_info3';
-% %     'WU_RE_GratingsMapRF_nsp2_20170814_002_thresh35_info3';
-% %     'WU_RE_GratingsMapRF_nsp2_20170815_001_thresh35_info3';
-%     };
-% newName = 'WU_RE_GratmapRF_nsp2_April2017_all_thresh35';
-
-% files = {
 %     'WU_LE_GratingsMapRF_nsp1_20170426_003_thresh35_info3';
 %     %     'WU_LE_GratingsMapRF_nsp1_20170814_003_thresh35_info3';
 %     };
 % newName = 'WU_LE_GratmapRF_nsp1_April2017_all_thresh35';
 
 files = {
-    'WU_RE_GratingsMapRF_nsp1_20170426_001_thresh35_info3';
-    'WU_RE_GratingsMapRF_nsp1_20170427_001_thresh35_info3';
-    'WU_RE_GratingsMapRF_nsp1_20170427_002_thresh35_info3';
-%     'WU_RE_GratingsMapRF_nsp1_20170814_001_thresh35_info3';
-%     'WU_RE_GratingsMapRF_nsp1_20170814_002_thresh35_info3';
-%     'WU_RE_GratingsMapRF_nsp1_20170815_001_thresh35_info3';
+    'WU_RE_GratingsMapRF_nsp1_20170814_001_thresh35_info3';
+    'WU_RE_GratingsMapRF_nsp1_20170814_002_thresh35_info3';
+    'WU_RE_GratingsMapRF_nsp1_20170815_001_thresh35_info3';
     };
-newName = 'WU_RE_GratmapRF_nsp1_April2017_all_thresh35';
+newName = 'WU_RE_GratmapRF_nsp1_Aug2017_all_thresh35';
+
+% files = {
+%     'WU_RE_GratingsMapRF_nsp2_20170814_001_thresh35_info3';
+%     'WU_RE_GratingsMapRF_nsp2_20170814_002_thresh35_info3';
+%     'WU_RE_GratingsMapRF_nsp2_20170815_001_thresh35_info3';
+%     };
+% newName = 'WU_RE_GratmapRF_nsp2_Aug2017_all_thresh35';
+
+% files = {
+%     'WU_RE_GratingsMapRF_nsp1_20170426_001_thresh35_info3';
+%     'WU_RE_GratingsMapRF_nsp1_20170427_001_thresh35_info3';
+%     'WU_RE_GratingsMapRF_nsp1_20170427_002_thresh35_info3';
+%     };
+% newName = 'WU_RE_GratmapRF_nsp1_April2017_all_thresh35';
+
+% files = {
+%     'WU_RE_GratingsMapRF_nsp2_20170426_001_thresh35_info3';
+%     'WU_RE_GratingsMapRF_nsp2_20170427_001_thresh35_info3';
+%     'WU_RE_GratingsMapRF_nsp2_20170427_002_thresh35_info3';
+%     };
+% newName = 'WU_RE_GratmapRF_nsp2_April2017_all_thresh35';
 %%
 location = determineComputer;
 for fi = 1:size(files,1)

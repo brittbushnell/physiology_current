@@ -72,10 +72,8 @@ tic;
 % end
 %%
 files = {
-    'WU_RE_GratingsMapRF_nsp2_20170620_001_thresh35.nev';
-    'WU_LE_GratingsMapRF_nsp1_20170426_002_thresh35.nev';
-    'WU_LE_GratingsMapRF_nsp2_20170814_003_thresh35.nev';
-    'WU_LE_GratingsMapRF_nsp2_20170426_002_thresh35.nev';
+    'WU_LE_GratingsMapRF_nsp1_20170426_003_thresh35';
+    'WU_LE_GratingsMapRF_nsp1_20170814_003_thresh35';
     };
 stimType = 'grat';
 array = 'nsp1';

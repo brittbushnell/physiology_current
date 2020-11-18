@@ -6,7 +6,7 @@ tic
 monks = {
     'WU';
     %     'WV';
-    'XT';
+    %'XT';
     };
 ez = {
     'LE';
@@ -114,20 +114,14 @@ failNdx = 0;
 % end
 %%
 files = {
-    'WU_RE_GratingsMapRF_nsp1_20170426_001_thresh35';
-    'WU_RE_GratingsMapRF_nsp1_20170427_001_thresh35';
-    'WU_RE_GratingsMapRF_nsp1_20170427_002_thresh35';
-    
-    'WU_RE_GratingsMapRF_nsp2_20170426_001_thresh35';
-    'WU_RE_GratingsMapRF_nsp2_20170427_001_thresh35';
-    'WU_RE_GratingsMapRF_nsp2_20170427_002_thresh35';
-    
     'WU_LE_GratingsMapRF_nsp1_20170426_003_thresh35';
-    };
+    'WU_LE_GratingsMapRF_nsp1_20170814_003_thresh35';
+
+};
 %%
 for fi = 1:length(files)
     %% Get basic information about experiments
-    try
+%     try
         filename = files{fi};
         dataT = load(filename);
         filename = strrep(filename,'.mat','');
@@ -201,16 +195,16 @@ for fi = 1:length(files)
         saveName = [outputDir filename '_' nameEnd ''];
         save(saveName,'data');
         fprintf('%s saved\n', saveName)
-    catch ME
-        failNdx = failNdx+1;
-        fprintf('\n%s did not work. \nError message: %s \n\n',filename,ME.message)
-        failedFiles{failNdx,1} = filename;
-        failedFiles{failNdx,2} = ME.message;
-        failedME{failNdx} = ME;
-        
-    end
+%     catch ME
+%         failNdx = failNdx+1;
+%         fprintf('\n%s did not work. \nError message: %s \n\n',filename,ME.message)
+%         failedFiles{failNdx,1} = filename;
+%         failedFiles{failNdx,2} = ME.message;
+%         failedME{failNdx} = ME;
+%         
+%     end
 end
-fprintf('\n\n*** Mapping1 done in %.2f minutes. %s files failed at some point***',toc/60,failNdx)
+fprintf('\n\n*** Mapping1 done in %.2f minutes. %d files failed at some point***\n',toc/60,failNdx)
 %failedFiles
 %         end
 %     end

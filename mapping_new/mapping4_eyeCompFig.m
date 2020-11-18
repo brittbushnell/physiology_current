@@ -19,9 +19,14 @@ tic
 % LE = 'WU_LE_GratmapRF_nsp2_April2017_all_thresh35_resps';
 % RE = 'WU_RE_GratmapRF_nsp2_April2017_all_thresh35_resps';
  
-LE = 'WU_LE_GratmapRF_nsp1_April2017_all_thresh35_resps';
-RE = 'WU_RE_GratmapRF_nsp1_April2017_all_thresh35_resps';
+% LE = 'WU_LE_GratmapRF_nsp1_April2017_all_thresh35_resps';
+% RE = 'WU_RE_GratmapRF_nsp1_April2017_all_thresh35_resps';
 
+% LE = 'WU_LE_GratingsMapRF_nsp1_20170814_003_thresh35_info3_resps';
+% RE = 'WU_RE_GratmapRF_nsp1_Aug2017_all_thresh35_resps';
+
+LE = 'WU_LE_GratingsMapRF_nsp2_20170814_003_thresh35_info3_resps';
+RE = 'WU_RE_GratmapRF_nsp2_Aug2017_all_thresh35_resps';
 %%
 load(LE);
 dataLE = data.LE;

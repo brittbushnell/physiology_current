@@ -103,7 +103,11 @@ for ch = 1:96
     figName = [fname,'_PSTHbyLocationCh',num2str(ch),'.pdf'];
 %     print(gcf, figName,'-dpdf','-fillpage')
 end
-%
+
+if sum(isnan(stimZscore)) == numel(stimZscore)
+    keyboard
+end
+%%
 % if location == 1
 %     figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/Mapping/%s/zScore/',dataT.animal,dataT.array);
 % elseif location == 0

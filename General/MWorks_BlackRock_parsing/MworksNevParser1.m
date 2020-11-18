@@ -313,6 +313,11 @@ end
 strpName = strrep(fileName,'.nev','');
 save_name = [strpName,'.mat'];
 saveName = fullfile(outputDir,save_name);
+
+if ~exist(outputDir,'dir')
+    mkdir(outputDir)
+end
+
 if contains(programID,'grat','IgnoreCase',true) || contains(programID,'edge','IgnoreCase',true)
     save(saveName, 'stimOn', 'starting_phase', 'direction', 'o_starting_phase',...
         'height', 'temporal_frequency', 't_stim', 'o_temporal_frequency', 'overlay','current_phase', 'width', 'grating',...
