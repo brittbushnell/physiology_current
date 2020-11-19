@@ -34,29 +34,33 @@ for ch = 1:96
     blankSpikeCount(ch,:) = sum(dataT.bins(blankNdx, startMean:endMean, ch),2);
     allStimSpikeCount(ch,:) = sum(dataT.bins(allStimTrials,(startMean:endMean) ,ch),2);
     for tp = 1:length(types)
-    for ndot = 1:numDots
-        for dx = 1:numDxs
-            for co = 1:numCoh
-                cohNdx = (dataT.coh == coherences(co));
-                dotNdx = (dataT.numDots == dots(ndot));
-                dxNdx = (dataT.dx == dxs(dx));
-                tpNdx = (dataT.type == types(tp));
-                
-                radTrials = (radNdx & dotNdx & dxNdx & cohNdx);
-                conTrials = (conNdx & dotNdx & dxNdx & cohNdx);
-                noiseTrials = (noiseNdx & dotNdx & dxNdx);
-                
-                stimTrials = (tpNdx & dotNdx & dxNdx & cohNdx);
-                
-                glassSpikeCount(tp,co,ndot,dx,ch,1:sum(conTrials)) = sum(dataT.bins(conTrials, (startMean:endMean) ,ch),2);
-                radSpikeCount(1,co,ndot,dx,ch,1:sum(radTrials)) = sum(dataT.bins(radTrials, (startMean:endMean) ,ch),2);
-                conSpikeCount(1,co,ndot,dx,ch,1:sum(conTrials)) = sum(dataT.bins(conTrials, (startMean:endMean) ,ch),2);
-                if co == 1
-                    noiseSpikeCount(1,co,ndot,dx,ch,1:sum(noiseTrials)) = sum(dataT.bins(noiseTrials, startMean:endMean, ch),2);
+        for ndot = 1:numDots
+            for dx = 1:numDxs
+                for co = 1:numCoh
+                    cohNdx = (dataT.coh == coherences(co));
+                    dotNdx = (dataT.numDots == dots(ndot));
+                    dxNdx = (dataT.dx == dxs(dx));
+                    tpNdx = (dataT.type == types(tp));
+                    
+                    radTrials = (radNdx & dotNdx & dxNdx & cohNdx);
+                    conTrials = (conNdx & dotNdx & dxNdx & cohNdx);
+                    noiseTrials = (noiseNdx & dotNdx & dxNdx);
+                    
+                    stimTrials = (tpNdx & dotNdx & dxNdx & cohNdx);
+                    
+                    glassSpikeCount(tp,co,ndot,dx,ch,1:sum(conTrials)) = sum(dataT.bins(conTrials, (startMean:endMean) ,ch),2);
+                    if tp == 3
+                    radSpikeCount(co,ndot,dx,ch,1:sum(radTrials)) = sum(dataT.bins(radTrials, (startMean:endMean) ,ch),2);
+                    elseif tp == 2
+                    conSpikeCount(co,ndot,dx,ch,1:sum(conTrials)) = sum(dataT.bins(conTrials, (startMean:endMean) ,ch),2);
+                    else
+                    if co == 1
+                        noiseSpikeCount(co,ndot,dx,ch,1:sum(noiseTrials)) = sum(dataT.bins(noiseTrials, startMean:endMean, ch),2);
+                    end
+                    end
                 end
             end
         end
-    end
     end
 end
 %%

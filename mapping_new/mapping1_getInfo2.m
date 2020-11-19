@@ -27,97 +27,98 @@ location = determineComputer;
 failedFiles = {};
 failNdx = 0;
 %%
-% ndx = 1;
-% corNdx = 1;
-% filesT = {};
-% filesC = {};
-% for an = 1:length(monks)
-%     monk = monks{an};
-%     for ey = 1:length(ez)
-%         eye = ez{ey};
-%         for ar = 1:length(brArray)
-%             area = brArray{ar};
-%             %%
-%             if contains(monk,'WU')
-%                 if location == 0
-%                     dataDir = sprintf('~/Dropbox/ArrayData/matFiles/reThreshold/gratings/%s/%s/Mapping/%s/',monk,area,eye);
-%                 else
-%                     dataDir = sprintf('/Local/Users/bushnell/Dropbox/ArrayData/matFiles/reThreshold/gratings/%s/%s/Mapping/%s/',monk,area,eye);
-%                 end
-%             else
-%                 if location == 0
-%                     dataDir = sprintf('~/Dropbox/ArrayData/matFiles/reThreshold/png/%s/%s/Mapping/%s/',monk,area,eye);
-%                 else
-%                     dataDir = sprintf('/Local/Users/bushnell/Dropbox/ArrayData/matFiles/reThreshold/png/%s/%s/Mapping/%s/',monk,area,eye);
-%                 end
-%             end
-%             cd(dataDir);
-%             
-%             tmp = dir;
-%             %%
-%             for t = 1:size(tmp,1)
-%                 if contains(tmp(t).name,'.mat')
-%                     if contains(tmp(t).name,'_og')
-%                         % make a list of all of the files that have
-%                         % been realigned
-%                         
-%                         filesC{corNdx,1} = tmp(t).name;
-%                         corNdx = corNdx+1;
-%                     else
-%                         % list of un-aligned files
-%                         filesT{ndx,1} = tmp(t).name;
-%                         ndx = ndx+1;
-%                     end
-%                 end
-%             end
-%             
-%             for c = 1:length(filesC)
-%                 shortName = strrep(filesC{c,1},'_ogcorrupt','');
-%                 %remove from the list any _thresh35 files that were
-%                 %later realigned.  No reason to run through everything
-%                 %on all of them.
-%                 filesT(strcmp(shortName,filesT)) = [];
-%             end
-%             
-%             if isempty(filesT)
-%                 list = filesC;
-%             elseif isempty(filesC)
-%                 list = filesT;
-%             else
-%                 list = cat(1,filesC,filesT);
-%             end
-%             
-%             clear tmp
-%         end
-%     end
-% end
-% %%
-% if location == 0
-%     listDir ='~/Dropbox/ArrayData/matFiles/reThreshold/listMatrices/Mapping/';
-% else
-%     listDir = '/Local/Users/bushnell/Dropbox/ArrayData/matFiles/reThreshold/listMatrices/Mapping/';
-% end
-% 
-% if ~exist(listDir,'dir')
-%     mkdir(listDir)
-% end
-% mtxSaveName = [listDir,monk,'_',eye,'_',area,'_mapping_','FileList.mat'];
-% save(mtxSaveName,'list')
-% %% very cludgy way to get rid of empty cells
-% files = {};
-% ndx = 1;
-% for i = 1:length(list)
-%     if ~isempty(list{i})
-%         files{ndx,1} = list{i};
-%         ndx = ndx+1;
-%     end
-% end
+ndx = 1;
+corNdx = 1;
+filesT = {};
+filesC = {};
+for an = 1:length(monks)
+    monk = monks{an};
+    for ey = 1:length(ez)
+        eye = ez{ey};
+        for ar = 1:length(brArray)
+            area = brArray{ar};
+            %%
+            if contains(monk,'WU')
+                if location == 0
+                    dataDir = sprintf('~/Dropbox/ArrayData/matFiles/reThreshold/gratings/%s/%s/Mapping/%s/',monk,area,eye);
+                else
+                    dataDir = sprintf('/Local/Users/bushnell/Dropbox/ArrayData/matFiles/reThreshold/gratings/%s/%s/Mapping/%s/',monk,area,eye);
+                end
+            else
+                if location == 0
+                    dataDir = sprintf('~/Dropbox/ArrayData/matFiles/reThreshold/png/%s/%s/Mapping/%s/',monk,area,eye);
+                else
+                    dataDir = sprintf('/Local/Users/bushnell/Dropbox/ArrayData/matFiles/reThreshold/png/%s/%s/Mapping/%s/',monk,area,eye);
+                end
+            end
+            cd(dataDir);
+            
+            tmp = dir;
+            %%
+            for t = 1:size(tmp,1)
+                if contains(tmp(t).name,'.mat')
+                    if contains(tmp(t).name,'_og')
+                        % make a list of all of the files that have
+                        % been realigned
+                        
+                        filesC{corNdx,1} = tmp(t).name;
+                        corNdx = corNdx+1;
+                    else
+                        % list of un-aligned files
+                        filesT{ndx,1} = tmp(t).name;
+                        ndx = ndx+1;
+                    end
+                end
+            end
+            
+            for c = 1:length(filesC)
+                shortName = strrep(filesC{c,1},'_ogcorrupt','');
+                %remove from the list any _thresh35 files that were
+                %later realigned.  No reason to run through everything
+                %on all of them.
+                filesT(strcmp(shortName,filesT)) = [];
+            end
+            
+            if isempty(filesT)
+                list = filesC;
+            elseif isempty(filesC)
+                list = filesT;
+            else
+                list = cat(1,filesC,filesT);
+            end
+            
+            clear tmp
+        end
+    end
+end
 %%
-files = {
-    'WU_LE_GratingsMapRF_nsp1_20170426_003_thresh35';
-    'WU_LE_GratingsMapRF_nsp1_20170814_003_thresh35';
+if location == 0
+    listDir ='~/Dropbox/ArrayData/matFiles/reThreshold/listMatrices/Mapping/';
+else
+    listDir = '/Local/Users/bushnell/Dropbox/ArrayData/matFiles/reThreshold/listMatrices/Mapping/';
+end
 
-};
+if ~exist(listDir,'dir')
+    mkdir(listDir)
+end
+mtxSaveName = [listDir,monk,'_',eye,'_',area,'_mapping_','FileList.mat'];
+save(mtxSaveName,'list')
+%% very cludgy way to get rid of empty cells
+files = {};
+ndx = 1;
+for i = 1:length(list)
+    if ~isempty(list{i})
+        files{ndx,1} = list{i};
+        ndx = ndx+1;
+    end
+end
+%%
+% files = {
+%     'WU_RE_GratingsMapRF_nsp2_20170427_001_thresh35';
+%     'WU_RE_GratingsMapRF_nsp2_20170427_002_thresh35';
+%     'WU_RE_GratingsMapRF_nsp1_20170427_001_thresh35';
+%     'WU_RE_GratingsMapRF_nsp1_20170427_002_thresh35';
+%     };
 %%
 for fi = 1:length(files)
     %% Get basic information about experiments

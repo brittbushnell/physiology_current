@@ -19,13 +19,13 @@ yPos = double(unique(dataT.pos_y));
 if fixX ~= 0
     xPosRelFix = xPos-fixX;
 else
-    xPosRelFix = xPos;
+    xPosRelFix = xPos
 end
 
 if fixY ~= 0
     yPosRelFix = yPos-fixY;
 else
-    yPosRelFix = yPos;
+    yPosRelFix = yPos
 end
 
 %% Get receptive field information

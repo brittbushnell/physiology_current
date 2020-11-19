@@ -13,13 +13,11 @@ files = {
 %     'XT_RE_mapNoiseRight_nsp2_20181119_001_thresh35_info3'
 %     'XT_LE_mapNoise_nsp1_Oct2018_all_thresh35';
 %     'XT_RE_mapNoise_nsp1_Oct2018_all_thresh35';
-      
 
-% 'WU_LE_GratingsMapRF_nsp2_20170814_003_thresh35_info3';
-% 'WU_RE_GratmapRF_nsp2_Aug2017_all_thresh35';
-
+'WU_LE_GratingsMapRF_nsp2_20170426_003_thresh35_info3';
+'WU_RE_GratingsMapRF_nsp2_20170426_001_thresh35_info3';
 'WU_LE_GratingsMapRF_nsp1_20170426_003_thresh35_info3';
-'WU_RE_GratmapRF_nsp1_April2017_all_thresh35';
+'WU_RE_GratingsMapRF_nsp1_20170426_001_thresh35_info3';
 };
 nameEnd = 'resps';
 %%
@@ -34,7 +32,7 @@ failNdx = 1;
 %%
 for fi = 1:length(files)
     %% Get basic information about experiments
-   try
+  % try
         filename = files{fi};
         fprintf('\n*** analyzing %s *** \n file %d/%d \n', filename,fi,size(files,1))
         
@@ -132,10 +130,10 @@ for fi = 1:length(files)
         saveName = [outputDir filename '_' nameEnd '.mat'];
         save(saveName,'data');
         fprintf('%s saved\n', saveName)
-    catch ME
-        failNdx = failNdx+1;
-        fprintf('\n%s did not work. \nError message: %s \n\n',filename,ME.message)
-        failedFiles{failNdx,1} = filename;
-        failedFiles{failNdx,2} = ME.message;        
-    end
+%     catch ME
+%         failNdx = failNdx+1;
+%         fprintf('\n%s did not work. \nError message: %s \n\n',filename,ME.message)
+%         failedFiles{failNdx,1} = filename;
+%         failedFiles{failNdx,2} = ME.message;        
+%     end
 end
