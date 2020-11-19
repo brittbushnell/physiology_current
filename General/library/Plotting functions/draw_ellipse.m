@@ -22,7 +22,7 @@ A = [x(:) y(:)]*R(p(5)) +[p(1) p(2)];
   % x,y center points. 
   
 if isempty(varargin)  
-    plot(A(:,1),A(:,2),'Color',c,'LineWidth',1.25);
+    plot(A(:,1),A(:,2),'Color',c,'LineWidth',0.5);
 else
     plot(A(:,1),A(:,2),'Color',c);
 end
