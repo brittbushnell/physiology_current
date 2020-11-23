@@ -10,8 +10,8 @@ tic
 % LE = 'WV_LE_MapNoise_nsp1_Jan2019_all_thresh35_info3_resps';
 % RE = 'WV_RE_MapNoise_nsp1_Jan2019_all_thresh35_info3_resps';
  
-% LE = 'XT_LE_mapNoiseRight_nsp2_Nov2018_all_thresh35_resps';
-% RE = 'XT_RE_mapNoiseRight_nsp2_20181119_001_thresh35_info3_resps';
+LE = 'XT_LE_mapNoiseRight_nsp2_Nov2018_all_thresh35_resps';
+RE = 'XT_RE_mapNoiseRight_nsp2_20181119_001_thresh35_info3_resps';
 
 % LE = 'XT_LE_mapNoise_nsp1_Oct2018_all_thresh35_resps';
 % RE = 'XT_RE_mapNoise_nsp1_Oct2018_all_thresh35_resps';
