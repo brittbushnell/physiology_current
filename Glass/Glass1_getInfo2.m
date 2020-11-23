@@ -72,11 +72,11 @@ for an = 1:length(monks)
             end
             
             if isempty(filesT)
-                files = filesC;
+                files1 = filesC;
             elseif isempty(filesC)
-                files = filesT;
+                files1 = filesT;
             else
-                files = cat(1,filesC,filesT);
+                files1 = cat(1,filesC,filesT);
             end
             if location == 0
                 listDir ='~/Dropbox/ArrayData/matFiles/reThreshold/listMatrices/Glass/';
@@ -84,13 +84,20 @@ for an = 1:length(monks)
                 listDir = '/Local/Users/bushnell/Dropbox/ArrayData/matFiles/reThreshold/listMatrices/Glass/';
             end
             
-            mtxSaveName = [listDir,monk,'_',eye,'_',area,'_Glass_','FileList.mat'];
-            save(mtxSaveName,'files')
+%             mtxSaveName = [listDir,monk,'_',eye,'_',area,'_Glass_','FileList.mat'];
+%             save(mtxSaveName,'files')
             
         end
     end
 end
-
+%%
+for i = 1:length(files1)
+    if ~isempty(files1{i})
+        files{ndx,1} = files1{i};
+        ndx = ndx+1;
+    end
+end
+%files = unique(files);
 %%
 for fi = 1:length(files)
     %% Get basic information about experiments

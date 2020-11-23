@@ -102,5 +102,5 @@ end
 
 cd(figDir)
 
-figName = [data.animal,'_',data.eye,'_',data.programID,'_reliableVvisual_',data.array,'_',data.date2,'.pdf'];
+figName = [data.animal,'_',data.eye,'_',data.programID,'_reliableVvisual_',data.array,'.pdf'];
 print(gcf, figName,'-dpdf','-fillpage')

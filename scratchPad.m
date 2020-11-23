@@ -1,84 +1,263 @@
 % This is just to be used for debugging and fucking around with things.
 % Creating a saved script for it after losing info due to crashes.
 %%
-clear
-close all
-clc
-location = determineComputer;
-
-files = {
-    'WU_LE_GratingsMapRF_nsp1_20170426_003_thresh35';
-    'WU_LE_GratingsMapRF_nsp1_20170814_003_thresh35';
-    'WU_LE_Gratmap2_nsp1_20170428_005_thresh35'    ;
-    'WU_LE_Gratmap_nsp1_20170216_008_thresh35'     ;
-    'WU_LE_Gratmap_nsp1_20170216_009_thresh35'     ;
-    'WU_LE_Gratmap_nsp1_20170216_010_thresh35'     ;
-    'WU_LE_Gratmap_nsp1_20170221_001_thresh35'     ;
-    'WU_LE_Gratmap_nsp1_20170424_001_thresh35'     ;
-    'WU_LE_Gratmap_nsp1_20170428_003_thresh35'     ;
-    'WU_LE_Gratmap_nsp1_20170428_004_thresh35'     ;
-    'WU_LE_GratingsMapRF_nsp1_20170426_003_thresh35';
-    'WU_LE_GratingsMapRF_nsp1_20170814_003_thresh35';
-    'WU_LE_GratingsMapRF_nsp2_20170426_003_thresh35';
-    'WU_LE_GratingsMapRF_nsp2_20170620_001_thresh35';
-    'WU_LE_Gratmap2_nsp1_20170428_005_thresh35'    ;
-    'WU_LE_Gratmap2_nsp2_20170428_005_thresh35'    ;
-    'WU_LE_Gratmap_nsp1_20170216_008_thresh35'     ;
-    'WU_LE_Gratmap_nsp1_20170216_009_thresh35'     ;
-    'WU_LE_Gratmap_nsp1_20170216_010_thresh35'     ;
-    'WU_LE_Gratmap_nsp1_20170221_001_thresh35'     ;
-    'WU_LE_Gratmap_nsp1_20170424_001_thresh35'     ;
-    'WU_LE_Gratmap_nsp1_20170428_003_thresh35'     ;
-    'WU_LE_Gratmap_nsp1_20170428_004_thresh35'     ;
-    'WU_LE_Gratmap_nsp2_20170215_002_thresh35'     ;
-    'WU_LE_Gratmap_nsp2_20170215_003_thresh35'     ;
-    'WU_LE_Gratmap_nsp2_20170215_004_thresh35'     ;
-    'WU_LE_Gratmap_nsp2_20170424_001_thresh35'     ;
-    'WU_LE_Gratmap_nsp2_20170428_003_thresh35'     ;
-    'WU_LE_Gratmap_nsp2_20170428_004_thresh35'     ;
-%     'WU_LE_Gratmap_nsp2_20170504_007_thresh35'     ;
-    'WU_RE_GratingsMapRF_nsp1_20170426_001_thresh35';
-    'WU_RE_GratingsMapRF_nsp1_20170427_001_thresh35';
-    'WU_RE_GratingsMapRF_nsp1_20170427_002_thresh35';
-    'WU_RE_GratingsMapRF_nsp1_20170814_001_thresh35';
-    'WU_RE_GratingsMapRF_nsp1_20170814_002_thresh35';
-    'WU_RE_GratingsMapRF_nsp1_20170815_001_thresh35';
-    'WU_RE_GratingsMapRF_nsp2_20170426_001_thresh35';
-    'WU_RE_GratingsMapRF_nsp2_20170427_001_thresh35';
-    'WU_RE_GratingsMapRF_nsp2_20170427_002_thresh35';
-    'WU_RE_GratingsMapRF_nsp2_20170814_001_thresh35';
-    'WU_RE_GratingsMapRF_nsp2_20170814_002_thresh35';
-    'WU_RE_GratingsMapRF_nsp2_20170815_001_thresh35';
-    'WU_RE_Gratmap2_nsp1_20170428_007_thresh35'    ;
-    'WU_RE_Gratmap2_nsp2_20170428_007_thresh35'    ;
-    'WU_RE_Gratmap_nsp1_20170216_005_thresh35'     ;
-    'WU_RE_Gratmap_nsp1_20170216_006_thresh35'     ;
-    'WU_RE_Gratmap_nsp1_20170216_007_thresh35'     ;
-    'WU_RE_Gratmap_nsp1_20170428_006_thresh35'     ;
-    'WU_RE_Gratmap_nsp2_20170424_002_thresh35'     ;
-    'WU_RE_Gratmap_nsp2_20170428_006_thresh35'     ;
-    'WU_RE_Gratmap_nsp2_20170504_002_thresh35'     ;
-    'WU_RE_Gratmap_nsp2_20170504_004_thresh35'     ;
-   };
-%%
-for fi = 1:length(files)
-    fname = files{fi};
-    load(fname)
-    info = strsplit(fname,'_');
+    'WV_LE_glassCohSmall_nsp1_20190425_002_thresh35_ogcorrupt';  
+    'WV_LE_glassCohSmall_nsp1_20190429_001_thresh35_ogcorrupt';  
+    'WV_LE_glassCohSmall_nsp1_20190429_002_thresh35_ogcorrupt';  
+   
+    'WV_LE_glassCoh_nsp1_20190402_002_thresh35_ogcorrupt';       
+    'WV_LE_glassCoh_nsp1_20190402_003_thresh35_ogcorrupt';       
+    'WV_LE_glassCoh_nsp1_20190403_002_thresh35_ogcorrupt';       
+    'WV_LE_glassCoh_nsp1_20190404_001_thresh35_ogcorrupt';       
     
-    fprintf('## %s ##\n',fname)
-    if contains(fname,'LE')
-        deets(fi,1) = 1;
-    else
-        deets(fi,1) = 2;
-    end
-    a = info{5};
-    b = info{6};
-    deets(fi,2) = str2num(a);
-    deets(fi,3) = str2num(b);
-    deets(fi,4:6) = unique(yoffset);
-    deets(fi,8:10) = unique(xoffset);
-
-%     xfix = unique(dataT.fix_x)
-%     yfix = unique(dataT.fix_y)
-end
+    'WV_LE_glassTRCohSmall_nsp1_20190429_003_thresh35_ogcorrupt';
+    'WV_LE_glassTRCohSmall_nsp1_20190429_004_thresh35_ogcorrupt';
+    'WV_LE_glassTRCohSmall_nsp1_20190430_001_thresh35_ogcorrupt';
+    'WV_LE_glassTRCohSmall_nsp1_20190430_002_thresh35_ogcorrupt';
+    'WV_LE_glassTRCohSmall_nsp1_20190430_003_thresh35_ogcorrupt';
+    
+    'WV_LE_glassTRCoh_nsp1_20190411_001_thresh35_ogcorrupt';     
+    'WV_LE_glassTRCoh_nsp1_20190412_001_thresh35_ogcorrupt';     
+    'WV_LE_glassTRCoh_nsp1_20190415_001_thresh35_ogcorrupt';     
+    'WV_LE_glassTRCoh_nsp1_20190416_001_thresh35_ogcorrupt';     
+    'WV_LE_glassTRCoh_nsp1_20190416_002_thresh35_ogcorrupt';     
+    'WV_LE_glassTRCoh_nsp1_20190416_003_thresh35_ogcorrupt';     
+    'WV_LE_glassTRCoh_nsp1_20190417_001_thresh35_ogcorrupt';     
+    'WV_LE_glassTRCoh_nsp1_20190417_002_thresh35_ogcorrupt';     
+    'WV_RE_glassTRCoh_nsp2_20190405_002_thresh35_ogcorrupt';     
+    'WV_RE_glassTRCoh_nsp2_20190408_001_thresh35_ogcorrupt';     
+    'WV_RE_glassTRCoh_nsp2_20190409_001_thresh35_ogcorrupt';     
+    'WV_RE_glassTRCoh_nsp2_20190409_002_thresh35_ogcorrupt';     
+    'WV_RE_glassTRCoh_nsp2_20190410_001_thresh35_ogcorrupt';     
+    'WV_RE_glassTRCoh_nsp2_20190410_002_thresh35_ogcorrupt';     
+   
+    'WV_RE_glassCohSmall_nsp1_20190423_001_thresh35_ogcorrupt';  
+    'WV_RE_glassCohSmall_nsp1_20190423_002_thresh35_ogcorrupt';  
+    'WV_RE_glassCohSmall_nsp1_20190424_001_thresh35_ogcorrupt';  
+    
+    'WV_RE_glassCoh_nsp1_20190404_002_thresh35_ogcorrupt';       
+    'WV_RE_glassCoh_nsp1_20190404_003_thresh35_ogcorrupt';       
+    'WV_RE_glassCoh_nsp1_20190405_001_thresh35_ogcorrupt';       
+   
+    'WV_RE_glassTRCoh_nsp1_20190405_002_thresh35_ogcorrupt';     
+    'WV_RE_glassTRCoh_nsp1_20190408_001_thresh35_ogcorrupt';     
+    'WV_RE_glassTRCoh_nsp1_20190409_001_thresh35_ogcorrupt';     
+    'WV_RE_glassTRCoh_nsp1_20190409_002_thresh35_ogcorrupt';     
+    'WV_RE_glassTRCoh_nsp1_20190410_001_thresh35_ogcorrupt';     
+    'WV_RE_glassTRCoh_nsp1_20190410_002_thresh35_ogcorrupt';  
+    
+    
+    'WV_LE_glassCohSmall_nsp1_20190425_003_thresh35';  
+    'WV_LE_glassCohSmall_nsp2_20190425_002_thresh35';            
+    'WV_LE_glassCohSmall_nsp2_20190425_003_thresh35';            
+    'WV_LE_glassCohSmall_nsp2_20190429_001_thresh35';            
+    'WV_LE_glassCohSmall_nsp2_20190429_002_thresh35';  
+    
+    'WV_LE_glassCoh_nsp2_20190402_002_thresh35';                 
+    'WV_LE_glassCoh_nsp2_20190402_003_thresh35';                 
+    'WV_LE_glassCoh_nsp2_20190402_004_thresh35';                 
+    'WV_LE_glassCoh_nsp2_20190403_001_thresh35';                 
+    'WV_LE_glassCoh_nsp2_20190403_002_thresh35';                 
+    'WV_LE_glassCoh_nsp2_20190404_001_thresh35';  
+    
+    'WV_LE_glassTRCohSmall_nsp2_20190429_003_thresh35';          
+    'WV_LE_glassTRCohSmall_nsp2_20190429_004_thresh35'; 
+    
+    'WV_LE_glassTRCoh_nsp2_20190411_001_thresh35';               
+    'WV_LE_glassTRCoh_nsp2_20190412_001_thresh35';               
+    'WV_LE_glassTRCoh_nsp2_20190415_001_thresh35';               
+    'WV_LE_glassTRCoh_nsp2_20190415_002_thresh35';               
+    'WV_LE_glassTRCoh_nsp2_20190416_001_thresh35';               
+    'WV_LE_glassTRCoh_nsp2_20190416_002_thresh35';               
+    'WV_LE_glassTRCoh_nsp2_20190416_003_thresh35';               
+    'WV_LE_glassTRCoh_nsp2_20190417_001_thresh35';               
+    'WV_LE_glassTRCoh_nsp2_20190417_002_thresh35'; 
+    
+     
+    
+    'WV_LE_glassCoh_nsp1_20190402_004_thresh35';                 
+    'WV_LE_glassCoh_nsp1_20190403_001_thresh35'; 
+    
+    'WV_LE_glassTRCohSmall_nsp1_20190501_001_thresh35';          
+    'WV_LE_glassTRCohSmall_nsp1_20190501_002_thresh35';          
+    'WV_LE_glassTRCohSmall_nsp1_20190502_001_thresh35';          
+    'WV_LE_glassTRCohSmall_nsp1_20190503_001_thresh35'; 
+    
+    'WV_LE_glassTRCoh_nsp1_20190415_002_thresh35';   
+    
+    'WV_RE_glassCohSmall_nsp2_20190423_001_thresh35';            
+    'WV_RE_glassCohSmall_nsp2_20190423_002_thresh35';            
+    'WV_RE_glassCohSmall_nsp2_20190424_001_thresh35';   
+    
+    'WV_RE_glassCoh_nsp2_20190404_002_thresh35';                 
+    'WV_RE_glassCoh_nsp2_20190404_003_thresh35';                 
+    'WV_RE_glassCoh_nsp2_20190405_001_thresh35';   
+    
+    'WV_RE_glassTRCohSmall_nsp1_20190503_002_thresh35';          
+    'WV_RE_glassTRCohSmall_nsp1_20190506_001_thresh35';          
+    'WV_RE_glassTRCohSmall_nsp1_20190506_002_thresh35';          
+    'WV_RE_glassTRCohSmall_nsp1_20190507_001_thresh35';          
+    'WV_RE_glassTRCohSmall_nsp1_20190508_001_thresh35';  
+    
+   %%
+    'XT_LE_GlassCoh_nsp2_20190324_005_thresh35_ogcorrupt';       
+    'XT_LE_GlassCoh_nsp2_20190325_001_thresh35_ogcorrupt';       
+    'XT_LE_GlassCoh_nsp2_20190325_002_thresh35_ogcorrupt';       
+    'XT_LE_GlassCoh_nsp2_20190325_004_thresh35_ogcorrupt';       
+    'XT_LE_Glass_nsp2_20190123_001_thresh35_ogcorrupt';          
+    'XT_LE_Glass_nsp2_20190124_001_thresh35_ogcorrupt';          
+    'XT_LE_Glass_nsp2_20190124_002_thresh35_ogcorrupt';          
+    'XT_LE_Glass_nsp2_20190124_003_thresh35_ogcorrupt';          
+    'XT_LE_GlassCoh_nsp1_20190324_005_thresh35_ogcorrupt';       
+    'XT_LE_GlassCoh_nsp1_20190325_001_thresh35_ogcorrupt';       
+    'XT_LE_GlassCoh_nsp1_20190325_002_thresh35_ogcorrupt';       
+    'XT_LE_GlassCoh_nsp1_20190325_003_thresh35_ogcorrupt';       
+    'XT_LE_GlassCoh_nsp1_20190325_004_thresh35_ogcorrupt';       
+    'XT_LE_GlassTRCoh_nsp1_20190325_005_thresh35_ogcorrupt';     
+    'XT_LE_GlassTR_nsp1_20190130_001_thresh35_ogcorrupt';        
+    'XT_LE_GlassTR_nsp1_20190130_002_thresh35_ogcorrupt';        
+    'XT_LE_GlassTR_nsp1_20190130_003_thresh35_ogcorrupt';        
+    'XT_LE_GlassTR_nsp1_20190130_004_thresh35_ogcorrupt';        
+    'XT_LE_GlassTR_nsp1_20190131_001_thresh35_ogcorrupt';        
+    'XT_LE_Glass_nsp1_20190123_001_thresh35_ogcorrupt';          
+    'XT_LE_Glass_nsp1_20190123_002_thresh35_ogcorrupt';          
+    'XT_LE_Glass_nsp1_20190124_001_thresh35_ogcorrupt';          
+    'XT_LE_Glass_nsp1_20190124_002_thresh35_ogcorrupt';          
+    'XT_LE_Glass_nsp1_20190124_003_thresh35_ogcorrupt';          
+    'XT_RE_GlassCoh_nsp2_20190322_001_thresh35_ogcorrupt';       
+    'XT_RE_GlassTRCoh_nsp2_20190322_002_thresh35_ogcorrupt';     
+    'XT_RE_GlassTRCoh_nsp2_20190322_003_thresh35_ogcorrupt';     
+    'XT_RE_GlassTRCoh_nsp2_20190322_004_thresh35_ogcorrupt';     
+    'XT_RE_GlassTRCoh_nsp2_20190324_001_thresh35_ogcorrupt';     
+    'XT_RE_GlassTRCoh_nsp2_20190324_002_thresh35_ogcorrupt';     
+    'XT_RE_GlassTRCoh_nsp2_20190324_003_thresh35_ogcorrupt';     
+    'XT_RE_GlassTRCoh_nsp2_20190324_004_thresh35_ogcorrupt';     
+    'XT_RE_GlassTR_nsp2_20190125_001_thresh35_ogcorrupt';        
+    'XT_RE_GlassTR_nsp2_20190125_002_thresh35_ogcorrupt';        
+    'XT_RE_GlassTR_nsp2_20190125_003_thresh35_ogcorrupt';        
+    'XT_RE_GlassTR_nsp2_20190125_004_thresh35_ogcorrupt';        
+    'XT_RE_GlassTR_nsp2_20190125_005_thresh35_ogcorrupt';        
+    'XT_RE_GlassTR_nsp2_20190128_001_thresh35_ogcorrupt';        
+    'XT_RE_GlassTR_nsp2_20190128_002_thresh35_ogcorrupt';        
+    'XT_RE_Glass_nsp2_20190123_005_thresh35_ogcorrupt';          
+    'XT_RE_Glass_nsp2_20190123_006_thresh35_ogcorrupt';          
+    'XT_RE_Glass_nsp2_20190123_007_thresh35_ogcorrupt';          
+    'XT_RE_Glass_nsp2_20190123_008_thresh35_ogcorrupt';          
+    'XT_RE_Glass_nsp2_20190124_005_thresh35_ogcorrupt';          
+    'XT_LE_GlassCoh_nsp1_20190324_005_thresh35_ogcorrupt';       
+    'XT_LE_GlassCoh_nsp1_20190325_001_thresh35_ogcorrupt';       
+    'XT_LE_GlassCoh_nsp1_20190325_002_thresh35_ogcorrupt';       
+    'XT_LE_GlassCoh_nsp1_20190325_003_thresh35_ogcorrupt';       
+    'XT_LE_GlassCoh_nsp1_20190325_004_thresh35_ogcorrupt';       
+    'XT_LE_GlassCoh_nsp2_20190324_005_thresh35_ogcorrupt';       
+    'XT_LE_GlassCoh_nsp2_20190325_001_thresh35_ogcorrupt';       
+    'XT_LE_GlassCoh_nsp2_20190325_002_thresh35_ogcorrupt';       
+    'XT_LE_GlassCoh_nsp2_20190325_003_thresh35_ogcorrupt';       
+    'XT_LE_GlassCoh_nsp2_20190325_004_thresh35_ogcorrupt';       
+    'XT_LE_GlassTRCoh_nsp1_20190325_005_thresh35_ogcorrupt';     
+    'XT_LE_GlassTRCoh_nsp2_20190325_005_thresh35_ogcorrupt';     
+    'XT_LE_GlassTR_nsp1_20190130_001_thresh35_ogcorrupt';        
+    'XT_LE_GlassTR_nsp1_20190130_002_thresh35_ogcorrupt';        
+    'XT_LE_GlassTR_nsp1_20190130_003_thresh35_ogcorrupt';        
+    'XT_LE_GlassTR_nsp1_20190130_004_thresh35_ogcorrupt';        
+    'XT_LE_GlassTR_nsp1_20190131_001_thresh35_ogcorrupt';        
+    'XT_LE_Glass_nsp1_20190123_001_thresh35_ogcorrupt';          
+    'XT_LE_Glass_nsp1_20190123_002_thresh35_ogcorrupt';          
+    'XT_LE_Glass_nsp1_20190124_001_thresh35_ogcorrupt';          
+    'XT_LE_Glass_nsp1_20190124_002_thresh35_ogcorrupt';          
+    'XT_LE_Glass_nsp1_20190124_003_thresh35_ogcorrupt';          
+    'XT_LE_Glass_nsp2_20190123_001_thresh35_ogcorrupt';          
+    'XT_LE_Glass_nsp2_20190124_001_thresh35_ogcorrupt';          
+    'XT_LE_Glass_nsp2_20190124_002_thresh35_ogcorrupt';          
+    'XT_LE_Glass_nsp2_20190124_003_thresh35_ogcorrupt';          
+    'XT_RE_GlassCoh_nsp1_20190321_002_thresh35_ogcorrupt';       
+    'XT_RE_GlassCoh_nsp1_20190322_001_thresh35_ogcorrupt';       
+    'XT_RE_GlassCoh_nsp2_20190322_001_thresh35_ogcorrupt';       
+    'XT_RE_GlassTRCoh_nsp1_20190322_002_thresh35_ogcorrupt';     
+    'XT_RE_GlassTRCoh_nsp1_20190322_004_thresh35_ogcorrupt';     
+    'XT_RE_GlassTRCoh_nsp1_20190324_001_thresh35_ogcorrupt';     
+    'XT_RE_GlassTRCoh_nsp1_20190324_002_thresh35_ogcorrupt';     
+    'XT_RE_GlassTRCoh_nsp1_20190324_003_thresh35_ogcorrupt';     
+    'XT_RE_GlassTRCoh_nsp1_20190324_004_thresh35_ogcorrupt';     
+    'XT_RE_GlassTRCoh_nsp2_20190322_002_thresh35_ogcorrupt';     
+    'XT_RE_GlassTRCoh_nsp2_20190322_003_thresh35_ogcorrupt';     
+    'XT_RE_GlassTRCoh_nsp2_20190322_004_thresh35_ogcorrupt';     
+    'XT_RE_GlassTRCoh_nsp2_20190324_001_thresh35_ogcorrupt';     
+    'XT_RE_GlassTRCoh_nsp2_20190324_002_thresh35_ogcorrupt';     
+    'XT_RE_GlassTRCoh_nsp2_20190324_003_thresh35_ogcorrupt';     
+    'XT_RE_GlassTRCoh_nsp2_20190324_004_thresh35_ogcorrupt';     
+    'XT_RE_GlassTR_nsp1_20190125_002_thresh35_ogcorrupt';        
+    'XT_RE_GlassTR_nsp1_20190125_003_thresh35_ogcorrupt';        
+    'XT_RE_GlassTR_nsp1_20190125_005_thresh35_ogcorrupt';        
+    'XT_RE_GlassTR_nsp1_20190128_001_thresh35_ogcorrupt';        
+    'XT_RE_GlassTR_nsp1_20190128_002_thresh35_ogcorrupt';        
+    'XT_RE_GlassTR_nsp2_20190125_001_thresh35_ogcorrupt';        
+    'XT_RE_GlassTR_nsp2_20190125_002_thresh35_ogcorrupt';        
+    'XT_RE_GlassTR_nsp2_20190125_003_thresh35_ogcorrupt';        
+    'XT_RE_GlassTR_nsp2_20190125_004_thresh35_ogcorrupt';        
+    'XT_RE_GlassTR_nsp2_20190125_005_thresh35_ogcorrupt';        
+    'XT_RE_GlassTR_nsp2_20190128_001_thresh35_ogcorrupt';        
+    'XT_RE_GlassTR_nsp2_20190128_002_thresh35_ogcorrupt';        
+    'XT_RE_Glass_nsp1_20190123_003_thresh35_ogcorrupt';          
+    'XT_RE_Glass_nsp1_20190123_004_thresh35_ogcorrupt';          
+    'XT_RE_Glass_nsp1_20190123_007_thresh35_ogcorrupt';          
+    'XT_RE_Glass_nsp1_20190124_005_thresh35_ogcorrupt';          
+    'XT_RE_Glass_nsp2_20190123_005_thresh35_ogcorrupt';          
+    'XT_RE_Glass_nsp2_20190123_006_thresh35_ogcorrupt';          
+    'XT_RE_Glass_nsp2_20190123_007_thresh35_ogcorrupt';          
+    'XT_RE_Glass_nsp2_20190123_008_thresh35_ogcorrupt';          
+    'XT_RE_Glass_nsp2_20190124_005_thresh35_ogcorrupt';   
+    
+    'WU_LE_GlassTR_nsp2_20170824_001_thresh35';                  
+    'WU_LE_GlassTR_nsp2_20170825_002_thresh35';                  
+    'WU_LE_Glass_nsp2_20170817_001_thresh35';                    
+    'WU_LE_Glass_nsp2_20170821_002_thresh35';                    
+    'WU_LE_Glass_nsp2_20170822_001_thresh35';                    
+    'WU_LE_GlassTR_nsp1_20170822_002_thresh35';                  
+    'WU_LE_GlassTR_nsp1_20170824_001_thresh35';                  
+    'WU_LE_GlassTR_nsp1_20170825_002_thresh35';                  
+    'WU_LE_Glass_nsp1_20170817_001_thresh35';                    
+    'WU_LE_Glass_nsp1_20170821_002_thresh35';                    
+    'WU_LE_Glass_nsp1_20170822_001_thresh35';                    
+    'WU_RE_GlassTR_nsp2_20170825_001_thresh35';                  
+    'WU_RE_GlassTR_nsp2_20170828_002_thresh35';                  
+    'WU_RE_GlassTR_nsp2_20170828_003_thresh35';                  
+    'WU_RE_GlassTR_nsp2_20170829_001_thresh35';                  
+    'WU_RE_Glass_nsp2_20170817_002_thresh35';                    
+    'WU_RE_Glass_nsp2_20170818_001_thresh35';                    
+    'WU_RE_Glass_nsp2_20170818_002_thresh35';                    
+    'WU_RE_Glass_nsp2_20170821_001_thresh35';                    
+    'WU_RE_GlassTR_nsp1_20170825_001_thresh35';                  
+    'WU_RE_GlassTR_nsp1_20170828_002_thresh35';                  
+    'WU_RE_GlassTR_nsp1_20170828_003_thresh35';                  
+    'WU_RE_GlassTR_nsp1_20170829_001_thresh35';                  
+    'WU_RE_Glass_nsp1_20170817_002_thresh35';                    
+    'WU_RE_Glass_nsp1_20170818_001_thresh35';                    
+    'WU_RE_Glass_nsp1_20170821_001_thresh35';     
+    
+    'XT_LE_GlassTR_nsp2_20190130_001_thresh35';                  
+    'XT_LE_GlassTR_nsp2_20190130_002_thresh35';                  
+    'XT_LE_GlassTR_nsp2_20190130_003_thresh35';                  
+    'XT_LE_GlassTR_nsp2_20190130_004_thresh35';                  
+    'XT_LE_GlassTR_nsp2_20190131_001_thresh35';                  
+    'XT_RE_GlassCoh_nsp2_20190321_002_thresh35';                 
+    'XT_RE_GlassCoh_nsp2_20190321_003_thresh35';                 
+    'XT_RE_GlassTRCoh_nsp2_20190324_001_cleaned35';              
+    'XT_RE_Glass_nsp2_20190123_003_thresh35';                    
+    'XT_RE_Glass_nsp2_20190123_004_thresh35';                    
+    'XT_LE_GlassTR_nsp2_20190130_001_thresh35';                  
+    'XT_LE_GlassTR_nsp2_20190130_002_thresh35';                  
+    'XT_LE_GlassTR_nsp2_20190130_003_thresh35';                  
+    'XT_LE_GlassTR_nsp2_20190130_004_thresh35';                  
+    'XT_LE_GlassTR_nsp2_20190131_001_thresh35';                  
+    'XT_RE_GlassCoh_nsp2_20190321_002_thresh35';                 
+    'XT_RE_GlassCoh_nsp2_20190321_003_thresh35';                 
+    'XT_RE_GlassTRCoh_nsp1_20190322_003_thresh35';               
+    'XT_RE_GlassTRCoh_nsp2_20190324_001_cleaned3.5';             
+    'XT_RE_GlassTR_nsp1_20190125_001_thresh35';                  
+    'XT_RE_GlassTR_nsp1_20190125_004_thresh35';                  
+    'XT_RE_Glass_nsp1_20190123_005_thresh35';                    
+    'XT_RE_Glass_nsp1_20190123_006_thresh35';                    
+    'XT_RE_Glass_nsp1_20190123_008_thresh35';                    
+    'XT_RE_Glass_nsp2_20190123_003_thresh35';                    
+    'XT_RE_Glass_nsp2_20190123_004_thresh35';                    

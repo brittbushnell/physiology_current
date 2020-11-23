@@ -4,8 +4,8 @@ clc
 tic
 %%
 
-LE = 'WV_LE_MapNoise_nsp2_Jan2019_all_thresh35_info3_resps';
-RE = 'WV_RE_MapNoise_nsp2_Jan2019_all_thresh35_info3_resps';
+% LE = 'WV_LE_MapNoise_nsp2_Jan2019_all_thresh35_info3_resps';
+% RE = 'WV_RE_MapNoise_nsp2_Jan2019_all_thresh35_info3_resps';
 
 % LE = 'WV_LE_MapNoise_nsp1_Jan2019_all_thresh35_info3_resps';
 % RE = 'WV_RE_MapNoise_nsp1_Jan2019_all_thresh35_info3_resps';

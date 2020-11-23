@@ -3,194 +3,201 @@ close all
 clc
 %% WU
 
-%{'WU_LE_GlassTR_nsp1_20170822_002_thresh35_info3'} % leaving this file out because there's something really messed up with the V4 version.
+% files ={
+%     'WU_LE_GlassTR_nsp1_20170824_001_thresh35_info3';
+%     'WU_LE_GlassTR_nsp1_20170825_002_thresh35_info3';
+%     };
+% newName = 'WU_LE_GlassTR_nsp1_Aug2017_all_thresh35_info3';
 
-% files = {'WU_LE_GlassTR_nsp1_20170824_001_thresh35_info3';
-%     'WU_LE_GlassTR_nsp1_20170825_002_thresh35_info3'};
-% newName ='WU_LE_GlassTR_nsp1_Aug2017_all_thresh35_info';
- 
-% files = {'WU_LE_Glass_nsp1_20170817_001_thresh35_info3'  ;
-%     'WU_LE_Glass_nsp1_20170821_002_thresh35_info3'  ;
-%     'WU_LE_Glass_nsp1_20170822_001_thresh35_info3'  };
-% newName ='WU_LE_Glass_nsp1_Aug2017_all_thresh35_info';
- 
-files = {    'WU_LE_Glass_nsp2_20170817_001_thresh35_info3'  ;
-    'WU_LE_Glass_nsp2_20170821_002_thresh35_info3'  ;
-    'WU_LE_Glass_nsp2_20170822_001_thresh35_info3'  ;
-    };
-newName ='WU_LE_Glass_nsp2_Aug2017_all_thresh35_info';
- 
-% % files = {
+% files ={
 %     'WU_LE_GlassTR_nsp2_20170824_001_thresh35_info3';
 %     'WU_LE_GlassTR_nsp2_20170825_002_thresh35_info3';
 %     };
-% % newName ='WU_LE_GlassTR_nsp2_Aug2017_all_thresh35_info';
- 
-% % RE
-% % files = {'WU_RE_GlassTR_nsp1_20170825_001_thresh35_info3';
+% newName = 'WU_LE_GlassTR_nsp2_Aug2017_all_thresh35_info3';
+
+% files ={
+%     'WU_RE_GlassTR_nsp1_20170825_001_thresh35_info3';
 %     'WU_RE_GlassTR_nsp1_20170828_002_thresh35_info3';
 %     'WU_RE_GlassTR_nsp1_20170828_003_thresh35_info3';
-%     'WU_RE_GlassTR_nsp1_20170829_001_thresh35_info3';};
-% % newName ='WU_RE_GlassTR_nsp1_Aug2017_all_thresh35_info';
-% 
-% % files = {'WU_RE_Glass_nsp1_20170817_002_thresh35_info3'  ;
-%     'WU_RE_Glass_nsp1_20170818_001_thresh35_info3'  ;
-%     'WU_RE_Glass_nsp1_20170821_001_thresh35_info3'  ;};
-% % newName ='WU_RE_Glass_nsp1_Aug2017_all_thresh35_info';
-% %
-% % files = {'WU_RE_GlassTR_nsp2_20170825_001_thresh35_info3';
+%     'WU_RE_GlassTR_nsp1_20170829_001_thresh35_info3';
+%     };
+% newName = 'WU_RE_GlassTR_nsp1_Aug2017_all_thresh35_info3';
+
+% files ={
+%     'WU_RE_GlassTR_nsp2_20170825_001_thresh35_info3';
 %     'WU_RE_GlassTR_nsp2_20170828_002_thresh35_info3';
 %     'WU_RE_GlassTR_nsp2_20170828_003_thresh35_info3';
 %     'WU_RE_GlassTR_nsp2_20170829_001_thresh35_info3';
 %     };
-% % newName ='WU_RE_GlassTR_nsp2_Aug2017_all_thresh35_info';
-% 
-% % files = {    'WU_RE_Glass_nsp2_20170817_002_thresh35_info3'  ;
-%     'WU_RE_Glass_nsp2_20170818_001_thresh35_info3'  ;
-%     'WU_RE_Glass_nsp2_20170818_002_thresh35_info3'  ;
-%     'WU_RE_Glass_nsp2_20170821_001_thresh35_info3'  ;
-%     };
-% % newName ='WU_RE_Glass_nsp2_Aug2017_all_thresh35_info';
- %% XT re-cleaned files
-% % files = {
-% %       'XT_RE_GlassTR_nsp1_20190125_002_thresh35_ogcorrupt_info3'   ;
-%     'XT_RE_GlassTR_nsp1_20190125_003_thresh35_ogcorrupt_info3'   ;
-%     'XT_RE_GlassTR_nsp1_20190125_005_thresh35_ogcorrupt_info3'   ;
-%     'XT_RE_GlassTR_nsp1_20190128_001_thresh35_ogcorrupt_info3'   ;
-%     'XT_RE_GlassTR_nsp1_20190128_002_thresh35_ogcorrupt_info3'   ;
-% % };
-% % newName = 'XT_RE_GlassTR_nsp1_Jan2019_all_thresh35_info2';
- 
-% % files = {
-%  'XT_LE_GlassTR_nsp1_20190130_001_thresh35_ogcorrupt_info3'   ;
-%     'XT_LE_GlassTR_nsp1_20190130_002_thresh35_ogcorrupt_info3'   ;
-%     'XT_LE_GlassTR_nsp1_20190130_003_thresh35_ogcorrupt_info3'   ;
-%     'XT_LE_GlassTR_nsp1_20190130_004_thresh35_ogcorrupt_info3'   ;
-%     'XT_LE_GlassTR_nsp1_20190131_001_thresh35_ogcorrupt_info3'   ;
-% %     };
-% % newName = 'XT_LE_GlassTR_nsp1_Jan2019_all_thresh35_info2';
-  
-% % files = {
-%     'XT_RE_Glass_nsp1_20190123_003_thresh35_ogcorrupt_info3'     ;
-%     'XT_RE_Glass_nsp1_20190123_004_thresh35_ogcorrupt_info3'     ;
-%     'XT_RE_Glass_nsp1_20190123_007_thresh35_ogcorrupt_info3'     ;
-%     'XT_RE_Glass_nsp1_20190124_005_thresh35_ogcorrupt_info3'     ;
-% % };
-% % newName = 'XT_RE_Glass_nsp1_Jan2019_all_thresh35_info2';
-%  
-% % files = {
-%     'XT_LE_Glass_nsp1_20190123_001_thresh35_ogcorrupt_info3'     ;
-%     'XT_LE_Glass_nsp1_20190124_001_thresh35_ogcorrupt_info3'     ;
-%     'XT_LE_Glass_nsp1_20190124_002_thresh35_ogcorrupt_info3'     ;
-%     'XT_LE_Glass_nsp1_20190124_003_thresh35_ogcorrupt_info3'     ;
-% % };
-% % newName = 'XT_LE_Glass_nsp1_Jan2019_all_thresh35_info2';
- 
-% % files = {
-% %       'XT_RE_GlassTR_nsp2_20190125_002_thresh35_ogcorrupt_info3'   ;
-%     'XT_RE_GlassTR_nsp2_20190125_003_thresh35_ogcorrupt_info3'   ;
-%     'XT_RE_GlassTR_nsp2_20190125_005_thresh35_ogcorrupt_info3'   ;
-%     'XT_RE_GlassTR_nsp2_20190128_001_thresh35_ogcorrupt_info3'   ;
-%     'XT_RE_GlassTR_nsp2_20190128_002_thresh35_ogcorrupt_info3'   ;
-% % };
-% % newName = 'XT_RE_GlassTR_nsp2_Jan2019_all_thresh35_info2';
- 
-% % files = {
-%  'XT_LE_GlassTR_nsp2_20190130_001_thresh35_ogcorrupt_info3'   ;
-%     'XT_LE_GlassTR_nsp2_20190130_002_thresh35_ogcorrupt_info3'   ;
-%     'XT_LE_GlassTR_nsp2_20190130_003_thresh35_ogcorrupt_info3'   ;
-%     'XT_LE_GlassTR_nsp2_20190130_004_thresh35_ogcorrupt_info3'   ;
-%     'XT_LE_GlassTR_nsp2_20190131_001_thresh35_ogcorrupt_info3'   ;
-% %     };
-% % newName = 'XT_LE_GlassTR_nsp2_Jan2019_all_thresh35_info2';
+% newName = 'WU_RE_GlassTR_nsp2_Aug2017_all_thresh35_info3';
 
-% % files = {
-%     'XT_RE_Glass_nsp2_20190123_003_thresh35_ogcorrupt_info3'     ;
-%     'XT_RE_Glass_nsp2_20190123_004_thresh35_ogcorrupt_info3'     ;
-%     'XT_RE_Glass_nsp2_20190123_007_thresh35_ogcorrupt_info3'     ;
-%     'XT_RE_Glass_nsp2_20190124_005_thresh35_ogcorrupt_info3'     ;
-% % };
-% % newName = 'XT_RE_Glass_nsp2_Jan2019_all_thresh35_info2';
- 
-% files = {
-%     'XT_LE_Glass_nsp2_20190123_001_thresh35_ogcorrupt_info3'     ;
-%     'XT_LE_Glass_nsp2_20190124_001_thresh35_ogcorrupt_info3'     ;
-%     'XT_LE_Glass_nsp2_20190124_002_thresh35_ogcorrupt_info3'     ;
-%     'XT_LE_Glass_nsp2_20190124_003_thresh35_ogcorrupt_info3'     ;
+
+
+% files ={
+%     'WU_LE_Glass_nsp1_20170817_001_thresh35_info3';
+%     'WU_LE_Glass_nsp1_20170821_002_thresh35_info3';
+%     'WU_LE_Glass_nsp1_20170822_001_thresh35_info3';
 %     };
-% newName = 'XT_LE_Glass_nsp2_Jan2019_all_thresh35_info2';
- %% WV
-% 
-% files = {
-%     'WV_LE_glassCoh_nsp1_20190402_002_thresh35_ogcorrupt_info3'  ;
-%     'WV_LE_glassCoh_nsp1_20190402_003_thresh35_ogcorrupt_info3'  ;
-%     'WV_LE_glassCoh_nsp1_20190403_002_thresh35_ogcorrupt_info3'  ;
-%     'WV_LE_glassCoh_nsp1_20190404_001_thresh35_ogcorrupt_info3'  ;
+% newName = 'WU_LE_Glass_nsp1_Aug2017_all_thresh35_info3';
+
+
+% files ={
+%     'WU_LE_Glass_nsp2_20170817_001_thresh35_info3';
+%     'WU_LE_Glass_nsp2_20170821_002_thresh35_info3';
+%     'WU_LE_Glass_nsp2_20170822_001_thresh35_info3';
 %     };
-%     newName = 'WV_LE_glassCoh_nsp1_April2019_all_thresh35_info';
-% 
-% files = {
-%     'WV_LE_glassTRCoh_nsp1_20190411_001_thresh35_ogcorrupt_info3';
-%     'WV_LE_glassTRCoh_nsp1_20190412_001_thresh35_ogcorrupt_info3';
-%     'WV_LE_glassTRCoh_nsp1_20190415_001_thresh35_ogcorrupt_info3';
-%     'WV_LE_glassTRCoh_nsp1_20190416_001_thresh35_ogcorrupt_info3';
-%     'WV_LE_glassTRCoh_nsp1_20190416_002_thresh35_ogcorrupt_info3';
-%     'WV_LE_glassTRCoh_nsp1_20190416_003_thresh35_ogcorrupt_info3';
-%     'WV_LE_glassTRCoh_nsp1_20190417_001_thresh35_ogcorrupt_info3';
-%     'WV_LE_glassTRCoh_nsp1_20190417_002_thresh35_ogcorrupt_info3';};
-% newName = 'WV_LE_glassTRCoh_nsp1_April2019_all_thresh35_info';
-% 
-% files = {    
-%     'WV_LE_glassCoh_nsp2_20190402_002_thresh35_info3'            ;
-%     'WV_LE_glassCoh_nsp2_20190402_003_thresh35_info3'            ;
-%     'WV_LE_glassCoh_nsp2_20190402_004_thresh35_info3'            ;
-%     'WV_LE_glassCoh_nsp2_20190403_001_thresh35_info3'            ;
-%     'WV_LE_glassCoh_nsp2_20190403_002_thresh35_info3'            ;
-%     'WV_LE_glassCoh_nsp2_20190404_001_thresh35_info3'            ;};
-% newName = 'WV_LE_glassCoh_nsp2_April2019_all_thresh35_info';
-% 
-% files = {
-%     'WV_LE_glassTRCoh_nsp2_20190411_001_thresh35_info3'          ;
-%     'WV_LE_glassTRCoh_nsp2_20190412_001_thresh35_info3'          ;
-%     'WV_LE_glassTRCoh_nsp2_20190415_001_thresh35_info3'          ;
-%     'WV_LE_glassTRCoh_nsp2_20190415_002_thresh35_info3'          ;
-%     'WV_LE_glassTRCoh_nsp2_20190416_001_thresh35_info3'          ;
-%     'WV_LE_glassTRCoh_nsp2_20190416_002_thresh35_info3'          ;
-%     'WV_LE_glassTRCoh_nsp2_20190416_003_thresh35_info3'          ;
-%     'WV_LE_glassTRCoh_nsp2_20190417_001_thresh35_info3'          ;
-%     'WV_LE_glassTRCoh_nsp2_20190417_002_thresh35_info3'          ;};
-% newName = 'WV_LE_glassTRCoh_nsp2_April2019_all_thresh35_info';
-% 
-% files = {
-%     'WV_RE_glassTRCoh_nsp1_20190405_002_thresh35_ogcorrupt_info3';
-%     'WV_RE_glassTRCoh_nsp1_20190408_001_thresh35_ogcorrupt_info3';
-%     'WV_RE_glassTRCoh_nsp1_20190409_001_thresh35_ogcorrupt_info3';
-%     'WV_RE_glassTRCoh_nsp1_20190409_002_thresh35_ogcorrupt_info3';
-%     'WV_RE_glassTRCoh_nsp1_20190410_001_thresh35_ogcorrupt_info3';
-%     'WV_RE_glassTRCoh_nsp1_20190410_002_thresh35_ogcorrupt_info3';};
-% newName = 'WV_RE_glassTRCoh_nsp1_April2019_all_thresh35_info';
-% 
-% files = {
-%     'WV_RE_glassTRCoh_nsp2_20190405_002_thresh35_ogcorrupt_info3';
-%     'WV_RE_glassTRCoh_nsp2_20190408_001_thresh35_ogcorrupt_info3';
-%     'WV_RE_glassTRCoh_nsp2_20190409_001_thresh35_ogcorrupt_info3';
-%     'WV_RE_glassTRCoh_nsp2_20190409_002_thresh35_ogcorrupt_info3';
-%     'WV_RE_glassTRCoh_nsp2_20190410_001_thresh35_ogcorrupt_info3';
-%     'WV_RE_glassTRCoh_nsp2_20190410_002_thresh35_ogcorrupt_info3';};
-% newName = 'WV_RE_glassTRCoh_nsp2_April2019_all_thresh35_info';
-% 
-% files = {
-%     'WV_RE_glassCoh_nsp2_20190404_002_thresh35_info3'            ;
-%     'WV_RE_glassCoh_nsp2_20190404_003_thresh35_info3'            ;
-%     'WV_RE_glassCoh_nsp2_20190405_001_thresh35_info3'            ;};
-% newName = 'WV_RE_glassCoh_nsp2_April2019_all_thresh35_info';
-% 
+% newName = 'WU_LE_Glass_nsp2_Aug2017_all_thresh35_info3';
+
+% files ={
+%     'WU_RE_Glass_nsp1_20170817_002_thresh35_info3';
+%     'WU_RE_Glass_nsp1_20170818_001_thresh35_info3';
+%     'WU_RE_Glass_nsp1_20170821_001_thresh35_info3';
+%     };
+% newName = 'WU_RE_Glass_nsp1_Aug2017_all_thresh35_info3';
+
+% files ={
+%     'WU_RE_Glass_nsp2_20170817_002_thresh35_info3';
+%     'WU_RE_Glass_nsp2_20170818_001_thresh35_info3';
+%     'WU_RE_Glass_nsp2_20170821_001_thresh35_info3';
+%     };
+% newName = 'WU_RE_Glass_nsp2_Aug2017_all_thresh35_info3';
+%% WV standard size
+% files ={
+%     'WV_LE_glassCoh_nsp1_20190402_002_thresh35_ogcorrupt_info3';
+%     'WV_LE_glassCoh_nsp1_20190402_003_thresh35_ogcorrupt_info3';
+%     'WV_LE_glassCoh_nsp1_20190403_002_thresh35_ogcorrupt_info3';
+%     };
+% newName =  'WV_LE_glassCoh_nsp1_April2019_all_thresh35_info3';
+
+% files ={
+%     'WV_LE_glassCoh_nsp2_20190402_002_thresh35_info3';
+%     'WV_LE_glassCoh_nsp2_20190402_003_thresh35_info3';
+%     'WV_LE_glassCoh_nsp2_20190403_002_thresh35_info3';
+%     };
+% newName = 'WV_LE_glassCoh_nsp2_April2019_all_thresh35_info3';
+
 % files ={    
-% 'WV_RE_glassCoh_nsp1_20190404_002_thresh35_ogcorrupt_info3'  ;
-%     'WV_RE_glassCoh_nsp1_20190404_003_thresh35_ogcorrupt_info3'  ;
-%     'WV_RE_glassCoh_nsp1_20190405_001_thresh35_ogcorrupt_info3'  ;
+%     'WV_RE_glassCoh_nsp2_20190404_002_thresh35_info3';
+%     'WV_RE_glassCoh_nsp2_20190404_003_thresh35_info3';
+%     'WV_RE_glassCoh_nsp2_20190405_001_thresh35_info3';
 %     };
-% newName = 'WV_RE_glassCoh_nsp1_April2019_all_thresh35_info';
+% newName = 'WV_RE_glassCoh_nsp1_April2019_all_thresh35_info3'; 
+
+% files ={    
+%     'WV_RE_glassCoh_nsp1_20190404_002_thresh35_ogcorrupt_info3';       
+%     'WV_RE_glassCoh_nsp1_20190404_003_thresh35_ogcorrupt_info3';       
+%     'WV_RE_glassCoh_nsp1_20190405_001_thresh35_ogcorrupt_info3';   
+%     };
+% newName = 'WV_RE_glassCoh_nsp1_April2019_all_thresh35_info3';
+
+
+% files ={       
+%     'WV_LE_glassTRCoh_nsp1_20190411_001_thresh35_ogcorrupt_info3';     
+%     'WV_LE_glassTRCoh_nsp1_20190412_001_thresh35_ogcorrupt_info3';     
+%     'WV_LE_glassTRCoh_nsp1_20190415_001_thresh35_ogcorrupt_info3';  
+%     'WV_LE_glassTRCoh_nsp1_20190415_002_thresh35_info3';   
+%     'WV_LE_glassTRCoh_nsp1_20190416_001_thresh35_ogcorrupt_info3';     
+%     'WV_LE_glassTRCoh_nsp1_20190416_002_thresh35_ogcorrupt_info3';     
+%     'WV_LE_glassTRCoh_nsp1_20190416_003_thresh35_ogcorrupt_info3';     
+%     'WV_LE_glassTRCoh_nsp1_20190417_001_thresh35_ogcorrupt_info3';     
+%     'WV_LE_glassTRCoh_nsp1_20190417_002_thresh35_ogcorrupt_info3';  
+%     };
+% newName = 'WV_LE_glassTRCoh_nsp1_April2019_all_thresh35_info3';
+
+% files ={  
+%     'WV_LE_glassTRCoh_nsp2_20190411_001_thresh35_info3';               
+%     'WV_LE_glassTRCoh_nsp2_20190412_001_thresh35_info3';               
+%     'WV_LE_glassTRCoh_nsp2_20190415_001_thresh35_info3';               
+%     'WV_LE_glassTRCoh_nsp2_20190415_002_thresh35_info3';               
+%     'WV_LE_glassTRCoh_nsp2_20190416_001_thresh35_info3';               
+%     'WV_LE_glassTRCoh_nsp2_20190416_002_thresh35_info3';               
+%     'WV_LE_glassTRCoh_nsp2_20190416_003_thresh35_info3';               
+%     'WV_LE_glassTRCoh_nsp2_20190417_001_thresh35_info3';               
+%     'WV_LE_glassTRCoh_nsp2_20190417_002_thresh35_info3'; 
+%     };
+% newName = 'WV_LE_glassTRCoh_nsp2_April2019_all_thresh35_info3';
+
+% files ={    
+%     'WV_RE_glassTRCoh_nsp1_20190405_002_thresh35_ogcorrupt_info3';     
+%     'WV_RE_glassTRCoh_nsp1_20190408_001_thresh35_ogcorrupt_info3';     
+%     'WV_RE_glassTRCoh_nsp1_20190409_001_thresh35_ogcorrupt_info3';     
+%     'WV_RE_glassTRCoh_nsp1_20190409_002_thresh35_ogcorrupt_info3';     
+%     'WV_RE_glassTRCoh_nsp1_20190410_001_thresh35_ogcorrupt_info3';     
+%     'WV_RE_glassTRCoh_nsp1_20190410_002_thresh35_ogcorrupt_info3';  
+%     };
+% newName = 'WV_RE_glassTRCoh_nsp1_April2019_all_thresh35_info3';
+
+% files ={    
+%     'WV_RE_glassTRCoh_nsp2_20190405_002_thresh35_ogcorrupt_info3';     
+%     'WV_RE_glassTRCoh_nsp2_20190408_001_thresh35_ogcorrupt_info3';     
+%     'WV_RE_glassTRCoh_nsp2_20190409_001_thresh35_ogcorrupt_info3';     
+%     'WV_RE_glassTRCoh_nsp2_20190409_002_thresh35_ogcorrupt_info3';     
+%     'WV_RE_glassTRCoh_nsp2_20190410_001_thresh35_ogcorrupt_info3';     
+%     'WV_RE_glassTRCoh_nsp2_20190410_002_thresh35_ogcorrupt_info3'; 
+%     };
+% newName = 'WV_RE_glassTRCoh_nsp2_April2019_all_thresh35_info3';
+
+%% XT
+% files ={    
+%     'XT_RE_Glass_nsp1_20190123_007_thresh35_ogcorrupt_info3';          
+%     'XT_RE_Glass_nsp1_20190124_005_thresh35_ogcorrupt_info3';  
+%     };
+% newName = 'XT_RE_Glass_nsp1_Jan2019_all_thresh35_info3';
+
+% files ={
+%     'XT_RE_Glass_nsp2_20190123_007_thresh35_ogcorrupt_info3';
+%     'XT_RE_Glass_nsp2_20190124_005_thresh35_ogcorrupt_info3';
+%     };
+% newName = 'XT_RE_Glass_nsp2_Jan2019_all_thresh35_info3';
+
+% files ={            
+%     'XT_LE_Glass_nsp1_20190124_001_thresh35_ogcorrupt_info3';          
+%     'XT_LE_Glass_nsp1_20190124_002_thresh35_ogcorrupt_info3';          
+%     'XT_LE_Glass_nsp1_20190124_003_thresh35_ogcorrupt_info3';
+%     };
+% newName = 'XT_LE_Glass_nsp1_Jan2019_all_thresh35_info3';
+
+% files ={
+%     'XT_LE_Glass_nsp2_20190124_001_thresh35_ogcorrupt_info3';
+%     'XT_LE_Glass_nsp2_20190124_002_thresh35_ogcorrupt_info3';
+%     'XT_LE_Glass_nsp2_20190124_003_thresh35_ogcorrupt_info3';
+%     };
+% newName ='XT_LE_Glass_nsp2_Jan2019_all_thresh35_info3';
+
+% files ={  
+%         'XT_RE_GlassTR_nsp1_20190125_002_thresh35_ogcorrupt_info3';        
+%     'XT_RE_GlassTR_nsp1_20190125_003_thresh35_ogcorrupt_info3';        
+%     'XT_RE_GlassTR_nsp1_20190125_005_thresh35_ogcorrupt_info3';        
+%     'XT_RE_GlassTR_nsp1_20190128_001_thresh35_ogcorrupt_info3';        
+%     'XT_RE_GlassTR_nsp1_20190128_002_thresh35_ogcorrupt_info3';  
+%     };
+% newName = 'XT_RE_GlassTR_nsp1_Jan2019_all_thresh35_info3';
+
+% files ={    
+%         'XT_RE_GlassTR_nsp2_20190125_002_thresh35_ogcorrupt_info3';        
+%     'XT_RE_GlassTR_nsp2_20190125_003_thresh35_ogcorrupt_info3';              
+%     'XT_RE_GlassTR_nsp2_20190125_005_thresh35_ogcorrupt_info3';        
+%     'XT_RE_GlassTR_nsp2_20190128_001_thresh35_ogcorrupt_info3';        
+%     'XT_RE_GlassTR_nsp2_20190128_002_thresh35_ogcorrupt_info3';  
+%     };
+% newName = 'XT_RE_GlassTR_nsp2_Jan2019_all_thresh35_info3';
+
+% files ={
+%     'XT_LE_GlassTR_nsp1_20190130_001_thresh35_ogcorrupt_info3';
+%     'XT_LE_GlassTR_nsp1_20190130_002_thresh35_ogcorrupt_info3';
+%     'XT_LE_GlassTR_nsp1_20190130_003_thresh35_ogcorrupt_info3';
+%     'XT_LE_GlassTR_nsp1_20190130_004_thresh35_ogcorrupt_info3';
+%    
+%     };
+% newName ='XT_LE_GlassTR_nsp1_Jan2019_all_thresh35_info3';
+
+% files ={
+%     'XT_LE_GlassTR_nsp2_20190130_001_thresh35_info3';
+%     'XT_LE_GlassTR_nsp2_20190130_002_thresh35_info3';
+%     'XT_LE_GlassTR_nsp2_20190130_003_thresh35_info3';
+%     'XT_LE_GlassTR_nsp2_20190130_004_thresh35_info3'; 
+%     };
+% newName ='XT_LE_GlassTR_nsp2_Jan2019_all_thresh35_info3';
 %%
 location = determineComputer;
 for fi = 1:length(files)
