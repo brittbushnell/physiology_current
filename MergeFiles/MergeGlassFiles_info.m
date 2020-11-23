@@ -157,12 +157,12 @@ clc
 %     };
 % newName = 'XT_LE_Glass_nsp1_Jan2019_all_thresh35_info3';
 
-% files ={
-%     'XT_LE_Glass_nsp2_20190124_001_thresh35_ogcorrupt_info3';
-%     'XT_LE_Glass_nsp2_20190124_002_thresh35_ogcorrupt_info3';
-%     'XT_LE_Glass_nsp2_20190124_003_thresh35_ogcorrupt_info3';
-%     };
-% newName ='XT_LE_Glass_nsp2_Jan2019_all_thresh35_info3';
+files ={
+    'XT_LE_Glass_nsp2_20190124_001_thresh35_ogcorrupt_info3';
+    'XT_LE_Glass_nsp2_20190124_002_thresh35_ogcorrupt_info3';
+    'XT_LE_Glass_nsp2_20190124_003_thresh35_ogcorrupt_info3';
+    };
+newName ='XT_LE_Glass_nsp2_Jan2019_all_thresh35_info3';
 
 % files ={  
 %         'XT_RE_GlassTR_nsp1_20190125_002_thresh35_ogcorrupt_info3';        
@@ -257,7 +257,10 @@ conSpikeCount = [];
 radSpikeCount = [];
 blankSpikeCount = [];
 allStimSpikeCount = [];
+glassSpikeCount = [];
+
 allStimZscore = [];
+glassZscore = [];
 conZscore = [];
 radZscore = [];
 noiseZscore = [];
@@ -272,14 +275,14 @@ for i = 1:length(dataTComp)
     stmOff = dataTComp{i}.stimOff;
     xPos = dataTComp{i}.pos_x;
     yPos = dataTComp{i}.pos_y;
-    
+ %%   
     if contains(dataTComp{1}.programID,'TR')
         rot    = dataTComp{i}.rotation;
         gSC = dataTComp{i}.GlassTRSpikeCount;
         nSC = dataTComp{i}.noiseSpikeCount;
         bSC = dataTComp{i}.blankSpikeCount;
         aSC = dataTComp{i}.allStimSpikeCount;
-        gZ  = dataTComp{i}.GlassTRZscore;
+        aZ  = dataTComp{i}.GlassTRZscore;
         nZ  = dataTComp{i}.noiseZscore;
         aZ  = dataTComp{i}.allStimZscore;
         bz  = dataTComp{i}.blankZscore;
@@ -289,11 +292,11 @@ for i = 1:length(dataTComp)
         noiseSpikeCount = cat(6,noiseSpikeCount,nSC);
         blankSpikeCount = cat(2,blankSpikeCount,bSC);
         allStimSpikeCount = cat(2,allStimSpikeCount,aSC);
-        GlassTRZscore = cat(6,GlassTRZscore,gZ);
+        GlassTRZscore = cat(6,GlassTRZscore,aZ);
         noiseZscore = cat(6,noiseZscore,nZ);
         blankZscore = cat(2,blankZscore,bz);
         allStimZscore = cat(2,allStimZscore,aZ);
-        
+ %%       
     else
         % gSC = dataTComp{i}.GlassSpikeCount;
         cSC = dataTComp{i}.conSpikeCount;
@@ -301,19 +304,24 @@ for i = 1:length(dataTComp)
         nSC = dataTComp{i}.noiseSpikeCount;
         bSC = dataTComp{i}.blankSpikeCount;
         aSC = dataTComp{i}.allStimSpikeCount;
-        gZ  = dataTComp{i}.allStimZscore;
+        gSC = dataTComp{i}.glassSpikeCount;
+        
+        aZ  = dataTComp{i}.allStimZscore;
         cZ  = dataTComp{i}.conZscore;
         rZ  = dataTComp{i}.radZscore;
         nZ  = dataTComp{i}.noiseZscore;
         bZ  = dataTComp{i}.blankZscore;
+        gZ  = dataTComp{i}.glassZscore;
         
         %GlassSpikeCount = cat(5,GlassSpikeCount,gSC);
         noiseSpikeCount = cat(5,noiseSpikeCount,nSC);
         blankSpikeCount = cat(2,blankSpikeCount,bSC);
         allStimSpikeCount = cat(2,allStimSpikeCount,aSC);
+        glassSpikeCount = cat(6,glassSpikeCount,gSC);
         conSpikeCount = cat(5,conSpikeCount,cSC);
         radSpikeCount = cat(5,radSpikeCount,rSC);
-        allStimZscore = cat(2,allStimZscore,gZ);
+        allStimZscore = cat(2,allStimZscore,aZ);
+        glassZscore = cat(6,glassZscore,gZ);
         conZscore   = cat(5,conZscore,cZ);
         radZscore   = cat(5,radZscore,rZ);
         noiseZscore = cat(5,noiseZscore,nZ);
@@ -536,8 +544,8 @@ else
        save(newName,'bins','fix_x','fix_y','rotation','stimOn','stimOff','filename',...
         'animal','eye','programID','array','amap',...
         'pos_x','pos_y','type','numDots','dx','coh','sample','dxDeg',...
-        'noiseSpikeCount','conSpikeCount','radSpikeCount','blankSpikeCount','allStimSpikeCount',...
-        'conZscore','radZscore','noiseZscore','allStimZscore','blankZscore') %'chReceptiveFieldParams','arrayReceptiveFieldParams','rfQuadrant','inStim',...
+        'noiseSpikeCount','conSpikeCount','radSpikeCount','blankSpikeCount','allStimSpikeCount','glassSpikeCount',...
+        'conZscore','radZscore','noiseZscore','allStimZscore','blankZscore','glassZscore') %'chReceptiveFieldParams','arrayReceptiveFieldParams','rfQuadrant','inStim',...
 end
 fprintf('file %s done \n', newName)
 

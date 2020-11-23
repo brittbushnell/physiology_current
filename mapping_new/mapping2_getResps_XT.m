@@ -50,9 +50,9 @@ end
 %%
 location = determineComputer;
 if location == 1
-    figDir =  ('~/bushnell-local/Dropbox/Figures/XT/mapNoiseRight/%s/');
+    figDir =  ('~/bushnell-local/Dropbox/Figures/XT/mapNoiseRight/');
 elseif location == 0
-    figDir =  ('~/Dropbox/Figures/XT/mapNoiseRight/%s/');
+    figDir =  ('~/Dropbox/Figures/XT/mapNoiseRight/');
 end
 
 if ~exist(figDir,'dir')
@@ -66,7 +66,7 @@ hold on
 for ch = 1:96
     scatter(dataRE.chReceptiveFieldParams{ch}(1),dataRE.chReceptiveFieldParams{ch}(2),35,[0.8 0 0.4],'filled','MarkerFaceAlpha',0.3);
     scatter(dataLE.chReceptiveFieldParams{ch}(1),dataLE.chReceptiveFieldParams{ch}(2),35,[0.2 0.4 1],'filled','MarkerFaceAlpha',0.3);
-    scatter(chFit{ch}(1),chFit{ch}(2),35,[0.7 0 0.7],'filled','MarkerFaceAlpha',0.7);
+    scatter(chFit{ch}(1),chFit{ch}(2),35,[0.7 0 0.7],'filled','MarkerFaceAlpha',0.8);
     
     grid on;
     xlim([-15,15])
@@ -83,6 +83,7 @@ text(10,12,'summed LE and RE','Color',[0.7 0 0.7],'FontWeight','bold','FontSize'
 
 plot(0,0,'ok','MarkerFaceColor','k','MarkerSize',8)
 title('XT V4 recepive field centers','FontSize',14,'FontWeight','Bold')
+
 figName = ['XT_V4_receptiveFields_sumLEandRE','.pdf'];
 print(gcf, figName,'-dpdf','-fillpage')
 %%
@@ -104,7 +105,7 @@ viscircles([0,0],0.75, 'color',[0.2 0.2 0.2]);
 
 plot(0,0,'ok','MarkerFaceColor','k','MarkerSize',8)
 title('XT V4 recepive field centers','FontSize',14,'FontWeight','Bold')
-figName = ['XT_V4_receptiveFields_sumLEandRE','.pdf'];
+figName = ['XT_V4_BE_receptiveFields','.pdf'];
 print(gcf, figName,'-dpdf','-fillpage')
 %%
 figure%(6)
