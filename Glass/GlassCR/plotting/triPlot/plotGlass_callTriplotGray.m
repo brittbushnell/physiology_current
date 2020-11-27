@@ -1,18 +1,12 @@
 function [] = plotGlass_callTriplotGray(dataT)
 location = determineComputer;
-if length(dataT.inStim) > 96 % running on a single session rather than merged data
-    if location == 1
-        figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/%s/prefStim/%s/triplot/singleSession/',dataT.animal, dataT.programID, dataT.array, dataT.eye);
-    elseif location == 0
-        figDir =  sprintf('~/Dropbox/Figures/%s/%s/%s/prefStim/%s/triplot/singleSession/',dataT.animal, dataT.programID, dataT.array, dataT.eye);
-    end
-else
-    if location == 1
-        figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/%s/prefStim/%s/triplot/',dataT.animal, dataT.programID, dataT.array, dataT.eye);
-    elseif location == 0
-        figDir =  sprintf('~/Dropbox/Figures/%s/%s/%s/prefStim/%s/triplot/',dataT.animal, dataT.programID, dataT.array, dataT.eye);
-    end
+
+if location == 1
+    figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/%s/prefStim/%s/triplot/',dataT.animal, dataT.programID, dataT.array, dataT.eye);
+elseif location == 0
+    figDir =  sprintf('~/Dropbox/Figures/%s/%s/%s/prefStim/%s/triplot/',dataT.animal, dataT.programID, dataT.array, dataT.eye);
 end
+
 if ~exist(figDir,'dir')
     mkdir(figDir);
 end
@@ -33,7 +27,7 @@ for dt = 1:numDots
         conDps = abs(squeeze(dataT.conBlankDprime(end,dt,dx,:)));
         nosDps = abs(squeeze(dataT.noiseBlankDprime(1,dt,dx,:)));
         
-        dps = [radDps,conDps,nosDps];     
+        dps = [radDps,conDps,nosDps];
         
         subplot(2,2,ndx)
         hold on
@@ -45,7 +39,7 @@ for dt = 1:numDots
             triplotter_stereo_Glass(dps,5.5);
         end
         title(sprintf('%d dots, dx %.2f',dots(dt),dxs(dx)))
-       
+        
         ndx = ndx+1;
     end
 end

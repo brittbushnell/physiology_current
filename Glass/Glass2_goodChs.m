@@ -4,9 +4,9 @@ clc
 tic
 %%
 files = {
-%     'XT_LE_GlassTR_nsp2_Jan2019_all_thresh35_info3';
-%     'XT_LE_GlassTR_nsp1_Jan2019_all_thresh35_info3';
-%    'XT_RE_GlassTR_nsp2_Jan2019_all_thresh35_info3';
+    'XT_LE_GlassTR_nsp2_Jan2019_all_thresh35_info3';
+    'XT_LE_GlassTR_nsp1_Jan2019_all_thresh35_info3';
+   'XT_RE_GlassTR_nsp2_Jan2019_all_thresh35_info3';
     'XT_RE_GlassTR_nsp1_Jan2019_all_thresh35_info3';
     'XT_LE_Glass_nsp2_Jan2019_all_thresh35_info3';
     'XT_LE_Glass_nsp1_Jan2019_all_thresh35_info3';

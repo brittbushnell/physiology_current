@@ -4,28 +4,21 @@ clc
 tic
 %%
 files = {
-    % 'WU_LE_Glass_nsp2_Aug2017_all_thresh35_info_goodRuns';
-    %     'WU_LE_Glass_nsp1_Aug2017_all_thresh35_info_goodRuns';
-    %
-    %     'WU_RE_Glass_nsp1_Aug2017_all_thresh35_info_goodRuns';
-    %     'WU_RE_Glass_nsp2_Aug2017_all_thresh35_info_goodRuns';
-    %
-    %     'XT_RE_GlassCoh_nsp2_March2019_all_thresh35_info_goodRuns';
-    %     'XT_RE_GlassCoh_nsp1_March2019_all_thresh35_info_goodRuns';
+
+    'XT_LE_Glass_nsp2_Jan2019_all_thresh35_info3_goodRuns';
+    'XT_LE_Glass_nsp1_Jan2019_all_thresh35_info3_goodRuns';
+    'XT_RE_Glass_nsp2_Jan2019_all_thresh35_info3_goodRuns';
+    'XT_RE_Glass_nsp1_Jan2019_all_thresh35_info3_goodRuns';
     
-    %     'XT_LE_GlassCoh_nsp1_March2019_all_thresh35_info_goodRuns';
-    %     'XT_LE_GlassCoh_nsp2_March2019_all_thresh35_info_goodRuns';
-    %
-    %     'WV_LE_glassCoh_nsp1_April2019_all_thresh35_info_goodRuns';
-    %     'WV_LE_glassCoh_nsp2_April2019_all_thresh35_info_goodRuns';
-    %
-    %     'WV_RE_glassCoh_nsp2_April2019_all_thresh35_info_goodRuns';
-    %     'WV_RE_glassCoh_nsp1_April2019_all_thresh35_info_goodRuns';
+    'WV_RE_glassCoh_nsp1_April2019_all_thresh35_info3_goodRuns';
+    'WV_RE_glassCoh_nsp1_April2019_all_thresh35_info3_goodRuns';
+    'WV_LE_glassCoh_nsp2_April2019_all_thresh35_info3_goodRuns';
+    'WV_LE_glassCoh_nsp1_April2019_all_thresh35_info3_goodRuns';
     
-    'XT_LE_GlassCoh_nsp1_20190324_005_thresh35_info_goodRuns';
-    'XT_LE_GlassCoh_nsp1_20190325_001_thresh35_info_goodRuns';
-    'XT_LE_GlassCoh_nsp1_20190325_002_thresh35_info_goodRuns';
-    'XT_LE_GlassCoh_nsp1_20190325_004_thresh35_info_goodRuns';
+    'WU_RE_Glass_nsp2_Aug2017_all_thresh35_info3_goodRuns';
+    'WU_RE_Glass_nsp1_Aug2017_all_thresh35_info3_goodRuns';
+    'WU_LE_Glass_nsp2_Aug2017_all_thresh35_info3_goodRuns';
+    'WU_LE_Glass_nsp1_Aug2017_all_thresh35_info3_goodRuns';
     };
 %%
 nameEnd = 'dPrime';

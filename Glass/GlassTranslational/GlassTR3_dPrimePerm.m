@@ -4,22 +4,23 @@ clc
 fprintf('running glassTR3_DprimePerm \n')
 tic
 %%
-   files = {
-  'WU_LE_GlassTR_nsp2_Aug2017_all_thresh35_info_goodRuns';
-  'WU_RE_GlassTR_nsp2_Aug2017_all_thresh35_info_goodRuns';
-  'WU_LE_GlassTR_nsp1_Aug2017_all_thresh35_info_goodRuns';
-  'WU_RE_GlassTR_nsp1_Aug2017_all_thresh35_info_goodRuns';
-  
-  'XT_RE_GlassTRCoh_nsp2_March2019_all_cleaned35_info_goodRuns';
-  'XT_RE_GlassTRCoh_nsp1_March2019_all_thresh35_info_goodRuns';
-  'XT_LE_GlassTRCoh_nsp1_20190325_005_thresh35_ogcorrupt_info_goodRuns';
-  'XT_LE_GlassTRCoh_nsp2_20190325_005_thresh35_info_goodRuns';    
-  
-  'WV_LE_glassTRCoh_nsp1_April2019_all_thresh35_info_goodRuns';
-  'WV_LE_glassTRCoh_nsp2_April2019_all_thresh35_info_goodRuns';
-  'WV_RE_glassTRCoh_nsp1_April2019_all_thresh35_info_goodRuns';
-  'WV_RE_glassTRCoh_nsp2_April2019_all_thresh35_info_goodRuns';
-   };
+files = {
+%     'XT_LE_GlassTR_nsp2_Jan2019_all_thresh35_info3_goodRuns';
+%     'XT_LE_GlassTR_nsp1_Jan2019_all_thresh35_info3_goodRuns';
+%     'XT_RE_GlassTR_nsp2_Jan2019_all_thresh35_info3_goodRuns';
+%     'XT_RE_GlassTR_nsp1_Jan2019_all_thresh35_info3_goodRuns';
+
+    'WV_RE_glassTRCoh_nsp2_April2019_all_thresh35_info3_goodRuns';
+    'WV_RE_glassTRCoh_nsp1_April2019_all_thresh35_info3_goodRuns';
+    'WV_LE_glassTRCoh_nsp2_April2019_all_thresh35_info3_goodRuns';
+    'WV_LE_glassTRCoh_nsp1_April2019_all_thresh35_info3_goodRuns';
+    
+    'WU_RE_GlassTR_nsp2_Aug2017_all_thresh35_info3_goodRuns';
+    'WU_RE_GlassTR_nsp1_Aug2017_all_thresh35_info3_goodRuns';
+    'WU_LE_GlassTR_nsp1_Aug2017_all_thresh35_info3_goodRuns';
+    'WU_LE_GlassTR_nsp2_Aug2017_all_thresh35_info3_goodRuns';
+    };
+
 %%
 nameEnd = 'stimPerm';
 %%

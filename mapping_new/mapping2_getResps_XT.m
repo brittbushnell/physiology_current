@@ -26,25 +26,33 @@ REx = unique(dataRE.pos_x);
 RErepeats = size(REresps,4);
 LErepeats = size(LEresps,4);
 LErespSample = datasample(LEresps,RErepeats,4);
-%% prepare information to use
-LEzScores = nanmean(LErespSample,4);
-LEzScores = permute(LEzScores,[2 1 3]);
+%%
+allXs = [REx,LEx];
+[sortXs, xInd] = sort(allXs); 
+allYs = [REy,LEy];
+[sortYs, yInd] = sort(allYs);
+eyeRef = [1 1 1 1 1 2 2 2 2 2];
+eyeXsort = eyeRef(xInd);
+eyeYsort = eyeRef(yInd);
+%%
+BEmtx = zeros(10,10,96,55); % setup empty matrix
 
-REzScores = nanmean(REresps,4);
-REzScores = permute(REzScores,[2 1 3]);
-
-xPos = [LEx;REx];
-yPos = [LEy;REy];
-xMu = mean(xPos);
-yMu = mean(yPos);
-
+for ch = 1:96
+    for y = 1:10
+        for x = 1:10
+            if eyeXsort(x) == 1 && eyeYsort(y) == 1
+                BEmtx(y,x,ch) = nanmean(REresps(yInd(y),xInd(x),ch,:));
+            elseif eyeXsort(x) == 2 && eyeYsort(y) == 2
+                BEmtx(y,x,ch) = nanmean(LErespSample(yInd(y)-5,xInd(x)-5,ch,:));
+            end
+        end        
+    end
+end
 %%
 for ch = 1:96
-    REchResps = squeeze(REzScores(:,:,ch));
-    LEchResps = squeeze(LEzScores(:,:,ch));
-    sumBEresps = REchResps + LEchResps;
-    
-    [params,rhat,errorsum,cf] = fit_gaussianrf_z(xMu,yMu,sumBEresps);
+    BEZs = squeeze(BEmtx(:,:,ch));
+    BEZs = flipud(BEZs);
+    [params,rhat,errorsum,cf] = fit_gaussianrf_z(sortXs,sortYs,BEZs);
     chFit{ch} = cf.paramsadj;
 end
 %%

@@ -1,19 +1,13 @@
 function [] = plotGlass_GlassRankingsDistBlank(dataT)
 %%
 location = determineComputer;
-if length(dataT.inStim) > 96 % running on a single session rather than merged data
-    if location == 1
-        figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/%s/prefStim/%s/singleSession/',dataT.animal,dataT.programID, dataT.array, dataT.eye);
-    elseif location == 0
-        figDir =  sprintf('~/Dropbox/Figures/%s/%s/%s/prefStim/%s/singleSession/',dataT.animal, dataT.programID, dataT.array, dataT.eye);
-    end
-else
-    if location == 1
-        figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/%s/prefStim/%s/',dataT.animal,dataT.programID, dataT.array, dataT.eye);
-    elseif location == 0
-        figDir =  sprintf('~/Dropbox/Figures/%s/%s/%s/prefStim/%s/',dataT.animal, dataT.programID, dataT.array, dataT.eye);
-    end
+
+if location == 1
+    figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/%s/prefStim/%s/',dataT.animal,dataT.programID, dataT.array, dataT.eye);
+elseif location == 0
+    figDir =  sprintf('~/Dropbox/Figures/%s/%s/%s/prefStim/%s/',dataT.animal, dataT.programID, dataT.array, dataT.eye);
 end
+
 if ~exist(figDir,'dir')
     mkdir(figDir)
 end

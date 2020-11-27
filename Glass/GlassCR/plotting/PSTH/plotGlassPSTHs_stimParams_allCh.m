@@ -65,14 +65,14 @@ for dt = 1:numDots
                 yMax = max(y);
                 
                 title(sprintf('%d',ch))
-
+                
                 if  ismember(ch,bottomRow)
                     set(gca,'Color','none','tickdir','out')
                 else
                     set(gca,'Color','none','tickdir','out','XTickLabel',[]);
                 end
             end
-  
+            
         end
         if contains(dataT.animal,'XT')
             nsubplot(10,10,10,10);
@@ -86,7 +86,7 @@ for dt = 1:numDots
         text(0,1.1,'concentric','Color',[0.7 0 0.7],'FontWeight','bold','FontSize',12)
         
         theseDots = dots(dt);
-        theseDxs = dxs(dx);       
+        theseDxs = dxs(dx);
         
         if contains(dataT.programID,'Small')
             suptitle({(sprintf('%s %s %s Glass 4 degree stim vs blank vs noise raw data', dataT.animal, dataT.eye, dataT.array));...
@@ -98,18 +98,11 @@ for dt = 1:numDots
             figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_',dataT.programID,'_PSTH8Deg_raw_50to250_dots',num2str(theseDots),'_dx',num2str(theseDxs),'.pdf'];
         end
         %% save figure
-        if length(dataT.inStim) > 96
-            if location == 1
-                figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/%s/PSTH/%s/byParam/singleSession/',dataT.animal,dataT.programID,dataT.array,dataT.eye);
-            elseif location == 0
-                figDir =  sprintf('~/Dropbox/Figures/%s/%s/%s/PSTH/%s/byParam/singleSession/',dataT.animal,dataT.programID,dataT.array,dataT.eye);
-            end
-        else
-            if location == 1
-                figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/%s/PSTH/%s/byParam/',dataT.animal,dataT.programID,dataT.array,dataT.eye);
-            elseif location == 0
-                figDir =  sprintf('~/Dropbox/Figures/%s/%s/%s/PSTH/%s/byParam/',dataT.animal,dataT.programID,dataT.array,dataT.eye);
-            end
+        
+        if location == 1
+            figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/%s/PSTH/%s/byParam/',dataT.animal,dataT.programID,dataT.array,dataT.eye);
+        elseif location == 0
+            figDir =  sprintf('~/Dropbox/Figures/%s/%s/%s/PSTH/%s/byParam/',dataT.animal,dataT.programID,dataT.array,dataT.eye);
         end
     end
     if ~exist(figDir,'dir')
