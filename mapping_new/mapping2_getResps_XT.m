@@ -30,14 +30,14 @@ LErespSample = datasample(LEresps,RErepeats,4);
 allXs = [REx,LEx];
 [sortXs, xInd] = sort(allXs); 
 allYs = [REy,LEy];
-[sortYs, yInd] = sort(allYs);
+[sortYs, yInd] = sort(allYs,'descend');
 eyeRef = [1 1 1 1 1 2 2 2 2 2];
 eyeXsort = eyeRef(xInd);
 eyeYsort = eyeRef(yInd);
 %%
-BEmtx = zeros(10,10,96,55); % setup empty matrix
+BEmtx = nan(10,10,96,55); % setup empty matrix
 
-for ch = 1:96
+for ch = 1%:96
     for y = 1:10
         for x = 1:10
             if eyeXsort(x) == 1 && eyeYsort(y) == 1
@@ -51,8 +51,7 @@ end
 %%
 for ch = 1:96
     BEZs = squeeze(BEmtx(:,:,ch));
-    BEZs = flipud(BEZs);
-    [params,rhat,errorsum,cf] = fit_gaussianrf_z(sortXs,sortYs,BEZs);
+    [params,rhat,errorsum,cf] = fit_gaussianrf_z2(sortXs,sortYs,BEZs);
     chFit{ch} = cf.paramsadj;
 end
 %%

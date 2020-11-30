@@ -43,6 +43,7 @@ for ch = 1:96
 end
 
 %% figure out where to save figure
+if plotFlag == 1
 location = determineComputer;
 
 if contains(compStr,'rad','IgnoreCase',true)
@@ -65,56 +66,19 @@ else
     comp = 'stimVblank';
 end
 
-if ~contains(dataT.programID,'TR')
-    if contains(dataT.animal,'WV')
-        if location == 1
-            if contains(dataT.programID,'Small')
-                figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/Glass/%s/4Deg/PermTests/%s/%s/%s/',dataT.animal, dataT.array,dataT.eye,comp,stim);
-            else
-                figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/Glass/%s/8Deg/PermTests/%s/%s/%s/',dataT.animal, dataT.array,dataT.eye,comp,stim);
-            end
-        elseif location == 0
-            if contains(dataT.programID,'Small')
-                figDir =  sprintf('~/Dropbox/Figures/%s/Glass/%s/4Deg/PermTests/%s/%s/%s/',dataT.animal, dataT.array,dataT.eye,comp,stim);
-            else
-                figDir =  sprintf('~/Dropbox/Figures/%s/Glass/%s/8Deg/PermTests/%s/%s/%s/',dataT.animal, dataT.array,dataT.eye,comp,stim);
-            end
-        end
-    else
-        if location == 1
-            figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/Glass/%s/PermTests/%s/%s/%s/',dataT.animal, dataT.array,dataT.eye,comp,stim);
-        elseif location == 0
-            figDir =  sprintf('~/Dropbox/Figures/%s/Glass/%s/PermTests/%s/%s/%s/',dataT.animal, dataT.array,dataT.eye,comp,stim);
-        end
-    end
-else
-    if contains(dataT.animal,'WV')
-        if location == 1
-            if contains(dataT.programID,'Small')
-                figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/GlassTR/%s/4Deg/PermTests/%s/%s/%s/',dataT.animal, dataT.array,dataT.eye,comp,stim);
-            else
-                figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/GlassTR/%s/8Deg/PermTests/%s/%s/%s/',dataT.animal, dataT.array,dataT.eye,comp,stim);
-            end
-        elseif location == 0
-            if contains(dataT.programID,'Small')
-                figDir =  sprintf('~/Dropbox/Figures/%s/GlassTR/%s/4Deg/PermTests/%s/%s/%s/',dataT.animal, dataT.array,dataT.eye,comp,stim);
-            else
-                figDir =  sprintf('~/Dropbox/Figures/%s/GlassTR/%s/8Deg/PermTests/%s/%s/%s/',dataT.animal, dataT.array,dataT.eye,comp,stim);
-            end
-        end
-    else
-        if location == 1
-            figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/GlassTR/%s/PermTests/%s/%s/%s/',dataT.animal, dataT.array,dataT.eye,comp,stim);
-        elseif location == 0
-            figDir =  sprintf('~/Dropbox/Figures/%s/GlassTR/%s/PermTests/%s/%s/%s/',dataT.animal, dataT.array,dataT.eye,comp,stim);
-        end
-    end
+
+if location == 1
+    figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/%s/PermTests/%s/%s/%s/',dataT.animal, dataT.programID,dataT.array,dataT.eye,comp,stim);
+elseif location == 0
+    figDir =  sprintf('~/Dropbox/Figures/%s/%s/%s/PermTests/%s/%s/%s/',dataT.animal, dataT.programID,dataT.array,dataT.eye,comp,stim);
+end
+
+
+if ~exist(figDir,'dir')
+    mkdir(figDir)
 end
 cd(figDir)
-% go to date specific folder, if it doesn't exist, make it
-folder = dataT.date2;
-mkdir(folder)
-cd(sprintf('%s',folder))
+
 %% plot
 if plotFlag == 1
     [numTypes,numDots,numDxs,numCoh,numSamp,types,dots,dxs,coherences,samples] = getGlassParameters(dataT);
@@ -177,4 +141,5 @@ if plotFlag == 1
             print(gcf, figName,'-dpdf','-fillpage')
         end
     end
+end
 end

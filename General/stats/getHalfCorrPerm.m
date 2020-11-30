@@ -143,17 +143,24 @@ if plotFlag == 1
     %%
     location = determineComputer;
     filePartInfo = strsplit(filename,'_');
-    if location == 0
-        figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/%s/%s/stats/halfCorr/dist/',filePartInfo{1}, filePartInfo{3}, filePartInfo{4});
+    
+    if contains(filename,'nsp1')
+        array = 'V1';
     else
-        figDir =  sprintf( '/Local/Users/bushnell/Dropbox/Figures/%s/%s/%s/stats/halfCorr/dist/',filePartInfo{1}, filePartInfo{3}, filePartInfo{4});
+        array = 'V4';
+    end
+        
+    if location == 0
+        figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/%s/%s/stats/halfCorr/dist/',filePartInfo{1}, filePartInfo{3}, array);
+    else
+        figDir =  sprintf( '/Local/Users/bushnell/Dropbox/Figures/%s/%s/%s/stats/halfCorr/dist/',filePartInfo{1}, filePartInfo{3}, array);
     end
     if ~exist(figDir,'dir')
         mkdir(figDir)
     end
     cd(figDir)
     
-    figName = [filePartInfo{1},'_',filePartInfo{2},'_',filePartInfo{4},'_splitHalfPermDist_',filePartInfo{3},'_',filePartInfo{5},'_',filePartInfo{6},'.pdf'];
+    figName = [filePartInfo{1},'_',filePartInfo{2},'_',array,'_splitHalfPermDist_',filePartInfo{3},'_',filePartInfo{5},'_',filePartInfo{6},'.pdf'];
     print(gcf, figName,'-dpdf','-fillpage')
     %%
     figure%(1)

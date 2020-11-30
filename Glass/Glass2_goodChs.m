@@ -6,30 +6,31 @@ tic
 files = {
     'XT_LE_GlassTR_nsp2_Jan2019_all_thresh35_info3';
     'XT_LE_GlassTR_nsp1_Jan2019_all_thresh35_info3';
-   'XT_RE_GlassTR_nsp2_Jan2019_all_thresh35_info3';
+    'XT_RE_GlassTR_nsp2_Jan2019_all_thresh35_info3';
     'XT_RE_GlassTR_nsp1_Jan2019_all_thresh35_info3';
+    
     'XT_LE_Glass_nsp2_Jan2019_all_thresh35_info3';
     'XT_LE_Glass_nsp1_Jan2019_all_thresh35_info3';
     'XT_RE_Glass_nsp2_Jan2019_all_thresh35_info3';
     'XT_RE_Glass_nsp1_Jan2019_all_thresh35_info3';
     
-    'WV_RE_glassTRCoh_nsp2_April2019_thresh35_info3';
-    'WV_RE_glassTRCoh_nsp1_April2019_all_thresh35_info3';
-    'WV_LE_glassTRCoh_nsp2_April2019_all_thresh35_info3';
-    'WV_LE_glassTRCoh_nsp1_April2019_all_thresh35_info3';
-    'WV_RE_glassCoh_nsp1_April2019_all_thresh35_info3';
-    'WV_RE_glassCoh_nsp1_April2019_all_thresh35_info3';
-    'WV_LE_glassCoh_nsp2_April2019_all_thresh35_info3';
-    'WV_LE_glassCoh_nsp1_April2019_all_thresh35_info3';
-    
-    'WU_RE_Glass_nsp2_Aug2017_all_thresh35_info3';
-    'WU_RE_Glass_nsp1_Aug2017_all_thresh35_info3';
-    'WU_LE_Glass_nsp2_Aug2017_all_thresh35_info3';
-    'WU_LE_Glass_nsp1_Aug2017_all_thresh35_info3';
-    'WU_RE_GlassTR_nsp2_Aug2017_all_thresh35_info3';
-    'WU_RE_GlassTR_nsp1_Aug2017_all_thresh35_info3';
-    'WU_LE_GlassTR_nsp1_Aug2017_all_thresh35_info3';
-    'WU_LE_GlassTR_nsp2_Aug2017_all_thresh35_info3';
+%     'WV_RE_glassTRCoh_nsp2_April2019_thresh35_info3';
+%     'WV_RE_glassTRCoh_nsp1_April2019_all_thresh35_info3';
+%     'WV_LE_glassTRCoh_nsp2_April2019_all_thresh35_info3';
+%     'WV_LE_glassTRCoh_nsp1_April2019_all_thresh35_info3';
+%     'WV_RE_glassCoh_nsp1_April2019_all_thresh35_info3';
+%     'WV_RE_glassCoh_nsp1_April2019_all_thresh35_info3';
+%     'WV_LE_glassCoh_nsp2_April2019_all_thresh35_info3';
+%     'WV_LE_glassCoh_nsp1_April2019_all_thresh35_info3';
+%     
+%     'WU_RE_Glass_nsp2_Aug2017_all_thresh35_info3';
+%     'WU_RE_Glass_nsp1_Aug2017_all_thresh35_info3';
+%     'WU_LE_Glass_nsp2_Aug2017_all_thresh35_info3';
+%     'WU_LE_Glass_nsp1_Aug2017_all_thresh35_info3';
+%     'WU_RE_GlassTR_nsp2_Aug2017_all_thresh35_info3';
+%     'WU_RE_GlassTR_nsp1_Aug2017_all_thresh35_info3';
+%     'WU_LE_GlassTR_nsp1_Aug2017_all_thresh35_info3';
+%     'WU_LE_GlassTR_nsp2_Aug2017_all_thresh35_info3';
     };
 %%
 nameEnd = 'goodRuns';
@@ -146,7 +147,7 @@ for fi = 1:length(files)
         suptitle(sprintf('%s %s %s %s stim vs blank', dataT.animal, dataT.array, dataT.programID, dataT.eye));
         
         figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_',dataT.programID,'_PSTHstimVBlank'];
-        print(gcf, figName,'-dpdf','-fillpage')
+        print(gcf, figName,'-dpdf','-bestfit')
         %% save good data
         if location == 1
             outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/Glass/goodChs/',dataT.array);

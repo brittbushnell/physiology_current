@@ -10,15 +10,15 @@ files = {
     'XT_RE_Glass_nsp2_Jan2019_all_thresh35_info3_goodRuns';
     'XT_RE_Glass_nsp1_Jan2019_all_thresh35_info3_goodRuns';
     
-    'WV_RE_glassCoh_nsp1_April2019_all_thresh35_info3_goodRuns';
-    'WV_RE_glassCoh_nsp1_April2019_all_thresh35_info3_goodRuns';
-    'WV_LE_glassCoh_nsp2_April2019_all_thresh35_info3_goodRuns';
-    'WV_LE_glassCoh_nsp1_April2019_all_thresh35_info3_goodRuns';
-    
-    'WU_RE_Glass_nsp2_Aug2017_all_thresh35_info3_goodRuns';
-    'WU_RE_Glass_nsp1_Aug2017_all_thresh35_info3_goodRuns';
-    'WU_LE_Glass_nsp2_Aug2017_all_thresh35_info3_goodRuns';
-    'WU_LE_Glass_nsp1_Aug2017_all_thresh35_info3_goodRuns';
+%     'WV_RE_glassCoh_nsp1_April2019_all_thresh35_info3_goodRuns';
+%     'WV_RE_glassCoh_nsp1_April2019_all_thresh35_info3_goodRuns';
+%     'WV_LE_glassCoh_nsp2_April2019_all_thresh35_info3_goodRuns';
+%     'WV_LE_glassCoh_nsp1_April2019_all_thresh35_info3_goodRuns';
+%     
+%     'WU_RE_Glass_nsp2_Aug2017_all_thresh35_info3_goodRuns';
+%     'WU_RE_Glass_nsp1_Aug2017_all_thresh35_info3_goodRuns';
+%     'WU_LE_Glass_nsp2_Aug2017_all_thresh35_info3_goodRuns';
+%     'WU_LE_Glass_nsp1_Aug2017_all_thresh35_info3_goodRuns';
     };
 %%
 nameEnd = 'dPrime';
@@ -57,33 +57,47 @@ for fi = 1:size(files,1)
     set(gcf,'PaperOrientation','Landscape');
     
     subplot(4,1,1)
+    hold on
     blank =  reshape(dataT.blankZscore,1,numel(dataT.blankZscore));
     histogram(blank,'BinWidth',0.5,'Normalization','probability','FaceColor',[0.5 0.5 0.5],'FaceAlpha',0.4)
+    bMed = nanmedian(blank);
+    plot([bMed, bMed],[0,0.28],'k')
     xlim([-5 5])
     ylim([0 0.3])
     title('blank')
     set(gca,'box','off','tickdir','out')
     
     subplot(4,1,2)
+    hold on
     cons = reshape(dataT.conZscore,1,numel(dataT.conZscore));
     histogram(cons,'BinWidth',0.5,'Normalization','probability','FaceColor',[0.7 0 0.7],'FaceAlpha',0.4)
+    cMed = nanmedian(cons);
+    plot([cMed, cMed],[0,0.28],'k')
     xlim([-5 5])
     ylim([0 0.3])
     title('concentric')
     set(gca,'box','off','tickdir','out')
     
     subplot(4,1,3)
+    hold on
     rads = reshape(dataT.radZscore,1,numel(dataT.radZscore));
     histogram(rads,'BinWidth',0.5,'Normalization','probability','FaceColor',[0 0.6 0.2],'FaceAlpha',0.4)
+    rMed = nanmedian(rads);
+    plot([rMed, rMed],[0,0.28],'k')
     xlim([-5 5])
     ylim([0 0.3])
     title('radial')
     set(gca,'box','off','tickdir','out')
     
+    clear t
     subplot(4,1,4)
+    hold on
     noise =  reshape(dataT.noiseZscore(1,:,:,:,:),1,numel(dataT.noiseZscore(1,:,:,:,:)));
     histogram(noise,'BinWidth',0.5,'Normalization','probability','FaceColor',[1 0.5 0.1],'FaceAlpha',0.4)
-    title('noise')
+    nMed = nanmedian(noise);
+    plot([nMed, nMed],[0,0.28],'k')
+     title('noise');
+%     t.Position(3) = t.Position(3) - 0.005;
     xlim([-5 5])
     ylim([0 0.3])
     set(gca,'box','off','tickdir','out')
@@ -125,10 +139,15 @@ for fi = 1:size(files,1)
     
     fprintf('permuted vaules for stim vs noise done %.2f hours \n',toc/3600)
     %% pattern vs noise and con vs rad permutation tests
+    if contains(filename,'XT')
+    [dataT.radNoiseDprimePvals,dataT.radNoiseDprimeSig] = glassGetPermutationStats(squeeze(dataT.radNoiseDprime),squeeze(dataT.radNoiseDprimeBootPerm),dataT,'radial vs noise permutation test',plotHists);
+    [dataT.conNoiseDprimePvals,dataT.conNoiseDprimeSig] = glassGetPermutationStats(squeeze(dataT.conNoiseDprime),squeeze(dataT.conNoiseDprimeBootPerm),dataT,'concentric vs noise permutation test',plotHists);
+    [dataT.conRadDprimePvals,  dataT.conRadDprimeSig]   = glassGetPermutationStats(squeeze(dataT.conRadDprime),  squeeze(dataT.conRadDprimeBootPerm),dataT,'concentric vs radial permutation test',plotHists);     
+    else
     [dataT.radNoiseDprimePvals,dataT.radNoiseDprimeSig] = glassGetPermutationStats_coh(dataT.radNoiseDprime,dataT.radNoiseDprimeBootPerm,dataT,'radial vs noise permutation test',plotHists);
     [dataT.conNoiseDprimePvals,dataT.conNoiseDprimeSig] = glassGetPermutationStats_coh(dataT.conNoiseDprime,dataT.conNoiseDprimeBootPerm,dataT,'concentric vs noise permutation test',plotHists);
     [dataT.conRadDprimePvals,  dataT.conRadDprimeSig]   = glassGetPermutationStats_coh(dataT.conRadDprime,  dataT.conRadDprimeBootPerm,dataT,'concentric vs radial permutation test',plotHists);
-    
+    end
     fprintf('stim vs noise and con vs rad tests done %d  hours \n',toc/3600)
     %% get homogeneity
     dataT = ChiSquareHomogeneity(dataT,0.1);

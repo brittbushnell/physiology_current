@@ -91,15 +91,14 @@ title({sprintf('%s %s %s %s split half p-value vs visual response p-value', data
 location = determineComputer;
 
 if location == 0
-    figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/%s/%s/stats/halfCorr/zones/',data.animal, data.array, data.programID);
+    figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/%s/%s/stats/halfCorr/',data.animal, data.array, data.programID);
 else
-    figDir =  sprintf( '/Local/Users/bushnell/Dropbox/Figures/%s/%s/%s/stats/halfCorr/zones/',data.animal, data.array, data.programID);
+    figDir =  sprintf( '/Local/Users/bushnell/Dropbox/Figures/%s/%s/%s/stats/halfCorr/',data.animal, data.array, data.programID);
 end
 
 if ~exist(figDir,'dir')
     mkdir(figDir)
 end
-
 cd(figDir)
 
 figName = [data.animal,'_',data.eye,'_',data.programID,'_reliableVvisual_',data.array,'.pdf'];
