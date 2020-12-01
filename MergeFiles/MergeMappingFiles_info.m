@@ -108,6 +108,19 @@ newName = 'XT_LE_mapNoiseRight_nsp2_Nov2018_all_thresh35';
 %     'WU_RE_GratingsMapRF_nsp2_20170427_002_thresh35_info3';
 %     };
 % newName = 'WU_RE_GratmapRF_nsp2_April2017_all_thresh35';
+%% XT V4 overlapping near fixation
+
+files = {
+    'XT_LE_mapNoise_nsp2_20181023_002_thresh35_info3';     
+    'XT_LE_mapNoise_nsp2_20181025_001_thresh35_info3';    
+    };
+newName = 'XT_LE_mapNoise_nsp2_Oct2018_all_thresh35';
+
+% files = {
+%     'XT_RE_mapNoise_nsp2_20181024_001_thresh35_info3';     
+%     'XT_RE_mapNoise_nsp2_20181024_002_thresh35_info3';     
+%     'XT_RE_mapNoise_nsp2_20181024_003_thresh35_info3'};
+% newName = 'XT_RE_mapNoise_nsp2_Oct2018_all_thresh35';
 %%
 location = determineComputer;
 for fi = 1:size(files,1)
