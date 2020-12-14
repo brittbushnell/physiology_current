@@ -4,35 +4,29 @@
 clear
 
 %%
-files = {
-    'XT_LE_mapNoiseRight_nsp2_20181105_003_thresh35_info3';
-    'XT_LE_mapNoiseRight_nsp2_20181105_004_thresh35_info3';
-    'XT_LE_mapNoiseRight_nsp2_20181120_001_thresh35_info3';
-    'XT_LE_mapNoiseRight_nsp2_20181120_002_thresh35_info3';
-    'XT_LE_mapNoiseRight_nsp2_20181120_003_thresh35_info3';
-    'XT_LE_mapNoiseRight_nsp2_20181127_001_thresh35_info3';
-    'XT_LE_mapNoise_nsp2_20181023_002_thresh35_info3';     
-    'XT_LE_mapNoise_nsp2_20181025_001_thresh35_info3';     
-    'XT_RE_mapNoiseLeft_nsp2_20181026_001_thresh35_info3'; 
-    'XT_RE_mapNoiseRight_nsp2_20181026_001_thresh35_info3';
-    'XT_RE_mapNoiseRight_nsp2_20181026_003_thresh35_info3';
-    'XT_RE_mapNoiseRight_nsp2_20181119_001_thresh35_info3';
-    'XT_RE_mapNoise_nsp2_20181024_001_thresh35_info3';     
-    'XT_RE_mapNoise_nsp2_20181024_002_thresh35_info3';     
-    'XT_RE_mapNoise_nsp2_20181024_003_thresh35_info3'};
-%%
-info = {};
-for fi = 1:length(files)
-    fname = files{fi};
-    load(fname)
-    if contains(fname,'RE')
-        dataT = data.RE;
+figure%(6)
+clf
+hold on
+for ch = 1:96
+    if contains(dataT.eye,'RE')
+%         scatter(chFit{ch}(1),chFit{ch}(2),35,[0.8 0 0.4],'filled','MarkerFaceAlpha',0.7);
+        text(chFit{ch}(1),chFit{ch}(2),num2str(ch),'FontWeight','bold','Color',[0.8 0 0.4])
     else
-        dataT = data.LE;
+%         scatter(chFit{ch}(1),chFit{ch}(2),35,[0.2 0.4 1],'filled','MarkerFaceAlpha',0.7);
+        text(chFit{ch}(1),chFit{ch}(2),num2str(ch),'FontWeight','bold','Color',[0.2 0.4 1])
     end
-    info{fi,1} = dataT.eye;
-    info{fi,2} = dataT.date2;
-    info{fi,3} = dataT.runNum;
-    info{fi,4} = unique(dataT.pos_x);
-    info{fi,5} = unique(dataT.pos_y);    
+    
+    grid on;
+    xlim([-14,14])
+    ylim([-14,14])
+    set(gca,'YAxisLocation','origin','XAxisLocation','origin',...
+        'Layer','top','FontWeight','bold','FontSize',14,'FontAngle','italic')
+    axis square
 end
+if contains(dataT.animal,'WU')
+    viscircles([0,0],1.5, 'color',[0.2 0.2 0.2]);
+else
+    viscircles([0,0],0.75, 'color',[0.2 0.2 0.2]);
+end
+plot(dataT.fix_x, dataT.fix_y,'ok','MarkerFaceColor','k','MarkerSize',8)
+title(sprintf('%s %s %s recepive field centers',dataT.animal, dataT.array, dataT.eye),'FontSize',14,'FontWeight','Bold')

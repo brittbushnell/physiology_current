@@ -3,7 +3,7 @@ close all
 clc
 
 %% WV
-% 
+%
 % V4
 % files = {
 %     'WV_LE_MapNoise_nsp2_20190122_003_thresh35_info3'                   ;
@@ -15,14 +15,14 @@ clc
 %     'WV_LE_MapNoise_nsp2_20190204_003_thresh35_info3'                   ;
 %     };
 % newName = 'WV_LE_MapNoise_nsp2_Jan2019_all_thresh35_info3';
- 
+
 % files = {
 %     'WV_RE_MapNoise_nsp2_20190130_003_thresh35_info3'                   ;
 %     'WV_RE_MapNoise_nsp2_20190201_001_thresh35_info3'                   ;
 %     'WV_RE_MapNoise_nsp2_20190205_001_thresh35_info3'                   ;
 %     };
 % newName = 'WV_RE_MapNoise_nsp2_Jan2019_all_thresh35_info3';
- 
+
 % V1
 % files = {
 %     'WV_LE_MapNoise_nsp1_20190122_003_thresh35_info3'                   ;
@@ -34,7 +34,7 @@ clc
 %     'WV_LE_MapNoise_nsp1_20190204_003_thresh35_info3'                   ;
 %     };
 % newName = 'WV_LE_MapNoise_nsp1_Jan2019_all_thresh35_info3';
- 
+
 % files = {
 %     'WV_RE_MapNoise_nsp1_20190130_003_thresh35_ogcorrupt_info3'         ;
 %     'WV_RE_MapNoise_nsp1_20190201_001_thresh35_ogcorrupt_info3'         ;
@@ -42,35 +42,35 @@ clc
 %     };
 % newName = 'WV_RE_MapNoise_nsp1_Jan2019_all_thresh35_info3';
 %% XT
-% 
+%
 % % V4
 files = {
-    'XT_LE_mapNoiseRight_nsp2_20181120_001_thresh35_info3';
-    'XT_LE_mapNoiseRight_nsp2_20181120_002_thresh35_info3'
+    'XT_LE_mapNoiseRight_nsp2_20181120_001_thresh35_info4';
+    'XT_LE_mapNoiseRight_nsp2_20181120_002_thresh35_info4'
     };
 newName = 'XT_LE_mapNoiseRight_nsp2_Nov2018_all_thresh35';
- 
+
 % files = {
 %no need to merge this, it's just one session
 %     'XT_RE_mapNoiseRight_nsp2_20181119_001_thresh35_info3';
-%     
+%
 %     };
 % newName = 'XT_RE_mapNoiseRight_nsp2_Nov2018_all_thresh35';
- 
+
 % V1
 % files = {
 %     'XT_LE_mapNoise_nsp1_20181023_001_thresh35_info3'                   ;
 %     'XT_LE_mapNoise_nsp1_20181023_002_thresh35_info3'                   ;
 %     };
 % newName = 'XT_LE_mapNoise_nsp1_Oct2018_all_thresh35';
- 
+
 % files = {
 %     'XT_RE_mapNoise_nsp1_20181024_001_thresh35_info3'                   ;
 %     'XT_RE_mapNoise_nsp1_20181024_002_thresh35_info3'                   ;
 %     'XT_RE_mapNoise_nsp1_20181024_003_thresh35_info3'                   ;
 %     };
 % newName = 'XT_RE_mapNoise_nsp1_Oct2018_all_thresh35';
- %% WU
+%% WU
 % files = {
 %     'WU_LE_GratingsMapRF_nsp2_20170426_003_thresh35_info3';
 %     %    'WU_LE_GratingsMapRF_nsp2_20170814_003_thresh35_info3';
@@ -96,7 +96,7 @@ newName = 'XT_LE_mapNoiseRight_nsp2_Nov2018_all_thresh35';
 %     'WU_RE_GratingsMapRF_nsp2_20170815_001_thresh35_info3';
 %     };
 % newName = 'WU_RE_GratmapRF_nsp2_Aug2017_all_thresh35';
-% 
+%
 % files = {
 %     'WU_RE_GratingsMapRF_nsp1_20170427_001_thresh35_info3';
 %     'WU_RE_GratingsMapRF_nsp1_20170427_002_thresh35_info3';
@@ -110,15 +110,15 @@ newName = 'XT_LE_mapNoiseRight_nsp2_Nov2018_all_thresh35';
 % newName = 'WU_RE_GratmapRF_nsp2_April2017_all_thresh35';
 %% XT V4 overlapping near fixation
 
-files = {
-    'XT_LE_mapNoise_nsp2_20181023_002_thresh35_info3';     
-    'XT_LE_mapNoise_nsp2_20181025_001_thresh35_info3';    
-    };
-newName = 'XT_LE_mapNoise_nsp2_Oct2018_all_thresh35';
+% files = {
+%     'XT_LE_mapNoise_nsp2_20181023_002_thresh35_info3';
+%     'XT_LE_mapNoise_nsp2_20181025_001_thresh35_info3';
+%     };
+% newName = 'XT_LE_mapNoise_nsp2_Oct2018_all_thresh35';
 
 % files = {
-%     'XT_RE_mapNoise_nsp2_20181024_001_thresh35_info3';     
-%     'XT_RE_mapNoise_nsp2_20181024_002_thresh35_info3';     
+%     'XT_RE_mapNoise_nsp2_20181024_001_thresh35_info3';
+%     'XT_RE_mapNoise_nsp2_20181024_002_thresh35_info3';
 %     'XT_RE_mapNoise_nsp2_20181024_003_thresh35_info3'};
 % newName = 'XT_RE_mapNoise_nsp2_Oct2018_all_thresh35';
 %%
@@ -141,25 +141,8 @@ for fi = 1:size(files,1)
             dataT.bins = dataT.binsV1;
         end
     end
-    % adjust locations so fixation is at (0,0). This will also allow us to
-    % combine across runs with different locations to get full maps.
     
-    if contains(filename,'WU')
-        dataT.pos_x = dataT.xoffset;
-        dataT.pos_y = dataT.yoffset;
-    end
-    
-    dataT.fix_xOrig = dataT.fix_x;
-    dataT.fix_x = dataT.fix_x - dataT.fix_x;
-    dataT.pos_xOrig = dataT.pos_x;
-    dataT.pos_x = dataT.pos_x - double(unique(dataT.fix_xOrig));
-    
-    dataT.fix_yOrig = dataT.fix_y;
-    dataT.fix_y = dataT.fix_y - dataT.fix_y;
-    dataT.pos_yOrig = dataT.pos_y;
-    dataT.pos_y = dataT.pos_y - double(unique(dataT.fix_yOrig));
     dataTComp{fi} = dataT;
-    
 end
 %% Concatenate sections
 action = [];
@@ -178,7 +161,7 @@ spatial_frequency = [];
 phase = [];
 contrast = [];
 
-% added 11/11
+% added 11/11/20
 stimulus = [];
 blankSpikeCount = [];
 stimSpikeCount = [];
@@ -190,7 +173,7 @@ fix_xOrig = [];
 fix_yOrig = [];
 pos_xOrig = [];
 pos_yOrig = [];
-
+%%
 for i = 1:length(dataTComp)
     bT     = dataTComp{i}.bins;
     fx     = dataTComp{i}.fix_x;
@@ -209,21 +192,18 @@ for i = 1:length(dataTComp)
     fYog= dataTComp{i}.fix_yOrig;
     pXog= dataTComp{i}.pos_xOrig;
     pYog= dataTComp{i}.pos_yOrig;
+    xPos = dataTComp{i}.pos_x;
+    yPos = dataTComp{i}.pos_y;
     
     if ~contains(files{fi,:},'WU') %there are a few things that are named differently because WU was run with gratings instead of pngs
         fnm    = dataTComp{i}.filename;
         filename = cat(1, filename, fnm);
         szx    = dataTComp{i}.size_x;
-        xPos = dataTComp{i}.pos_x;
-        yPos = dataTComp{i}.pos_y;
         stim = dataTComp{i}.stimulus;
         stimulus = [stimulus, stim];
-        
     else
         %%
         szx = dataTComp{i}.width;
-        xPos = dataTComp{i}.xoffset;
-        yPos = dataTComp{i}.yoffset;
         sf = dataTComp{i}.spatial_frequency;
         spatial_frequency = [spatial_frequency, sf];
         ph = dataTComp{i}.current_phase;
@@ -250,7 +230,6 @@ for i = 1:length(dataTComp)
     
     stimSpikeCount = cat(4,stimSpikeCount, sSC);
     stimZscore = cat(4,stimZscore, sZ);
-    
     
     fix_xOrig = [fix_xOrig, fXog];
     fix_yOrig = [fix_yOrig, fYog];

@@ -4,21 +4,18 @@ clc
 tic
 %%
 files = {
-    %     'WV_LE_MapNoise_nsp2_Jan2019_all_thresh35_info3';
-    %     'WV_RE_MapNoise_nsp2_Jan2019_all_thresh35_info3';
-    %     'WV_LE_MapNoise_nsp1_Jan2019_all_thresh35_info3';
-    %     'WV_RE_MapNoise_nsp1_Jan2019_all_thresh35_info3';
-     %
-    'XT_LE_mapNoiseRight_nsp2_Nov2018_all_thresh35';
-    'XT_RE_mapNoiseRight_nsp2_20181119_001_thresh35_info3';
-    %     'XT_LE_mapNoise_nsp1_Oct2018_all_thresh35';
-    %     'XT_RE_mapNoise_nsp1_Oct2018_all_thresh35';
+    'WV_LE_MapNoise_nsp2_Jan2019_all_thresh35_info3';
+    'WV_RE_MapNoise_nsp2_Jan2019_all_thresh35_info3';
+    'WV_LE_MapNoise_nsp1_Jan2019_all_thresh35_info3';
+    'WV_RE_MapNoise_nsp1_Jan2019_all_thresh35_info3';
     
-%     'WU_LE_GratingsMapRF_nsp2_20170426_003_thresh35_info3';
-%     'WU_RE_GratingsMapRF_nsp2_20170426_001_thresh35_info3';
-    % 'WU_LE_GratingsMapRF_nsp1_20170426_003_thresh35_info3';
-    % 'WU_RE_GratingsMapRF_nsp1_20170426_001_thresh35_info3';
-
+    'XT_LE_mapNoise_nsp1_Oct2018_all_thresh35';
+    'XT_RE_mapNoise_nsp1_Oct2018_all_thresh35';
+    
+    'WU_LE_GratingsMapRF_nsp2_20170426_003_thresh35_info3';
+    'WU_RE_GratingsMapRF_nsp2_20170426_001_thresh35_info3';
+    'WU_LE_GratingsMapRF_nsp1_20170426_003_thresh35_info3';
+    'WU_RE_GratingsMapRF_nsp1_20170426_001_thresh35_info3';
     };
 nameEnd = 'resps';
 %%
@@ -70,9 +67,9 @@ for fi = 1:length(files)
     %%
     location = determineComputer;
     if location == 1
-        figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/RF/%s/ch/',dataT.animal,dataT.programID, dataT.eye);
+        figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/%s/',dataT.animal,dataT.programID, dataT.eye);
     elseif location == 0
-        figDir =  sprintf('~/Dropbox/Figures/%s/%s/RF/%s/ch/',dataT.animal, dataT.programID, dataT.eye);
+        figDir =  sprintf('~/Dropbox/Figures/%s/%s/%s/',dataT.animal, dataT.programID, dataT.eye);
     end
     
     if ~exist(figDir,'dir')
@@ -104,6 +101,7 @@ for fi = 1:length(files)
     end
     plot(dataT.fix_x, dataT.fix_y,'ok','MarkerFaceColor','k','MarkerSize',8)
     title(sprintf('%s %s %s recepive field centers',dataT.animal, dataT.array, dataT.eye),'FontSize',14,'FontWeight','Bold')
+    
     %%
     if location == 1
         outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/GratMapRF/',dataT.array);

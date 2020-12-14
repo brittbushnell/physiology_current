@@ -1,18 +1,19 @@
-clear all
+                       clear
 close all
 clc
 %%
+LE = 'XT_LE_mapNoiseRight_nsp2_Nov2018_all_thresh35';
+RE = 'XT_RE_mapNoiseRight_nsp2_20181119_001_thresh35_info4';
 
-LE = 'XT_LE_mapNoiseRight_nsp2_Nov2018_all_thresh35_resps';
-RE = 'XT_RE_mapNoiseRight_nsp2_20181119_001_thresh35_info3_resps';
-
-
-load(LE);
-dataLE = data.LE;
-clear data;
-
+dataLE = load(LE);
 load(RE);
 dataRE = data.RE;
+
+plotChs = 1;
+%% get receptive field centers and boundaries
+
+dataLE = getReceptiveFields_zScore(dataLE);
+dataRE = getReceptiveFields_zScore(dataRE);
 %% get info from data structures
 
 LEresps = dataLE.stimZscore;
@@ -49,140 +50,147 @@ for ch = 1:96
     end
 end
 %% PSTHs of BEmtx info
-% cd '/Users/brittany/Dropbox/Figures/XT/Mapping/V4/PSTH/ch/'
-% 
-% stimNdxRE  = dataRE.stimulus ~=0;
-% blankNdxRE  = dataRE.stimulus ==0;
-% 
-% stimNdxLE  = dataLE.stimulus ~=0;
-% blankNdxLE  = dataLE.stimulus ==0;
-% 
-% for ch = 1:96
-%     figure(1)
-%     clf
-%     pos = get(gcf,'Position');
-%     set(gcf,'Position',[pos(1) pos(2) 1000 800])
-%     set(gcf,'PaperOrientation','Landscape');
-%     
-%     nx = 1;
-%     for y = 1:10
-%         for x = 1:10
-%             subplot(10, 10, nx)
-%             hold on
-%             if eyeXsort(x) == 1 && eyeYsort(y) == 1 %RE
-%                 xNdx = dataRE.pos_x == sortXs(x);
-%                 yNdx = dataRE.pos_y == sortYs(y);
-%                 stimTrials  = stimNdxRE & yNdx & xNdx;
-%                 
-%                 bK = nanmean(smoothdata(dataRE.bins(blankNdxRE, 1:35 ,ch),'gaussian',3))./0.01;
-%                 sK = nanmean(smoothdata(dataRE.bins(stimNdxRE & xNdx & yNdx, 1:35 ,ch),'gaussian',3))./0.01;
-%                 
-%                 plot(bK,'-','color',[0.2 0.2 0.2],'LineWidth',0.5)
-%                 plot(sK,'-r','LineWidth',1.25)
-%                 title(sprintf('\n\n\n(%.1f,%.1f)',sortXs(x),sortYs(y)),'FontWeight','normal')
-%                 ylim([0, 300]);
-%                 if nx< 91
-%                     set(gca,'XTickLabel','')
-%                 end
-%                 
-%                 nx = nx+1;
-%                 clear yNdx;
-%                 clear xNdx;
-%                 clear bK;
-%                 clear sK;
-%             elseif eyeXsort(x) == 2 && eyeYsort(y) == 2
-%                 xNdx = dataLE.pos_x == sortXs(x);
-%                 yNdx = dataLE.pos_y == sortYs(y);
-%                 stimTrials  = stimNdxLE & yNdx & xNdx;
-%                 
-%                 bK = nanmean(smoothdata(dataLE.bins(blankNdxLE, 1:35 ,ch),'gaussian',3))./0.01;
-%                 sK = nanmean(smoothdata(dataLE.bins(stimNdxLE & xNdx & yNdx, 1:35 ,ch),'gaussian',3))./0.01;
-%                 
-%                 plot(bK,'-','color',[0.2 0.2 0.2],'LineWidth',0.5)
-%                 plot(sK,'-b','LineWidth',1.25)
-%                 title(sprintf('\n\n\n(%.1f,%.1f)',sortXs(x),sortYs(y)),'FontWeight','normal')
-%                 ylim([0, 300]);
-%                 if nx< 91
-%                     set(gca,'XTickLabel','')
-%                 end
-%                 nx = nx+1;
-%                 clear yNdx;
-%                 clear xNdx;
-%                 clear bK;
-%                 clear sK;
-%             else % isnan
-%                 axis off
-%                 nx = nx+1;
-%             end
-%         end
-%     end
-%     
-%     suptitle(sprintf('%s %s %s channel %d',dataRE.animal, dataRE.array,dataRE.programID, ch))
-%     figName = ['XT_BE_mappNoiseRight_V4_PSTHbyLocationCh',num2str(ch),'.pdf'];
-%     %print(gcf, figName,'-dpdf','-fillpage')
-% end
-% %% heat maps
-% figDir =  '/Users/brittany/Dropbox/Figures/XT/Mapping/V4/heatmap/ch/';
-% if ~exist(figDir,'dir')
-%     mkdir(figDir)
-% end
-% cd(figDir);
-% 
-% BEvect = reshape(BEmtx,[1,numel(BEmtx)]);
-% minZ = min(BEvect);
-% maxZ = max(BEvect);
-% clim = [minZ, maxZ];
-% cmap = gray(20);
-% cmap = flipud(cmap);
-% 
-% 
-% for ch = 1:96
-%     figure(2)
-%     clf
-%     pos = get(gcf,'Position');
-%     set(gcf,'Position',[pos(1) pos(2) 700 700])
-%     set(gcf,'PaperOrientation','Landscape');
-% 
-%     %s = subplot(dataRE.amap,10,10,ch);
-%     %s.Position(3) = s.Position(3)+0.02;
-%     hold on
-%     imagesc(BEmtx(:,:,ch),clim)
-%     c = colorbar;
-%     c.Label.String = 'z score';
-%     c.FontSize = 12;
-%     c.FontWeight = 'bold';
-%     c.FontAngle = 'italic';
-%     
-%     
-%     axis ij;
-%     colormap(cmap) 
-%     axis square
-%     axis tight 
-%     
-%     xlabel('x coordinate relative to fixation at (0,0)')
-%     ylabel('y coordinate relative to fixation at (0,0)')
-%     set(gca,'tickdir','out','XTick',...
-%         1:1:length(sortXs),'XTickLabel',sortXs,'YTick',1:1:length(sortYs),'YTickLabel',sortYs)
-%     title(sprintf('XT V4 z scores for both eyes by location channel %d',ch),...
-%         'FontSize',14,'FontAngle','italic')
-%     
-%     figName = ['XT_BE_mappNoiseRight_V4_PSTHbyLocationCh',num2str(ch),'.pdf'];
-%    % print(gcf, figName,'-dpdf','-fillpage')
-% end
+if plotChs == 1
+outputDir = '/Users/brittany/Dropbox/Figures/XT/Mapping/V4/PSTH/ch/';
+
+if ~exist(outputDir,'dir')
+    mkdir(outputDir)
+end
+cd(outputDir)
+
+stimNdxRE  = dataRE.stimulus ~=0;
+blankNdxRE  = dataRE.stimulus ==0;
+
+stimNdxLE  = dataLE.stimulus ~=0;
+blankNdxLE  = dataLE.stimulus ==0;
+
+for ch = 1:96
+    figure(3)
+    clf
+    pos = get(gcf,'Position');
+    set(gcf,'Position',[pos(1) pos(2) 1000 800])
+    set(gcf,'PaperOrientation','Landscape');
+    
+    nx = 1;
+    for y = 1:10
+        for x = 1:10
+            subplot(10, 10, nx)
+            hold on
+            if eyeXsort(x) == 1 && eyeYsort(y) == 1 %RE
+                xNdx = dataRE.pos_x == sortXs(x);
+                yNdx = dataRE.pos_y == sortYs(y);
+                stimTrials  = stimNdxRE & yNdx & xNdx;
+                
+                bK = nanmean(smoothdata(dataRE.bins(blankNdxRE, 1:35 ,ch),'gaussian',3))./0.01;
+                sK = nanmean(smoothdata(dataRE.bins(stimNdxRE & xNdx & yNdx, 1:35 ,ch),'gaussian',3))./0.01;
+                
+                plot(bK,'-','color',[0.2 0.2 0.2],'LineWidth',0.5)
+                plot(sK,'-r','LineWidth',1.25)
+                title(sprintf('\n\n\n(%.1f,%.1f)',sortXs(x),sortYs(y)),'FontWeight','normal')
+                ylim([0, 300]);
+                if nx< 91
+                    set(gca,'XTickLabel','')
+                end
+                
+                nx = nx+1;
+                clear yNdx;
+                clear xNdx;
+                clear bK;
+                clear sK;
+            elseif eyeXsort(x) == 2 && eyeYsort(y) == 2
+                xNdx = dataLE.pos_x == sortXs(x);
+                yNdx = dataLE.pos_y == sortYs(y);
+                stimTrials  = stimNdxLE & yNdx & xNdx;
+                
+                bK = nanmean(smoothdata(dataLE.bins(blankNdxLE, 1:35 ,ch),'gaussian',3))./0.01;
+                sK = nanmean(smoothdata(dataLE.bins(stimNdxLE & xNdx & yNdx, 1:35 ,ch),'gaussian',3))./0.01;
+                
+                plot(bK,'-','color',[0.2 0.2 0.2],'LineWidth',0.5)
+                plot(sK,'-b','LineWidth',1.25)
+                title(sprintf('\n\n\n(%.1f,%.1f)',sortXs(x),sortYs(y)),'FontWeight','normal')
+                ylim([0, 300]);
+                if nx< 91
+                    set(gca,'XTickLabel','')
+                end
+                nx = nx+1;
+                clear yNdx;
+                clear xNdx;
+                clear bK;
+                clear sK;
+            else % isnan
+                axis off
+                nx = nx+1;
+            end
+        end
+    end
+    
+    suptitle(sprintf('%s %s %s channel %d',dataRE.animal, dataRE.array,dataRE.programID, ch))
+    figName = ['XT_BE_mappNoiseRight_V4_PSTHbyLocationCh',num2str(ch),'.pdf'];
+    print(gcf, figName,'-dpdf','-fillpage')
+end
+%% heat maps
+figDir =  '/Users/brittany/Dropbox/Figures/XT/Mapping/V4/heatmap/ch/';
+if ~exist(figDir,'dir')
+    mkdir(figDir)
+end
+cd(figDir);
+
+BEvect = reshape(BEmtx,[1,numel(BEmtx)]);
+minZ = min(BEvect);
+maxZ = max(BEvect);
+clim = [minZ, maxZ];
+cmap = gray(20);
+cmap = flipud(cmap);
+
+
+for ch = 1:96
+    figure(4)
+    clf
+    pos = get(gcf,'Position');
+    set(gcf,'Position',[pos(1) pos(2) 700 700])
+    set(gcf,'PaperOrientation','Landscape');
+
+    %s = subplot(dataRE.amap,10,10,ch);
+    %s.Position(3) = s.Position(3)+0.02;
+    hold on
+    imagesc(BEmtx(:,:,ch),clim)
+    c = colorbar;
+    c.Label.String = 'z score';
+    c.FontSize = 12;
+    c.FontWeight = 'bold';
+    c.FontAngle = 'italic';
+    
+    
+    axis ij;
+    colormap(cmap) 
+    axis square
+    axis tight 
+    
+    xlabel('x coordinate relative to fixation at (0,0)')
+    ylabel('y coordinate relative to fixation at (0,0)')
+    set(gca,'tickdir','out','XTick',...
+        1:1:length(sortXs),'XTickLabel',sortXs,'YTick',1:1:length(sortYs),'YTickLabel',sortYs)
+    title(sprintf('XT V4 z scores for both eyes by location channel %d',ch),...
+        'FontSize',14,'FontAngle','italic')
+    
+    figName = ['XT_BE_mappNoiseRight_V4_PSTHbyLocationCh',num2str(ch),'.pdf'];
+   print(gcf, figName,'-dpdf','-fillpage')
+end
+end
 %%
 
 for ch = 1:96
     BEZs = squeeze(BEmtx(:,:,ch));
-    %BEZs = inpaint_nans(BEZs);
+    BEZs = inpaint_nans(BEZs);
     [params,rhat,errorsum,cf] = fit_gaussianrf_z2(sortXs,sortYs,BEZs);
     chFit{ch} = cf.paramsadj;
 end
 %%
 location = determineComputer;
 if location == 1
-    figDir =  ('~/bushnell-local/Dropbox/Figures/XT/mapNoiseRight/');
+    figDir =  ('~/bushnell-local/Dropbox/Figures/XT/Mapping/V4/');
 elseif location == 0
-    figDir =  ('~/Dropbox/Figures/XT/mapNoiseRight/');
+    figDir =  ('~/Dropbox/Figures/XT/Mapping/V4/');
 end
 
 if ~exist(figDir,'dir')
@@ -209,12 +217,12 @@ end
 viscircles([0,0],0.75, 'color',[0.2 0.2 0.2]);
 text(10,10,'RE','Color',[0.8 0 0.4],'FontWeight','bold','FontSize',14)
 text(10,11,'LE','Color',[0.2 0.4 1],'FontWeight','bold','FontSize',14)
-text(8,12,'missing = 0 LE and RE','Color',[0.7 0 0.7],'FontWeight','bold','FontSize',14)
+text(8,12,'missing = interpolated LE and RE','Color',[0.7 0 0.7],'FontWeight','bold','FontSize',14)
 
 plot(0,0,'ok','MarkerFaceColor','k','MarkerSize',8)
 title('XT V4 recepive field centers','FontSize',14,'FontWeight','Bold')
 
-figName = ['XT_V4_receptiveFields_nancombined','.pdf'];
+figName = ['XT_V4_receptiveFields_nanInterp','.pdf'];
 print(gcf, figName,'-dpdf','-fillpage')
 %%
 figure%(6)
@@ -264,10 +272,10 @@ data.LE = dataLE;
 data.chReceptiveFieldParams = chFit;
 
 if location == 1
-    outputDir =  '~/bushnell-local/Dropbox/ArrayData/matFiles/V4/GratMapRF/';
+    outputDir =  '~/bushnell-local/Dropbox/ArrayData/matFiles/V4/Mapping/';
     
 elseif location == 0
-    outputDir = '~/Dropbox/ArrayData/matFiles/V4/GratMapRF/';
+    outputDir = '~/Dropbox/ArrayData/matFiles/V4/Mapping/';
 end
 if ~exist(outputDir,'dir')
     mkdir(outputDir)
