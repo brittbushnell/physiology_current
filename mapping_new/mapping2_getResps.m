@@ -1,21 +1,21 @@
-clear all
+clear
 close all
 clc
 tic
 %%
 files = {
-    'WV_LE_MapNoise_nsp2_Jan2019_all_thresh35_info3';
-    'WV_RE_MapNoise_nsp2_Jan2019_all_thresh35_info3';
-    'WV_LE_MapNoise_nsp1_Jan2019_all_thresh35_info3';
-    'WV_RE_MapNoise_nsp1_Jan2019_all_thresh35_info3';
+    'WV_LE_MapNoise_nsp2_Jan2019_all_thresh35';
+    'WV_RE_MapNoise_nsp2_Jan2019_all_thresh35';
+    'WV_LE_MapNoise_nsp1_Jan2019_all_thresh35';
+    'WV_RE_MapNoise_nsp1_Jan2019_all_thresh35';
     
     'XT_LE_mapNoise_nsp1_Oct2018_all_thresh35';
     'XT_RE_mapNoise_nsp1_Oct2018_all_thresh35';
     
-    'WU_LE_GratingsMapRF_nsp2_20170426_003_thresh35_info3';
-    'WU_RE_GratingsMapRF_nsp2_20170426_001_thresh35_info3';
-    'WU_LE_GratingsMapRF_nsp1_20170426_003_thresh35_info3';
-    'WU_RE_GratingsMapRF_nsp1_20170426_001_thresh35_info3';
+    'WU_LE_GratingsMapRF_nsp2_20170426_003_thresh35_info4';
+    'WU_LE_GratingsMapRF_nsp1_20170426_003_thresh35_info4';
+    'WU_RE_GratmapRF_nsp1_Aug2017_all_thresh35';
+    'WU_RE_GratmapRF_nsp2_Aug2017_all_thresh35';
     };
 nameEnd = 'resps';
 %%

@@ -8,39 +8,48 @@ close all
 clc
 tic
 %%
-files = {
-    'XT_LE_mapNoiseRight_nsp2_20181120_001_thresh35';
-    'XT_LE_mapNoiseRight_nsp2_20181120_002_thresh35';
-    'XT_RE_mapNoiseRight_nsp2_20181119_001_thresh35';
-    'WV_LE_MapNoise_nsp2_20190122_003_thresh35'                   ;
-    'WV_LE_MapNoise_nsp2_20190130_001_thresh35'                   ;
-    'WV_LE_MapNoise_nsp2_20190130_002_thresh35'                   ;
-    'WV_LE_MapNoise_nsp2_20190201_002_thresh35'                   ;
-    'WV_LE_MapNoise_nsp2_20190204_001_thresh35'                   ;
-    'WV_LE_MapNoise_nsp2_20190204_002_thresh35'                   ;
-    'WV_LE_MapNoise_nsp2_20190204_003_thresh35'                   ;
-    'WV_RE_MapNoise_nsp2_20190130_003_thresh35'                   ;
-    'WV_RE_MapNoise_nsp2_20190201_001_thresh35'                   ;
-    'WV_RE_MapNoise_nsp2_20190205_001_thresh35'                   ;
-    'WV_LE_MapNoise_nsp1_20190122_003_thresh35'                   ;
-    'WV_LE_MapNoise_nsp1_20190130_001_thresh35'                   ;
-    'WV_LE_MapNoise_nsp1_20190130_002_thresh35'                   ;
-    'WV_LE_MapNoise_nsp1_20190201_002_thresh35'                   ;
-    'WV_LE_MapNoise_nsp1_20190204_001_thresh35'                   ;
-    'WV_LE_MapNoise_nsp1_20190204_002_thresh35'                   ;
-    'WV_LE_MapNoise_nsp1_20190204_003_thresh35'                   ;
-    'WV_RE_MapNoise_nsp1_20190130_003_thresh35_ogcorrupt'         ;
-    'WV_RE_MapNoise_nsp1_20190201_001_thresh35_ogcorrupt'         ;
-    'WV_RE_MapNoise_nsp1_20190205_001_thresh35_ogcorrupt'         ;
-    'WU_LE_GratingsMapRF_nsp1_20170426_003_thresh35';
-    'WU_LE_GratingsMapRF_nsp2_20170426_003_thresh35';
-    'WU_RE_GratingsMapRF_nsp1_20170814_001_thresh35';
-    'WU_RE_GratingsMapRF_nsp1_20170814_002_thresh35';
-    'WU_RE_GratingsMapRF_nsp1_20170815_001_thresh35';
-    'WU_RE_GratingsMapRF_nsp2_20170814_001_thresh35';
-    'WU_RE_GratingsMapRF_nsp2_20170814_002_thresh35';
-    'WU_RE_GratingsMapRF_nsp2_20170815_001_thresh35';
-    };
+ files = {
+%     'XT_LE_mapNoiseRight_nsp2_20181120_001_thresh35';
+%     'XT_LE_mapNoiseRight_nsp2_20181120_002_thresh35';
+%     'XT_RE_mapNoiseRight_nsp2_20181119_001_thresh35';
+%     'WV_LE_MapNoise_nsp2_20190122_003_thresh35'                   ;
+%     'WV_LE_MapNoise_nsp2_20190130_001_thresh35'                   ;
+%     'WV_LE_MapNoise_nsp2_20190130_002_thresh35'                   ;
+%     'WV_LE_MapNoise_nsp2_20190201_002_thresh35'                   ;
+%     'WV_LE_MapNoise_nsp2_20190204_001_thresh35'                   ;
+%     'WV_LE_MapNoise_nsp2_20190204_002_thresh35'                   ;
+%     'WV_LE_MapNoise_nsp2_20190204_003_thresh35'                   ;
+%     'WV_RE_MapNoise_nsp2_20190130_003_thresh35'                   ;
+%     'WV_RE_MapNoise_nsp2_20190201_001_thresh35'                   ;
+%     'WV_RE_MapNoise_nsp2_20190205_001_thresh35'                   ;
+%     'WV_LE_MapNoise_nsp1_20190122_003_thresh35'                   ;
+%     'WV_LE_MapNoise_nsp1_20190130_001_thresh35'                   ;
+%     'WV_LE_MapNoise_nsp1_20190130_002_thresh35'                   ;
+%     'WV_LE_MapNoise_nsp1_20190201_002_thresh35'                   ;
+%     'WV_LE_MapNoise_nsp1_20190204_001_thresh35'                   ;
+%     'WV_LE_MapNoise_nsp1_20190204_002_thresh35'                   ;
+%     'WV_LE_MapNoise_nsp1_20190204_003_thresh35'                   ;
+%     'WV_RE_MapNoise_nsp1_20190130_003_thresh35_ogcorrupt'         ;
+%     'WV_RE_MapNoise_nsp1_20190201_001_thresh35_ogcorrupt'         ;
+%     'WV_RE_MapNoise_nsp1_20190205_001_thresh35_ogcorrupt'         ;
+%     'WU_LE_GratingsMapRF_nsp1_20170426_003_thresh35';
+%     'WU_LE_GratingsMapRF_nsp2_20170426_003_thresh35';
+%     'WU_RE_GratingsMapRF_nsp1_20170814_001_thresh35';
+%     'WU_RE_GratingsMapRF_nsp1_20170814_002_thresh35';
+%     'WU_RE_GratingsMapRF_nsp1_20170815_001_thresh35';
+%     'WU_RE_GratingsMapRF_nsp2_20170814_001_thresh35';
+%     'WU_RE_GratingsMapRF_nsp2_20170814_002_thresh35';
+%     'WU_RE_GratingsMapRF_nsp2_20170815_001_thresh35';
+%     'XT_LE_mapNoise_nsp1_20181023_002_thresh35';
+%     'XT_LE_mapNoise_nsp1_20181025_001_thresh35';
+%     'XT_RE_mapNoise_nsp1_20181024_001_thresh35';
+%     'XT_RE_mapNoise_nsp1_20181024_002_thresh35';
+%     'XT_RE_mapNoise_nsp1_20181024_003_thresh35';
+%     'WU_RE_GratingsMapRF_nsp2_20170427_001_thresh35';
+%     'WU_RE_GratingsMapRF_nsp2_20170427_002_thresh35';
+    'XT_LE_mapNoise_nsp1_20181023_001_thresh35';
+    'XT_LE_mapNoise_nsp1_20181023_002_thresh35';  
+};
 %%
 nameEnd = 'info4';
 plotFlag = 0;
@@ -77,17 +86,24 @@ for fi = 1:length(files)
         dataT.pos_x = dataT.xoffset; % renaming so it's consistent with the rest of the mapping programs
         dataT.pos_y = dataT.yoffset;
     end
+    
     if dataT.fix_x ~=0
         dataT.fix_xOrig = dataT.fix_x;
         dataT.fix_x = dataT.fix_x - dataT.fix_x;
         dataT.pos_xOrig = dataT.pos_x;
         dataT.pos_x = dataT.pos_x - double(unique(dataT.fix_xOrig));
+    else
+        dataT.fix_xOrig = dataT.fix_x;
+        dataT.pos_xOrig = dataT.pos_x;
     end
     if dataT.fix_y ~=0
         dataT.fix_yOrig = dataT.fix_y;
         dataT.fix_y = dataT.fix_y - dataT.fix_y;
         dataT.pos_yOrig = dataT.pos_y;
         dataT.pos_y = dataT.pos_y - double(unique(dataT.fix_yOrig));
+    else
+        dataT.fix_yOrig = dataT.fix_y;
+        dataT.pos_yOrig = dataT.pos_y;
     end
     %% parse stimulus name
     if ~contains(filename, 'WU')
