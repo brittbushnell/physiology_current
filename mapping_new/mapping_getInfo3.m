@@ -11,7 +11,35 @@ tic
 files = {
     'XT_LE_mapNoiseRight_nsp2_20181120_001_thresh35';
     'XT_LE_mapNoiseRight_nsp2_20181120_002_thresh35';
-    'XT_RE_mapNoiseRight_nsp2_20181119_001_thresh35'
+    'XT_RE_mapNoiseRight_nsp2_20181119_001_thresh35';
+    'WV_LE_MapNoise_nsp2_20190122_003_thresh35'                   ;
+    'WV_LE_MapNoise_nsp2_20190130_001_thresh35'                   ;
+    'WV_LE_MapNoise_nsp2_20190130_002_thresh35'                   ;
+    'WV_LE_MapNoise_nsp2_20190201_002_thresh35'                   ;
+    'WV_LE_MapNoise_nsp2_20190204_001_thresh35'                   ;
+    'WV_LE_MapNoise_nsp2_20190204_002_thresh35'                   ;
+    'WV_LE_MapNoise_nsp2_20190204_003_thresh35'                   ;
+    'WV_RE_MapNoise_nsp2_20190130_003_thresh35'                   ;
+    'WV_RE_MapNoise_nsp2_20190201_001_thresh35'                   ;
+    'WV_RE_MapNoise_nsp2_20190205_001_thresh35'                   ;
+    'WV_LE_MapNoise_nsp1_20190122_003_thresh35'                   ;
+    'WV_LE_MapNoise_nsp1_20190130_001_thresh35'                   ;
+    'WV_LE_MapNoise_nsp1_20190130_002_thresh35'                   ;
+    'WV_LE_MapNoise_nsp1_20190201_002_thresh35'                   ;
+    'WV_LE_MapNoise_nsp1_20190204_001_thresh35'                   ;
+    'WV_LE_MapNoise_nsp1_20190204_002_thresh35'                   ;
+    'WV_LE_MapNoise_nsp1_20190204_003_thresh35'                   ;
+    'WV_RE_MapNoise_nsp1_20190130_003_thresh35_ogcorrupt'         ;
+    'WV_RE_MapNoise_nsp1_20190201_001_thresh35_ogcorrupt'         ;
+    'WV_RE_MapNoise_nsp1_20190205_001_thresh35_ogcorrupt'         ;
+    'WU_LE_GratingsMapRF_nsp1_20170426_003_thresh35';
+    'WU_LE_GratingsMapRF_nsp2_20170426_003_thresh35';
+    'WU_RE_GratingsMapRF_nsp1_20170814_001_thresh35';
+    'WU_RE_GratingsMapRF_nsp1_20170814_002_thresh35';
+    'WU_RE_GratingsMapRF_nsp1_20170815_001_thresh35';
+    'WU_RE_GratingsMapRF_nsp2_20170814_001_thresh35';
+    'WU_RE_GratingsMapRF_nsp2_20170814_002_thresh35';
+    'WU_RE_GratingsMapRF_nsp2_20170815_001_thresh35';
     };
 %%
 nameEnd = 'info4';

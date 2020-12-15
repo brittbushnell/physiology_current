@@ -77,6 +77,7 @@ for fi = 1:length(files)
     end
     cd(figDir)
     %%
+    
     figure%(6)
     clf
     hold on
@@ -101,7 +102,8 @@ for fi = 1:length(files)
     end
     plot(dataT.fix_x, dataT.fix_y,'ok','MarkerFaceColor','k','MarkerSize',8)
     title(sprintf('%s %s %s recepive field centers',dataT.animal, dataT.array, dataT.eye),'FontSize',14,'FontWeight','Bold')
-    
+    figName = [dataT.animal,'_',dataT.array,'_',dataT.eye,'_receptiveFieldCenter','.pdf'];
+print(gcf, figName,'-dpdf','-fillpage')
     %%
     if location == 1
         outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/GratMapRF/',dataT.array);

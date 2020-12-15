@@ -9,7 +9,7 @@ dataLE = load(LE);
 load(RE);
 dataRE = data.RE;
 
-plotChs = 1;
+plotChs = 0;
 %% get receptive field centers and boundaries
 
 dataLE = getReceptiveFields_zScore(dataLE);
