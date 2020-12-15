@@ -4,18 +4,19 @@ clc
 tic
 %%
 files = {
-    'WV_LE_MapNoise_nsp2_Jan2019_all_thresh35';
-    'WV_RE_MapNoise_nsp2_Jan2019_all_thresh35';
-    'WV_LE_MapNoise_nsp1_Jan2019_all_thresh35';
-    'WV_RE_MapNoise_nsp1_Jan2019_all_thresh35';
+%     'WV_LE_MapNoise_nsp2_Jan2019_all_thresh35';
+%     'WV_RE_MapNoise_nsp2_Jan2019_all_thresh35';
+%     'WV_LE_MapNoise_nsp1_Jan2019_all_thresh35';
+%     'WV_RE_MapNoise_nsp1_Jan2019_all_thresh35';
+%     
+%     'XT_LE_mapNoise_nsp1_Oct2018_all_thresh35';
+%     'XT_RE_mapNoise_nsp1_Oct2018_all_thresh35';
+%     
+%     'WU_LE_GratingsMapRF_nsp2_20170426_003_thresh35_info4';
+%     'WU_LE_GratingsMapRF_nsp1_20170426_003_thresh35_info4';
+%     'WU_RE_GratmapRF_nsp2_April2017_all_thresh35';
+    'WU_RE_GratmapRF_nsp1_April2017_all_thresh35';
     
-    'XT_LE_mapNoise_nsp1_Oct2018_all_thresh35';
-    'XT_RE_mapNoise_nsp1_Oct2018_all_thresh35';
-    
-    'WU_LE_GratingsMapRF_nsp2_20170426_003_thresh35_info4';
-    'WU_LE_GratingsMapRF_nsp1_20170426_003_thresh35_info4';
-    'WU_RE_GratmapRF_nsp1_Aug2017_all_thresh35';
-    'WU_RE_GratmapRF_nsp2_Aug2017_all_thresh35';
     };
 nameEnd = 'resps';
 %%
@@ -54,7 +55,7 @@ for fi = 1:length(files)
         mkdir(outputDir)
     end
     %% do stim vs blank permutation test
-
+    
     
     %% get receptive field centers and boundaries
     % verify 1) using z-scores  2)  using (y,x) for mapping receptive
@@ -67,9 +68,9 @@ for fi = 1:length(files)
     %%
     location = determineComputer;
     if location == 1
-        figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/%s/',dataT.animal,dataT.programID, dataT.eye);
+        figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/Mapping/%s/',dataT.animal, dataT.eye);
     elseif location == 0
-        figDir =  sprintf('~/Dropbox/Figures/%s/%s/%s/',dataT.animal, dataT.programID, dataT.eye);
+        figDir =  sprintf('~/Dropbox/Figures/%s/Mapping/%s/',dataT.animal, dataT.eye);
     end
     
     if ~exist(figDir,'dir')
@@ -103,7 +104,31 @@ for fi = 1:length(files)
     plot(dataT.fix_x, dataT.fix_y,'ok','MarkerFaceColor','k','MarkerSize',8)
     title(sprintf('%s %s %s recepive field centers',dataT.animal, dataT.array, dataT.eye),'FontSize',14,'FontWeight','Bold')
     figName = [dataT.animal,'_',dataT.array,'_',dataT.eye,'_receptiveFieldCenter','.pdf'];
-print(gcf, figName,'-dpdf','-fillpage')
+    print(gcf, figName,'-dpdf','-fillpage')
+    %% RF bounds
+    figure%(6)
+    clf
+    hold on
+    for ch = 1:96
+        if contains(dataT.eye,'RE')
+            draw_ellipse(dataT.chReceptiveFieldParams{ch},[0.8 0 0.4])
+        else
+            draw_ellipse(dataT.chReceptiveFieldParams{ch},[0.2 0.4 1])
+        end
+        grid on;
+        xlim([-15,15])
+        ylim([-15,15])
+        set(gca,'YAxisLocation','origin','XAxisLocation','origin',...
+            'Layer','top','FontWeight','bold','FontSize',14,'FontAngle','italic')
+        axis square
+    end
+    
+    viscircles([0,0],0.75, 'color',[0.2 0.2 0.2]);
+    
+    plot(0,0,'ok','MarkerFaceColor','k','MarkerSize',8)
+    title(sprintf('%s %s %s recepive field bounds',dataT.animal, dataT.eye, dataT.array),'FontSize',14,'FontWeight','Bold')
+    figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_receptiveFieldBounds','.pdf'];
+    print(gcf, figName,'-dpdf','-fillpage')
     %%
     if location == 1
         outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/GratMapRF/',dataT.array);

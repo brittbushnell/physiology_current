@@ -45,10 +45,12 @@ tic
 %     'XT_RE_mapNoise_nsp1_20181024_001_thresh35';
 %     'XT_RE_mapNoise_nsp1_20181024_002_thresh35';
 %     'XT_RE_mapNoise_nsp1_20181024_003_thresh35';
-%     'WU_RE_GratingsMapRF_nsp2_20170427_001_thresh35';
-%     'WU_RE_GratingsMapRF_nsp2_20170427_002_thresh35';
-    'XT_LE_mapNoise_nsp1_20181023_001_thresh35';
-    'XT_LE_mapNoise_nsp1_20181023_002_thresh35';  
+    'WU_RE_GratingsMapRF_nsp2_20170427_001_thresh35';
+    'WU_RE_GratingsMapRF_nsp2_20170427_002_thresh35';
+       'WU_RE_GratingsMapRF_nsp1_20170427_001_thresh35';
+    'WU_RE_GratingsMapRF_nsp1_20170427_002_thresh35';
+%     'XT_LE_mapNoise_nsp1_20181023_001_thresh35';
+%     'XT_LE_mapNoise_nsp1_20181023_002_thresh35';  
 };
 %%
 nameEnd = 'info4';
