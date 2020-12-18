@@ -47,7 +47,7 @@ failNdx = 0;
 %%
 for fi = 1:length(files)
     %%
-    try
+    %try
         filename = files{fi};
         fprintf('\n *** Analyzing %s file %d/%d ***\n',filename,fi,length(files));
         
@@ -176,12 +176,12 @@ for fi = 1:length(files)
         save(saveName,'data');
         fprintf('%s saved\n  run time: %.2f minutes\n\n', saveName, toc/60)
         
-    catch ME
-        fprintf('%s did not work. \nError message: %s \n',filename,ME.message)
-        failNdx = failNdx+1;
-        failedFiles{failNdx,1} = filename;
-        failedME{failNdx,1} = ME;
-    end
+%     catch ME
+%         fprintf('%s did not work. \nError message: %s \n',filename,ME.message)
+%         failNdx = failNdx+1;
+%         failedFiles{failNdx,1} = filename;
+%         failedME{failNdx,1} = ME;
+%     end
     %% clean up workspace
     clearvars -except files fi nameEnd numPerm failedFiles failNdx numBoot location holdout
 end
