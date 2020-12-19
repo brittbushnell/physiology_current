@@ -16,21 +16,42 @@ clc
 % 
 % newName = 'WV_BE_V1_bothGlass_cleanMerged';
 %%
-load('WU_BE_GlassTR_V1_cleanMerged');
+% load('WU_BE_GlassTR_V1_cleanMerged');
+% trLE = data.LE;
+% trRE = data.RE;
+% trData = data;
+% clear data;
+% 
+% load('WU_BE_V1_Glass_clean_merged');
+% conRadLE = data.LE;
+% conRadRE = data.RE;
+% conRadData = data;
+% clear data
+% 
+% newName = 'WU_BE_V1_bothGlass_cleanMerged';
+%% 
+load('XT_BE_GlassTR_V4_cleanMerged');
 trLE = data.LE;
 trRE = data.RE;
 trData = data;
 clear data;
 
-load('WU_BE_V1_Glass_clean_merged');
+load('XT_BE_V4_Glass_clean_merged');
 conRadLE = data.LE;
 conRadRE = data.RE;
 conRadData = data;
 clear data
 
-newName = 'WU_BE_V1_bothGlass_cleanMerged';
-%%  get correct receptive field information
-[trLE.rfQuadrant] = getRFsinGlass(trLE);
+newName = 'XT_BE_V4_bothGlass_cleanMerged';
+%%  get receptive field information
+% It doesn't matter if you use the conRad or translational inputs, they'll
+% both return the same thing.
+
+trLE = callReceptiveFieldParameters(trLE);
+trRE = callReceptiveFieldParameters(trRE);
+
+%%
+[trLE.rfQuadrant] = getRFsRelGlass_ecc(trLE);
 trLE = GlassTR_bestSumDOris(trLE);
 trLE.quadOris = getOrisInRFs_conRadPrefs(trLE,conRadLE);
 

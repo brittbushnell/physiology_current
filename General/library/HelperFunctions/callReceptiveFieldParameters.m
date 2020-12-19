@@ -2,64 +2,64 @@ function dataOut = callReceptiveFieldParameters(dataT)
 % This function will get the receptive field parameters from previously
 % analyzed data and save them into the current dataT structure.
 % 
-% Receptive field locations are relative to fixation point, not center of
-% the monitor. 
+% Receptive field locations are relative to the center of the monitor, not
+% the fixation point. If the fixation point was moved to allow for more
+% space, then all points were adjusted so fixation = (0,0).
 
-%fprintf('\n *********UPDATE MAPPING FILES WITH FINALIZED AND CLEANED FILENAMES********* \n\n')
-fprintf( 'Receptive field locations are relative to fixation point, not the center of the monitor.\n') 
+fprintf( 'Receptive field locations are relative to origin, not fixation point.\n') 
 
 dataOut = dataT;
 if contains(dataT.animal,'WU')
     if contains(dataT.eye,'LE')
         if contains(dataT.array,'V4')
-            load('WU_LE_Gratmap_nsp2_20170428_all_thresh35_info_resps');
+            load('WU_LE_GratingsMapRF_nsp2_20170426_003_thresh35_info4_resps');
             rfData = data.LE;
         else
-            load('WU_LE_Gratmap_nsp1_20170428_all_thresh35_info_resps');
+            load('WU_LE_GratingsMapRF_nsp1_20170426_003_thresh35_info4_resps');
             rfData = data.LE;
         end
     else
         if contains(dataT.array,'V4')
-            load('WU_RE_Gratmap_nsp2_20170428_006_thresh35_info_resps');
+            load('WU_RE_GratmapRF_nsp2_April2017_all_thresh35_resps');
             rfData = data.RE;
         else
-            load('WU_RE_Gratmap_nsp1_20170428_006_thresh35_info_resps');
+            load('WU_RE_GratmapRF_nsp1_April2017_all_thresh35_resps');
             rfData = data.RE;
         end
     end
 elseif contains(dataT.animal,'WV')
     if contains(dataT.eye,'RE')
         if contains(dataT.array,'V4')
-            load('WV_RE_MapNoise_nsp2_20190130_all_thresh35_info_resps');
+            load('WV_RE_MapNoise_nsp2_Jan2019_all_thresh35_resps');
             rfData = data.RE;
         else
-            load('WV_RE_MapNoise_nsp1_20190130_all_thresh35_info_resps');
+            load('WV_RE_MapNoise_nsp1_Jan2019_all_thresh35_resps');
             rfData = data.RE;
         end
     else
         if contains(dataT.array,'V4')
-            load('WV_LE_MapNoise_nsp2_20190130_all_thresh35_info_resps');
+            load('WV_LE_MapNoise_nsp2_Jan2019_all_thresh35_resps');
             rfData = data.LE;
         else
-            load('WV_LE_MapNoise_nsp1_20190130_all_thresh35_info_resps');
+            load('WV_LE_MapNoise_nsp1_Jan2019_all_thresh35_resps');
             rfData = data.LE;
         end
     end
 elseif contains(dataT.animal,'XT')
     if contains(dataT.eye,'RE')
         if contains(dataT.array,'V4')
-            load('XT_RE_mapNoiseRight_nsp2_20181026_all_thresh35_info_resps');
-            rfData = data.RE;
+            load('XT_BE_mapNoiseRight_V4_zeros');
+            rfData = data;
         else
-            load('XT_RE_mapNoiseRight_nsp1_20181026_all_thresh35_info_resps');
+            load('XT_RE_mapNoise_nsp1_Oct2018_all_thresh35_resps');
             rfData = data.RE;
         end
     else
         if contains(dataT.array,'V4')
-            load('XT_LE_mapNoiseRight_nsp2_20181120_all_thresh35_info_resps');
-            rfData = data.LE;
+            load('XT_BE_mapNoiseRight_V4_zeros');
+            rfData = data;
         else
-            load('XT_LE_mapNoiseRight_nsp1_20181120_all_thresh35_info_resps');
+            load('XT_LE_mapNoise_nsp1_Oct2018_all_thresh35_resps');
             rfData = data.LE;
         end
     end
@@ -68,8 +68,11 @@ else
     error('do not recognize animal')
 end
 
+
+% dataOut.mapFix_x = rfData.fix_xOrig;
+% dataOut.mapFix_y = rfData.fix_yOrig;
 dataOut.chReceptiveFieldParams = rfData.chReceptiveFieldParams;
-dataOut.arrayReceptiveFieldParams = rfData.arrayReceptiveFieldParams;
+%dataOut.arrayReceptiveFieldParams = rfData.arrayReceptiveFieldParams;
 
 
 

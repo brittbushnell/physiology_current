@@ -1,9 +1,7 @@
 function [dataT] = getReceptiveFields_zScore(dataT)
 %%
 locMtx = dataT.stimZscore;
-% stim mtx is set up (y,x,ch,rep), but Manu's code assumes x,y
 locZscores = nanmean(locMtx,4); % get mean z score at each location
-%locZscores = permute(locZscores,[2,1,3]); % reorganize so it's (x,y,ch)
 xPos = double(unique(dataT.pos_x));
 yPos = double(unique(dataT.pos_y));
 %% Get receptive field information
