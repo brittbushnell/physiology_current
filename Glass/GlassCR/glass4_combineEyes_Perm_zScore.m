@@ -24,9 +24,9 @@ clc
 % REfile = 'WV_RE_glassCoh_nsp1_April2019_all_thresh35_info3_goodRuns_dPrime';
 % newName = 'WV_BE_V1_Glass_clean_merged';
  
-LEfile =  'XT_LE_Glass_nsp1_Jan2019_all_thresh35_info3_goodRuns_dPrime';
-REfile =  'XT_RE_Glass_nsp1_Jan2019_all_thresh35_info3_goodRuns_dPrime';
-newName = 'XT_BE_V1_Glass_clean_merged';
+% LEfile =  'XT_LE_Glass_nsp1_Jan2019_all_thresh35_info3_goodRuns_dPrime';
+% REfile =  'XT_RE_Glass_nsp1_Jan2019_all_thresh35_info3_goodRuns_dPrime';
+% newName = 'XT_BE_V1_Glass_clean_merged';
 %% combine data from the two eyes into one pair of structures
 data = CombineEyes_OD(LEfile, REfile);
 

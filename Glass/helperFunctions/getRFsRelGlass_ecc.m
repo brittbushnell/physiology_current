@@ -1,4 +1,4 @@
-function [rfQuadrant,inStim, inCenterStim,rfParamsStim0] = getRFsRelGlass_ecc(dataT)
+function [rfQuadrant,inStim,inCenterStim] = getRFsRelGlass_ecc(dataT)
 % This function determines which quadrant of the stimulus receptive fields
 % are in, and what the distribution of preferred orientations are for
 % receptive fields within each quadrant.
@@ -12,12 +12,16 @@ function [rfQuadrant,inStim, inCenterStim,rfParamsStim0] = getRFsRelGlass_ecc(da
 glassX = unique(dataT.pos_x);
 glassY = unique(dataT.pos_y);
 
-rfParamsOrig = dataT.chReceptiveFieldParams;
+if contains(dataT.animal,'XT') && contains(dataT.array,'V4')
+    rfParamsOrig = dataT.chReceptiveFieldParamsBE;
+else
+    rfParamsOrig = dataT.chReceptiveFieldParams;
+end
 %% for XT, move receptive field locations to be in same coordinate space as Glass fixation
 if contains(dataT.animal,'XT')
     for ch = 1:96
         rfParamsRelGlassFix{ch}(1) = rfParamsOrig{ch}(1) + unique(dataT.fix_x);
-        rfParamsRelGlassFix{ch}(2) = rfParamsOrig{ch}(1) + unique(dataT.fix_y);
+        rfParamsRelGlassFix{ch}(2) = rfParamsOrig{ch}(2) + unique(dataT.fix_y);
     end
 end
 %% center stimulus at (0,0)
@@ -109,62 +113,64 @@ for ch = 1:96
             rfQuadrant(ch) = 3;
         end
     end
-    inStim(1,ch) = sum(inpolygon(rfX,rfY,stimX,stimY) & ((rfX-0).^2+(rfY-0).^2 <= 4^2));
-    inCenterStim(1,ch) = sum(inpolygon(rfX,rfY,stimXSmall,stimYSmall) & ((rfX-0).^2+(rfY-0).^2 <= 2^2));
-    
-    figure(4)
-    clf
-    hold on
-    if inStim(ch) == 1
-         scatter(rfParamsStim0{ch}(1),rfParamsStim0{ch}(2),40,[0.9 0.1 0],'filled','MarkerFaceAlpha',0.8);
-    elseif inCenterStim(ch) == 1
-        scatter(rfParamsStim0{ch}(1),rfParamsStim0{ch}(2),40,[0 0.3 0.8],'filled','MarkerFaceAlpha',0.7);
-    else
-        scatter(rfParamsStim0{ch}(1),rfParamsStim0{ch}(2),40,[0.5 0.5 0.5],'filled','MarkerFaceAlpha',0.7);
-    end
-    
-    viscircles([glassX,glassY],4,...
-        'color',[0.8 0 0.6],'LineWidth',3);
-    viscircles([glassX,glassY],2,...
-        'color',[0.8 0 0.6]);
-%     plot(rfX,rfY,'.k','MarkerSize',14)
-    grid on;
-    
-    title({sprintf('%s %s %s %s',dataT.animal, dataT.eye, dataT.array, dataT.programID);...
-        sprintf('ch %d quadrant %d',ch,rfQuadrant(ch))})
-    xlim([-10,10])
-    ylim([-10,10])
-    set(gca,'YAxisLocation','origin','XAxisLocation','origin',...
-        'Layer','top','FontWeight','bold','FontSize',12,'FontAngle','italic')
-    axis square
-    
-    figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_RFlocRelGlassStim_ch',num2str(ch),'.pdf'];
-    %print(gcf, figName,'-dpdf','-fillpage')
-    
+    inStim(1,ch) = (((rfX-0).^2+(rfY-0).^2 <= 4^2));
+    inCenterStim(1,ch) = (((rfX-0).^2+(rfY-0).^2 <= 2^2));
 end
+
+%%
+% for ch = 1:96
+%     figure(4)
+%     clf
+%     hold on
+%     if inStim(ch) == 1
+%          scatter(rfParamsStim0{ch}(1),rfParamsStim0{ch}(2),40,[0.9 0.1 0],'filled','MarkerFaceAlpha',0.8);
+%     elseif inCenterStim(ch) == 1
+%         scatter(rfParamsStim0{ch}(1),rfParamsStim0{ch}(2),40,[0 0.3 0.8],'filled','MarkerFaceAlpha',0.7);
+%     else
+%         scatter(rfParamsStim0{ch}(1),rfParamsStim0{ch}(2),40,[0.5 0.5 0.5],'filled','MarkerFaceAlpha',0.7);
+%     end
+%
+%     viscircles([glassX,glassY],4,...
+%         'color',[0.8 0 0.6],'LineWidth',3);
+%     viscircles([glassX,glassY],2,...
+%         'color',[0.8 0 0.6]);
+% %     plot(rfX,rfY,'.k','MarkerSize',14)
+%     grid on;
+%
+%     title({sprintf('%s %s %s %s',dataT.animal, dataT.eye, dataT.array, dataT.programID);...
+%         sprintf('ch %d quadrant %d',ch,rfQuadrant(ch))})
+%     xlim([-10,10])
+%     ylim([-10,10])
+%     set(gca,'YAxisLocation','origin','XAxisLocation','origin',...
+%         'Layer','top','FontWeight','bold','FontSize',12,'FontAngle','italic')
+%     axis square
+%
+%     figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_RFlocRelGlassStim_ch',num2str(ch),'.pdf'];
+%     %print(gcf, figName,'-dpdf','-fillpage')
+%
+% end
 %% plot all receptive fields on one figure
 cd ../
 figure(5)
 clf
+viscircles([glassX,glassY],4,...
+    'color',[0.2 0.2 0.2]);
+viscircles([glassX,glassY],2,...
+    'color',[0.2 0.2 0.2]);
+grid on;
+
 for ch = 1:96
     
     hold on
+    
     if inCenterStim(ch) == 1
-        scatter(rfParamsStim0{ch}(1),rfParamsStim0{ch}(2),40,[0.9 0.1 0],'filled','MarkerFaceAlpha',0.8);
-%         draw_ellipse(rfParams{ch})
+        scatter(rfParamsRelGlassFix{ch}(1),rfParamsRelGlassFix{ch}(2),40,[0.9 0.1 0],'filled','MarkerFaceAlpha',0.8);
     elseif inStim(ch) == 1 && inCenterStim(ch) == 0
-        scatter(rfParamsRelGlassFix{ch}(1),rfParamsStim0{ch}(2),40,[0 0.3 0.8],'filled','MarkerFaceAlpha',0.7);
+        scatter(rfParamsRelGlassFix{ch}(1),rfParamsRelGlassFix{ch}(2),40,[0 0.3 0.8],'filled','MarkerFaceAlpha',0.7);
     else
-        scatter(rfParamsStim0{ch}(1),rfParamsStim0{ch}(2),40,[0.5 0.5 0.5],'filled','MarkerFaceAlpha',0.7);
-%         draw_ellipse(rfParams{ch},[0.3 0.3 0.3])
+        scatter(rfParamsRelGlassFix{ch}(1),rfParamsRelGlassFix{ch}(2),40,[0.5 0.5 0.5],'filled','MarkerFaceAlpha',0.7);
     end
-    
-    viscircles([glassX,glassY],4,...
-        'color',[0.2 0.2 0.2],'LineWidth',3);
-    viscircles([glassX,glassY],2,...
-        'color',[0.2 0.2 0.2]);
-    grid on;
-    
+
     xlim([-15,15])
     ylim([-15,15])
     set(gca,'YAxisLocation','origin','XAxisLocation','origin',...
@@ -183,4 +189,4 @@ title({sprintf('%s %s %s %s',dataT.animal, dataT.eye, dataT.array, dataT.program
     sprintf('%d in stimulus boundary, %d in center half of stimulus',sum(inStim), sum(inCenterStim))})
 
 figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_RFlocRelGlassStim_ch',num2str(ch),'.pdf'];
-%print(gcf, figName,'-dpdf','-fillpage')
+print(gcf, figName,'-dpdf','-fillpage')
