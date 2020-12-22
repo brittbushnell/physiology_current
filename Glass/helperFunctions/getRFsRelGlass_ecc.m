@@ -49,9 +49,9 @@ end
 location = determineComputer;
 
 if location == 1
-    figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/Mapping/RF/%s/ch/',dataT.animal, dataT.array, dataT.eye);
+    figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/%s/RF/',dataT.animal, dataT.programID,dataT.array);
 elseif location == 0
-    figDir =  sprintf('~/Dropbox/Figures/%s/%s/Mapping/RF/%s/ch/',dataT.animal, dataT.array, dataT.eye);
+    figDir =  sprintf('~/Dropbox/Figures/%s/%s/%s/RF/',dataT.animal, dataT.programID,dataT.array);
 end
 
 if ~exist(figDir,'dir')
@@ -116,41 +116,8 @@ for ch = 1:96
     inStim(1,ch) = (((rfX-0).^2+(rfY-0).^2 <= 4^2));
     inCenterStim(1,ch) = (((rfX-0).^2+(rfY-0).^2 <= 2^2));
 end
-
-%%
-% for ch = 1:96
-%     figure(4)
-%     clf
-%     hold on
-%     if inStim(ch) == 1
-%          scatter(rfParamsStim0{ch}(1),rfParamsStim0{ch}(2),40,[0.9 0.1 0],'filled','MarkerFaceAlpha',0.8);
-%     elseif inCenterStim(ch) == 1
-%         scatter(rfParamsStim0{ch}(1),rfParamsStim0{ch}(2),40,[0 0.3 0.8],'filled','MarkerFaceAlpha',0.7);
-%     else
-%         scatter(rfParamsStim0{ch}(1),rfParamsStim0{ch}(2),40,[0.5 0.5 0.5],'filled','MarkerFaceAlpha',0.7);
-%     end
-%
-%     viscircles([glassX,glassY],4,...
-%         'color',[0.8 0 0.6],'LineWidth',3);
-%     viscircles([glassX,glassY],2,...
-%         'color',[0.8 0 0.6]);
-% %     plot(rfX,rfY,'.k','MarkerSize',14)
-%     grid on;
-%
-%     title({sprintf('%s %s %s %s',dataT.animal, dataT.eye, dataT.array, dataT.programID);...
-%         sprintf('ch %d quadrant %d',ch,rfQuadrant(ch))})
-%     xlim([-10,10])
-%     ylim([-10,10])
-%     set(gca,'YAxisLocation','origin','XAxisLocation','origin',...
-%         'Layer','top','FontWeight','bold','FontSize',12,'FontAngle','italic')
-%     axis square
-%
-%     figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_RFlocRelGlassStim_ch',num2str(ch),'.pdf'];
-%     %print(gcf, figName,'-dpdf','-fillpage')
-%
-% end
 %% plot all receptive fields on one figure
-cd ../
+
 figure(5)
 clf
 viscircles([glassX,glassY],4,...
@@ -164,9 +131,9 @@ for ch = 1:96
     hold on
     
     if inCenterStim(ch) == 1
-        scatter(rfParamsRelGlassFix{ch}(1),rfParamsRelGlassFix{ch}(2),40,[0.9 0.1 0],'filled','MarkerFaceAlpha',0.8);
+        scatter(rfParamsRelGlassFix{ch}(1),rfParamsRelGlassFix{ch}(2),40,[1 0.4 0],'filled','MarkerFaceAlpha',0.8);
     elseif inStim(ch) == 1 && inCenterStim(ch) == 0
-        scatter(rfParamsRelGlassFix{ch}(1),rfParamsRelGlassFix{ch}(2),40,[0 0.3 0.8],'filled','MarkerFaceAlpha',0.7);
+        scatter(rfParamsRelGlassFix{ch}(1),rfParamsRelGlassFix{ch}(2),40,[0 0.6 0.2],'filled','MarkerFaceAlpha',0.7);
     else
         scatter(rfParamsRelGlassFix{ch}(1),rfParamsRelGlassFix{ch}(2),40,[0.5 0.5 0.5],'filled','MarkerFaceAlpha',0.7);
     end
@@ -184,9 +151,12 @@ text(9, 9.5, sprintf('n %d',sum(rfQuadrant==1)))
 text(-9.5, 9.5, sprintf('n %d',sum(rfQuadrant==2)))
 text(-9.5, -9.5, sprintf('n %d',sum(rfQuadrant==3)))
 text(9, -9.5, sprintf('n %d',sum(rfQuadrant==4)))
-
-title({sprintf('%s %s %s %s',dataT.animal, dataT.eye, dataT.array, dataT.programID);...
+if contains(dataT.animal,'XT')
+title({sprintf('%s BE %s %s',dataT.animal, dataT.array, dataT.programID);...
     sprintf('%d in stimulus boundary, %d in center half of stimulus',sum(inStim), sum(inCenterStim))})
-
-figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_RFlocRelGlassStim_ch',num2str(ch),'.pdf'];
+else
+    title({sprintf('%s %s %s %s',dataT.animal, dataT.eye, dataT.array, dataT.programID);...
+    sprintf('%d in stimulus boundary, %d in center half of stimulus',sum(inStim), sum(inCenterStim))})
+end
+figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_RFlocRelGlassStim','.pdf'];
 print(gcf, figName,'-dpdf','-fillpage')

@@ -38,7 +38,7 @@ q1InStim(isnan(q1InStim)) = [];
 q2InStim(isnan(q2InStim)) = [];
 q3InStim(isnan(q3InStim)) = [];
 q4InStim(isnan(q4InStim)) = [];
-%%
+
 % get stimulus rankings for each quadrant
 chRanks = nan(3,96);
 prefParams = trData.prefParamsIndex;
@@ -51,20 +51,20 @@ q1RanksInStim = chRanks(:,quadInStim == 1);
 q2RanksInStim = chRanks(:,quadInStim == 2);
 q3RanksInStim = chRanks(:,quadInStim == 3);
 q4RanksInStim = chRanks(:,quadInStim == 4);
-%%
-quadInStimCenter = trData.rfQuadrant(trData.inStimCenter == 1);
-q1InStimCenter = deg2rad(trData.prefParamsPrefOri(quadInStimCenter == 1));  % This is already  limited to good channels, so no need to add another qualifier
-q2InStimCenter = deg2rad(trData.prefParamsPrefOri(quadInStimCenter == 2));
-q3InStimCenter = deg2rad(trData.prefParamsPrefOri(quadInStimCenter == 3));
-q4InStimCenter = deg2rad(trData.prefParamsPrefOri(quadInStimCenter == 4));
-quadInStimCenterOris = [q1InStimCenter;q2InStimCenter;q3InStimCenter;q4InStimCenter];
+%% outer ring of stimulus
+quadNotInStimCenter = trData.rfQuadrant(trData.inStimCenter == 0 & trData.inStim == 1);
+q1NotInStimCenter = deg2rad(trData.prefParamsPrefOri(quadNotInStimCenter == 1)); 
+q2NotInStimCenter = deg2rad(trData.prefParamsPrefOri(quadNotInStimCenter == 2));
+q3NotInStimCenter = deg2rad(trData.prefParamsPrefOri(quadNotInStimCenter == 3));
+q4NotInStimCenter = deg2rad(trData.prefParamsPrefOri(quadNotInStimCenter == 4));
+quadNotInStimCenterOris = [q1NotInStimCenter;q2NotInStimCenter;q3NotInStimCenter;q4NotInStimCenter];
 
 % remove nans
-q1InStimCenter(isnan(q1InStimCenter)) = [];
-q2InStimCenter(isnan(q2InStimCenter)) = [];
-q3InStimCenter(isnan(q3InStimCenter)) = [];
-q4InStimCenter(isnan(q4InStimCenter)) = [];
-%%
+q1NotInStimCenter(isnan(q1NotInStimCenter)) = [];
+q2NotInStimCenter(isnan(q2NotInStimCenter)) = [];
+q3NotInStimCenter(isnan(q3NotInStimCenter)) = [];
+q4NotInStimCenter(isnan(q4NotInStimCenter)) = [];
+
 % get stimulus rankings for each quadrant
 chRanks = nan(3,96);
 prefParams = trData.prefParamsIndex;
@@ -73,24 +73,24 @@ for ch = 1:96
     chRanks(:,ch) = crData.dPrimeRankBlank{prefParams(ch)}(:,ch);
 end
 
-q1RanksInStimCenter = chRanks(:,quadInStimCenter == 1);
-q2RanksInStimCenter = chRanks(:,quadInStimCenter == 2);
-q3RanksInStimCenter = chRanks(:,quadInStimCenter == 3);
-q4RanksInStimCenter = chRanks(:,quadInStimCenter == 4);
+q1RanksNotInStimCenter = chRanks(:,quadNotInStimCenter == 1);
+q2RanksNotInStimCenter = chRanks(:,quadNotInStimCenter == 2);
+q3RanksNotInStimCenter = chRanks(:,quadNotInStimCenter == 3);
+q4RanksNotInStimCenter = chRanks(:,quadNotInStimCenter == 4);
 %%
 location = determineComputer;
 
 if location == 1
-    figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/%s/RF/%s/',trData.animal,trData.programID, trData.array, trData.eye);
+    figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/%s/RF/',trData.animal,trData.programID, trData.array);
 elseif location == 0
-    figDir =  sprintf('~/Dropbox/Figures/%s/%s/%s/RF/%s/',trData.animal, trData.programID, trData.array, trData.eye);
+    figDir =  sprintf('~/Dropbox/Figures/%s/%s/%s/RF/',trData.animal, trData.programID, trData.array);
 end
 
 if ~exist(figDir,'dir')
     mkdir(figDir)
 end
 cd(figDir)
-%%
+%% all included channels
 
 figure(2)
 pos = get(gcf,'Position');
@@ -324,8 +324,8 @@ set(gca,'FontSize',12,'FontAngle','italic','RTickLabels',{'','',''})
 s1.Position(2) = s1.Position(2) - 0.02;
 
 figName = [trData.animal,'_',trData.eye,'_',trData.array,'_prefOriByRFlocation_radConPref_allGoodCh','.pdf'];
-print(gcf, figName,'-dpdf','-fillpage')
-%%
+print(gcf, figName,'-dpdf','-bestfit')
+%% all channels within stimulus bounds
 figure(3)
 pos = get(gcf,'Position');
 set(gcf,'Position',[pos(1) pos(2) 1000 800])
@@ -558,8 +558,8 @@ set(gca,'FontSize',12,'FontAngle','italic','RTickLabels',{'','',''})
 s1.Position(2) = s1.Position(2) - 0.02;
 
 figName = [trData.animal,'_',trData.eye,'_',trData.array,'_prefOriByRFlocation_radConPref_inStim','.pdf'];
-print(gcf, figName,'-dpdf','-fillpage')
-%%
+print(gcf, figName,'-dpdf','-bestfit')
+%% Channels at the outer ring of the stimulus bounds
 figure(4)
 pos = get(gcf,'Position');
 set(gcf,'Position',[pos(1) pos(2) 1000 800])
@@ -567,7 +567,7 @@ set(gcf,'PaperOrientation','Landscape');
 clf
 axis off
 
-t = suptitle(sprintf('%s %s %s distribution of preferred orientations based on receptive field location all channels in center half of stim',...
+t = suptitle(sprintf('%s %s %s distribution of preferred orientations based on receptive field location all channels in outer half of stim',...
     trData.animal, trData.eye, trData.array));
 t.Position(2) = -0.02;
 t.FontSize = 18;
@@ -578,34 +578,34 @@ text(0.6, -0.1, 'Radial','Color',[0 0.6 0.2],'FontWeight','Bold','FontSize',14)
 %  quadrant 2
 s1 = subplot(2,2,1,polaraxes);
 
-if ~isempty(q2InStimCenter)
+if ~isempty(q2NotInStimCenter)
     hold on
-    cirMu = circ_mean(q2InStimCenter*2)/2;
+    cirMu = circ_mean(q2NotInStimCenter*2)/2;
     cirMu2= cirMu+pi;
     
-    cirVar = circ_var(q2InStimCenter*2)/2;
+    cirVar = circ_var(q2NotInStimCenter*2)/2;
     cirVar2 = cirVar +pi;
     
-    prefCon = sum(q2RanksInStimCenter(1,:) == 1);
-    prefRad = sum(q2RanksInStimCenter(1,:) == 2);
-    prefNos = sum(q2RanksInStimCenter(1,:) == 3);
+    prefCon = sum(q2RanksNotInStimCenter(1,:) == 1);
+    prefRad = sum(q2RanksNotInStimCenter(1,:) == 2);
+    prefNos = sum(q2RanksNotInStimCenter(1,:) == 3);
     
     if contains(trData.eye,'RE')
-        [bins,edges] = histcounts(q2InStimCenter,0:pi/6:pi);
+        [bins,edges] = histcounts(q2NotInStimCenter,0:pi/6:pi);
         bins2 = sqrt(bins);
         polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor','r','EdgeColor','w')
         
-        [bins,edges] = histcounts(q2InStimCenter+pi,[0:pi/6:pi]+pi);
+        [bins,edges] = histcounts(q2NotInStimCenter+pi,[0:pi/6:pi]+pi);
         bins2 = sqrt(bins);
         polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor','r','EdgeColor','w')
         
         polarplot([cirMu 0 cirMu2],[0.4 0 0.4],'k-','LineWidth',.85)
     else
-        [bins,edges] = histcounts(q2InStimCenter,0:pi/6:pi);
+        [bins,edges] = histcounts(q2NotInStimCenter,0:pi/6:pi);
         bins2 = sqrt(bins);
         polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor','b','EdgeColor','w')
         
-        [bins,edges] = histcounts(q2InStimCenter+pi,[0:pi/6:pi]+pi);
+        [bins,edges] = histcounts(q2NotInStimCenter+pi,[0:pi/6:pi]+pi);
         bins2 = sqrt(bins);
         polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor','b','EdgeColor','w')
         
@@ -624,7 +624,7 @@ if ~isempty(q2InStimCenter)
     
     set(gca,'FontSize',12,'FontAngle','italic','RTickLabels',{'','',''})
     
-    title(sprintf('n:%d',length(q2InStimCenter)))
+    title(sprintf('n:%d',length(q2NotInStimCenter)))
     
     ax = gca;
     ax.RLim   = [0,0.55];
@@ -634,31 +634,31 @@ set(gca,'FontSize',12,'FontAngle','italic','RTickLabels',{'','',''})
 
 % quadrant 1
 s1 = subplot(2,2,2,polaraxes);
-if ~isempty(q1InStimCenter)
+if ~isempty(q1NotInStimCenter)
     hold on
-    cirMu = circ_mean(q1InStimCenter*2)/2;
+    cirMu = circ_mean(q1NotInStimCenter*2)/2;
     cirMu2= cirMu+pi;
     
-    prefCon = sum(q1RanksInStimCenter(1,:) == 1);
-    prefRad = sum(q1RanksInStimCenter(1,:) == 2);
-    prefNos = sum(q1RanksInStimCenter(1,:) == 3);
+    prefCon = sum(q1RanksNotInStimCenter(1,:) == 1);
+    prefRad = sum(q1RanksNotInStimCenter(1,:) == 2);
+    prefNos = sum(q1RanksNotInStimCenter(1,:) == 3);
     
     if contains(trData.eye,'RE')
-        [bins,edges] = histcounts(q1InStimCenter,0:pi/6:pi);
+        [bins,edges] = histcounts(q1NotInStimCenter,0:pi/6:pi);
         bins2 = sqrt(bins);
         polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor','r','EdgeColor','w')
         
-        [bins,edges] = histcounts(q1InStimCenter+pi,[0:pi/6:pi]+pi);
+        [bins,edges] = histcounts(q1NotInStimCenter+pi,[0:pi/6:pi]+pi);
         bins2 = sqrt(bins);
         polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor','r','EdgeColor','w')
         
         polarplot([cirMu 0 cirMu2],[0.4 0 0.4],'k-','LineWidth',.85)
     else
-        [bins,edges] = histcounts(q1InStimCenter,0:pi/6:pi);
+        [bins,edges] = histcounts(q1NotInStimCenter,0:pi/6:pi);
         bins2 = sqrt(bins);
         polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor','b','EdgeColor','w')
         
-        [bins,edges] = histcounts(q1InStimCenter+pi,[0:pi/6:pi]+pi);
+        [bins,edges] = histcounts(q1NotInStimCenter+pi,[0:pi/6:pi]+pi);
         bins2 = sqrt(bins);
         polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor','b','EdgeColor','w')
         
@@ -678,7 +678,7 @@ if ~isempty(q1InStimCenter)
     text(cirMu2+0.2,0.45,sprintf('%.1f%c',rad2deg(cirMu2),char(176)),'FontSize',11,'HorizontalAlignment','right','FontWeight','bold')
     set(gca,'FontSize',12,'FontAngle','italic','RTickLabels',{'','',''})
     
-    title(sprintf('n:%d',length(q1InStimCenter)))
+    title(sprintf('n:%d',length(q1NotInStimCenter)))
     s1.Position(2) = s1.Position(2) - 0.02;
     ax = gca;
     ax.RLim   = [0,0.55];
@@ -687,31 +687,31 @@ set(gca,'FontSize',12,'FontAngle','italic','RTickLabels',{'','',''})
 
 % quadrant 3
 s1 = subplot(2,2,3,polaraxes);
-if ~isempty(q3InStimCenter)
+if ~isempty(q3NotInStimCenter)
     hold on
-    cirMu = circ_mean(q3InStimCenter*2)/2;
+    cirMu = circ_mean(q3NotInStimCenter*2)/2;
     cirMu2= cirMu+pi;
     
-    prefCon = sum(q3RanksInStimCenter(1,:) == 1);
-    prefRad = sum(q3RanksInStimCenter(1,:) == 2);
-    prefNos = sum(q3RanksInStimCenter(1,:) == 3);
+    prefCon = sum(q3RanksNotInStimCenter(1,:) == 1);
+    prefRad = sum(q3RanksNotInStimCenter(1,:) == 2);
+    prefNos = sum(q3RanksNotInStimCenter(1,:) == 3);
     
     if contains(trData.eye,'RE')
-        [bins,edges] = histcounts(q3InStimCenter,0:pi/6:pi);
+        [bins,edges] = histcounts(q3NotInStimCenter,0:pi/6:pi);
         bins2 = sqrt(bins);
         polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor','r','EdgeColor','w')
         
-        [bins,edges] = histcounts(q3InStimCenter+pi,[0:pi/6:pi]+pi);
+        [bins,edges] = histcounts(q3NotInStimCenter+pi,[0:pi/6:pi]+pi);
         bins2 = sqrt(bins);
         polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor','r','EdgeColor','w')
         
         polarplot([cirMu 0 cirMu2],[0.4 0 0.4],'k-','LineWidth',.85)
     else
-        [bins,edges] = histcounts(q3InStimCenter,0:pi/6:pi);
+        [bins,edges] = histcounts(q3NotInStimCenter,0:pi/6:pi);
         bins2 = sqrt(bins);
         polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor','b','EdgeColor','w')
         
-        [bins,edges] = histcounts(q3InStimCenter+pi,[0:pi/6:pi]+pi);
+        [bins,edges] = histcounts(q3NotInStimCenter+pi,[0:pi/6:pi]+pi);
         bins2 = sqrt(bins);
         polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor','b','EdgeColor','w')
         
@@ -728,7 +728,7 @@ if ~isempty(q3InStimCenter)
     text(cirMu+0.2,0.45,sprintf('%.1f%c',rad2deg(cirMu),char(176)),'FontSize',11,'HorizontalAlignment','left','FontWeight','bold')
     text(cirMu2+0.2,0.45,sprintf('%.1f%c',rad2deg(cirMu2),char(176)),'FontSize',11,'HorizontalAlignment','right','FontWeight','bold')
     set(gca,'FontSize',12,'FontAngle','italic','RTickLabels',{'','',''})
-    title(sprintf('n:%d',length(q3InStimCenter)))
+    title(sprintf('n:%d',length(q3NotInStimCenter)))
     
     ax = gca;
     ax.RLim   = [0,0.55];
@@ -737,34 +737,34 @@ set(gca,'FontSize',12,'FontAngle','italic','RTickLabels',{'','',''})
 s1.Position(2) = s1.Position(2) - 0.02;
 % quadrant 4
 s1 = subplot(2,2,4,polaraxes);
-if ~isempty(q4InStimCenter)
+if ~isempty(q4NotInStimCenter)
     hold on
-    cirMu = circ_mean(q4InStimCenter*2)/2;
+    cirMu = circ_mean(q4NotInStimCenter*2)/2;
     cirMu2= cirMu+pi;
     
-    cirVar = circ_var(q4InStimCenter*2)/2;
+    cirVar = circ_var(q4NotInStimCenter*2)/2;
     cirVar2 = cirVar +pi;
     
-    prefCon = sum(q4RanksInStimCenter(1,:) == 1);
-    prefRad = sum(q4RanksInStimCenter(1,:) == 2);
-    prefNos = sum(q4RanksInStimCenter(1,:) == 3);
+    prefCon = sum(q4RanksNotInStimCenter(1,:) == 1);
+    prefRad = sum(q4RanksNotInStimCenter(1,:) == 2);
+    prefNos = sum(q4RanksNotInStimCenter(1,:) == 3);
     
     if contains(trData.eye,'RE')
-        [bins,edges] = histcounts(q4InStimCenter,0:pi/6:pi);
+        [bins,edges] = histcounts(q4NotInStimCenter,0:pi/6:pi);
         bins2 = sqrt(bins);
         polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor','r','EdgeColor','w')
         
-        [bins,edges] = histcounts(q4InStimCenter+pi,[0:pi/6:pi]+pi);
+        [bins,edges] = histcounts(q4NotInStimCenter+pi,[0:pi/6:pi]+pi);
         bins2 = sqrt(bins);
         polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor','r','EdgeColor','w')
         
         polarplot([cirMu 0 cirMu2],[0.4 0 0.4],'k-','LineWidth',.85)
     else
-        [bins,edges] = histcounts(q4InStimCenter,0:pi/6:pi);
+        [bins,edges] = histcounts(q4NotInStimCenter,0:pi/6:pi);
         bins2 = sqrt(bins);
         polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor','b','EdgeColor','w')
         
-        [bins,edges] = histcounts(q4InStimCenter+pi,[0:pi/6:pi]+pi);
+        [bins,edges] = histcounts(q4NotInStimCenter+pi,[0:pi/6:pi]+pi);
         bins2 = sqrt(bins);
         polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor','b','EdgeColor','w')
         
@@ -783,7 +783,7 @@ if ~isempty(q4InStimCenter)
     text(cirMu+0.2,0.45,sprintf('%.1f%c',rad2deg(cirMu),char(176)),'FontSize',11,'HorizontalAlignment','left','FontWeight','bold')
     text(cirMu2+0.2,0.45,sprintf('%.1f%c',rad2deg(cirMu2),char(176)),'FontSize',11,'HorizontalAlignment','right','FontWeight','bold')
     set(gca,'FontSize',12,'FontAngle','italic','RTickLabels',{'','',''})
-    title(sprintf('n:%d',length(q4InStimCenter)))
+    title(sprintf('n:%d',length(q4NotInStimCenter)))
     
     ax = gca;
     ax.RLim   = [0,0.55];
@@ -791,5 +791,5 @@ end
 set(gca,'FontSize',12,'FontAngle','italic','RTickLabels',{'','',''})
 s1.Position(2) = s1.Position(2) - 0.02;
 
-figName = [trData.animal,'_',trData.eye,'_',trData.array,'_prefOriByRFlocation_radConPref_InStimCenter','.pdf'];
-print(gcf, figName,'-dpdf','-fillpage')
+figName = [trData.animal,'_',trData.eye,'_',trData.array,'_prefOriByRFlocation_radConPref_NotInStimCenter','.pdf'];
+print(gcf, figName,'-dpdf','-bestfit')
