@@ -1,4 +1,4 @@
-function [rfQuadrant,inStim,inCenterStim] = getRFsRelGlass_ecc_Sprinkles(trData, crData)
+function [rfQuadrant,inStim,inCenterStim,within2degStim] = getRFsRelGlass_ecc_Sprinkles(trData, crData)
 % This function determines which quadrant of the stimulus receptive fields
 % are in, and what the distribution of preferred orientations are for
 % receptive fields within each quadrant.
@@ -96,6 +96,7 @@ stimYSmall = vxSmall.get.Children(2).YData;
 rfQuadrant = nan(1,96);
 inStim = zeros(1,96);
 inCenterStim = zeros(1,96);
+within2degStim = zeros(1,96);
 %%
 for ch = 1:96
     rfX = rfParamsStim0{ch}(1);
@@ -115,14 +116,15 @@ for ch = 1:96
     end
     inStim(1,ch) = (((rfX-0).^2+(rfY-0).^2 <= 4^2));
     inCenterStim(1,ch) = (((rfX-0).^2+(rfY-0).^2 <= 1^2));
+    within2degStim(1,ch) = (((rfX-0).^2+(rfY-0).^2 <= 6^2));
 end
 %% plot all receptive fields on one figure
 
-figure%(5)
+figure(5)
 clf
 viscircles([glassX,glassY],4,...
     'color',[0.2 0.2 0.2]);
-viscircles([glassX,glassY],1,...
+viscircles([glassX,glassY],2,...
     'color',[0.2 0.2 0.2]);
 grid on;
 
@@ -160,36 +162,54 @@ else
         sprintf('%d in stimulus boundary, %d in center degree of stimulus',sum(inStim), sum(inCenterStim))})
 end
 
-figName = [trData.animal,'_',trData.eye,'_',trData.array,'_RFlocRelGlassStim_1deg','.pdf'];
+figName = [trData.animal,'_',trData.eye,'_',trData.array,'_RFlocRelGlassStim','.pdf'];
 print(gcf, figName,'-dpdf','-fillpage')
 %% glitteratti plot
 
-figure (8)
-hold on
+figure %(8)
 clf
-
-for ch = 1%:96
-    pOri = trData.prefParamsPrefOri(ch);
-    rfX = rfParamsRelGlassFix{ch}(1);
-    rfY = rfParamsRelGlassFix{ch}(2);
-    lwidth = trData.OSI{trData.prefParamsIndex}(ch);
-    
-    x2 = rfX +(0.75*cos(pOri));
-    y2 = rfY +(0.75*sin(pOri));
-    
-    if crData.dPrimeRankBlank{trData.prefParamsIndex}(ch) == 1
-        plot([rfX, x2], [rfY, y2],'-','color',[0.7 0 0.7],'lineWidth',lwidth)
-    elseif crData.dPrimeRankBlank{trData.prefParamsIndex}(ch) == 2
-        plot([rfX, x2], [rfY, y2],'-','color',[0 0.6 0.2],'lineWidth',lwidth)
-    else
-        plot([rfX, x2], [rfY, y2],'-','color',[1 0.5 0.1],'lineWidth',lwidth)
+hold on
+viscircles([glassX,glassY],4,...
+    'color',[0.2 0.2 0.2],'LineWidth',0.6);
+viscircles([glassX,glassY],2,...
+    'color',[0.2 0.2 0.2],'LineWidth',0.6);
+grid on;
+for ch = 1:96
+    if trData.goodCh(ch) == 1
+        pOri = trData.prefParamsPrefOri(ch);
+        rfX = rfParamsRelGlassFix{ch}(1);
+        rfY = rfParamsRelGlassFix{ch}(2);
+        o = squeeze(trData.OSI(1,:,:,ch));
+        lwidth = o(trData.prefParamsIndex(ch));
+        %         t(ch) =lwidth;
+        if lwidth > 0.5
+            lLen = 1+(lwidth^2);
+        else
+            lLen = 1-(lwidth^2);
+        end
+        x2 = rfX +(lLen*cos(pOri));
+        y2 = rfY +(lLen*sin(pOri));
+        
+        if crData.dPrimeRankBlank{trData.prefParamsIndex(ch)}(ch) == 1
+            plot([rfX, x2], [rfY, y2],'-','color',[0.7 0 0.7],'lineWidth',lLen)
+        elseif crData.dPrimeRankBlank{trData.prefParamsIndex(ch)}(ch) == 2
+            plot([rfX, x2], [rfY, y2],'-','color',[0 0.6 0.2],'lineWidth',lLen)
+        else
+            plot([rfX, x2], [rfY, y2],'-','color',[1 0.5 0.1],'lineWidth',lLen)
+        end
     end
-end
-text(0.35, -0.1, 'Concentric','Color',[0.7 0 0.7],'FontWeight','Bold','FontSize',14) 
-text(0.5, -0.1, 'Dipole','Color',[1 0.5 0.1],'FontWeight','Bold','FontSize',14) 
-text(0.6, -0.1, 'Radial','Color',[0 0.6 0.2],'FontWeight','Bold','FontSize',14) 
 xlim([-15,15])
 ylim([-15,15])
 set(gca,'YAxisLocation','origin','XAxisLocation','origin',...
-    'Layer','top','FontWeight','bold','FontSize',12,'FontAngle','italic')
+    'Layer','top','FontWeight','bold','FontSize',12,'FontAngle','italic')    
+end
+text(-14, 14, 'Concentric','Color',[0.7 0 0.7],'FontWeight','Bold','FontSize',14) 
+text(-14, 13, 'Dipole','Color',[1 0.5 0.1],'FontWeight','Bold','FontSize',14) 
+text(-14, 12, 'Radial','Color',[0 0.6 0.2],'FontWeight','Bold','FontSize',14) 
+
 axis square
+suptitle({'Preferred orientations and pattern type for each channel and their receptive field locations';...
+    sprintf('%s %s %s',trData.animal, trData.eye, trData.array)})
+
+figName = [trData.animal,'_',trData.eye,'_',trData.array,'_RFloc_prefOri_prefPattern','.pdf'];
+print(gcf, figName,'-dpdf','-bestfit')

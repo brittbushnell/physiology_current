@@ -1,4 +1,4 @@
-function quadOris = getOrisInRFs_conRadPrefs(trData,crData)
+function quadOris = getOrisInRFs_conRadColored(trData,crData)
 %% get quadrant locations for all included channels
 quad = trData.rfQuadrant(1:96);
 q1 = deg2rad(trData.prefParamsPrefOri(quad == 1));  
@@ -18,8 +18,11 @@ chRanks = nan(3,96);
 prefParams = trData.prefParamsIndex;
 
 for ch = 1:96
-    chRanks(:,ch) = crData.dPrimeRankBlank{prefParams(ch)}(:,ch);
+    if trData.goodCh(ch) == 1
+        chRanks(:,ch) = crData.dPrimeRankBlank{prefParams(ch)}(:,ch);
+    end
 end
+
 q1Ranks = chRanks(:,quad == 1);
 q2Ranks = chRanks(:,quad == 2);
 q3Ranks = chRanks(:,quad == 3);
@@ -43,13 +46,21 @@ chRanks = nan(3,96);
 prefParams = trData.prefParamsIndex;
 
 for ch = 1:96
-    chRanks(:,ch) = crData.dPrimeRankBlank{prefParams(ch)}(:,ch);
+    if trData.goodCh(ch) == 1
+        chRanks(:,ch) = crData.dPrimeRankBlank{prefParams(ch)}(:,ch);
+    end
 end
 
 q1RanksInStim = chRanks(:,quadInStim == 1);
 q2RanksInStim = chRanks(:,quadInStim == 2);
 q3RanksInStim = chRanks(:,quadInStim == 3);
 q4RanksInStim = chRanks(:,quadInStim == 4);
+
+% remove nans
+q1RanksInStim(isnan(q1RanksInStim)) = [];
+q2RanksInStim(isnan(q2RanksInStim)) = [];
+q3RanksInStim(isnan(q3RanksInStim)) = [];
+q4RanksInStim(isnan(q4RanksInStim)) = [];
 %% outer ring of stimulus
 quadNotInStimCenter = trData.rfQuadrant(trData.inStimCenter == 0 & trData.inStim == 1);
 q1NotInStimCenter = deg2rad(trData.prefParamsPrefOri(quadNotInStimCenter == 1)); 
@@ -69,15 +80,23 @@ chRanks = nan(3,96);
 prefParams = trData.prefParamsIndex;
 
 for ch = 1:96
+    if trData.goodCh(ch) == 1
     chRanks(:,ch) = crData.dPrimeRankBlank{prefParams(ch)}(:,ch);
+    end
 end
 
 q1RanksNotInStimCenter = chRanks(:,quadNotInStimCenter == 1);
 q2RanksNotInStimCenter = chRanks(:,quadNotInStimCenter == 2);
 q3RanksNotInStimCenter = chRanks(:,quadNotInStimCenter == 3);
 q4RanksNotInStimCenter = chRanks(:,quadNotInStimCenter == 4);
+
+% remove nans
+q1RanksNotInStimCenter(isnan(q1RanksNotInStimCenter)) = [];
+q2RanksNotInStimCenter(isnan(q2RanksNotInStimCenter)) = [];
+q3RanksNotInStimCenter(isnan(q3RanksNotInStimCenter)) = [];
+q4RanksNotInStimCenter(isnan(q4RanksNotInStimCenter)) = [];
 %% withing two degrees of the stimulus
-quadIn2Deg = trData.rfQuadrant(trData.inStimCenter == 0 & trData.inStim == 1);
+quadIn2Deg = trData.rfQuadrant(trData.inStimCenter == 0 & trData.inStim == 1 & trData.within2Deg);
 q1In2Deg = deg2rad(trData.prefParamsPrefOri(quadIn2Deg == 1)); 
 q2In2Deg = deg2rad(trData.prefParamsPrefOri(quadIn2Deg == 2));
 q3In2Deg = deg2rad(trData.prefParamsPrefOri(quadIn2Deg == 3));
@@ -95,13 +114,21 @@ chRanks = nan(3,96);
 prefParams = trData.prefParamsIndex;
 
 for ch = 1:96
-    chRanks(:,ch) = crData.dPrimeRankBlank{prefParams(ch)}(:,ch);
+    if trData.goodCh(ch) == 1
+        chRanks(:,ch) = crData.dPrimeRankBlank{prefParams(ch)}(:,ch);
+    end
 end
 
-q1RanksIn2Deg = chRanks(:,quadIn2Deg == 1);
-q2RanksIn2Deg = chRanks(:,quadIn2Deg == 2);
-q3RanksIn2Deg = chRanks(:,quadIn2Deg == 3);
-q4RanksIn2Deg = chRanks(:,quadIn2Deg == 4);
+q1RanksIn2Deg = chRanks(1,quadIn2Deg == 1);
+q2RanksIn2Deg = chRanks(1,quadIn2Deg == 2);
+q3RanksIn2Deg = chRanks(1,quadIn2Deg == 3);
+q4RanksIn2Deg = chRanks(1,quadIn2Deg == 4);
+
+% remove nans
+q1RanksIn2Deg(isnan(q1RanksIn2Deg)) = [];
+q2RanksIn2Deg(isnan(q2RanksIn2Deg)) = [];
+q3RanksIn2Deg(isnan(q3RanksIn2Deg)) = [];
+q4RanksIn2Deg(isnan(q4RanksIn2Deg)) = [];
 %%
 location = determineComputer;
 
@@ -817,4 +844,220 @@ set(gca,'FontSize',12,'FontAngle','italic','RTickLabels',{'','',''})
 s1.Position(2) = s1.Position(2) - 0.02;
 
 figName = [trData.animal,'_',trData.eye,'_',trData.array,'_prefOriByRFlocation_radConPref_NotInStim1deg','.pdf'];
+print(gcf, figName,'-dpdf','-bestfit')
+%% within 2 degrees and color coded bars
+figure(13)
+pos = get(gcf,'Position');
+set(gcf,'Position',[pos(1) pos(2) 1000 800])
+set(gcf,'PaperOrientation','Landscape');
+clf
+axis off
+
+t = suptitle({'Distributions of preferred orientations based on RF location';...
+    sprintf('%s %s %s',trData.animal, trData.eye, trData.array)});
+t.Position(2) = -0.025;
+t.FontSize = 18;
+text(0.35, -0.1, 'Concentric','Color',[0.7 0 0.7],'FontWeight','Bold','FontSize',14)
+text(0.5, -0.1, 'Dipole','Color',[1 0.5 0.1],'FontWeight','Bold','FontSize',14)
+text(0.6, -0.1, 'Radial','Color',[0 0.6 0.2],'FontWeight','Bold','FontSize',14)
+
+s1 = subplot(2,2,1,polaraxes);
+hold on
+
+radDomOri = 45;
+conDomOri = 135;
+q2PrefOris = q2In2Deg';
+q2PrefStim = q2RanksIn2Deg(1,:);
+conOris = (q2PrefOris(q2PrefStim == 1));
+radOris = (q2PrefOris(q2PrefStim == 2));
+dipOris = (q2PrefOris(q2PrefStim == 3));
+
+% dipole distributions
+[bins,edges] = histcounts(dipOris+pi,[0:pi/6:pi]+pi);
+bins2 = sqrt(bins);
+polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor',[1 0.5 0.1],'EdgeColor','w','FaceAlpha',0.45)
+
+[bins,edges] = histcounts(dipOris,0:pi/6:pi);
+bins2 = sqrt(bins);
+polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor',[1 0.5 0.1],'EdgeColor','w','FaceAlpha',0.45)
+text(deg2rad(91),0.5,sprintf('%d',length(dipOris)),'FontWeight','bold','Color',[1 0.5 0.1],'FontSize',12)
+
+% concentric distributions
+[bins,edges] = histcounts(conOris+pi,[0:pi/6:pi]+pi);
+bins2 = sqrt(bins);
+polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor',[0.7 0 0.7],'EdgeColor','w','FaceAlpha',0.5)
+
+[bins,edges] = histcounts(conOris,0:pi/6:pi);
+bins2 = sqrt(bins);
+polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor',[0.7 0 0.7],'EdgeColor','w','FaceAlpha',0.5)
+polarplot([deg2rad(45) 0 deg2rad(225)],[0.5 0 0.5],'--','color',[0.7 0 0.7],'LineWidth',0.85)
+text(deg2rad(55),0.5,sprintf('%d',length(conOris)),'FontWeight','bold','Color',[0.7 0 0.7],'FontSize',12)
+
+% radial distributions
+[bins,edges] = histcounts(radOris+pi,[0:pi/6:pi]+pi);
+bins2 = sqrt(bins);
+polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor',[0 0.6 0.2],'EdgeColor','w','FaceAlpha',0.5)
+
+[bins,edges] = histcounts(radOris,0:pi/6:pi);
+bins2 = sqrt(bins);
+polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor',[0 0.6 0.2],'EdgeColor','w','FaceAlpha',0.5)
+polarplot([deg2rad(135) 0 deg2rad(315)],[0.5 0 0.5],'--','color',[0 0.6 0.2],'LineWidth',0.85)
+text(deg2rad(125),0.45,sprintf('%d',length(radOris)),'FontWeight','bold','Color',[0 0.6 0.2],'FontSize',12)
+set(gca,'FontSize',12,'FontAngle','italic','RTickLabels',{'','',''})
+title(sprintf('n:%d',length(q2In2Deg)))
+
+ax = gca;
+ax.RLim   = [0,0.55];
+s1.Position(2) = s1.Position(2) - 0.02;
+
+s1 = subplot(2,2,2,polaraxes);
+hold on
+
+radDomOri = 45;
+conDomOri = 135;
+q1PrefOris = q1In2Deg';
+q1PrefStim = q1RanksIn2Deg(1,:);
+conOris = (q1PrefOris(q1PrefStim == 1));
+radOris = (q1PrefOris(q1PrefStim == 2));
+dipOris = (q1PrefOris(q1PrefStim == 3));
+
+% dipole distributions
+[bins,edges] = histcounts(dipOris+pi,[0:pi/6:pi]+pi);
+bins2 = sqrt(bins);
+polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor',[1 0.5 0.1],'EdgeColor','w','FaceAlpha',0.45)
+
+[bins,edges] = histcounts(dipOris,0:pi/6:pi);
+bins2 = sqrt(bins);
+polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor',[1 0.5 0.1],'EdgeColor','w','FaceAlpha',0.45)
+text(deg2rad(91),0.5,sprintf('%d',length(dipOris)),'FontWeight','bold','Color',[1 0.5 0.1],'FontSize',12)
+
+% concentric distributions
+[bins,edges] = histcounts(conOris+pi,[0:pi/6:pi]+pi);
+bins2 = sqrt(bins);
+polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor',[0.7 0 0.7],'EdgeColor','w','FaceAlpha',0.5)
+
+[bins,edges] = histcounts(conOris,0:pi/6:pi);
+bins2 = sqrt(bins);
+polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor',[0.7 0 0.7],'EdgeColor','w','FaceAlpha',0.5)
+polarplot([deg2rad(135) 0 deg2rad(315)],[0.5 0 0.5],'--','color',[0.7 0 0.7],'LineWidth',0.85)
+text(deg2rad(125),0.5,sprintf('%d',length(conOris)),'FontWeight','bold','Color',[0.7 0 0.7],'FontSize',12)
+
+% radial distributions
+[bins,edges] = histcounts(radOris+pi,[0:pi/6:pi]+pi);
+bins2 = sqrt(bins);
+polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor',[0 0.6 0.2],'EdgeColor','w','FaceAlpha',0.5)
+
+[bins,edges] = histcounts(radOris,0:pi/6:pi);
+bins2 = sqrt(bins);
+polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor',[0 0.6 0.2],'EdgeColor','w','FaceAlpha',0.5)
+polarplot([deg2rad(45) 0 deg2rad(225)],[0.5 0 0.5],'--','color',[0 0.6 0.2],'LineWidth',0.85)
+text(deg2rad(55),0.5,sprintf('%d',length(radOris)),'FontWeight','bold','Color',[0 0.6 0.2],'FontSize',12)
+
+set(gca,'FontSize',12,'FontAngle','italic','RTickLabels',{'','',''})
+title(sprintf('n:%d',length(q1In2Deg)))
+
+ax = gca;
+ax.RLim   = [0,0.55];
+s1.Position(2) = s1.Position(2) - 0.02;
+
+s1 = subplot(2,2,3,polaraxes);
+hold on
+
+radDomOri = 45;
+conDomOri = 135;
+q3PrefOris = q3In2Deg';
+q3PrefStim = q3RanksIn2Deg(1,:);
+conOris = (q3PrefOris(q3PrefStim == 1));
+radOris = (q3PrefOris(q3PrefStim == 2));
+dipOris = (q3PrefOris(q3PrefStim == 3));
+
+% dipole distributions
+[bins,edges] = histcounts(dipOris+pi,[0:pi/6:pi]+pi);
+bins2 = sqrt(bins);
+polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor',[1 0.5 0.1],'EdgeColor','w','FaceAlpha',0.45)
+
+[bins,edges] = histcounts(dipOris,0:pi/6:pi);
+bins2 = sqrt(bins);
+polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor',[1 0.5 0.1],'EdgeColor','w','FaceAlpha',0.45)
+text(deg2rad(91),0.5,sprintf('%d',length(dipOris)),'FontWeight','bold','Color',[1 0.5 0.1],'FontSize',12)
+
+% concentric distributions
+[bins,edges] = histcounts(conOris+pi,[0:pi/6:pi]+pi);
+bins2 = sqrt(bins);
+polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor',[0.7 0 0.7],'EdgeColor','w','FaceAlpha',0.5)
+
+[bins,edges] = histcounts(conOris,0:pi/6:pi);
+bins2 = sqrt(bins);
+polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor',[0.7 0 0.7],'EdgeColor','w','FaceAlpha',0.5)
+polarplot([deg2rad(315) 0 deg2rad(135)],[0.5 0 0.5],'--','color',[0.7 0 0.7],'LineWidth',0.85)
+text(deg2rad(125),0.5,sprintf('%d',length(conOris)),'FontWeight','bold','Color',[0.7 0 0.7],'FontSize',12)
+
+% radial distributions
+[bins,edges] = histcounts(radOris+pi,[0:pi/6:pi]+pi);
+bins2 = sqrt(bins);
+polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor',[0 0.6 0.2],'EdgeColor','w','FaceAlpha',0.5)
+
+[bins,edges] = histcounts(radOris,0:pi/6:pi);
+bins2 = sqrt(bins);
+polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor',[0 0.6 0.2],'EdgeColor','w','FaceAlpha',0.5)
+polarplot([deg2rad(45) 0 deg2rad(225)],[0.5 0 0.5],'--','color',[0 0.6 0.2],'LineWidth',0.85)
+text(deg2rad(55),0.5,sprintf('%d',length(radOris)),'FontWeight','bold','Color',[0 0.6 0.2],'FontSize',12)
+
+set(gca,'FontSize',12,'FontAngle','italic','RTickLabels',{'','',''})
+title(sprintf('n:%d',length(q3In2Deg)))
+
+ax = gca;
+ax.RLim   = [0,0.55];
+s1.Position(2) = s1.Position(2) - 0.02;
+
+s1 = subplot(2,2,4,polaraxes);
+hold on
+
+radDomOri = 45;
+conDomOri = 135;
+q4PrefOris = q4In2Deg';
+q4PrefStim = q4RanksIn2Deg(1,:);
+conOris = (q4PrefOris(q4PrefStim == 1));
+radOris = (q4PrefOris(q4PrefStim == 2));
+dipOris = (q4PrefOris(q4PrefStim == 3));
+
+% dipole distributions
+[bins,edges] = histcounts(dipOris+pi,[0:pi/6:pi]+pi);
+bins2 = sqrt(bins);
+polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor',[1 0.5 0.1],'EdgeColor','w','FaceAlpha',0.45)
+
+[bins,edges] = histcounts(dipOris,0:pi/6:pi);
+bins2 = sqrt(bins);
+polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor',[1 0.5 0.1],'EdgeColor','w','FaceAlpha',0.45)
+text(deg2rad(91),0.5,sprintf('%d',length(dipOris)),'FontWeight','bold','Color',[1 0.5 0.1],'FontSize',12)
+
+% concentric distributions
+[bins,edges] = histcounts(conOris+pi,[0:pi/6:pi]+pi);
+bins2 = sqrt(bins);
+polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor',[0.7 0 0.7],'EdgeColor','w','FaceAlpha',0.5)
+
+[bins,edges] = histcounts(conOris,0:pi/6:pi);
+bins2 = sqrt(bins);
+polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor',[0.7 0 0.7],'EdgeColor','w','FaceAlpha',0.5)
+polarplot([deg2rad(45) 0 deg2rad(225)],[0.5 0 0.5],'--','color',[0.7 0 0.7],'LineWidth',0.85)
+text(deg2rad(55),0.5,sprintf('%d',length(conOris)),'FontWeight','bold','Color',[0.7 0 0.7],'FontSize',12)
+
+% radial distributions
+[bins,edges] = histcounts(radOris+pi,[0:pi/6:pi]+pi);
+bins2 = sqrt(bins);
+polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor',[0 0.6 0.2],'EdgeColor','w','FaceAlpha',0.5)
+
+[bins,edges] = histcounts(radOris,0:pi/6:pi);
+bins2 = sqrt(bins);
+polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor',[0 0.6 0.2],'EdgeColor','w','FaceAlpha',0.5)
+polarplot([deg2rad(135) 0 deg2rad(315)],[0.5 0 0.5],'--','color',[0 0.6 0.2],'LineWidth',0.85)
+text(deg2rad(125),0.5,sprintf('%d',length(radOris)),'FontWeight','bold','Color',[0 0.6 0.2],'FontSize',12)
+
+set(gca,'FontSize',12,'FontAngle','italic','RTickLabels',{'','',''})
+title(sprintf('n:%d',length(q4In2Deg)))
+ax = gca;
+ax.RLim   = [0,0.55];
+s1.Position(2) = s1.Position(2) - 0.02;
+
+figName = [trData.animal,'_',trData.eye,'_',trData.array,'_prefOriByRFlocation_radConColored_in2Deg','.pdf'];
 print(gcf, figName,'-dpdf','-bestfit')
