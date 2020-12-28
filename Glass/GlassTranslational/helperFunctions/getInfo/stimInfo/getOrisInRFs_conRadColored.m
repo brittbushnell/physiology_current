@@ -51,6 +51,11 @@ for ch = 1:96
     end
 end
 
+q1RanksInStim = zeros(3,96);
+q2RanksInStim = zeros(3,96);
+q3RanksInStim = zeros(3,96);
+q4RanksInStim = zeros(3,96);
+
 q1RanksInStim = chRanks(:,quadInStim == 1);
 q2RanksInStim = chRanks(:,quadInStim == 2);
 q3RanksInStim = chRanks(:,quadInStim == 3);
@@ -61,6 +66,23 @@ q1RanksInStim(isnan(q1RanksInStim)) = [];
 q2RanksInStim(isnan(q2RanksInStim)) = [];
 q3RanksInStim(isnan(q3RanksInStim)) = [];
 q4RanksInStim(isnan(q4RanksInStim)) = [];
+
+% fill empty matrices
+if isempty(q1RanksInStim)
+    q1RanksInStim = zeros(3,96);
+end
+
+if isempty(q2RanksInStim)
+    q2RanksInStim = zeros(3,96);
+end
+
+if isempty(q3RanksInStim)
+    q3RanksInStim = zeros(3,96);
+end
+
+if isempty(q4RanksInStim)
+    q4RanksInStim = zeros(3,96);
+end
 %% outer ring of stimulus
 quadNotInStimCenter = trData.rfQuadrant(trData.inStimCenter == 0 & trData.inStim == 1);
 q1NotInStimCenter = deg2rad(trData.prefParamsPrefOri(quadNotInStimCenter == 1)); 
@@ -95,6 +117,23 @@ q1RanksNotInStimCenter(isnan(q1RanksNotInStimCenter)) = [];
 q2RanksNotInStimCenter(isnan(q2RanksNotInStimCenter)) = [];
 q3RanksNotInStimCenter(isnan(q3RanksNotInStimCenter)) = [];
 q4RanksNotInStimCenter(isnan(q4RanksNotInStimCenter)) = [];
+
+% fill empty matrices
+if isempty(q1RanksNotInStimCenter)
+    q1RanksNotInStimCenter = zeros(3,96);
+end
+
+if isempty(q2RanksNotInStimCenter)
+    q2RanksNotInStimCenter = zeros(3,96);
+end
+
+if isempty(q3RanksNotInStimCenter)
+    q3RanksNotInStimCenter = zeros(3,96);
+end
+
+if isempty(q4RanksNotInStimCenter)
+    q4RanksNotInStimCenter = zeros(3,96);
+end
 %% withing two degrees of the stimulus
 quadIn2Deg = trData.rfQuadrant(trData.inStimCenter == 0 & trData.inStim == 1 & trData.within2Deg);
 q1In2Deg = deg2rad(trData.prefParamsPrefOri(quadIn2Deg == 1)); 
@@ -119,6 +158,11 @@ for ch = 1:96
     end
 end
 
+q1RanksIn2Deg = zeros(3,96);
+q2RanksIn2Deg = zeros(3,96);
+q3RanksIn2Deg = zeros(3,96);
+q4RanksIn2Deg = zeros(3,96);
+
 q1RanksIn2Deg = chRanks(1,quadIn2Deg == 1);
 q2RanksIn2Deg = chRanks(1,quadIn2Deg == 2);
 q3RanksIn2Deg = chRanks(1,quadIn2Deg == 3);
@@ -129,6 +173,23 @@ q1RanksIn2Deg(isnan(q1RanksIn2Deg)) = [];
 q2RanksIn2Deg(isnan(q2RanksIn2Deg)) = [];
 q3RanksIn2Deg(isnan(q3RanksIn2Deg)) = [];
 q4RanksIn2Deg(isnan(q4RanksIn2Deg)) = [];
+
+% populate empty matrices
+if isempty(q1RanksIn2Deg)
+    q1RanksIn2Deg = zeros(3,96);
+end
+
+if isempty(q2RanksIn2Deg)
+    q2RanksIn2Deg = zeros(3,96);
+end
+
+if isempty(q3RanksIn2Deg)
+    q3RanksIn2Deg = zeros(3,96);
+end
+
+if isempty(q4RanksIn2Deg)
+    q4RanksIn2Deg = zeros(3,96);
+end
 %%
 location = determineComputer;
 
@@ -846,7 +907,7 @@ s1.Position(2) = s1.Position(2) - 0.02;
 figName = [trData.animal,'_',trData.eye,'_',trData.array,'_prefOriByRFlocation_radConPref_NotInStim1deg','.pdf'];
 print(gcf, figName,'-dpdf','-bestfit')
 %% within 2 degrees and color coded bars
-figure(13)
+figure%(13)
 pos = get(gcf,'Position');
 set(gcf,'Position',[pos(1) pos(2) 1000 800])
 set(gcf,'PaperOrientation','Landscape');

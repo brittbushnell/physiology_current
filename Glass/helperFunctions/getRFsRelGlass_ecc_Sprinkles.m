@@ -23,6 +23,11 @@ if contains(trData.animal,'XT')
         rfParamsRelGlassFix{ch}(1) = rfParamsOrig{ch}(1) + unique(trData.fix_x);
         rfParamsRelGlassFix{ch}(2) = rfParamsOrig{ch}(2) + unique(trData.fix_y);
     end
+else
+        for ch = 1:96
+        rfParamsRelGlassFix{ch}(1) = rfParamsOrig{ch}(1);
+        rfParamsRelGlassFix{ch}(2) = rfParamsOrig{ch}(2);
+    end
 end
 %% center stimulus at (0,0)
 % Need stimulus to be centered at origin to define the quadrants according
@@ -33,6 +38,11 @@ if glassX ~= 0
         rfParamsStim0{ch}(1) = rfParamsRelGlassFix{ch}(1) - unique(trData.pos_x);
     end
     glassXstim0 = unique(trData.pos_x) - unique(trData.pos_x);
+else
+    for ch = 1:96
+        rfParamsStim0{ch}(1) = rfParamsRelGlassFix{ch}(1);
+    end
+    glassXstim0 = unique(trData.pos_x);
 end
 
 if glassY ~= 0
@@ -40,9 +50,14 @@ if glassY ~= 0
         rfParamsStim0{ch}(2) = rfParamsRelGlassFix{ch}(2) - unique(trData.pos_y);
     end
     glassYstim0 = unique(trData.pos_x) - unique(trData.pos_x);
+else
+    for ch = 1:96
+        rfParamsStim0{ch}(2) = rfParamsRelGlassFix{ch}(2);
+    end
+    glassYstim0 = unique(trData.pos_x);
 end
-if glassXstim0 ~=0 || glassYstim0 ~= 0
-    fprintf('stimulus did not move to (0,0)')
+if glassXstim0 ~=0 && glassYstim0 ~= 0
+    fprintf('stimulus did not move to (0,0) \n')
     keyboard
 end
 %% make dummy plot to get stimulus bounds
@@ -115,12 +130,12 @@ for ch = 1:96
         end
     end
     inStim(1,ch) = (((rfX-0).^2+(rfY-0).^2 <= 4^2));
-    inCenterStim(1,ch) = (((rfX-0).^2+(rfY-0).^2 <= 1^2));
+    inCenterStim(1,ch) = (((rfX-0).^2+(rfY-0).^2 <= 2^2));
     within2degStim(1,ch) = (((rfX-0).^2+(rfY-0).^2 <= 6^2));
 end
 %% plot all receptive fields on one figure
 
-figure(5)
+figure%(5)
 clf
 viscircles([glassX,glassY],4,...
     'color',[0.2 0.2 0.2]);
