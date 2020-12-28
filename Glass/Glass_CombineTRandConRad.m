@@ -54,18 +54,23 @@ trRE = callReceptiveFieldParameters(trRE);
 trLE = GlassTR_bestSumDOris(trLE);
 [trLE.rfQuadrant, trLE.inStim, trLE.inStimCenter, trLE.within2Deg] = getRFsRelGlass_ecc_Sprinkles(trLE, conRadLE);
 trLE.quadOris = getOrisInRFs_conRadColored(trLE,conRadLE);
+diffPrefOriPrefStimOri(trLE,conRadLE)
 
 trRE = GlassTR_bestSumDOris(trRE);
 [trRE.rfQuadrant, trRE.inStim, trRE.inStimCenter,trRE.within2Deg] = getRFsRelGlass_ecc_Sprinkles(trRE, conRadRE);
 trRE.quadOris = getOrisInRFs_conRadColored(trRE,conRadRE);
+diffPrefOriPrefStimOri(trRE,conRadRE)
+
 
 conRadLE.rfQuadrant   = trLE.rfQuadrant;
 conRadLE.inStim       = trLE.inStim;
 conRadLE.inStimCenter = trLE.inStimCenter;
+conRadLE.within2Deg   = trLE.within2Deg;
 
 conRadRE.rfQuadrant   = trRE.rfQuadrant;
 conRadRE.inStim       = trRE.inStim;
 conRadRE.inStimCenter = trRE.inStimCenter;
+conRadRE.within2Deg   = trRE.within2Deg;
 %% save combined data
 
 location = determineComputer;
