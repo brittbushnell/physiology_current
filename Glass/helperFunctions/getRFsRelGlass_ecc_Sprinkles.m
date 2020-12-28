@@ -137,10 +137,12 @@ end
 
 figure%(5)
 clf
+viscircles([glassX,glassY],6,...
+    'color',[0.2 0.2 0.2],'LineWidth',0.5);
 viscircles([glassX,glassY],4,...
-    'color',[0.2 0.2 0.2]);
+    'color',[0.2 0.2 0.2],'LineWidth',0.6);
 viscircles([glassX,glassY],2,...
-    'color',[0.2 0.2 0.2]);
+    'color',[0.2 0.2 0.2],'LineWidth',0.6);
 grid on;
 
 for ch = 1:96
@@ -151,6 +153,8 @@ for ch = 1:96
         scatter(rfParamsRelGlassFix{ch}(1),rfParamsRelGlassFix{ch}(2),40,[1 0.4 0],'filled','MarkerFaceAlpha',0.8);
     elseif inStim(ch) == 1 && inCenterStim(ch) == 0
         scatter(rfParamsRelGlassFix{ch}(1),rfParamsRelGlassFix{ch}(2),40,[0 0.6 0.2],'filled','MarkerFaceAlpha',0.7);
+    elseif inCenterStim(ch) == 0 && within2degStim(ch) == 1
+        scatter(rfParamsRelGlassFix{ch}(1),rfParamsRelGlassFix{ch}(2),40,[0 0 0],'filled','MarkerFaceAlpha',0.7);
     else
         scatter(rfParamsRelGlassFix{ch}(1),rfParamsRelGlassFix{ch}(2),40,[0.5 0.5 0.5],'filled','MarkerFaceAlpha',0.7);
     end
