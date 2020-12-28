@@ -26,7 +26,7 @@ data.LE.ODI = ODI;
 location = determineComputer;
 
 if location == 1
-    figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/%s/EyeComps',REdata.animal, REdta.programID,REdata.array);
+    figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/%s/EyeComps',REdata.animal, REdata.programID,REdata.array);
 elseif location == 0
     figDir =  sprintf('~/Dropbox/Figures/%s/%s/%s/EyeComps',REdata.animal, REdata.programID, REdata.array);
 end
