@@ -53,8 +53,7 @@ trRE = callReceptiveFieldParameters(trRE);
 %%
 trLE = GlassTR_bestSumDOris(trLE);
 [trLE.rfQuadrant, trLE.inStim, trLE.inStimCenter, trLE.within2Deg] = getRFsRelGlass_ecc_Sprinkles(trLE, conRadLE);
-Note: figure out why numbers are off for the polar plots
-trLE.quadOris = getOrisInRFs_conRadColored(trLE,conRadLE);
+trLE.quadOris = getOrisInRFs_conRadColored2(trLE,conRadLE);
 diffPrefOriPrefStimOri(trLE,conRadLE)
 
 trRE = GlassTR_bestSumDOris(trRE);

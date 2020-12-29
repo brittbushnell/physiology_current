@@ -93,8 +93,8 @@ clear conNdxs; clear radNdxs; clear conOris; clear radOris; clear conDiff; clear
 
 subplot(2,2,4)
 hold on
-
-conNdxs = (in2d == 1) & (quad == 4) & (chRanks(1,:) == 1);
+useNdx = (in2d == 1) & (quad == 4);
+conNdxs = (chRanks(1,useNdx) == 1);
 radNdxs = (in2d == 1) & (quad == 4) & (chRanks(1,:) == 2);
 conOris = rad2deg(qOri(conNdxs));
 
