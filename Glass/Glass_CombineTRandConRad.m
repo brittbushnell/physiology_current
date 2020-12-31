@@ -58,7 +58,7 @@ diffPrefOriPrefStimOri(trLE,conRadLE)
 
 trRE = GlassTR_bestSumDOris(trRE);
 [trRE.rfQuadrant, trRE.inStim, trRE.inStimCenter,trRE.within2Deg] = getRFsRelGlass_ecc_Sprinkles(trRE, conRadRE);
-trRE.quadOris = getOrisInRFs_conRadColored(trRE,conRadRE);
+trRE.quadOris = getOrisInRFs_conRadColored2(trRE,conRadRE);
 diffPrefOriPrefStimOri(trRE,conRadRE)
 
 

@@ -18,10 +18,10 @@ quadOris.q2 = q2;
 quadOris.q3 = q3;
 quadOris.q4 = q4; % preferred orientations for channels within each quadrant
 %% get preferred pattern type for each channel in each quadrant
-q1Ranks = chRanks(:,quad == 1);
-q2Ranks = chRanks(:,quad == 2);
-q3Ranks = chRanks(:,quad == 3);
-q4Ranks = chRanks(:,quad == 4);
+q1Ranks = chRanks(quad == 1);
+q2Ranks = chRanks(quad == 2);
+q3Ranks = chRanks(quad == 3);
+q4Ranks = chRanks(quad == 4);
 
 % remove nans
 q1Ranks(isnan(q1Ranks)) = [];
