@@ -90,8 +90,8 @@ for fi = 1:length(files)
         end
         
         grid on;
-        xlim([-14,14])
-        ylim([-14,14])
+        xlim([-15,15])
+        ylim([-15,15])
         set(gca,'YAxisLocation','origin','XAxisLocation','origin',...
             'Layer','top','FontWeight','bold','FontSize',14,'FontAngle','italic')
         axis square

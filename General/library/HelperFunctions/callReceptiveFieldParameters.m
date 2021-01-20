@@ -52,8 +52,9 @@ elseif contains(dataT.animal,'XT')
             rfDataBE = data;
             rfData = data.RE;
         else
-            load('XT_RE_mapNoise_nsp1_Oct2018_all_thresh35_resps');
+            load('XT_BE_mapNoise_V1_comboEyes');
             rfData = data.RE;
+            rfDataBE = data;
         end
     else
         if contains(dataT.array,'V4')
@@ -62,8 +63,9 @@ elseif contains(dataT.animal,'XT')
             rfData = data.LE;
             
         else
-            load('XT_LE_mapNoise_nsp1_Oct2018_all_thresh35_resps');
+            load('XT_BE_mapNoise_V1_comboEyes');
             rfData = data.LE;
+            rfDataBE = data;
         end
     end
     
@@ -73,7 +75,7 @@ end
 
 
 dataOut.chReceptiveFieldParams = rfData.chReceptiveFieldParams;
-if contains(dataT.animal,'XT') && contains(dataT.array,'V4')
+if contains(dataT.animal,'XT')
     dataOut.chReceptiveFieldParamsBE = rfDataBE.chReceptiveFieldParams;
 end
 

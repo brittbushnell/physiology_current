@@ -2,25 +2,25 @@ clear all
 close all
 clc
 tic
-%%
+ %%
+% 
+LE = 'WV_LE_MapNoise_nsp2_Jan2019_all_thresh35_resps';
+RE = 'WV_RE_MapNoise_nsp2_Jan2019_all_thresh35_resps';
 
-% LE = 'WV_LE_MapNoise_nsp2_Jan2019_all_thresh35_info3_resps';
-% RE = 'WV_RE_MapNoise_nsp2_Jan2019_all_thresh35_info3_resps';
-
-% LE = 'WV_LE_MapNoise_nsp1_Jan2019_all_thresh35_info3_resps';
-% RE = 'WV_RE_MapNoise_nsp1_Jan2019_all_thresh35_info3_resps';
+% LE = 'WV_LE_MapNoise_nsp1_Jan2019_all_thresh35_resps';
+% RE = 'WV_RE_MapNoise_nsp1_Jan2019_all_thresh35_resps';
  
-LE = 'XT_LE_mapNoiseRight_nsp2_Nov2018_all_thresh35_resps';
-RE = 'XT_RE_mapNoiseRight_nsp2_20181119_001_thresh35_info3_resps';
+% LE = 'XT_LE_mapNoiseRight_nsp2_Nov2018_all_thresh35_resps';
+% RE = 'XT_RE_mapNoiseRight_nsp2_20181119_001_thresh35_info3_resps';
 
 % LE = 'XT_LE_mapNoise_nsp1_Oct2018_all_thresh35_resps';
 % RE = 'XT_RE_mapNoise_nsp1_Oct2018_all_thresh35_resps';
 
-% LE = 'WU_LE_GratingsMapRF_nsp2_20170426_003_thresh35_info3_resps';
-% RE = 'WU_RE_GratingsMapRF_nsp2_20170426_001_thresh35_info3_resps';
-
-% LE = 'WU_LE_GratingsMapRF_nsp1_20170426_003_thresh35_info3_resps';
-% RE = 'WU_RE_GratingsMapRF_nsp1_20170426_001_thresh35_info3_resps';
+% LE = 'WU_LE_GratingsMapRF_nsp2_20170426_003_thresh35_info4_resps';
+% RE = 'WU_RE_GratmapRF_nsp2_April2017_all_thresh35_resps';
+ 
+% LE = 'WU_LE_GratingsMapRF_nsp1_20170426_003_thresh35_info4_resps';
+% RE = 'WU_RE_GratmapRF_nsp1_April2017_all_thresh35_resps';
 
 %%
 load(LE);
@@ -51,8 +51,8 @@ for ch = 1:96
     scatter(dataLE.chReceptiveFieldParams{ch}(1),dataLE.chReceptiveFieldParams{ch}(2),35,[0.2 0.4 1],'filled','MarkerFaceAlpha',0.7);
     
     grid on;
-    xlim([-14,14])
-    ylim([-14,14])
+    xlim([-15,15])
+    ylim([-15,15])
     set(gca,'YAxisLocation','origin','XAxisLocation','origin',...
         'Layer','top','FontWeight','bold','FontSize',14,'FontAngle','italic')
     axis square
@@ -91,8 +91,8 @@ for ch = 1:96
     scatter(dataLE.chReceptiveFieldParams{ch}(1),dataLE.chReceptiveFieldParams{ch}(2),35,[0.2 0.4 1],'filled','MarkerFaceAlpha',0.7);
 
     grid on;
-    xlim([-14,14])
-    ylim([-14,14])
+    xlim([-15,15])
+    ylim([-15,15])
     set(gca,'YAxisLocation','origin','XAxisLocation','origin',...
         'Layer','top','FontWeight','bold','FontSize',14,'FontAngle','italic')
     axis square
@@ -113,8 +113,8 @@ for ch = 1:96
     scatter(dataRE.chReceptiveFieldParams{ch}(1),dataRE.chReceptiveFieldParams{ch}(2),35,[0.8 0 0.4],'filled','MarkerFaceAlpha',0.7);
     scatter(dataLE.chReceptiveFieldParams{ch}(1),dataLE.chReceptiveFieldParams{ch}(2),35,[0.2 0.4 1],'filled','MarkerFaceAlpha',0.7);
     grid on;
-    xlim([-14,14])
-    ylim([-14,14])
+    xlim([-15,15])
+    ylim([-15,15])
     set(gca,'YAxisLocation','origin','XAxisLocation','origin',...
         'Layer','top','FontWeight','bold','FontSize',14,'FontAngle','italic')
     axis square
@@ -134,8 +134,8 @@ for ch = 1:96
     scatter(dataRE.chReceptiveFieldParams{ch}(1),dataRE.chReceptiveFieldParams{ch}(2),35,[0.8 0 0.4],'filled','MarkerFaceAlpha',0.7);
 
     grid on;
-    xlim([-14,14])
-    ylim([-14,14])
+    xlim([-15,15])
+    ylim([-15,15])
     set(gca,'YAxisLocation','origin','XAxisLocation','origin',...
         'Layer','top','FontWeight','bold','FontSize',14,'FontAngle','italic')
     axis square
@@ -157,8 +157,8 @@ for ch = 1:96
     draw_ellipse(dataLE.chReceptiveFieldParams{ch},[0.2 0.4 1])
 
     grid on;
-    xlim([-14,14])
-    ylim([-14,14])
+    xlim([-15,15])
+    ylim([-15,15])
     set(gca,'YAxisLocation','origin','XAxisLocation','origin',...
         'Layer','top','FontWeight','bold','FontSize',14,'FontAngle','italic')
     axis square
@@ -180,8 +180,8 @@ for ch = 1:96
     draw_ellipse(dataLE.chReceptiveFieldParams{ch},[0.2 0.4 1])
     
     grid on;
-    xlim([-14,14])
-    ylim([-14,14])
+    xlim([-15,15])
+    ylim([-15,15])
     set(gca,'YAxisLocation','origin','XAxisLocation','origin',...
         'Layer','top','FontWeight','bold','FontSize',14,'FontAngle','italic')
     axis square
@@ -202,8 +202,8 @@ s.Position(4) = s.Position(4)+0.035;
 for ch = 1:96 
     draw_ellipse(dataRE.chReceptiveFieldParams{ch},[0.8 0 0.4])
     grid on;
-    xlim([-14,14])
-    ylim([-14,14])
+    xlim([-15,15])
+    ylim([-15,15])
     set(gca,'YAxisLocation','origin','XAxisLocation','origin',...
         'Layer','top','FontWeight','bold','FontSize',14,'FontAngle','italic')
     axis square
@@ -223,8 +223,8 @@ hold on
 for ch = 1:96 
     draw_ellipse(dataRE.chReceptiveFieldParams{ch},[0.8 0 0.4])
     grid on;
-    xlim([-14,14])
-    ylim([-14,14])
+    xlim([-15,15])
+    ylim([-15,15])
     set(gca,'YAxisLocation','origin','XAxisLocation','origin',...
         'Layer','top','FontWeight','bold','FontSize',14,'FontAngle','italic')
     axis square
@@ -243,8 +243,8 @@ hold on
 for ch = 1:96 
     draw_ellipse(dataLE.chReceptiveFieldParams{ch},[0.2 0.4 1])
     grid on;
-    xlim([-14,14])
-    ylim([-14,14])
+    xlim([-15,15])
+    ylim([-15,15])
     set(gca,'YAxisLocation','origin','XAxisLocation','origin',...
         'Layer','top','FontWeight','bold','FontSize',14,'FontAngle','italic')
     axis square
@@ -263,8 +263,8 @@ for ch = 1:96
     draw_ellipse(dataLE.chReceptiveFieldParams{ch},[0.2 0.4 1])
     draw_ellipse(dataRE.chReceptiveFieldParams{ch},[0.8 0 0.4])
     grid on;
-    xlim([-14,14])
-    ylim([-14,14])
+    xlim([-15,15])
+    ylim([-15,15])
     set(gca,'YAxisLocation','origin','XAxisLocation','origin',...
         'Layer','top','FontWeight','bold','FontSize',14,'FontAngle','italic')
     axis square

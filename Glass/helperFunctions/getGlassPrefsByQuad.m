@@ -1,5 +1,5 @@
-function [quadOris,quadRanks] = getGlassPrefsByQuad(prefParams,quad,chRanks)
-% This function will
+function [quadOris,quadRanks, quadOSI] = getGlassPrefsByQuad(prefParams,quad,chRanks, prefOSI)
+
 
 %% get preferred orientations for all channel in each quadrant of the stimulus
 q1 = deg2rad(prefParams(quad == 1));  
@@ -17,6 +17,22 @@ quadOris.q1 = q1;
 quadOris.q2 = q2;
 quadOris.q3 = q3;
 quadOris.q4 = q4; % preferred orientations for channels within each quadrant
+%% get OSI for channels in the quadrants
+q1 = (prefOSI(quad == 1));  
+q2 = (prefOSI(quad == 2));
+q3 = (prefOSI(quad == 3));
+q4 = (prefOSI(quad == 4));
+
+% remove nans
+q1(isnan(q1)) = [];
+q2(isnan(q2)) = [];
+q3(isnan(q3)) = [];
+q4(isnan(q4)) = [];
+quadOSI = {};
+quadOSI.q1 = q1;
+quadOSI.q2 = q2;
+quadOSI.q3 = q3;
+quadOSI.q4 = q4; % preferred orientations for channels within each quadrant
 %% get preferred pattern type for each channel in each quadrant
 q1Ranks = chRanks(quad == 1);
 q2Ranks = chRanks(quad == 2);

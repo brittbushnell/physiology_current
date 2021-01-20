@@ -55,7 +55,7 @@ data = plotGlassTR_prefOriDist_BE_bestDprimeSum(data);
 %plotGlassTR_OSI_eyeComps(data) % fig 12
 %% OSI histograms
 % plotGlassTR_OSIdist(data) % fig 3-5
-% plotGlassTR_OSIdist_binoc(data) % fig 13-15
+plotGlassTR_OSIdist_binoc(data) % fig 13-15
 %%
 saveName = [outputDir newName '.mat'];
 save(saveName,'data','-v7.3');

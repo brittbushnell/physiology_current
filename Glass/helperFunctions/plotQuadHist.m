@@ -1,4 +1,4 @@
-function [] = plotQuadHist(quadOris, quadRanks,eye) 
+function [] = plotQuadHist(quadOris, quadRanks, quad, eye) 
 
 hold on
 cirMu = circ_mean(quadOris*2)/2;
@@ -32,12 +32,35 @@ else
     
     polarplot([cirMu 0 cirMu2],[0.4 0 0.4],'k-','LineWidth',.85)
 end
-% plot radial
-polarplot([deg2rad(315) 0 deg2rad(135)],[0.5 0 0.5],'--','color',[0 0.6 0.2],'LineWidth',0.85)
-text(deg2rad(125),0.45,sprintf('%d',prefRad),'FontWeight','bold','Color',[0 0.6 0.2],'FontSize',12)
-% plot concentric
-polarplot([deg2rad(45) 0 deg2rad(225)],[0.5 0 0.5],'--','color',[0.7 0 0.7],'LineWidth',0.85)
-text(deg2rad(55),0.45,sprintf('%d',prefCon),'FontWeight','bold','Color',[0.7 0 0.7],'FontSize',12)
+
+if quad == 1
+    % plot radial
+    polarplot([deg2rad(315) 0 deg2rad(135)],[0.5 0 0.5],'--','color',[0.7 0 0.7],'LineWidth',0.85)
+    text(deg2rad(125),0.45,sprintf('%d',prefRad),'FontWeight','bold','Color',[0.7 0 0.7],'FontSize',12)
+    % plot concentric
+    polarplot([deg2rad(45) 0 deg2rad(225)],[0.5 0 0.5],'--','color',[0 0.6 0.2],'LineWidth',0.85)
+    text(deg2rad(55),0.45,sprintf('%d',prefCon),'FontWeight','bold','Color',[0 0.6 0.2],'FontSize',12)
+elseif quad == 2
+    % plot radial
+    polarplot([deg2rad(315) 0 deg2rad(135)],[0.5 0 0.5],'--','color',[0 0.6 0.2],'LineWidth',0.85)
+    text(deg2rad(125),0.45,sprintf('%d',prefRad),'FontWeight','bold','Color',[0 0.6 0.2],'FontSize',12)
+    % plot concentric
+    polarplot([deg2rad(45) 0 deg2rad(225)],[0.5 0 0.5],'--','color',[0.7 0 0.7],'LineWidth',0.85)
+    text(deg2rad(55),0.45,sprintf('%d',prefCon),'FontWeight','bold','Color',[0.7 0 0.7],'FontSize',12)
+elseif quad == 3
+    polarplot([deg2rad(315) 0 deg2rad(135)],[0.5 0 0.5],'--','color',[0.7 0 0.7],'LineWidth',0.85)
+    text(deg2rad(125),0.45,sprintf('%d',prefRad),'FontWeight','bold','Color',[0.7 0 0.7],'FontSize',12)
+    % plot concentric
+    polarplot([deg2rad(45) 0 deg2rad(225)],[0.5 0 0.5],'--','color',[0 0.6 0.2],'LineWidth',0.85)
+    text(deg2rad(55),0.45,sprintf('%d',prefCon),'FontWeight','bold','Color',[0 0.6 0.2],'FontSize',12)
+elseif quad == 4
+    % plot radial
+    polarplot([deg2rad(315) 0 deg2rad(135)],[0.5 0 0.5],'--','color',[0 0.6 0.2],'LineWidth',0.85)
+    text(deg2rad(125),0.45,sprintf('%d',prefRad),'FontWeight','bold','Color',[0 0.6 0.2],'FontSize',12)
+    % plot concentric
+    polarplot([deg2rad(45) 0 deg2rad(225)],[0.5 0 0.5],'--','color',[0.7 0 0.7],'LineWidth',0.85)
+    text(deg2rad(55),0.45,sprintf('%d',prefCon),'FontWeight','bold','Color',[0.7 0 0.7],'FontSize',12)
+end
 
 text(deg2rad(90),0.45,sprintf('%d',prefNos),'FontWeight','bold','Color',[1 0.5 0.1],'FontSize',12)
 text(cirMu+0.2,0.45,sprintf('%.1f%c',rad2deg(cirMu),char(176)),'FontSize',11,'HorizontalAlignment','left','FontWeight','bold')

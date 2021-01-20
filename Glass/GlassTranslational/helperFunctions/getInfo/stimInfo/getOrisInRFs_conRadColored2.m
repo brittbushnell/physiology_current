@@ -1,4 +1,4 @@
-function [quadOris] = getOrisInRFs_conRadColored2(trData,crData)
+function [quadOris, quadRanks] = getOrisInRFs_conRadColored2(trData,crData)
 
 %% get the preferred stimuli for each channel by quadrant
 chRanks = nan(1,96);

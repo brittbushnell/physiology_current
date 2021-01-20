@@ -1,4 +1,4 @@
-function [rfQuadrant,inStim,inCenterStim,within2degStim] = getRFsRelGlass_ecc_Sprinkles(trData, crData)
+function [rfQuadrant,inStim,inCenterStim,within2degStim,rfParamsRelGlassFix] = getRFsRelGlass_ecc_Sprinkles(trData, crData)
 % This function determines which quadrant of the stimulus receptive fields
 % are in, and what the distribution of preferred orientations are for
 % receptive fields within each quadrant.
@@ -12,7 +12,7 @@ function [rfQuadrant,inStim,inCenterStim,within2degStim] = getRFsRelGlass_ecc_Sp
 glassX = unique(trData.pos_x);
 glassY = unique(trData.pos_y);
 
-if contains(trData.animal,'XT') && contains(trData.array,'V4')
+if contains(trData.animal,'XT')
     rfParamsOrig = trData.chReceptiveFieldParamsBE;
 else
     rfParamsOrig = trData.chReceptiveFieldParams;
@@ -24,7 +24,7 @@ if contains(trData.animal,'XT')
         rfParamsRelGlassFix{ch}(2) = rfParamsOrig{ch}(2) + unique(trData.fix_y);
     end
 else
-        for ch = 1:96
+    for ch = 1:96
         rfParamsRelGlassFix{ch}(1) = rfParamsOrig{ch}(1);
         rfParamsRelGlassFix{ch}(2) = rfParamsOrig{ch}(2);
     end
@@ -61,20 +61,6 @@ if glassXstim0 ~=0 && glassYstim0 ~= 0
     keyboard
 end
 %% make dummy plot to get stimulus bounds
-location = determineComputer;
-
-if location == 1
-    figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/%s/RF/',trData.animal, trData.programID,trData.array);
-elseif location == 0
-    figDir =  sprintf('~/Dropbox/Figures/%s/%s/%s/RF/',trData.animal, trData.programID,trData.array);
-end
-
-if ~exist(figDir,'dir')
-    mkdir(figDir)
-end
-cd(figDir)
-
-%%
 figure(80)
 clf
 
@@ -158,10 +144,10 @@ for ch = 1:96
     else
         scatter(rfParamsRelGlassFix{ch}(1),rfParamsRelGlassFix{ch}(2),40,[0.5 0.5 0.5],'filled','MarkerFaceAlpha',0.7);
     end
-
+    
     xlim([-15,15])
     ylim([-15,15])
-    set(gca,'YAxisLocation','origin','XAxisLocation','origin',...
+    set(gca,'YAxisLocation','origin','XAxisLocation','origin','tickdir','both',...
         'Layer','top','FontWeight','bold','FontSize',12,'FontAngle','italic')
     axis square
     
@@ -173,15 +159,19 @@ text(-9.5, 9.5, sprintf('n %d',sum(rfQuadrant==2)))
 text(-9.5, -9.5, sprintf('n %d',sum(rfQuadrant==3)))
 text(9, -9.5, sprintf('n %d',sum(rfQuadrant==4)))
 
-if contains(trData.animal,'XT') && contains(trData.array,'V4')
+if contains(trData.animal,'XT')
     title({sprintf('%s BE %s %s',trData.animal, trData.array, trData.programID);...
         sprintf('%d in stimulus boundary, %d in center degree of stimulus',sum(inStim), sum(inCenterStim))})
 else
     title({sprintf('%s %s %s %s',trData.animal, trData.eye, trData.array, trData.programID);...
         sprintf('%d in stimulus boundary, %d in center degree of stimulus',sum(inStim), sum(inCenterStim))})
 end
+if contains(trData.animal,'XT')
+    figName = [trData.animal,'_BE_',trData.array,'_RFlocRelGlassStim','.pdf'];
+else
+    figName = [trData.animal,'_',trData.eye,'_',trData.array,'_RFlocRelGlassStim','.pdf'];
 
-figName = [trData.animal,'_',trData.eye,'_',trData.array,'_RFlocRelGlassStim','.pdf'];
+end
 print(gcf, figName,'-dpdf','-fillpage')
 %% glitteratti plot
 
@@ -219,18 +209,25 @@ for ch = 1:96
             plot([rfX, x2], [rfY, y2],'-','color',[1 0.5 0.1],'lineWidth',lLen)
         end
     end
-xlim([-15,15])
-ylim([-15,15])
-set(gca,'YAxisLocation','origin','XAxisLocation','origin',...
-    'Layer','top','FontWeight','bold','FontSize',12,'FontAngle','italic')    
+    xlim([-15,15])
+    ylim([-15,15])
+    set(gca,'YAxisLocation','origin','XAxisLocation','origin','tickdir','both',...
+        'Layer','top','FontWeight','bold','FontSize',12,'FontAngle','italic')
 end
-text(-14, 14, 'Concentric','Color',[0.7 0 0.7],'FontWeight','Bold','FontSize',14) 
-text(-14, 13, 'Dipole','Color',[1 0.5 0.1],'FontWeight','Bold','FontSize',14) 
-text(-14, 12, 'Radial','Color',[0 0.6 0.2],'FontWeight','Bold','FontSize',14) 
+text(-14, 14, 'Concentric','Color',[0.7 0 0.7],'FontWeight','Bold','FontSize',14)
+text(-14, 13, 'Dipole','Color',[1 0.5 0.1],'FontWeight','Bold','FontSize',14)
+text(-14, 12, 'Radial','Color',[0 0.6 0.2],'FontWeight','Bold','FontSize',14)
 
 axis square
-suptitle({'Preferred orientations and pattern type for each channel and their receptive field locations';...
-    sprintf('%s %s %s',trData.animal, trData.eye, trData.array)})
+if contains(trData.animal,'XT')
+    suptitle({'Preferred orientations and pattern type for each channel and their receptive field locations';...
+        sprintf('%s BE %s',trData.animal, trData.array)})
+    figName = [trData.animal,'_BE_',trData.array,'_RFloc_prefOri_prefPattern','.pdf'];
+else
+    suptitle({'Preferred orientations and pattern type for each channel and their receptive field locations';...
+        sprintf('%s %s %s',trData.animal, trData.eye, trData.array)})
+    figName = [trData.animal,'_',trData.eye,'_',trData.array,'_RFloc_prefOri_prefPattern','.pdf'];
+end
 
-figName = [trData.animal,'_',trData.eye,'_',trData.array,'_RFloc_prefOri_prefPattern','.pdf'];
+
 print(gcf, figName,'-dpdf','-bestfit')
