@@ -1,48 +1,48 @@
 clear
 close all
 % clc
+% %%
+% load('WV_BE_GlassTRCoh_V4_cleanMerged');
+% trLE = data.LE;
+% trRE = data.RE;
+% trData = data;
+% clear data;
+% 
+% load('WV_BE_V4_Glass_Aug2017_clean_merged');
+% conRadLE = data.LE;
+% conRadRE = data.RE;
+% conRadData = data;
+% clear data
+% 
+% newName = 'WV_BE_V4_bothGlass_cleanMerged';
 %%
-load('WV_BE_GlassTRCoh_V1_cleanMerged');
+% load('WU_BE_GlassTR_V4_cleanMerged');
+% trLE = data.LE;
+% trRE = data.RE;
+% trData = data;
+% clear data;
+% 
+% load('WU_BE_V4_Glass_clean_merged');
+% conRadLE = data.LE;
+% conRadRE = data.RE;
+% conRadData = data;
+% clear data
+% 
+% newName = 'WU_BE_V4_bothGlass_cleanMerged';
+%% 
+load('XT_BE_GlassTR_V4_cleanMerged');
 trLE = data.LE;
 trRE = data.RE;
 trData = data;
 clear data;
 
-load('WV_BE_V1_Glass_Aug2017_clean_merged');
+load('XT_BE_V4_Glass_clean_merged');
 conRadLE = data.LE;
 conRadRE = data.RE;
 conRadData = data;
 clear data
 
-newName = 'WV_BE_V1_bothGlass_cleanMerged';
-%%
-% load('WU_BE_GlassTR_V1_cleanMerged');
-% trLE = data.LE;
-% trRE = data.RE;
-% trData = data;
-% clear data;
-% 
-% load('WU_BE_V1_Glass_clean_merged');
-% conRadLE = data.LE;
-% conRadRE = data.RE;
-% conRadData = data;
-% clear data
-% 
-% newName = 'WU_BE_V1_bothGlass_cleanMerged';
-%% 
-% load('XT_BE_GlassTR_V4_cleanMerged');
-% trLE = data.LE;
-% trRE = data.RE;
-% trData = data;
-% clear data;
-% 
-% load('XT_BE_V4_Glass_clean_merged');
-% conRadLE = data.LE;
-% conRadRE = data.RE;
-% conRadData = data;
-% clear data
-% 
-% newName = 'XT_BE_V4_bothGlass_cleanMerged';
+newName = 'XT_BE_V4_bothGlass_cleanMerged';
 %%  get receptive field information
 % It doesn't matter if you use the conRad or translational inputs, they'll
 % both return the same thing, just need one from each eye.
@@ -80,6 +80,7 @@ for ch = 1:96
     end
 end
 trLE.prefPatternsPrefParams = chRanksLE;
+
 %% LE: look at all responsive channels
 goodQuads = trLE.rfQuadrant(trLE.goodCh == 1);
 goodOris = trLE.prefParamsPrefOri(trLE.goodCh == 1);
@@ -92,7 +93,14 @@ t1Text = ({'Distribution of preferred orientations all included channels';...
 
 figName = [trLE.animal,'_',trLE.eye,'_',trLE.array,'_prefOriByRFlocation_radConPref_allGoodCh','.pdf'];
 print(gcf, figName,'-dpdf','-bestfit')
+%% LE: look at the channels in the center of the stimulus
+centerRanks = chRanksLE(trLE.goodCh == 1 & trLE.inStimCenter == 1);
 
+% fill empty matrices
+if isempty(centerRanks)
+    centerRanks = zeros(1);
+end
+trLE.centerRanks = centerRanks; 
 %% LE: all channels inside stimulus boundaries
 goodQuads = trLE.rfQuadrant(trLE.goodCh == 1 & trLE.inStim == 1);
 goodOris = trLE.prefParamsPrefOri(trLE.goodCh == 1 & trLE.inStim == 1);
@@ -145,7 +153,7 @@ clf
 pos = get(gcf,'Position');
 set(gcf,'Position',[pos(1) pos(2) 1000 800])
 set(gcf,'PaperOrientation','Landscape');
-clf
+
 set(gca,'tickdir','out','XAxisLocation','origin','XTickLabel',[],'YAxisLocation','origin','YTickLabel',[],'TickLength',[0 0])
 ylim([-1 1])
 xlim([-1 1])
@@ -225,7 +233,14 @@ t1Text = ({'Distribution of preferred orientations all included channels';...
 
 figName = [trRE.animal,'_',trRE.eye,'_',trRE.array,'_prefOriByRFlocation_radConPref_allGoodCh','.pdf'];
 print(gcf, figName,'-dpdf','-bestfit')
+%% RE: channels in the center of the stimulus
+centerRanks = chRanksRE(trRE.goodCh == 1 & trRE.inStimCenter == 1);
 
+% fill empty matrices
+if isempty(centerRanks)
+    centerRanks = zeros(1);
+end
+trRE.centerRanks = centerRanks; 
 %% RE: all channels inside stimulus boundaries
 goodQuads = trRE.rfQuadrant(trRE.goodCh == 1 & trRE.inStim == 1);
 goodOris = trRE.prefParamsPrefOri(trRE.goodCh == 1 & trRE.inStim == 1);

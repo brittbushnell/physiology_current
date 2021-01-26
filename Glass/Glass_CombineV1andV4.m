@@ -228,7 +228,41 @@ else
     
     figName = [V1data.trRE.animal,'BothArrays_prefPattern_centerStim','.pdf'];
     print(gcf, figName,'-dpdf','-bestfit')
+    
 end
+%%
+[V1data, V4data] = getGlassSumZscorePrefParams(V1data,V4data);
+%%
+% figure(6)
+% clf
+% pos = get(gcf,'Position');
+% set(gcf,'Position',[pos(1) pos(2) 1000 1000])
+% hold on
+% 
+% [V1data, V4data] = PlotGlassZscoresCenterStimByPref(V1data, V4data);
+% 
+% s = suptitle(sprintf('%s Glass pattern z scores for each pattern in center of stimuli',V1data.trLE.animal));
+% s.FontAngle = 'italic';
+% s.FontSize = 18;
+% s.FontWeight = 'bold';
+% s.Position(2) = s.Position(2) + 0.02;
+% 
+% figName = [V1data.trRE.animal,'BothArrays_prefPattern_centerStimZscore_hist','.pdf'];
+% print(gcf, figName,'-dpdf','-bestfit')
+%%
+figure (7)
+clf
+hold on
+plotGlass_zScoreScatter(V1data,V4data)
+
+s = suptitle(sprintf('%s summed z scores for receptive fields in center of stimuli',V1data.trLE.animal));
+s.FontAngle = 'italic';
+s.FontSize = 18;
+s.FontWeight = 'bold';
+s.Position(2) = s.Position(2) + 0.02;
+
+figName = [V1data.trRE.animal,'BothArrays_prefPattern_centerStimZscore_scatter','.pdf'];
+print(gcf, figName,'-dpdf','-bestfit')
 %%
 location = determineComputer;
 if location == 1

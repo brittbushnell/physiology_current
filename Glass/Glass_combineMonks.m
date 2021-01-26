@@ -60,6 +60,6 @@ t.FontSize = 18;
 plotPrefDomOriDiffVsOSI_noID(WUV1, WUV4, WVV1, WVV4, XTV1, XTV4)
 figName = 'GlassOriDiff_byQuad_noMonkID.pdf';
 print(gcf, figName,'-dpdf','-bestfit')
-%% all quadrants and animals together
+%% OSI distributions all quadrants and animals together 
 plotPrefDomOriDiffVsOSI_allQuad(WUV1, WUV4, WVV1, WVV4, XTV1, XTV4)
 plotGlassOSI_allMonk(WUV1, WUV4, WVV1, WVV4, XTV1, XTV4)
