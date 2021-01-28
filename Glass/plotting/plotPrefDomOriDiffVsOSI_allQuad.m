@@ -1,4 +1,4 @@
-function plotPrefDomOriDiffVsOSI_allQuad(WUV1, WUV4, WVV1, WVV4, XTV1, XTV4) 
+function [WUV1, WUV4, WVV1, WVV4, XTV1, XTV4] = plotPrefDomOriDiffVsOSI_allQuad(WUV1, WUV4, WVV1, WVV4, XTV1, XTV4) 
 %% LE
 tempRad = struct2cell(WUV1.trLE.radDiff);
 wuV1LEradDiff = cell2mat(tempRad);
@@ -77,37 +77,73 @@ tempCon = struct2cell(XTV4.trRE.conDiff);
 xtV4REconDiff = cell2mat(tempCon);
 %% OSIs
 % this should give the OSI for channels that prefer concentric
-WUV1LEconOSI= WUV1.trLE.prefParamSI(WUV1.trLE.prefPatternsPrefParams == 1 & WUV1.trLE.inStimCenter == 0 & WUV1.trLE.within2Deg == 1 & WUV1.trLE.goodCh == 1);
-WUV1REconOSI= WUV1.trRE.prefParamSI(WUV1.trRE.prefPatternsPrefParams == 1 & WUV1.trRE.inStimCenter == 0 & WUV1.trRE.within2Deg == 1 & WUV1.trRE.goodCh == 1);
-WUV4LEconOSI= WUV4.trLE.prefParamSI(WUV4.trLE.prefPatternsPrefParams == 1 & WUV4.trLE.inStimCenter == 0 & WUV4.trLE.within2Deg == 1 & WUV4.trLE.goodCh == 1);
-WUV4REconOSI= WUV4.trRE.prefParamSI(WUV4.trRE.prefPatternsPrefParams == 1 & WUV4.trRE.inStimCenter == 0 & WUV4.trRE.within2Deg == 1 & WUV4.trRE.goodCh == 1);
+WUV1LEconOSI= WUV1.trLE.prefParamSI(WUV1.trLE.prefPatternsPrefParams == 1 & WUV1.trLE.inStim == 1 & WUV1.trLE.goodCh == 1);
+WUV1REconOSI= WUV1.trRE.prefParamSI(WUV1.trRE.prefPatternsPrefParams == 1 & WUV1.trRE.inStim == 1 & WUV1.trRE.goodCh == 1);
+WUV4LEconOSI= WUV4.trLE.prefParamSI(WUV4.trLE.prefPatternsPrefParams == 1 & WUV4.trLE.inStim == 1 & WUV4.trLE.goodCh == 1);
+WUV4REconOSI= WUV4.trRE.prefParamSI(WUV4.trRE.prefPatternsPrefParams == 1 & WUV4.trRE.inStim == 1 & WUV4.trRE.goodCh == 1);
 
-WUV1LEradOSI= WUV1.trLE.prefParamSI(WUV1.trLE.prefPatternsPrefParams == 2 & WUV1.trLE.inStimCenter == 0 & WUV1.trLE.within2Deg == 1 & WUV1.trLE.goodCh == 1);
-WUV1REradOSI= WUV1.trRE.prefParamSI(WUV1.trRE.prefPatternsPrefParams == 2 & WUV1.trRE.inStimCenter == 0 & WUV1.trRE.within2Deg == 1 & WUV1.trRE.goodCh == 1);
-WUV4LEradOSI= WUV4.trLE.prefParamSI(WUV4.trLE.prefPatternsPrefParams == 2 & WUV4.trLE.inStimCenter == 0 & WUV4.trLE.within2Deg == 1 & WUV4.trLE.goodCh == 1);
-WUV4REradOSI= WUV4.trRE.prefParamSI(WUV4.trRE.prefPatternsPrefParams == 2 & WUV4.trRE.inStimCenter == 0 & WUV4.trRE.within2Deg == 1 & WUV4.trRE.goodCh == 1);
+WUV1LEradOSI= WUV1.trLE.prefParamSI(WUV1.trLE.prefPatternsPrefParams == 2 & WUV1.trLE.inStim == 1 & WUV1.trLE.goodCh == 1);
+WUV1REradOSI= WUV1.trRE.prefParamSI(WUV1.trRE.prefPatternsPrefParams == 2 & WUV1.trRE.inStim == 1 & WUV1.trRE.goodCh == 1);
+WUV4LEradOSI= WUV4.trLE.prefParamSI(WUV4.trLE.prefPatternsPrefParams == 2 & WUV4.trLE.inStim == 1 & WUV4.trLE.goodCh == 1);
+WUV4REradOSI= WUV4.trRE.prefParamSI(WUV4.trRE.prefPatternsPrefParams == 2 & WUV4.trRE.inStim == 1 & WUV4.trRE.goodCh == 1);
 
 % WV
-WVV1LEconOSI= WVV1.trLE.prefParamSI(WVV1.trLE.prefPatternsPrefParams == 1 & WVV1.trLE.inStimCenter == 0 & WVV1.trLE.within2Deg == 1 & WVV1.trLE.goodCh == 1);
-WVV1REconOSI= WVV1.trRE.prefParamSI(WVV1.trRE.prefPatternsPrefParams == 1 & WVV1.trRE.inStimCenter == 0 & WVV1.trRE.within2Deg == 1 & WVV1.trRE.goodCh == 1);
-WVV4LEconOSI= WVV4.trLE.prefParamSI(WVV4.trLE.prefPatternsPrefParams == 1 & WVV4.trLE.inStimCenter == 0 & WVV4.trLE.within2Deg == 1 & WVV4.trLE.goodCh == 1);
-WVV4REconOSI= WVV4.trRE.prefParamSI(WVV4.trRE.prefPatternsPrefParams == 1 & WVV4.trRE.inStimCenter == 0 & WVV4.trRE.within2Deg == 1 & WVV4.trRE.goodCh == 1);
+WVV1LEconOSI= WVV1.trLE.prefParamSI(WVV1.trLE.prefPatternsPrefParams == 1 & WVV1.trLE.inStim == 1 & WVV1.trLE.goodCh == 1);
+WVV1REconOSI= WVV1.trRE.prefParamSI(WVV1.trRE.prefPatternsPrefParams == 1 & WVV1.trRE.inStim == 1 & WVV1.trRE.goodCh == 1);
+WVV4LEconOSI= WVV4.trLE.prefParamSI(WVV4.trLE.prefPatternsPrefParams == 1 & WVV4.trLE.inStim == 1 & WVV4.trLE.goodCh == 1);
+WVV4REconOSI= WVV4.trRE.prefParamSI(WVV4.trRE.prefPatternsPrefParams == 1 & WVV4.trRE.inStim == 1 & WVV4.trRE.goodCh == 1);
 
-WVV1LEradOSI= WVV1.trLE.prefParamSI(WVV1.trLE.prefPatternsPrefParams == 2 & WVV1.trLE.inStimCenter == 0 & WVV1.trLE.within2Deg == 1 & WVV1.trLE.goodCh == 1);
-WVV1REradOSI= WVV1.trRE.prefParamSI(WVV1.trRE.prefPatternsPrefParams == 2 & WVV1.trRE.inStimCenter == 0 & WVV1.trRE.within2Deg == 1 & WVV1.trRE.goodCh == 1);
-WVV4LEradOSI= WVV4.trLE.prefParamSI(WVV4.trLE.prefPatternsPrefParams == 2 & WVV4.trLE.inStimCenter == 0 & WVV4.trLE.within2Deg == 1 & WVV4.trLE.goodCh == 1);
-WVV4REradOSI= WVV4.trRE.prefParamSI(WVV4.trRE.prefPatternsPrefParams == 2 & WVV4.trRE.inStimCenter == 0 & WVV4.trRE.within2Deg == 1 & WVV4.trRE.goodCh == 1);
+WVV1LEradOSI= WVV1.trLE.prefParamSI(WVV1.trLE.prefPatternsPrefParams == 2 & WVV1.trLE.inStim == 1 & WVV1.trLE.goodCh == 1);
+WVV1REradOSI= WVV1.trRE.prefParamSI(WVV1.trRE.prefPatternsPrefParams == 2 & WVV1.trRE.inStim == 1 & WVV1.trRE.goodCh == 1);
+WVV4LEradOSI= WVV4.trLE.prefParamSI(WVV4.trLE.prefPatternsPrefParams == 2 & WVV4.trLE.inStim == 1 & WVV4.trLE.goodCh == 1);
+WVV4REradOSI= WVV4.trRE.prefParamSI(WVV4.trRE.prefPatternsPrefParams == 2 & WVV4.trRE.inStim == 1 & WVV4.trRE.goodCh == 1);
 
 % XT 
-XTV1LEconOSI= XTV1.trLE.prefParamSI(XTV1.trLE.prefPatternsPrefParams == 1 & XTV1.trLE.inStimCenter == 0 & XTV1.trLE.within2Deg == 1 & XTV1.trLE.goodCh == 1);
-XTV1REconOSI= XTV1.trRE.prefParamSI(XTV1.trRE.prefPatternsPrefParams == 1 & XTV1.trRE.inStimCenter == 0 & XTV1.trRE.within2Deg == 1 & XTV1.trRE.goodCh == 1);
-XTV4LEconOSI= XTV4.trLE.prefParamSI(XTV4.trLE.prefPatternsPrefParams == 1 & XTV4.trLE.inStimCenter == 0 & XTV4.trLE.within2Deg == 1 & XTV4.trLE.goodCh == 1);
-XTV4REconOSI= XTV4.trRE.prefParamSI(XTV4.trRE.prefPatternsPrefParams == 1 & XTV4.trRE.inStimCenter == 0 & XTV4.trRE.within2Deg == 1 & XTV4.trRE.goodCh == 1);
+XTV1LEconOSI= XTV1.trLE.prefParamSI(XTV1.trLE.prefPatternsPrefParams == 1 & XTV1.trLE.inStim == 1 & XTV1.trLE.goodCh == 1);
+XTV1REconOSI= XTV1.trRE.prefParamSI(XTV1.trRE.prefPatternsPrefParams == 1 & XTV1.trRE.inStim == 1 & XTV1.trRE.goodCh == 1);
+XTV4LEconOSI= XTV4.trLE.prefParamSI(XTV4.trLE.prefPatternsPrefParams == 1 & XTV4.trLE.inStim == 1 & XTV4.trLE.goodCh == 1);
+XTV4REconOSI= XTV4.trRE.prefParamSI(XTV4.trRE.prefPatternsPrefParams == 1 & XTV4.trRE.inStim == 1 & XTV4.trRE.goodCh == 1);
 
-XTV1LEradOSI= XTV1.trLE.prefParamSI(XTV1.trLE.prefPatternsPrefParams == 2 & XTV1.trLE.inStimCenter == 0 & XTV1.trLE.within2Deg == 1 & XTV1.trLE.goodCh == 1);
-XTV1REradOSI= XTV1.trRE.prefParamSI(XTV1.trRE.prefPatternsPrefParams == 2 & XTV1.trRE.inStimCenter == 0 & XTV1.trRE.within2Deg == 1 & XTV1.trRE.goodCh == 1);
-XTV4LEradOSI= XTV4.trLE.prefParamSI(XTV4.trLE.prefPatternsPrefParams == 2 & XTV4.trLE.inStimCenter == 0 & XTV4.trLE.within2Deg == 1 & XTV4.trLE.goodCh == 1);
-XTV4REradOSI= XTV4.trRE.prefParamSI(XTV4.trRE.prefPatternsPrefParams == 2 & XTV4.trRE.inStimCenter == 0 & XTV4.trRE.within2Deg == 1 & XTV4.trRE.goodCh == 1);
+XTV1LEradOSI= XTV1.trLE.prefParamSI(XTV1.trLE.prefPatternsPrefParams == 2 & XTV1.trLE.inStim == 1 & XTV1.trLE.goodCh == 1);
+XTV1REradOSI= XTV1.trRE.prefParamSI(XTV1.trRE.prefPatternsPrefParams == 2 & XTV1.trRE.inStim == 1 & XTV1.trRE.goodCh == 1);
+XTV4LEradOSI= XTV4.trLE.prefParamSI(XTV4.trLE.prefPatternsPrefParams == 2 & XTV4.trLE.inStim == 1 & XTV4.trLE.goodCh == 1);
+XTV4REradOSI= XTV4.trRE.prefParamSI(XTV4.trRE.prefPatternsPrefParams == 2 & XTV4.trRE.inStim == 1 & XTV4.trRE.goodCh == 1);
+%% commit to structures 
+XTV1.conRadLE.radOSI = XTV1LEradOSI;
+XTV1.conRadRE.radOSI = XTV1REradOSI;
+
+XTV4.conRadLE.radOSI = XTV4LEradOSI;
+XTV4.conRadRE.radOSI = XTV4REradOSI;
+
+WVV1.conRadLE.radOSI = WVV1LEradOSI;
+WVV1.conRadRE.radOSI = WVV1REradOSI;
+
+WVV4.conRadLE.radOSI = WVV4LEradOSI;
+WVV4.conRadRE.radOSI = WVV4REradOSI;
+
+WUV1.conRadLE.radOSI = WUV1LEradOSI;
+WUV1.conRadRE.radOSI = WUV1REradOSI;
+
+WUV4.conRadLE.radOSI = WUV4LEradOSI;
+WUV4.conRadRE.radOSI = WUV4REradOSI;
+
+XTV1.conRadLE.conOSI = XTV1LEconOSI;
+XTV1.conRadRE.conOSI = XTV1REconOSI;
+
+XTV4.conRadLE.conOSI = XTV4LEconOSI;
+XTV4.conRadRE.conOSI = XTV4REconOSI;
+
+WVV1.conRadLE.conOSI = WVV1LEconOSI;
+WVV1.conRadRE.conOSI = WVV1REconOSI;
+
+WVV4.conRadLE.conOSI = WVV4LEconOSI;
+WVV4.conRadRE.conOSI = WVV4REconOSI;
+
+WUV1.conRadLE.conOSI = WUV1LEconOSI;
+WUV1.conRadRE.conOSI = WUV1REconOSI;
+
+WUV4.conRadLE.conOSI = WUV4LEconOSI;
+WUV4.conRadRE.conOSI = WUV4REconOSI;
 %% mean OSIs
 meanLEConOSIV1 = mean([XTV1LEconOSI;WUV1LEconOSI;WVV1LEconOSI]);
 meanREConOSIV1 = mean([XTV1REconOSI;WUV1REconOSI;WVV1REconOSI]);

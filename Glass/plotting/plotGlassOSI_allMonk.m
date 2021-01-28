@@ -1,41 +1,57 @@
- function plotGlassOSI_allMonk(WUV1, WUV4, WVV1, WVV4, XTV1, XTV4)
-XTv1LEOSI = squeeze(XTV1.trLE.OSI(end,:,:,XTV1.trLE.within2Deg==1));
+function [WUV1, WUV4, WVV1, WVV4, XTV1, XTV4] = plotGlassOSI_allMonk(WUV1, WUV4, WVV1, WVV4, XTV1, XTV4)
+XTv1LEOSI = squeeze(XTV1.trLE.OSI(end,:,:,XTV1.trLE.inStim==1));
 XTv1LEOSI = reshape(XTv1LEOSI,[1,numel(XTv1LEOSI)]);
 
-XTv1REOSI = squeeze(XTV1.trRE.OSI(end,:,:,XTV1.trRE.within2Deg==1));
+XTv1REOSI = squeeze(XTV1.trRE.OSI(end,:,:,XTV1.trRE.inStim==1));
 XTv1REOSI = reshape(XTv1REOSI,[1,numel(XTv1REOSI)]);
 
-XTv4LEOSI = squeeze(XTV4.trLE.OSI(end,:,:,XTV4.trLE.within2Deg==1));
+XTv4LEOSI = squeeze(XTV4.trLE.OSI(end,:,:,XTV4.trLE.inStim==1));
 XTv4LEOSI = reshape(XTv4LEOSI,[1,numel(XTv4LEOSI)]);
 
-XTv4REOSI = squeeze(XTV4.trRE.OSI(end,:,:,XTV4.trRE.within2Deg==1));
+XTv4REOSI = squeeze(XTV4.trRE.OSI(end,:,:,XTV4.trRE.inStim==1));
 XTv4REOSI = reshape(XTv4REOSI,[1,numel(XTv4REOSI)]);
 
+XTV1.trLE.prefOSIinStim = XTv1LEOSI;
+XTV1.trRE.prefOSIinStim = XTv1REOSI;
+
+XTV4.trLE.prefOSIinStim = XTv4LEOSI;
+XTV4.trRE.prefOSIinStim = XTv4REOSI;
 %% WV
-WVv1LEOSI = squeeze(WVV1.trLE.OSI(end,:,:,WVV1.trLE.within2Deg==1));
+WVv1LEOSI = squeeze(WVV1.trLE.OSI(end,:,:,WVV1.trLE.inStim==1));
 WVv1LEOSI = reshape(WVv1LEOSI,[1,numel(WVv1LEOSI)]);
 
-WVv1REOSI = squeeze(WVV1.trRE.OSI(end,:,:,WVV1.trRE.within2Deg==1));
+WVv1REOSI = squeeze(WVV1.trRE.OSI(end,:,:,WVV1.trRE.inStim==1));
 WVv1REOSI = reshape(WVv1REOSI,[1,numel(WVv1REOSI)]);
 
-WVv4LEOSI = squeeze(WVV4.trLE.OSI(end,:,:,WVV4.trLE.within2Deg==1));
+WVv4LEOSI = squeeze(WVV4.trLE.OSI(end,:,:,WVV4.trLE.inStim==1));
 WVv4LEOSI = reshape(WVv4LEOSI,[1,numel(WVv4LEOSI)]);
 
-WVv4REOSI = squeeze(WVV4.trRE.OSI(end,:,:,WVV4.trRE.within2Deg==1));
+WVv4REOSI = squeeze(WVV4.trRE.OSI(end,:,:,WVV4.trRE.inStim==1));
 WVv4REOSI = reshape(WVv4REOSI,[1,numel(WVv4REOSI)]);
 
+WVV1.trLE.prefOSIinStim = WVv1LEOSI;
+WVV1.trRE.prefOSIinStim = WVv1REOSI;
+
+WVV4.trLE.prefOSIinStim = WVv4LEOSI;
+WVV4.trRE.prefOSIinStim = WVv4REOSI;
 %% WU
-WUv1LEOSI = squeeze(WUV1.trLE.OSI(end,:,:,WUV1.trLE.within2Deg==1));
+WUv1LEOSI = squeeze(WUV1.trLE.OSI(end,:,:,WUV1.trLE.inStim==1));
 WUv1LEOSI = reshape(WUv1LEOSI,[1,numel(WUv1LEOSI)]);
 
-WUv1REOSI = squeeze(WUV1.trRE.OSI(end,:,:,WUV1.trRE.within2Deg==1));
+WUv1REOSI = squeeze(WUV1.trRE.OSI(end,:,:,WUV1.trRE.inStim==1));
 WUv1REOSI = reshape(WUv1REOSI,[1,numel(WUv1REOSI)]);
 
-WUv4LEOSI = squeeze(WUV4.trLE.OSI(end,:,:,WUV4.trLE.within2Deg==1));
+WUv4LEOSI = squeeze(WUV4.trLE.OSI(end,:,:,WUV4.trLE.inStim==1));
 WUv4LEOSI = reshape(WUv4LEOSI,[1,numel(WUv4LEOSI)]);
 
-WUv4REOSI = squeeze(WUV4.trRE.OSI(end,:,:,WUV4.trRE.within2Deg==1));
+WUv4REOSI = squeeze(WUV4.trRE.OSI(end,:,:,WUV4.trRE.inStim==1));
 WUv4REOSI = reshape(WUv4REOSI,[1,numel(WUv4REOSI)]);
+
+WUV1.trLE.prefOSIinStim = WUv1LEOSI;
+WUV1.trRE.prefOSIinStim = WUv1REOSI;
+
+WUV4.trLE.prefOSIinStim = WUv4LEOSI;
+WUV4.trRE.prefOSIinStim = WUv4REOSI;
 %% get max and minimum OSIs
 
 allOSI = [XTv1LEOSI, XTv4LEOSI, XTv1REOSI, XTv4REOSI,...
@@ -278,20 +294,20 @@ s.Position(4) = s.Position(4) - 0.2;
  figName = 'OSIdistributions_allMonks_allParams.pdf';
  print(gcf, figName,'-dpdf','-fillpage')
 %%
-XTv1LEprefOSI = (XTV1.trLE.prefParamSI(XTV1.trLE.within2Deg==1));
-XTv1REprefOSI = (XTV1.trRE.prefParamSI(XTV1.trRE.within2Deg==1));
-XTv4LEprefOSI = (XTV4.trLE.prefParamSI(XTV4.trLE.within2Deg==1));
-XTv4REprefOSI = (XTV4.trRE.prefParamSI(XTV4.trRE.within2Deg==1));
+XTv1LEprefOSI = (XTV1.trLE.prefParamSI(XTV1.trLE.inStim==1));
+XTv1REprefOSI = (XTV1.trRE.prefParamSI(XTV1.trRE.inStim==1));
+XTv4LEprefOSI = (XTV4.trLE.prefParamSI(XTV4.trLE.inStim==1));
+XTv4REprefOSI = (XTV4.trRE.prefParamSI(XTV4.trRE.inStim==1));
 
-WVv1LEprefOSI = (WVV1.trLE.prefParamSI(WVV1.trLE.within2Deg==1));
-WVv1REprefOSI = (WVV1.trRE.prefParamSI(WVV1.trRE.within2Deg==1));
-WVv4LEprefOSI = (WVV4.trLE.prefParamSI(WVV4.trLE.within2Deg==1));
-WVv4REprefOSI = (WVV4.trRE.prefParamSI(WVV4.trRE.within2Deg==1));
+WVv1LEprefOSI = (WVV1.trLE.prefParamSI(WVV1.trLE.inStim==1));
+WVv1REprefOSI = (WVV1.trRE.prefParamSI(WVV1.trRE.inStim==1));
+WVv4LEprefOSI = (WVV4.trLE.prefParamSI(WVV4.trLE.inStim==1));
+WVv4REprefOSI = (WVV4.trRE.prefParamSI(WVV4.trRE.inStim==1));
 
-WUv1LEprefOSI = (WUV1.trLE.prefParamSI(WUV1.trLE.within2Deg==1));
-WUv1REprefOSI = (WUV1.trRE.prefParamSI(WUV1.trRE.within2Deg==1));
-WUv4LEprefOSI = (WUV4.trLE.prefParamSI(WUV4.trLE.within2Deg==1));
-WUv4REprefOSI = (WUV4.trRE.prefParamSI(WUV4.trRE.within2Deg==1));
+WUv1LEprefOSI = (WUV1.trLE.prefParamSI(WUV1.trLE.inStim==1));
+WUv1REprefOSI = (WUV1.trRE.prefParamSI(WUV1.trRE.inStim==1));
+WUv4LEprefOSI = (WUV4.trLE.prefParamSI(WUV4.trLE.inStim==1));
+WUv4REprefOSI = (WUV4.trRE.prefParamSI(WUV4.trRE.inStim==1));
 %% get max and minimum OSIs
 
 allPrefOSI = [XTv1LEprefOSI; XTv4LEprefOSI; XTv1REprefOSI; XTv4REprefOSI;...

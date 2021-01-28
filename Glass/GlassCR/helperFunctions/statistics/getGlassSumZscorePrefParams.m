@@ -2,15 +2,12 @@ function [V1, V4] = getGlassSumZscorePrefParams(V1,V4)
 %% V1 LE
 radZ = squeeze(V1.conRadLE.radZscore (end,:,:,:,:));
 conZ = squeeze(V1.conRadLE.conZscore (end,:,:,:,:));
-if contains(V1.conRadLE.animal,'XT')
-    nozZ = squeeze(V1.conRadLE.noiseZscore(:,:,:,:));
-else
-    nozZ = squeeze(V1.conRadLE.noiseZscore(1,:,:,:,:));
-end
+nozZ = squeeze(V1.conRadLE.noiseZscore(1,:,:,:,:));
+
 
 ndx = 1;
 for ch = 1:96
-    if V1.trLE.inStimCenter(ch) == 1 && V1.trRE.goodCh(ch) == 1
+    if V1.trLE.inStim(ch) == 1 && V1.trRE.goodCh(ch) == 1
         if V1.trLE.prefParamsIndex(ch) == 1
             prefConZs(ndx,:) = squeeze(conZ(1,1,ch,:));
             prefRadZs(ndx,:) = squeeze(radZ(1,1,ch,:));
@@ -39,15 +36,11 @@ clear prefConZs; clear prefRadZs; clear prefNozZs
 %% V1 RE
 radZ = squeeze(V1.conRadRE.radZscore (end,:,:,:,:));
 conZ = squeeze(V1.conRadRE.conZscore (end,:,:,:,:));
-if contains(V1.conRadRE.animal,'XT')
-    nozZ = squeeze(V1.conRadRE.noiseZscore(:,:,:,:));
-else
-    nozZ = squeeze(V1.conRadRE.noiseZscore(1,:,:,:,:));
-end
+nozZ = squeeze(V1.conRadRE.noiseZscore(1,:,:,:,:));
 
 ndx = 1;
 for ch = 1:96
-    if V1.trRE.inStimCenter(ch) == 1 && V1.trRE.goodCh(ch) == 1
+    if V1.trRE.inStim(ch) == 1 && V1.trRE.goodCh(ch) == 1
         if V1.trRE.prefParamsIndex(ch) == 1
             prefConZs(ndx,:) = squeeze(conZ(1,1,ch,:));
             prefRadZs(ndx,:) = squeeze(radZ(1,1,ch,:));
@@ -76,15 +69,12 @@ clear prefConZs; clear prefRadZs; clear prefNozZs
 %% V4 LE
 radZ = squeeze(V4.conRadLE.radZscore (end,:,:,:,:));
 conZ = squeeze(V4.conRadLE.conZscore (end,:,:,:,:));
-if contains(V4.conRadLE.animal,'XT')
-    nozZ = squeeze(V4.conRadLE.noiseZscore(:,:,:,:));
-else
-    nozZ = squeeze(V4.conRadLE.noiseZscore(1,:,:,:,:));
-end
+nozZ = squeeze(V4.conRadLE.noiseZscore(1,:,:,:,:));
+
 
 ndx = 1;
 for ch = 1:96
-    if V4.trLE.inStimCenter(ch) == 1 && V1.trRE.goodCh(ch) == 1
+    if V4.trLE.inStim(ch) == 1 && V1.trRE.goodCh(ch) == 1
         if V4.trLE.prefParamsIndex(ch) == 1
             prefConZs(ndx,:) = squeeze(conZ(1,1,ch,:));
             prefRadZs(ndx,:) = squeeze(radZ(1,1,ch,:));
@@ -113,15 +103,12 @@ clear prefConZs; clear prefRadZs; clear prefNozZs
 %% V4 RE
 radZ = squeeze(V4.conRadRE.radZscore (end,:,:,:,:));
 conZ = squeeze(V4.conRadRE.conZscore (end,:,:,:,:));
-if contains(V4.conRadRE.animal,'XT')
-    nozZ = squeeze(V4.conRadRE.noiseZscore(:,:,:,:));
-else
-    nozZ = squeeze(V4.conRadRE.noiseZscore(1,:,:,:,:));
-end
+nozZ = squeeze(V4.conRadRE.noiseZscore(1,:,:,:,:));
+
 
 ndx = 1;
 for ch = 1:96
-    if V4.trRE.inStimCenter(ch) == 1 && V1.trRE.goodCh(ch) == 1
+    if V4.trRE.inStim(ch) == 1 && V1.trRE.goodCh(ch) == 1
         if V4.trRE.prefParamsIndex(ch) == 1
             prefConZs(ndx,:) = squeeze(conZ(1,1,ch,:));
             prefRadZs(ndx,:) = squeeze(radZ(1,1,ch,:));

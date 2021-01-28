@@ -2,14 +2,14 @@ clear
 close all
 clc
 %%
-% load('WV_BE_V1_bothGlass_cleanMerged');
-% V1data = data;
-% clear data;
-% 
-% load('WV_BE_V4_bothGlass_cleanMerged');
-% V4data = data;
-% clear data;
-% newName = 'WV_2eyes_2arrays_GlassPatterns';
+load('WV_BE_V1_bothGlass_cleanMerged');
+V1data = data;
+clear data;
+
+load('WV_BE_V4_bothGlass_cleanMerged');
+V4data = data;
+clear data;
+newName = 'WV_2eyes_2arrays_GlassPatterns';
 %%
 % load('WU_BE_V1_bothGlass_cleanMerged');
 % V1data = data;
@@ -20,14 +20,14 @@ clc
 % clear data;
 % newName = 'WU_2eyes_2arrays_GlassPatterns';
 %%
-load('XT_BE_V1_bothGlass_cleanMerged');
-V1data = data;
-clear data;
-
-load('XT_BE_V4_bothGlass_cleanMerged');
-V4data = data;
-clear data;
-newName = 'XT_2eyes_2arrays_GlassPatterns';
+% load('XT_BE_V1_bothGlass_cleanMerged');
+% V1data = data;
+% clear data;
+% 
+% load('XT_BE_V4_bothGlass_cleanMerged');
+% V4data = data;
+% clear data;
+% newName = 'XT_2eyes_2arrays_GlassPatterns';
 %%
 %  getRFsinGlass_V1andV4(V1data.conRadLE,V4data.conRadLE);
 %
@@ -233,25 +233,27 @@ end
 %%
 [V1data, V4data] = getGlassSumZscorePrefParams(V1data,V4data);
 %%
-% figure(6)
-% clf
-% pos = get(gcf,'Position');
-% set(gcf,'Position',[pos(1) pos(2) 1000 1000])
-% hold on
-% 
-% [V1data, V4data] = PlotGlassZscoresCenterStimByPref(V1data, V4data);
-% 
-% s = suptitle(sprintf('%s Glass pattern z scores for each pattern in center of stimuli',V1data.trLE.animal));
-% s.FontAngle = 'italic';
-% s.FontSize = 18;
-% s.FontWeight = 'bold';
-% s.Position(2) = s.Position(2) + 0.02;
-% 
-% figName = [V1data.trRE.animal,'BothArrays_prefPattern_centerStimZscore_hist','.pdf'];
-% print(gcf, figName,'-dpdf','-bestfit')
+figure(6)
+clf
+pos = get(gcf,'Position');
+set(gcf,'Position',[pos(1) pos(2) 1000 1000])
+hold on
+
+[V1data, V4data] = PlotGlassZscoresCenterStimByPref(V1data, V4data);
+
+s = suptitle(sprintf('%s Glass pattern z scores for each pattern in center of stimuli',V1data.trLE.animal));
+s.FontAngle = 'italic';
+s.FontSize = 18;
+s.FontWeight = 'bold';
+s.Position(2) = s.Position(2) + 0.02;
+
+figName = [V1data.trRE.animal,'BothArrays_prefPattern_centerStimZscore_hist','.pdf'];
+print(gcf, figName,'-dpdf','-fillpage')
 %%
 figure (7)
 clf
+pos = get(gcf,'Position');
+set(gcf,'Position',[pos(1) pos(2) 900 600])
 hold on
 plotGlass_zScoreScatter(V1data,V4data)
 
