@@ -66,5 +66,4 @@ title(sprintf('%s %s %s ocular dominance distribution',REdata.animal, REdata.arr
 h.Parent.Position(3) = 0.8;
 
 figName = [REdata.animal,'_',REdata.array,'_',REdata.programID,'ODI_cleanMergedZscore','.pdf'];
-
 print(gcf,figName,'-dpdf','-fillpage')

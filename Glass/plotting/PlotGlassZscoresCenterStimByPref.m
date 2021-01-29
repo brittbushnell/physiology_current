@@ -24,7 +24,6 @@ xMax = max(allZs);
 xMax = xMax+(xMax/10);
 xMin = -xMax;
 %% LE 
-
 % V1
 s = subplot(6,2,1); 
 hold on
@@ -32,6 +31,7 @@ xlim([xMin xMax])
 ylim([0 0.8])
 histogram(V1prefConZsLE,'BinWidth',10,'EdgeColor','w','FaceColor',[0.7 0 0.7],'Normalization','probability')
 plot([nanmedian(V1prefConZsLE),nanmedian(V1prefConZsLE)],[0 0.7],'k:')
+plot([0 0], [0 0.8],'-','color',[0.6 0.6 0.6])
 
 set(gca,'TickDir','out','FontSize',11,'FontAngle','italic','Layer','top','YTick',0:0.2:0.8)
 text(nanmedian(V1prefConZsLE)-0.3,0.75,sprintf('median %.2f',nanmedian(V1prefConZsLE)),'FontSize',12,'FontAngle','italic')
@@ -43,7 +43,6 @@ else
     title(sprintf('FE n%d', length(V1prefConZsLE)),...
         'FontSize',16,'FontWeight','bold','FontAngle','italic')
 end
-ylabel('proportion','FontSize',17,'FontWeight','bold','FontAngle','italic');
 
 s.Position(2) = s.Position(2) - 0.015;
 s.Position(4) = s.Position(4) -0.02;
@@ -56,10 +55,10 @@ hold on
 ylim([0 0.8])
 histogram(V1prefRadZsLE,'BinWidth',10,'EdgeColor','w','EdgeColor','w','FaceColor',[0 0.6 0.2],'Normalization','probability')
 plot([nanmedian(V1prefRadZsLE),nanmedian(V1prefRadZsLE)],[0 0.7],'k:')
+plot([0 0], [0 0.8],'-','color',[0.6 0.6 0.6])
 
 set(gca,'TickDir','out','FontSize',11,'FontAngle','italic','Layer','top','YTick',0:0.2:0.8)
 text(nanmedian(V1prefRadZsLE)-0.3,0.75,sprintf('median %.2f',nanmedian(V1prefRadZsLE)),'FontSize',12,'FontAngle','italic')
-ylabel('proportion','FontSize',17,'FontWeight','bold','FontAngle','italic');
 
 text(xMin + (xMin/1.7),0.18,'V1','FontSize',20,'FontWeight','bold','FontAngle','italic');
 
@@ -74,6 +73,7 @@ xlim([xMin xMax])
 ylim([0 0.8])
 histogram(V1prefNozZsLE,'BinWidth',10,'EdgeColor','w','FaceColor',[1 0.5 0.1],'Normalization','probability')
 plot([nanmedian(V1prefNozZsLE),nanmedian(V1prefNozZsLE)],[0 0.7],'k:')
+plot([0 0], [0 0.8],'-','color',[0.6 0.6 0.6])
 
 set(gca,'TickDir','out','FontSize',11,'FontAngle','italic','Layer','top','YTick',0:0.2:0.8)
 text(nanmedian(V1prefNozZsLE)-0.3,0.75,sprintf('median %.2f',nanmedian(V1prefNozZsLE)),'FontSize',12,'FontAngle','italic')
@@ -92,6 +92,7 @@ xlim([xMin xMax])
 ylim([0 0.8])
 histogram(V4prefConZsLE,'BinWidth',10,'EdgeColor','w','FaceColor',[0.7 0 0.7],'Normalization','probability')
 plot([nanmedian(V4prefConZsLE),nanmedian(V4prefConZsLE)],[0 0.7],'k:')
+plot([0 0], [0 0.8],'-','color',[0.6 0.6 0.6])
 
 set(gca,'TickDir','out','FontSize',11,'FontAngle','italic','Layer','top','YTick',0:0.2:0.8)
 text(nanmedian(V4prefConZsLE)-0.3,0.75,sprintf('median %.2f',nanmedian(V4prefConZsLE)),'FontSize',12,'FontAngle','italic')
@@ -103,7 +104,6 @@ else
     title(sprintf('FE n%d', length(V4prefConZsLE)),...
         'FontSize',16,'FontWeight','bold','FontAngle','italic')
 end
-ylabel('proportion','FontSize',17,'FontWeight','bold','FontAngle','italic');
 
 s.Position(2) = s.Position(2) - 0.015;
 s.Position(4) = s.Position(4) -0.02;
@@ -117,10 +117,10 @@ ylim([0 0.8])
 
 histogram(V4prefRadZsLE,'BinWidth',10,'EdgeColor','w','FaceColor',[0 0.6 0.2],'Normalization','probability')
 plot([nanmedian(V4prefRadZsLE),nanmedian(V4prefRadZsLE)],[0 0.7],'k:')
+plot([0 0], [0 0.8],'-','color',[0.6 0.6 0.6])
 
 set(gca,'TickDir','out','FontSize',11,'FontAngle','italic','Layer','top','YTick',0:0.2:0.8)
 text(nanmedian(V4prefRadZsLE)-0.3,0.75,sprintf('median %.2f',nanmedian(V4prefRadZsLE)),'FontSize',12,'FontAngle','italic')
-ylabel('proportion','FontSize',17,'FontWeight','bold','FontAngle','italic');
 
 text(xMin + (xMin/1.7),0.18,'V4','FontSize',20,'FontWeight','bold','FontAngle','italic');
 
@@ -134,6 +134,7 @@ xlim([xMin xMax])
 ylim([0 0.8])
 histogram(V4prefNozZsLE,'BinWidth',10,'EdgeColor','w','FaceColor',[1 0.5 0.1],'Normalization','probability')
 plot([nanmedian(V4prefNozZsLE),nanmedian(V4prefNozZsLE)],[0 0.7],'k:')
+plot([0 0], [0 0.8],'-','color',[0.6 0.6 0.6])
 
 set(gca,'TickDir','out','FontSize',11,'FontAngle','italic','Layer','top','YTick',0:0.2:0.8)
 text(nanmedian(V4prefNozZsLE)-0.3,0.75,sprintf('median %.2f',nanmedian(V4prefNozZsLE)),'FontSize',12,'FontAngle','italic')
@@ -152,6 +153,7 @@ xlim([xMin xMax])
 ylim([0 0.8])
 histogram(V1prefConZsRE,'BinWidth',10,'EdgeColor','w','FaceColor',[0.7 0 0.7],'Normalization','probability')
 plot([nanmedian(V1prefConZsRE),nanmedian(V1prefConZsRE)],[0 0.7],'k:')
+plot([0 0], [0 0.8],'-','color',[0.6 0.6 0.6])
 
 set(gca,'TickDir','out','FontSize',11,'FontAngle','italic','Layer','top','YTick',0:0.2:0.8)
 text(nanmedian(V1prefConZsRE)-0.3,0.75,sprintf('median %.2f',nanmedian(V1prefConZsRE)),'FontSize',12,'FontAngle','italic')
@@ -176,6 +178,7 @@ ylim([0 0.8])
 
 histogram(V1prefRadZsRE,'BinWidth',10,'EdgeColor','w','FaceColor',[0 0.6 0.2],'Normalization','probability')
 plot([nanmedian(V1prefRadZsRE),nanmedian(V1prefRadZsRE)],[0 0.7],'k:')
+plot([0 0], [0 0.8],'-','color',[0.6 0.6 0.6])
 
 set(gca,'TickDir','out','FontSize',11,'FontAngle','italic','Layer','top','YTick',0:0.2:0.8)
 text(nanmedian(V1prefRadZsRE)-0.3,0.75,sprintf('median %.2f',nanmedian(V1prefRadZsRE)),'FontSize',12,'FontAngle','italic')
@@ -191,6 +194,7 @@ ylim([0 0.8])
 
 histogram(V1prefNozZsRE,'BinWidth',10,'EdgeColor','w','FaceColor',[1 0.5 0.1],'Normalization','probability')
 plot([nanmedian(V1prefNozZsRE),nanmedian(V1prefNozZsRE)],[0 0.7],'k:')
+plot([0 0], [0 0.8],'-','color',[0.6 0.6 0.6])
 
 set(gca,'TickDir','out','FontSize',11,'FontAngle','italic','Layer','top','YTick',0:0.2:0.8)
 text(nanmedian(V1prefNozZsRE)-0.3,0.75,sprintf('median %.2f',nanmedian(V1prefNozZsRE)),'FontSize',12,'FontAngle','italic')
@@ -206,6 +210,7 @@ ylim([0 0.8])
 
 histogram(V4prefConZsRE,'BinWidth',10,'EdgeColor','w','FaceColor',[0.7 0 0.7],'Normalization','probability')
 plot([nanmedian(V4prefConZsRE),nanmedian(V4prefConZsRE)],[0 0.7],'k:')
+plot([0 0], [0 0.8],'-','color',[0.6 0.6 0.6])
 
 set(gca,'TickDir','out','FontSize',11,'FontAngle','italic','Layer','top','YTick',0:0.2:0.8)
 text(nanmedian(V4prefConZsRE)-0.3,0.75,sprintf('median %.2f',nanmedian(V4prefConZsRE)),'FontSize',12,'FontAngle','italic')
@@ -230,6 +235,7 @@ ylim([0 0.8])
 
 histogram(V4prefRadZsRE,'BinWidth',10,'EdgeColor','w','FaceColor',[0 0.6 0.2],'Normalization','probability')
 plot([nanmedian(V4prefRadZsRE),nanmedian(V4prefRadZsRE)],[0 0.7],'k:')
+plot([0 0], [0 0.8],'-','color',[0.6 0.6 0.6])
 
 set(gca,'TickDir','out','FontSize',11,'FontAngle','italic','Layer','top','YTick',0:0.2:0.8)
 text(nanmedian(V4prefRadZsRE)-0.3,0.75,sprintf('median %.2f',nanmedian(V4prefRadZsRE)),'FontSize',12,'FontAngle','italic')
@@ -245,6 +251,7 @@ ylim([0 0.8])
 
 histogram(V4prefNozZsRE,'BinWidth',10,'EdgeColor','w','FaceColor',[1 0.5 0.1],'Normalization','probability')
 plot([nanmedian(V4prefNozZsRE),nanmedian(V4prefNozZsRE)],[0 0.7],'k:')
+plot([0 0], [0 0.8],'-','color',[0.6 0.6 0.6])
 
 set(gca,'TickDir','out','FontSize',11,'FontAngle','italic','Layer','top','YTick',0:0.2:0.8)
 text(nanmedian(V4prefNozZsRE)-0.3,0.75,sprintf('median %.2f',nanmedian(V4prefNozZsRE)),'FontSize',12,'FontAngle','italic')

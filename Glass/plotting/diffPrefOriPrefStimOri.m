@@ -1,7 +1,7 @@
 function [conDiffAll, radDiffAll] = diffPrefOriPrefStimOri(trData)
 %% in 2 deg
-oris = trData.within2Oris;
-ranks = trData.within2Ranks;
+oris = trData.inStimOris;
+ranks = trData.inStimRanks;
 figure(2)
 clf
 

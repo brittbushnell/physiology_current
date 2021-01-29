@@ -15,7 +15,7 @@ WVV1RE = WVV1.trRE.prefOSIinStim;
 WVV4LE = WVV4.trLE.prefOSIinStim;
 WVV4RE = WVV4.trRE.prefOSIinStim;
 
-figure(3)
+figure(7)
 clf
 pos = get(gcf,'Position');
 set(gcf,'Position',[pos(1) pos(2) 400 400])

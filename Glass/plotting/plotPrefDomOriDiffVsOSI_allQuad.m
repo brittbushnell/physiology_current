@@ -169,7 +169,7 @@ stdRERadOSIV1 = std([XTV1REradOSI;WUV1REradOSI;WVV1REradOSI]);
 stdLERadOSIV4 = std([XTV4LEradOSI;WUV4LEradOSI;WVV4LEradOSI]);
 stdRERadOSIV4 = std([XTV4REradOSI;WUV4REradOSI;WVV4REradOSI]);
 %%
-figure(4)
+figure(1)
 clf
 t = suptitle('Difference between preferred and dominant orientations in concentric patterns as a function of OSI');
 t.Position(2) = t.Position(2)+0.03;
@@ -260,7 +260,7 @@ xlabel('OSI','FontSize',14,'FontWeight','bold','FontAngle','italic')
 figName = 'AllMonk_allQuad_ConOriDiffPrefVsDom.pdf';
 print(gcf, figName,'-dpdf','-bestfit')
 %%
-figure(5)
+figure(2)
 clf
 t = suptitle('Difference between preferred and dominant orientations in radial patterns as a function of OSI');
 t.Position(2) = t.Position(2)+0.03;
@@ -351,7 +351,7 @@ xlabel('OSI','FontSize',14,'FontWeight','bold','FontAngle','italic')
 figName = 'AllMonk_allQuad_RadOriDiffPrefVsDom.pdf';
 print(gcf, figName,'-dpdf','-bestfit')
 %%
-figure(6)
+figure(3)
 clf
 
 t = suptitle('Difference between preferred and dominant orientations as a function of OSI');

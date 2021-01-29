@@ -31,7 +31,7 @@ hold on
 scatter(1:length(V1prefConZsLE),V1prefConZsLE,25,'MarkerFaceColor',[0.7 0 0.7],'MarkerEdgeColor',[0.7 0 0.7],'MarkerFaceAlpha',0.5,'MarkerEdgeAlpha',0.5)
 scatter(1:length(V1prefRadZsLE),V1prefRadZsLE,25,'MarkerFaceColor',[0 0.6 0.2],'MarkerEdgeColor',[0 0.6 0.2],'MarkerFaceAlpha',0.5,'MarkerEdgeAlpha',0.5)
 scatter(1:length(V1prefNozZsLE),V1prefNozZsLE,25,'MarkerFaceColor',[1 0.5 0.1],'MarkerEdgeColor',[1 0.5 0.1],'MarkerFaceAlpha',0.5,'MarkerEdgeAlpha',0.5)
-
+plot([0 length(V1prefNozZsLE)],[0 0],'-','color',[0.6 0.6 0.6])
 set(gca,'TickDir','out','FontSize',11,'FontAngle','italic')
 ylabel({'V1';'z score'},'FontSize',14,'FontWeight','bold','FontAngle','italic');
 ylim([yMin yMax])
@@ -57,7 +57,7 @@ hold on
 scatter(1:length(V1prefConZsRE),V1prefConZsRE,25,'MarkerFaceColor',[0.7 0 0.7],'MarkerEdgeColor',[0.7 0 0.7],'MarkerFaceAlpha',0.5,'MarkerEdgeAlpha',0.5)
 scatter(1:length(V1prefRadZsRE),V1prefRadZsRE,25,'MarkerFaceColor',[0 0.6 0.2],'MarkerEdgeColor',[0 0.6 0.2],'MarkerFaceAlpha',0.5,'MarkerEdgeAlpha',0.5)
 scatter(1:length(V1prefNozZsRE),V1prefNozZsRE,25,'MarkerFaceColor',[1 0.5 0.1],'MarkerEdgeColor',[1 0.5 0.1],'MarkerFaceAlpha',0.5,'MarkerEdgeAlpha',0.5)
-
+plot([0 length(V1prefNozZsRE)],[0 0],'-','color',[0.6 0.6 0.6])
 set(gca,'TickDir','out','FontSize',11,'FontAngle','italic')
 ylim([yMin yMax])
 xlim([0 length(V1prefConZsRE)])
@@ -75,7 +75,7 @@ hold on
 scatter(1:length(V4prefConZsLE),V4prefConZsLE,25,'MarkerFaceColor',[0.7 0 0.7],'MarkerEdgeColor',[0.7 0 0.7],'MarkerFaceAlpha',0.5,'MarkerEdgeAlpha',0.5)
 scatter(1:length(V4prefRadZsLE),V4prefRadZsLE,25,'MarkerFaceColor',[0 0.6 0.2],'MarkerEdgeColor',[0 0.6 0.2],'MarkerFaceAlpha',0.5,'MarkerEdgeAlpha',0.5)
 scatter(1:length(V4prefNozZsLE),V4prefNozZsLE,25,'MarkerFaceColor',[1 0.5 0.1],'MarkerEdgeColor',[1 0.5 0.1],'MarkerFaceAlpha',0.5,'MarkerEdgeAlpha',0.5)
-
+plot([0 length(V4prefNozZsLE)],[0 0],'-','color',[0.6 0.6 0.6])
 set(gca,'TickDir','out','FontSize',11,'FontAngle','italic')
 ylabel({'V4';'z score'},'FontSize',14,'FontWeight','bold','FontAngle','italic');
 xlabel('Channel','FontSize',14,'FontWeight','bold','FontAngle','italic')
@@ -97,7 +97,7 @@ hold on
 scatter(1:length(V4prefConZsRE),V4prefConZsRE,25,'MarkerFaceColor',[0.7 0 0.7],'MarkerEdgeColor',[0.7 0 0.7],'MarkerFaceAlpha',0.5,'MarkerEdgeAlpha',0.5)
 scatter(1:length(V4prefRadZsRE),V4prefRadZsRE,25,'MarkerFaceColor',[0 0.6 0.2],'MarkerEdgeColor',[0 0.6 0.2],'MarkerFaceAlpha',0.5,'MarkerEdgeAlpha',0.5)
 scatter(1:length(V4prefNozZsRE),V4prefNozZsRE,25,'MarkerFaceColor',[1 0.5 0.1],'MarkerEdgeColor',[1 0.5 0.1],'MarkerFaceAlpha',0.5,'MarkerEdgeAlpha',0.5)
-
+plot([0 length(V4prefNozZsRE)],[0 0],'-','color',[0.6 0.6 0.6])
 set(gca,'TickDir','out','FontSize',11,'FontAngle','italic')
 xlabel('Channel','FontSize',14,'FontWeight','bold','FontAngle','italic')
 ylim([yMin yMax])

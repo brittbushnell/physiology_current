@@ -60,7 +60,7 @@ allOSI = [XTv1LEOSI, XTv4LEOSI, XTv1REOSI, XTv4REOSI,...
 minOSI = min(allOSI);
 maxOSI = max(allOSI); 
 %%
-figure(7)
+figure(5)
 clf
 pos = get(gcf,'Position');
 set(gcf,'Position',[pos(1) pos(2) 1100 500])
@@ -316,7 +316,7 @@ allPrefOSI = [XTv1LEprefOSI; XTv4LEprefOSI; XTv1REprefOSI; XTv4REprefOSI;...
 minOSI = min(allPrefOSI);
 maxOSI = max(allPrefOSI); 
 %%
-figure(8)
+figure(6)
 clf
 pos = get(gcf,'Position');
 set(gcf,'Position',[pos(1) pos(2) 1100 500])
