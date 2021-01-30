@@ -64,6 +64,7 @@ for ch = 1:96
         V4chRanksRE(1,ch) = V4data.conRadRE.dPrimeRankBlank{prefParams(ch)}(1,ch);
     end
 end
+
 %%
 location = determineComputer;
 
@@ -243,21 +244,21 @@ figName = [V1data.trRE.animal,'BothArrays_prefPattern_Zscorehist_separate','.pdf
 print(gcf, figName,'-dpdf','-fillpage')
 
 %% 
-figure(8)
-clf
-pos = get(gcf,'Position');
-set(gcf,'Position',[pos(1) pos(2) 600 1000])
-hold on
-
-plotGlassZscoreHist_eyesTogether(V1data, V4data)
-
-t = suptitle(sprintf('%s summed z scores for each pattern',V1data.trLE.animal));
-t.Position(2) = t.Position(2) +0.03;
-t.FontSize = 18;
-t.FontWeight = 'bold';
-
-figName = [V1data.trRE.animal,'BothArrays_prefPattern_Zscorehist_combinEye','.pdf'];
-print(gcf, figName,'-dpdf','-fillpage')
+% figure(8)
+% clf
+% pos = get(gcf,'Position');
+% set(gcf,'Position',[pos(1) pos(2) 600 1000])
+% hold on
+% 
+% plotGlassZscoreHist_eyesTogether(V1data, V4data)
+% 
+% t = suptitle(sprintf('%s summed z scores for each pattern',V1data.trLE.animal));
+% t.Position(2) = t.Position(2) +0.03;
+% t.FontSize = 18;
+% t.FontWeight = 'bold';
+% 
+% figName = [V1data.trRE.animal,'BothArrays_prefPattern_Zscorehist_combinEye','.pdf'];
+% print(gcf, figName,'-dpdf','-fillpage')
 %%
 figure (7)
 clf

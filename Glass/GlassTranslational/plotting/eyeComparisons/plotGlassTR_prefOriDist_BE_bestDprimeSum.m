@@ -19,14 +19,8 @@ SIL = nan(96,1);
 vSumRE = nan(2,2,96);
 vSumLE = nan(2,2,96);
 
-% if contains(data.RE.animal, 'XT')
-%     dpRE = squeeze(data.RE.linBlankDprime(:,end,2:end,2:end,:)); % orientation, coherence, dots, dx, ch
-%     dpLE = squeeze(data.LE.linBlankDprime(:,end,2:end,2:end,:)); 
-% else
-    dpRE = squeeze(data.RE.linBlankDprime(:,end,:,:,:)); 
-    dpLE = squeeze(data.LE.linBlankDprime(:,end,:,:,:)); 
-% end
-
+dpRE = squeeze(data.RE.linBlankDprime(:,end,:,:,:));
+dpLE = squeeze(data.LE.linBlankDprime(:,end,:,:,:));
 
 
 for dt = 1:2
