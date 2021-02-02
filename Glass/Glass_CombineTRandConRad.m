@@ -53,9 +53,9 @@ trRE = callReceptiveFieldParameters(trRE);
 location = determineComputer;
 
 if location == 1
-    figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/RF/%s/',trLE.animal,trLE.programID,trLE.array);
+    figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/GlassCombo/%s/',trLE.animal,trLE.array);
 elseif location == 0
-    figDir =  sprintf('~/Dropbox/Figures/%s/%s/RF/%s/',trLE.animal, trLE.programID,trLE.array);
+    figDir =  sprintf('~/Dropbox/Figures/%s/GlassCombo/%s/',trLE.animal, trLE.array);
 end
 
 if ~exist(figDir,'dir')
@@ -70,26 +70,28 @@ conRadLE.rfQuadrant   = trLE.rfQuadrant;
 conRadLE.inStim       = trLE.inStim;
 conRadLE.inStimCenter = trLE.inStimCenter;
 conRadLE.within2Deg   = trLE.within2Deg;
-%% get preferred pattern for each cell's concentric and radial data
-%% get prefered dt,dx parameters
 
-conRadLE.prefIndex = getGlassConRadPrefParamIndex(conRadLE);
-conRadRE.prefIndex = getGlassConRadPrefParamIndex(conRadRE);
 %% Get preferred pattern for each cell's translational data
-chRanksLE = nan(1,96);
-prefParams = trLE.prefParamsIndex; % this says which dot,dx is preferred
 
+% problem: this is using the preferred dt,dx for translational which is not always the same as in concentric/radial. 
+% Need to determine what preferences to use, or to just use all dt.dx.
+
+chRanksTRLE = nan(1,96);
+chRanksCRLE = nan(1,96);
+prefParamsCr = conRadLE.prefParamsIndex; % this says which dot,dx is preferred
+prefParamsTr = trLE.prefParamsIndex;
 for ch = 1:96
     if trLE.goodCh(ch) == 1
-        chRanksLE(1,ch) = conRadLE.dPrimeRankBlank{prefParams(ch)}(1,ch);
+        chRanksCRLE(1,ch) = conRadLE.dPrimeRankBlank{prefParamsCr(ch)}(1,ch);
+        chRanksTRLE(1,ch) = conRadLE.dPrimeRankBlank{prefParamsTr(ch)}(1,ch);
     end
 end
-trLE.prefPatternsPrefParams = chRanksLE;
-
+conRadLE.prefPatternsPrefParams = chRanksCRLE;
+trLE.prefPatternsPrefParams = chRanksTRLE;
 %% LE: look at all responsive channels
 goodQuads = trLE.rfQuadrant(trLE.goodCh == 1);
 goodOris = trLE.prefParamsPrefOri(trLE.goodCh == 1);
-goodRanks = chRanksLE(trLE.goodCh == 1);
+goodRanks = chRanksTRLE(trLE.goodCh == 1);
 goodOSI = trLE.prefParamSI(trLE.goodCh == 1);
 t1Text = ({'Distribution of preferred orientations all included channels';...
    sprintf('%s LE %s', trLE.animal,trLE.array)});
@@ -99,7 +101,7 @@ t1Text = ({'Distribution of preferred orientations all included channels';...
 figName = [trLE.animal,'_',trLE.eye,'_',trLE.array,'_prefOriByRFlocation_radConPref_allGoodCh','.pdf'];
 print(gcf, figName,'-dpdf','-bestfit')
 %% LE: look at the channels in the center of the stimulus
-centerRanks = chRanksLE(trLE.goodCh == 1 & trLE.inStimCenter == 1);
+centerRanks = chRanksTRLE(trLE.goodCh == 1 & trLE.inStimCenter == 1);
 
 % fill empty matrices
 if isempty(centerRanks)
@@ -109,7 +111,7 @@ trLE.centerRanks = centerRanks;
 %% LE: all channels inside stimulus boundaries
 goodQuads = trLE.rfQuadrant(trLE.goodCh == 1 & trLE.inStim == 1);
 goodOris = trLE.prefParamsPrefOri(trLE.goodCh == 1 & trLE.inStim == 1);
-goodRanks = chRanksLE(trLE.goodCh == 1 & trLE.inStim == 1);
+goodRanks = chRanksTRLE(trLE.goodCh == 1 & trLE.inStim == 1);
 goodOSI = trLE.prefParamSI(trLE.goodCh == 1 & trLE.inStim == 1);
 t1Text = ({'Distribution of preferred orientations all channels with centers in the stimulus';...
    sprintf('%s LE %s', trLE.animal,trLE.array)});
@@ -123,7 +125,7 @@ clear goodQuads; clear goodRanks; clear goodOris; clear goodOSI; clear t1Text;
 %% LE: all channels inside stimulus boundaries and with an OSI >=0.5
 goodQuads = trLE.rfQuadrant(trLE.goodCh == 1 & trLE.inStim == 1 & trLE.prefParamSI' >=0.5);
 goodOris = trLE.prefParamsPrefOri(trLE.goodCh == 1 & trLE.inStim == 1 & trLE.prefParamSI' >=0.5);
-goodRanks = chRanksLE(trLE.goodCh == 1 & trLE.inStim == 1 & trLE.prefParamSI' >=0.5);
+goodRanks = chRanksTRLE(trLE.goodCh == 1 & trLE.inStim == 1 & trLE.prefParamSI' >=0.5);
 goodOSI = trLE.prefParamSI(trLE.goodCh == 1 & trLE.inStim == 1 & trLE.prefParamSI' >=0.5);
 t1Text = ({'Distribution of preferred orientations all channels with centers in the stimulus';...
    sprintf('%s LE %s', trLE.animal,trLE.array)});
@@ -149,7 +151,7 @@ clear goodQuads; clear goodRanks; clear goodOris; clear goodOSI; clear t1Text;
 %% LE: All channels within 2 degrees of the stimulus 
 goodQuads = trLE.rfQuadrant(trLE.goodCh == 1  & trLE.within2Deg == 1);
 goodOris = trLE.prefParamsPrefOri(trLE.goodCh == 1   & trLE.within2Deg == 1);
-goodRanks = chRanksLE(trLE.goodCh == 1  & trLE.within2Deg == 1);
+goodRanks = chRanksTRLE(trLE.goodCh == 1  & trLE.within2Deg == 1);
 goodOSI = trLE.prefParamSI(trLE.goodCh == 1  & trLE.within2Deg == 1);
 t1Text = ({'Distribution of preferred orientations all channels within 2deg of the stimulus (and center)';...
    sprintf('%s LE %s', trLE.animal,trLE.array)});
@@ -161,7 +163,7 @@ print(gcf, figName,'-dpdf','-bestfit')
 %%  LE: All channels within 2 degrees of the stimulus and have OSIs > 0.5
 goodQuads = trLE.rfQuadrant(trLE.goodCh == 1  & trLE.within2Deg == 1 & trLE.prefParamSI' >=0.5);
 goodOris = trLE.prefParamsPrefOri(trLE.goodCh == 1   & trLE.within2Deg == 1 & trLE.prefParamSI' >=0.5);
-goodRanks = chRanksLE(trLE.goodCh == 1  & trLE.within2Deg == 1 & trLE.prefParamSI' >=0.5);
+goodRanks = chRanksTRLE(trLE.goodCh == 1  & trLE.within2Deg == 1 & trLE.prefParamSI' >=0.5);
 goodOSI = trLE.prefParamSI(trLE.goodCh == 1  & trLE.within2Deg == 1 & trLE.prefParamSI' >=0.5);
 t1Text = ({'Distribution of preferred orientations all channels within 2deg of the stimulus (and center)';...
    sprintf('%s LE %s', trLE.animal,trLE.array)});
@@ -277,11 +279,11 @@ conRadRE.inStimCenter = trRE.inStimCenter;
 conRadRE.within2Deg   = trRE.within2Deg;
 %% Get preferred pattern for each cell
 chRanksRE = nan(1,96);
-prefParams = trRE.prefParamsIndex; % this says which dot,dx is preferred
+prefParamsCr = conRadRE.prefParamsIndex; % this says which dot,dx is preferred
 
 for ch = 1:96
     if trRE.goodCh(ch) == 1
-        chRanksRE(1,ch) = conRadRE.dPrimeRankBlank{prefParams(ch)}(1,ch);
+        chRanksRE(1,ch) = conRadRE.dPrimeRankBlank{prefParamsCr(ch)}(1,ch);
     end
 end
 trRE.prefPatternsPrefParams = chRanksRE;
@@ -470,6 +472,52 @@ clear goodQuads; clear goodRanks; clear goodOris; clear goodOSI; clear t1Text;
 %% plot differences between preferred and dominant orientations
 [trLE.conDiff, trLE.radDiff] = diffPrefOriPrefStimOri(trLE);
 [trRE.conDiff, trRE.radDiff] = diffPrefOriPrefStimOri(trRE);
+%% get prefered dt,dx parameters for concentric and radial data
+
+conRadLE.prefParamsIndex = getGlassConRadPrefParamIndex(conRadLE);
+conRadRE.prefParamsIndex = getGlassConRadPrefParamIndex(conRadRE);
+
+%% compare preferred pattern from translational and concentric
+figure(20)
+clf
+set(gcf,'PaperOrientation','Landscape');
+
+leNdx = (trLE.inStim == 1) & (trLE.goodCh == 1);
+reNdx = (trRE.inStim == 1) & (trRE.goodCh == 1);
+
+subplot(1,2,1)
+hold on
+scatter(1:sum(leNdx),trLE.prefParamsIndex(trLE.inStim == 1 & trLE.goodCh == 1),30,'filled','MarkerFaceColor','k','MarkerEdgeColor','w','MarkerFaceAlpha',0.6,'MarkerEdgeAlpha',0.6)
+scatter(1:sum(leNdx),conRadLE.prefParamsIndex(trLE.inStim == 1 & trLE.goodCh == 1),60,'d','MarkerEdgeColor','k','MarkerFaceAlpha',0.6,'MarkerEdgeAlpha',0.6)
+
+axis square
+title('LE/FE')
+xlabel('channel')
+ylabel('preferred dt dx pair')
+
+set(gca,'tickdir','out','YTick',1:4,'YTickLabel',{'200, 0.02','200,0.03','400, 0.02','400,0.03'},'FontSize',12,'FontAngle','italic','FontWeight','bold')
+l = legend('translational','concentric and radial');
+l.Position(1) = l.Position(1) + 0.2;
+l.Position(2) = l.Position(2) - 0.5;
+l.Box = 'off';
+l.FontSize = 14;
+
+subplot(1,2,2)
+hold on
+scatter(1:sum(reNdx),trRE.prefParamsIndex(trRE.inStim == 1 & trRE.goodCh == 1),30,'filled','MarkerFaceColor','k','MarkerEdgeColor','w','MarkerFaceAlpha',0.6,'MarkerEdgeAlpha',0.6)
+scatter(1:sum(reNdx),conRadRE.prefParamsIndex(trRE.inStim == 1 & trRE.goodCh == 1),60,'d','MarkerEdgeColor','k','MarkerFaceAlpha',0.6,'MarkerEdgeAlpha',0.6)
+
+axis square
+title('RE/AE')
+xlabel('channel')
+
+set(gca,'tickdir','out','YTick',1:4,'YTickLabel',[],'FontSize',12,'FontAngle','italic','FontWeight','bold')
+s = suptitle(sprintf('%s %s preferred dots,dx combo in Glass experiments',trLE.animal, trLE.array));
+s.Position(2) = s.Position(2) - 0.13;
+s.FontSize = 18;
+s.FontWeight = 'bold';
+figName = [trLE.animal,'_',trLE.array,'_prefParamsTRvsCR','.pdf'];
+print(gcf, figName,'-dpdf','-bestfit')
 %% save combined data
 
 location = determineComputer;

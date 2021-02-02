@@ -1,36 +1,63 @@
+%% RE: look at all included channels
+goodQuads = trRE.rfQuadrant(trRE.goodCh == 1);
+goodOris = trRE.prefParamsPrefOri(trRE.goodCh == 1);
+goodRanks = chRanksTRRE(trRE.goodCh == 1);
+goodOSI = trRE.prefParamSI(trRE.goodCh == 1);
+t1Text = ({'Distribution of preferred orientations all included channels';...
+   sprintf('%s RE %s', trRE.animal,trRE.array)});
 
-for ch = 1:96
-    if V1.trLE.prefParamsIndex(ch) == 1 && V1.conRadLE.inStim(ch) == 1
-        V1radLE = abs(squeeze(V1.conRadLE.radBlankDprime(end,1,1,ch)));
-        V1conLE = abs(squeeze(V1.conRadLE.conBlankDprime(end,1,1,ch)));
-        V1nozLE = abs(squeeze(V1.conRadLE.noiseBlankDprime(1,1,1,ch)));
-    elseif V1.trLE.prefParamsIndex(ch) == 2 && V1.conRadLE.inStim(ch) == 1
-        V1radLE = abs(squeeze(V1.conRadLE.radBlankDprime(end,1,2,ch)));
-        V1conLE = abs(squeeze(V1.conRadLE.conBlankDprime(end,1,2,ch)));
-        V1nozLE = abs(squeeze(V1.conRadLE.noiseBlankDprime(1,1,2,ch)));
-    elseif V1.trLE.prefParamsIndex(ch) == 3 && V1.conRadLE.inStim(ch) == 1
-        V1radLE = abs(squeeze(V1.conRadLE.radBlankDprime(end,2,1,ch)));
-        V1conLE = abs(squeeze(V1.conRadLE.conBlankDprime(end,2,1,ch)));
-        V1nozLE = abs(squeeze(V1.conRadLE.noiseBlankDprime(1,2,1,ch)));
-    elseif V1.trLE.prefParamsIndex(ch) == 2 && V1.conRadLE.inStim(ch) == 1
-        V1radLE = abs(squeeze(V1.conRadLE.radBlankDprime(end,2,2,ch)));
-        V1conLE = abs(squeeze(V1.conRadLE.conBlankDprime(end,2,2,ch)));
-        V1nozLE = abs(squeeze(V1.conRadLE.noiseBlankDprime(1,2,2,ch)));
-    end
-        
+[trRE.allQuadOris, trRE.allQuadRanks, trRE.allQuadOSI] = getOrisInRFs_plotDists(goodQuads, goodRanks, goodOris, goodOSI, t1Text);
+
+figName = [trRE.animal,'_',trRE.eye,'_',trRE.array,'_prefOriByRFlocation_radConPref_allGoodCh','.pdf'];
+print(gcf, figName,'-dpdf','-bestfit')
+%% RE: look at the channels in the center of the stimulus
+centerRanksTR = chRanksTRRE(trRE.goodCh == 1 & trRE.inStimCenter == 1);
+centerRanksCR = chRanksCRRE(conRadRE.goodCh == 1 & conRadRE.inStimCenter == 1);
+% fill empty matrices
+if isempty(centerRanksTR)
+    centerRanksTR = zeros(1);
 end
-%%
-rDp = squeeze([squeeze(V1radLE(1,1,:)),squeeze(V1radLE(1,2,:)),squeeze(V1radLE(2,1,:)),squeeze(V1radLE(2,2,:))]);
-rDp = max(rDp');
-rDp = rDp';
-cDp = squeeze([squeeze(V1conLE(1,1,:)),squeeze(V1conLE(1,2,:)),squeeze(V1conLE(2,1,:)),squeeze(V1conLE(2,2,:))]);
-cDp = max(cDp');
-cDp = cDp';
-nDp = squeeze([squeeze(V1nozLE(1,1,:)),squeeze(V1nozLE(1,2,:)),squeeze(V1nozLE(2,1,:)),squeeze(V1nozLE(2,2,:))]);
-nDp = max(nDp');
-nDp = nDp';
+if isempty(centerRanksCR)
+    centerRanksCR = zeros(1);
+end
+trRE.centerRanks = centerRanksTR; 
+conRadRE.centerRanks = centerRanksCR; 
+%% RE: all channels inside stimulus boundaries
+goodQuads = trRE.rfQuadrant(trRE.goodCh == 1 & trRE.inStim == 1);
+goodOris = trRE.prefParamsPrefOri(trRE.goodCh == 1 & trRE.inStim == 1);
+goodRanks = chRanksTRRE(trRE.goodCh == 1 & trRE.inStim == 1);
+goodOSI = trRE.prefParamSI(trRE.goodCh == 1 & trRE.inStim == 1);
+t1Text = ({'Distribution of preferred orientations all channels with centers in the stimulus';...
+   sprintf('%s RE %s', trRE.animal,trRE.array)});
 
-dps = [rDp,cDp,nDp];
+[trRE.inStimOris, trRE.inStimRanks,trRE.inStimOSI] = getOrisInRFs_plotDists(goodQuads, goodRanks, goodOris, goodOSI,t1Text);
 
+figName = [trRE.animal,'_',trRE.eye,'_',trRE.array,'_prefOriByRFlocation_radConPref_allInStim','.pdf'];
+print(gcf, figName,'-dpdf','-bestfit')
 
-V1.trLE.prefParamsIndex
+clear goodQuads; clear goodRanks; clear goodOris; clear goodOSI; clear t1Text;
+%% RE: polar histograms separated and color coded by preferred stimulus 
+figure(8)
+clf
+pos = get(gcf,'Position');
+set(gcf,'Position',[pos(1) pos(2) 1000 800])
+set(gcf,'PaperOrientation','Landscape');
+
+set(gca,'tickdir','out','XAxisLocation','origin','XTickLabel',[],'YAxisLocation','origin','YTickLabel',[],'TickLength',[0 0])
+ylim([-1 1])
+xlim([-1 1])
+t = suptitle({'Distributions of preferred orientations and pattern type based on RF location';...
+    sprintf('%s RE %s',trRE.animal, trRE.array)});
+t.Position(2) = -0.025;
+t.FontSize = 18;
+
+text(-0.15, -1.12, 'Radial','Color',[0 0.6 0.2],'FontWeight','Bold','FontSize',14)
+text(0.01, -1.12, 'Concentric','Color',[0.7 0 0.7],'FontWeight','Bold','FontSize',14)
+text(-0.05, -1.2, 'Dipole','Color',[1 0.5 0.1],'FontWeight','Bold','FontSize',14)
+
+plotQuadHist_conRadDipSep(trRE.inStimOris, trRE.inStimRanks)
+
+figName = [trRE.animal,'_RE_',trRE.array,'_prefOriByRFlocation_radConPref_inStim','.pdf'];
+print(gcf, figName,'-dpdf','-bestfit')
+
+clear goodQuads; clear goodRanks; clear goodOris; clear goodOSI; clear t1Text;

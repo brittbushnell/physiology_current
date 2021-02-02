@@ -426,5 +426,5 @@ s.Position(2) = s.Position(2) + 0.035;
 s.Position(3) = s.Position(3) + 0.08; 
 s.Position(4) = s.Position(4) - 0.09; 
 
-figName = 'GlassODI_AllMonk_allArrays_translational.pdf';
+figName = 'GlassODI_AllMonk_allArrays_conRad.pdf';
 print(gcf,figName,'-dpdf','-fillpage')
