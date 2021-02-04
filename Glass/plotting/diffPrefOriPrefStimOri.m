@@ -133,7 +133,7 @@ s.FontWeight = 'Bold';
 
 figName = [trData.animal,'_',trData.eye,'_',trData.array,'_prefOriVSdomOri','.pdf'];
 print(gcf, figName,'-dpdf','-fillpage')
-% %% highOSI
+%% highOSI
 % 
 % oris = trData.within2OrisHighSI;
 % ranks = trData.within2RanksHighSI;

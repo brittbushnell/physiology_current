@@ -131,8 +131,7 @@ viscircles([glassX,glassY],2,...
     'color',[0.2 0.2 0.2],'LineWidth',0.6);
 grid on;
 
-for ch = 1:96
-    
+for ch = 1:96    
     hold on
     
     if inCenterStim(ch) == 1
@@ -149,9 +148,7 @@ for ch = 1:96
     ylim([-15,15])
     set(gca,'YAxisLocation','origin','XAxisLocation','origin','tickdir','both',...
         'Layer','top','FontWeight','bold','FontSize',12,'FontAngle','italic')
-    axis square
-    
-    
+    axis square    
 end
 plot(trData.fix_x,trData.fix_y,'+k','MarkerFaceColor','k')
 text(9, 9.5, sprintf('n %d',sum(rfQuadrant==1)))
@@ -185,6 +182,7 @@ viscircles([glassX,glassY],4,...
 viscircles([glassX,glassY],2,...
     'color',[0.2 0.2 0.2],'LineWidth',0.6);
 grid on;
+
 for ch = 1:96
     if trData.goodCh(ch) == 1
         pOri = trData.prefParamsPrefOri(ch);
@@ -201,9 +199,9 @@ for ch = 1:96
         x2 = rfX +(lLen*cos(pOri));
         y2 = rfY +(lLen*sin(pOri));
         
-        if crData.dPrimeRankBlank{trData.prefParamsIndex(ch)}(ch) == 1
+        if crData.dPrimeRankBlank{crData.prefParamsIndex(ch)}(ch) == 1
             plot([rfX, x2], [rfY, y2],'-','color',[0.7 0 0.7],'lineWidth',lLen)
-        elseif crData.dPrimeRankBlank{trData.prefParamsIndex(ch)}(ch) == 2
+        elseif crData.dPrimeRankBlank{crData.prefParamsIndex(ch)}(ch) == 2
             plot([rfX, x2], [rfY, y2],'-','color',[0 0.6 0.2],'lineWidth',lLen)
         else
             plot([rfX, x2], [rfY, y2],'-','color',[1 0.5 0.1],'lineWidth',lLen)

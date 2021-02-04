@@ -242,3 +242,14 @@ print(gcf, figName,'-dpdf','-bestfit')
 clear goodQuads; clear goodRanks; clear goodOris; clear goodOSI; clear t1Text;
 %% plot differences between preferred and dominant orientations
 [trRE.conDiff, trRE.radDiff] = diffPrefOriPrefStimOri(trRE);
+%%
+trLEz(:,:,:,:) = nanmean(squeeze(trLE.GlassTRZscore(:,end,:,:,:,:)),5);
+trREz(:,:,:,:) = nanmean(squeeze(trRE.GlassTRZscore(:,end,:,:,:,:)),5);
+
+conLEz(:,:,:) = nanmean(squeeze(conRadLE.conZscore(end,:,:,:,:)),4);
+radLEz(:,:,:) = nanmean(squeeze(conRadLE.radZscore(end,:,:,:,:)),4);
+nozLEz(:,:,:) = nanmean(squeeze(conRadLE.noiseZscore(1,:,:,:,:)),4);
+
+conREz(:,:,:) = nanmean(squeeze(conRadRE.conZscore(end,:,:,:,:)),4);
+radREz(:,:,:) = nanmean(squeeze(conRadRE.radZscore(end,:,:,:,:)),4);
+nozREz(:,:,:) = nanmean(squeeze(conRadRE.noiseZscore(1,:,:,:,:)),4);

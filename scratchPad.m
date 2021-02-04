@@ -1,63 +1,79 @@
-%% RE: look at all included channels
-goodQuads = trRE.rfQuadrant(trRE.goodCh == 1);
-goodOris = trRE.prefParamsPrefOri(trRE.goodCh == 1);
-goodRanks = chRanksTRRE(trRE.goodCh == 1);
-goodOSI = trRE.prefParamSI(trRE.goodCh == 1);
-t1Text = ({'Distribution of preferred orientations all included channels';...
-   sprintf('%s RE %s', trRE.animal,trRE.array)});
 
-[trRE.allQuadOris, trRE.allQuadRanks, trRE.allQuadOSI] = getOrisInRFs_plotDists(goodQuads, goodRanks, goodOris, goodOSI, t1Text);
+numDots = length(unique(trData.numDots));
+numDx   = length(unique(trData.dx));
+%%
 
-figName = [trRE.animal,'_',trRE.eye,'_',trRE.array,'_prefOriByRFlocation_radConPref_allGoodCh','.pdf'];
-print(gcf, figName,'-dpdf','-bestfit')
-%% RE: look at the channels in the center of the stimulus
-centerRanksTR = chRanksTRRE(trRE.goodCh == 1 & trRE.inStimCenter == 1);
-centerRanksCR = chRanksCRRE(conRadRE.goodCh == 1 & conRadRE.inStimCenter == 1);
-% fill empty matrices
-if isempty(centerRanksTR)
-    centerRanksTR = zeros(1);
-end
-if isempty(centerRanksCR)
-    centerRanksCR = zeros(1);
-end
-trRE.centerRanks = centerRanksTR; 
-conRadRE.centerRanks = centerRanksCR; 
-%% RE: all channels inside stimulus boundaries
-goodQuads = trRE.rfQuadrant(trRE.goodCh == 1 & trRE.inStim == 1);
-goodOris = trRE.prefParamsPrefOri(trRE.goodCh == 1 & trRE.inStim == 1);
-goodRanks = chRanksTRRE(trRE.goodCh == 1 & trRE.inStim == 1);
-goodOSI = trRE.prefParamSI(trRE.goodCh == 1 & trRE.inStim == 1);
-t1Text = ({'Distribution of preferred orientations all channels with centers in the stimulus';...
-   sprintf('%s RE %s', trRE.animal,trRE.array)});
+trLEz(:,:,:,:) = nanmean(squeeze(trLE.GlassTRZscore(:,end,:,:,:,:)),5);
+trREz(:,:,:,:) = nanmean(squeeze(trRE.GlassTRZscore(:,end,:,:,:,:)),5);
 
-[trRE.inStimOris, trRE.inStimRanks,trRE.inStimOSI] = getOrisInRFs_plotDists(goodQuads, goodRanks, goodOris, goodOSI,t1Text);
+conLEz(:,:,:) = nanmean(squeeze(conRadLE.conZscore(end,:,:,:,:)),4);
+radLEz(:,:,:) = nanmean(squeeze(conRadLE.radZscore(end,:,:,:,:)),4);
+nozLEz(:,:,:) = nanmean(squeeze(conRadLE.noiseZscore(1,:,:,:,:)),4);
 
-figName = [trRE.animal,'_',trRE.eye,'_',trRE.array,'_prefOriByRFlocation_radConPref_allInStim','.pdf'];
-print(gcf, figName,'-dpdf','-bestfit')
-
-clear goodQuads; clear goodRanks; clear goodOris; clear goodOSI; clear t1Text;
-%% RE: polar histograms separated and color coded by preferred stimulus 
-figure(8)
+conREz(:,:,:) = nanmean(squeeze(conRadRE.conZscore(end,:,:,:,:)),4);
+radREz(:,:,:) = nanmean(squeeze(conRadRE.radZscore(end,:,:,:,:)),4);
+nozREz(:,:,:) = nanmean(squeeze(conRadRE.noiseZscore(1,:,:,:,:)),4);
+%%
+useColors = brewermap(4,'set1');
+figure(64)
 clf
 pos = get(gcf,'Position');
-set(gcf,'Position',[pos(1) pos(2) 1000 800])
+set(gcf,'Position',[pos(1) pos(2) 1200 1000])
 set(gcf,'PaperOrientation','Landscape');
 
-set(gca,'tickdir','out','XAxisLocation','origin','XTickLabel',[],'YAxisLocation','origin','YTickLabel',[],'TickLength',[0 0])
-ylim([-1 1])
-xlim([-1 1])
-t = suptitle({'Distributions of preferred orientations and pattern type based on RF location';...
-    sprintf('%s RE %s',trRE.animal, trRE.array)});
-t.Position(2) = -0.025;
-t.FontSize = 18;
+s = suptitle(sprintf('%s %s %s mean z scores in translational Glass patterns',trData.animal,trData.eye, trData.array));
+s.FontSize = 20;
+s.Position(2) = s.Position(2)+0.01;
 
-text(-0.15, -1.12, 'Radial','Color',[0 0.6 0.2],'FontWeight','Bold','FontSize',14)
-text(0.01, -1.12, 'Concentric','Color',[0.7 0 0.7],'FontWeight','Bold','FontSize',14)
-text(-0.05, -1.2, 'Dipole','Color',[1 0.5 0.1],'FontWeight','Bold','FontSize',14)
+for ch = 1:96
+    
+    subplot(trData.amap,10,10,ch)
+    hold on
+    
+    yy = squeeze(trDataz(:,:,:,ch));
+    yy = reshape(yy,[1,numel(yy)]);
+    y1 = max(yy);
+    y2 = min(yy);
+    y2 = abs(y2);
+    yMax = round(max(y1,y2),1)+0.1;
+    
+    ylim([-yMax,yMax])
+    xlim([0.5 4.5])
+    
+    ndx = 1;
+    for dt = 1:2
+        for dx = 1:2    
+            t =  squeeze(trDataz(:,dt,dx,ch));
+            if trData.goodCh(ch) == 1 && trData.inStim(ch) == 1
+                plot(t,'-o','LineWidth',0.6,'color',useColors(ndx,:),'MarkerSize',2.4,'MarkerFaceColor',useColors(ndx,:))
+%                 plot(t,'.','MarkerSize',10,'color',useColors(ndx,:))
+                title(ch)
+            else
+                plot(t,':','LineWidth',0.6,'color',useColors(ndx,:))
+                title(ch)
+            end
+            ndx = ndx+1;
+        end
+        
+        set(gca,'tickdir','out','XTick',1:4,'XTickLabel',[],'FontSize',9,'FontAngle','italic','YTick',[-yMax,0,yMax])
+    end
+    
+    % if ch == 96 && trData.goodCh(ch) == 1 && trData.inStim(ch) == 1
+    if ch == 63
+        l = legend('200, 0.02','200, 0.03','400, 0.02','400, 0.03');
+        l.Position(1) = l.Position(1) - 0.18;
+         l.Position(2) = l.Position(2) - 0.15;
+        l.Box = 'off';
+        l.NumColumns = 2;
+        l.LineWidth = 3;
+        l.FontSize = 11.5;
+    end
+    
+    if ch == 83
+        ylabel('mean z score')
+        xlabel('orientation')
+    end    
+end
 
-plotQuadHist_conRadDipSep(trRE.inStimOris, trRE.inStimRanks)
-
-figName = [trRE.animal,'_RE_',trRE.array,'_prefOriByRFlocation_radConPref_inStim','.pdf'];
-print(gcf, figName,'-dpdf','-bestfit')
-
-clear goodQuads; clear goodRanks; clear goodOris; clear goodOSI; clear t1Text;
+figName = [trData.animal,'_',trData.eye,'_',trData.array,'_GlassTR_','MuZscoreVSdtdx.pdf'];
+print(gcf,figName,'-dpdf','-fillpage')
