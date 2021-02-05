@@ -4,7 +4,7 @@ function aMap = getBlackrockArrayMap(filename)
 % 09/06/18 -- note, this only has info so far for WU's arrays. 
 % 11/08/18 -- updated with array information for XT and WV
 
-if contains(filename,'nsp2')
+if contains(filename,'nsp2') || contains(filename,'V4')
     disp 'data recorded from nsp2, V4 array'
     
     if contains(filename,'WU')
@@ -19,11 +19,11 @@ if contains(filename,'nsp2')
         error('Cannot determine animal identity from filename')
     end
     
-elseif contains(filename,'nsp1')
+elseif contains(filename,'nsp1') || contains(filename,'V1')
     disp 'data recorded from nsp1, V1/V2 array'
     
     if contains(filename,'WU')
-        aMap = arraymap('SN 1024-001795.cmp');
+        aMap = arraymap('SN 1024-001790.cmp');
     elseif contains(filename,'XT')
         aMap = arraymap('SN1024-001852.cmp');
     elseif contains(filename,'WV')
