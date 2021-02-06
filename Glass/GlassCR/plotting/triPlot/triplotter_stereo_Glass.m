@@ -1,53 +1,25 @@
 function [] = triplotter_stereo_Glass(rcb,grayMax)
 % input should be matrix of  radial, concentric, dipole across the columns,
 % and each row is a different channel. 
-
-% [~,numDots,numDxs,~,~,~,dots,dxs,~,~] = getGlassParameters(dataT);
-% 
-% figure (7)
-% clf
-% pos = get(gcf,'Position');
-% set(gcf,'Position',[pos(1) pos(2) 1000 900]);
-% 
-% radDps = squeeze(dataT.radBlankDprime(end,:,:,:));
-% conDps = squeeze(dataT.conBlankDprime(end,:,:,:));
-% nosDps = squeeze(dataT.noiseBlankDprime(:,:,:));
-% 
-% radMax = max(radDps(:));
-% conMax = max(conDps(:));
-% nosMax = max(nosDps(:));
-% 
-% xyz = [radMax,conMax,nosMax];
-% from Romesh
-%line([0 1],[0 0],[0 0],'color','k','LineStyle','--'); %horizontal
-% line([0 0],[1 0],[0 0],'color','k','LineStyle','--'); % vertical
-% line([-1 0],[0 0],[0 0],'color','k','LineStyle','--'); % flipped horz
-
-% dt = 2;
-% dx = 2;
-% radDps = abs(squeeze(dataT.radBlankDprime(end,dt,dx,:)));
-% conDps = abs(squeeze(dataT.conBlankDprime(end,dt,dx,:)));
-% nosDps = abs(squeeze(dataT.noiseBlankDprime(dt,dx,:)));
-% rcb = [radDps,conDps,nosDps];
 %%
-%
-%  clc
-%  clf;
-% pause(0.02);
+
 h=axesm('stereo','origin',[45 45 0]);
 axis off;
 
 % draw the outlines of the triangle
-plot3m(linspace(0,90,90), 0.*ones(1,90),ones(1,90),'k')
-plot3m(linspace(0,90,90),90.*ones(1,90),ones(1,90),'k')
-plot3m(0.*ones(1,90),linspace(0,90,90),ones(1,90),'k')
+plot3m(linspace(0,90,90), 0.*ones(1,90),ones(1,90),'k','LineWidth',0.6)
+plot3m(linspace(0,90,90),90.*ones(1,90),ones(1,90),'k','LineWidth',0.6)
+plot3m(0.*ones(1,90),linspace(0,90,90),ones(1,90),'k','LineWidth',0.6)
 
-% draw lines for the vertices
-[th,phi,r]=cart2sph(1,1,1); plot3m(rad2deg(phi),rad2deg(th),r,'ro')
+% draw dots for edge of vertices
+[th,phi,r]=cart2sph(1,1,1); plot3m(rad2deg(phi),rad2deg(th),r,'ro','LineWidth',0.6)
 
-[th,phi,r]=cart2sph(1,0,1); plot3m(rad2deg(phi),rad2deg(th),r,'ro')
-[th,phi,r]=cart2sph(0,1,1); plot3m(rad2deg(phi),rad2deg(th),r,'ro')
-[th,phi,r]=cart2sph(1,1,0); plot3m(rad2deg(phi),rad2deg(th),r,'ro')
+
+[thl,phil,rl]=cart2sph(1,0,1); plot3m(rad2deg(phil),rad2deg(thl),rl,'ro','LineWidth',1) % left
+[thr,phir,rr]=cart2sph(0,1,1); plot3m(rad2deg(phir),rad2deg(thr),rr,'ro','LineWidth',1) %right
+[thb,phib,rb]=cart2sph(1,1,0); plot3m(rad2deg(phib),rad2deg(thb),rb,'ro','LineWidth',1) % bottom
+
+% change data points to appropriate projections
 x = rcb(:,1);
 y = rcb(:,2);
 z = rcb(:,3);
@@ -65,25 +37,25 @@ for i = 1:length(rcb)
     tmp = sum_xyz(i);
     
     if tmp > binLim(9) %&& tmp < binLim(5) % plot black
-        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), '.','color',  [1 1 1].*0,'MarkerSize', 20); hold on;  
+        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), 'o','MarkerFaceColor',  [1 1 1].* 0,'MarkerSize', 7,'MarkerEdgeColor',[0.99 0.99 0.99],'LineWidth',0.4); hold on;  
     elseif tmp > binLim(8) && tmp < binLim(9)
-        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), '.','color',  [1 1 1].*.1,'MarkerSize', 20);
+        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), 'o','MarkerFaceColor',  [1 1 1].*.1,'MarkerSize', 7,'MarkerEdgeColor',[0.99 0.99 0.99],'LineWidth',0.4);
     elseif tmp > binLim(7) && tmp < binLim(8)
-        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), '.','color',  [1 1 1].*.2,'MarkerSize', 20);
+        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), 'o','MarkerFaceColor',  [1 1 1].*.2,'MarkerSize', 7,'MarkerEdgeColor',[0.99 0.99 0.99],'LineWidth',0.4);
     elseif tmp > binLim(6) && tmp < binLim(7)
-        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), '.','color',  [1 1 1].*.3,'MarkerSize', 20);
+        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), 'o','MarkerFaceColor',  [1 1 1].*.3,'MarkerSize', 7,'MarkerEdgeColor',[0.99 0.99 0.99],'LineWidth',0.4);
     elseif tmp > binLim(5) && tmp < binLim(6)
-        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), '.','color',  [1 1 1].*.4,'MarkerSize', 20);
+        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), 'o','MarkerFaceColor',  [1 1 1].*.4,'MarkerSize', 7,'MarkerEdgeColor',[0.99 0.99 0.99],'LineWidth',0.4);
     elseif tmp > binLim(4) && tmp < binLim(5)
-        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), '.','color',  [1 1 1].*.5,'MarkerSize', 20);
+        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), 'o','MarkerFaceColor',  [1 1 1].*.5,'MarkerSize', 7,'MarkerEdgeColor',[0.99 0.99 0.99],'LineWidth',0.4);
     elseif tmp > binLim(3) && tmp < binLim(4)
-        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), '.','color',  [1 1 1].*.6,'MarkerSize', 20);
+        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), 'o','MarkerFaceColor',  [1 1 1].*.6,'MarkerSize', 7,'MarkerEdgeColor',[0.99 0.99 0.99],'LineWidth',0.4);
     elseif tmp > binLim(2) && tmp < binLim(3)
-        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), '.','color',  [1 1 1].*.7,'MarkerSize', 20);
+        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), 'o','MarkerFaceColor',  [1 1 1].*.7,'MarkerSize', 7,'MarkerEdgeColor',[0.99 0.99 0.99],'LineWidth',0.4);
     elseif tmp > binLim(1) && tmp < binLim(2)
-        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), '.','color',  [1 1 1].*.8,'MarkerSize', 20);
+        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), 'o','MarkerFaceColor',  [1 1 1].*.8,'MarkerSize', 7,'MarkerEdgeColor',[0.99 0.99 0.99],'LineWidth',0.4);
     elseif tmp > 0 && tmp < binLim(1)
-        plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), '.','color',  [1 1 1].*.9,'MarkerSize', 20);  
+       plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), 'o','MarkerFaceColor',  [1 1 1].*.9,'MarkerSize', 7,'MarkerEdgeColor',[0.99 0.99 0.99],'LineWidth',0.4);  
     end
         
 end
@@ -92,16 +64,30 @@ colormap(map); colorbar;
 c = colorbar('TickDirection','out');
 c.Ticks = 0:0.25:1;
 c.TickLabels = round(linspace(0,grayMax,5),1);
-c.Label.String = 'vector sum of dPrimes';
+c.Label.String = 'Vector sum of dPrimes';
+c.FontAngle = 'italic';
+c.FontSize = 11;
 
 
-c.Label.FontSize = 12;
-set(gca,'FontSize',12)
+c.Label.FontSize = 13;
+set(gca,'FontSize',13,'color','none')
 
-bl=textm(0,0,'Model 1','FontSize',12);
-br=textm(0,90,'Model 2','FontSize',12);
-tp=textm(90,90,'Model 3','FontSize',12);
+bl=textm(0,0,'Model 1','FontSize',13);
+br=textm(0,90,'Model 2','FontSize',13);
+tp=textm(90,90,'Model 3','FontSize',13);
 
 set(bl,'horizontalalignment','left','string',sprintf('\n\nRadial    '))
-set(br,'horizontalalignment','right','string',sprintf('\n\n\n        Concentric'))
+set(br,'horizontalalignment','right','string',sprintf('\n\n\n         Concentric'))
 set(tp,'horizontalalignment','center','string',sprintf('Dipole\n\n'))
+
+% draw the outlines of the triangle
+plot3m(linspace(0,90,90), 0.*ones(1,90),ones(1,90),'k','LineWidth',1)
+plot3m(linspace(0,90,90),90.*ones(1,90),ones(1,90),'k','LineWidth',1)
+plot3m(0.*ones(1,90),linspace(0,90,90),ones(1,90),'k','LineWidth',1)
+
+% draw dots for edge of vertices
+[thc,phic,rc]=cart2sph(1,1,1); plot3m(rad2deg(phic),rad2deg(thc),rc,'ro','LineWidth',1) % center
+
+plot3m([rad2deg(phic),rad2deg(phil)],[rad2deg(thc),rad2deg(thl)],[rc,rl],'-','color',[0.6 0.6 0.6])
+plot3m([rad2deg(phic),rad2deg(phir)],[rad2deg(thc),rad2deg(thr)],[rc,rr],'-','color',[0.6 0.6 0.6])
+plot3m([rad2deg(phic),rad2deg(phib)],[rad2deg(thc),rad2deg(thb)],[rc,rb],'-','color',[0.6 0.6 0.6])

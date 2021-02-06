@@ -25,7 +25,7 @@ XTV4 = data.V4;
 XTV1 = data.V1;
 clear data
 
-cd '/Users/brittany/Dropbox/Figures/CrossAnimals/Glass';
+cd '/Users/brittany/Dropbox/Figures/CrossAnimals/Glass/';
 %% OSI figures
 [WUV1, WUV4, WVV1, WVV4, XTV1, XTV4] = plotPrefDomOriDiffVsOSI_allQuad(WUV1, WUV4, WVV1, WVV4, XTV1, XTV4); % fig 1-3
 plotGlassOSIpatterns(WUV1, WUV4, WVV1, WVV4, XTV1, XTV4) % figs 4-8

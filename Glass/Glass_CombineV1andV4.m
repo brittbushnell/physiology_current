@@ -28,42 +28,46 @@ load('XT_BE_V4_bothGlass_cleanMerged');
 V4data = data;
 clear data;
 newName = 'XT_2eyes_2arrays_GlassPatterns';
-%% Get preferred pattern for each cell V1
-V1chRanksLE = nan(1,96);
-prefParams = V1data.trLE.prefParamsIndex; % this says which dot,dx is preferred
+%% triplot
+% using best dt, dx for each pattern
+triplotter_Glass_BExArrays_optimalForPattern(V1data,V4data)
 
-for ch = 1:96
-    if V1data.trLE.goodCh(ch) == 1
-        V1chRanksLE(1,ch) = V1data.conRadLE.dPrimeRankBlank{prefParams(ch)}(1,ch);
-    end
-end
-
-V1chRanksRE = nan(1,96);
-prefParams = V1data.trRE.prefParamsIndex; % this says which dot,dx is preferred
-
-for ch = 1:96
-    if V1data.trRE.goodCh(ch) == 1
-        V1chRanksRE(1,ch) = V1data.conRadRE.dPrimeRankBlank{prefParams(ch)}(1,ch);
-    end
-end
-%%
-V4chRanksLE = nan(1,96);
-prefParams = V4data.trLE.prefParamsIndex; % this says which dot,dx is preferred
-
-for ch = 1:96
-    if V4data.trLE.goodCh(ch) == 1
-        V4chRanksLE(1,ch) = V4data.conRadLE.dPrimeRankBlank{prefParams(ch)}(1,ch);
-    end
-end
-
-V4chRanksRE = nan(1,96);
-prefParams = V4data.trRE.prefParamsIndex; % this says which dot,dx is preferred
-
-for ch = 1:96
-    if V4data.trRE.goodCh(ch) == 1
-        V4chRanksRE(1,ch) = V4data.conRadRE.dPrimeRankBlank{prefParams(ch)}(1,ch);
-    end
-end
+% %% Get preferred pattern for each cell V1
+% V1chRanksLE = nan(1,96);
+% prefParams = V1data.trLE.prefParamsIndex; % this says which dot,dx is preferred
+% 
+% for ch = 1:96
+%     if V1data.trLE.goodCh(ch) == 1
+%         V1chRanksLE(1,ch) = V1data.conRadLE.dPrimeRankBlank{prefParams(ch)}(1,ch);
+%     end
+% end
+% 
+% V1chRanksRE = nan(1,96);
+% prefParams = V1data.trRE.prefParamsIndex; % this says which dot,dx is preferred
+% 
+% for ch = 1:96
+%     if V1data.trRE.goodCh(ch) == 1
+%         V1chRanksRE(1,ch) = V1data.conRadRE.dPrimeRankBlank{prefParams(ch)}(1,ch);
+%     end
+% end
+% %%
+% V4chRanksLE = nan(1,96);
+% prefParams = V4data.trLE.prefParamsIndex; % this says which dot,dx is preferred
+% 
+% for ch = 1:96
+%     if V4data.trLE.goodCh(ch) == 1
+%         V4chRanksLE(1,ch) = V4data.conRadLE.dPrimeRankBlank{prefParams(ch)}(1,ch);
+%     end
+% end
+% 
+% V4chRanksRE = nan(1,96);
+% prefParams = V4data.trRE.prefParamsIndex; % this says which dot,dx is preferred
+% 
+% for ch = 1:96
+%     if V4data.trRE.goodCh(ch) == 1
+%         V4chRanksRE(1,ch) = V4data.conRadRE.dPrimeRankBlank{prefParams(ch)}(1,ch);
+%     end
+% end
 
 %%
 location = determineComputer;
