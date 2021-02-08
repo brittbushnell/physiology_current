@@ -34,39 +34,21 @@ specifically compare across them.
 
 %}
 
-allDps = cat(1,v1dLE, v1dRE, v4dLE, v4dRE); 
-allDps(:,4) = sqrt(allDps(:,1).^2 + allDps(:,2).^2 + allDps(:,3).^2);
-%%
-% WUREa = reshape(WUV1dPRE,[1,numel(WUV1dPRE)]);
-% WVREa = reshape(WVV1dPRE,[1,numel(WVV1dPRE)]);
-% XTREa = reshape(XTV1dPRE,[1,numel(XTV1dPRE)]);
-% v1RE = [WUREa, WVREa];%, XTREa];
-% 
-% WULEa = reshape(WUV1dPLE,[1,numel(WUV1dPLE)]);
-% WVLEa = reshape(WVV1dPLE,[1,numel(WVV1dPLE)]);
-% XTLEa = reshape(XTV1dPLE,[1,numel(XTV1dPLE)]);
-% v1LE = [WULEa, WVLEa];%, XTLEa];
-% 
-% WUREa = reshape(WUV4dPRE,[1,numel(WUV4dPRE)]);
-% WVREa = reshape(WVV4dPRE,[1,numel(WVV4dPRE)]);
-% XTREa = reshape(XTV4dPRE,[1,numel(XTV4dPRE)]);
-% v4RE = [WUREa, WVREa];%, XTREa];
-% 
-% WULEa = reshape(WUV4dPLE,[1,numel(WUV4dPLE)]);
-% WVLEa = reshape(WVV4dPLE,[1,numel(WVV4dPLE)]);
-% XTLEa = reshape(XTV4dPLE,[1,numel(XTV4dPLE)]);
-% v4LE = [WULEa, WVLEa];%, XTLEa];
-% 
-% allDp = [v1RE,v1LE,v4RE,v4LE];
-% [allDp,dpNdx] = sort(allDp,'descend');
-% dpMax = allDp(1);
-% dpMin = allDp(end);
-% 
+ndx1 = ones(size(v1dLE,1),1);
+ndx2 = ones(size(v1dRE,1),1)+1;
+ndx3 = ones(size(v4dLE,1),1)+2;
+ndx4 = ones(size(v4dRE,1),1)+3;
 
-%% setup colorlims
-cmap = gray(length(allDp)); 
+allDps = cat(1,v1dLE, v1dRE, v4dLE, v4dRE); 
+vSum = sqrt(allDps(:,1).^2 + allDps(:,2).^2 + allDps(:,3).^2);
+vSumNdx = [ndx1;ndx2;ndx3;ndx4];
+
+[sortSum,sortNdx] = sort(vSum,'descend');
+
+cmap = gray(length(allDps)); 
 cmap = flipud(cmap); % make black be highest, white lowest
-colormap(cmap)
+cmapSort = cmap(sortNdx);
+
 
 %%
 figure(1)
@@ -79,9 +61,14 @@ t = suptitle('Amblyopic dPrimes for each pattern in V1 and V4');
 t.Position(2) = t.Position(2) +0.025;
 t.FontWeight = 'bold';
 t.FontSize = 18;
-
+%
 s = subplot(2,2,1);
 hold on
+
+v1Lndx = vSumCmap(vSumCmap(:,3) == 1);
+v1Lsum = sortSum(v1Lndx);
+v1Cmap = cmapSort(v1Lndx);
+
 triplotter_stereo_Glass(v1dLE,dpMax)
 title(sprintf('FE n: %d',length(v1dLE)))
 

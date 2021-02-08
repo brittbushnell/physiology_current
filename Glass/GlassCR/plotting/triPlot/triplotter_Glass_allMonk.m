@@ -7,8 +7,6 @@ figure(800)
 clf
 hold on
 
-rcb = v4dLE;
-
 h=axesm('stereo','origin',[45 45 0]);
 axis off;
 
