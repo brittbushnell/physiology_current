@@ -27,12 +27,16 @@ z = rcb(:,3);
 [th,phi,r]=cart2sph(x,y,z);
 
 % plot with the gray scale based on the sum of the d's
-%(sqrt(d'1^2+d'2^2+d'3^2))
+%(sqrt(d'1^2+d'2^2+d'3^2))  The grayscale is what determines the grayscale,
+% but the d' for con, rad, dipole are what define the xyz locations of the
+% data points
 sum_xyz = sqrt(rcb(:,1).^2 + rcb(:,2).^2 + rcb(:,3).^2);
 binLim = linspace(0,grayMax,11);
 binLim = binLim(2:end);
 
 hold on;
+% now, go through each channel and base their color on which bin they fall
+% into.
 for i = 1:length(rcb)
     tmp = sum_xyz(i);
     
@@ -85,7 +89,7 @@ plot3m(linspace(0,90,90), 0.*ones(1,90),ones(1,90),'k','LineWidth',1)
 plot3m(linspace(0,90,90),90.*ones(1,90),ones(1,90),'k','LineWidth',1)
 plot3m(0.*ones(1,90),linspace(0,90,90),ones(1,90),'k','LineWidth',1)
 
-% draw dots for edge of vertices
+% draw lines for the sections
 [thc,phic,rc]=cart2sph(1,1,1); plot3m(rad2deg(phic),rad2deg(thc),rc,'ro','LineWidth',1) % center
 
 plot3m([rad2deg(phic),rad2deg(phil)],[rad2deg(thc),rad2deg(thl)],[rc,rl],'-','color',[0.6 0.6 0.6])

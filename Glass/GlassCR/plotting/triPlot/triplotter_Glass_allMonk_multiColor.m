@@ -1,4 +1,4 @@
-function [h] = triplotter_Glass_allMonk(rcd,cmap,vSumMax)
+function [h] = triplotter_Glass_allMonk_multiColor(rcd,cmap)
 % required inputs(rcb,cmap)
 % RCD   are d' vs blank for radial, concentric, and dipole
 % CMAP  are the (r,g,b) values to be used for each data point based on their

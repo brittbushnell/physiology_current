@@ -273,6 +273,8 @@ nozLEz(:,:,:) = nanmean(squeeze(conRadLE.noiseZscore(1,:,:,:,:)),4);
 conREz(:,:,:) = nanmean(squeeze(conRadRE.conZscore(end,:,:,:,:)),4);
 radREz(:,:,:) = nanmean(squeeze(conRadRE.radZscore(end,:,:,:,:)),4);
 nozREz(:,:,:) = nanmean(squeeze(conRadRE.noiseZscore(1,:,:,:,:)),4);
+%% plot density dx by pattern for each channel. 
+plotGlass_dtDxPref_bych(trLE,trRE,conRadLE,conRadRE)
 %% save combined data
 
 location = determineComputer;

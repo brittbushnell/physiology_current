@@ -19,7 +19,7 @@ for fi = 1:size(files,1)
     
     REdata = data.RE;    
     LEdata = data.LE;
- 
+ %%
     plotGlass_GlassRankingsDistBlank(REdata) % figure 1 and 2
     plotGlassPSTHs_stimParams_allCh(REdata)
     plotGlass_callTriplotGray(REdata)
