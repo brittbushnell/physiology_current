@@ -1,3 +1,12 @@
+rcdWU = WUv4LEsort(:,1:3);
+cmpWU = WUv4LEsort(:,6:8);
+triplotter_Glass_allMonk_multiColor(rcdWU,cmpWU);
+
+rcd = WVv4LEsort(:,1:3);
+cmap = WVv4LEsort(:,6:8);
+
+vSum = WVv4LEsort(:,4);
+%%
 figure(1)
 clf
 hold on
@@ -24,9 +33,28 @@ ctol = plot3m([rad2deg(phic),rad2deg(phil)],[rad2deg(thc),rad2deg(thl)],[rc,rl],
 ctor = plot3m([rad2deg(phic),rad2deg(phir)],[rad2deg(thc),rad2deg(thr)],[rc,rr],'-','color',[0.6 0.6 0.6]);
 ctpb = plot3m([rad2deg(phic),rad2deg(phib)],[rad2deg(thc),rad2deg(thb)],[rc,rb],'-','color',[0.6 0.6 0.6]);
 %
-[thRad,phiRad,rRad]=cart2sph(1,0,0); plot3m(rad2deg(phiRad),rad2deg(thRad),rRad,'ro','LineWidth',1,'MarkerSize', 7) % left
-[thDip,phiDip,rDip]=cart2sph(0,0,1); plot3m(rad2deg(phiDip),rad2deg(thDip),rDip,'co','LineWidth',1,'MarkerSize', 7) % left
-[thCon,phiCon,rCon]=cart2sph(0,1,0); plot3m(rad2deg(phiCon),rad2deg(thCon),rCon,'bo','LineWidth',1,'MarkerSize', 7) % left
+% [thRad,phiRad,rRad]=cart2sph(1,0,0); plot3m(rad2deg(phiRad),rad2deg(thRad),rRad,'ro','LineWidth',1,'MarkerSize', 7) % left
+% [thDip,phiDip,rDip]=cart2sph(0,0,1); plot3m(rad2deg(phiDip),rad2deg(thDip),rDip,'co','LineWidth',1,'MarkerSize', 7) % left
+% [thCon,phiCon,rCon]=cart2sph(0,1,0); plot3m(rad2deg(phiCon),rad2deg(thCon),rCon,'bo','LineWidth',1,'MarkerSize', 7) % left
+
+% change data points to appropriate projections
+x = rcd(:,1);
+y = rcd(:,2);
+z = rcd(:,3);
+
+[th,phi,r]=cart2sph(x,y,z);
+
+hold on
+for i = 1:size(rcd,1)
+   plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), 'o','MarkerFaceColor',  cmap(i,:),'MarkerSize', 7,'MarkerEdgeColor',[0.99 0.99 0.99],'LineWidth',0.4);
+end
+
+% get center of data
+wgtLoc = (rcd).*vSum;
+wgtMu = mean(wgtLoc);
+[thx,phix,rx]=cart2sph(wgtMu(1),wgtMu(2),wgtMu(3));
+
+plot3m(rad2deg(phix),rad2deg(thx),rx, '*','MarkerFaceColor',[0 0.6 0.2],'MarkerEdgeColor',[0 0.6 0.2],'MarkerSize', 10,'LineWidth',1.5);
 %% radial zone
 radFakeL = plot3m([rad2deg(phil),rad2deg(phiRad)],[rad2deg(thl),rad2deg(thRad)],[rl,rRad],'-','color',[0.6 0.6 0.6]);
 radFakeB = plot3m([rad2deg(phib),rad2deg(phiRad)],[rad2deg(thb),rad2deg(thRad)],[rb,rRad],'-','color',[0.6 0.6 0.6]);

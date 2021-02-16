@@ -151,10 +151,10 @@ for ch = 1:96
     axis square    
 end
 plot(trData.fix_x,trData.fix_y,'+k','MarkerFaceColor','k')
-text(9, 9.5, sprintf('n %d',sum(rfQuadrant==1)))
-text(-9.5, 9.5, sprintf('n %d',sum(rfQuadrant==2)))
-text(-9.5, -9.5, sprintf('n %d',sum(rfQuadrant==3)))
-text(9, -9.5, sprintf('n %d',sum(rfQuadrant==4)))
+% text(9, 9.5, sprintf('n %d',sum(rfQuadrant==1)))
+% text(-9.5, 9.5, sprintf('n %d',sum(rfQuadrant==2)))
+% text(-9.5, -9.5, sprintf('n %d',sum(rfQuadrant==3)))
+% text(9, -9.5, sprintf('n %d',sum(rfQuadrant==4)))
 
 if contains(trData.animal,'XT')
     title({sprintf('%s BE %s %s',trData.animal, trData.array, trData.programID);...

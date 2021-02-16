@@ -15,20 +15,20 @@ clc
 % clear data
 % 
 % newName = 'WV_BE_V4_bothGlass_cleanMerged';
-%  %%
-% load('WU_BE_GlassTR_V4_cleanMerged');
+ %%
+% load('WU_BE_GlassTR_V1_cleanMerged');
 % trLE = data.LE;
 % trRE = data.RE;
 % trData = data;
 % clear data;
 % 
-% load('WU_BE_V4_Glass_clean_merged');
+% load('WU_BE_V1_Glass_clean_merged');
 % conRadLE = data.LE;
 % conRadRE = data.RE;
 % conRadData = data;
 % clear data
 % 
-% newName = 'WU_BE_V4_bothGlass_cleanMerged';
+% newName = 'WU_BE_V1_bothGlass_cleanMerged';
 %% 
 load('XT_BE_GlassTR_V4_cleanMerged');
 trLE = data.LE;
@@ -61,7 +61,7 @@ filename = [trLE.animal,'_',trLE.array];
 trLE.amap = getBlackrockArrayMap(filename);
 trRE.amap = getBlackrockArrayMap(filename);
 conRadLE.amap = getBlackrockArrayMap(filename);
-conRadLE.amap = getBlackrockArrayMap(filename);
+conRadRE.amap = getBlackrockArrayMap(filename);
 %%  get receptive field information
 trLE = callReceptiveFieldParameters(trLE);
 trRE = callReceptiveFieldParameters(trRE);
@@ -119,7 +119,7 @@ conRadRE.within2Deg   = trRE.within2Deg;
 
 %% plot responses by dt,dx
 getGlass_dtdxByCh(trLE,trRE,conRadLE,conRadRE)
-%
+%%
 if location == 1
     figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/GlassCombo/%s/',trLE.animal,trLE.array);
 elseif location == 0
@@ -261,20 +261,7 @@ print(gcf, figName,'-dpdf','-bestfit')
 
 clear goodQuads; clear goodRanks; clear goodOris; clear goodOSI; clear t1Text;
 %% plot differences between preferred and dominant orientations
-[trRE.conDiff, trRE.radDiff] = diffPrefOriPrefStimOri(trRE);
-%%
-trLEz(:,:,:,:) = nanmean(squeeze(trLE.GlassTRZscore(:,end,:,:,:,:)),5);
-trREz(:,:,:,:) = nanmean(squeeze(trRE.GlassTRZscore(:,end,:,:,:,:)),5);
-
-conLEz(:,:,:) = nanmean(squeeze(conRadLE.conZscore(end,:,:,:,:)),4);
-radLEz(:,:,:) = nanmean(squeeze(conRadLE.radZscore(end,:,:,:,:)),4);
-nozLEz(:,:,:) = nanmean(squeeze(conRadLE.noiseZscore(1,:,:,:,:)),4);
-
-conREz(:,:,:) = nanmean(squeeze(conRadRE.conZscore(end,:,:,:,:)),4);
-radREz(:,:,:) = nanmean(squeeze(conRadRE.radZscore(end,:,:,:,:)),4);
-nozREz(:,:,:) = nanmean(squeeze(conRadRE.noiseZscore(1,:,:,:,:)),4);
-%% plot density dx by pattern for each channel. 
-plotGlass_dtDxPref_bych(trLE,trRE,conRadLE,conRadRE)
+% [trRE.conDiff, trRE.radDiff] = diffPrefOriPrefStimOri(trRE);
 %% save combined data
 
 location = determineComputer;

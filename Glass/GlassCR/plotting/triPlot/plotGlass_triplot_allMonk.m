@@ -121,114 +121,137 @@ WUv1REsort = WUsortDps(WUsortDps(:,5) == 2,:);
 WUv4LEsort = WUsortDps(WUsortDps(:,5) == 3,:);
 WUv4REsort = WUsortDps(WUsortDps(:,5) == 4,:);
 %% plot amblyopic data together
-figDir =  '/Users/brittany/Dropbox/Figures/crossAnimals/Glass/';
-
-if ~exist(figDir,'dir')
-    mkdir(figDir)
-end
-cd(figDir)
-
-figure(1)
-clf
-pos = get(gcf,'Position');
-set(gcf,'Position',[pos(1) pos(2) 900 600]);
-set(gcf,'PaperOrientation','landscape')
-
-t = suptitle('Amblyopic dPrimes for each pattern in V1 and V4');
-t.Position(2) = t.Position(2) +0.026;
-t.FontWeight = 'bold';
-t.FontSize = 18;
-
-makeFig_triplotGlass_2array2eyes(v1LEsort,v1REsort,v4LEsort,v4REsort,sortDps)
-
-figName = 'triplot_ambly_gray.pdf';
-print(gcf, figName,'-dpdf','-bestfit')
+% figDir =  '/Users/brittany/Dropbox/Figures/crossAnimals/Glass/';
+% 
+% if ~exist(figDir,'dir')
+%     mkdir(figDir)
+% end
+% cd(figDir)
+% 
+% figure(1)
+% clf
+% pos = get(gcf,'Position');
+% set(gcf,'Position',[pos(1) pos(2) 900 600]);
+% set(gcf,'PaperOrientation','landscape')
+% 
+% t = suptitle('Amblyopic dPrimes for each pattern in V1 and V4');
+% t.Position(2) = t.Position(2) +0.026;
+% t.FontWeight = 'bold';
+% t.FontSize = 18;
+% 
+% makeFig_triplotGlass_2array2eyes(v1LEsort,v1REsort,v4LEsort,v4REsort,sortDps)
+% 
+% figName = 'triplot_ambly_gray.pdf';
+% print(gcf, figName,'-dpdf','-bestfit')
 
 %%
-figDir =  '/Users/brittany/Dropbox/Figures/XT/glassCoh/arrayComp/';
-
-if ~exist(figDir,'dir')
-    mkdir(figDir)
-end
-cd(figDir)
-
-figure(2)
-clf
-pos = get(gcf,'Position');
-set(gcf,'Position',[pos(1) pos(2) 900 600]);
-set(gcf,'PaperOrientation','landscape')
-
-t = suptitle('Control dPrimes for each pattern in V1 and V4');
-t.Position(2) = t.Position(2) +0.026;
-t.FontWeight = 'bold';
-t.FontSize = 18;
-
-makeFig_triplotGlass_2array2eyes(XTv1LEsort,XTv1REsort,XTv4LEsort,XTv4REsort,XTsortDps)
-
-figName = 'triplot_control_gray.pdf';
-print(gcf, figName,'-dpdf','-bestfit')
+% figDir =  '/Users/brittany/Dropbox/Figures/XT/glassCoh/arrayComp/';
+% 
+% if ~exist(figDir,'dir')
+%     mkdir(figDir)
+% end
+% cd(figDir)
+% 
+% figure(2)
+% clf
+% pos = get(gcf,'Position');
+% set(gcf,'Position',[pos(1) pos(2) 900 600]);
+% set(gcf,'PaperOrientation','landscape')
+% 
+% t = suptitle('Control dPrimes for each pattern in V1 and V4');
+% t.Position(2) = t.Position(2) +0.026;
+% t.FontWeight = 'bold';
+% t.FontSize = 18;
+% 
+% makeFig_triplotGlass_2array2eyes(XTv1LEsort,XTv1REsort,XTv4LEsort,XTv4REsort,XTsortDps)
+% 
+% figName = 'triplot_control_gray.pdf';
+% print(gcf, figName,'-dpdf','-bestfit')
 %%
-figDir = '/Users/brittany/Dropbox/Figures/WV/glassCoh/arrayComp/';
-
-if ~exist(figDir,'dir')
-    mkdir(figDir)
-end
-cd(figDir)
-
-figure(3)
-clf
-pos = get(gcf,'Position');
-set(gcf,'Position',[pos(1) pos(2) 900 600]);
-set(gcf,'PaperOrientation','landscape')
-
-t = suptitle('WV dPrimes for each pattern in V1 and V4');
-t.Position(2) = t.Position(2) +0.026;
-t.FontWeight = 'bold';
-t.FontSize = 18;
-
-makeFig_triplotGlass_2array2eyes(WVv1LEsort,WVv1REsort,WVv4LEsort,WVv4REsort,WVsortDps)
-
-figName = 'triplot_WV_gray.pdf';
-print(gcf, figName,'-dpdf','-bestfit')
+% figDir = '/Users/brittany/Dropbox/Figures/WV/glassCoh/arrayComp/';
+% 
+% if ~exist(figDir,'dir')
+%     mkdir(figDir)
+% end
+% cd(figDir)
+% 
+% figure(3)
+% clf
+% pos = get(gcf,'Position');
+% set(gcf,'Position',[pos(1) pos(2) 900 600]);
+% set(gcf,'PaperOrientation','landscape')
+% 
+% t = suptitle('WV dPrimes for each pattern in V1 and V4');
+% t.Position(2) = t.Position(2) +0.026;
+% t.FontWeight = 'bold';
+% t.FontSize = 18;
+% 
+% makeFig_triplotGlass_2array2eyes(WVv1LEsort,WVv1REsort,WVv4LEsort,WVv4REsort,WVsortDps)
+% 
+% figName = 'triplot_WV_gray.pdf';
+% print(gcf, figName,'-dpdf','-bestfit')
 %% WU
-figDir = '/Users/brittany/Dropbox/Figures/WU/glassCoh/arrayComp/';
-
-if ~exist(figDir,'dir')
-    mkdir(figDir)
-end
-cd(figDir)
-
-figure(4)
-clf
-pos = get(gcf,'Position');
-set(gcf,'Position',[pos(1) pos(2) 900 600]);
-set(gcf,'PaperOrientation','landscape')
-
-t = suptitle('WU dPrimes for each pattern in V1 and V4');
-t.Position(2) = t.Position(2) +0.026;
-t.FontWeight = 'bold';
-t.FontSize = 18;
-
-makeFig_triplotGlass_2array2eyes(WUv1LEsort,WUv1REsort,WUv4LEsort,WUv4REsort,WUsortDps)
-
-figName = 'triplot_WU_gray.pdf';
-print(gcf, figName,'-dpdf','-bestfit')
+% figDir = '/Users/brittany/Dropbox/Figures/WU/glassCoh/arrayComp/';
+% 
+% if ~exist(figDir,'dir')
+%     mkdir(figDir)
+% end
+% cd(figDir)
+% 
+% figure(4)
+% clf
+% pos = get(gcf,'Position');
+% set(gcf,'Position',[pos(1) pos(2) 900 600]);
+% set(gcf,'PaperOrientation','landscape')
+% 
+% t = suptitle('WU dPrimes for each pattern in V1 and V4');
+% t.Position(2) = t.Position(2) +0.026;
+% t.FontWeight = 'bold';
+% t.FontSize = 18;
+% 
+% makeFig_triplotGlass_2array2eyes(WUv1LEsort,WUv1REsort,WUv4LEsort,WUv4REsort,WUsortDps)
+% 
+% figName = 'triplot_WU_gray.pdf';
+% print(gcf, figName,'-dpdf','-bestfit')
 %% plot triplot for the amblyopes using red for WV and blue for WU
 
-figDir =  '/Users/brittany/Dropbox/Figures/crossAnimals/Glass/';
-
-if ~exist(figDir,'dir')
-    mkdir(figDir)
-end
-cd(figDir)
-
-figure(5)
+% figDir =  '/Users/brittany/Dropbox/Figures/crossAnimals/Glass/';
+% 
+% if ~exist(figDir,'dir')
+%     mkdir(figDir)
+% end
+% cd(figDir)
+% 
+% figure(5)
+% clf
+% pos = get(gcf,'Position');
+% set(gcf,'Position',[pos(1) pos(2) 800 600]); 
+% set(gcf,'PaperOrientation','landscape')
+% 
+% makeFig_triplotGlass_multiColorWs(WUsortDps,WVsortDps)
+% 
+% figName = ['triplot_Amblys_redBlue','.pdf'];
+% print(gcf, figName,'-dpdf','-bestfit')
+%% plot center of mass
+figure(6)
 clf
-pos = get(gcf,'Position');
-set(gcf,'Position',[pos(1) pos(2) 800 600]); 
 set(gcf,'PaperOrientation','landscape')
+makeFig_triplotGlass_centerMass(WUsortDps, WVsortDps, XTsortDps,1)
 
-makeFig_triplotGlass_multiColorWs(WUsortDps,WVsortDps)
+s = suptitle('Location of the center of mass in d prime triplots for all animals');
+s.Position(2) = s.Position(2) + 0.02;
+s.FontSize = 22;
+figName = ['triplot_centerMass_all3','.pdf'];
+print(gcf, figName,'-dpdf','-bestfit')
 
-figName = 'triplot_Amblys_redBlue.pdf';
+%% 
+figure(7)
+clf
+set(gcf,'PaperOrientation','landscape')
+makeFig_triplotGlass_centerMass(WUsortDps, WVsortDps, XTsortDps,0)
+
+s = suptitle('Location of the center of mass in d prime triplots for amblyopes');
+s.Position(2) = s.Position(2) + 0.02;
+s.FontSize = 22; 
+figName = ['triplot_centerMass_amb','.pdf'];
 print(gcf, figName,'-dpdf','-bestfit')
