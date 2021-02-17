@@ -1,4 +1,4 @@
-function [h] = triplotter_Glass(rcd,cmap,cBarFlag,vSumMax)
+function [h] = triplotter_Glass_noCBar(rcd,cmap)
 % required inputs(rcb,cmap)
 % RCD   are d' vs blank for radial, concentric, and dipole
 % CMAP  are the (r,g,b) values to be used for each data point based on their
@@ -43,22 +43,11 @@ plot3m([rad2deg(phic),rad2deg(phil)],[rad2deg(thc),rad2deg(thl)],[rc,rl],'-','co
 plot3m([rad2deg(phic),rad2deg(phir)],[rad2deg(thc),rad2deg(thr)],[rc,rr],'-','color',[0.6 0.6 0.6])
 plot3m([rad2deg(phic),rad2deg(phib)],[rad2deg(thc),rad2deg(thb)],[rc,rb],'-','color',[0.6 0.6 0.6])
 
-if cBarFlag == 1
-colormap(flipud(cmap)); colorbar;
-c = colorbar('TickDirection','out');
-c.Ticks = 0:0.25:1;
-c.TickLabels = round(linspace(0,vSumMax,5),1);
-c.Label.String = 'Vector sum of dPrimes';
-c.FontAngle = 'italic';
-c.FontSize = 11;
-
-c.Label.FontSize = 13;
-end
 set(gca,'FontSize',13,'color','none')
 
-bl=textm(0,0,'Model 1','FontSize',13);
-br=textm(0,90,'Model 2','FontSize',13);
-tp=textm(90,90,'Model 3','FontSize',13);
+bl=textm(0,0,'','FontSize',13);
+br=textm(0,90,'','FontSize',13);
+tp=textm(90,90,'','FontSize',13);
 
 set(bl,'horizontalalignment','left','string',sprintf('\n\nRadial    '))
 set(br,'horizontalalignment','right','string',sprintf('\n\n\n         Concentric'))
