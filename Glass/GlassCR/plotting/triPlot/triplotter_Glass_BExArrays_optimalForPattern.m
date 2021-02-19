@@ -1,4 +1,4 @@
-function [] = triplotter_Glass_noCBar_BExArrays_optimalForPattern(V1data,V4data)
+function [] = triplotter_Glass_BExArrays_optimalForPattern(V1data,V4data)
 location = determineComputer;
 
 if location == 1
@@ -17,15 +17,10 @@ DONE:
 1) V1 and V4  
 2) limit everything to good ch and in stim 
 3) plot the dashed lines for each subsection
-a) switch to triplotter_glass
-b) verify center of mass plotted clearly
-
-NOT DONE: 
-variance of data points
-alter figures so only one color bar on the far right of the figure window. 
-
-b) use inpolygon to determine how many points fall within the different sections
-    - make 4 sections: one at/around the center then the others at the three subareas for the different stimuli.
+4) switch to triplotter_glass
+5) verify center of mass plotted clearly
+6) alter figures so only one color bar on the far right of the figure window. 
+7) count how many points fall within the different sections
 %}
 %%
 
@@ -55,7 +50,7 @@ v1REsort = sortDps(sortDps(:,5) == 2,:);
 v4LEsort = sortDps(sortDps(:,5) == 3,:);
 v4REsort = sortDps(sortDps(:,5) == 4,:);
 %% 
-figure(2)
+figure(1)
 clf
 pos = get(gcf,'Position');
 set(gcf,'Position',[pos(1) pos(2) 900 700]);
@@ -76,9 +71,9 @@ hold on
 triplotter_centerMass(rcd,v1LEsort(:,4),[1 0 0])
 
 if contains(V1data.conRadLE.animal,'XT')
-    title(sprintf('LE n: %d',sum(V1data.conRadLE.goodCh)))
+    title(sprintf('LE n: %d',sum(V1data.conRadLE.goodCh & V1data.conRadLE.inStim)))
 else
-    title(sprintf('FE n: %d',sum(V1data.conRadLE.goodCh)))
+    title(sprintf('FE n: %d',sum(V1data.conRadLE.goodCh & V1data.conRadLE.inStim)))
 end
 clear dps;
 s.Position(1) = s.Position(1) + 0.01;
@@ -88,10 +83,10 @@ s.Position(4) = s.Position(4) + 0.02;
 
 text(-1.5,0.1,'V1','FontSize',22,'FontWeight','bold')
 % variances
-LEv1Vars = var(rcd,v1LEsort(:,4));
-text(-1.1, 0.6,sprintf('radial var: %.2f',LEv1Vars(1)),'FontSize',12) 
-text(-1.1, 0.5,sprintf('con var: %.2f',LEv1Vars(2)),'FontSize',12) 
-text(-1.1, 0.4,sprintf('dipole var: %.2f',LEv1Vars(3)),'FontSize',12) 
+% LEv1Vars = var(rcd,v1LEsort(:,4));
+% text(-1.1, 0.6,sprintf('radial var: %.2f',LEv1Vars(1)),'FontSize',12) 
+% text(-1.1, 0.5,sprintf('con var: %.2f',LEv1Vars(2)),'FontSize',12) 
+% text(-1.1, 0.4,sprintf('dipole var: %.2f',LEv1Vars(3)),'FontSize',12) 
 
 %
 s = subplot(2,2,2);     
@@ -102,9 +97,9 @@ triplotter_Glass_noCBar(rcd,cmp);
 triplotter_centerMass(rcd,v1REsort(:,4),[1 0 0])
 
 if contains(V1data.conRadLE.animal,'XT')
-    title(sprintf('RE n: %d',sum(V1data.conRadLE.goodCh)))
+    title(sprintf('RE n: %d',sum(V1data.conRadRE.goodCh & V1data.conRadRE.inStim)))
 else
-    title(sprintf('AE n: %d',sum(V1data.conRadLE.goodCh)))
+    title(sprintf('AE n: %d',sum(V1data.conRadRE.goodCh & V1data.conRadRE.inStim)))
 end
 clear dps;
 s.Position(1) = s.Position(1) - 0.03;
@@ -114,9 +109,9 @@ s.Position(4) = s.Position(4) + 0.02;
 
 % variances
 REv1Vars = var(rcd,v1REsort(:,4));
-text(-1.1, 0.6,sprintf('radial var: %.2f',REv1Vars(1)),'FontSize',12) 
-text(-1.1, 0.5,sprintf('con var: %.2f',REv1Vars(2)),'FontSize',12) 
-text(-1.1, 0.4,sprintf('dipole var: %.2f',REv1Vars(3)),'FontSize',12) 
+% text(-1.1, 0.6,sprintf('radial var: %.2f',REv1Vars(1)),'FontSize',12) 
+% text(-1.1, 0.5,sprintf('con var: %.2f',REv1Vars(2)),'FontSize',12) 
+% text(-1.1, 0.4,sprintf('dipole var: %.2f',REv1Vars(3)),'FontSize',12) 
 
 s = subplot(2,2,3);  
 hold on
@@ -126,9 +121,9 @@ triplotter_Glass_noCBar(rcd,cmp);
 triplotter_centerMass(rcd,v4LEsort(:,4),[1 0 0])
 
 if contains(V1data.conRadLE.animal,'XT')
-    title(sprintf('LE n: %d',sum(V1data.conRadLE.goodCh)))
+    title(sprintf('LE n: %d',sum(V4data.conRadLE.goodCh & V4data.conRadLE.inStim)))
 else
-    title(sprintf('FE n: %d',sum(V1data.conRadLE.goodCh)))
+    title(sprintf('FE n: %d',sum(V4data.conRadLE.goodCh & V4data.conRadLE.inStim)))
 end
 clear dps;
 s.Position(1) = s.Position(1) + 0.01;
@@ -136,10 +131,10 @@ s.Position(3) = s.Position(3) + 0.02;
 s.Position(4) = s.Position(4) + 0.02;
 text(-1.5,0.1,'V4','FontSize',22,'FontWeight','bold')
 % variances
-LEv4Vars = var(rcd,v4LEsort(:,4));
-text(-1.1, 0.6,sprintf('radial var: %.2f',LEv4Vars(1)),'FontSize',12) 
-text(-1.1, 0.5,sprintf('con var: %.2f',LEv4Vars(2)),'FontSize',12) 
-text(-1.1, 0.4,sprintf('dipole var: %.2f',LEv4Vars(3)),'FontSize',12) 
+% LEv4Vars = var(rcd,v4LEsort(:,4));
+% text(-1.1, 0.6,sprintf('radial var: %.2f',LEv4Vars(1)),'FontSize',12) 
+% text(-1.1, 0.5,sprintf('con var: %.2f',LEv4Vars(2)),'FontSize',12) 
+% text(-1.1, 0.4,sprintf('dipole var: %.2f',LEv4Vars(3)),'FontSize',12) 
 
 
 
@@ -147,23 +142,23 @@ s = subplot(2,2,4);
 hold on
 rcd = v4REsort(:,1:3);
 cmp = v4REsort(:,6:8);
-ax = triplotter_Glass_noCBar(rcd,cmp);;
+ax = triplotter_Glass_noCBar(rcd,cmp);
 triplotter_centerMass(rcd,v4REsort(:,4),[1 0 0])
 
 if contains(V1data.conRadLE.animal,'XT')
-    title(sprintf('RE n: %d',sum(V1data.conRadLE.goodCh)))
+    title(sprintf('RE n: %d',sum(V4data.conRadRE.goodCh & V4data.conRadRE.inStim)))
 else
-    title(sprintf('AE n: %d',sum(V1data.conRadLE.goodCh)))
+    title(sprintf('AE n: %d',sum(V4data.conRadRE.goodCh & V4data.conRadRE.inStim)))
 end
 s.Position(1) = s.Position(1) - 0.03;
 s.Position(3) = s.Position(3) + 0.02;
 s.Position(4) = s.Position(4) + 0.02;
 
 % variances
-REv4Vars = var(rcd,v4REsort(:,4));
-text(-1.1, 0.6,sprintf('radial var: %.2f',REv4Vars(1)),'FontSize',12) 
-text(-1.1, 0.5,sprintf('con var: %.2f',REv4Vars(2)),'FontSize',12) 
-text(-1.1, 0.4,sprintf('dipole var: %.2f',REv4Vars(3)),'FontSize',12) 
+% REv4Vars = var(rcd,v4REsort(:,4));
+% text(-1.1, 0.6,sprintf('radial var: %.2f',REv4Vars(1)),'FontSize',12) 
+% text(-1.1, 0.5,sprintf('con var: %.2f',REv4Vars(2)),'FontSize',12) 
+% text(-1.1, 0.4,sprintf('dipole var: %.2f',REv4Vars(3)),'FontSize',12) 
 
 colormap(ax,flipud(cmap));
 c2 = colorbar(ax,'Position',[0.9 0.31 0.0178 0.37]);

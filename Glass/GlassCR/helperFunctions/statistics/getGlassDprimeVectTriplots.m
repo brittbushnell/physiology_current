@@ -20,4 +20,4 @@ nDp = max(nDp');
 nDp = nDp(goodCh == 1 & inStim == 1);
 nDp = nDp';
 
-stimDps = [rDp,cDp,nDp]; % this vector is the input to the triplot figure.
+stimDps = [rDp,cDp,nDp]; % this matrix is the input to the triplot figure. Each row is a channel, each column is a different stimulus

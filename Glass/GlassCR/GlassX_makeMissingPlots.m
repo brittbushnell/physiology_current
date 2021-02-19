@@ -1,14 +1,9 @@
 clear all
 close all
 clc
-
+%%
 files = {
-    'WU_BE_V4_Aug2017_clean_merged';
-    'WV_BE_V4_Aug2017_clean_merged';
-    'XT_BE_V4_Aug2017_clean_merged';
-    'WU_BE_V1_Aug2017_clean_merged';
-    'WV_BE_V1_Aug2017_clean_merged';
-    'XT_BE_V1_Aug2017_clean_merged';
+'WV_BE_V4_Glass_Aug2017_clean_merged'
     };
 %%
 
@@ -20,10 +15,12 @@ for fi = 1:size(files,1)
     REdata = data.RE;    
     LEdata = data.LE;
  %%
-    plotGlass_GlassRankingsDistBlank(REdata) % figure 1 and 2
-    plotGlassPSTHs_stimParams_allCh(REdata)
-    plotGlass_callTriplotGray(REdata)
+%     plotGlass_GlassRankingsDistBlank(REdata) % figure 1 and 2
+%     plotGlassPSTHs_stimParams_allCh(REdata)
+%     plotGlass_callTriplotGray(REdata)
+
     plotGlass_CoherenceResps(REdata) 
+      %%
     plotResponsePvalsVSreliabilityPvals_inStim(REdata)
     
     plotGlass_GlassRankingsDistBlank(LEdata) % figure 1 and 2
