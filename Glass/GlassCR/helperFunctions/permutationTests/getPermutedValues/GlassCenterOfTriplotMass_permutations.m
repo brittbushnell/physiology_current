@@ -1,4 +1,4 @@
-function GlassCenterOfTriplotMass_permutations(varargin)
+function [CoM,vSum] = GlassCenterOfTriplotMass_permutations(varargin)
 %{
 Input requirements:
 
@@ -33,22 +33,14 @@ switch nargin
         radDprimes = varargin{2};
         nozDprimes = varargin{3};
         numBoot = 1000;
-        holdout = 0.9;
     case 4
         conDprimes = varargin{1};
         radDprimes = varargin{2};
         nozDprimes = varargin{3};
         numBoot = varargin{4};
-        holdout = 0.9;
-    case 5
-        conDprimes = varargin{1};
-        radDprimes = varargin{2};
-        nozDprimes = varargin{3};
-        numBoot = varargin{4};
-        holdout = varargin{5};
 end
 %% initialize response matrices
-CoM = nan(1,numBoot);
+CoM = nan(numBoot,3);
 
 %%
 for nb = 1:numBoot
@@ -56,27 +48,22 @@ for nb = 1:numBoot
     for ch = 1:size(conDprimes,3)
         conT = squeeze(conDprimes(:,:,ch));
         radT = squeeze(radDprimes(:,:,ch));
-        nozT = squeeze(conDprimes(:,:,ch));
+        nozT = squeeze(nozDprimes(:,:,ch));
         
         dpsT = cat(2,conT,radT,nozT);
-        randC = randi(numel(dpsT),1);
-        randR = randi(numel(dpsT),1);
+        r = randi(numel(dpsT),6);
+        r = unique(r);
         
-        while randR == randC
-            randR = randi(numel(dpsT),1);
-        end
+        rndC = dpsT(r(1));
+        rndR = dpsT(r(2));
+        rndN = dpsT(r(3));
         
-        randN = randi(numel(dpsT),1);
-        
-        while randN == randC || randN == randR
-            randN = randi(numel(dpsT),1);
-        end
-        
-        rcdT(ch,1:3) = [randC randR randN];  
+        rcdT(ch,1:3) = [rndC rndR rndN];  
     end
-    rcdT(:,4) = sqrt(rcdT(:,1).^2 + rcdT(:,2).^2 + rcdT(:,3).^2);
-    wgtLoc = (rcdT(:,1:3)).*rcdT(:,4);
-    CoM(nb) = mean(wgtLoc);
+    
+    vSum(:,nb) = sqrt(rcdT(:,1).^2 + rcdT(:,2).^2 + rcdT(:,3).^2);
+    wgtLoc = (rcdT(:,1:3)).*vSum(:,nb);
+    CoM(nb,:) = mean(wgtLoc);
 end
 
 

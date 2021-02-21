@@ -1,67 +1,52 @@
-s = subplot(2,3,4);
-le =  reshape(v4ConLE,numel(v4ConLE),1);
-re = reshape(v4ConRE,numel(v4ConRE),1);
-oneMtx = ones(length(re),1);
-regX = [oneMtx,re];
-[~,~,~,~,nozReg] = regress(le,regX);
-
+figure(1)
+clf
 hold on
-scatter(le,re,40,'markerfacecolor', [0.7 0 0.7],'markeredgecolor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)
-text(-0.5, 4.5,sprintf('R2: %.3f',nozReg(1))) 
-plot([-2 5],[-2 5],'k')
 
-title('Concentric')
-set(gca,'color','none','tickdir','out','box','off','FontSize',12,'FontWeight','bold','FontAngle','italic',...
-    'layer','top','XTick',0:2:4,'YTick',0:2:4);
-xlim([-1 5])
-ylim([-1 5])
-axis square
-if contains(V4data.conRadRE.animal,'XT')
-    xlabel('LE')
-    ylabel('RE')
-else
-    xlabel('FE')
-    ylabel('AE')
+goodCh = V4data.conRadLE.goodCh;
+inStim = V4data.conRadLE.inStim;
+
+conDp = squeeze(V4data.conRadLE.conBlankDprime);
+radDp = squeeze(V4data.conRadLE.radBlankDprime);
+nozDp = squeeze(V4data.conRadLE.noiseBlankDprime);
+
+rcd = getGlassDprimeVectTriplots(radDp,conDp,nozDp,goodCh,inStim);
+
+vSum = sqrt(rcd(:,1).^2 + rcd(:,2).^2 + rcd(:,3).^2);
+comReal = triplotter_centerMass(rcd,vSum,[1,0,0]);
+
+[comPerm,vSumPerm] = GlassCenterOfTriplotMass_permutations(conDp,radDp,nozDp);
+
+%%
+figure(1)
+% clf
+hold on
+
+for nb = 1:size(comPerm,1)
+    [thx,phix,rx]=cart2sph(comPerm(nb,1),comPerm(nb,2),comPerm(nb,3));
+    plot3m(rad2deg(phix),rad2deg(thx),rx+4, 'o','MarkerFaceColor',[0.5 0.5 0.5],'MarkerEdgeColor',[0.99 0.99 0.99],'MarkerSize',7,'LineWidth',0.2);
 end
+%%
 
-text(-3.5,2,'V4','FontSize',20,'FontWeight','bold') 
-clear le; clear re; clear regX;
 
-s = subplot(2,3,5);
-le = reshape(v4RadLE,numel(v4RadLE),1);
-re = reshape(v4RadRE,numel(v4RadRE),1);
-oneMtx = ones(length(re),1);
-regX = [oneMtx,re];
-[~,~,~,~,radReg] = regress(le,regX);
+figure(2)
+clf
+pos = get(gcf,'Position');
+set(gcf,'Position',[pos(1) pos(2) 700 400]);
+set(gcf,'PaperOrientation','landscape')
 
 hold on
-scatter(le,re,40,'markerfacecolor', [0 0.6 0.2],'markeredgecolor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)
-text(-0.5, 4.5,sprintf('R2: %.3f',radReg(1))) 
-plot([-2 5],[-2 5],'k')
+comPermDist = mean(comPerm,2);
+comRealDist = squeeze(mean(comReal,2));
 
-title('Radial')
-set(gca,'color','none','tickdir','out','box','off','FontSize',12,'FontWeight','bold','FontAngle','italic',...
-    'layer','top','XTick',0:2:4,'YTick',0:2:4);
-xlim([-1 5])
-ylim([-1 5])
-axis square
-clear le; clear re; clear regX;
+permMax = max(comPermDist); permMin = min(comPermDist);
+xMax = max(abs([comRealDist,permMax,permMin]));
 
-s = subplot(2,3,6);
-le =  reshape(v4NozLE,numel(v4NozLE),1);
-re = reshape(v4NozRE,numel(v4NozRE),1);
-oneMtx = ones(length(re),1);
-regX = [oneMtx,re];
-[~,~,~,~,nozReg] = regress(le,regX);
-hold on
-scatter(le,re,40,'markerfacecolor', [1 0.5 0.1],'markeredgecolor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)
-text(-0.5, 4.5,sprintf('R2: %.3f',nozReg(1))) 
-plot([-2 5],[-2 5],'k')
+xlim([-xMax xMax])
+title(sprintf('%s LE V4 mean distance between d'' values',V4data.conRadLE.animal),'FontSize',18)
+histogram(comPermDist,12,'FaceColor',[0 0.5 0.1],'EdgeColor','w','Normalization','probability');
+plot([comRealDist,comRealDist],[0 0.6],'-r','LineWidth',1)
+set(gca,'box','off','tickdir','out','layer','top');
+%%
 
-title('Dipole')
-set(gca,'color','none','tickdir','out','box','off','FontSize',12,'FontWeight','bold','FontAngle','italic',...
-    'layer','top','XTick',0:2:4,'YTick',0:2:4);
-xlim([-1 5])
-ylim([-1 5])
-axis square
-clear le; clear re; clear regX;
+
+%% 

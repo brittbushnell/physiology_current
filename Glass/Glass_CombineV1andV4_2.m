@@ -1,7 +1,7 @@
 clear
 %close all
 clc
-%%
+ %%
 load('WV_BE_V1_bothGlass_cleanMerged');
 V1data = data;
 clear data;

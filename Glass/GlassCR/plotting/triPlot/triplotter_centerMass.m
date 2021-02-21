@@ -1,4 +1,4 @@
-function triplotter_centerMass(rcd,vSum,mkColor)
+function wgtMu = triplotter_centerMass(rcd,vSum,mkColor)
 %%
 % figure(1)
 % clf
