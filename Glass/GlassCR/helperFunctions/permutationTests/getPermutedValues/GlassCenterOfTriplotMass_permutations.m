@@ -5,6 +5,9 @@ Input requirements:
 concentric, radial, and dipole matrices that are organized (dt,dx,ch) and
 limited to included channels.
 
+Optional inputs:
+number of permutations to do.
+
 steps:
 
 1) setup rcd matrix
@@ -29,22 +32,21 @@ switch nargin
     case 2
         error('Must pass in the d'' matrices')
     case 3
-        conDprimes = varargin{1};
-        radDprimes = varargin{2};
+        radDprimes = varargin{1};
+        conDprimes = varargin{2};
         nozDprimes = varargin{3};
         numBoot = 1000;
     case 4
-        conDprimes = varargin{1};
-        radDprimes = varargin{2};
+        radDprimes = varargin{1};
+        conDprimes = varargin{2};
         nozDprimes = varargin{3};
         numBoot = varargin{4};
 end
 %% initialize response matrices
 CoM = nan(numBoot,3);
-
 %%
 for nb = 1:numBoot
-    rcdT = nan(size(conDprimes,3),4);
+    rcdT = nan(size(conDprimes,3),3);
     for ch = 1:size(conDprimes,3)
         conT = squeeze(conDprimes(:,:,ch));
         radT = squeeze(radDprimes(:,:,ch));
@@ -58,12 +60,13 @@ for nb = 1:numBoot
         rndR = dpsT(r(2));
         rndN = dpsT(r(3));
         
-        rcdT(ch,1:3) = [rndC rndR rndN];  
+        rcdT(ch,1:3) = [rndR rndC rndN];  
     end
     
     vSum(:,nb) = sqrt(rcdT(:,1).^2 + rcdT(:,2).^2 + rcdT(:,3).^2);
-    wgtLoc = (rcdT(:,1:3)).*vSum(:,nb);
+    wgtLoc = (rcdT).*vSum(:,nb);
     CoM(nb,:) = mean(wgtLoc);
+    clear rcdT; clear wgtLoc;
 end
 
 

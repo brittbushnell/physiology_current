@@ -2,23 +2,23 @@ clear
 %close all
 clc
  %%
-load('WV_BE_V1_bothGlass_cleanMerged');
-V1data = data;
-clear data;
-
-load('WV_BE_V4_bothGlass_cleanMerged');
-V4data = data;
-clear data;
-newName = 'WV_2eyes_2arrays_GlassPatterns';
-%%
-% load('WU_BE_V1_bothGlass_cleanMerged');
+% load('WV_BE_V1_bothGlass_cleanMerged');
 % V1data = data;
 % clear data;
 % 
-% load('WU_BE_V4_bothGlass_cleanMerged');
+% load('WV_BE_V4_bothGlass_cleanMerged');
 % V4data = data;
 % clear data;
-% newName = 'WU_2eyes_2arrays_GlassPatterns';
+% newName = 'WV_2eyes_2arrays_GlassPatterns';
+%%
+load('WU_BE_V1_bothGlass_cleanMerged');
+V1data = data;
+clear data;
+
+load('WU_BE_V4_bothGlass_cleanMerged');
+V4data = data;
+clear data;
+newName = 'WU_2eyes_2arrays_GlassPatterns';
 %%
 % load('XT_BE_V1_bothGlass_cleanMerged');
 % V1data = data;

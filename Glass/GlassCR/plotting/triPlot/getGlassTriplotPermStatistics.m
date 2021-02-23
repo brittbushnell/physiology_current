@@ -3,9 +3,9 @@
 V4goodChLE = V4data.conRadLE.goodCh;
 V4inStimLE = V4data.conRadLE.inStim;
 
-V4conDpLE = squeeze(V4data.conRadLE.conBlankDprime);
-V4radDpLE = squeeze(V4data.conRadLE.radBlankDprime);
-V4nozDpLE = squeeze(V4data.conRadLE.noiseBlankDprime);
+V4conDpLE = V4data.conRadLE.conBlankDprime;
+V4radDpLE = V4data.conRadLE.radBlankDprime;
+V4nozDpLE = V4data.conRadLE.noiseBlankDprime;
 
 V4rcdLE = getGlassDprimeVectTriplots(V4radDpLE,V4conDpLE,V4nozDpLE,V4goodChLE,V4inStimLE);
 
@@ -16,9 +16,9 @@ V4comPermLE = GlassCenterOfTriplotMass_permutations(V4conDpLE,V4radDpLE,V4nozDpL
 V4goodChRE = V4data.conRadRE.goodCh;
 V4inStimRE = V4data.conRadRE.inStim;
 
-V4conDpRE = squeeze(V4data.conRadRE.conBlankDprime);
-V4radDpRE = squeeze(V4data.conRadRE.radBlankDprime);
-V4nozDpRE = squeeze(V4data.conRadRE.noiseBlankDprime);
+V4conDpRE = V4data.conRadRE.conBlankDprime;
+V4radDpRE = V4data.conRadRE.radBlankDprime;
+V4nozDpRE = V4data.conRadRE.noiseBlankDprime;
 
 V4rcdRE = getGlassDprimeVectTriplots(V4radDpRE,V4conDpRE,V4nozDpRE,V4goodChRE,V4inStimRE);
 
@@ -28,9 +28,9 @@ V4comPermRE = GlassCenterOfTriplotMass_permutations(V4conDpRE,V4radDpRE,V4nozDpR
 V1goodChLE = V1data.conRadLE.goodCh;
 V1inStimLE = V1data.conRadLE.inStim;
 
-V1conDpLE = squeeze(V1data.conRadLE.conBlankDprime);
-V1radDpLE = squeeze(V1data.conRadLE.radBlankDprime);
-V1nozDpLE = squeeze(V1data.conRadLE.noiseBlankDprime);
+V1conDpLE = V1data.conRadLE.conBlankDprime;
+V1radDpLE = V1data.conRadLE.radBlankDprime;
+V1nozDpLE = V1data.conRadLE.noiseBlankDprime;
 
 V1rcdLE = getGlassDprimeVectTriplots(V1radDpLE,V1conDpLE,V1nozDpLE,V1goodChLE,V1inStimLE);
 
@@ -40,10 +40,9 @@ V1comPermLE = GlassCenterOfTriplotMass_permutations(V1conDpLE,V1radDpLE,V1nozDpL
 
 V1goodChRE = V1data.conRadRE.goodCh;
 V1inStimRE = V1data.conRadRE.inStim;
-
-V1conDpRE = squeeze(V1data.conRadRE.conBlankDprime);
-V1radDpRE = squeeze(V1data.conRadRE.radBlankDprime);
-V1nozDpRE = squeeze(V1data.conRadRE.noiseBlankDprime);
+V1conDpRE = V1data.conRadRE.conBlankDprime;
+V1radDpRE = V1data.conRadRE.radBlankDprime;
+V1nozDpRE = V1data.conRadRE.noiseBlankDprime;
 
 V1rcdRE = getGlassDprimeVectTriplots(V1radDpRE,V1conDpRE,V1nozDpRE,V1goodChRE,V1inStimRE);
 
@@ -103,9 +102,9 @@ comRealDist = squeeze(mean(V1comRealLE,2));
 
 permMax = max(comPermDist); permMin = min(comPermDist);
 xMax = max(abs([comRealDist,permMax,permMin]));
-
 xlim([-xMax xMax])
 title(sprintf('%s LE V1 ',V4data.conRadLE.animal),'FontSize',18)
+
 histogram(comPermDist,12,'FaceColor',[0 0.5 0.1],'EdgeColor','w','Normalization','probability');
 plot([comRealDist,comRealDist],[0 0.6],'-r','LineWidth',1)
 set(gca,'box','off','tickdir','out','layer','top');
