@@ -1,105 +1,34 @@
-function makeGlassFigs_dPrimeScatter_2arrays(V1data, V4data)
-%% V1
-v1ConRE = nan(2,2,96);
-v1RadRE = nan(2,2,96);
-v1NozRE = nan(2,2,96);
-
-v1ConLE = nan(2,2,96);
-v1RadLE = nan(2,2,96);
-v1NozLE = nan(2,2,96);
-% identify channels that are responsive  and in stimuli with both eyes
-binocCh = V1data.conRadRE.inStim & V1data.conRadRE.goodCh & V1data.conRadLE.inStim & V1data.conRadLE.goodCh;
+function makeGlassFigs_dPrimeScatter_bothProgs(V1data, V4data)
+%% 
+[V1conLE,V1conRE,V1radLE,V1radRE,V1nozLE,V1nozRE,V1trLE,V1trRE] = getBinocGlassCRdPrimeMats(V1data);
+[V4conLE,V4conRE,V4radLE,V4radRE,V4nozLE,V4nozRE,V4trLE,V4trRE] = getBinocGlassCRdPrimeMats(V4data);
 LEV1chs = V1data.conRadLE.inStim & V1data.conRadLE.goodCh;
 REV1chs = V1data.conRadRE.inStim & V1data.conRadRE.goodCh;
 
-for ch = 1:96
-    if binocCh(ch) == 1
-        v1ConLE(:,:,ch) = squeeze(V1data.conRadLE.conBlankDprime(end,:,:,ch));
-        v1ConRE(:,:,ch) = squeeze(V1data.conRadRE.conBlankDprime(end,:,:,ch));
-        
-        v1RadLE(:,:,ch) = squeeze(V1data.conRadLE.radBlankDprime(end,:,:,ch));
-        v1RadRE(:,:,ch) = squeeze(V1data.conRadRE.radBlankDprime(end,:,:,ch));
-        
-        v1NozLE(:,:,ch) = squeeze(V1data.conRadLE.noiseBlankDprime(1,:,:,ch));
-        v1NozRE(:,:,ch) = squeeze(V1data.conRadRE.noiseBlankDprime(1,:,:,ch));
-    elseif LEV1chs(ch) == 1 && REV1chs(ch) == 0
-        v1ConLE(:,:,ch) = squeeze(V1data.conRadLE.conBlankDprime(end,:,:,ch));
-        v1ConRE(:,:,ch) = zeros(2,2,1);
-        
-        v1RadLE(:,:,ch) = squeeze(V1data.conRadRE.radBlankDprime(end,:,:,ch));
-        v1RadRE(:,:,ch) = zeros(2,2,1);
-        
-        v1NozLE(:,:,ch) = squeeze(V1data.conRadLE.noiseBlankDprime(1,:,:,ch));
-        v1NozRE(:,:,ch) =  zeros(2,2,1);
-    elseif LEV1chs(ch) == 0 && REV1chs(ch) == 1
-        v1ConLE(:,:,ch) = zeros(2,2,1);
-        v1ConRE(:,:,ch) = squeeze(V1data.conRadRE.conBlankDprime(end,:,:,ch));
-        
-        v1RadLE(:,:,ch) = zeros(2,2,1);
-        v1RadRE(:,:,ch) = squeeze(V1data.conRadRE.radBlankDprime(end,:,:,ch));
-        
-        v1NozLE(:,:,ch) =  zeros(2,2,1);
-        v1NozRE(:,:,ch) = squeeze(V1data.conRadRE.noiseBlankDprime(1,:,:,ch));
-    end 
-end
-%% V4
-v4ConRE = nan(2,2,96);
-v4RadRE = nan(2,2,96);
-v4NozRE = nan(2,2,96);
+LEV1chstr = V1data.trLE.inStim & V1data.trLE.goodCh;
+REV1chstr = V1data.trRE.inStim & V1data.trRE.goodCh;
 
-v4ConLE = nan(2,2,96);
-v4RadLE = nan(2,2,96);
-v4NozLE = nan(2,2,96);
-% identify channels that are responsive  and in stimuli with both eyes
-binocCh = V4data.conRadRE.inStim & V4data.conRadRE.goodCh & V4data.conRadLE.inStim & V4data.conRadLE.goodCh;
 LEV4chs = V4data.conRadLE.inStim & V4data.conRadLE.goodCh;
 REV4chs = V4data.conRadRE.inStim & V4data.conRadRE.goodCh;
 
-for ch = 1:96
-    if binocCh(ch) == 1
-        v4ConLE(:,:,ch) = squeeze(V4data.conRadLE.conBlankDprime(end,:,:,ch));
-        v4ConRE(:,:,ch) = squeeze(V4data.conRadRE.conBlankDprime(end,:,:,ch));
-        
-        v4RadLE(:,:,ch) = squeeze(V4data.conRadLE.radBlankDprime(end,:,:,ch));
-        v4RadRE(:,:,ch) = squeeze(V4data.conRadRE.radBlankDprime(end,:,:,ch));
-        
-        v4NozLE(:,:,ch) = squeeze(V4data.conRadLE.noiseBlankDprime(1,:,:,ch));
-        v4NozRE(:,:,ch) = squeeze(V4data.conRadRE.noiseBlankDprime(1,:,:,ch));
-    elseif LEV4chs(ch) == 1 && REV4chs(ch) == 0
-        v4ConLE(:,:,ch) = squeeze(V4data.conRadLE.conBlankDprime(end,:,:,ch));
-        v4ConRE(:,:,ch) = zeros(2,2,1);
-        
-        v4RadLE(:,:,ch) = squeeze(V4data.conRadRE.radBlankDprime(end,:,:,ch));
-        v4RadRE(:,:,ch) = zeros(2,2,1);
-        
-        v4NozLE(:,:,ch) = squeeze(V4data.conRadLE.noiseBlankDprime(1,:,:,ch));
-        v4NozRE(:,:,ch) =  zeros(2,2,1);
-    elseif LEV4chs(ch) == 0 && REV4chs(ch) == 1
-        v4ConLE(:,:,ch) = zeros(2,2,1);
-        v4ConRE(:,:,ch) = squeeze(V4data.conRadRE.conBlankDprime(end,:,:,ch));
-        
-        v4RadLE(:,:,ch) = zeros(2,2,1);
-        v4RadRE(:,:,ch) = squeeze(V4data.conRadRE.radBlankDprime(end,:,:,ch));
-        
-        v4NozLE(:,:,ch) =  zeros(2,2,1);
-        v4NozRE(:,:,ch) = squeeze(V4data.conRadRE.noiseBlankDprime(1,:,:,ch));
-    end 
-end
+LEV4chstr = V4data.trLE.inStim & V4data.trLE.goodCh;
+REV4chstr = V4data.trRE.inStim & V4data.trRE.goodCh;
+
 %%
 
 figure(2)
 clf
 pos = get(gcf,'Position');
-set(gcf,'Position',[pos(1) pos(2) 900 600]);
+set(gcf,'Position',[pos(1) pos(2) 900 500]);
 set(gcf,'PaperOrientation','landscape')
 
 s = suptitle(sprintf('%s d prime values between eyes for stumuli and arrays',V1data.conRadRE.animal));
 s.FontSize = 20;
 s.Position(2) = s.Position(2)+0.025;
 
-s = subplot(2,3,1);
-le =  reshape(v1ConLE,numel(v1ConLE),1);
-re = reshape(v1ConRE,numel(v1ConRE),1);
+s = subplot(2,4,1);
+le =  reshape(V1conLE,numel(V1conLE),1);
+re = reshape(V1conRE,numel(V1conRE),1);
 oneMtx = ones(length(re),1);
 regX = [oneMtx,re];
 [~,~,~,~,conReg] = regress(le,regX);
@@ -128,11 +57,14 @@ text(4,-0.4,sprintf('LE %d',sum(LEV1chs)),'FontSize',12)
 text(4,-0.75,sprintf('RE %d',sum(REV1chs)),'FontSize',12)
 
 text(-3.5,2,'V1','FontSize',20,'FontWeight','bold') 
+s.Position(2) = s.Position(2) - 0.02;
+s.Position(3) = s.Position(3) + 0.01;
+s.Position(4) = s.Position(4) + 0.01;
 clear le; clear re; clear regX;
 
-s = subplot(2,3,2);
-le = reshape(v1RadLE,numel(v1RadLE),1);
-re = reshape(v1RadRE,numel(v1RadRE),1);
+s = subplot(2,4,2);
+le = reshape(V1radLE,numel(V1radLE),1);
+re = reshape(V1radRE,numel(V1radRE),1);
 oneMtx = ones(length(re),1);
 regX = [oneMtx,re];
 [~,~,~,~,radReg] = regress(le,regX);
@@ -151,11 +83,14 @@ ylim([-1 5])
 axis square
 text(4,-0.4,sprintf('LE %d',sum(LEV1chs)),'FontSize',12)
 text(4,-0.75,sprintf('RE %d',sum(REV1chs)),'FontSize',12)
+s.Position(2) = s.Position(2) - 0.02;
+s.Position(3) = s.Position(3) + 0.01;
+s.Position(4) = s.Position(4) + 0.01;
 clear le; clear re; clear regX;
 
-s = subplot(2,3,3);
-le =  reshape(v1NozLE,numel(v1NozLE),1);
-re = reshape(v1NozRE,numel(v1NozRE),1);
+s = subplot(2,4,3);
+le =  reshape(V1nozLE,numel(V1nozLE),1);
+re = reshape(V1nozRE,numel(V1nozRE),1);
 oneMtx = ones(length(re),1);
 regX = [oneMtx,re];
 [~,~,~,~,nozReg] = regress(le,regX);
@@ -174,11 +109,14 @@ ylim([-1 5])
 text(4,-0.4,sprintf('LE %d',sum(LEV1chs)),'FontSize',12)
 text(4,-0.75,sprintf('RE %d',sum(REV1chs)),'FontSize',12)
 axis square
+s.Position(2) = s.Position(2) - 0.02;
+s.Position(3) = s.Position(3) + 0.01;
+s.Position(4) = s.Position(4) + 0.01;
 clear le; clear re; clear regX;
 
-s = subplot(2,3,4);
-le =  reshape(v4ConLE,numel(v4ConLE),1);
-re = reshape(v4ConRE,numel(v4ConRE),1);
+s = subplot(2,4,5);
+le =  reshape(V4conLE,numel(V4conLE),1);
+re = reshape(V4conRE,numel(V4conRE),1);
 oneMtx = ones(length(re),1);
 regX = [oneMtx,re];
 [~,~,~,~,conReg] = regress(le,regX);
@@ -189,7 +127,7 @@ scatter(le,re,40,'markerfacecolor', [0.7 0 0.7],'markeredgecolor','w','MarkerFac
 text(-0.5, 4.5,sprintf('R2: %.3f',conReg(1)),'FontSize',12) 
 % text(-0.5, 4,sprintf('p %.3f',conReg(3)),'FontSize',12) 
 
-title('Concentric')
+% title('Concentric')
 set(gca,'color','none','tickdir','out','box','off','FontSize',12,'FontWeight','bold','FontAngle','italic',...
     'layer','top','XTick',0:2:4,'YTick',0:2:4);
 xlim([-1 5])
@@ -206,11 +144,14 @@ end
 text(-3.5,2,'V4','FontSize',20,'FontWeight','bold') 
 text(4,-0.4,sprintf('LE %d',sum(LEV4chs)),'FontSize',12)
 text(4,-0.75,sprintf('RE %d',sum(REV4chs)),'FontSize',12)
+s.Position(2) = s.Position(2) + 0.02;
+s.Position(3) = s.Position(3) + 0.01;
+s.Position(4) = s.Position(4) + 0.01;
 clear le; clear re; clear regX;
 
-s = subplot(2,3,5);
-le = reshape(v4RadLE,numel(v4RadLE),1);
-re = reshape(v4RadRE,numel(v4RadRE),1);
+s = subplot(2,4,6);
+le = reshape(V4radLE,numel(V4radLE),1);
+re = reshape(V4radRE,numel(V4radRE),1);
 oneMtx = ones(length(re),1);
 regX = [oneMtx,re];
 [~,~,~,~,radReg] = regress(le,regX);
@@ -221,7 +162,7 @@ scatter(le,re,40,'markerfacecolor', [0 0.6 0.2],'markeredgecolor','w','MarkerFac
 text(-0.5, 4.5,sprintf('R2: %.3f',radReg(1)),'FontSize',12)
 % text(-0.5, 4,sprintf('p %.3f',radReg(3)),'FontSize',12)
 
-title('Radial')
+% title('Radial')
 set(gca,'color','none','tickdir','out','box','off','FontSize',12,'FontWeight','bold','FontAngle','italic',...
     'layer','top','XTick',0:2:4,'YTick',0:2:4);
 xlim([-1 5])
@@ -229,11 +170,14 @@ ylim([-1 5])
 axis square
 text(4,-0.4,sprintf('LE %d',sum(LEV4chs)),'FontSize',12)
 text(4,-0.75,sprintf('RE %d',sum(REV4chs)),'FontSize',12)
+s.Position(2) = s.Position(2) + 0.02;
+s.Position(3) = s.Position(3) + 0.01;
+s.Position(4) = s.Position(4) + 0.01;
 clear le; clear re; clear regX;
 
-s = subplot(2,3,6);
-le =  reshape(v4NozLE,numel(v4NozLE),1);
-re = reshape(v4NozRE,numel(v4NozRE),1);
+s = subplot(2,4,7);
+le =  reshape(V4nozLE,numel(V4nozLE),1);
+re = reshape(V4nozRE,numel(V4nozRE),1);
 oneMtx = ones(length(re),1);
 regX = [oneMtx,re];
 [~,~,~,~,nozReg] = regress(le,regX);
@@ -246,19 +190,73 @@ text(-0.5, 4.5,sprintf('R2: %.3f',nozReg(1)),'FontSize',12)
 
 text(4,-0.4,sprintf('LE %d',sum(LEV4chs)),'FontSize',12)
 text(4,-0.75,sprintf('RE %d',sum(REV4chs)),'FontSize',12)
-title('Dipole')
+% title('Dipole')
 set(gca,'color','none','tickdir','out','box','off','FontSize',12,'FontWeight','bold','FontAngle','italic',...
     'layer','top','XTick',0:2:4,'YTick',0:2:4);
 xlim([-1 5])
 ylim([-1 5])
 axis square
+s.Position(2) = s.Position(2) + 0.02;
+s.Position(3) = s.Position(3) + 0.01;
+s.Position(4) = s.Position(4) + 0.01;
 clear le; clear re; clear regX;
+
+% add translational figures
+
+s = subplot(2,4,4);
+
+le =  reshape(V1trLE,numel(V1trLE),1);
+re = reshape(V1trRE,numel(V1trRE),1);
+oneMtx = ones(length(re),1);
+regX = [oneMtx,re];
+[~,~,~,~,trLEReg] = regress(le,regX);
+
+hold on
+plot([-2 5],[-2 5],'color',[0.2 0.2 0.2])
+scatter(le,re,40,'markerfacecolor', [0.2 0.4 1],'markeredgecolor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)
+text(-0.5, 4.5,sprintf('R2: %.3f',trLEReg(1)),'FontSize',12) 
+
+xlim([-1 5])
+ylim([-1 5])
+axis square
+set(gca,'color','none','tickdir','out','box','off','FontSize',12,'FontWeight','bold','FontAngle','italic',...
+    'layer','top','XTick',0:2:4,'YTick',0:2:4);
+text(4,-0.4,sprintf('LE %d',sum(LEV1chstr)),'FontSize',12)
+text(4,-0.75,sprintf('RE %d',sum(REV1chstr)),'FontSize',12)
+s.Position(2) = s.Position(2) - 0.02;
+s.Position(3) = s.Position(3) + 0.01;
+s.Position(4) = s.Position(4) + 0.01;
+title('Translational')
+
+s = subplot(2,4,8);
+hold on
+le =  reshape(V4trLE,numel(V4trLE),1);
+re = reshape(V4trRE,numel(V4trRE),1);
+oneMtx = ones(length(re),1);
+regX = [oneMtx,re];
+[~,~,~,~,trLEReg] = regress(le,regX);
+
+hold on
+plot([-2 5],[-2 5],'color',[0.2 0.2 0.2])
+scatter(le,re,40,'markerfacecolor', [0.2 0.4 1],'markeredgecolor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)
+text(-0.5, 4.5,sprintf('R2: %.3f',trLEReg(1)),'FontSize',12) 
+
+xlim([-1 5])
+ylim([-1 5])
+axis square
+set(gca,'color','none','tickdir','out','box','off','FontSize',12,'FontWeight','bold','FontAngle','italic',...
+    'layer','top','XTick',0:2:4,'YTick',0:2:4);
+text(4,-0.4,sprintf('LE %d',sum(LEV4chstr)),'FontSize',12)
+text(4,-0.75,sprintf('RE %d',sum(REV4chstr)),'FontSize',12)
+s.Position(2) = s.Position(2) + 0.02;
+s.Position(3) = s.Position(3) + 0.01;
+s.Position(4) = s.Position(4) + 0.01;
 %%
 location = determineComputer;
 if location == 1
-    figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/arrayComp/',V1data.conRadRE.animal,V1data.conRadRE.programID);
+    figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/GlassCombo/',V1data.conRadRE.animal);
 elseif location == 0
-    figDir =  sprintf('~/Dropbox/Figures/%s/%s/arrayComp/',V1data.conRadRE.animal,V1data.conRadRE.programID);
+    figDir =  sprintf('~/Dropbox/Figures/%s/GlassCombo/',V1data.conRadRE.animal);
 end
 
 if~exist(figDir,'dir')
@@ -266,6 +264,6 @@ if~exist(figDir,'dir')
 end
 cd(figDir)
 
-figName = [V1data.conRadRE.animal '_glassdPrimeScatters_botArrays','.pdf'];
+figName = [V1data.conRadRE.animal '_glassdPrimeScatters_botProgs','.pdf'];
 set(gcf,'InvertHardCopy','off')
 print(gcf, figName, '-dpdf', '-fillpage')
