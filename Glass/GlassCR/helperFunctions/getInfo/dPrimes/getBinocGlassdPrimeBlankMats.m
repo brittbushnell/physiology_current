@@ -48,7 +48,6 @@ end
 trLE = nan(2,2,96);
 trRE = nan(2,2,96);
 
-Add noise from translational 
 trLEnoz = nan(2,2,96);
 trREnoz = nan(2,2,96);
 % identify channels that are responsive  and in stimuli with both eyes
