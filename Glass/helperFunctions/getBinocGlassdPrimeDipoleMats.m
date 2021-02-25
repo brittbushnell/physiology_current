@@ -1,13 +1,11 @@
-function [conLE,conRE,radLE,radRE,nozLE,nozRE,trLE,trRE] = getBinocGlassCRdPrimeMats(data)
+function [conLE,conRE,radLE,radRE,trLE,trRE] = getBinocGlassdPrimeDipoleMats(data)
 
 
 conRE = nan(2,2,96);
 radRE = nan(2,2,96);
-nozRE = nan(2,2,96);
 
 conLE = nan(2,2,96);
 radLE = nan(2,2,96);
-nozLE = nan(2,2,96);
 
 % identify channels that are responsive  and in stimuli with both eyes
 binocCh = data.conRadRE.inStim & data.conRadRE.goodCh & data.conRadLE.inStim & data.conRadLE.goodCh;
@@ -16,32 +14,26 @@ REchs = data.conRadRE.inStim & data.conRadRE.goodCh;
 
 for ch = 1:96
     if binocCh(ch) == 1
-        conLE(:,:,ch) = squeeze(data.conRadLE.conBlankDprime(end,:,:,ch));
-        conRE(:,:,ch) = squeeze(data.conRadRE.conBlankDprime(end,:,:,ch));
+        conLE(:,:,ch) = squeeze(data.conRadLE.conNoiseDprime(end,:,:,ch));
+        conRE(:,:,ch) = squeeze(data.conRadRE.conNoiseDprime(end,:,:,ch));
         
-        radLE(:,:,ch) = squeeze(data.conRadLE.radBlankDprime(end,:,:,ch));
-        radRE(:,:,ch) = squeeze(data.conRadRE.radBlankDprime(end,:,:,ch));
-        
-        nozLE(:,:,ch) = squeeze(data.conRadLE.noiseBlankDprime(1,:,:,ch));
-        nozRE(:,:,ch) = squeeze(data.conRadRE.noiseBlankDprime(1,:,:,ch));
+        radLE(:,:,ch) = squeeze(data.conRadLE.radNoiseDprime(end,:,:,ch));
+        radRE(:,:,ch) = squeeze(data.conRadRE.radNoiseDprime(end,:,:,ch));
+       
     elseif LEchs(ch) == 1 && REchs(ch) == 0
-        conLE(:,:,ch) = squeeze(data.conRadLE.conBlankDprime(end,:,:,ch));
+        conLE(:,:,ch) = squeeze(data.conRadLE.conNoiseDprime(end,:,:,ch));
         conRE(:,:,ch) = zeros(2,2,1);
         
-        radLE(:,:,ch) = squeeze(data.conRadRE.radBlankDprime(end,:,:,ch));
+        radLE(:,:,ch) = squeeze(data.conRadRE.radNoiseDprime(end,:,:,ch));
         radRE(:,:,ch) = zeros(2,2,1);
         
-        nozLE(:,:,ch) = squeeze(data.conRadLE.noiseBlankDprime(1,:,:,ch));
-        nozRE(:,:,ch) =  zeros(2,2,1);
     elseif LEchs(ch) == 0 && REchs(ch) == 1
         conLE(:,:,ch) = zeros(2,2,1);
-        conRE(:,:,ch) = squeeze(data.conRadRE.conBlankDprime(end,:,:,ch));
+        conRE(:,:,ch) = squeeze(data.conRadRE.conNoiseDprime(end,:,:,ch));
         
         radLE(:,:,ch) = zeros(2,2,1);
-        radRE(:,:,ch) = squeeze(data.conRadRE.radBlankDprime(end,:,:,ch));
+        radRE(:,:,ch) = squeeze(data.conRadRE.radNoiseDprime(end,:,:,ch));
         
-        nozLE(:,:,ch) =  zeros(2,2,1);
-        nozRE(:,:,ch) = squeeze(data.conRadRE.noiseBlankDprime(1,:,:,ch));
     end
 end
 
@@ -55,13 +47,13 @@ REchs = data.trRE.inStim & data.trRE.goodCh;
 
 for ch = 1:96
     % get the max orientation
-    chDps = squeeze(data.trLE.linBlankDprime(:,end,:,:,ch));
+    chDps = squeeze(data.trLE.linNoiseDprime(:,end,:,:,ch));
     [~,maxNdx] = max(chDps,[],'all','linear');
     [maxOri,~] = ind2sub(size(chDps),maxNdx);
     
     maxOriMatLE = squeeze(chDps(maxOri,:,:));
     
-    chDps = squeeze(data.trRE.linBlankDprime(:,end,:,:,ch));
+    chDps = squeeze(data.trRE.linNoiseDprime(:,end,:,:,ch));
     [~,maxNdx] = max(chDps,[],'all','linear');
     [maxOri,~] = ind2sub(size(chDps),maxNdx);
     

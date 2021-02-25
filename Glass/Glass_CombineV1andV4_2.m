@@ -10,7 +10,7 @@ clc
 % V4data = data;
 % clear data;
 % newName = 'WV_2eyes_2arrays_GlassPatterns';
-%%
+ %%
 % load('WU_BE_V1_bothGlass_cleanMerged');
 % V1data = data;
 % clear data;
@@ -52,5 +52,5 @@ data.V1 = V1data;
 data.V4 = V4data;
 
 saveName = [outputDir newName '.mat'];
-save(saveName,'data','-v7.3');
-fprintf('%s saved\n', saveName)
+% save(saveName,'data','-v7.3');
+% fprintf('%s saved\n', saveName)
