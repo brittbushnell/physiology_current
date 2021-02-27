@@ -16,13 +16,13 @@ REV4chstr = V4data.trRE.inStim & V4data.trRE.goodCh;
 
 %%
 
-figure(2)
+figure(5)
 clf
 pos = get(gcf,'Position');
 set(gcf,'Position',[pos(1) pos(2) 900 500]);
 set(gcf,'PaperOrientation','landscape')
 
-s = suptitle(sprintf('%s d'' vs blank between eyes for stumuli and arrays',V1data.conRadRE.animal));
+s = suptitle(sprintf('%s d'' vs blank between eyes for binocular channels',V1data.conRadRE.animal));
 s.FontSize = 20;
 s.Position(2) = s.Position(2)+0.025;
 
@@ -31,12 +31,12 @@ le =  reshape(V1conLE,numel(V1conLE),1);
 re = reshape(V1conRE,numel(V1conRE),1);
 oneMtx = ones(length(re),1);
 regX = [oneMtx,re];
-[~,~,conRes,~,conReg] = regress(le,regX);
+[~,~,conRes,~,conRegV1] = regress(le,regX);
 
 hold on
 plot([-2 5],[-2 5],'color',[0.2 0.2 0.2])
 scatter(le,re,40,'markerfacecolor', [0.7 0 0.7],'markeredgecolor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)
-text(-0.55, 4.25,sprintf('R2 %.3f',conReg(1)),'FontSize',12)
+text(-0.55, 4.75,sprintf('R2 %.3f',conRegV1(1)),'FontSize',12)
 %text(-0.55, 4.75,sprintf('med res %.3f',nanmedian(conRes)),'FontSize',12)
 
 title('Concentric')
@@ -63,12 +63,12 @@ le = reshape(V1radLE,numel(V1radLE),1);
 re = reshape(V1radRE,numel(V1radRE),1);
 oneMtx = ones(length(re),1);
 regX = [oneMtx,re];
-[~,~,radRes,~,radReg] = regress(le,regX);
+[~,~,radRes,~,radRegV1] = regress(le,regX);
 
 hold on
 plot([-2 5],[-2 5],'color',[0.2 0.2 0.2])
 scatter(le,re,40,'markerfacecolor', [0 0.6 0.2],'markeredgecolor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)
-text(-0.55, 4.25,sprintf('R2 %.3f',radReg(1)),'FontSize',12)
+text(-0.55, 4.75,sprintf('R2 %.3f',radRegV1(1)),'FontSize',12)
 % text(-0.55, 4.75,sprintf('med res %.3f',nanmedian(radRes)),'FontSize',12)
 
 title('Radial')
@@ -83,17 +83,17 @@ s.Position(3) = s.Position(3) + 0.01;
 s.Position(4) = s.Position(4) + 0.01;
 clear le; clear re; clear regX;
 
-s = subplot(2,4,3);
+s = subplot(2,4,4);
 le =  reshape(V1nozLE,numel(V1nozLE),1);
 re = reshape(V1nozRE,numel(V1nozRE),1);
 oneMtx = ones(length(re),1);
 regX = [oneMtx,re];
-[~,~,nozRes,~,nozReg] = regress(le,regX);
+[~,~,nozRes,~,nozRegV1] = regress(le,regX);
 
 hold on
 plot([-2 5],[-2 5],'color',[0.2 0.2 0.2])
 scatter(le,re,40,'markerfacecolor', [1 0.5 0.1],'markeredgecolor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)
-text(-0.55, 4.25,sprintf('R2 %.3f',nozReg(1)),'FontSize',12)
+text(-0.55, 4.75,sprintf('R2 %.3f',nozRegV1(1)),'FontSize',12)
 %text(-0.55, 4.75,sprintf('med res %.3f',nanmedian(nozRes)),'FontSize',12)
 
 title('Dipole')
@@ -113,12 +113,12 @@ le =  reshape(V4conLE,numel(V4conLE),1);
 re = reshape(V4conRE,numel(V4conRE),1);
 oneMtx = ones(length(re),1);
 regX = [oneMtx,re];
-[~,~,conRes,~,conReg] = regress(le,regX);
+[~,~,conRes,~,conRegV4] = regress(le,regX);
 
 hold on
 plot([-2 5],[-2 5],'color',[0.2 0.2 0.2])
 scatter(le,re,40,'markerfacecolor', [0.7 0 0.7],'markeredgecolor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)
-text(-0.55, 4.25,sprintf('R2: %.3f',conReg(1)),'FontSize',12)
+text(-0.55, 4.75,sprintf('R2: %.3f',conRegV4(1)),'FontSize',12)
 %text(-0.55, 4.75,sprintf('med res %.3f', nanmedian(conRes)),'FontSize',12)
 
 set(gca,'color','none','tickdir','out','box','off','FontSize',12,'FontWeight','bold','FontAngle','italic',...
@@ -146,12 +146,12 @@ le = reshape(V4radLE,numel(V4radLE),1);
 re = reshape(V4radRE,numel(V4radRE),1);
 oneMtx = ones(length(re),1);
 regX = [oneMtx,re];
-[~,~,radRes,~,radReg] = regress(le,regX);
+[~,~,radRes,~,radRegV4] = regress(le,regX);
 
 hold on
 plot([-2 5],[-2 5],'color',[0.2 0.2 0.2])
 scatter(le,re,40,'markerfacecolor', [0 0.6 0.2],'markeredgecolor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)
-text(-0.55, 4.25,sprintf('R2: %.3f',radReg(1)),'FontSize',12)
+text(-0.55, 4.75,sprintf('R2: %.3f',radRegV4(1)),'FontSize',12)
 %text(-0.55, 4.75,sprintf('med res %.3f',nanmedian(radRes)),'FontSize',12)
 
 set(gca,'color','none','tickdir','out','box','off','FontSize',12,'FontWeight','bold','FontAngle','italic',...
@@ -165,17 +165,17 @@ s.Position(3) = s.Position(3) + 0.01;
 s.Position(4) = s.Position(4) + 0.01;
 clear le; clear re; clear regX;
 
-s = subplot(2,4,7);
+s = subplot(2,4,8);
 le =  reshape(V4nozLE,numel(V4nozLE),1);
 re = reshape(V4nozRE,numel(V4nozRE),1);
 oneMtx = ones(length(re),1);
 regX = [oneMtx,re];
-[~,~,nozRes,~,nozReg] = regress(le,regX);
+[~,~,nozRes,~,nozRegV4] = regress(le,regX);
 
 hold on
 plot([-2 5],[-2 5],'color',[0.2 0.2 0.2])
 scatter(le,re,40,'markerfacecolor', [1 0.5 0.1],'markeredgecolor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)
-text(-0.55, 4.25,sprintf('R2: %.3f',nozReg(1)),'FontSize',12)
+text(-0.55, 4.75,sprintf('R2: %.3f',nozRegV4(1)),'FontSize',12)
 %text(-0.55, 4.75,sprintf('med res %.3f',nanmedian(nozRes)),'FontSize',12)
 
 set(gca,'color','none','tickdir','out','box','off','FontSize',12,'FontWeight','bold','FontAngle','italic',...
@@ -190,18 +190,18 @@ clear le; clear re; clear regX;
 
 % add translational figures
 
-s = subplot(2,4,4);
+s = subplot(2,4,3);
 
 le =  reshape(V1trLE,numel(V1trLE),1);
 re = reshape(V1trRE,numel(V1trRE),1);
 oneMtx = ones(length(re),1);
 regX = [oneMtx,re];
-[~,~,trRes,~,trLEReg] = regress(le,regX);
+[~,~,trRes,~,trRegV1] = regress(le,regX);
 
 hold on
 plot([-2 5],[-2 5],'color',[0.2 0.2 0.2])
 scatter(le,re,40,'markerfacecolor', [0.2 0.4 1],'markeredgecolor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)
-text(-0.55, 4.25,sprintf('R2: %.3f',trLEReg(1)),'FontSize',12)
+text(-0.55, 4.75,sprintf('R2: %.3f',trRegV1(1)),'FontSize',12)
 %text(-0.55, 4.75,sprintf('med res %.3f',nanmedian(trRes)),'FontSize',12)
 
 xlim([-1.2 5])
@@ -215,18 +215,18 @@ s.Position(3) = s.Position(3) + 0.01;
 s.Position(4) = s.Position(4) + 0.01;
 title('Translational')
 
-s = subplot(2,4,8);
+s = subplot(2,4,7);
 hold on
 le =  reshape(V4trLE,numel(V4trLE),1);
 re = reshape(V4trRE,numel(V4trRE),1);
 oneMtx = ones(length(re),1);
 regX = [oneMtx,re];
-[~,~,trRes,~,trLEReg] = regress(le,regX);
+[~,~,trRes,~,trRegV4] = regress(le,regX);
 
 hold on
 plot([-2 5],[-2 5],'color',[0.2 0.2 0.2])
 scatter(le,re,40,'markerfacecolor', [0.2 0.4 1],'markeredgecolor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)
-text(-0.55, 4.25,sprintf('R2: %.3f',trLEReg(1)),'FontSize',12)
+text(-0.55, 4.75,sprintf('R2: %.3f',trRegV4(1)),'FontSize',12)
 %text(-0.55, 4.75,sprintf('med res %.3f',nanmedian(trRes)),'FontSize',12)
 
 xlim([-1.2 5])
@@ -254,3 +254,8 @@ cd(figDir)
 figName = [V1data.conRadRE.animal '_glassdPrimeScatters_vsBlank_binocOnly','.pdf'];
 set(gcf,'InvertHardCopy','off')
 print(gcf, figName, '-dpdf', '-bestfit')
+%%
+figure (89) % DO NOT CLF THIS FIGURE, WANT TO ADD EACH ANIMAL TO IT
+hold on
+makeGlassR2CompFig(conRegV1,conRegV4,radRegV1,radRegV4,trRegV1,trRegV4,V4data.conRadRE.animal)
+suptitle('R2 values stimulus vs blank all channels')

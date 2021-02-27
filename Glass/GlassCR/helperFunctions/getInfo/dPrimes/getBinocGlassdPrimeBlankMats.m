@@ -2,7 +2,7 @@ function [conLE,conRE,radLE,radRE,nozLE,nozRE,trLE,trRE,trLEnoz,trREnoz] = getBi
 % binoc only: set to 1 if you only want to get data from binocular
 % channels, 0 if you want to include monocular channels with the
 % non-responsive channel set to 0 d'
-
+%%
 conRE = nan(2,2,96);
 radRE = nan(2,2,96);
 nozRE = nan(2,2,96);
