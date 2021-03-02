@@ -1,7 +1,7 @@
-function makeGlassFigs_dPrimeScatter_bothProgs(V1data, V4data)
+function [stimBlankR2] = makeGlassFigs_dPrimeScatter_bothProgs(V1data, V4data, stimBlankR2)
 %%
-[V1conLE,V1conRE,V1radLE,V1radRE,V1nozLE,V1nozRE,V1trLE,V1trRE,V1trLEnoz,V1trREnoz] = getBinocGlassdPrimeBlankMats(V1data,0);
-[V4conLE,V4conRE,V4radLE,V4radRE,V4nozLE,V4nozRE,V4trLE,V4trRE,V4trLEnoz,V4trREnoz] = getBinocGlassdPrimeBlankMats(V4data,0);
+[V1conLE,V1conRE,V1radLE,V1radRE,V1nozLE,V1nozRE,V1trLE,V1trRE] = getBinocGlassdPrimeBlankMats(V1data,0);
+[V4conLE,V4conRE,V4radLE,V4radRE,V4nozLE,V4nozRE,V4trLE,V4trRE] = getBinocGlassdPrimeBlankMats(V4data,0);
 LEV1chs = V1data.conRadLE.inStim & V1data.conRadLE.goodCh;
 REV1chs = V1data.conRadRE.inStim & V1data.conRadRE.goodCh;
 
@@ -382,12 +382,22 @@ print(gcf, figName, '-dpdf', '-bestfit')
 %     text(3.6,0,sprintf('AE %d',sum(REV4chs)),'FontSize',12)
 % end
 %%
-figure (90) % DO NOT CLF THIS FIGURE, WANT TO ADD EACH ANIMAL TO IT
-pos = get(gcf,'Position');
-set(gcf,'Position',[pos(1) pos(2) 400 900])
-hold on
-makeGlassR2CompFig(conRegV1,conRegV4,radRegV1,radRegV4,trRegV1,trRegV4,V4data.conRadRE.animal)
-suptitle('R2 values for stim vs blank screen all channels')
+stimBlankR2.monoc.conRegV1 = conRegV1;
+stimBlankR2.monoc.radRegV1 = radRegV1;
+stimBlankR2.monoc.nozRegV1 = nozRegV1;
+stimBlankR2.monoc.trRegV1 = trRegV1;
+
+stimBlankR2.monoc.conRegV4 = conRegV4;
+stimBlankR2.monoc.radRegV4 = radRegV4;
+stimBlankR2.monoc.nozRegV4 = nozRegV4;
+stimBlankR2.monoc.trRegV4 = trRegV4;
+%%
+% figure (90) % DO NOT CLF THIS FIGURE, WANT TO ADD EACH ANIMAL TO IT
+% pos = get(gcf,'Position');
+% set(gcf,'Position',[pos(1) pos(2) 400 900])
+% hold on
+% makeGlassR2CompFig(conRegV1,conRegV4,radRegV1,radRegV4,trRegV1,trRegV4,V4data.conRadRE.animal)
+% suptitle('R2 values for stim vs blank screen all channels')
 
 
 

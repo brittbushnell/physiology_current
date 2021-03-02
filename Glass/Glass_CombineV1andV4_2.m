@@ -32,11 +32,14 @@ newName = 'XT_2eyes_2arrays_GlassPatterns';
 % using best dt, dx for each pattern
 % triplotter_Glass_BExArrays_optimalForPattern(V1data,V4data)
 %% d' scatter plots
-makeGlassFigs_dPrimeScatter_bothProgs(V1data, V4data)
-makeGlassFigs_dPrimeScatter_stimVnoise(V1data,V4data)
+stimBlankR2 = {};
+stimNoiseR2 = {};
 
-makeGlassFigs_dPrimeScatter_binocOnly(V1data, V4data)
-makeGlassFigs_dPrimeScatter_stimVnoise_binocOnly(V1data,V4data)
+stimBlankR2 = makeGlassFigs_dPrimeScatter_bothProgs(V1data, V4data, stimBlankR2);
+stimNoiseR2 = makeGlassFigs_dPrimeScatter_stimVnoise(V1data,V4data, stimNoiseR2);
+
+stimBlankR2 = makeGlassFigs_dPrimeScatter_binocOnly(V1data, V4data, stimBlankR2);
+stimNoiseR2 = makeGlassFigs_dPrimeScatter_stimVnoise_binocOnly(V1data,V4data, stimNoiseR2);
 %% Chi squared homogeneity
 % plotGlassChiSquareDistribution(data)
  %% coherence
@@ -55,6 +58,9 @@ end
 data.V1 = V1data;
 data.V4 = V4data;
 
+data.stimNoiseR2 = stimNoiseR2;
+data.stimBlankR2 = stimBlankR2;
+
 saveName = [outputDir newName '.mat'];
-% save(saveName,'data','-v7.3');
-% fprintf('%s saved\n', saveName)
+save(saveName,'data','-v7.3');
+fprintf('%s saved\n', saveName)

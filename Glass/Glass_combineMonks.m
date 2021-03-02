@@ -26,6 +26,8 @@ XTV1 = data.V1;
 clear data
 
 cd '/Users/brittany/Dropbox/Figures/CrossAnimals/Glass/';
+%% R2 comparisons from d' scatter plots
+MakeFigs_GlassR2Vals(XTdata,WUdata,WVdata) % fig 14 & 15
 %% triplots
 plotGlass_triplot_allMonk(WUV1, WUV4, WVV1, WVV4, XTV1, XTV4);
 %% OSI figures

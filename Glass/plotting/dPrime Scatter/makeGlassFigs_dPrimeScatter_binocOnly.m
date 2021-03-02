@@ -1,7 +1,7 @@
-function makeGlassFigs_dPrimeScatter_binocOnly(V1data, V4data)
+function [stimBlankR2] = makeGlassFigs_dPrimeScatter_binocOnly(V1data, V4data, stimBlankR2)
 %%
-[V1conLE,V1conRE,V1radLE,V1radRE,V1nozLE,V1nozRE,V1trLE,V1trRE,V1trLEnoz,V1trREnoz] = getBinocGlassdPrimeBlankMats(V1data,1);
-[V4conLE,V4conRE,V4radLE,V4radRE,V4nozLE,V4nozRE,V4trLE,V4trRE,V4trLEnoz,V4trREnoz] = getBinocGlassdPrimeBlankMats(V4data,1);
+[V1conLE,V1conRE,V1radLE,V1radRE,V1nozLE,V1nozRE,V1trLE,V1trRE] = getBinocGlassdPrimeBlankMats(V1data,1);
+[V4conLE,V4conRE,V4radLE,V4radRE,V4nozLE,V4nozRE,V4trLE,V4trRE] = getBinocGlassdPrimeBlankMats(V4data,1);
 LEV1chs = V1data.conRadLE.inStim & V1data.conRadLE.goodCh;
 REV1chs = V1data.conRadRE.inStim & V1data.conRadRE.goodCh;
 
@@ -255,7 +255,17 @@ figName = [V1data.conRadRE.animal '_glassdPrimeScatters_vsBlank_binocOnly','.pdf
 set(gcf,'InvertHardCopy','off')
 print(gcf, figName, '-dpdf', '-bestfit')
 %%
-figure (89) % DO NOT CLF THIS FIGURE, WANT TO ADD EACH ANIMAL TO IT
-hold on
-makeGlassR2CompFig(conRegV1,conRegV4,radRegV1,radRegV4,trRegV1,trRegV4,V4data.conRadRE.animal)
-suptitle('R2 values stimulus vs blank all channels')
+stimBlankR2.binoc.conRegV1 = conRegV1;
+stimBlankR2.binoc.radRegV1 = radRegV1;
+stimBlankR2.binoc.nozRegV1 = nozRegV1;
+stimBlankR2.binoc.trRegV1 = trRegV1;
+
+stimBlankR2.binoc.conRegV4 = conRegV4;
+stimBlankR2.binoc.radRegV4 = radRegV4;
+stimBlankR2.binoc.nozRegV4 = nozRegV4;
+stimBlankR2.binoc.trRegV4 = trRegV4;
+%%
+% figure (89) % DO NOT CLF THIS FIGURE, WANT TO ADD EACH ANIMAL TO IT
+% hold on
+% makeGlassR2CompFig(conRegV1,conRegV4,radRegV1,radRegV4,trRegV1,trRegV4,V4data.conRadRE.animal)
+% suptitle('R2 values stimulus vs blank all channels')

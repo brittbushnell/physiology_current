@@ -1,4 +1,4 @@
-function [] = makeGlassFigs_dPrimeScatter_stimVnoise_binocOnly(V1data,V4data)
+function [stimNoiseR2] = makeGlassFigs_dPrimeScatter_stimVnoise_binocOnly(V1data,V4data,stimNoiseR2)
 [V1conLE,V1conRE,V1radLE,V1radRE,V1trLE,V1trRE] = getBinocGlassdPrimeDipoleMats(V1data,1);
 [V4conLE,V4conRE,V4radLE,V4radRE,V4trLE,V4trRE] = getBinocGlassdPrimeDipoleMats(V4data,1);
 
@@ -366,7 +366,15 @@ figName = [V1data.conRadRE.animal '_glassdPrimeScatters_vsNoise_3plot_binocOnly'
 set(gcf,'InvertHardCopy','off')
 print(gcf, figName, '-dpdf', '-bestfit')
 %% 
-figure (88) % DO NOT CLF THIS FIGURE, WANT TO ADD EACH ANIMAL TO IT
-hold on
-makeGlassR2CompFig(conRegV1,conRegV4,radRegV1,radRegV4,trRegV1,trRegV4,V4data.conRadRE.animal)
-suptitle('R2 values stimulus vs noise binocular channels')
+stimNoiseR2.binoc.conRegV1 = conRegV1;
+stimNoiseR2.binoc.radRegV1 = radRegV1;
+stimNoiseR2.binoc.trRegV1 = trRegV1;
+
+stimNoiseR2.binoc.conRegV4 = conRegV4;
+stimNoiseR2.binoc.radRegV4 = radRegV4;
+stimNoiseR2.binoc.trRegV4 = trRegV4;
+%%
+% figure (88) % DO NOT CLF THIS FIGURE, WANT TO ADD EACH ANIMAL TO IT
+% hold on
+% makeGlassR2CompFig(conRegV1,conRegV4,radRegV1,radRegV4,trRegV1,trRegV4,V4data.conRadRE.animal)
+% suptitle('R2 values stimulus vs noise binocular channels')
