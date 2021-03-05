@@ -56,18 +56,16 @@ pos = get(gcf,'Position');
 set(gcf,'Position',[pos(1) pos(2) 900 700]);
 set(gcf,'PaperOrientation','landscape')
 
-s = suptitle(sprintf('%s stimulus vs blank dPrime at 100%% coherence best density/dx for each pattern',V1data.conRadLE.animal));
+s = suptitle(sprintf('%s stimulus vs blank d''',V1data.conRadLE.animal));
 s.Position(2) = s.Position(2) +0.025;
 s.FontWeight = 'bold';
 s.FontSize = 18;
 
 s = subplot(2,2,1); 
-
+hold on
 rcd = v1LEsort(:,1:3);
 cmp = v1LEsort(:,6:8);
 triplotter_Glass_noCBar(rcd,cmp);
-
-hold on
 triplotter_centerMass(rcd,v1LEsort(:,4),[1 0 0])
 
 if contains(V1data.conRadLE.animal,'XT')

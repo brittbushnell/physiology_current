@@ -1,4 +1,4 @@
-function [stimDps] = getGlassDprimeNoiseVectTriplots(radNoiseDprime,conNoiseDprime,trNoiseDprime,goodCh,inStim)
+function [stimDps] = getGlassDprimeNoiseVectTriplots_meanOri(radNoiseDprime,conNoiseDprime,trNoiseDprime,goodCh,inStim)
 %%
 % output is a matrix where each row is a different channel and columns are
 % radial, concentric, and translational respectively.
@@ -6,7 +6,7 @@ function [stimDps] = getGlassDprimeNoiseVectTriplots(radNoiseDprime,conNoiseDpri
 radDps = abs(squeeze(radNoiseDprime(end,:,:,:)));
 conDps = abs(squeeze(conNoiseDprime(end,:,:,:)));
 trDps = abs(squeeze(trNoiseDprime(:,end,:,:,:)));
-trDps = squeeze(max(trDps,[],1)); % pick the orientation with the highest d'
+trDps = squeeze(mean(trDps,1)); % pick the orientation with the highest d'
 
 rDp = squeeze([squeeze(radDps(1,1,:)),squeeze(radDps(1,2,:)),squeeze(radDps(2,1,:)),squeeze(radDps(2,2,:))]); 
 rDp = max(rDp');
