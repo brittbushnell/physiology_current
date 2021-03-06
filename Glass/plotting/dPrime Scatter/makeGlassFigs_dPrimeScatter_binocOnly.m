@@ -35,7 +35,7 @@ regX = [oneMtx,re];
 
 hold on
 plot([-2 5],[-2 5],'color',[0.2 0.2 0.2])
-scatter(le,re,40,'markerfacecolor', [0.7 0 0.7],'markeredgecolor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)
+scatter(le,re,40,'markerfacecolor', [0.7 0 0.7],'markeredgecolor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7,'LineWidth',0.3)
 text(-0.55, 4.75,sprintf('R2 %.3f',conRegV1(1)),'FontSize',12)
 %text(-0.55, 4.75,sprintf('med res %.3f',nanmedian(conRes)),'FontSize',12)
 
@@ -67,7 +67,7 @@ regX = [oneMtx,re];
 
 hold on
 plot([-2 5],[-2 5],'color',[0.2 0.2 0.2])
-scatter(le,re,40,'markerfacecolor', [0 0.6 0.2],'markeredgecolor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)
+scatter(le,re,40,'markerfacecolor', [0 0.6 0.2],'markeredgecolor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7,'LineWidth',0.3)
 text(-0.55, 4.75,sprintf('R2 %.3f',radRegV1(1)),'FontSize',12)
 % text(-0.55, 4.75,sprintf('med res %.3f',nanmedian(radRes)),'FontSize',12)
 
@@ -92,7 +92,7 @@ regX = [oneMtx,re];
 
 hold on
 plot([-2 5],[-2 5],'color',[0.2 0.2 0.2])
-scatter(le,re,40,'markerfacecolor', [1 0.5 0.1],'markeredgecolor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)
+scatter(le,re,40,'markerfacecolor', [1 0.5 0.1],'markeredgecolor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7,'LineWidth',0.3)
 text(-0.55, 4.75,sprintf('R2 %.3f',nozRegV1(1)),'FontSize',12)
 %text(-0.55, 4.75,sprintf('med res %.3f',nanmedian(nozRes)),'FontSize',12)
 
@@ -117,7 +117,7 @@ regX = [oneMtx,re];
 
 hold on
 plot([-2 5],[-2 5],'color',[0.2 0.2 0.2])
-scatter(le,re,40,'markerfacecolor', [0.7 0 0.7],'markeredgecolor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)
+scatter(le,re,40,'markerfacecolor', [0.7 0 0.7],'markeredgecolor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7,'LineWidth',0.3)
 text(-0.55, 4.75,sprintf('R2: %.3f',conRegV4(1)),'FontSize',12)
 %text(-0.55, 4.75,sprintf('med res %.3f', nanmedian(conRes)),'FontSize',12)
 
@@ -150,7 +150,7 @@ regX = [oneMtx,re];
 
 hold on
 plot([-2 5],[-2 5],'color',[0.2 0.2 0.2])
-scatter(le,re,40,'markerfacecolor', [0 0.6 0.2],'markeredgecolor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)
+scatter(le,re,40,'markerfacecolor', [0 0.6 0.2],'markeredgecolor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7,'LineWidth',0.3)
 text(-0.55, 4.75,sprintf('R2: %.3f',radRegV4(1)),'FontSize',12)
 %text(-0.55, 4.75,sprintf('med res %.3f',nanmedian(radRes)),'FontSize',12)
 
@@ -174,7 +174,7 @@ regX = [oneMtx,re];
 
 hold on
 plot([-2 5],[-2 5],'color',[0.2 0.2 0.2])
-scatter(le,re,40,'markerfacecolor', [1 0.5 0.1],'markeredgecolor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)
+scatter(le,re,40,'markerfacecolor', [1 0.5 0.1],'markeredgecolor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7,'LineWidth',0.3)
 text(-0.55, 4.75,sprintf('R2: %.3f',nozRegV4(1)),'FontSize',12)
 %text(-0.55, 4.75,sprintf('med res %.3f',nanmedian(nozRes)),'FontSize',12)
 
@@ -200,7 +200,7 @@ regX = [oneMtx,re];
 
 hold on
 plot([-2 5],[-2 5],'color',[0.2 0.2 0.2])
-scatter(le,re,40,'markerfacecolor', [0.2 0.4 1],'markeredgecolor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)
+scatter(le,re,40,'markerfacecolor', [0.2 0.4 1],'markeredgecolor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7,'LineWidth',0.3)
 text(-0.55, 4.75,sprintf('R2: %.3f',trRegV1(1)),'FontSize',12)
 %text(-0.55, 4.75,sprintf('med res %.3f',nanmedian(trRes)),'FontSize',12)
 
@@ -225,7 +225,7 @@ regX = [oneMtx,re];
 
 hold on
 plot([-2 5],[-2 5],'color',[0.2 0.2 0.2])
-scatter(le,re,40,'markerfacecolor', [0.2 0.4 1],'markeredgecolor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)
+scatter(le,re,40,'markerfacecolor', [0.2 0.4 1],'markeredgecolor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7,'LineWidth',0.3)
 text(-0.55, 4.75,sprintf('R2: %.3f',trRegV4(1)),'FontSize',12)
 %text(-0.55, 4.75,sprintf('med res %.3f',nanmedian(trRes)),'FontSize',12)
 
@@ -238,18 +238,6 @@ set(gca,'color','none','tickdir','out','box','off','FontSize',12,'FontWeight','b
 s.Position(2) = s.Position(2) + 0.02;
 s.Position(3) = s.Position(3) + 0.01;
 s.Position(4) = s.Position(4) + 0.01;
-%%
-location = determineComputer;
-if location == 1
-    figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/GlassCombo/',V1data.conRadRE.animal);
-elseif location == 0
-    figDir =  sprintf('~/Dropbox/Figures/%s/GlassCombo/',V1data.conRadRE.animal);
-end
-
-if~exist(figDir,'dir')
-    mkdir(figDir)
-end
-cd(figDir)
 
 figName = [V1data.conRadRE.animal '_glassdPrimeScatters_vsBlank_binocOnly','.pdf'];
 set(gcf,'InvertHardCopy','off')
@@ -264,8 +252,3 @@ stimBlankR2.binoc.conRegV4 = conRegV4;
 stimBlankR2.binoc.radRegV4 = radRegV4;
 stimBlankR2.binoc.nozRegV4 = nozRegV4;
 stimBlankR2.binoc.trRegV4 = trRegV4;
-%%
-% figure (89) % DO NOT CLF THIS FIGURE, WANT TO ADD EACH ANIMAL TO IT
-% hold on
-% makeGlassR2CompFig(conRegV1,conRegV4,radRegV1,radRegV4,trRegV1,trRegV4,V4data.conRadRE.animal)
-% suptitle('R2 values stimulus vs blank all channels')

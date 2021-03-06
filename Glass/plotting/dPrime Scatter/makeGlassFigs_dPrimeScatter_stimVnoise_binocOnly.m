@@ -138,7 +138,7 @@ regX = [oneMtx,re];
 
 hold on
 plot([-2 5],[-2 5],'color',[0.2 0.2 0.2])
-scatter(le,re,40,'markerfacecolor', [0 0.6 0.2],'markeredgecolor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)
+scatter(le,re,40,'markerfacecolor', [0 0.6 0.2],'markeredgecolor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7,'LineWidth',0.3)
 text(-0.55, 2.35,sprintf('R2: %.3f',radRegV4(1)),'FontSize',12)
 %text(-0.55, 4.75,sprintf('med res %.3f',nanmedian(radRes)),'FontSize',12)
 
@@ -171,7 +171,7 @@ regX = [oneMtx,re];
 
 hold on
 plot([-2 5],[-2 5],'color',[0.2 0.2 0.2])
-scatter(le,re,40,'markerfacecolor', [0.2 0.4 1],'markeredgecolor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)
+scatter(le,re,40,'markerfacecolor', [0.2 0.4 1],'markeredgecolor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7,'LineWidth',0.3)
 text(-0.55, 2.35,sprintf('R2: %.3f',trLERegV1(1)),'FontSize',12)
 %text(-0.55, 4.75,sprintf('med res %.3f',nanmedian(trRes)),'FontSize',12)
 
@@ -202,7 +202,7 @@ regX = [oneMtx,re];
 
 hold on
 plot([-2 5],[-2 5],'color',[0.2 0.2 0.2])
-scatter(le,re,40,'markerfacecolor', [0.2 0.4 1],'markeredgecolor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)
+scatter(le,re,40,'markerfacecolor', [0.2 0.4 1],'markeredgecolor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7,'LineWidth',0.3)
 text(-0.55, 2.35,sprintf('R2: %.3f',trLERegV4(1)),'FontSize',12)
 %text(-0.55, 4.75,sprintf('med res %.3f',nanmedian(trRes)),'FontSize',12)
 
@@ -221,18 +221,6 @@ end
 s.Position(2) = s.Position(2) + 0.02;
 s.Position(3) = s.Position(3) + 0.01;
 s.Position(4) = s.Position(4) + 0.01;
-%%
-location = determineComputer;
-if location == 1
-    figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/GlassCombo/',V1data.conRadRE.animal);
-elseif location == 0
-    figDir =  sprintf('~/Dropbox/Figures/%s/GlassCombo/',V1data.conRadRE.animal);
-end
-
-if~exist(figDir,'dir')
-    mkdir(figDir)
-end
-cd(figDir)
 
 figName = [V1data.conRadRE.animal '_glassdPrimeScatters_vsNoise_binocOnly','.pdf'];
 set(gcf,'InvertHardCopy','off')
@@ -350,21 +338,21 @@ xlim([-1 2.5])
 ylim([-1 2.5])
 axis square
 %%
-location = determineComputer;
-if location == 1
-    figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/GlassCombo/',V1data.conRadRE.animal);
-elseif location == 0
-    figDir =  sprintf('~/Dropbox/Figures/%s/GlassCombo/',V1data.conRadRE.animal);
-end
-
-if~exist(figDir,'dir')
-    mkdir(figDir)
-end
-cd(figDir)
-
-figName = [V1data.conRadRE.animal '_glassdPrimeScatters_vsNoise_3plot_binocOnly','.pdf'];
-set(gcf,'InvertHardCopy','off')
-print(gcf, figName, '-dpdf', '-bestfit')
+% location = determineComputer;
+% if location == 1
+%     figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/GlassCombo/dPrime',V1data.conRadRE.animal);
+% elseif location == 0
+%     figDir =  sprintf('~/Dropbox/Figures/%s/GlassCombo/dPrime/',V1data.conRadRE.animal);
+% end
+% 
+% if ~exist(figDir,'dir')
+%     mkdir(figDir)
+% end
+% cd(figDir)
+% 
+% figName = [V1data.conRadRE.animal '_glassdPrimeScatters_vsNoise_3plot_binocOnly','.pdf'];
+% set(gcf,'InvertHardCopy','off')
+% print(gcf, figName, '-dpdf', '-bestfit')
 %% 
 stimNoiseR2.binoc.conRegV1 = conRegV1;
 stimNoiseR2.binoc.radRegV1 = radRegV1;
@@ -373,8 +361,4 @@ stimNoiseR2.binoc.trRegV1 = trRegV1;
 stimNoiseR2.binoc.conRegV4 = conRegV4;
 stimNoiseR2.binoc.radRegV4 = radRegV4;
 stimNoiseR2.binoc.trRegV4 = trRegV4;
-%%
-% figure (88) % DO NOT CLF THIS FIGURE, WANT TO ADD EACH ANIMAL TO IT
-% hold on
-% makeGlassR2CompFig(conRegV1,conRegV4,radRegV1,radRegV4,trRegV1,trRegV4,V4data.conRadRE.animal)
-% suptitle('R2 values stimulus vs noise binocular channels')
+
