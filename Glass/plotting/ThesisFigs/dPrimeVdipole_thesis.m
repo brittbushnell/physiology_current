@@ -31,7 +31,7 @@ s.Position(4) = s.Position(4)+0.018;
 ylabel('RE d''','FontSize',12)
 
 text(-4,1,'V1','FontSize',18,'FontWeight','bold')
-text(4.5, 4.28, 'd'' versus blank','FontSize',18,'FontWeight','bold');
+text(4.5, 4.28, 'd'' versus random dipole','FontSize',18,'FontWeight','bold');
 text(-6, 3.5,'A','FontSize',18,'FontWeight','bold');
 t = title('Concentric','FontSize',12);
 t.Position(2) = t.Position(2)+0.015;
@@ -124,8 +124,8 @@ s.Position(4) = s.Position(4)+0.018;
 set(gca,'FontSize',11,'tickdir','out','FontAngle','italic','XTickLabel',{'','0','1','2'},'YTickLabel',{'','0','1','2'})
 
 % WU
-[V1conLE,V1conRE,V1radLE,V1radRE,V1trLE,V1trRE] = getBinocGlassdPrimeDipoleMats(WVdata.V1,1);
-[V4conLE,V4conRE,V4radLE,V4radRE,V4trLE,V4trRE] = getBinocGlassdPrimeDipoleMats(WVdata.V4,1);
+[V1conLE,V1conRE,V1radLE,V1radRE,V1trLE,V1trRE] = getBinocGlassdPrimeDipoleMats(WUdata.V1,1);
+[V4conLE,V4conRE,V4radLE,V4radRE,V4trLE,V4trRE] = getBinocGlassdPrimeDipoleMats(WUdata.V4,1);
 
 s = subplot(6,4,9);
 le = reshape(V1conLE,numel(V1conLE),1);

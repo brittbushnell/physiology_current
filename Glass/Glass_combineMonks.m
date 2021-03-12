@@ -24,8 +24,15 @@ XTdata = data;
 XTV4 = data.V4;
 XTV1 = data.V1;
 clear data
+%%
+location = determineComputer;
 
-cd '/Users/brittany/Dropbox/Figures/CrossAnimals/Glass/';
+if location == 1
+    figDir =  ('~/bushnell-local/Dropbox/Figures/CrossAnimals/Glass/');
+elseif location == 0
+    figDir =  ('~/Dropbox/Figures/CrossAnimals/Glass/');
+end
+cd(figDir)
 %% R2 comparisons from d' scatter plots
 MakeFigs_GlassR2Vals(XTdata,WUdata,WVdata) % fig 14 & 15
 %% triplots

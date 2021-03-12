@@ -11,7 +11,7 @@ conLE = nan(2,2,96);
 radLE = nan(2,2,96);
 nozLE = nan(2,2,96);
 
-% identify channels that are responsive  and in stimuli with both eyes
+% identify channels that are responsive and in stimuli with both eyes
 binocCh = data.conRadRE.inStim & data.conRadRE.goodCh & data.conRadLE.inStim & data.conRadLE.goodCh;
 LEchs = data.conRadLE.inStim & data.conRadLE.goodCh;
 REchs = data.conRadRE.inStim & data.conRadRE.goodCh;
