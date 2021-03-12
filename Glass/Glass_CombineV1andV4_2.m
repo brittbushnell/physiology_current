@@ -1,24 +1,24 @@
 clear
-% close all
+close all
 clc
 %%
-% load('WV_BE_V1_bothGlass_cleanMerged');
-% V1data = data;
-% clear data;
-% 
-% load('WV_BE_V4_bothGlass_cleanMerged');
-% V4data = data;
-% clear data;
-% newName = 'WV_2eyes_2arrays_GlassPatterns';
-%%
-load('WU_BE_V1_bothGlass_cleanMerged');
+load('WV_BE_V1_bothGlass_cleanMerged');
 V1data = data;
 clear data;
 
-load('WU_BE_V4_bothGlass_cleanMerged');
+load('WV_BE_V4_bothGlass_cleanMerged');
 V4data = data;
 clear data;
-newName = 'WU_2eyes_2arrays_GlassPatterns';
+newName = 'WV_2eyes_2arrays_GlassPatterns';
+%%
+% load('WU_BE_V1_bothGlass_cleanMerged');
+% V1data = data;
+% clear data;
+% 
+% load('WU_BE_V4_bothGlass_cleanMerged');
+% V4data = data;
+% clear data;
+% newName = 'WU_2eyes_2arrays_GlassPatterns';
 %%
 % load('XT_BE_V1_bothGlass_cleanMerged');
 % V1data = data;
@@ -28,6 +28,10 @@ newName = 'WU_2eyes_2arrays_GlassPatterns';
 % V4data = data;
 % clear data;
 % newName = 'XT_2eyes_2arrays_GlassPatterns';
+%% coherence
+if ~contains(V1data.conRadRE.animal,'XT')
+   GlassCohCorrStats(V1data, V4data)
+end
 
 %% d' scatter plots
 location = determineComputer;
@@ -55,13 +59,13 @@ stimNoiseR2 = makeGlassFigs_dPrimeScatter_stimVnoise_binocOnly(V1data,V4data, st
 % triplotter_Glass_BExArrays_optimalForPattern(V1data,V4data);
 % makeFig_triplotGlass_trNoise(V1data, V4data);
 % makeFig_triplotGlass_trNoise_oris(V1data, V4data)
-if ~contains(V1data.conRadRE.animal,'XT')
-    makeFig_triplotGlass_Noise_coh(V1data, V4data) % he didn't run multiple coherences
-end
+
 %% Chi squared homogeneity
 % plotGlassChiSquareDistribution(data)
  %% coherence
 % plotGlass_CoherenceResps(REdata)
+%% orietnation tuning across array
+% plotGlassTR_tuningCurvesPolarArray
 %%
 location = determineComputer;
 if location == 1
@@ -80,5 +84,5 @@ data.stimNoiseR2 = stimNoiseR2;
 data.stimBlankR2 = stimBlankR2;
 
 saveName = [outputDir newName '.mat'];
-% save(saveName,'data','-v7.3');
-% fprintf('%s saved\n', saveName)
+save(saveName,'data','-v7.3');
+fprintf('%s saved\n', saveName)
