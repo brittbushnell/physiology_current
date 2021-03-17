@@ -1,13 +1,13 @@
-nver = 5;               % number of image versions
-dsz  = 2;               % dot size (>=3 for presentation visibility)
-coh  = 0.75;            % coherent (0..1)
+nver = 1;               % number of image versions
+dsz  = 16;               % dot size (>=3 for presentation visibility)
+coh  = 1;            % coherent (0..1)
 
 bkgdcolor = 0.5;        % background color (0..1); 0.5=mid-gray
 dotscolor = 1.0;        % dots color (0..1); 1=white
-type = [0 1 2];         % translational, circlar, radial
-nd = [200 400];         % dipole pairs
-dx = [0.02 0.03];       % of image
-sz = 128;               % 1/dsz of output images size dsz-X for smoothier dots
+type = 1;         % translational, circlar, radial
+nd = 400;         % dipole pairs
+dx = 0.03;       % of image
+sz = 32;               % 1/dsz of output images size dsz-X for smoothier dots
 k = 0.8;                % 10 % margin around dipole area
 inver = 0;              % inverse image color
 

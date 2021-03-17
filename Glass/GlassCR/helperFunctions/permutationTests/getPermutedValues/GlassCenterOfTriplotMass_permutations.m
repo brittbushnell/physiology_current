@@ -1,4 +1,4 @@
-function [CoM,vSum] = GlassCenterOfTriplotMass_permutations(varargin)
+function [CoM] = GlassCenterOfTriplotMass_permutations(varargin)
 %{
 Input requirements:
 
@@ -20,8 +20,11 @@ steps:
 2) calculate vector sum
  
 3) calculate center of mass
-    
-4) repeat 1k times, creating a vector of permuted CoM values
+
+4) calculate the distance from permuted CoM and real
+
+5) repeat 1k times, creating a vector of permuted CoM values and
+CoM distances
 %}
 %%
 switch nargin
@@ -46,7 +49,7 @@ end
 CoM = nan(numBoot,3);
 %%
 for nb = 1:numBoot
-    rcdT = nan(size(conDprimes,3),3);
+    rcdT = nan(size(conDprimes,3),3); %limited to included channels already, so number of channels will vary.
     for ch = 1:size(conDprimes,3)
         conT = squeeze(conDprimes(:,:,ch));
         radT = squeeze(radDprimes(:,:,ch));
@@ -63,10 +66,13 @@ for nb = 1:numBoot
         rcdT(ch,1:3) = [rndR rndC rndN];  
     end
     
-    vSum(:,nb) = sqrt(rcdT(:,1).^2 + rcdT(:,2).^2 + rcdT(:,3).^2);
-    wgtLoc = (rcdT).*vSum(:,nb);
-    CoM(nb,:) = mean(wgtLoc);
-    clear rcdT; clear wgtLoc;
+    vSum = sqrt(rcdT(:,1).^2 + rcdT(:,2).^2 + rcdT(:,3).^2);
+    wgt = (rcdT).*vSum;
+    wgtMu = nanmean(wgt);    
+    [thx,phix,rx]=cart2sph(wgtMu(1),wgtMu(2),wgtMu(3));
+    CoM(nb,:) = [rad2deg(thx),rad2deg(phix),rx];
+    
+    clear rcdT; clear wgtLoc; clear vSum;
 end
 
 

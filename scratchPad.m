@@ -1,38 +1,19 @@
+figure(1)
+h=axesm('stereo','origin',[45 45 0]);
+axis off;
+hold on
+% draw the outlines of the triangle
+plot3m(linspace(0,90,90), 0.*ones(1,90),ones(1,90),'k','LineWidth',1.2)
+plot3m(linspace(0,90,90),90.*ones(1,90),ones(1,90),'k','LineWidth',1.2)
+plot3m(0.*ones(1,90),linspace(0,90,90),ones(1,90),'k','LineWidth',1.2)
 
-inclConRadLEV1 = (V1data.conRadLE.goodCh == 1) & (V1data.conRadLE.inStim == 1);
-incltrLEV1 = (V1data.trLE.goodCh == 1) & (V1data.trLE.inStim == 1);
+% draw lines for the subsections
+plot3m([rad2deg(phic),rad2deg(phil)],[rad2deg(thc),rad2deg(thl)],[rc,rl],'-','color',[0.6 0.6 0.6],'LineWidth',1.2)
+plot3m([rad2deg(phic),rad2deg(phir)],[rad2deg(thc),rad2deg(thr)],[rc,rr],'-','color',[0.6 0.6 0.6],'LineWidth',1.2)
+plot3m([rad2deg(phic),rad2deg(phib)],[rad2deg(thc),rad2deg(thb)],[rc,rb],'-','color',[0.6 0.6 0.6],'LineWidth',1.2)
 
-conDLEV1 = abs(squeeze(V1data.conRadLE.conNoiseDprime(end,:,:,:)));
-cDpLEV1 = squeeze([squeeze(conDLE(1,1,:)),squeeze(conDLE(1,2,:)),squeeze(conDLE(2,1,:)),squeeze(conDLE(2,2,:))]);
-[~,conDtDxPrefLEV1] = max(cDpLE,[],2);
-% conDtDxPref = cDp(inclConRadLE);
+set(gca,'FontSize',13,'color','none')
 
-radDLEV1 = abs(squeeze(V1data.conRadLE.radNoiseDprime(end,:,:,:)));
-rDpLEV1 = squeeze([squeeze(radDLEV1(1,1,:)),squeeze(radDLEV1(1,2,:)),squeeze(radDLEV1(2,1,:)),squeeze(radDLEV1(2,2,:))]);
-[~,radDtDxPrefLEV1] = max(rDpLEV1,[],2);
-% radDtDxPref = rDp(inclConRadLE);
-
-for o = 1:4
-    trDLEV1 = abs(squeeze(V1data.trLE.linNoiseDprime(o,end,:,:,:)));
-    trDpLEV1 = squeeze([squeeze(trDLEV1(1,1,:)),squeeze(trDLEV1(1,2,:)),squeeze(trDLEV1(2,1,:)),squeeze(trDLEV1(2,2,:))]);
-    [~,trDtDxPrefLEV1(:,o)] = max(trDpLEV1,[],2);
-end
-
-inclConRadREV1 = (V1data.conRadRE.goodCh == 1) & (V1data.conRadRE.inStim == 1);
-incltrREV1 = (V1data.trRE.goodCh == 1) & (V1data.trRE.inStim == 1);
-
-conDREV1 = abs(squeeze(V1data.conRadRE.conNoiseDprime(end,:,:,:)));
-cDpREV1 = squeeze([squeeze(conDREV1(1,1,:)),squeeze(conDREV1(1,2,:)),squeeze(conDREV1(2,1,:)),squeeze(conDREV1(2,2,:))]);
-[~,conDtDxPrefREV1] = max(cDpREV1,[],2);
-% conDtDxPref = cDp(inclConRadRE);
-
-radDRE = abs(squeeze(V1data.conRadRE.radNoiseDprime(end,:,:,:)));
-rDpRE = squeeze([squeeze(radDRE(1,1,:)),squeeze(radDRE(1,2,:)),squeeze(radDRE(2,1,:)),squeeze(radDRE(2,2,:))]);
-[~,radDtDxPrefREV1] = max(rDpRE,[],2);
-% radDtDxPref = rDp(inclConRadRE);
-
-for o = 1:4
-    trDREV1 = abs(squeeze(V1data.trRE.linNoiseDprime(o,end,:,:,:)));
-    trDpREV1 = squeeze([squeeze(trDREV1(1,1,:)),squeeze(trDREV1(1,2,:)),squeeze(trDREV1(2,1,:)),squeeze(trDREV1(2,2,:))]);
-    [~,trDtDxPrefREV1(:,o)] = max(trDpREV1,[],2);
-end
+textm(0,0,sprintf('\n\nRadial    '),'horizontalalignment','left','FontSize',13);
+textm(0,90,sprintf('\n\n\n      Concentric'),'FontSize',13,'horizontalalignment','right');
+textm(90,90,sprintf('Translational\n\n'),'FontSize',13,'horizontalalignment','center');

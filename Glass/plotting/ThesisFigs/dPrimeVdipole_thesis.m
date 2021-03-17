@@ -2,6 +2,8 @@
     WUBlankV1binoc,WUBlankV4binoc,WUdipoleV1binoc,WUdipoleV4binoc,...
     WVBlankV1binoc,WVBlankV4binoc,WVdipoleV1binoc,WVdipoleV4binoc]= getGlassRegStatsBinocOnly(XTdata,WUdata,WVdata);
 %%
+meanDp = zeros(6,3);
+%%
 close all
 figure(2)
 clf
@@ -18,6 +20,7 @@ figName = ['allMonk_glassdPrimeScatters_vsNoise_binocOnly_port','.pdf'];
 s = subplot(6,4,1);
 le = reshape(V1conLE,numel(V1conLE),1);
 re = reshape(V1conRE,numel(V1conRE),1);
+meanDp(1,1) = nanmedian([le;re],'all');
 hold on
 axis square
 plot([-2 5],[-2 5],'color',[0.2 0.2 0.2])
@@ -40,6 +43,7 @@ set(gca,'FontSize',10,'tickdir','out','FontAngle','italic','XTickLabel',[],'YTic
 s = subplot(6,4,2);
 le = reshape(V1radLE,numel(V1radLE),1);
 re = reshape(V1radRE,numel(V1radRE),1);
+meanDp(1,2) = nanmedian([le;re],'all');
 hold on
 xlim([-1 2.5])
 xlim([-1 2.5])
@@ -57,6 +61,7 @@ set(gca,'FontSize',11,'tickdir','out','FontAngle','italic','XTickLabel',[],'YTic
 s = subplot(6,4,3);
 le = reshape(V1trLE,numel(V1trLE),1);
 re = reshape(V1trRE,numel(V1trRE),1);
+meanDp(1,3) = nanmedian([le;re],'all');
 hold on
 xlim([-1 2.5])
 xlim([-1 2.5])
@@ -75,6 +80,7 @@ set(gca,'FontSize',11,'tickdir','out','FontAngle','italic','XTickLabel',[],'YTic
 s = subplot(6,4,5);
 le = reshape(V4conLE,numel(V4conLE),1);
 re = reshape(V4conRE,numel(V4conRE),1);
+meanDp(2,1) = nanmedian([le;re],'all');
 hold on
 axis square
 plot([-2 5],[-2 5],'color',[0.2 0.2 0.2])
@@ -94,6 +100,7 @@ set(gca,'FontSize',11,'tickdir','out','FontAngle','italic','XTickLabel',{'','0',
 s = subplot(6,4,6);
 le = reshape(V4radLE,numel(V4radLE),1);
 re = reshape(V4radRE,numel(V4radRE),1);
+meanDp(2,2) = nanmedian([le;re],'all');
 hold on
 xlim([-1 2.5])
 xlim([-1 2.5])
@@ -110,6 +117,7 @@ set(gca,'FontSize',11,'tickdir','out','FontAngle','italic','XTickLabel',{'','0',
 s = subplot(6,4,7);
 le = reshape(V4trLE,numel(V4trLE),1);
 re = reshape(V4trRE,numel(V4trRE),1);
+meanDp(2,3) = nanmedian([le;re],'all');
 hold on
 xlim([-1 2.5])
 xlim([-1 2.5])
@@ -130,6 +138,7 @@ set(gca,'FontSize',11,'tickdir','out','FontAngle','italic','XTickLabel',{'','0',
 s = subplot(6,4,9);
 le = reshape(V1conLE,numel(V1conLE),1);
 re = reshape(V1conRE,numel(V1conRE),1);
+meanDp(3,1) = nanmedian([le;re],'all');
 hold on
 axis square
 plot([-2 5],[-2 5],'color',[0.2 0.2 0.2])
@@ -149,6 +158,7 @@ set(gca,'FontSize',10,'tickdir','out','FontAngle','italic','XTickLabel',[],'YTic
 s = subplot(6,4,10);
 le = reshape(V1radLE,numel(V1radLE),1);
 re = reshape(V1radRE,numel(V1radRE),1);
+meanDp(3,2) = nanmedian([le;re],'all');
 hold on
 xlim([-1 2.5])
 xlim([-1 2.5])
@@ -165,6 +175,7 @@ set(gca,'FontSize',11,'tickdir','out','FontAngle','italic','XTickLabel',[],'YTic
 s = subplot(6,4,11);
 le = reshape(V1trLE,numel(V1trLE),1);
 re = reshape(V1trRE,numel(V1trRE),1);
+meanDp(3,3) = nanmedian([le;re],'all');
 hold on
 xlim([-1 2.5])
 xlim([-1 2.5])
@@ -182,6 +193,7 @@ set(gca,'FontSize',11,'tickdir','out','FontAngle','italic','XTickLabel',[],'YTic
 s = subplot(6,4,13);
 le = reshape(V4conLE,numel(V4conLE),1);
 re = reshape(V4conRE,numel(V4conRE),1);
+meanDp(4,1) = nanmedian([le;re],'all');
 hold on
 axis square
 plot([-2 5],[-2 5],'color',[0.2 0.2 0.2])
@@ -202,6 +214,7 @@ set(gca,'FontSize',11,'tickdir','out','FontAngle','italic','XTickLabel',{'','0',
 s = subplot(6,4,14);
 le = reshape(V4radLE,numel(V4radLE),1);
 re = reshape(V4radRE,numel(V4radRE),1);
+meanDp(4,2) = nanmedian([le;re],'all');
 hold on
 xlim([-1 2.5])
 xlim([-1 2.5])
@@ -218,6 +231,7 @@ set(gca,'FontSize',11,'tickdir','out','FontAngle','italic','XTickLabel',{'','0',
 s = subplot(6,4,15);
 le = reshape(V4trLE,numel(V4trLE),1);
 re = reshape(V4trRE,numel(V4trRE),1);
+meanDp(4,3) = nanmedian([le;re],'all');
 hold on
 xlim([-1 2.5])
 xlim([-1 2.5])
@@ -239,6 +253,7 @@ set(gca,'FontSize',11,'tickdir','out','FontAngle','italic','XTickLabel',{'','0',
 s = subplot(6,4,21);
 le = reshape(V4conLE,numel(V4conLE),1);
 re = reshape(V4conRE,numel(V4conRE),1);
+meanDp(6,1) = nanmedian([le;re],'all');
 hold on
 axis square
 plot([-2 5],[-2 5],'color',[0.2 0.2 0.2])
@@ -260,6 +275,7 @@ set(gca,'FontSize',11,'tickdir','out','FontAngle','italic','XTickLabel',{'','0',
 s = subplot(6,4,22);
 le = reshape(V4radLE,numel(V4radLE),1);
 re = reshape(V4radRE,numel(V4radRE),1);
+meanDp(6,2) = nanmedian([le;re],'all');
 hold on
 xlim([-1 2.5])
 xlim([-1 2.5])
@@ -277,6 +293,7 @@ set(gca,'FontSize',11,'tickdir','out','FontAngle','italic','XTickLabel',{'','0',
 s = subplot(6,4,23);
 le = reshape(V4trLE,numel(V4trLE),1);
 re = reshape(V4trRE,numel(V4trRE),1);
+meanDp(6,3) = nanmedian([le;re],'all');
 hold on
 xlim([-1 2.5])
 xlim([-1 2.5])
@@ -295,6 +312,7 @@ set(gca,'FontSize',11,'tickdir','out','FontAngle','italic','XTickLabel',{'','0',
 s = subplot(6,4,17);
 le = reshape(V1conLE,numel(V1conLE),1);
 re = reshape(V1conRE,numel(V1conRE),1);
+meanDp(5,1) = nanmedian([le;re],'all');
 hold on
 axis square
 plot([-2 5],[-2 5],'color',[0.2 0.2 0.2])
@@ -315,6 +333,7 @@ set(gca,'FontSize',10,'tickdir','out','FontAngle','italic','XTickLabel',[],'YTic
 s = subplot(6,4,18);
 le = reshape(V1radLE,numel(V1radLE),1);
 re = reshape(V1radRE,numel(V1radRE),1);
+meanDp(5,2) = nanmedian([le;re],'all');
 hold on
 xlim([-1 2.5])
 xlim([-1 2.5])
@@ -331,6 +350,7 @@ set(gca,'FontSize',11,'tickdir','out','FontAngle','italic','XTickLabel',[],'YTic
 s = subplot(6,4,19);
 le = reshape(V1trLE,numel(V1trLE),1);
 re = reshape(V1trRE,numel(V1trRE),1);
+meanDp(5,3) = nanmedian([le;re],'all');
 hold on
 xlim([-1 2.5])
 xlim([-1 2.5])
@@ -343,6 +363,8 @@ s.Position(2) = s.Position(2)-0.06;
 s.Position(3) = s.Position(3)+0.018;
 s.Position(4) = s.Position(4)+0.018;
 set(gca,'FontSize',11,'tickdir','out','FontAngle','italic','XTickLabel',[],'YTickLabel',{'','0','1','2'})
+
+meanDp = round(meanDp,3);
 
 % % XT Rsq comp
 s = subplot(6,4,4);

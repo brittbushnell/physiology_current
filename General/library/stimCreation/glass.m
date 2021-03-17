@@ -90,6 +90,7 @@ function g = glass(type, n, dx, coh, bkgdcolor, dotcolor, mask)
   set(h, 'color', dotcolor);
   set(gca, 'color', bkgdcolor);
   set(gcf, 'color', bkgdcolor);
+  set(gca,'axes','off')
   hold off
 
   % requested coherence

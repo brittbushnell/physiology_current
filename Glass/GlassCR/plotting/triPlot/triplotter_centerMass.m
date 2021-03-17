@@ -1,4 +1,4 @@
-function wgtMu = triplotter_centerMass(rcd,vSum,mkColor)
+function [wgtMu,CoM] = triplotter_centerMass(rcd,vSum,mkColor)
 %%
 % figure(1)
 % clf
@@ -25,6 +25,8 @@ plot3m([rad2deg(phic),rad2deg(phib)],[rad2deg(thc),rad2deg(thb)],[rc,rb],'-','co
 wgtLoc = (rcd).*vSum;
 wgtMu = mean(wgtLoc);
 [thx,phix,rx]=cart2sph(wgtMu(1),wgtMu(2),wgtMu(3));
+CoM = [rad2deg(thx),rad2deg(phix),rx];
 
 plot3m(rad2deg(phix),rad2deg(thx),rx+4, 'o','MarkerFaceColor',mkColor,'MarkerEdgeColor',[0.99 0.99 0.99],'MarkerSize',7,'LineWidth',0.3);
-% plot3m(rad2deg(phix),rad2deg(thx),rx+1, 'o','MarkerEdgeColor','r','MarkerSize', 20,'LineWidth',1.5);
+% rx+4 to make the center of mass dot always appear on top of all of the
+% data markers
