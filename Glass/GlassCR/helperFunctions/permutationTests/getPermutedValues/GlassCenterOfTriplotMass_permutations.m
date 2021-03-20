@@ -21,10 +21,9 @@ steps:
  
 3) calculate center of mass
 
-4) calculate the distance from permuted CoM and real
+4) repeat 1k times, creating a vector of permuted CoM values. Keep in mind
+this is just for one eye.
 
-5) repeat 1k times, creating a vector of permuted CoM values and
-CoM distances
 %}
 %%
 switch nargin

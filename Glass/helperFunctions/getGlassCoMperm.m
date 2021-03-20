@@ -12,12 +12,20 @@ rad = squeeze(LEcrData.radNoiseDprime(end,:,:,useCh));
 lin = squeeze(mean(LEtrData.linNoiseDprime(:,end,:,:,useCh),1));
 
 permCoMLE = GlassCenterOfTriplotMass_permutations(con,rad,lin);
+%%
+
+%%
+figure
+
+subplot(1,2,1)
+hold on
+triplotter_GlassWithTr_noCBar_oneOri(permCoMRE,cmap)
 %% get permuted distances
 permComDist = vecnorm(permCoMLE - permCoMRE,2,2);
 %% do permutation test
 
 high = find(permComDist>realCoMdistance);
-pVal = round((length(high)+1)/(length(permComDist)+1),3);
+pVal = round((length(high)+1)/(length(permComDist)+1));
 
 if (pVal > 0.95) || (pVal < 0.05) % two tailed test
     sigDif = 1;
@@ -30,4 +38,5 @@ title(sprintf('permuted distance between LE and RE %s %s',REcrData.animal, REcrD
 histogram(permComDist,'Normalization','probability')
 plot([realCoMdistance, realCoMdistance],[0 0.6],'r-','LineWidth',0.75)
 
+ 
 

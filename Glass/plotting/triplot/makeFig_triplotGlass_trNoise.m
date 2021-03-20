@@ -282,12 +282,6 @@ s.Position(4) = s.Position(4) + 0.02;
 
 v4Dist = vecnorm((v4ComLEsph) - (v4ComREsph),2,2);
 
-% if sigDifV4 == 1
-%     text(-2,-1,sprintf('V4 distance between CoM: %.3f* p = %.3f',v4Dist,pValV4),'FontSize',12)
-% else
-%     text(-2,-1,sprintf('V4 distance between CoM: %.3f p = %.3f',v4Dist,pValV4),'FontSize',12)
-% end
-
 colormap(ax,flipud(cmap));
 c2 = colorbar(ax,'Position',[0.9 0.31 0.0178 0.37]);
 c2.TickDirection = 'out';
