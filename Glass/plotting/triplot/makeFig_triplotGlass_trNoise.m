@@ -300,7 +300,7 @@ print(gcf, figName,'-dpdf','-bestfit')
 [pValV4,sigDifV4] = getGlassCoMperm(V4data.conRadRE,V4data.conRadLE,V4data.trRE,V4data.trLE,v4Dist);
 %%
 figure(18)
-clf
+ clf
 hold on
 triplotter_GlassWithTr_noCBar_oneOri(v1ComREmu,[1 0 0]);
 triplotter_GlassWithTr_noCBar_oneOri(v1ComLEmu,[0 0 1]);
@@ -311,8 +311,8 @@ triplotter_GlassWithTr_noCBar_oneOri(v4ComLEmu,[0.8 0.3 0.8]);
 % reDist = vecnorm(v4ComREsph - v1ComREsph,2,2);
 % leDist = vecnorm(v4ComLEsph - v1ComLEsph,2,2);
 
-text(-1,-1.05,sprintf('V4 CoM vector norm: %.3f',v4Dist),'FontSize',12)
-text(-1,-1,sprintf('V1 CoM vector norm: %.3f',v1Dist),'FontSize',12)
+text(-1,-1.05,sprintf('V4 CoM distance: %.3f ',v4Dist),'FontSize',12)
+text(-1,-1,sprintf('V1 CoM distance: %.3f ',v1Dist),'FontSize',12)
 
 text(-0.25,-1.05,sprintf('p = %.3f',pValV4),'FontSize',12)
 text(-0.25,-1,sprintf('p = %.3f',pValV1),'FontSize',12)
@@ -321,6 +321,7 @@ text(0.5,0.75,'V1 RE','FontWeight','bold','color',[1 0 0],'FontSize',12)
 text(0.5,0.7,'V1 LE','FontWeight','bold','color',[0 0 1],'FontSize',12)
 text(0.7,0.75,'V4 RE','FontWeight','bold','color',[1 0.5 0.1],'FontSize',12)
 text(0.7,0.7,'V4 LE','FontWeight','bold','color',[0.8 0.3 0.8],'FontSize',12)
+% text(0.5, 0.65,'permuted CoM','FontWeight','bold','FontSize',12)
 
 text(-1,-0.75,'Radial','FontSize',12)
 text(0.8,-0.75,'Concentric','FontSize',12)

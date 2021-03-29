@@ -2,19 +2,19 @@ clear
 close all
 clc
 %%
-% load('WV_BE_GlassTRCoh_V4_cleanMerged');
-% trLE = data.LE; 
-% trRE = data.RE;
-% trData = data;
-% clear data;
-% 
-% load('WV_BE_V4_Glass_Aug2017_clean_merged');
-% conRadLE = data.LE;
-% conRadRE = data.RE;
-% conRadData = data;
-% clear data
-% 
-% newName = 'WV_BE_V4_bothGlass_cleanMerged';
+load('WV_BE_GlassTRCoh_V1_cleanMerged');
+trLE = data.LE; 
+trRE = data.RE;
+trData = data;
+clear data;
+
+load('WV_BE_V1_Glass_Aug2017_clean_merged');
+conRadLE = data.LE;
+conRadRE = data.RE;
+conRadData = data;
+clear data
+
+newName = 'WV_BE_V1_bothGlass_cleanMerged';
  %%
 % load('WU_BE_GlassTR_V1_cleanMerged');
 % trLE = data.LE;
@@ -30,19 +30,19 @@ clc
 % 
 % newName = 'WU_BE_V1_bothGlass_cleanMerged';
 %% 
-load('XT_BE_GlassTR_V4_cleanMerged');
-trLE = data.LE;
-trRE = data.RE;
-trData = data;
-clear data;
-
-load('XT_BE_V4_Glass_clean_merged');
-conRadLE = data.LE;
-conRadRE = data.RE;
-conRadData = data;
-clear data
-
-newName = 'XT_BE_V4_bothGlass_cleanMerged';
+% load('XT_BE_GlassTR_V4_cleanMerged');
+% trLE = data.LE;
+% trRE = data.RE;
+% trData = data;
+% clear data;
+% 
+% load('XT_BE_V4_Glass_clean_merged');
+% conRadLE = data.LE;
+% conRadRE = data.RE;
+% conRadData = data;
+% clear data
+% 
+% newName = 'XT_BE_V4_bothGlass_cleanMerged';
 %%
 location = determineComputer;
 

@@ -2,32 +2,32 @@ clear
 close all
 clc
 %%
-load('WV_BE_V1_bothGlass_cleanMerged');
-V1data = data;
-clear data;
-
-load('WV_BE_V4_bothGlass_cleanMerged');
-V4data = data;
-clear data;
-newName = 'WV_2eyes_2arrays_GlassPatterns';
-%%
-% load('WU_BE_V1_bothGlass_cleanMerged');
+% load('WV_BE_V1_bothGlass_cleanMerged');
 % V1data = data;
 % clear data;
 % 
-% load('WU_BE_V4_bothGlass_cleanMerged');
+% load('WV_BE_V4_bothGlass_cleanMerged');
 % V4data = data;
 % clear data;
-% newName = 'WU_2eyes_2arrays_GlassPatterns';
-%%
-load('XT_BE_V1_bothGlass_cleanMerged');
+% newName = 'WV_2eyes_2arrays_GlassPatterns';
+ %%
+load('WU_BE_V1_bothGlass_cleanMerged');
 V1data = data;
 clear data;
 
-load('XT_BE_V4_bothGlass_cleanMerged');
+load('WU_BE_V4_bothGlass_cleanMerged');
 V4data = data;
 clear data;
-newName = 'XT_2eyes_2arrays_GlassPatterns';
+newName = 'WU_2eyes_2arrays_GlassPatterns';
+%%
+% load('XT_BE_V1_bothGlass_cleanMerged');
+% V1data = data;
+% clear data;
+% 
+% load('XT_BE_V4_bothGlass_cleanMerged');
+% V4data = data;
+% clear data;
+% newName = 'XT_2eyes_2arrays_GlassPatterns';
 %% coherence
 if ~contains(V1data.conRadRE.animal,'XT')
    GlassCohCorrStats(V1data, V4data)
@@ -61,7 +61,7 @@ makeFig_triplotGlass_trNoise(V1data, V4data);
 % makeFig_triplotGlass_trNoise_oris(V1data, V4data)
 
 %% Chi squared homogeneity
-% plotGlassChiSquareDistribution(data)
+ plotGlassChiSquareDistribution(V4data.conRadRE,V4data.conRadLE)
  %% coherence
 % plotGlass_CoherenceResps(REdata)
 %% orietnation tuning across array

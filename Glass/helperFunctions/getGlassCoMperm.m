@@ -1,34 +1,42 @@
 function [pVal,sigDif] = getGlassCoMperm(REcrData,LEcrData,REtrData,LEtrData,realCoMdistance)
-useCh = (REcrData.inStim == 1 & REcrData.goodCh == 1 & LEcrData.inStim == 1 & LEcrData.goodCh == 1);
-con = squeeze(REcrData.conNoiseDprime(end,:,:,useCh));
-rad = squeeze(REcrData.radNoiseDprime(end,:,:,useCh));
-lin = squeeze(mean(REtrData.linNoiseDprime(:,end,:,:,useCh),1));
+useCh = (REcrData.inStim == 1 & REcrData.goodCh == 1 & LEcrData.inStim == 1 & LEcrData.goodCh == 1 & ...
+   REtrData.inStim == 1 & REtrData.goodCh == 1 & LEtrData.inStim == 1 & LEtrData.goodCh == 1);
 
-permCoMRE = GlassCenterOfTriplotMass_permutations(con,rad,lin);
+con = abs(squeeze(REcrData.conNoiseDprime(end,:,:,useCh)));
+rad = abs(squeeze(REcrData.radNoiseDprime(end,:,:,useCh)));
+lin = abs(squeeze(mean(REtrData.linNoiseDprime(:,end,:,:,useCh),1)));
+
+[permCoMRE,permCoMREsph] = GlassCenterOfTriplotMass_permutations(con,rad,lin);
 
 
-con = squeeze(LEcrData.conNoiseDprime(end,:,:,useCh));
-rad = squeeze(LEcrData.radNoiseDprime(end,:,:,useCh));
-lin = squeeze(mean(LEtrData.linNoiseDprime(:,end,:,:,useCh),1));
+con = abs(squeeze(LEcrData.conNoiseDprime(end,:,:,useCh)));
+rad = abs(squeeze(LEcrData.radNoiseDprime(end,:,:,useCh)));
+lin = abs(squeeze(mean(LEtrData.linNoiseDprime(:,end,:,:,useCh),1)));
 
-permCoMLE = GlassCenterOfTriplotMass_permutations(con,rad,lin);
+[permCoMLE,permCoMLEsph] = GlassCenterOfTriplotMass_permutations(con,rad,lin);
+
 %%
-
-%%
-figure
-
-subplot(1,2,1)
+figure%(18)
+clf
 hold on
-triplotter_GlassWithTr_noCBar_oneOri(permCoMRE,cmap)
+
+cmap = zeros(50,3);
+triplotter_GlassWithTr_noCBar_oneOri(permCoMLE(1:50,:),brewermap(50,'Blues'));
+
+cmap = zeros(50,3);
+triplotter_GlassWithTr_noCBar_oneOri(permCoMRE(1:50,:),brewermap(50,'Reds'));
+
 %% get permuted distances
-permComDist = vecnorm(permCoMLE - permCoMRE,2,2);
+permComDist = vecnorm(permCoMLEsph - permCoMREsph,2,2);
 %% do permutation test
 
 high = find(permComDist>realCoMdistance);
-pVal = round((length(high)+1)/(length(permComDist)+1));
+pVal = ((length(high)+1)/(length(permComDist)+1));
 
-if (pVal > 0.95) || (pVal < 0.05) % two tailed test
+if  (pVal < 0.05)
     sigDif = 1;
+else
+    sigDif = 0;
 end
 %%
 figure

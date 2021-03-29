@@ -1,4 +1,4 @@
-function [CoM] = GlassCenterOfTriplotMass_permutations(varargin)
+function [CoM,CoMsph] = GlassCenterOfTriplotMass_permutations(varargin)
 %{
 Input requirements:
 
@@ -36,44 +36,56 @@ switch nargin
     case 3
         radDprimes = varargin{1};
         conDprimes = varargin{2};
-        nozDprimes = varargin{3};
+        linDprimes = varargin{3};
         numBoot = 1000;
     case 4
         radDprimes = varargin{1};
         conDprimes = varargin{2};
-        nozDprimes = varargin{3};
+        linDprimes = varargin{3};
         numBoot = varargin{4};
 end
 %% initialize response matrices
 CoM = nan(numBoot,3);
+CoMsph = nan(numBoot,3);
 %%
+figure %(120)
+clf
+hold on
 for nb = 1:numBoot
     rcdT = nan(size(conDprimes,3),3); %limited to included channels already, so number of channels will vary.
     for ch = 1:size(conDprimes,3)
         conT = squeeze(conDprimes(:,:,ch));
         radT = squeeze(radDprimes(:,:,ch));
-        nozT = squeeze(nozDprimes(:,:,ch));
+        linT = squeeze(linDprimes(:,:,ch));
         
-        dpsT = cat(2,conT,radT,nozT);
-        r = randi(numel(dpsT),6);
-        r = unique(r);
+        conT = reshape(conT,numel(conT),1);
+        radT = reshape(radT,numel(radT),1);
+        linT = reshape(linT,numel(linT),1);
+        
+        dpsT = [conT;radT;linT];
+        r = randperm(size(dpsT,1));
         
         rndC = dpsT(r(1));
         rndR = dpsT(r(2));
-        rndN = dpsT(r(3));
+        rndL = dpsT(r(3));
         
-        rcdT(ch,1:3) = [rndR rndC rndN];  
+        rcdT(ch,1:3) = [rndR rndC rndL];  
     end
     
     vSum = sqrt(rcdT(:,1).^2 + rcdT(:,2).^2 + rcdT(:,3).^2);
-    wgt = (rcdT).*vSum;
-    wgtMu = nanmean(wgt);    
-    [thx,phix,rx]=cart2sph(wgtMu(1),wgtMu(2),wgtMu(3));
-    CoM(nb,:) = [rad2deg(thx),rad2deg(phix),rx];
-    
+    [Ct,CoMsph(nb,:)] = triplotter_centerMass(rcdT,vSum,[1 0 0],0);
+    if isnan(Ct)
+        keyboard
+    else
+        CoM(nb,:) = Ct;
+    end
+
     clear rcdT; clear wgtLoc; clear vSum;
 end
+hold on
+cmap = zeros(numBoot,3);
 
+triplotter_GlassWithTr_noCBar_oneOri(CoM,cmap);
 
 
 
