@@ -296,11 +296,13 @@ figName = [V1data.conRadLE.animal,'_BE_bothArrays_triplot_meanOri'];
 set(gca,'color','none')
 print(gcf, figName,'-dpdf','-bestfit')
 %%
-[pValV1,sigDifV1] = getGlassCoMperm(V1data.conRadRE,V1data.conRadLE,V1data.trRE,V1data.trLE,v1Dist);
-[pValV4,sigDifV4] = getGlassCoMperm(V4data.conRadRE,V4data.conRadLE,V4data.trRE,V4data.trLE,v4Dist);
+% [pValV1,sigDifV1] = getGlassCoMperm(V1data.conRadRE,V1data.conRadLE,V1data.trRE,V1data.trLE,v1Dist);
+% [pValV4,sigDifV4] = getGlassCoMperm(V4data.conRadRE,V4data.conRadLE,V4data.trRE,V4data.trLE,v4Dist);
+[pValV1,sigDifV1] = getGlassCoMperm2(V1dataRE,V1dataLE,v1Dist,V1data.trLE.animal, 'V1');
+[pValV4,sigDifV4] = getGlassCoMperm2(V1dataRE,V4dataLE,v4Dist,V1data.trLE.animal, 'V4');
 %%
 figure(18)
- clf
+clf
 hold on
 triplotter_GlassWithTr_noCBar_oneOri(v1ComREmu,[1 0 0]);
 triplotter_GlassWithTr_noCBar_oneOri(v1ComLEmu,[0 0 1]);

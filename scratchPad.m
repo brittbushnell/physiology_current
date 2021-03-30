@@ -1,4 +1,3 @@
-% debugging/figuring out GlassCoh and why some match perfectly
     for ndx = 1:numel(REdata)
         RErcdT(ndx) = dataBE(REndxs(ndx));
     end

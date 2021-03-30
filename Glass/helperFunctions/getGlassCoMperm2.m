@@ -1,33 +1,22 @@
-function [pVal,sigDif] = getGlassCoMperm2(V1dataRE,V1dataLE,V4dataRE,V4dataLE,realCoMdistance)
-
-
-
-
-
-
-
-
-
-
-
-
-%%
-figure%(18)
+function [pVal,sigDif] = getGlassCoMperm2(REdata,LEdata,realCoMdistance,animal,array)
+figure%(2)
 clf
 hold on
+suptitle(sprintf('%s %s permuted centers of mass using best density/dx',animal,array))
+[CoMdist,CoMLE,CoMsphLE,CoMRE,CoMsphRE] = GlassCenterOfTriplotMass_perm2(REdata,LEdata);
 
-cmap = zeros(50,3);
-triplotter_GlassWithTr_noCBar_oneOri(permCoMLE(1:50,:),brewermap(50,'Blues'));
-
-cmap = zeros(50,3);
-triplotter_GlassWithTr_noCBar_oneOri(permCoMRE(1:50,:),brewermap(50,'Reds'));
-
-%% get permuted distances
-permComDist = vecnorm(permCoMLEsph - permCoMREsph,2,2);
+%%
+% figure%(18)
+% clf
+% hold on
+% 
+% suptitle(sprintf('%s %s permuted centers of mass using best density/dx', REdata.animal, REdata.array))
+% triplotter_GlassWithTr_noCBar_oneOri(CoMLE(1:50,:),brewermap(50,'Blues'));
+% triplotter_GlassWithTr_noCBar_oneOri(CoMRE(1:50,:),brewermap(50,'Reds'));
 %% do permutation test
 
-high = find(permComDist>realCoMdistance);
-pVal = ((length(high)+1)/(length(permComDist)+1));
+high = find(CoMdist>realCoMdistance);
+pVal = ((length(high)+1)/(length(CoMdist)+1));
 
 if  (pVal < 0.05)
     sigDif = 1;
@@ -35,12 +24,17 @@ else
     sigDif = 0;
 end
 %%
-figure
+figure%(3)
 clf
-hold on
-title(sprintf('permuted distance between LE and RE %s %s',REcrData.animal, REcrData.array))
-histogram(permComDist,'Normalization','probability')
-plot([realCoMdistance, realCoMdistance],[0 0.6],'r-','LineWidth',0.75)
 
+subplot(2,1,1)
+hold on
+suptitle(sprintf('%s %s permuted distance between LE and RE using best density/dx',animal,array))
+histogram(CoMdist,'Normalization','probability')
+plot([realCoMdistance, realCoMdistance],[0 0.6],'r-','LineWidth',0.75)
+text(realCoMdistance+1,0.4,sprintf('p = %.2f',pVal))
+
+ylim([0 0.5])
+set(gca,'tickdir','out','box','off')
  
 

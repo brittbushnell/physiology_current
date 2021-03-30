@@ -1,4 +1,4 @@
-function [CoMLE,CoMsphLE,CoMRE,CoMsphRE] = GlassCenterOfTriplotMass_perm2(REdata,LEdata)
+function [CoMdist,CoMLE,CoMsphLE,CoMRE,CoMsphRE] = GlassCenterOfTriplotMass_perm2(REdata,LEdata)
 %{
 Input requirements:
 
@@ -22,7 +22,7 @@ this is just for one eye.
 
 %}
 %%
-numBoot = 100;
+numBoot = 1000;
 %% initialize response matrices
 CoMLE = nan(numBoot,3);
 CoMsphLE = nan(numBoot,3);
@@ -33,9 +33,6 @@ CoMsphRE = nan(numBoot,3);
 dataBE = cat(1,REdata,LEdata);
 CoMdist = nan(numBoot,1);
 %%
-figure %(120)
-clf
-hold on
 for nb = 1:numBoot
     LErcdT = nan(size(LEdata));
     RErcdT = nan(size(REdata));
@@ -78,11 +75,11 @@ cmap = zeros(numBoot,3);
 
 subplot(1,2,1)
 triplotter_GlassWithTr_noCBar_oneOri(CoMLE,cmap);
-title('FE/LE')
+title(sprintf('FE/LE n: %d',size(LEdata,1)))
 
 subplot(1,2,2)
 triplotter_GlassWithTr_noCBar_oneOri(CoMRE,cmap);
-title('AE/RE')
+title(sprintf('AE/RE n: %d',size(REdata,1)))
 %%
 
 
