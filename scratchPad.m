@@ -1,13 +1,7 @@
-    for ndx = 1:numel(REdata)
-        RErcdT(ndx) = dataBE(REndxs(ndx));
+    if incltrLEV1(ch) || inclConRadLEV1(ch)
+        LEV1Sig(ch,1) = 0;
     end
     
-    vSum = sqrt(RErcdT(:,1).^2 + RErcdT(:,2).^2 + RErcdT(:,3).^2);
-    [Ct,CoMsphRE(nb,:)] = triplotter_centerMass(RErcdT,vSum,[1 0 0],0);
-
-    if isnan(Ct)
-        keyboard
-    else
-        CoMRE(nb,:) = Ct;
+    if incltrREV1(ch) || inclConRadREV1(ch)
+        REV1Sig(ch,1) = 0;
     end
-    clear RErcdT; clear vSum; clear Ct;

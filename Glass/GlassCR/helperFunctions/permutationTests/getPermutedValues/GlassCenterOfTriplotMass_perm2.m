@@ -11,7 +11,7 @@ steps:
 1) set up blank matrices for RE and LE that's the same dimensions as the
 input matrices.
 
-2) fill the matrices with random d' from either input matrix.
+2) randomly assign each element as to if it will get the LE or RE data
 
 3) calculate vector sum
  
@@ -30,15 +30,13 @@ CoMsphLE = nan(numBoot,3);
 CoMRE = nan(numBoot,3);
 CoMsphRE = nan(numBoot,3);
 
-dataBE = cat(1,REdata,LEdata);
 CoMdist = nan(numBoot,1);
 %%
 for nb = 1:numBoot
     LErcdT = nan(size(LEdata));
     RErcdT = nan(size(REdata));
-    randNdx = randperm(numel(dataBE));
-    LEndxs = randNdx(1:numel(LEdata));
-    REndxs = randNdx(numel(LEdata,1):end);
+    
+    
     
     for ndx = 1:numel(LEdata)
         LErcdT(ndx) = dataBE(LEndxs(ndx));
@@ -76,10 +74,16 @@ cmap = zeros(numBoot,3);
 subplot(1,2,1)
 triplotter_GlassWithTr_noCBar_oneOri(CoMLE,cmap);
 title(sprintf('FE/LE n: %d',size(LEdata,1)))
+text(-1,-0.78,'Radial','FontSize',12)
+text(0.8,-0.78,'Concentric','FontSize',12)
+text(-0.2,0.87,'Translational','FontSize',12)
 
 subplot(1,2,2)
 triplotter_GlassWithTr_noCBar_oneOri(CoMRE,cmap);
 title(sprintf('AE/RE n: %d',size(REdata,1)))
+text(-1,-0.78,'Radial','FontSize',12)
+text(0.8,-0.78,'Concentric','FontSize',12)
+text(-0.2,0.87,'Translational','FontSize',12) 
 %%
 
 

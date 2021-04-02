@@ -3,8 +3,17 @@ figure%(2)
 clf
 hold on
 suptitle(sprintf('%s %s permuted centers of mass using best density/dx',animal,array))
-[CoMdist,CoMLE,CoMsphLE,CoMRE,CoMsphRE] = GlassCenterOfTriplotMass_perm2(REdata,LEdata);
+CoMdist = GlassCenterOfTriplotMass_perm2(REdata,LEdata);
 
+figDir = '/Users/brittany/Dropbox/Figures/XT/GlassCombo/triplot/ori/perm';
+if ~exist(figDir,'dir')
+    mkdir(figDir)
+end
+cd(figDir)
+
+figName = [animal,array,'CoMperm_Triplot','.pdf'];
+set(gca,'color','none')
+print(gcf, figName,'-dpdf','-bestfit')
 %%
 % figure%(18)
 % clf
@@ -36,5 +45,7 @@ text(realCoMdistance+1,0.4,sprintf('p = %.2f',pVal))
 
 ylim([0 0.5])
 set(gca,'tickdir','out','box','off')
- 
+
+figName = [animal,array,'CoMpermDist_Hist','.pdf'];
+print(gcf, figName,'-dpdf','-bestfit')
 

@@ -112,6 +112,14 @@ LEv4sig0 = 0;
 LEv4sig45 = 0;
 LEv4sig90 = 0;
 LEv4sig135 = 0;
+
+LEV1Sig = nan(96,1);
+REV1Sig = nan(96,1);
+LEV4Sig = nan(96,1);
+REV4Sig = nan(96,1);
+% posConSlope = 0;
+% negConSlope = 0;
+
 %%
 inclConRadLEV1 = (V1data.conRadLE.goodCh == 1) & (V1data.conRadLE.inStim == 1);
 incltrLEV1 = (V1data.trLE.goodCh == 1) & (V1data.trLE.inStim == 1);
@@ -126,13 +134,28 @@ inclConRadREV4 = (V4data.conRadRE.goodCh == 1) & (V4data.conRadRE.inStim == 1);
 incltrREV4 = (V4data.trRE.goodCh == 1) & (V4data.trRE.inStim == 1);
 %%
 for ch = 1:96
-    chSig = 0;
     figure(1)
     clf
     hold on
     s = suptitle(sprintf('%s coherence responses ch %d',V4data.conRadLE.animal,ch));
     s.Position(2) = s.Position(2)+0.025;
     s.FontSize = 18;
+    
+    if incltrLEV1(ch) || inclConRadLEV1(ch)
+        LEV1Sig(ch,1) = 0;
+    end
+    
+    if incltrREV1(ch) || inclConRadREV1(ch)
+        REV1Sig(ch,1) = 0;
+    end   
+    
+    if incltrLEV4(ch) || inclConRadLEV4(ch)
+        LEV4Sig(ch,1) = 0;
+    end
+    
+    if incltrREV4(ch) || inclConRadREV4(ch)
+        REV4Sig(ch,1) = 0;
+    end
     
     subplot(2,2,1)
     if contains(V4data.trLE.animal,'WV')
@@ -152,15 +175,23 @@ for ch = 1:96
         else
             conDp(2:end) = squeeze(V1data.conRadLE.conNoiseDprime(:,2,2,ch));
         end
-        [~,cT] = corrcoef(conDp,cohs','Alpha',0.01);
+        [cC,cT] = corrcoef(conDp,cohs','Alpha',0.01);
         cPv = cT(2);
+        cCor = cC(2);
+        
         if round(cPv,2) <=0.05
             plot(cohs, conDp, 'o-','color',[0.7 0 0.7],'LineWidth',1.2)
             LEv1conSig = LEv1conSig +1;
-            chSig = chSig+1;
+            LEV1Sig(ch,1) = LEV1Sig(ch,1) + 1;
         else
             plot(cohs, conDp, 'o-','color',[0.65 0.65 0.65],'LineWidth',0.35)
         end
+        
+%         if cCor<0
+%             negConSlope = negConSlope+1;
+%         elseif cCor>0
+%             posConSlope = posConSlope+1;
+%         end
         
         if radDtDxPrefLEV1(ch) == 1
             radDp(2:end) = squeeze(V1data.conRadLE.radNoiseDprime(:,1,1,ch));
@@ -176,7 +207,7 @@ for ch = 1:96
         if round(rPv,2) <=0.05
             plot(cohs, radDp, 'o-','color',[0 0.6 0.2],'LineWidth',1.2)
             LEv1radSig = LEv1radSig+1;
-            chSig = chSig+1;
+            LEV1Sig(ch,1) = LEV1Sig(ch,1)+1;
         else
             plot(cohs, radDp, 'o-','color',[0.65 0.65 0.65],'LineWidth',0.35)
         end
@@ -196,6 +227,8 @@ for ch = 1:96
             trPv = trT(2);
             if round(trPv,2) <= 0.05
                 plot(cohs, trDp, 'o-','color',cmapOri(ori,:),'LineWidth',1.2)
+                LEV1Sig(ch,1) = LEV1Sig(ch,1)+1;
+                
                 if ori == 1
                     LEv1sig0 = LEv1sig0+1;
                 elseif ori == 2
@@ -205,7 +238,7 @@ for ch = 1:96
                 else
                     LEv1sig135 = LEv1sig135+1;
                 end
-                chSig = chSig+1;
+               
             else
                 plot(cohs, trDp, 'o-','color',[0.65 0.65 0.65],'LineWidth',0.35)
             end
@@ -240,7 +273,7 @@ for ch = 1:96
         if round(cPv,2) <=0.05
             plot(cohs, conDp, 'o-','color',[0.7 0 0.7],'LineWidth',1.2)
             REv1conSig = REv1conSig+1;
-            chSig = chSig+1;
+            REV1Sig(ch,1) = REV1Sig(ch,1)+1;
         else
             plot(cohs, conDp, 'o-','color',[0.65 0.65 0.65],'LineWidth',0.35)
         end
@@ -259,7 +292,7 @@ for ch = 1:96
         if round(rPv,2) <=0.05
             plot(cohs, radDp, 'o-','color',[0 0.6 0.2],'LineWidth',1.2)
             REv1radSig = REv1radSig+1;
-            chSig = chSig+1;
+            REV1Sig(ch,1) = REV1Sig(ch,1)+1;
         else
             plot(cohs, radDp, 'o-','color',[0.65 0.65 0.65],'LineWidth',0.35)
         end
@@ -279,6 +312,7 @@ for ch = 1:96
             trPv = trT(2);
             if round(trPv,2) <= 0.05
                 plot(cohs, trDp, 'o-','color',cmapOri(ori,:),'LineWidth',1.2)
+                REV1Sig(ch,1) = REV1Sig(ch,1) +1;
                 if ori == 1
                     REv1sig0 = REv1sig0+1;
                 elseif ori == 2
@@ -288,7 +322,6 @@ for ch = 1:96
                 else
                     REv1sig135 = REv1sig135+1;
                 end
-                chSig = chSig+1;
             else
                 plot(cohs, trDp, 'o-','color',[0.65 0.65 0.65],'LineWidth',0.35)
             end
@@ -324,7 +357,7 @@ for ch = 1:96
         if round(cPv,2) <=0.05
             plot(cohs, conDp, 'o-','color',[0.7 0 0.7],'LineWidth',1.2)
             LEv4conSig = LEv4conSig+1;
-            chSig = chSig+1;
+            LEV4Sig(ch,1) = LEV4Sig(ch,1)+1;
         else
             plot(cohs, conDp, 'o-','color',[0.65 0.65 0.65],'LineWidth',0.35)
         end
@@ -343,7 +376,7 @@ for ch = 1:96
         if round(rPv,2) <=0.05
             plot(cohs, radDp, 'o-','color',[0 0.6 0.2],'LineWidth',1.2);
             LEv4radSig = LEv4radSig +1;
-            chSig = chSig+1;
+            LEV4Sig(ch,1) = LEV4Sig(ch,1)+1;
         else
             plot(cohs, radDp, 'o-','color',[0.65 0.65 0.65],'LineWidth',0.35);
         end
@@ -363,6 +396,7 @@ for ch = 1:96
             trPv = trP(2);
             if round(trPv,2) <= 0.05
                 plot(cohs, trDp, 'o-','color',cmapOri(ori,:),'LineWidth',1.2)
+                LEV4Sig(ch,1) = LEV4Sig(ch,1) +1;
                 if ori == 1
                     LEv4sig0 = LEv4sig0+1;
                 elseif ori == 2
@@ -372,7 +406,6 @@ for ch = 1:96
                 else
                     LEv4sig135 = LEv4sig135+1;
                 end
-                chSig = chSig+1;
             else
                 plot(cohs, trDp, 'o-','color',[0.65 0.65 0.65],'LineWidth',0.35)
             end
@@ -407,7 +440,7 @@ for ch = 1:96
         if round(cPv,2) <=0.05
             plot(cohs, conDp, 'o-','color',[0.7 0 0.7],'LineWidth',1.2)
             REv4conSig = REv4conSig +1;
-            chSig = chSig+1;
+            REV4Sig(ch,1) = REV4Sig(ch,1)+1;
         else
             plot(cohs, conDp, 'o-','color',[0.65 0.65 0.65],'LineWidth',0.35)
         end
@@ -426,7 +459,7 @@ for ch = 1:96
         if round(rPv,2) <=0.05
             plot(cohs, radDp, 'o-','color',[0 0.6 0.2],'LineWidth',1.2)
             REv4radSig = REv4radSig+1;
-            chSig = chSig+1;
+            REV4Sig(ch,1) = REV4Sig(ch,1)+1;
         else
             plot(cohs, radDp, 'o-','color',[0.65 0.65 0.65],'LineWidth',0.35)
         end
@@ -446,6 +479,7 @@ for ch = 1:96
             trPv = trP(2);
             if round(trPv,2) <= 0.05
                 plot(cohs, trDp, 'o-','color',cmapOri(ori,:),'LineWidth',1.2)
+                REV4Sig(ch,1) = REV4Sig(ch,1) +1;
                 if ori == 1
                     REv4sig0 = REv4sig0+1;
                 elseif ori == 2
@@ -455,7 +489,6 @@ for ch = 1:96
                 else
                     REv4sig135 = REv4sig135+1;
                 end
-                chSig = chSig+1;
             else
                 plot(cohs, trDp, 'o-','color',[0.65 0.65 0.65],'LineWidth',0.35)
             end
@@ -529,8 +562,9 @@ for ch = 1:96
     
     %     pause
     figName = [V4data.conRadRE.animal,'sigCohPlotsAllCurves_ch',num2str(ch),'.pdf'];
-    if chSig >1
-        cd sigChs
+    if REV4Sig(ch,1) >1 || LEV4Sig(ch,1) >1 || REV1Sig(ch,1) >1 || LEV1Sig(ch,1) >1
+        figDir = '/Users/brittany/Dropbox/Figures/WV/GlassCombo/coh/sigChs';
+        cd(figDir)
         print(gcf, figName,'-dpdf','-bestfit')
         cd ../
     else
@@ -589,4 +623,60 @@ plot([-1 1],[0 0],'k:')
 plot([0 0],[-1 1],'k:')
 axis off
 figName = [V4data.conRadRE.animal,'_SigCohCount','.pdf'];
+print(gcf, figName,'-dpdf','-bestfit')
+%%
+figure(3)
+clf
+pos = get(gcf,'Position');
+set(gcf,'Position',[pos(1),pos(2),pos(3),400],'PaperOrientation','landscape');
+
+s = suptitle(sprintf('%s number of significant correlations per channel',V4data.conRadRE.animal));
+s.FontSize = 20;
+s.FontWeight = 'bold';
+s.FontAngle = 'italic';
+
+t = subplot(2,2,1);
+hold on
+histogram(LEV1Sig,'FaceColor','k','EdgeColor','w','FaceAlpha',1)
+set(gca,'tickDir','out','Layer','top','FontSize',11,'FontAngle','italic','Xtick',0:6)
+ylabel('Number of channels','FontSize',12,'FontAngle','italic')
+title('LE V1')
+xlim([-1 6])
+ylim([0 60])
+t.Position(4) = t.Position(4) - 0.1;
+
+
+t = subplot(2,2,2);
+hold on
+histogram(REV1Sig,'FaceColor','k','EdgeColor','w','FaceAlpha',1)
+set(gca,'tickDir','out','Layer','top','FontSize',11,'FontAngle','italic','Xtick',0:6)
+
+title('RE V1')
+xlim([-1 6])
+ylim([0 60])
+t.Position(4) = t.Position(4) - 0.1;
+
+t = subplot(2,2,3);
+hold on
+histogram(LEV4Sig,'FaceColor','k','EdgeColor','w','FaceAlpha',1)
+set(gca,'tickDir','out','Layer','top','FontSize',11,'FontAngle','italic','Xtick',0:6)
+xlabel('Number of significant correlations','FontSize',12,'FontAngle','italic')
+ylabel('Number of channels','FontSize',12,'FontAngle','italic')
+title('LE V4')
+xlim([-1 6])
+ylim([0 60])
+t.Position(4) = t.Position(4) - 0.1;
+
+
+t = subplot(2,2,4);
+hold on
+histogram(REV4Sig,'FaceColor','k','EdgeColor','w','FaceAlpha',1)
+set(gca,'tickDir','out','Layer','top','FontSize',11,'FontAngle','italic','Xtick',0:6)
+xlim([-1 6])
+ylim([0 60])
+xlabel('Number of significant correlations','FontSize',12,'FontAngle','italic')
+title('RE V4')
+t.Position(4) = t.Position(4) - 0.1;
+%%
+figName = [V4data.conRadRE.animal,'_SigDist','.pdf'];
 print(gcf, figName,'-dpdf','-bestfit')
