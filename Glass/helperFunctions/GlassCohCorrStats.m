@@ -117,9 +117,34 @@ LEV1Sig = nan(96,1);
 REV1Sig = nan(96,1);
 LEV4Sig = nan(96,1);
 REV4Sig = nan(96,1);
-% posConSlope = 0;
-% negConSlope = 0;
 
+LEv4conCorr = nan(96,1);
+LEv4radCorr = nan(96,1);
+LEv4corr0 = nan(96,1);
+LEv4corr45 = nan(96,1);
+LEv4corr90 = nan(96,1);
+LEv4corr135 = nan(96,1);
+
+REv4conCorr = nan(96,1);
+REv4radCorr = nan(96,1);
+REv4corr0 = nan(96,1);
+REv4corr45 = nan(96,1);
+REv4corr90 = nan(96,1);
+REv4corr135 = nan(96,1);
+
+LEv1conCorr = nan(96,1);
+LEv1radCorr = nan(96,1);
+LEv1corr0 = nan(96,1);
+LEv1corr45 = nan(96,1);
+LEv1corr90 = nan(96,1);
+LEv1corr135 = nan(96,1);
+
+REv1conCorr = nan(96,1);
+REv1radCorr = nan(96,1);
+REv1corr0 = nan(96,1);
+REv1corr45 = nan(96,1);
+REv1corr90 = nan(96,1);
+REv1corr135 = nan(96,1);
 %%
 inclConRadLEV1 = (V1data.conRadLE.goodCh == 1) & (V1data.conRadLE.inStim == 1);
 incltrLEV1 = (V1data.trLE.goodCh == 1) & (V1data.trLE.inStim == 1);
@@ -183,6 +208,7 @@ for ch = 1:96
             plot(cohs, conDp, 'o-','color',[0.7 0 0.7],'LineWidth',1.2)
             LEv1conSig = LEv1conSig +1;
             LEV1Sig(ch,1) = LEV1Sig(ch,1) + 1;
+            LEv1conCorr(ch,1) = cCor;
         else
             plot(cohs, conDp, 'o-','color',[0.65 0.65 0.65],'LineWidth',0.35)
         end
