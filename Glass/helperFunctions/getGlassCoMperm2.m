@@ -6,7 +6,7 @@ s = suptitle(sprintf('%s %s permuted values (top) and centers of mass (bottom) u
 s.Position(2) = s.Position(2)+0.02;
 CoMdist = GlassCenterOfTriplotMass_perm2(REdata,LEdata);
 
-figDir = '/Users/brittany/Dropbox/Figures/XT/GlassCombo/triplot/ori/perm';
+figDir = sprintf('/Users/brittany/Dropbox/Figures/%s/GlassCombo/triplot/ori/perm',animal);
 if ~exist(figDir,'dir')
     mkdir(figDir)
 end

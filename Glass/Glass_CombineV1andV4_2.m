@@ -10,7 +10,7 @@ clc
 % V4data = data;
 % clear data;
 % newName = 'WV_2eyes_2arrays_GlassPatterns';
- %%
+  %%
 % load('WU_BE_V1_bothGlass_cleanMerged');
 % V1data = data;
 % clear data;
