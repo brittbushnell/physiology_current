@@ -2,14 +2,14 @@ clear
 close all
 clc
 %%
-load('WV_BE_V1_bothGlass_cleanMerged');
-V1data = data;
-clear data;
-
-load('WV_BE_V4_bothGlass_cleanMerged');
-V4data = data;
-clear data;
-newName = 'WV_2eyes_2arrays_GlassPatterns';
+% load('WV_BE_V1_bothGlass_cleanMerged');
+% V1data = data;
+% clear data;
+% 
+% load('WV_BE_V4_bothGlass_cleanMerged');
+% V4data = data;
+% clear data;
+% newName = 'WV_2eyes_2arrays_GlassPatterns';
  %%
 % load('WU_BE_V1_bothGlass_cleanMerged');
 % V1data = data;
@@ -20,14 +20,20 @@ newName = 'WV_2eyes_2arrays_GlassPatterns';
 % clear data;
 % newName = 'WU_2eyes_2arrays_GlassPatterns';
 %%
-% load('XT_BE_V1_bothGlass_cleanMerged');
-% V1data = data;
-% clear data;
-% 
-% load('XT_BE_V4_bothGlass_cleanMerged');
-% V4data = data;
-% clear data;
-% newName = 'XT_2eyes_2arrays_GlassPatterns';
+load('XT_BE_V1_bothGlass_cleanMerged');
+V1data = data;
+clear data;
+
+load('XT_BE_V4_bothGlass_cleanMerged');
+V4data = data;
+clear data;
+newName = 'XT_2eyes_2arrays_GlassPatterns';
+%% triplot
+% using best dt, dx for each pattern
+% triplotter_Glass_BExArrays_optimalForPattern(V1data,V4data);
+makeFig_triplotGlass_trNoise(V1data, V4data);
+% makeFig_triplotGlass_trNoise_oris(V1data, V4data)
+
 %% coherence
 if ~contains(V1data.conRadRE.animal,'XT')
    GlassCohCorrStats(V1data, V4data)
@@ -54,11 +60,6 @@ stimNoiseR2 = {};
 
 stimBlankR2 = makeGlassFigs_dPrimeScatter_binocOnly(V1data, V4data, stimBlankR2);
 stimNoiseR2 = makeGlassFigs_dPrimeScatter_stimVnoise_binocOnly(V1data,V4data, stimNoiseR2);
-%% triplot figure 1
-% using best dt, dx for each pattern
-% triplotter_Glass_BExArrays_optimalForPattern(V1data,V4data);
-makeFig_triplotGlass_trNoise(V1data, V4data);
-% makeFig_triplotGlass_trNoise_oris(V1data, V4data)
 
 %% Chi squared homogeneity
  plotGlassChiSquareDistribution(V4data.conRadRE,V4data.conRadLE)

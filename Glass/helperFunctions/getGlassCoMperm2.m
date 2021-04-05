@@ -2,7 +2,8 @@ function [pVal,sigDif] = getGlassCoMperm2(REdata,LEdata,realCoMdistance,animal,a
 figure%(2)
 clf
 hold on
-suptitle(sprintf('%s %s permuted centers of mass using best density/dx',animal,array))
+s = suptitle(sprintf('%s %s permuted values (top) and centers of mass (bottom) using best density/dx',animal,array));
+s.Position(2) = s.Position(2)+0.02;
 CoMdist = GlassCenterOfTriplotMass_perm2(REdata,LEdata);
 
 figDir = '/Users/brittany/Dropbox/Figures/XT/GlassCombo/triplot/ori/perm';
@@ -39,9 +40,9 @@ clf
 subplot(2,1,1)
 hold on
 suptitle(sprintf('%s %s permuted distance between LE and RE using best density/dx',animal,array))
-histogram(CoMdist,'Normalization','probability')
+histogram(CoMdist,'Normalization','probability','FaceColor','k','FaceAlpha',1,'EdgeColor','w')
 plot([realCoMdistance, realCoMdistance],[0 0.6],'r-','LineWidth',0.75)
-text(realCoMdistance+1,0.4,sprintf('p = %.2f',pVal))
+text(realCoMdistance+0.25,0.4,sprintf('p = %.2f',pVal))
 
 ylim([0 0.5])
 set(gca,'tickdir','out','box','off')
