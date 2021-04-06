@@ -202,22 +202,17 @@ for ch = 1:96
         end
         [cC,cT] = corrcoef(conDp,cohs','Alpha',0.01);
         cPv = cT(2);
-        cCor = cC(2);
+        cCorr = cC(2);
         
         if round(cPv,2) <=0.05
             plot(cohs, conDp, 'o-','color',[0.7 0 0.7],'LineWidth',1.2)
             LEv1conSig = LEv1conSig +1;
             LEV1Sig(ch,1) = LEV1Sig(ch,1) + 1;
-            LEv1conCorr(ch,1) = cCor;
+            LEv1conCorr(ch,1) = cCorr;
         else
             plot(cohs, conDp, 'o-','color',[0.65 0.65 0.65],'LineWidth',0.35)
         end
-        
-%         if cCor<0
-%             negConSlope = negConSlope+1;
-%         elseif cCor>0
-%             posConSlope = posConSlope+1;
-%         end
+        clear cC; clear cT; clear cPv; clear cCorr;
         
         if radDtDxPrefLEV1(ch) == 1
             radDp(2:end) = squeeze(V1data.conRadLE.radNoiseDprime(:,1,1,ch));
@@ -228,16 +223,20 @@ for ch = 1:96
         else
             radDp(2:end) = squeeze(V1data.conRadLE.radNoiseDprime(:,2,2,ch));
         end
-        [~,rT] = corrcoef(radDp,cohs','Alpha',0.01);
+        [rC,rT] = corrcoef(radDp,cohs','Alpha',0.01);
         rPv = rT(2);
+        rCorr = rC(2);
         if round(rPv,2) <=0.05
             plot(cohs, radDp, 'o-','color',[0 0.6 0.2],'LineWidth',1.2)
             LEv1radSig = LEv1radSig+1;
             LEV1Sig(ch,1) = LEV1Sig(ch,1)+1;
+            LEv1radCorr(ch,1) = rCorr;
         else
             plot(cohs, radDp, 'o-','color',[0.65 0.65 0.65],'LineWidth',0.35)
         end
     end
+    clear rC; clear rT; clear rPv; clear rCorr;
+    
     if incltrLEV1(ch)
         for ori = 1:4
             if trDtDxPrefLEV1(ch,ori) == 1
@@ -249,32 +248,37 @@ for ch = 1:96
             else
                 trDp(2:end) = squeeze(V1data.trLE.linNoiseDprime(ori,:,2,2,ch));
             end
-            [~,trT] = corrcoef(trDp,cohs','Alpha',0.01);
+            [tC,trT] = corrcoef(trDp,cohs','Alpha',0.01);
             trPv = trT(2);
+            trCor = tC(2);
             if round(trPv,2) <= 0.05
                 plot(cohs, trDp, 'o-','color',cmapOri(ori,:),'LineWidth',1.2)
                 LEV1Sig(ch,1) = LEV1Sig(ch,1)+1;
                 
                 if ori == 1
                     LEv1sig0 = LEv1sig0+1;
+                    LEv1corr0(ch,1) = trCor;
                 elseif ori == 2
                     LEv1sig45 = LEv1sig45+1;
+                    LEv1corr45(ch,1) = trCor;
                 elseif ori == 3
                     LEv1sig90 = LEv1sig90+1;
+                    LEv1corr90(ch,1) = trCor;
                 else
                     LEv1sig135 = LEv1sig135+1;
+                    LEv1corr135(ch,1) = trCor;
                 end
-               
             else
                 plot(cohs, trDp, 'o-','color',[0.65 0.65 0.65],'LineWidth',0.35)
             end
+            clear tC; clear trT; clear trPv; clear trCor;
         end
     end
     
     title('FE')
     set(gca,'tickdir','out','box','off','XTick',0:25:100)
     axis square
-    clear trPv; clear rPv; clear cPv; clear trT; clear cT; clear rT; trDp = zeros(5,1);
+    trDp = zeros(5,1);
   
     subplot(2,2,2)
     if contains(V4data.trLE.animal,'WV')
@@ -294,15 +298,18 @@ for ch = 1:96
         else
             conDp(2:end) = squeeze(V1data.conRadRE.conNoiseDprime(:,2,2,ch));
         end
-        [~,cT] = corrcoef(conDp,cohs','Alpha',0.01);
+        [cC,cT] = corrcoef(conDp,cohs','Alpha',0.01);
         cPv = cT(2);
+        cCorr = cC(2);
         if round(cPv,2) <=0.05
             plot(cohs, conDp, 'o-','color',[0.7 0 0.7],'LineWidth',1.2)
             REv1conSig = REv1conSig+1;
             REV1Sig(ch,1) = REV1Sig(ch,1)+1;
+            REv1conCorr(ch,1) = cCorr;
         else
             plot(cohs, conDp, 'o-','color',[0.65 0.65 0.65],'LineWidth',0.35)
         end
+        clear cC; clear cT; clear cPv; clear cCorr;
         
         if radDtDxPrefREV1(ch) == 1
             radDp(2:end) = squeeze(V1data.conRadRE.radNoiseDprime(:,1,1,ch));
@@ -313,16 +320,20 @@ for ch = 1:96
         else
             radDp(2:end) = squeeze(V1data.conRadRE.radNoiseDprime(:,2,2,ch));
         end
-        [~,rT] = corrcoef(radDp,cohs','Alpha',0.01);
+        [rC,rT] = corrcoef(radDp,cohs','Alpha',0.01);
         rPv = rT(2);
+        rCorr = rC(2);
         if round(rPv,2) <=0.05
             plot(cohs, radDp, 'o-','color',[0 0.6 0.2],'LineWidth',1.2)
             REv1radSig = REv1radSig+1;
             REV1Sig(ch,1) = REV1Sig(ch,1)+1;
+            REv1radCorr(ch,1) = rCorr;
         else
             plot(cohs, radDp, 'o-','color',[0.65 0.65 0.65],'LineWidth',0.35)
         end
     end
+    clear rC; clear rT; clear rPv; clear rCorr;
+    
     if incltrREV1(ch)
         for ori = 1:4
             if trDtDxPrefREV1(ch,ori) == 1
@@ -334,30 +345,36 @@ for ch = 1:96
             else
                 trDp(2:end) = squeeze(V1data.trRE.linNoiseDprime(ori,:,2,2,ch));
             end
-            [~,trT] = corrcoef(trDp,cohs','Alpha',0.01);
+            [tC,trT] = corrcoef(trDp,cohs','Alpha',0.01);
             trPv = trT(2);
+            trCorr = tC(2);
             if round(trPv,2) <= 0.05
                 plot(cohs, trDp, 'o-','color',cmapOri(ori,:),'LineWidth',1.2)
                 REV1Sig(ch,1) = REV1Sig(ch,1) +1;
                 if ori == 1
                     REv1sig0 = REv1sig0+1;
+                    REv1corr0(ch,1) = trCorr;
                 elseif ori == 2
                     REv1sig45 = REv1sig45+1;
+                    REv1corr45(ch,1) = trCorr;
                 elseif ori == 3
                     REv1sig90 = REv1sig90+1;
+                    REv1corr90(ch,1) = trCorr;
                 else
                     REv1sig135 = REv1sig135+1;
+                    REv1corr135(ch,1) = trCorr;
                 end
             else
                 plot(cohs, trDp, 'o-','color',[0.65 0.65 0.65],'LineWidth',0.35)
             end
+            clear tC; clear trT; clear trPv; clear trCorr;
         end
     end
     
     title('AE')
     set(gca,'tickdir','out','box','off','XTick',0:25:100)
     axis square
-    clear trPv; clear rPv; clear cPv; clear trT; clear cT; clear rT; trDp = zeros(5,1);
+    trDp = zeros(5,1);
     
     subplot(2,2,3)
     hold on
@@ -378,15 +395,18 @@ for ch = 1:96
         else
             conDp(2:end) = squeeze(V4data.conRadLE.conNoiseDprime(:,2,2,ch));
         end
-        [~,cT] = corrcoef(conDp,cohs','Alpha',0.01);
+        [cC,cT] = corrcoef(conDp,cohs','Alpha',0.01);
         cPv = cT(2);
+        cCorr = cC(2);
         if round(cPv,2) <=0.05
             plot(cohs, conDp, 'o-','color',[0.7 0 0.7],'LineWidth',1.2)
             LEv4conSig = LEv4conSig+1;
             LEV4Sig(ch,1) = LEV4Sig(ch,1)+1;
+            LEv4conCorr(ch,1) = cCorr;
         else
             plot(cohs, conDp, 'o-','color',[0.65 0.65 0.65],'LineWidth',0.35)
         end
+        clear cC; clear cT; clear cPv; clear cCorr;
         
         if radDtDxPrefLEV4(ch) == 1
             radDp(2:end) = squeeze(V4data.conRadLE.radNoiseDprime(:,1,1,ch));
@@ -397,16 +417,20 @@ for ch = 1:96
         else
             radDp(2:end) = squeeze(V4data.conRadLE.radNoiseDprime(:,2,2,ch));
         end
-        [~,rT] = corrcoef(radDp,cohs','Alpha',0.01);
+        [rC,rT] = corrcoef(radDp,cohs','Alpha',0.01);
         rPv = rT(2);
+        rCorr = rC(2);
         if round(rPv,2) <=0.05
             plot(cohs, radDp, 'o-','color',[0 0.6 0.2],'LineWidth',1.2);
             LEv4radSig = LEv4radSig +1;
             LEV4Sig(ch,1) = LEV4Sig(ch,1)+1;
+            LEv4radCorr(ch,1) = rCorr;
         else
             plot(cohs, radDp, 'o-','color',[0.65 0.65 0.65],'LineWidth',0.35);
         end
     end
+    clear rT; clear rC; clear rPv; clear rCorr;
+    
     if incltrLEV4(ch)
         for ori = 1:4
             if trDtDxPrefLEV4(ch,ori) == 1
@@ -418,30 +442,36 @@ for ch = 1:96
             else
                 trDp(2:end) = squeeze(V4data.trLE.linNoiseDprime(ori,:,2,2,ch));
             end
-            [~,trP] = corrcoef(trDp,cohs','Alpha',0.01);
+            [trC,trP] = corrcoef(trDp,cohs','Alpha',0.01);
             trPv = trP(2);
+            trCorr = trC(2);
             if round(trPv,2) <= 0.05
                 plot(cohs, trDp, 'o-','color',cmapOri(ori,:),'LineWidth',1.2)
                 LEV4Sig(ch,1) = LEV4Sig(ch,1) +1;
                 if ori == 1
                     LEv4sig0 = LEv4sig0+1;
+                    LEv4corr0(ch,1) = trCorr;
                 elseif ori == 2
                     LEv4sig45 = LEv4sig45+1;
+                    LEv4corr45(ch,1) = trCorr;
                 elseif ori == 3
                     LEv4sig90 = LEv4sig90+1;
+                    LEv4corr90(ch,1) = trCorr;
                 else
                     LEv4sig135 = LEv4sig135+1;
+                    LEv4corr135(ch,1) = trCorr;
                 end
             else
                 plot(cohs, trDp, 'o-','color',[0.65 0.65 0.65],'LineWidth',0.35)
             end
+            clear trC; clear trP; clear trPv; clear trCorr;
         end
     end
     
     title('FE')
     set(gca,'tickdir','out','box','off','XTick',0:25:100)
     axis square
-    clear trPv; clear rPv; clear cPv; clear trT; clear cT; clear rT; trDp = zeros(5,1);
+    trDp = zeros(5,1);
     
     subplot(2,2,4)
     if contains(V4data.trLE.animal,'WV')
@@ -461,15 +491,18 @@ for ch = 1:96
         else
             conDp(2:end) = squeeze(V4data.conRadRE.conNoiseDprime(:,2,2,ch));
         end
-        [~,cT] = corrcoef(conDp,cohs','Alpha',0.01);
+        [cC,cT] = corrcoef(conDp,cohs','Alpha',0.01);
         cPv = cT(2);
+        cCorr = cC(2);
         if round(cPv,2) <=0.05
             plot(cohs, conDp, 'o-','color',[0.7 0 0.7],'LineWidth',1.2)
             REv4conSig = REv4conSig +1;
             REV4Sig(ch,1) = REV4Sig(ch,1)+1;
+            REv4conCorr(ch,1) = cCorr;
         else
             plot(cohs, conDp, 'o-','color',[0.65 0.65 0.65],'LineWidth',0.35)
         end
+        clear cC; clear cT; clear cPv; clear cCorr;
         
         if radDtDxPrefREV4(ch) == 1
             radDp(2:end) = squeeze(V4data.conRadRE.radNoiseDprime(:,1,1,ch));
@@ -480,16 +513,20 @@ for ch = 1:96
         else
             radDp(2:end) = squeeze(V4data.conRadRE.radNoiseDprime(:,2,2,ch));
         end
-        [~,rT] = corrcoef(radDp,cohs','Alpha',0.01);
+        [rC,rT] = corrcoef(radDp,cohs','Alpha',0.01);
         rPv = rT(2);
+        rCorr = rC(2);
         if round(rPv,2) <=0.05
             plot(cohs, radDp, 'o-','color',[0 0.6 0.2],'LineWidth',1.2)
             REv4radSig = REv4radSig+1;
             REV4Sig(ch,1) = REV4Sig(ch,1)+1;
+            REv4radCorr(ch,1) = rCorr;
         else
             plot(cohs, radDp, 'o-','color',[0.65 0.65 0.65],'LineWidth',0.35)
         end
     end
+    clear rC; clear rT; clear rPv; clear rCorr;
+    
     if incltrREV4(ch)
         for ori = 1:4
             if trDtDxPrefREV4(ch,ori) == 1
@@ -501,29 +538,35 @@ for ch = 1:96
             else
                 trDp(2:end) = squeeze(V4data.trRE.linNoiseDprime(ori,:,2,2,ch));
             end
-            [~,trP] = corrcoef(trDp,cohs','Alpha',0.01);
+            [tC,trP] = corrcoef(trDp,cohs','Alpha',0.01);
             trPv = trP(2);
+            trCorr = tC(2);
             if round(trPv,2) <= 0.05
                 plot(cohs, trDp, 'o-','color',cmapOri(ori,:),'LineWidth',1.2)
                 REV4Sig(ch,1) = REV4Sig(ch,1) +1;
                 if ori == 1
                     REv4sig0 = REv4sig0+1;
+                    REv4corr0(ch,1) = trCorr;
                 elseif ori == 2
                     REv4sig45 = REv4sig45+1;
+                    REv4corr45(ch,1) = trCorr;
                 elseif ori == 3
                     REv4sig90 = REv4sig90+1;
+                    REv4corr90(ch,1) = trCorr;
                 else
                     REv4sig135 = REv4sig135+1;
+                    REv4corr135(ch,1) = trCorr;
                 end
             else
                 plot(cohs, trDp, 'o-','color',[0.65 0.65 0.65],'LineWidth',0.35)
             end
+            clear tC; clear trP; clear trPv; clear trCorr;
         end
     end
     title('AE')
     set(gca,'tickdir','out','box','off','XTick',0:25:100)
     axis square
-    clear trPv; clear rPv; clear cPv; clear trT; clear cT; clear rT; trDp = zeros(5,1); 
+    trDp = zeros(5,1); 
     %%
     if contains(V4data.trLE.animal,'WV')
         ymax = 1.5;
@@ -589,12 +632,12 @@ for ch = 1:96
     %     pause
     figName = [V4data.conRadRE.animal,'sigCohPlotsAllCurves_ch',num2str(ch),'.pdf'];
     if REV4Sig(ch,1) >1 || LEV4Sig(ch,1) >1 || REV1Sig(ch,1) >1 || LEV1Sig(ch,1) >1
-        figDir = '/Users/brittany/Dropbox/Figures/WV/GlassCombo/coh/sigChs';
+        figDir = sprintf('/Users/brittany/Dropbox/Figures/%s/GlassCombo/coh/sigChs',V4data.trLE.animal);
         cd(figDir)
-        print(gcf, figName,'-dpdf','-bestfit')
+      %  print(gcf, figName,'-dpdf','-bestfit')
         cd ../
     else
-        print(gcf, figName,'-dpdf','-bestfit')
+       % print(gcf, figName,'-dpdf','-bestfit')
     end
 end
 %%
@@ -663,46 +706,302 @@ s.FontAngle = 'italic';
 
 t = subplot(2,2,1);
 hold on
-histogram(LEV1Sig,'FaceColor','k','EdgeColor','w','FaceAlpha',1)
+LEV1Sig(isnan(LEV1Sig)) = [];
+histogram(LEV1Sig,'FaceColor','k','EdgeColor','w','FaceAlpha',1,'Normalization','probability')
 set(gca,'tickDir','out','Layer','top','FontSize',11,'FontAngle','italic','Xtick',0:6)
-ylabel('Number of channels','FontSize',12,'FontAngle','italic')
+ylabel('% of channels','FontSize',12,'FontAngle','italic')
 title('LE V1')
 xlim([-1 6])
-ylim([0 60])
+ylim([0 .6])
 t.Position(4) = t.Position(4) - 0.1;
 
 
 t = subplot(2,2,2);
 hold on
-histogram(REV1Sig,'FaceColor','k','EdgeColor','w','FaceAlpha',1)
+REV1Sig(isnan(REV1Sig)) = [];
+histogram(REV1Sig,'FaceColor','k','EdgeColor','w','FaceAlpha',1,'Normalization','probability')
 set(gca,'tickDir','out','Layer','top','FontSize',11,'FontAngle','italic','Xtick',0:6)
 
 title('RE V1')
 xlim([-1 6])
-ylim([0 60])
+ylim([0 .6])
 t.Position(4) = t.Position(4) - 0.1;
 
 t = subplot(2,2,3);
 hold on
-histogram(LEV4Sig,'FaceColor','k','EdgeColor','w','FaceAlpha',1)
+LEV4Sig(isnan(LEV4Sig)) = [];
+histogram(LEV4Sig,'FaceColor','k','EdgeColor','w','FaceAlpha',1,'Normalization','probability')
 set(gca,'tickDir','out','Layer','top','FontSize',11,'FontAngle','italic','Xtick',0:6)
 xlabel('Number of significant correlations','FontSize',12,'FontAngle','italic')
-ylabel('Number of channels','FontSize',12,'FontAngle','italic')
+ylabel('% of channels','FontSize',12,'FontAngle','italic')
 title('LE V4')
 xlim([-1 6])
-ylim([0 60])
+ylim([0 .6])
 t.Position(4) = t.Position(4) - 0.1;
 
 
 t = subplot(2,2,4);
 hold on
-histogram(REV4Sig,'FaceColor','k','EdgeColor','w','FaceAlpha',1)
+REV4Sig(isnan(REV4Sig)) = [];
+histogram(REV4Sig,'FaceColor','k','EdgeColor','w','FaceAlpha',1,'Normalization','probability')
 set(gca,'tickDir','out','Layer','top','FontSize',11,'FontAngle','italic','Xtick',0:6)
 xlim([-1 6])
-ylim([0 60])
+ylim([0 .6])
 xlabel('Number of significant correlations','FontSize',12,'FontAngle','italic')
 title('RE V4')
 t.Position(4) = t.Position(4) - 0.1;
-%%
+
 figName = [V4data.conRadRE.animal,'_SigDist','.pdf'];
 print(gcf, figName,'-dpdf','-bestfit')
+%%
+figure(4)
+clf
+pos = get(gcf,'Position');
+set(gcf,'Position',[pos(1),pos(2),600,1200]);
+
+s = suptitle(sprintf('%s correlation distributions V1 LE',V4data.conRadRE.animal));
+s.Position(2) = s.Position(2)+0.02;
+
+subplot(6,1,1)
+LEv1conCorr(isnan(LEv1conCorr)) = [];
+histogram(LEv1conCorr,'BinWidth',0.1,'Normalization','probability','FaceColor',[0.7 0 0.7], 'FaceAlpha',1, 'EdgeColor','w')
+set(gca,'tickDir','out','Layer','top','FontSize',11,'FontAngle','italic','box','off','YTick',0:0.2:0.6)
+ylim([0 .6])
+xlim([-1.25,1.25])
+title('concentric')
+ylabel('% of channels')
+
+subplot(6,1,2)
+LEv1radCorr(isnan(LEv1radCorr)) = [];
+histogram(LEv1radCorr,'BinWidth',0.1,'Normalization','probability','FaceColor',[0 0.6 0.2], 'FaceAlpha',1, 'EdgeColor','w')
+set(gca,'tickDir','out','Layer','top','FontSize',11,'FontAngle','italic','box','off','YTick',0:0.2:0.6)
+title('radial')
+ylim([0 .6])
+xlim([-1.25,1.25])
+ylabel('% of channels')
+
+subplot(6,1,3)
+LEv1corr0(isnan(LEv1corr0)) = [];
+histogram(LEv1corr0,'BinWidth',0.1,'Normalization','probability','FaceColor',cmapOri(1,:), 'FaceAlpha',1, 'EdgeColor','w')
+set(gca,'tickDir','out','Layer','top','FontSize',11,'FontAngle','italic','box','off','YTick',0:0.2:0.6)
+title('0 degrees')
+ylim([0 .6])
+xlim([-1.25,1.25])
+ylabel('% of channels')
+
+subplot(6,1,4)
+LEv1corr45(isnan(LEv1corr45)) = [];
+histogram(LEv1corr45,'BinWidth',0.1,'Normalization','probability','FaceColor',cmapOri(2,:), 'FaceAlpha',1, 'EdgeColor','w')
+set(gca,'tickDir','out','Layer','top','FontSize',11,'FontAngle','italic','box','off','YTick',0:0.2:0.6)
+title('45 degrees')
+ylim([0 .6])
+xlim([-1.25,1.25])
+ylabel('% of channels')
+
+subplot(6,1,5)
+LEv1corr90(isnan(LEv1corr90)) = [];
+histogram(LEv1corr90,'BinWidth',0.1,'Normalization','probability','FaceColor',cmapOri(3,:), 'FaceAlpha',1, 'EdgeColor','w')
+set(gca,'tickDir','out','Layer','top','FontSize',11,'FontAngle','italic','box','off','YTick',0:0.2:0.6)
+title('90 degrees')
+ylim([0 .6])
+xlim([-1.25,1.25])
+ylabel('% of channels')
+
+subplot(6,1,6)
+LEv1corr135(isnan(LEv1corr135)) = [];
+histogram(LEv1corr135,'BinWidth',0.1,'Normalization','probability','FaceColor',cmapOri(4,:), 'FaceAlpha',1, 'EdgeColor','w')
+set(gca,'tickDir','out','Layer','top','FontSize',11,'FontAngle','italic','box','off','YTick',0:0.2:0.6)
+title('135 degrees')
+ylim([0 .6])
+xlim([-1.25,1.25])
+ylabel('% of channels')
+xlabel('correlation')
+%%
+figure(5)
+clf
+pos = get(gcf,'Position');
+set(gcf,'Position',[pos(1),pos(2),600,1200]);
+
+s = suptitle(sprintf('%s correlation distributions V1 RE',V4data.conRadRE.animal));
+s.Position(2) = s.Position(2)+0.02;
+
+subplot(6,1,1)
+REv1conCorr(isnan(REv1conCorr)) = [];
+histogram(REv1conCorr,'BinWidth',0.1,'Normalization','probability','FaceColor',[0.7 0 0.7], 'FaceAlpha',1, 'EdgeColor','w')
+set(gca,'tickDir','out','Layer','top','FontSize',11,'FontAngle','italic','box','off','YTick',0:0.2:0.6)
+ylim([0 .6])
+xlim([-1.25,1.25])
+title('concentric')
+ylabel('% of channels')
+
+subplot(6,1,2)
+REv1radCorr(isnan(REv1radCorr)) = [];
+histogram(REv1radCorr,'BinWidth',0.1,'Normalization','probability','FaceColor',[0 0.6 0.2], 'FaceAlpha',1, 'EdgeColor','w')
+set(gca,'tickDir','out','Layer','top','FontSize',11,'FontAngle','italic','box','off','YTick',0:0.2:0.6)
+title('radial')
+ylim([0 .6])
+xlim([-1.25,1.25])
+ylabel('% of channels')
+
+subplot(6,1,3)
+REv1corr0(isnan(REv1corr0)) = [];
+histogram(REv1corr0,'BinWidth',0.1,'Normalization','probability','FaceColor',cmapOri(1,:), 'FaceAlpha',1, 'EdgeColor','w')
+set(gca,'tickDir','out','Layer','top','FontSize',11,'FontAngle','italic','box','off','YTick',0:0.2:0.6)
+title('0 degrees')
+ylim([0 .6])
+xlim([-1.25,1.25])
+ylabel('% of channels')
+
+subplot(6,1,4)
+REv1corr45(isnan(REv1corr45)) = [];
+histogram(REv1corr45,'BinWidth',0.1,'Normalization','probability','FaceColor',cmapOri(2,:), 'FaceAlpha',1, 'EdgeColor','w')
+set(gca,'tickDir','out','Layer','top','FontSize',11,'FontAngle','italic','box','off','YTick',0:0.2:0.6)
+title('45 degrees')
+ylim([0 .6])
+xlim([-1.25,1.25])
+ylabel('% of channels')
+
+subplot(6,1,5)
+REv1corr90(isnan(REv1corr90)) = [];
+histogram(REv1corr90,'BinWidth',0.1,'Normalization','probability','FaceColor',cmapOri(3,:), 'FaceAlpha',1, 'EdgeColor','w')
+set(gca,'tickDir','out','Layer','top','FontSize',11,'FontAngle','italic','box','off','YTick',0:0.2:0.6)
+title('90 degrees')
+ylim([0 .6])
+xlim([-1.25,1.25])
+ylabel('% of channels')
+
+subplot(6,1,6)
+REv1corr135(isnan(REv1corr135)) = [];
+histogram(REv1corr135,'BinWidth',0.1,'Normalization','probability','FaceColor',cmapOri(4,:), 'FaceAlpha',1, 'EdgeColor','w')
+set(gca,'tickDir','out','Layer','top','FontSize',11,'FontAngle','italic','box','off','YTick',0:0.2:0.6)
+title('135 degrees')
+ylim([0 .6])
+xlim([-1.25,1.25])
+ylabel('% of channels')
+xlabel('correlation')
+%%
+figure(6)
+clf
+pos = get(gcf,'Position');
+set(gcf,'Position',[pos(1),pos(2),600,1200]);
+
+s = suptitle(sprintf('%s correlation distributions V4 LE',V4data.conRadRE.animal));
+s.Position(2) = s.Position(2)+0.02;
+
+subplot(6,1,1)
+LEv4conCorr(isnan(LEv4conCorr)) = [];
+histogram(LEv4conCorr,'BinWidth',0.1,'Normalization','probability','FaceColor',[0.7 0 0.7], 'FaceAlpha',1, 'EdgeColor','w')
+set(gca,'tickDir','out','Layer','top','FontSize',11,'FontAngle','italic','box','off','YTick',0:0.2:0.6)
+ylim([0 .6])
+xlim([-1.25,1.25])
+title('concentric')
+ylabel('% of channels')
+
+subplot(6,1,2)
+LEv4radCorr(isnan(LEv4radCorr)) = [];
+histogram(LEv4radCorr,'BinWidth',0.1,'Normalization','probability','FaceColor',[0 0.6 0.2], 'FaceAlpha',1, 'EdgeColor','w')
+set(gca,'tickDir','out','Layer','top','FontSize',11,'FontAngle','italic','box','off','YTick',0:0.2:0.6)
+title('radial')
+ylim([0 .6])
+xlim([-1.25,1.25])
+ylabel('% of channels')
+
+subplot(6,1,3)
+LEv4corr0(isnan(LEv4corr0)) = [];
+histogram(LEv4corr0,'BinWidth',0.1,'Normalization','probability','FaceColor',cmapOri(1,:), 'FaceAlpha',1, 'EdgeColor','w')
+set(gca,'tickDir','out','Layer','top','FontSize',11,'FontAngle','italic','box','off','YTick',0:0.2:0.6)
+title('0 degrees')
+ylim([0 .6])
+xlim([-1.25,1.25])
+ylabel('% of channels')
+
+subplot(6,1,4)
+LEv4corr45(isnan(LEv4corr45)) = [];
+histogram(LEv4corr45,'BinWidth',0.1,'Normalization','probability','FaceColor',cmapOri(2,:), 'FaceAlpha',1, 'EdgeColor','w')
+set(gca,'tickDir','out','Layer','top','FontSize',11,'FontAngle','italic','box','off','YTick',0:0.2:0.6)
+title('45 degrees')
+ylim([0 .6])
+xlim([-1.25,1.25])
+ylabel('% of channels')
+
+subplot(6,1,5)
+LEv4corr90(isnan(LEv4corr90)) = [];
+histogram(LEv4corr90,'BinWidth',0.1,'Normalization','probability','FaceColor',cmapOri(3,:), 'FaceAlpha',1, 'EdgeColor','w')
+set(gca,'tickDir','out','Layer','top','FontSize',11,'FontAngle','italic','box','off','YTick',0:0.2:0.6)
+title('90 degrees')
+ylim([0 .6])
+xlim([-1.25,1.25])
+ylabel('% of channels')
+
+subplot(6,1,6)
+LEv4corr135(isnan(LEv4corr135)) = [];
+histogram(LEv4corr135,'BinWidth',0.1,'Normalization','probability','FaceColor',cmapOri(4,:), 'FaceAlpha',1, 'EdgeColor','w')
+set(gca,'tickDir','out','Layer','top','FontSize',11,'FontAngle','italic','box','off','YTick',0:0.2:0.6)
+title('135 degrees')
+ylim([0 .6])
+xlim([-1.25,1.25])
+ylabel('% of channels')
+xlabel('correlation')
+%%
+figure(7)
+clf
+pos = get(gcf,'Position');
+set(gcf,'Position',[pos(1),pos(2),600,1200]);
+
+s = suptitle(sprintf('%s correlation distributions V4 RE',V4data.conRadRE.animal));
+s.Position(2) = s.Position(2)+0.02;
+
+subplot(6,1,1)
+REv4conCorr(isnan(REv4conCorr)) = [];
+histogram(REv4conCorr,'BinWidth',0.1,'Normalization','probability','FaceColor',[0.7 0 0.7], 'FaceAlpha',1, 'EdgeColor','w')
+set(gca,'tickDir','out','Layer','top','FontSize',11,'FontAngle','italic','box','off','YTick',0:0.2:0.6)
+ylim([0 .6])
+xlim([-1.25,1.25])
+title('concentric')
+ylabel('% of channels')
+
+subplot(6,1,2)
+REv4radCorr(isnan(REv4radCorr)) = [];
+histogram(REv4radCorr,'BinWidth',0.1,'Normalization','probability','FaceColor',[0 0.6 0.2], 'FaceAlpha',1, 'EdgeColor','w')
+set(gca,'tickDir','out','Layer','top','FontSize',11,'FontAngle','italic','box','off','YTick',0:0.2:0.6)
+title('radial')
+ylim([0 .6])
+xlim([-1.25,1.25])
+ylabel('% of channels')
+
+subplot(6,1,3)
+REv4corr0(isnan(REv4corr0)) = [];
+histogram(REv4corr0,'BinWidth',0.1,'Normalization','probability','FaceColor',cmapOri(1,:), 'FaceAlpha',1, 'EdgeColor','w')
+set(gca,'tickDir','out','Layer','top','FontSize',11,'FontAngle','italic','box','off','YTick',0:0.2:0.6)
+title('0 degrees')
+ylim([0 .6])
+xlim([-1.25,1.25])
+ylabel('% of channels')
+
+subplot(6,1,4)
+REv4corr45(isnan(REv4corr45)) = [];
+histogram(REv4corr45,'BinWidth',0.1,'Normalization','probability','FaceColor',cmapOri(2,:), 'FaceAlpha',1, 'EdgeColor','w')
+set(gca,'tickDir','out','Layer','top','FontSize',11,'FontAngle','italic','box','off','YTick',0:0.2:0.6)
+title('45 degrees')
+ylim([0 .6])
+xlim([-1.25,1.25])
+ylabel('% of channels')
+
+subplot(6,1,5)
+REv4corr90(isnan(REv4corr90)) = [];
+histogram(REv4corr90,'BinWidth',0.1,'Normalization','probability','FaceColor',cmapOri(3,:), 'FaceAlpha',1, 'EdgeColor','w')
+set(gca,'tickDir','out','Layer','top','FontSize',11,'FontAngle','italic','box','off','YTick',0:0.2:0.6)
+title('90 degrees')
+ylim([0 .6])
+xlim([-1.25,1.25])
+ylabel('% of channels')
+
+subplot(6,1,6)
+REv4corr135(isnan(REv4corr135)) = [];
+histogram(REv4corr135,'BinWidth',0.1,'Normalization','probability','FaceColor',cmapOri(4,:), 'FaceAlpha',1, 'EdgeColor','w')
+set(gca,'tickDir','out','Layer','top','FontSize',11,'FontAngle','italic','box','off','YTick',0:0.2:0.6)
+title('135 degrees')
+ylim([0 .6])
+xlim([-1.25,1.25])
+ylabel('% of channels')
+xlabel('correlation')
