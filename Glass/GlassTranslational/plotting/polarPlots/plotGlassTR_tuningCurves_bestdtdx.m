@@ -1,4 +1,4 @@
-function [] = plotGlassTR_tuningCurvesPolarArray(dataT)
+function [] = plotGlassTR_tuningCurves_bestdtdx(dataT)
 location = determineComputer;
 [numOris,numDots,numDxs,~,~,oris,dots,dxs,~,~] = getGlassTRParameters(dataT);
 %% plot data computed with 2theta

@@ -5,8 +5,8 @@ function [stimDps] = getGlassDprimeNoiseVectTriplots_meanOri(radNoiseDprime,conN
 %%
 radDps = abs(squeeze(radNoiseDprime(end,:,:,:)));
 conDps = abs(squeeze(conNoiseDprime(end,:,:,:)));
-trDps = abs(squeeze(trNoiseDprime(:,end,:,:,:)));
-trDps = squeeze(mean(trDps,1)); % pick the orientation with the highest d'
+trDps  = abs(squeeze(trNoiseDprime(:,end,:,:,:)));
+trDps  = squeeze(mean(trDps,1)); % get the mean orientation
 
 rDp = squeeze([squeeze(radDps(1,1,:)),squeeze(radDps(1,2,:)),squeeze(radDps(2,1,:)),squeeze(radDps(2,2,:))]); 
 rDp = max(rDp');
@@ -23,4 +23,4 @@ tDp = max(tDp');
 tDp = tDp(goodCh == 1 & inStim == 1);
 tDp = tDp';
 
-stimDps = [rDp,cDp,tDp]; % t
+stimDps = [rDp,cDp,tDp]; % this will create a triplet of radial, concentric, and translational d' that will be used as inputs for the triplotter.

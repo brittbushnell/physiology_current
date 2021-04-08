@@ -1,4 +1,4 @@
-function GlassCohCorrStats(V1data, V4data)
+function [LEV1Sig,REV1Sig,LEV4Sig,REV4Sig] = GlassCohCorrStats(V1data, V4data)
 
 % Steps for each channel that's good and in stim:
 % 1) find preferred dt,dx at 100%

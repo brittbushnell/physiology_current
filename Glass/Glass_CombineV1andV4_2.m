@@ -11,32 +11,33 @@ clc
 % clear data;
 % newName = 'WV_2eyes_2arrays_GlassPatterns';
   %%
-load('WU_BE_V1_bothGlass_cleanMerged');
-V1data = data;
-clear data;
-
-load('WU_BE_V4_bothGlass_cleanMerged');
-V4data = data;
-clear data;
-newName = 'WU_2eyes_2arrays_GlassPatterns';
-%%
-% load('XT_BE_V1_bothGlass_cleanMerged');
+% load('WU_BE_V1_bothGlass_cleanMerged');
 % V1data = data;
 % clear data;
 % 
-% load('XT_BE_V4_bothGlass_cleanMerged');
+% load('WU_BE_V4_bothGlass_cleanMerged');
 % V4data = data;
 % clear data;
-% newName = 'XT_2eyes_2arrays_GlassPatterns';
+% newName = 'WU_2eyes_2arrays_GlassPatterns';
+%%
+load('XT_BE_V1_bothGlass_cleanMerged');
+V1data = data;
+clear data;
+
+load('XT_BE_V4_bothGlass_cleanMerged');
+V4data = data;
+clear data;
+newName = 'XT_2eyes_2arrays_GlassPatterns';
 %% triplot
 % using best dt, dx for each pattern
 % triplotter_Glass_BExArrays_optimalForPattern(V1data,V4data);
-makeFig_triplotGlass_trNoise(V1data, V4data);
+[V1data.CoMRE,V1data.CoMLE,V4data.CoMRE,V4data.CoMLE,...
+ V1data.CoMDist,V4data.CoMDist,V1data.CoMpVal,V4data.CoMpVal] = makeFig_triplotGlass_trNoise(V1data, V4data);
 % makeFig_triplotGlass_trNoise_oris(V1data, V4data)
 
 %% coherence
 if ~contains(V1data.conRadRE.animal,'XT')
-   GlassCohCorrStats(V1data, V4data)
+  [V1data.NumSigCohCorrLE,V1data.NumSigCohCorrRE,V4data.NumSigCohCorrLE,V4data.NumSigCohCorrRE] = GlassCohCorrStats(V1data, V4data);
 end
 
 %% d' scatter plots
@@ -62,11 +63,12 @@ stimBlankR2 = makeGlassFigs_dPrimeScatter_binocOnly(V1data, V4data, stimBlankR2)
 stimNoiseR2 = makeGlassFigs_dPrimeScatter_stimVnoise_binocOnly(V1data,V4data, stimNoiseR2);
 
 %% Chi squared homogeneity
- plotGlassChiSquareDistribution(V4data.conRadRE,V4data.conRadLE)
- %% coherence
-% plotGlass_CoherenceResps(REdata)
+% plotGlassChiSquareDistribution(V4data.conRadRE,V4data.conRadLE)
 %% orietnation tuning across array
-% plotGlassTR_tuningCurvesPolarArray
+% NOTE: come back to orientation tuning - need to make sure that I'm
+% limiting everything to best dt/dx rather than a lot of different plots
+% for each combo. That way it will match everything else. 
+%  plotGlassTR_tuningCurvesPolarArray
 %%
 location = determineComputer;
 if location == 1
