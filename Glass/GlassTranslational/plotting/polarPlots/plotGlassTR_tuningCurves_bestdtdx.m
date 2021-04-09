@@ -8,19 +8,25 @@ elseif location == 0
     figDir =  sprintf('~/Dropbox/Figures/%s/GlassTR/%s/tuningCurves/%s/polar/',dataT.animal, dataT.array,dataT.eye);
 end
 
+if ~exist(figDir,'dir')
+    mkdir(figDir)
+end
 cd(figDir)
-% go to date specific folder, if it doesn't exist, make it
-folder = dataT.date2;
-mkdir(folder)
-cd(sprintf('%s',folder))
+
 %% get responses
 linNdx = dataT.type == 3;
 noiseNdx = dataT.type == 0;
 blankNdx = dataT.numDots == 0;
+
 for ch = 1:96
     if dataT.goodCh(ch) == 1 && dataT.inStim(ch) == 1
         blankMean(1,ch) = mean(mean(squeeze(dataT.bins((blankNdx),5:25,ch))))./0.01;
+        
         for or = 1:numOris
+            
+            
+            
+            
             for dt = 1:numDots
                 for dx = 1:numDxs
                     dtNdx = dataT.numDots == dots(dt);

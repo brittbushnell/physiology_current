@@ -43,6 +43,92 @@ v1LEsort = sortDps(sortDps(:,5) == 1,:);
 v1REsort = sortDps(sortDps(:,5) == 2,:);
 v4LEsort = sortDps(sortDps(:,5) == 3,:);
 v4REsort = sortDps(sortDps(:,5) == 4,:);
+%% test for significant difference between concentric and radial
+% conc - radial / conc + radial
+v1LEconRadNdx = (v1LEsort(:,2) - v1LEsort(:,1))./ (v1LEsort(:,2) + v1LEsort(:,1));  
+v1REconRadNdx = (v1REsort(:,2) - v1REsort(:,1))./ (v1REsort(:,2) + v1REsort(:,1)); 
+v4LEconRadNdx = (v4LEsort(:,2) - v4LEsort(:,1))./ (v4LEsort(:,2) + v4LEsort(:,1));  
+v4REconRadNdx = (v4REsort(:,2) - v4REsort(:,1))./ (v4REsort(:,2) + v4REsort(:,1)); 
+
+figure(22)
+clf
+pos = get(gcf,'Position');
+set(gcf,'Position',[pos(1) pos(2) 900 500]);
+set(gcf,'PaperOrientation','landscape')
+t = suptitle(sprintf('%s concentric vs radial index',V1data.trLE.animal));
+t.FontSize = 20;
+
+
+s = subplot(2,2,1);
+hold on
+histogram(v1LEconRadNdx,'Normalization','probability','FaceColor','k','FaceAlpha',1,'EdgeColor','w','binWidth',0.1)
+plot([0 0],[0,0.5],':k')
+plot(mean(v1LEconRadNdx),0.45,'v','MarkerFaceColor','k','MarkerEdgeColor','w','MarkerSize',8)
+text(mean(v1LEconRadNdx)+0.05,0.46,sprintf('\\mu %.2f',mean(v1LEconRadNdx)),'FontSize',11)
+set(gca,'layer','top','tickdir','out','fontSize',11,'fontAngle','italic','XTickLabel',{'Radial','','0','','Concentric'})
+if contains(V1data.trLE.animal,'XT')
+    title('LE','FontSize',12)
+else
+    title('FE','FontSize',12)
+end
+ylim([0 0.5])
+xlim([-1.25 1.25])
+s.Position(2) = s.Position(2) - 0.025;
+s.Position(4) = s.Position(4) - 0.075;
+ylabel('% channels')
+text(-2, 0.375, 'V1','FontSize',18,'FontWeight','bold')
+
+s = subplot(2,2,2);
+hold on
+histogram(v1REconRadNdx,'Normalization','probability','FaceColor','k','FaceAlpha',1,'EdgeColor','w','binWidth',0.1)
+
+plot([0 0],[0,0.5],':k')
+plot(mean(v1REconRadNdx),0.45,'v','MarkerFaceColor','k','MarkerEdgeColor','w','MarkerSize',8)
+text(mean(v1REconRadNdx)+0.05,0.46,sprintf('\\mu %.2f',mean(v1REconRadNdx)),'FontSize',11)
+set(gca,'layer','top','tickdir','out','fontSize',11,'fontAngle','italic','XTickLabel',{'Radial','','0','','Concentric'})
+
+ylim([0 0.5])
+xlim([-1.25 1.25])
+s.Position(2) = s.Position(2) - 0.025;
+s.Position(4) = s.Position(4) - 0.075;
+
+if contains(V1data.trLE.animal,'XT')
+    title('RE','FontSize',12)
+else
+    title('AE','FontSize',12)
+end
+
+s = subplot(2,2,3);
+hold on
+histogram(v4LEconRadNdx,'Normalization','probability','FaceColor','k','FaceAlpha',1,'EdgeColor','w','binWidth',0.1)
+plot([0 0],[0,0.5],':k')
+plot(mean(v4LEconRadNdx),0.45,'v','MarkerFaceColor','k','MarkerEdgeColor','w','MarkerSize',8)
+text(mean(v4LEconRadNdx)+0.05,0.46,sprintf('\\mu %.2f',mean(v4LEconRadNdx)),'FontSize',11)
+set(gca,'layer','top','tickdir','out','fontSize',11,'fontAngle','italic','XTickLabel',{'Radial','','0','','Concentric'})
+ylim([0 0.5])
+xlim([-1.25 1.25])
+s.Position(2) = s.Position(2) + 0.035;
+s.Position(4) = s.Position(4) - 0.075;
+ylabel('% channels')
+text(-2, 0.375, 'V4','FontSize',18,'FontWeight','bold')
+
+s = subplot(2,2,4);
+hold on
+histogram(v4REconRadNdx,'Normalization','probability','FaceColor','k','FaceAlpha',1,'EdgeColor','w','binWidth',0.1)
+
+plot([0 0],[0,0.5],':k')
+plot(mean(v4REconRadNdx),0.45,'v','MarkerFaceColor','k','MarkerEdgeColor','w','MarkerSize',8)
+text(mean(v4REconRadNdx)+0.05,0.46,sprintf('\\mu %.2f',mean(v4REconRadNdx)),'FontSize',11)
+set(gca,'layer','top','tickdir','out','fontSize',11,'fontAngle','italic','XTickLabel',{'Radial','','0','','Concentric'})
+
+ylim([0 0.5])
+xlim([-1.25 1.25])
+s.Position(2) = s.Position(2) + 0.035;
+s.Position(4) = s.Position(4) - 0.075;
+
+figName = [V1data.conRadLE.animal,'_conRadNdx_hist'];
+print(gcf, figName,'-dpdf','-bestfit')
+
 %%
 figure (23)
 clf

@@ -65,10 +65,8 @@ stimNoiseR2 = makeGlassFigs_dPrimeScatter_stimVnoise_binocOnly(V1data,V4data, st
 %% Chi squared homogeneity
 % plotGlassChiSquareDistribution(V4data.conRadRE,V4data.conRadLE)
 %% orietnation tuning across array
-% NOTE: come back to orientation tuning - need to make sure that I'm
-% limiting everything to best dt/dx rather than a lot of different plots
-% for each combo. That way it will match everything else. 
-%  plotGlassTR_tuningCurvesPolarArray
+[V1data.trRE,V1data.trLE] = plotGlassTR_prefOriDist_BE_bestDprimeSum(V1data.trRE,V1data.trLE);
+[V4data.trRE,V4data.trLE] = plotGlassTR_prefOriDist_BE_bestDprimeSum(V4data.trRE,V4data.trLE);
 %%
 location = determineComputer;
 if location == 1
