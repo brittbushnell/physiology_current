@@ -1,11 +1,13 @@
-function [inRad,inCon,inTr] = triplotter_GlassWithTr_noCBar_oneOri(rct,cmap)
+function [inRad,inCon,inTr] = triplotter_GlassWithTr_noCBar_oneOri(rct,cmap,stimType)
 % required inputs(rcb,cmap)
 % RCD   are d' vs blank for radial, concentric, and dipole
 % CMAP  are the (r,g,b) values to be used for each data point based on their
-% vector sum ranking. 
+% vector sum ranking.
+% stimType 4 = filled
+% stimType 1 = open
 
 
-   
+
 %%
 axesm('stereo','origin',[45 45 0]);
 axis off;
@@ -41,17 +43,29 @@ inRad = 0;
 inTr = 0;
 
 for i = 1:size(rct,1)
-   [~,mndx] = max(rct(i,:));
-   if mndx == 1
-       inRad = inRad+1;
-       plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), 'o','MarkerFaceColor',  cmap(i,:),'MarkerSize', 7,'MarkerEdgeColor',[0.9 0.9 0.9],'LineWidth',0.4);
-   elseif mndx == 2
-       inCon = inCon+1;
-       plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), 'o','MarkerFaceColor',  cmap(i,:),'MarkerSize', 7,'MarkerEdgeColor',[0.9 0.9 0.9],'LineWidth',0.4);
-   else
-       inTr = inTr+1;
-       plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), 'o','MarkerFaceColor',  cmap(i,:),'MarkerSize', 7,'MarkerEdgeColor',[0.9 0.9 0.9],'LineWidth',0.4);
-   end
+    [~,mndx] = max(rct(i,:));
+    if mndx == 1
+        inRad = inRad+1;
+        if stimType == 4
+            plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), 'o','MarkerFaceColor',  cmap(i,:),'MarkerSize', 6,'MarkerEdgeColor',[0.9 0.9 0.9],'LineWidth',0.4);
+        else
+            plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), 'o','MarkerFaceColor',  'none','MarkerSize', 5,'MarkerEdgeColor',cmap(i,:),'LineWidth',0.6);
+        end
+    elseif mndx == 2
+        inCon = inCon+1;
+        if stimType == 4
+            plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), 'o','MarkerFaceColor',  cmap(i,:),'MarkerSize', 6,'MarkerEdgeColor',[0.9 0.9 0.9],'LineWidth',0.4);
+        else
+            plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), 'o','MarkerFaceColor',  'none','MarkerSize', 5,'MarkerEdgeColor',cmap(i,:),'LineWidth',0.6);
+        end
+    else
+        inTr = inTr+1;
+        if stimType == 4
+            plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), 'o','MarkerFaceColor',  cmap(i,:),'MarkerSize', 6,'MarkerEdgeColor',[0.9 0.9 0.9],'LineWidth',0.4);
+        else
+            plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), 'o','MarkerFaceColor',  'none','MarkerSize', 5,'MarkerEdgeColor',cmap(i,:),'LineWidth',0.6);
+        end
+    end
 end
 
 

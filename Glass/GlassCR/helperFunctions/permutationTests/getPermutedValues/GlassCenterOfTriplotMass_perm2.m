@@ -52,12 +52,12 @@ for nb = 1:numBoot
         CoMLE(nb,:) = CtLE;
     end
     if nb == numBoot
-        subplot(2,2,1)
-        triplotter_GlassWithTr_noCBar_oneOri(LErcdT,cmap);
-        title(sprintf('AE/RE n: %d',size(LEdata,1)))
-        text(-1,-0.78,'Radial','FontSize',12)
-        text(0.8,-0.78,'Concentric','FontSize',12)
-        text(-0.25,0.87,'Translational','FontSize',12)
+%         subplot(2,2,1)
+%         triplotter_GlassWithTr_noCBar_oneOri(LErcdT,cmap);
+%         title(sprintf('AE/RE n: %d',size(LEdata,1)))
+%         text(-1,-0.78,'Radial','FontSize',12)
+%         text(0.8,-0.78,'Concentric','FontSize',12)
+%         text(-0.25,0.87,'Translational','FontSize',12)
     end
     clear LErcdT;
     
@@ -72,12 +72,12 @@ for nb = 1:numBoot
         CoMRE(nb,:) = CtRE;
     end
     if nb == numBoot
-        subplot(2,2,2)
-        triplotter_GlassWithTr_noCBar_oneOri(RErcdT,cmap);
-        title(sprintf('AE/RE n: %d',size(REdata,1)))
-        text(-1,-0.78,'Radial','FontSize',12)
-        text(0.8,-0.78,'Concentric','FontSize',12)
-        text(-0.25,0.87,'Translational','FontSize',12)
+%         subplot(2,2,2)
+%         triplotter_GlassWithTr_noCBar_oneOri(RErcdT,cmap);
+%         title(sprintf('AE/RE n: %d',size(REdata,1)))
+%         text(-1,-0.78,'Radial','FontSize',12)
+%         text(0.8,-0.78,'Concentric','FontSize',12)
+%         text(-0.25,0.87,'Translational','FontSize',12)
     end
     clear RErcdT;
     
@@ -86,19 +86,19 @@ end
 
 hold on
 
-subplot(2,2,3)
-triplotter_GlassWithTr_noCBar_oneOri(CoMLE,cmap);
-title(sprintf('FE/LE n: %d',size(LEdata,1)))
-text(-1,-0.78,'Radial','FontSize',12)
-text(0.8,-0.78,'Concentric','FontSize',12)
-text(-0.25,0.87,'Translational','FontSize',12)
-
-subplot(2,2,4)
-triplotter_GlassWithTr_noCBar_oneOri(CoMRE,cmap);
-title(sprintf('AE/RE n: %d',size(REdata,1)))
-text(-1,-0.78,'Radial','FontSize',12)
-text(0.8,-0.78,'Concentric','FontSize',12)
-text(-0.25,0.87,'Translational','FontSize',12)
+% subplot(2,2,3)
+% triplotter_GlassWithTr_noCBar_oneOri(CoMLE,cmap);
+% title(sprintf('FE/LE n: %d',size(LEdata,1)))
+% text(-1,-0.78,'Radial','FontSize',12)
+% text(0.8,-0.78,'Concentric','FontSize',12)
+% text(-0.25,0.87,'Translational','FontSize',12)
+% 
+% subplot(2,2,4)
+% triplotter_GlassWithTr_noCBar_oneOri(CoMRE,cmap);
+% title(sprintf('AE/RE n: %d',size(REdata,1)))
+% text(-1,-0.78,'Radial','FontSize',12)
+% text(0.8,-0.78,'Concentric','FontSize',12)
+% text(-0.25,0.87,'Translational','FontSize',12)
 
 %%
 

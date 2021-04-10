@@ -47,7 +47,7 @@ wgtMu = mean(wgtLoc);
 [thx,phix,rx]=cart2sph(wgtMu(1),wgtMu(2),wgtMu(3));
 CoM = [rad2deg(thx),rad2deg(phix),rx];
 if plotFlag == 1
-    plot3m(rad2deg(phix),rad2deg(thx),rx+4, 'o','MarkerFaceColor',mkColor,'MarkerEdgeColor',[0.99 0.99 0.99],'MarkerSize',5,'LineWidth',0.3);
+    plot3m(rad2deg(phix),rad2deg(thx),rx+6, 'o','MarkerFaceColor',mkColor,'MarkerEdgeColor',[0.99 0.99 0.99],'MarkerSize',5,'LineWidth',0.3);
 end
 % rx+4 to make the center of mass dot always appear on top of all of the
 % data markers
