@@ -13,11 +13,19 @@ switch nargin
         vSum = varargin{2};
         mkColor = varargin{3};
         plotFlag = 1;
+        stimType = 4;
     case 4
         rcd = varargin{1};
         vSum = varargin{2};
         mkColor = varargin{3};
         plotFlag = varargin{4};
+        stimType = 4;
+    case 5
+        rcd = varargin{1};
+        vSum = varargin{2};
+        mkColor = varargin{3};
+        plotFlag = varargin{4};
+        stimType = varargin{5};
 end
 %%
 % figure(1)
@@ -47,7 +55,11 @@ wgtMu = mean(wgtLoc);
 [thx,phix,rx]=cart2sph(wgtMu(1),wgtMu(2),wgtMu(3));
 CoM = [rad2deg(thx),rad2deg(phix),rx];
 if plotFlag == 1
-    plot3m(rad2deg(phix),rad2deg(thx),rx+6, 'o','MarkerFaceColor',mkColor,'MarkerEdgeColor',[0.99 0.99 0.99],'MarkerSize',5,'LineWidth',0.3);
+    if stimType == 4
+        plot3m(rad2deg(phix),rad2deg(thx),rx+6, 'o','MarkerFaceColor',mkColor,'MarkerEdgeColor',[0.99 0.99 0.99],'MarkerSize',7.5,'LineWidth',0.4);
+    else
+        plot3m(rad2deg(phix),rad2deg(thx),rx+6, 'o','MarkerFaceColor','w','MarkerEdgeColor',mkColor,'MarkerSize',6.5,'LineWidth',1.25);
+    end
 end
 % rx+4 to make the center of mass dot always appear on top of all of the
 % data markers

@@ -31,13 +31,13 @@ for i = 1:size(rct,1)
    [~,mndx] = max(rct(i,:));
    if mndx == 1
        inRad = inRad+1;
-       plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), 'o','MarkerFaceColor',  cmap(i,:),'MarkerSize', 5,'MarkerEdgeColor',[0.99 0.99 0.99],'LineWidth',0.4);
+       plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), 'o','MarkerFaceColor',  cmap(i,:),'MarkerSize', 6,'MarkerEdgeColor',[0.99 0.99 0.99],'LineWidth',0.4);
    elseif mndx == 2
        inCon = inCon+1;
-       plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), 'o','MarkerFaceColor',  cmap(i,:),'MarkerSize', 5,'MarkerEdgeColor',[0.99 0.99 0.99],'LineWidth',0.4);
+       plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), 'o','MarkerFaceColor',  cmap(i,:),'MarkerSize', 6,'MarkerEdgeColor',[0.99 0.99 0.99],'LineWidth',0.4);
    else
        inTr = inTr+1;
-       plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), 'o','MarkerFaceColor',  cmap(i,:),'MarkerSize', 5,'MarkerEdgeColor',[0.99 0.99 0.99],'LineWidth',0.4);
+       plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), 'o','MarkerFaceColor',  cmap(i,:),'MarkerSize', 6,'MarkerEdgeColor',[0.99 0.99 0.99],'LineWidth',0.4);
    end
 end
 
@@ -60,10 +60,10 @@ plot3m([rad2deg(phic),rad2deg(phib)],[rad2deg(thc),rad2deg(thb)],[rc,rb],'-','co
 
 set(gca,'FontSize',13,'color','none')
 
-textm(0,0,sprintf('\n\nRadial    '),'horizontalalignment','left','FontSize',12);
-textm(0,92,sprintf('\n\n\n       Concentric'),'FontSize',12,'horizontalalignment','right');
-textm(90,90,sprintf('Translational\n\n'),'FontSize',12,'horizontalalignment','center');
+% textm(0,0,sprintf('\n\nRadial    '),'horizontalalignment','left','FontSize',12);
+% textm(0,92,sprintf('\n\n\n       Concentric'),'FontSize',12,'horizontalalignment','right');
+% textm(90,90,sprintf('Translational\n\n'),'FontSize',12,'horizontalalignment','center');
 
-textm(3,2,sprintf('%d',inRad),'FontSize',11)
-textm(5,80,sprintf('%d',inCon),'FontSize',11)
-textm(90,90,sprintf('\n\n %d',inTr),'horizontalalignment','center','FontSize',11)
+% textm(3,2,sprintf('%d',inRad),'FontSize',11)
+% textm(5,80,sprintf('%d',inCon),'FontSize',11)
+% textm(90,90,sprintf('\n\n %d',inTr),'horizontalalignment','center','FontSize',11)

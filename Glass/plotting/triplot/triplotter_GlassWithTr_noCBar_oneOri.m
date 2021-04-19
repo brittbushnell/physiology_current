@@ -1,4 +1,4 @@
-function [inRad,inCon,inTr] = triplotter_GlassWithTr_noCBar_oneOri(rct,cmap,stimType)
+function [h,inRad,inCon,inTr] = triplotter_GlassWithTr_noCBar_oneOri(rct,cmap,stimType)
 % required inputs(rcb,cmap)
 % RCD   are d' vs blank for radial, concentric, and dipole
 % CMAP  are the (r,g,b) values to be used for each data point based on their
@@ -9,16 +9,16 @@ function [inRad,inCon,inTr] = triplotter_GlassWithTr_noCBar_oneOri(rct,cmap,stim
 
 
 %%
-axesm('stereo','origin',[45 45 0]);
+h = axesm('stereo','origin',[45 45 0]);
 axis off;
 hold on
 % draw the outlines of the triangle
-plot3m(linspace(0,90,90), 0.*ones(1,90),ones(1,90),'k','LineWidth',0.6)
-plot3m(linspace(0,90,90),90.*ones(1,90),ones(1,90),'k','LineWidth',0.6)
-plot3m(0.*ones(1,90),linspace(0,90,90),ones(1,90),'k','LineWidth',0.6)
+plot3m(linspace(0,90,90), 0.*ones(1,90),ones(1,90),'k','LineWidth',0.75)
+plot3m(linspace(0,90,90),90.*ones(1,90),ones(1,90),'k','LineWidth',0.75)
+plot3m(0.*ones(1,90),linspace(0,90,90),ones(1,90),'k','LineWidth',0.75)
 
 % find the edge of vertices
-[thc,phic,rc]=cart2sph(1,1,1); %plot3m(rad2deg(phic),rad2deg(thc),rc,'ro','LineWidth',0.6,'MarkerSize', 7)
+[thc,phic,rc]=cart2sph(1,1,1); %plot3m(rad2deg(phic),rad2deg(thc),rc,'ro','LineWidth',0.75,'MarkerSize', 7)
 
 [thl,phil,rl]=cart2sph(1,0,1); %plot3m(rad2deg(phil),rad2deg(thl),rl,'ro','LineWidth',1,'MarkerSize', 7) % left
 [thr,phir,rr]=cart2sph(0,1,1); %plot3m(rad2deg(phir),rad2deg(thr),rr,'ro','LineWidth',1,'MarkerSize', 7) %right
@@ -47,23 +47,23 @@ for i = 1:size(rct,1)
     if mndx == 1
         inRad = inRad+1;
         if stimType == 4
-            plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), 'o','MarkerFaceColor',  cmap(i,:),'MarkerSize', 6,'MarkerEdgeColor',[0.9 0.9 0.9],'LineWidth',0.4);
+            plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), 'o','MarkerFaceColor',  cmap(i,:),'MarkerSize', 7.5,'MarkerEdgeColor',[0.9 0.9 0.9],'LineWidth',0.4);
         else
-            plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), 'o','MarkerFaceColor',  'none','MarkerSize', 5,'MarkerEdgeColor',cmap(i,:),'LineWidth',0.6);
+            plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), 'o','MarkerFaceColor',  'w','MarkerSize', 6.5,'MarkerEdgeColor',cmap(i,:),'LineWidth',1.25);
         end
     elseif mndx == 2
         inCon = inCon+1;
         if stimType == 4
-            plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), 'o','MarkerFaceColor',  cmap(i,:),'MarkerSize', 6,'MarkerEdgeColor',[0.9 0.9 0.9],'LineWidth',0.4);
+            plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), 'o','MarkerFaceColor',  cmap(i,:),'MarkerSize', 7.5,'MarkerEdgeColor',[0.9 0.9 0.9],'LineWidth',0.4);
         else
-            plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), 'o','MarkerFaceColor',  'none','MarkerSize', 5,'MarkerEdgeColor',cmap(i,:),'LineWidth',0.6);
+            plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), 'o','MarkerFaceColor',  'w','MarkerSize', 6.5,'MarkerEdgeColor',cmap(i,:),'LineWidth',1.25);
         end
     else
         inTr = inTr+1;
         if stimType == 4
-            plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), 'o','MarkerFaceColor',  cmap(i,:),'MarkerSize', 6,'MarkerEdgeColor',[0.9 0.9 0.9],'LineWidth',0.4);
+            plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), 'o','MarkerFaceColor',  cmap(i,:),'MarkerSize', 7.5,'MarkerEdgeColor',[0.9 0.9 0.9],'LineWidth',0.4);
         else
-            plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), 'o','MarkerFaceColor',  'none','MarkerSize', 5,'MarkerEdgeColor',cmap(i,:),'LineWidth',0.6);
+            plot3m(rad2deg(phi(i)),rad2deg(th(i)),r(i), 'o','MarkerFaceColor',  'w','MarkerSize', 6.5,'MarkerEdgeColor',cmap(i,:),'LineWidth',1.25);
         end
     end
 end

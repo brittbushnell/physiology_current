@@ -45,10 +45,11 @@ v4LEsort = sortDps(sortDps(:,5) == 3,:);
 v4REsort = sortDps(sortDps(:,5) == 4,:);
 %% test for significant difference between concentric and radial
 % conc - radial / conc + radial
-v1LEconRadNdx = (v1LEsort(:,2) - v1LEsort(:,1))./ (v1LEsort(:,2) + v1LEsort(:,1));  
-v1REconRadNdx = (v1REsort(:,2) - v1REsort(:,1))./ (v1REsort(:,2) + v1REsort(:,1)); 
-v4LEconRadNdx = (v4LEsort(:,2) - v4LEsort(:,1))./ (v4LEsort(:,2) + v4LEsort(:,1));  
-v4REconRadNdx = (v4REsort(:,2) - v4REsort(:,1))./ (v4REsort(:,2) + v4REsort(:,1)); 
+
+[v1LEConRadpVal,v1LEconRadNdx,v1LEconRad,v1LEConRadsigDif] = getGlassConRadSigPerm(v1LEsort(:,1:2),V1data.trLE.animal,'V1','LE');
+[v1REConRadpVal,v1REconRadNdx,v1REconRad,v1REConRadsigDif] = getGlassConRadSigPerm(v1REsort(:,1:2),V1data.trLE.animal,'V1','RE');
+[v4LEConRadpVal,v4LEconRadNdx,v4LEconRad,v4LEConRadsigDif] = getGlassConRadSigPerm(v4LEsort(:,1:2),V1data.trLE.animal,'V4','LE');
+[v4REConRadpVal,v4REconRadNdx,v4REconRad,v4REConRadsigDif] = getGlassConRadSigPerm(v4REsort(:,1:2),V1data.trLE.animal,'V4','RE');
 
 figure(22)
 clf
@@ -61,10 +62,15 @@ t.FontSize = 20;
 
 s = subplot(2,2,1);
 hold on
-histogram(v1LEconRadNdx,'Normalization','probability','FaceColor','k','FaceAlpha',1,'EdgeColor','w','binWidth',0.1)
+histogram(v1LEconRad,'Normalization','probability','FaceColor','k','FaceAlpha',1,'EdgeColor','w','binWidth',0.1)
 plot([0 0],[0,0.5],':k')
-plot(mean(v1LEconRadNdx),0.45,'v','MarkerFaceColor','k','MarkerEdgeColor','w','MarkerSize',8)
-text(mean(v1LEconRadNdx)+0.05,0.46,sprintf('\\mu %.2f',mean(v1LEconRadNdx)),'FontSize',11)
+plot((v1LEconRadNdx),0.45,'v','MarkerFaceColor','k','MarkerEdgeColor','w','MarkerSize',8)
+if v1LEConRadsigDif == 1
+    text((v1LEconRadNdx)+0.05,0.46,sprintf('\\mu %.2f*',(v1LEconRadNdx)),'FontSize',11)
+else
+    text((v1LEconRadNdx)+0.05,0.46,sprintf('\\mu %.2f',(v1LEconRadNdx)),'FontSize',11)
+end
+text(1,0.45,sprintf('p = %.2f',v1LEConRadpVal),'FontSize',11)
 set(gca,'layer','top','tickdir','out','fontSize',11,'fontAngle','italic','XTickLabel',{'Radial','','0','','Concentric'})
 if contains(V1data.trLE.animal,'XT')
     title('LE','FontSize',12)
@@ -80,11 +86,15 @@ text(-2, 0.375, 'V1','FontSize',18,'FontWeight','bold')
 
 s = subplot(2,2,2);
 hold on
-histogram(v1REconRadNdx,'Normalization','probability','FaceColor','k','FaceAlpha',1,'EdgeColor','w','binWidth',0.1)
-
+histogram(v1REconRad,'Normalization','probability','FaceColor','k','FaceAlpha',1,'EdgeColor','w','binWidth',0.1)
 plot([0 0],[0,0.5],':k')
-plot(mean(v1REconRadNdx),0.45,'v','MarkerFaceColor','k','MarkerEdgeColor','w','MarkerSize',8)
-text(mean(v1REconRadNdx)+0.05,0.46,sprintf('\\mu %.2f',mean(v1REconRadNdx)),'FontSize',11)
+plot((v1REconRadNdx),0.45,'v','MarkerFaceColor','k','MarkerEdgeColor','w','MarkerSize',8)
+if v1REConRadsigDif == 1
+    text((v1REconRadNdx)+0.05,0.46,sprintf('\\mu %.2f*',(v1REconRadNdx)),'FontSize',11)
+else
+    text((v1REconRadNdx)+0.05,0.46,sprintf('\\mu %.2f',(v1REconRadNdx)),'FontSize',11)
+end
+text(1,0.45,sprintf('p = %.2f',v1REConRadpVal),'FontSize',11)
 set(gca,'layer','top','tickdir','out','fontSize',11,'fontAngle','italic','XTickLabel',{'Radial','','0','','Concentric'})
 
 ylim([0 0.5])
@@ -100,11 +110,17 @@ end
 
 s = subplot(2,2,3);
 hold on
-histogram(v4LEconRadNdx,'Normalization','probability','FaceColor','k','FaceAlpha',1,'EdgeColor','w','binWidth',0.1)
+histogram(v4LEconRad,'Normalization','probability','FaceColor','k','FaceAlpha',1,'EdgeColor','w','binWidth',0.1)
 plot([0 0],[0,0.5],':k')
-plot(mean(v4LEconRadNdx),0.45,'v','MarkerFaceColor','k','MarkerEdgeColor','w','MarkerSize',8)
-text(mean(v4LEconRadNdx)+0.05,0.46,sprintf('\\mu %.2f',mean(v4LEconRadNdx)),'FontSize',11)
+plot((v4LEconRadNdx),0.45,'v','MarkerFaceColor','k','MarkerEdgeColor','w','MarkerSize',8)
+if v4LEConRadsigDif == 1
+    text((v4LEconRadNdx)+0.05,0.46,sprintf('\\mu %.2f*',(v4LEconRadNdx)),'FontSize',11)
+else
+    text((v4LEconRadNdx)+0.05,0.46,sprintf('\\mu %.2f',(v4LEconRadNdx)),'FontSize',11)
+end
+text(1,0.45,sprintf('p = %.2f',v4LEConRadpVal),'FontSize',11)
 set(gca,'layer','top','tickdir','out','fontSize',11,'fontAngle','italic','XTickLabel',{'Radial','','0','','Concentric'})
+
 ylim([0 0.5])
 xlim([-1.25 1.25])
 s.Position(2) = s.Position(2) + 0.035;
@@ -114,12 +130,17 @@ text(-2, 0.375, 'V4','FontSize',18,'FontWeight','bold')
 
 s = subplot(2,2,4);
 hold on
-histogram(v4REconRadNdx,'Normalization','probability','FaceColor','k','FaceAlpha',1,'EdgeColor','w','binWidth',0.1)
-
+histogram(v4REconRad,'Normalization','probability','FaceColor','k','FaceAlpha',1,'EdgeColor','w','binWidth',0.1)
 plot([0 0],[0,0.5],':k')
-plot(mean(v4REconRadNdx),0.45,'v','MarkerFaceColor','k','MarkerEdgeColor','w','MarkerSize',8)
-text(mean(v4REconRadNdx)+0.05,0.46,sprintf('\\mu %.2f',mean(v4REconRadNdx)),'FontSize',11)
+plot((v4REconRadNdx),0.45,'v','MarkerFaceColor','k','MarkerEdgeColor','w','MarkerSize',8)
+if v4REConRadsigDif == 1
+    text((v4REconRadNdx)+0.05,0.46,sprintf('\\mu %.2f*',(v4REconRadNdx)),'FontSize',11)
+else
+    text((v4REconRadNdx)+0.05,0.46,sprintf('\\mu %.2f',(v4REconRadNdx)),'FontSize',11)
+end
+text(1,0.45,sprintf('p = %.2f',v4REConRadpVal),'FontSize',11)
 set(gca,'layer','top','tickdir','out','fontSize',11,'fontAngle','italic','XTickLabel',{'Radial','','0','','Concentric'})
+
 
 ylim([0 0.5])
 xlim([-1.25 1.25])
@@ -130,6 +151,17 @@ figName = [V1data.conRadLE.animal,'_conRadNdx_hist'];
 print(gcf, figName,'-dpdf','-bestfit')
 
 %%
+if location == 1
+    figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/GlassCombo/triplot/ori/',V1data.conRadRE.animal);
+elseif location == 0
+    figDir =  sprintf('~/Dropbox/Figures/%s/GlassCombo/triplot/ori/',V1data.conRadRE.animal);
+end
+
+if ~exist(figDir,'dir')
+    mkdir(figDir)
+end
+cd(figDir)
+
 figure (23)
 clf
 pos = get(gcf,'Position');
@@ -254,11 +286,11 @@ cd ..
 figure(18)
 clf
 hold on
-triplotter_GlassWithTr_noCBar_oneOri(v1ComREmu,[1 0 0]);
-triplotter_GlassWithTr_noCBar_oneOri(v1ComLEmu,[0 0 1]);
+triplotter_GlassWithTr_noCBar_oneOri(v1ComREmu,[1 0 0],4);
+triplotter_GlassWithTr_noCBar_oneOri(v1ComLEmu,[0 0 1],4);
 
-triplotter_GlassWithTr_noCBar_oneOri(v4ComREmu,[1 0.5 0.1]);
-triplotter_GlassWithTr_noCBar_oneOri(v4ComLEmu,[0.8 0.3 0.8]);
+triplotter_GlassWithTr_noCBar_oneOri(v4ComREmu,[1 0.5 0.1],4);
+triplotter_GlassWithTr_noCBar_oneOri(v4ComLEmu,[0.8 0.3 0.8],4);
 
 % reDist = vecnorm(v4ComREsph - v1ComREsph,2,2);
 % leDist = vecnorm(v4ComLEsph - v1ComLEsph,2,2);
