@@ -10,10 +10,10 @@ if ~exist(figDir,'dir')
 end
 cd(figDir)
 %%
-
+close all
 figure(1)
 clf
-set(gcf,'Position',[34 177 650 1400]);
+set(gcf,'Position',[34 177 670 1400]);
 
 t = suptitle('Glass pattern orientation tuning');
 t.Position(2) = t.Position(2) +0.04;
@@ -45,14 +45,14 @@ ax.RLim   = [0,0.7];
 text(cirMuL+0.2,0.5,sprintf('\\mu: %.1f%c',rad2deg(cirMuL),char(176)),'FontSize',11,'HorizontalAlignment','center')
 text(cirMuL2+0.2,0.5,sprintf('\\mu: %.1f%c',rad2deg(cirMuL2),char(176)),'FontSize',11,'HorizontalAlignment','center')
 text(2.7,1.75,'XT','FontSize',18,'FontWeight','bold')
-text(3.14,1.5,'V1','FontSize',14,'FontWeight','bold')
-set(gca,'FontSize',12,'FontAngle','italic','RTickLabels',{'','',''})
+text(3.14,1.5,'V1/V2','FontSize',14,'FontWeight','bold')
+set(gca,'FontSize',11,'FontAngle','italic','RTickLabels',{'','',''})
 
 
 title(sprintf('LE n: %d',length(SIL2)),'FontSize',12)
 s.Position(1) = s.Position(1) - 0.1;
 s.Position(2) = s.Position(2) - 0.0025;
-s.Position(3) = s.Position(3) + 0.25;
+s.Position(3) = s.Position(3) + 0.008;
 s.Position(4) = s.Position(4) + 0.01;
 
 s = subplot(6,2,2,polaraxes);
@@ -79,13 +79,13 @@ ax.RLim   = [0,0.7];
 text(cirMuL+0.2,0.5,sprintf('\\mu: %.1f%c',rad2deg(cirMuL),char(176)),'FontSize',11,'HorizontalAlignment','center')
 text(cirMuL2+0.2,0.5,sprintf('\\mu: %.1f%c',rad2deg(cirMuL2),char(176)),'FontSize',11,'HorizontalAlignment','center')
 
-set(gca,'FontSize',12,'FontAngle','italic','RTickLabels',{'','',''})
+set(gca,'FontSize',11,'FontAngle','italic','RTickLabels',{'','',''})
 
 
 title(sprintf('RE n: %d',length(SIL2)),'FontSize',12)
 s.Position(1) = s.Position(1) - 0.1;
 s.Position(2) = s.Position(2) - 0.0025;
-s.Position(3) = s.Position(3) + 0.25;
+s.Position(3) = s.Position(3) + 0.008;
 s.Position(4) = s.Position(4) + 0.01;
 
 s = subplot(6,2,3,polaraxes);
@@ -111,14 +111,14 @@ ax = gca;
 ax.RLim   = [0,0.7];
 text(cirMuL+0.2,0.5,sprintf('\\mu: %.1f%c',rad2deg(cirMuL),char(176)),'FontSize',11,'HorizontalAlignment','center')
 text(cirMuL2+0.2,0.5,sprintf('\\mu: %.1f%c',rad2deg(cirMuL2),char(176)),'FontSize',11,'HorizontalAlignment','center')
-text(3.14,1.5,'V4','FontSize',16,'FontWeight','bold')
-set(gca,'FontSize',12,'FontAngle','italic','RTickLabels',{'','',''})
+text(3.14,1.5,'V4','FontSize',14,'FontWeight','bold')
+set(gca,'FontSize',11,'FontAngle','italic','RTickLabels',{'','',''})
 
 
-title(sprintf('n: %d',length(SIL2)))
+title(sprintf('n: %d',length(SIL2)),'FontSize',12)
 s.Position(1) = s.Position(1) - 0.1;
 s.Position(2) = s.Position(2) - 0.015;
-s.Position(3) = s.Position(3) + 0.25;
+s.Position(3) = s.Position(3) + 0.008;
 s.Position(4) = s.Position(4) + 0.01;
 
 s = subplot(6,2,4,polaraxes);
@@ -145,13 +145,13 @@ ax.RLim   = [0,0.7];
 text(cirMuL+0.2,0.5,sprintf('\\mu: %.1f%c',rad2deg(cirMuL),char(176)),'FontSize',11,'HorizontalAlignment','center')
 text(cirMuL2+0.2,0.5,sprintf('\\mu: %.1f%c',rad2deg(cirMuL2),char(176)),'FontSize',11,'HorizontalAlignment','center')
 
-set(gca,'FontSize',12,'FontAngle','italic','RTickLabels',{'','',''})
+set(gca,'FontSize',11,'FontAngle','italic','RTickLabels',{'','',''})
 
 
-title(sprintf('n: %d',length(SIL2)))
+title(sprintf('n: %d',length(SIL2)),'FontSize',12)
 s.Position(1) = s.Position(1) - 0.1;
 s.Position(2) = s.Position(2) - 0.015;
-s.Position(3) = s.Position(3) + 0.25;
+s.Position(3) = s.Position(3) + 0.008;
 s.Position(4) = s.Position(4) + 0.01;
 
 
@@ -180,14 +180,14 @@ ax.RLim   = [0,0.7];
 text(cirMuL+0.2,0.5,sprintf('\\mu: %.1f%c',rad2deg(cirMuL),char(176)),'FontSize',11,'HorizontalAlignment','center')
 text(cirMuL2+0.2,0.5,sprintf('\\mu: %.1f%c',rad2deg(cirMuL2),char(176)),'FontSize',11,'HorizontalAlignment','center')
 text(2.7,1.75,'WU','FontSize',18,'FontWeight','bold')
-text(3.14,1.5,'V1','FontSize',14,'FontWeight','bold')
-set(gca,'FontSize',12,'FontAngle','italic','RTickLabels',{'','',''})
+text(3.14,1.5,'V1/V2','FontSize',14,'FontWeight','bold')
+set(gca,'FontSize',11,'FontAngle','italic','RTickLabels',{'','',''})
 
 
 title(sprintf('FE n: %d',length(SIL2)),'FontSize',12)
 s.Position(1) = s.Position(1) - 0.1;
 s.Position(2) = s.Position(2) - 0.04;
-s.Position(3) = s.Position(3) + 0.25;
+s.Position(3) = s.Position(3) + 0.008;
 s.Position(4) = s.Position(4) + 0.01;
 
 s = subplot(6,2,6,polaraxes);
@@ -214,13 +214,13 @@ ax.RLim   = [0,0.7];
 text(cirMuL+0.2,0.5,sprintf('\\mu: %.1f%c',rad2deg(cirMuL),char(176)),'FontSize',11,'HorizontalAlignment','center')
 text(cirMuL2+0.2,0.5,sprintf('\\mu: %.1f%c',rad2deg(cirMuL2),char(176)),'FontSize',11,'HorizontalAlignment','center')
 
-set(gca,'FontSize',12,'FontAngle','italic','RTickLabels',{'','',''})
+set(gca,'FontSize',11,'FontAngle','italic','RTickLabels',{'','',''})
 
 
 title(sprintf('AE n: %d',length(SIL2)),'FontSize',12)
 s.Position(1) = s.Position(1) - 0.1;
 s.Position(2) = s.Position(2) - 0.04;
-s.Position(3) = s.Position(3) + 0.25;
+s.Position(3) = s.Position(3) + 0.008;
 s.Position(4) = s.Position(4) + 0.01;
 
 s = subplot(6,2,7,polaraxes);
@@ -246,14 +246,14 @@ ax = gca;
 ax.RLim   = [0,0.7];
 text(cirMuL+0.2,0.5,sprintf('\\mu: %.1f%c',rad2deg(cirMuL),char(176)),'FontSize',11,'HorizontalAlignment','center')
 text(cirMuL2+0.2,0.5,sprintf('\\mu: %.1f%c',rad2deg(cirMuL2),char(176)),'FontSize',11,'HorizontalAlignment','center')
-text(3.14,1.5,'V4','FontSize',16,'FontWeight','bold')
-set(gca,'FontSize',12,'FontAngle','italic','RTickLabels',{'','',''})
+text(3.14,1.5,'V4','FontSize',14,'FontWeight','bold')
+set(gca,'FontSize',11,'FontAngle','italic','RTickLabels',{'','',''})
 
 
-title(sprintf('n: %d',length(SIL2)))
+title(sprintf('n: %d',length(SIL2)),'FontSize',12)
 s.Position(1) = s.Position(1) - 0.1;
 s.Position(2) = s.Position(2) - 0.06;
-s.Position(3) = s.Position(3) + 0.25;
+s.Position(3) = s.Position(3) + 0.008;
 s.Position(4) = s.Position(4) + 0.01;
 
 s = subplot(6,2,8,polaraxes);
@@ -280,13 +280,13 @@ ax.RLim   = [0,0.7];
 text(cirMuL+0.2,0.5,sprintf('\\mu: %.1f%c',rad2deg(cirMuL),char(176)),'FontSize',11,'HorizontalAlignment','center')
 text(cirMuL2+0.2,0.5,sprintf('\\mu: %.1f%c',rad2deg(cirMuL2),char(176)),'FontSize',11,'HorizontalAlignment','center')
 
-set(gca,'FontSize',12,'FontAngle','italic','RTickLabels',{'','',''})
+set(gca,'FontSize',11,'FontAngle','italic','RTickLabels',{'','',''})
 
 
-title(sprintf('n: %d',length(SIL2)))
+title(sprintf('n: %d',length(SIL2)),'FontSize',12)
 s.Position(1) = s.Position(1) - 0.1;
 s.Position(2) = s.Position(2) - 0.06;
-s.Position(3) = s.Position(3) + 0.25;
+s.Position(3) = s.Position(3) + 0.008;
 s.Position(4) = s.Position(4) + 0.01;
 
 % WV
@@ -314,21 +314,21 @@ ax.RLim   = [0,0.7];
 text(cirMuL+0.2,0.5,sprintf('\\mu: %.1f%c',rad2deg(cirMuL),char(176)),'FontSize',11,'HorizontalAlignment','center')
 text(cirMuL2+0.2,0.5,sprintf('\\mu: %.1f%c',rad2deg(cirMuL2),char(176)),'FontSize',11,'HorizontalAlignment','center')
 text(2.7,1.75,'WV','FontSize',18,'FontWeight','bold')
-text(3.14,1.5,'V1','FontSize',14,'FontWeight','bold')
-set(gca,'FontSize',12,'FontAngle','italic','RTickLabels',{'','',''})
+text(3.14,1.5,'V1/V2','FontSize',14,'FontWeight','bold')
+set(gca,'FontSize',11,'FontAngle','italic','RTickLabels',{'','',''})
 
 
 title(sprintf('FE n: %d',length(SIL2)),'FontSize',12)
 s.Position(1) = s.Position(1) - 0.1;
 s.Position(2) = s.Position(2) - 0.07;
-s.Position(3) = s.Position(3) + 0.25;
+s.Position(3) = s.Position(3) + 0.008;
 s.Position(4) = s.Position(4) + 0.01;
 
 s = subplot(6,2,10,polaraxes);
 hold on
 pOrisL = WVV1.trRE.prefOriBestDprime;
 SIL2 = pOrisL;
-SIL2(SIL2<0) = SIL2(SIL2<0)+180;
+SIL2(SIL2<0) = SIL2(SIL2<0)+180; 
 
 cirMuL = circ_mean(deg2rad(SIL2(:)*2))/2;
 cirMuL2 = cirMuL+pi;
@@ -348,13 +348,13 @@ ax.RLim   = [0,0.7];
 text(cirMuL+0.2,0.5,sprintf('\\mu: %.1f%c',rad2deg(cirMuL),char(176)),'FontSize',11,'HorizontalAlignment','center')
 text(cirMuL2+0.2,0.5,sprintf('\\mu: %.1f%c',rad2deg(cirMuL2),char(176)),'FontSize',11,'HorizontalAlignment','center')
 
-set(gca,'FontSize',12,'FontAngle','italic','RTickLabels',{'','',''})
+set(gca,'FontSize',11,'FontAngle','italic','RTickLabels',{'','',''})
 
 
 title(sprintf('AE n: %d',length(SIL2)),'FontSize',12)
 s.Position(1) = s.Position(1) - 0.1;
 s.Position(2) = s.Position(2) - 0.07;
-s.Position(3) = s.Position(3) + 0.25;
+s.Position(3) = s.Position(3) + 0.008;
 s.Position(4) = s.Position(4) + 0.01;
 
 s = subplot(6,2,11,polaraxes);
@@ -380,14 +380,14 @@ ax = gca;
 ax.RLim   = [0,0.7];
 text(cirMuL+0.2,0.5,sprintf('\\mu: %.1f%c',rad2deg(cirMuL),char(176)),'FontSize',11,'HorizontalAlignment','center')
 text(cirMuL2+0.2,0.5,sprintf('\\mu: %.1f%c',rad2deg(cirMuL2),char(176)),'FontSize',11,'HorizontalAlignment','center')
-text(3.14,1.5,'V4','FontSize',16,'FontWeight','bold')
-set(gca,'FontSize',12,'FontAngle','italic','RTickLabels',{'','',''})
+text(3.14,1.5,'V4','FontSize',14,'FontWeight','bold')
+set(gca,'FontSize',11,'FontAngle','italic','RTickLabels',{'','',''})
 
 
-title(sprintf('n: %d',length(SIL2)))
+title(sprintf('n: %d',length(SIL2)),'FontSize',12)
 s.Position(1) = s.Position(1) - 0.1;
 s.Position(2) = s.Position(2) - 0.08;
-s.Position(3) = s.Position(3) + 0.25;
+s.Position(3) = s.Position(3) + 0.008;
 s.Position(4) = s.Position(4) + 0.01;
 
 s = subplot(6,2,12,polaraxes);
@@ -414,13 +414,13 @@ ax.RLim   = [0,0.7];
 text(cirMuL+0.2,0.5,sprintf('\\mu: %.1f%c',rad2deg(cirMuL),char(176)),'FontSize',11,'HorizontalAlignment','center')
 text(cirMuL2+0.2,0.5,sprintf('\\mu: %.1f%c',rad2deg(cirMuL2),char(176)),'FontSize',11,'HorizontalAlignment','center')
 
-set(gca,'FontSize',12,'FontAngle','italic','RTickLabels',{'','',''})
+set(gca,'FontSize',11,'FontAngle','italic','RTickLabels',{'','',''})
 
 
-title(sprintf('n: %d',length(SIL2)))
+title(sprintf('n: %d',length(SIL2)),'FontSize',12)
 s.Position(1) = s.Position(1) - 0.1;
 s.Position(2) = s.Position(2) - 0.08;
-s.Position(3) = s.Position(3) + 0.25;
+s.Position(3) = s.Position(3) + 0.008;
 s.Position(4) = s.Position(4) + 0.01;
 
 %%

@@ -314,7 +314,7 @@ print(figName,'-dpdf','-bestfit')
 figure(3)
 clf
 pos = get(gcf,'Position');
-set(gcf,'Position',[pos(1),pos(2),500,600],'InvertHardcopy','off','PaperSize',[6.5,6.5])
+set(gcf,'Position',[pos(1),pos(2),350,400],'InvertHardcopy','off','PaperSize',[6.5,6.5])
 
 
 t = suptitle('Dominant vs preferred orientation');
@@ -322,42 +322,46 @@ t.FontSize = 20;
 
 
 hold on
-scatter(mean(WVcDiffLEv1),mean(WVcDiffREv1),60,'d','MarkerEdgeColor',[0.7 0 0.7],'MarkerFaceAlpha',0.6,'MarkerEdgeAlpha',0.6)
-scatter(mean(WVcDiffLEv4),mean(WVcDiffREv4),70,'d','MarkerEdgeColor','w','MarkerFaceColor',[0.7 0 0.7],'MarkerFaceAlpha',0.6,'MarkerEdgeAlpha',0.6)
+scatter(mean(WVcDiffLEv1),mean(WVcDiffREv1),60,'d','MarkerEdgeColor',[0.7 0 0.7])
+scatter(mean(WVcDiffLEv4),mean(WVcDiffREv4),75,'d','MarkerEdgeColor','w','MarkerFaceColor',[0.7 0 0.7])
 
-scatter(mean(WUcDiffLEv1),mean(WUcDiffREv1),60,'s','MarkerEdgeColor',[0.7 0 0.7],'MarkerFaceAlpha',0.6,'MarkerEdgeAlpha',0.6)
-scatter(mean(WUcDiffLEv4),mean(WUcDiffREv4),70,'s','MarkerEdgeColor','w','MarkerFaceColor',[0.7 0 0.7],'MarkerFaceAlpha',0.6,'MarkerEdgeAlpha',0.6)
+scatter(mean(WUcDiffLEv1),mean(WUcDiffREv1),60,'s','MarkerEdgeColor',[0.7 0 0.7])
+scatter(mean(WUcDiffLEv4),mean(WUcDiffREv4),75,'s','MarkerEdgeColor','w','MarkerFaceColor',[0.7 0 0.7])
 
-scatter(mean(XTcDiffLEv1),mean(XTcDiffREv1),60,'o','MarkerEdgeColor',[0.7 0 0.7],'MarkerFaceAlpha',0.6,'MarkerEdgeAlpha',0.6)
-scatter(mean(XTcDiffLEv4),mean(XTcDiffREv4),70,'o','MarkerEdgeColor','w','MarkerFaceColor',[0.7 0 0.7],'MarkerFaceAlpha',0.6,'MarkerEdgeAlpha',0.6)
+scatter(mean(XTcDiffLEv1),mean(XTcDiffREv1),60,'o','MarkerEdgeColor',[0.7 0 0.7])
+scatter(mean(XTcDiffLEv4),mean(XTcDiffREv4),75,'o','MarkerEdgeColor','w','MarkerFaceColor',[0.7 0 0.7])
 
 
-scatter(mean(WVrDiffLEv1),mean(WVrDiffREv1),60,'d','MarkerEdgeColor',[0 0.6 0.2],'MarkerFaceAlpha',0.6,'MarkerEdgeAlpha',0.6)
-scatter(mean(WVrDiffLEv4),mean(WVrDiffREv4),70,'d','MarkerEdgeColor','w','MarkerFaceColor',[0 0.6 0.2],'MarkerFaceAlpha',0.6,'MarkerEdgeAlpha',0.6)
+scatter(mean(WVrDiffLEv1),mean(WVrDiffREv1),60,'d','MarkerEdgeColor',[0 0.6 0.2])
+scatter(mean(WVrDiffLEv4),mean(WVrDiffREv4),75,'d','MarkerEdgeColor','w','MarkerFaceColor',[0 0.6 0.2])
 
-scatter(mean(WUrDiffLEv1),mean(WUrDiffREv1),60,'s','MarkerEdgeColor',[0 0.6 0.2],'MarkerFaceAlpha',0.6,'MarkerEdgeAlpha',0.6)
-scatter(mean(WUrDiffLEv4),mean(WUrDiffREv4),70,'s','MarkerEdgeColor','w','MarkerFaceColor',[0 0.6 0.2],'MarkerFaceAlpha',0.6,'MarkerEdgeAlpha',0.6)
+scatter(mean(WUrDiffLEv1),mean(WUrDiffREv1),60,'s','MarkerEdgeColor',[0 0.6 0.2])
+scatter(mean(WUrDiffLEv4),mean(WUrDiffREv4),75,'s','MarkerEdgeColor','w','MarkerFaceColor',[0 0.6 0.2])
 
-scatter(mean(XTrDiffLEv1),mean(XTrDiffREv1),60,'o','MarkerEdgeColor',[0 0.6 0.2],'MarkerFaceAlpha',0.6,'MarkerEdgeAlpha',0.6)
-scatter(mean(XTrDiffLEv4),mean(XTrDiffREv4),70,'o','MarkerEdgeColor','w','MarkerFaceColor',[0 0.6 0.2],'MarkerFaceAlpha',0.6,'MarkerEdgeAlpha',0.6)
+scatter(mean(XTrDiffLEv1),mean(XTrDiffREv1),60,'o','MarkerEdgeColor',[0 0.6 0.2])
+scatter(mean(XTrDiffLEv4),mean(XTrDiffREv4),75,'o','MarkerEdgeColor','w','MarkerFaceColor',[0 0.6 0.2])
 
 plot([0 90],[0 90],'-','color',[0.4 0.4 0.4])
 
 xlim([0 90])
 ylim([0 90])
+
+pos = get(gca,'Position');
+pos = [pos(1)+0.06, pos(2) + 0.22, pos(3) - 0.2, pos(4) - 0.2];
+
 axis square
 xlabel('LE/FE','FontSize',12,'FontAngle','italic')
 ylabel('RE/AE','FontSize',12,'FontAngle','italic')
-ax = get(gca,'Position');
-set(gca,'tickdir','out','FontSize',11,'FontAngle','italic','Position',[ax(1),ax(2)+0.06,ax(3),ax(4)]);
+set(gca,'tickdir','out','FontSize',11,'FontAngle','italic','Position',pos,'XTick',0:30:90,'YTick',0:30:90);
 
 l = legend('WV Con V1/V2','WV Con V4','WU Con V1/V2','WU Con V4','XT Con V1/V2','XT Con V4','WV Rad V1/V2','WV Rad V4','WU Rad V1/V2','WU Rad V4','XT Rad V1/V2','XT Rad V4');
 l.Box = 'off';
-l.Position(1) = l.Position(1) - 0.3;
-l.Position(2) = l.Position(2) - 0.65;
+l.Position(1) = l.Position(1) - 0.085;
+l.Position(2) = l.Position(2) - 0.5;
 l.NumColumns = 3;
 l.FontSize = 11;
 
+axis square
 
 figName = 'domOriVsprefOri_1plot.pdf';
 set(gca,'color','none')
