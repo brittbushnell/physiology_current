@@ -15,7 +15,7 @@ conRadData = data;
 clear data
 
 newName = 'WV_BE_V1_bothGlass_cleanMerged';
- %%
+%%
 % load('WU_BE_GlassTR_V1_cleanMerged');
 % trLE = data.LE;
 % trRE = data.RE;
@@ -30,19 +30,19 @@ newName = 'WV_BE_V1_bothGlass_cleanMerged';
 % 
 % newName = 'WU_BE_V1_bothGlass_cleanMerged';
 %% 
-% load('XT_BE_GlassTR_V4_cleanMerged');
+% load('XT_BE_GlassTR_V1_cleanMerged');
 % trLE = data.LE;
 % trRE = data.RE;
 % trData = data;
 % clear data;
 % 
-% load('XT_BE_V4_Glass_clean_merged');
+% load('XT_BE_V1_Glass_clean_merged');
 % conRadLE = data.LE;
 % conRadRE = data.RE;
 % conRadData = data;
 % clear data
 % 
-% newName = 'XT_BE_V4_bothGlass_cleanMerged';
+% newName = 'XT_BE_V1_bothGlass_cleanMerged';
 %%
 location = determineComputer;
 
@@ -118,7 +118,7 @@ conRadRE.inStimCenter = trRE.inStimCenter;
 conRadRE.within2Deg   = trRE.within2Deg;
 
 %% plot responses by dt,dx
-getGlass_dtdxByCh(trLE,trRE,conRadLE,conRadRE)
+% getGlass_dtdxByCh(trLE,trRE,conRadLE,conRadRE)
 %%
 if location == 1
     figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/GlassCombo/%s/',trLE.animal,trLE.array);
@@ -189,7 +189,7 @@ text(-0.15, -1.12, 'Radial','Color',[0 0.6 0.2],'FontWeight','Bold','FontSize',1
 text(0.01, -1.12, 'Concentric','Color',[0.7 0 0.7],'FontWeight','Bold','FontSize',14)
 text(-0.05, -1.2, 'Dipole','Color',[1 0.5 0.1],'FontWeight','Bold','FontSize',14)
 
-plotQuadHist_conRadDipSep(trLE.inStimOris, trLE.inStimRanks)
+plotQuadHist_conRadDipSep(trLE.inStimOris, trLE.inStimRanks);
 
 figName = [trLE.animal,'_LE_',trLE.array,'_prefOriByRFlocation_radConPref_inStim','.pdf'];
 print(gcf, figName,'-dpdf','-bestfit')
@@ -254,14 +254,14 @@ text(-0.15, -1.12, 'Radial','Color',[0 0.6 0.2],'FontWeight','Bold','FontSize',1
 text(0.01, -1.12, 'Concentric','Color',[0.7 0 0.7],'FontWeight','Bold','FontSize',14)
 text(-0.05, -1.2, 'Dipole','Color',[1 0.5 0.1],'FontWeight','Bold','FontSize',14)
 
-plotQuadHist_conRadDipSep(trRE.inStimOris, trRE.inStimRanks)
+plotQuadHist_conRadDipSep(trRE.inStimOris, trRE.inStimRanks);
 
 figName = [trRE.animal,'_RE_',trRE.array,'_prefOriByRFlocation_radConPref_inStim','.pdf'];
 print(gcf, figName,'-dpdf','-bestfit')
 
 clear goodQuads; clear goodRanks; clear goodOris; clear goodOSI; clear t1Text;
 %% plot differences between preferred and dominant orientations
-% [trRE.conDiff, trRE.radDiff] = diffPrefOriPrefStimOri(trRE);
+[trRE.conDiff, trRE.radDiff] = diffPrefOriPrefStimOri(trRE);
 %% save combined data
 
 location = determineComputer;

@@ -632,7 +632,17 @@ for ch = 1:96
     %     pause
     figName = [V4data.conRadRE.animal,'sigCohPlotsAllCurves_ch',num2str(ch),'.pdf'];
     if REV4Sig(ch,1) >1 || LEV4Sig(ch,1) >1 || REV1Sig(ch,1) >1 || LEV1Sig(ch,1) >1
-        figDir = sprintf('/Users/brittany/Dropbox/Figures/%s/GlassCombo/coh/sigChs',V4data.trLE.animal);
+        
+        location = determineComputer;
+        if location == 1
+            figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/GlassCombo/coh/sigChs',V4data.trLE.animal);
+        elseif location == 0
+            figDir =  sprintf('/Users/brittany/Dropbox/Figures/%s/GlassCombo/coh/sigChs',V4data.trLE.animal);
+        end
+        
+        if ~exist(figDir,'dir')
+            mkdir(figDir)
+        end
         cd(figDir)
       %  print(gcf, figName,'-dpdf','-bestfit')
         cd ../

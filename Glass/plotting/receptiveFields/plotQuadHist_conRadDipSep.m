@@ -1,4 +1,4 @@
-function [] = plotQuadHist_conRadDipSep(quadOris, quadRanks)
+function [conDiff, radDiff] = plotQuadHist_conRadDipSep(quadOris, quadRanks)
 %Add: Mean of the distributions, and difference between the mean and the expected orientation.
 
 
@@ -15,7 +15,6 @@ qOris4 = quadOris.q4;
 qRanks4 = quadRanks.q4;
 %%
 
-% quadrant 2 subplots 1,2,5
 conOris = (qOris2(qRanks2 == 1));
 radOris = (qOris2(qRanks2 == 2));
 dipOris = (qOris2(qRanks2 == 3));
