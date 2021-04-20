@@ -31,8 +31,8 @@ ax = triplotter_GlassWithTr_noCBar(rct,cmp);
 axis square
 ax.Position(1) = ax.Position(1)-0.125;
 ax.Position(2) = ax.Position(2)-0.08;
-ax.Position(3) = ax.Position(3)+0.2;
-ax.Position(4) = ax.Position(4)+0.2;
+ax.Position(3) = ax.Position(3)+0.09;
+ax.Position(4) = ax.Position(4)+0.09;
 
 clear dps;
 set(gca,'color','none')
@@ -58,8 +58,8 @@ ax = triplotter_GlassWithTr_noCBar(rct,cmp);
 axis square
 ax.Position(1) = ax.Position(1)-0.125;
 ax.Position(2) = ax.Position(2)-0.08;
-ax.Position(3) = ax.Position(3)+0.2;
-ax.Position(4) = ax.Position(4)+0.2;
+ax.Position(3) = ax.Position(3)+0.09;
+ax.Position(4) = ax.Position(4)+0.09;
 
 clear dps;
 set(gca,'color','none')
@@ -85,8 +85,8 @@ ax = triplotter_GlassWithTr_noCBar(rct,cmp);
 axis square
 ax.Position(1) = ax.Position(1)-0.125;
 ax.Position(2) = ax.Position(2)-0.08;
-ax.Position(3) = ax.Position(3)+0.2;
-ax.Position(4) = ax.Position(4)+0.2;
+ax.Position(3) = ax.Position(3)+0.09;
+ax.Position(4) = ax.Position(4)+0.09;
 
 clear dps;
 set(gca,'color','none')
@@ -112,8 +112,8 @@ ax = triplotter_GlassWithTr_noCBar(rct,cmp);
 axis square
 ax.Position(1) = ax.Position(1)-0.125;
 ax.Position(2) = ax.Position(2)-0.08;
-ax.Position(3) = ax.Position(3)+0.2;
-ax.Position(4) = ax.Position(4)+0.2;
+ax.Position(3) = ax.Position(3)+0.09;
+ax.Position(4) = ax.Position(4)+0.09;
 
 clear dps;
 set(gca,'color','none')
@@ -153,8 +153,8 @@ ax = triplotter_GlassWithTr_noCBar_oneOri(v4ComLEmu,[0 0.5 1],4);
 
 ax.Position(1) = ax.Position(1)-0.125;
 ax.Position(2) = ax.Position(2)-0.08;
-ax.Position(3) = ax.Position(3)+0.2;
-ax.Position(4) = ax.Position(4)+0.2;
+ax.Position(3) = ax.Position(3)+0.09;
+ax.Position(4) = ax.Position(4)+0.09;
 
 set(gca,'color','none')
 figName = [V1data.trLE.animal,'_triplot_CoM','.pdf'];

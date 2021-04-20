@@ -15,7 +15,7 @@ cd(figDir)
 close all
 figure%(1)
 clf
-% set(gcf,'Position',[34 177 670 1400]);
+set(gcf,'Position',[34 177 750 850],'PaperSize',[7, 8.5]);
 
 t = suptitle(sprintf('%s Glass pattern orientation tuning',V1data.trRE.animal));
 t.Position(2) = t.Position(2) +0.03;
@@ -119,7 +119,7 @@ set(gca,'FontSize',11,'FontAngle','italic','RTickLabels',{'','',''})
 
 title(sprintf('n: %d',length(SIL2)),'FontSize',12)
 % s.Position(1) = s.Position(1) - 0.1;
-s.Position(2) = s.Position(2) - 0.05;
+s.Position(2) = s.Position(2) - 0.02;
 s.Position(3) = s.Position(3) + 0.008;
 s.Position(4) = s.Position(4) + 0.01;
 
@@ -152,7 +152,7 @@ set(gca,'FontSize',11,'FontAngle','italic','RTickLabels',{'','',''})
 
 title(sprintf('n: %d',length(SIL2)),'FontSize',12)
 % s.Position(1) = s.Position(1) - 0.1;
-s.Position(2) = s.Position(2) - 0.05;
+s.Position(2) = s.Position(2) - 0.02;
 s.Position(3) = s.Position(3) + 0.008;
 s.Position(4) = s.Position(4) + 0.01;
 %%
