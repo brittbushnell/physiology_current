@@ -34,7 +34,7 @@ files = {
 %     'WU_LE_GlassTR_nsp1_Aug2017_all_thresh35_info3';
 %     'WU_LE_GlassTR_nsp2_Aug2017_all_thresh35_info3';
 
-'WU_LE_GlassTR_nsp1_Aug2019_all_thresh35_DxComp';
+% 'WU_LE_GlassTR_nsp1_Aug2019_all_thresh35_DxComp';
 'WU_LE_GlassTR_nsp2_Aug2019_all_thresh35_DxComp';
 };
 %%
