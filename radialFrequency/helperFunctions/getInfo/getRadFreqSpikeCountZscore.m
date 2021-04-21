@@ -61,6 +61,10 @@ startBin = 5;
 endBin = 25;
 params = [data.rf data.amplitude data.orientation data.spatialFrequency data.radius data.pos_x data.pos_y]; % make a column matrix  of all of the parameters
 types = unique(params,'rows'); % types is a matrix of the stimulus parameters, index of types are the indices that correspond to each type
+allSpikeCounts = [];
+allZscores = [];
+allBlankSpikeCounts = [];
+allBlankZscores = [];
 %% See how many unique locations (and therefore blanks) were run
 xPoss = unique(data.pos_x);
 yPoss = unique(data.pos_y);
@@ -135,6 +139,8 @@ for ch = 1:96
     
     blankSpikeCount{ch} = blankCountCh;
     blankZscore{ch} = blankZscoreCh;
+    allBlankSpikeCounts = cat(2,allBlankSpikeCounts,countTmp);
+    allBlankZscores = cat(2,allBlankZscores,countTmp);
     
     clear blankSpikeTmp
     %% Make the matrices of responses to each stimulus for each channel
@@ -149,4 +155,58 @@ for ch = 1:96
     end
     RFspikeCount{ch} = countTmp;
     RFzScore{ch} = zTmp;
+    allSpikeCounts = cat(2,allSpikeCounts,countTmp);
+    allZscores = cat(2,allZscores,countTmp);
 end
+%% make sanity check figure
+figure%(2)
+clf
+
+subplot(2,2,1)
+hold on
+allZs = reshape(allZscores,1,numel(allZscores));
+histogram(allZs,30,'Normalization','probability');
+title ('z Scores across all stimuli and all chs')
+ylim([0 0.5])
+
+
+subplot(2,2,2)
+hold on
+allSpikes = reshape(allSpikeCounts,1,numel(allSpikeCounts));
+histogram(allSpikes,30,'Normalization','probability')
+title('spike counts across all stimuli and all chs')
+ylim([0 0.5])
+
+subplot(2,2,3)
+hold on
+blankZs = reshape(allBlankZscores,1,numel(allBlankZscores));
+histogram(blankZs,30,'Normalization','probability');
+title ('z Scores for blank screen across all chs')
+ylim([0 0.5])
+
+
+subplot(2,2,4)
+hold on
+blankSpikes = reshape(allBlankSpikeCounts,1,numel(allBlankSpikeCounts));
+histogram(blankSpikes,30,'Normalization','probability')
+title('spike counts during blank screen across all chs')
+ylim([0 0.5])
+
+
+suptitle({sprintf('%s %s %s %s spike count and zscore distributions',data.animal, data.eye, data.array, data.programID);...
+    sprintf('%s run %s',data.date, data.runNum')})
+%% 
+location = determineComputer;
+if location == 0
+    figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/%s/%s/spikeZscoreDists/%s/%s/',data.animal, data.programID, data.array,data.eye,data.date2);
+else
+    figDir =  sprintf( '/Local/Users/bushnell/Dropbox/Figures/%s/%s/%s/spikeZscoreDists/%s/%s/',data.animal, data.programID, data.array,data.eye,data.date2);
+end
+if ~exist(figDir,'dir')
+    mkdir(figDir)
+end
+
+cd(figDir)
+
+figName = [data.animal,'_',data.eye,'_', data.array,'_',data.programID,'_',data.date2,'_spikeZscoreDist','.pdf'];
+print(gcf, figName,'-dpdf','-bestfit')
