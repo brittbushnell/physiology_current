@@ -26,6 +26,8 @@ holdout = 0.9;
 saveData = 0;
 
 plotFlag = 0;
+failedFiles = {};
+failNdx = 0;
 %%
 for an = 1:length(monks)
     monk = monks{an};
