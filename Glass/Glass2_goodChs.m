@@ -14,26 +14,29 @@ files = {
 %     'XT_RE_Glass_nsp2_Jan2019_all_thresh35_info3';
 %     'XT_RE_Glass_nsp1_Jan2019_all_thresh35_info3';
     
-    'WV_RE_glassTRCoh_nsp2_April2019_all_thresh35_info3';
-    'WV_RE_glassTRCoh_nsp1_April2019_all_thresh35_info3';
-    'WV_LE_glassTRCoh_nsp2_April2019_all_thresh35_info3';
-    'WV_LE_glassTRCoh_nsp1_April2019_all_thresh35_info3';
+%     'WV_RE_glassTRCoh_nsp2_April2019_all_thresh35_info3';
+%     'WV_RE_glassTRCoh_nsp1_April2019_all_thresh35_info3';
+%     'WV_LE_glassTRCoh_nsp2_April2019_all_thresh35_info3';
+%     'WV_LE_glassTRCoh_nsp1_April2019_all_thresh35_info3';
+% 
+%     'WV_RE_glassCoh_nsp1_April2019_all_thresh35_info3';
+%     'WV_RE_glassCoh_nsp1_April2019_all_thresh35_info3';
+%     'WV_LE_glassCoh_nsp2_April2019_all_thresh35_info3';
+%     'WV_LE_glassCoh_nsp1_April2019_all_thresh35_info3';
+%     
+%     'WU_RE_Glass_nsp2_Aug2017_all_thresh35_info3';
+%     'WU_RE_Glass_nsp1_Aug2017_all_thresh35_info3';
+%     'WU_LE_Glass_nsp2_Aug2017_all_thresh35_info3';
+%     'WU_LE_Glass_nsp1_Aug2017_all_thresh35_info3';
+% 
+%     'WU_RE_GlassTR_nsp2_Aug2017_all_thresh35_info3';
+%     'WU_RE_GlassTR_nsp1_Aug2017_all_thresh35_info3';
+%     'WU_LE_GlassTR_nsp1_Aug2017_all_thresh35_info3';
+%     'WU_LE_GlassTR_nsp2_Aug2017_all_thresh35_info3';
 
-    'WV_RE_glassCoh_nsp1_April2019_all_thresh35_info3';
-    'WV_RE_glassCoh_nsp1_April2019_all_thresh35_info3';
-    'WV_LE_glassCoh_nsp2_April2019_all_thresh35_info3';
-    'WV_LE_glassCoh_nsp1_April2019_all_thresh35_info3';
-    
-    'WU_RE_Glass_nsp2_Aug2017_all_thresh35_info3';
-    'WU_RE_Glass_nsp1_Aug2017_all_thresh35_info3';
-    'WU_LE_Glass_nsp2_Aug2017_all_thresh35_info3';
-    'WU_LE_Glass_nsp1_Aug2017_all_thresh35_info3';
-
-    'WU_RE_GlassTR_nsp2_Aug2017_all_thresh35_info3';
-    'WU_RE_GlassTR_nsp1_Aug2017_all_thresh35_info3';
-    'WU_LE_GlassTR_nsp1_Aug2017_all_thresh35_info3';
-    'WU_LE_GlassTR_nsp2_Aug2017_all_thresh35_info3';
-    };
+'WU_LE_GlassTR_nsp1_Aug2019_all_thresh35_DxComp';
+'WU_LE_GlassTR_nsp2_Aug2019_all_thresh35_DxComp';
+};
 %%
 nameEnd = 'goodRuns';
 numPerm = 200;
@@ -73,16 +76,18 @@ for fi = 1:length(files)
             if contains(filename,'Coh','IgnoreCase',true)
                 GlassReshape = reshape(GlassChLast,64,numRepeats,96);
             else
-                GlassReshape = reshape(GlassChLast,16,numRepeats,96);
+                %                 GlassReshape = reshape(GlassChLast,16,numRepeats,96);
+                GlassReshape = reshape(GlassChLast,144,numRepeats,96);
             end
             
             nozChLast = permute(dataT.noiseZscore,[1 2 3 4 6 5]);
             numRepeats = size(dataT.noiseZscore,6);
-            if contains(filename,'Coh','IgnoreCase',true)
-                nozReshape = reshape(nozChLast,64,numRepeats,96);
-            else
-                nozReshape = reshape(nozChLast,16,numRepeats,96);
-            end
+            nozReshape = reshape(nozChLast,144,numRepeats,96); % use this for WU with all conditions only
+            %             if contains(filename,'Coh','IgnoreCase',true)
+            %                 nozReshape = reshape(nozChLast,64,numRepeats,96);
+            %             else
+%                 nozReshape = reshape(nozChLast,16,numRepeats,96);
+%             end
             zScoreReshape = cat(2,GlassReshape,nozReshape);
             %%
         else
