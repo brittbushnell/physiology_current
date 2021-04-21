@@ -83,12 +83,12 @@ clc
 %     };
 % newName = 'WV_RE_glassCoh_nsp2_April2019_all_thresh35_info3'; 
 
-files ={    
-    'WV_RE_glassCoh_nsp1_20190404_002_thresh35_ogcorrupt_info3';       
-    'WV_RE_glassCoh_nsp1_20190404_003_thresh35_ogcorrupt_info3';       
-    'WV_RE_glassCoh_nsp1_20190405_001_thresh35_ogcorrupt_info3';   
-    };
-newName = 'WV_RE_glassCoh_nsp1_April2019_all_thresh35_info3';
+% files ={    
+%     'WV_RE_glassCoh_nsp1_20190404_002_thresh35_ogcorrupt_info3';       
+%     'WV_RE_glassCoh_nsp1_20190404_003_thresh35_ogcorrupt_info3';       
+%     'WV_RE_glassCoh_nsp1_20190405_001_thresh35_ogcorrupt_info3';   
+%     };
+% newName = 'WV_RE_glassCoh_nsp1_April2019_all_thresh35_info3';
 
 
 % files ={       
@@ -198,6 +198,14 @@ newName = 'WV_RE_glassCoh_nsp1_April2019_all_thresh35_info3';
 %     'XT_LE_GlassTR_nsp2_20190130_004_thresh35_info3'; 
 %     };
 % newName ='XT_LE_GlassTR_nsp2_Jan2019_all_thresh35_info3';
+%% WU all dx
+% files =  {'WU_LE_GlassTR_nsp1_20170824_001_thresh35_DxComp';
+%     'WU_LE_GlassTR_nsp1_20170825_002_thresh35_DxComp'};
+% newName ='WU_LE_GlassTR_nsp1_Aug2019_all_thresh35_DxComp';
+
+files =  {'WU_LE_GlassTR_nsp2_20170824_001_thresh35_DxComp';
+    'WU_LE_GlassTR_nsp2_20170825_002_thresh35_DxComp'};
+newName =     'WU_LE_GlassTR_nsp2_Aug2019_all_thresh35_DxComp';
 %%
 location = determineComputer;
 for fi = 1:length(files)
@@ -284,7 +292,7 @@ for i = 1:length(dataTComp)
         aSC = dataTComp{i}.allStimSpikeCount;
         aZ  = dataTComp{i}.GlassTRZscore;
         nZ  = dataTComp{i}.noiseZscore;
-        aZ  = dataTComp{i}.allStimZscore;
+        alZ  = dataTComp{i}.allStimZscore;
         bz  = dataTComp{i}.blankZscore;
         
         rotation = [rotation,rot];
@@ -295,7 +303,7 @@ for i = 1:length(dataTComp)
         GlassTRZscore = cat(6,GlassTRZscore,aZ);
         noiseZscore = cat(6,noiseZscore,nZ);
         blankZscore = cat(2,blankZscore,bz);
-        allStimZscore = cat(2,allStimZscore,aZ);
+        allStimZscore = cat(2,allStimZscore,alZ);
  %%       
     else
         % gSC = dataTComp{i}.GlassSpikeCount;
