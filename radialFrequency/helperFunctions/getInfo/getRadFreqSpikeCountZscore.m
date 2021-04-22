@@ -159,7 +159,7 @@ for ch = 1:96
     allZscores = cat(2,allZscores,countTmp);
 end
 %% make sanity check figure
-figure%(2)
+figure(12)
 clf
 
 subplot(2,2,1)
