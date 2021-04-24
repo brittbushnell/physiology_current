@@ -21,10 +21,14 @@ if contains(filename,'blank')
     ori = 10000;
     sf  = 100;
     rad = 100;
-    
+elseif contains(filename,'diskfade')
+    rf  = nan;
+    mod = nan;
+    ori = nan;
+    sf  = nan;
+    rad = nan;
 elseif contains(filename,'Circle')
     chunks = sscanf(name, 'Circle_RAD%f_SF%d.png');
-    
     % for circles, all of the values that are actually 0, are set to double
     % the maximum value that's changed so the circle response will appear
     % at the far R of all plots.
@@ -34,11 +38,18 @@ elseif contains(filename,'Circle')
     ori = 720;
     sf  = chunks(2);
     
-else
+elseif contains(name,'RF')
     chunks = sscanf(name, 'RF%d_RAD%f_MOD%f_ORI%f_SF%d.png');
     rf  = chunks(1);
     rad = chunks(2);
     mod = chunks(3);
     ori = chunks(4);
     sf  = chunks(5);
+else
+    chunks = sscanf(name,'WPL%d_MOD%f_PHS%f_PKF%d.png');
+    rf  = chunks(1);
+    rad = 1;
+    mod = chunks(2);
+    ori = chunks(3);
+    sf  = chunks(4);
 end
