@@ -1,4 +1,4 @@
-function [rfQuadrant,inStim,inCenterStim] = getRFsRelGlass_ecc_Sprinkles(trData, crData)
+function [rfQuadrant,inStim,inCenterStim] = getRFsRelGlass_ecc(trData)
 % This function determines which quadrant of the stimulus receptive fields
 % are in, and what the distribution of preferred orientations are for
 % receptive fields within each quadrant.
@@ -23,7 +23,13 @@ if contains(trData.animal,'XT')
         rfParamsRelGlassFix{ch}(1) = rfParamsOrig{ch}(1) + unique(trData.fix_x);
         rfParamsRelGlassFix{ch}(2) = rfParamsOrig{ch}(2) + unique(trData.fix_y);
     end
+else
+    for ch = 1:96
+        rfParamsRelGlassFix{ch}(1) = rfParamsOrig{ch}(1);
+        rfParamsRelGlassFix{ch}(2) = rfParamsOrig{ch}(2);
+    end
 end
+
 %% center stimulus at (0,0)
 % Need stimulus to be centered at origin to define the quadrants according
 % to their signs
@@ -33,6 +39,11 @@ if glassX ~= 0
         rfParamsStim0{ch}(1) = rfParamsRelGlassFix{ch}(1) - unique(trData.pos_x);
     end
     glassXstim0 = unique(trData.pos_x) - unique(trData.pos_x);
+else
+    for ch = 1:96
+        rfParamsStim0{ch}(1) = rfParamsRelGlassFix{ch}(1);
+    end
+    glassXstim0 = unique(trData.pos_x);
 end
 
 if glassY ~= 0
@@ -40,9 +51,14 @@ if glassY ~= 0
         rfParamsStim0{ch}(2) = rfParamsRelGlassFix{ch}(2) - unique(trData.pos_y);
     end
     glassYstim0 = unique(trData.pos_x) - unique(trData.pos_x);
+else
+    for ch = 1:96
+        rfParamsStim0{ch}(2) = rfParamsRelGlassFix{ch}(2);
+    end
+    glassYstim0 = unique(trData.pos_x);
 end
-if glassXstim0 ~=0 || glassYstim0 ~= 0
-    fprintf('stimulus did not move to (0,0)')
+if glassXstim0 ~=0 && glassYstim0 ~= 0
+    fprintf('stimulus did not move to (0,0) \n')
     keyboard
 end
 %% make dummy plot to get stimulus bounds
@@ -97,6 +113,7 @@ rfQuadrant = nan(1,96);
 inStim = zeros(1,96);
 inCenterStim = zeros(1,96);
 %%
+%%
 for ch = 1:96
     rfX = rfParamsStim0{ch}(1);
     rfY = rfParamsStim0{ch}(2);
@@ -114,7 +131,7 @@ for ch = 1:96
         end
     end
     inStim(1,ch) = (((rfX-0).^2+(rfY-0).^2 <= 4^2));
-    inCenterStim(1,ch) = (((rfX-0).^2+(rfY-0).^2 <= 1^2));
+    inCenterStim(1,ch) = (((rfX-0).^2+(rfY-0).^2 <= 2^2));
 end
 %% plot all receptive fields on one figure
 
@@ -162,34 +179,3 @@ end
 
 figName = [trData.animal,'_',trData.eye,'_',trData.array,'_RFlocRelGlassStim_1deg','.pdf'];
 print(gcf, figName,'-dpdf','-fillpage')
-%% glitteratti plot
-
-figure (8)
-hold on
-clf
-
-for ch = 1%:96
-    pOri = trData.prefParamsPrefOri(ch);
-    rfX = rfParamsRelGlassFix{ch}(1);
-    rfY = rfParamsRelGlassFix{ch}(2);
-    lwidth = trData.OSI{trData.prefParamsIndex}(ch);
-    
-    x2 = rfX +(0.75*cos(pOri));
-    y2 = rfY +(0.75*sin(pOri));
-    
-    if crData.dPrimeRankBlank{trData.prefParamsIndex}(ch) == 1
-        plot([rfX, x2], [rfY, y2],'-','color',[0.7 0 0.7],'lineWidth',lwidth)
-    elseif crData.dPrimeRankBlank{trData.prefParamsIndex}(ch) == 2
-        plot([rfX, x2], [rfY, y2],'-','color',[0 0.6 0.2],'lineWidth',lwidth)
-    else
-        plot([rfX, x2], [rfY, y2],'-','color',[1 0.5 0.1],'lineWidth',lwidth)
-    end
-end
-text(0.35, -0.1, 'Concentric','Color',[0.7 0 0.7],'FontWeight','Bold','FontSize',14) 
-text(0.5, -0.1, 'Dipole','Color',[1 0.5 0.1],'FontWeight','Bold','FontSize',14) 
-text(0.6, -0.1, 'Radial','Color',[0 0.6 0.2],'FontWeight','Bold','FontSize',14) 
-xlim([-15,15])
-ylim([-15,15])
-set(gca,'YAxisLocation','origin','XAxisLocation','origin',...
-    'Layer','top','FontWeight','bold','FontSize',12,'FontAngle','italic')
-axis square
