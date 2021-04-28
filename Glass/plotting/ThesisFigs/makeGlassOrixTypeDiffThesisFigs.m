@@ -1,3 +1,4 @@
+function makeGlassOrixTypeDiffThesisFigs(XTV1,XTV4,WUV1, WUV4,WVV1, WVV4)
 location = determineComputer;
 if location == 1
     figDir =  '~/bushnell-local/Dropbox/Thesis/Glass/figures/oriTuning';

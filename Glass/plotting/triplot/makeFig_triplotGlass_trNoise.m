@@ -1,4 +1,6 @@
-function [v1ComREmu,v1ComLEmu,v4ComREmu,v4ComLEmu,v1Dist,v4Dist,pValV1,pValV4] = makeFig_triplotGlass_trNoise(V1data, V4data)
+function [v1ComREmu,v1ComLEmu,v4ComREmu,v4ComLEmu,v1Dist,v4Dist,pValV1,pValV4,...
+    v1LEconRadNdx,v1LEconRadch,v1REconRadNdx,v1REconRadch,...
+    v4LEconRadNdx,v4LEconRadch,v4REconRadNdx,v4REconRadch] = makeFig_triplotGlass_trNoise(V1data, V4data)
 location = determineComputer;
 
 if location == 1
@@ -46,10 +48,10 @@ v4REsort = sortDps(sortDps(:,5) == 4,:);
 %% test for significant difference between concentric and radial
 % conc - radial / conc + radial
 
-[v1LEConRadpVal,v1LEconRadNdx,v1LEconRad,v1LEConRadsigDif] = getGlassConRadSigPerm(v1LEsort(:,1:2),V1data.trLE.animal,'V1','LE');
-[v1REConRadpVal,v1REconRadNdx,v1REconRad,v1REConRadsigDif] = getGlassConRadSigPerm(v1REsort(:,1:2),V1data.trLE.animal,'V1','RE');
-[v4LEConRadpVal,v4LEconRadNdx,v4LEconRad,v4LEConRadsigDif] = getGlassConRadSigPerm(v4LEsort(:,1:2),V1data.trLE.animal,'V4','LE');
-[v4REConRadpVal,v4REconRadNdx,v4REconRad,v4REConRadsigDif] = getGlassConRadSigPerm(v4REsort(:,1:2),V1data.trLE.animal,'V4','RE');
+[v1LEConRadpVal,v1LEconRadNdx,v1LEconRadch,v1LEConRadsigDif] = getGlassConRadSigPerm(v1LEsort(:,1:2),V1data.trLE.animal,'V1','LE');
+[v1REConRadpVal,v1REconRadNdx,v1REconRadch,v1REConRadsigDif] = getGlassConRadSigPerm(v1REsort(:,1:2),V1data.trLE.animal,'V1','RE');
+[v4LEConRadpVal,v4LEconRadNdx,v4LEconRadch,v4LEConRadsigDif] = getGlassConRadSigPerm(v4LEsort(:,1:2),V1data.trLE.animal,'V4','LE');
+[v4REConRadpVal,v4REconRadNdx,v4REconRadch,v4REConRadsigDif] = getGlassConRadSigPerm(v4REsort(:,1:2),V1data.trLE.animal,'V4','RE');
 
 figure(22)
 clf
@@ -62,7 +64,7 @@ t.FontSize = 20;
 
 s = subplot(2,2,1);
 hold on
-histogram(v1LEconRad,'Normalization','probability','FaceColor','k','FaceAlpha',1,'EdgeColor','w','binWidth',0.1)
+histogram(v1LEconRadch,'Normalization','probability','FaceColor','k','FaceAlpha',1,'EdgeColor','w','binWidth',0.1)
 plot([0 0],[0,0.5],':k')
 plot((v1LEconRadNdx),0.45,'v','MarkerFaceColor','k','MarkerEdgeColor','w','MarkerSize',8)
 if v1LEConRadsigDif == 1
@@ -86,7 +88,7 @@ text(-2, 0.375, 'V1','FontSize',18,'FontWeight','bold')
 
 s = subplot(2,2,2);
 hold on
-histogram(v1REconRad,'Normalization','probability','FaceColor','k','FaceAlpha',1,'EdgeColor','w','binWidth',0.1)
+histogram(v1REconRadch,'Normalization','probability','FaceColor','k','FaceAlpha',1,'EdgeColor','w','binWidth',0.1)
 plot([0 0],[0,0.5],':k')
 plot((v1REconRadNdx),0.45,'v','MarkerFaceColor','k','MarkerEdgeColor','w','MarkerSize',8)
 if v1REConRadsigDif == 1
@@ -110,7 +112,7 @@ end
 
 s = subplot(2,2,3);
 hold on
-histogram(v4LEconRad,'Normalization','probability','FaceColor','k','FaceAlpha',1,'EdgeColor','w','binWidth',0.1)
+histogram(v4LEconRadch,'Normalization','probability','FaceColor','k','FaceAlpha',1,'EdgeColor','w','binWidth',0.1)
 plot([0 0],[0,0.5],':k')
 plot((v4LEconRadNdx),0.45,'v','MarkerFaceColor','k','MarkerEdgeColor','w','MarkerSize',8)
 if v4LEConRadsigDif == 1
@@ -130,7 +132,7 @@ text(-2, 0.375, 'V4','FontSize',18,'FontWeight','bold')
 
 s = subplot(2,2,4);
 hold on
-histogram(v4REconRad,'Normalization','probability','FaceColor','k','FaceAlpha',1,'EdgeColor','w','binWidth',0.1)
+histogram(v4REconRadch,'Normalization','probability','FaceColor','k','FaceAlpha',1,'EdgeColor','w','binWidth',0.1)
 plot([0 0],[0,0.5],':k')
 plot((v4REconRadNdx),0.45,'v','MarkerFaceColor','k','MarkerEdgeColor','w','MarkerSize',8)
 if v4REConRadsigDif == 1

@@ -33,16 +33,13 @@ elseif location == 0
     figDir =  ('~/Dropbox/Figures/CrossAnimals/Glass/');
 end
 cd(figDir)
-%% R2 comparisons from d' scatter plots
-MakeFigs_GlassR2Vals(XTdata,WUdata,WVdata) % fig 14 & 15
-%% triplots
-plotGlass_triplot_allMonk(WUV1, WUV4, WVV1, WVV4, XTV1, XTV4);
 %% OSI figures
 [WUV1, WUV4, WVV1, WVV4, XTV1, XTV4] = plotPrefDomOriDiffVsOSI_allQuad(WUV1, WUV4, WVV1, WVV4, XTV1, XTV4); % fig 1-3
 plotGlassOSIpatterns(WUV1, WUV4, WVV1, WVV4, XTV1, XTV4) % figs 4-8
-%% ODI figures
-[WUV1, WUV4, WVV1, WVV4, XTV1, XTV4] = plotGlassODI_xArray_xAnimal(WUV1, WUV4, WVV1, WVV4, XTV1, XTV4); % fig 9-11
-%% zScore figures 
-plotGlassZscore_xAnimal(WUV1, WUV4, WVV1, WVV4, XTV1, XTV4) % fig 12 & 13
 %%
+makeGlassOrixTypeDiffThesisFigs(XTV1,XTV4,WUV1, WUV4,WVV1, WVV4)
+MakeOriTuningThesisFigs(XTV1,XTV4,WUV1, WUV4,WVV1, WVV4)
+MakeTriploThesisFigs(XTV1,XTV4,WUV1, WUV4,WVV1, WVV4)
+dPrimeVdipole_thesis(XTdata,WUdata,WVdata)
+dPrimeVblank_thesis(XTdata,WUdata,WVdata)
 

@@ -25,13 +25,13 @@ pVal = ((length(high)+1)/(length(crNdxShuffle)+1));
 if  (pVal <= 0.05) || (pVal >= 0.95)
     sigDif = 1;
     if pVal  >= 0.95
-        pVal = 1-pVal
+        pVal = 1-pVal;
     end
 else
     sigDif = 0;
 end
 %%
-figDir =  sprintf('~/Dropbox/Figures/%s/Glass/%s/V4/stats/conRadNdx/',animal,array);
+figDir =  sprintf('~/Dropbox/Figures/%s/Glass/stats/conRadNdx/',animal,array);
 if ~exist(figDir,'dir')
     mkdir(figDir)
 end

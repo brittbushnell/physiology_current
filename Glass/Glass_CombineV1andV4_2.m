@@ -29,12 +29,11 @@ newName = 'WV_2eyes_2arrays_GlassPatterns';
 % clear data;
 % newName = 'XT_2eyes_2arrays_GlassPatterns';
 %% triplot
-% using best dt, dx for each pattern
-% triplotter_Glass_BExArrays_optimalForPattern(V1data,V4data);
-[V1data.CoMRE,V1data.CoMLE,V4data.CoMRE,V4data.CoMLE,...
- V1data.CoMDist,V4data.CoMDist,V1data.CoMpVal,V4data.CoMpVal] = makeFig_triplotGlass_trNoise(V1data, V4data);
-% makeFig_triplotGlass_trNoise_oris(V1data, V4data)
 
+[V1data.CoMRE,V1data.CoMLE,V4data.CoMRE,V4data.CoMLE,...
+ V1data.CoMDist,V4data.CoMDist,V1data.CoMpVal,V4data.CoMpVal,...
+ V1data.conRadLE.MeanConRadNdx,V1data.conRadLE.CRI,V1data.conRadRE.MeanConRadNdx,V1data.conRadRE.CRI,...
+ V4data.conRadLE.MeanConRadNdx,V4data.conRadLE.CRI,V4data.conRadRE.MeanConRadNdx,V4data.conRadRE.CRI] = makeFig_triplotGlass_trNoise(V1data, V4data);
 %% coherence
 if ~contains(V1data.conRadRE.animal,'XT')
   [V1data.NumSigCohCorrLE,V1data.NumSigCohCorrRE,V4data.NumSigCohCorrLE,V4data.NumSigCohCorrRE] = GlassCohCorrStats(V1data, V4data);
@@ -55,9 +54,6 @@ cd(figDir)
 
 stimBlankR2 = {};
 stimNoiseR2 = {};
-
-% stimBlankR2 = makeGlassFigs_dPrimeScatter_bothProgs(V1data, V4data, stimBlankR2);
-% stimNoiseR2 = makeGlassFigs_dPrimeScatter_stimVnoise(V1data,V4data, stimNoiseR2);
 
 stimBlankR2 = makeGlassFigs_dPrimeScatter_binocOnly(V1data, V4data, stimBlankR2);
 stimNoiseR2 = makeGlassFigs_dPrimeScatter_stimVnoise_binocOnly(V1data,V4data, stimNoiseR2);
