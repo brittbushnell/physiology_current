@@ -2,14 +2,14 @@ clear
 close all
 clc
 %%
-load('WV_BE_V1_bothGlass_cleanMerged');
-V1data = data;
-clear data;
-
-load('WV_BE_V4_bothGlass_cleanMerged');
-V4data = data;
-clear data;
-newName = 'WV_2eyes_2arrays_GlassPatterns';
+% load('WV_BE_V1_bothGlass_cleanMerged');
+% V1data = data;
+% clear data;
+% 
+% load('WV_BE_V4_bothGlass_cleanMerged');
+% V4data = data;
+% clear data;
+% newName = 'WV_2eyes_2arrays_GlassPatterns';
  %%
 % load('WU_BE_V1_bothGlass_cleanMerged');
 % V1data = data;
@@ -20,14 +20,14 @@ newName = 'WV_2eyes_2arrays_GlassPatterns';
 % clear data;
 % newName = 'WU_2eyes_2arrays_GlassPatterns';
 %%
-% load('XT_BE_V1_bothGlass_cleanMerged');
-% V1data = data;
-% clear data;
-% 
-% load('XT_BE_V4_bothGlass_cleanMerged');
-% V4data = data;
-% clear data;
-% newName = 'XT_2eyes_2arrays_GlassPatterns';
+load('XT_BE_V1_bothGlass_cleanMerged');
+V1data = data;
+clear data;
+
+load('XT_BE_V4_bothGlass_cleanMerged');
+V4data = data;
+clear data;
+newName = 'XT_2eyes_2arrays_GlassPatterns';
 %% triplot
 
 [V1data.CoMRE,V1data.CoMLE,V4data.CoMRE,V4data.CoMLE,...
