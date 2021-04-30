@@ -1,3 +1,5 @@
+function makeGlassOriThesisFigs(XTV1,XTV4,WUV1, WUV4,WVV1, WVV4)
+
 location = determineComputer;
 if location == 1
     figDir =  '~/bushnell-local/Dropbox/Thesis/Glass/figures/oriTuning';
@@ -29,6 +31,7 @@ SIL2(SIL2<0) = SIL2(SIL2<0)+180;
 
 cirMuL = circ_mean(deg2rad(SIL2(:)*2))/2;
 cirMuL2 = cirMuL+pi;
+XTv1LEmu = cirMuL;
 
 [bins,edges] = histcounts(deg2rad(SIL2),0:pi/6:pi);
 bins2 = sqrt(bins);
@@ -61,6 +64,7 @@ SIL2(SIL2<0) = SIL2(SIL2<0)+180;
 
 cirMuL = circ_mean(deg2rad(SIL2(:)*2))/2;
 cirMuL2 = cirMuL+pi;
+XTv1REmu = cirMuL;
 
 [bins,edges] = histcounts(deg2rad(SIL2),0:pi/6:pi);
 bins2 = sqrt(bins);
@@ -92,6 +96,7 @@ SIL2(SIL2<0) = SIL2(SIL2<0)+180;
 
 cirMuL = circ_mean(deg2rad(SIL2(:)*2))/2;
 cirMuL2 = cirMuL+pi;
+XTv4LEmu = cirMuL;
 
 [bins,edges] = histcounts(deg2rad(SIL2),0:pi/6:pi);
 bins2 = sqrt(bins);
@@ -122,6 +127,7 @@ SIL2(SIL2<0) = SIL2(SIL2<0)+180;
 
 cirMuL = circ_mean(deg2rad(SIL2(:)*2))/2;
 cirMuL2 = cirMuL+pi;
+XTv4REmu = cirMuL;
 
 [bins,edges] = histcounts(deg2rad(SIL2),0:pi/6:pi);
 bins2 = sqrt(bins);
@@ -154,6 +160,7 @@ SIL2(SIL2<0) = SIL2(SIL2<0)+180;
 
 cirMuL = circ_mean(deg2rad(SIL2(:)*2))/2;
 cirMuL2 = cirMuL+pi;
+WUv1LEmu = cirMuL;
 
 [bins,edges] = histcounts(deg2rad(SIL2),0:pi/6:pi);
 bins2 = sqrt(bins);
@@ -185,6 +192,7 @@ SIL2(SIL2<0) = SIL2(SIL2<0)+180;
 
 cirMuL = circ_mean(deg2rad(SIL2(:)*2))/2;
 cirMuL2 = cirMuL+pi;
+WUv1REmu = cirMuL;
 
 [bins,edges] = histcounts(deg2rad(SIL2),0:pi/6:pi);
 bins2 = sqrt(bins);
@@ -217,6 +225,7 @@ SIL2(SIL2<0) = SIL2(SIL2<0)+180;
 
 cirMuL = circ_mean(deg2rad(SIL2(:)*2))/2;
 cirMuL2 = cirMuL+pi;
+WUv4LEmu = cirMuL;
 
 [bins,edges] = histcounts(deg2rad(SIL2),0:pi/6:pi);
 bins2 = sqrt(bins);
@@ -249,6 +258,7 @@ SIL2(SIL2<0) = SIL2(SIL2<0)+180;
 
 cirMuL = circ_mean(deg2rad(SIL2(:)*2))/2;
 cirMuL2 = cirMuL+pi;
+WUv4REmu = cirMuL;
 
 [bins,edges] = histcounts(deg2rad(SIL2),0:pi/6:pi);
 bins2 = sqrt(bins);
@@ -282,6 +292,7 @@ SIL2(SIL2<0) = SIL2(SIL2<0)+180;
 
 cirMuL = circ_mean(deg2rad(SIL2(:)*2))/2;
 cirMuL2 = cirMuL+pi;
+WVv1LEmu = cirMuL;
 
 [bins,edges] = histcounts(deg2rad(SIL2),0:pi/6:pi);
 bins2 = sqrt(bins);
@@ -315,6 +326,7 @@ SIL2(SIL2<0) = SIL2(SIL2<0)+180;
 
 cirMuL = circ_mean(deg2rad(SIL2(:)*2))/2;
 cirMuL2 = cirMuL+pi;
+WVv1REmu = cirMuL;
 
 [bins,edges] = histcounts(deg2rad(SIL2),0:pi/6:pi);
 bins2 = sqrt(bins);
@@ -345,6 +357,7 @@ SIL2(SIL2<0) = SIL2(SIL2<0)+180;
 
 cirMuL = circ_mean(deg2rad(SIL2(:)*2))/2;
 cirMuL2 = cirMuL+pi;
+WVv4LEmu = cirMuL;
 
 [bins,edges] = histcounts(deg2rad(SIL2),0:pi/6:pi);
 bins2 = sqrt(bins);
@@ -375,6 +388,7 @@ SIL2(SIL2<0) = SIL2(SIL2<0)+180;
 
 cirMuL = circ_mean(deg2rad(SIL2(:)*2))/2;
 cirMuL2 = cirMuL+pi;
+WVv4REmu = cirMuL;
 
 [bins,edges] = histcounts(deg2rad(SIL2),0:pi/6:pi);
 bins2 = sqrt(bins);
@@ -397,7 +411,46 @@ text(0,1.2,sprintf('n %d',length(SIL2)),'FontSize',12,'FontWeight','bold')
 s.Position(2) = s.Position(2) - 0.085;
 s.Position(3) = s.Position(3) - 0.008;
 
+XTv1LEmu = rad2deg(XTv1LEmu);   XTv1REmu = rad2deg(XTv1REmu);
+XTv4LEmu = rad2deg(XTv4LEmu);   XTv4REmu = rad2deg(XTv4REmu);
 
+WUv1LEmu = rad2deg(WUv1LEmu);   WUv1REmu = rad2deg(WUv1REmu);
+WUv4LEmu = rad2deg(WUv4LEmu);   WUv4REmu = rad2deg(WUv4REmu);
+
+WVv1LEmu = rad2deg(WVv1LEmu);   WVv1REmu = rad2deg(WVv1REmu);
+WVv4LEmu = rad2deg(WVv4LEmu);   WVv4REmu = rad2deg(WVv4REmu);
 %%
 figName = ['AllMonk_prefOri_bestDprimeSum_port','.pdf'];
 print(gcf, figName,'-dpdf','-fillpage')
+%%
+
+figure
+hold on
+
+plot(rad2deg(XTv1LEmu),rad2deg(XTv1REmu),'ok')
+plot(rad2deg(XTv4LEmu),rad2deg(XTv4REmu),'ok','MarkerFaceColor','k')
+
+plot(rad2deg(WUv1LEmu),rad2deg(WUv1REmu),'ob')
+plot(rad2deg(WUv4LEmu),rad2deg(WUv4REmu),'ob','MarkerFaceColor','b')
+
+plot(rad2deg(WVv1LEmu),rad2deg(WVv1REmu),'or')
+plot(rad2deg(WVv4LEmu),rad2deg(WVv4REmu),'or','MarkerFaceColor','r')
+
+ylim([-30 30])
+xlim([-30 30])
+%%
+
+
+XTv1DegDif = abs(XTv1LEmu - XTv1REmu)
+XTv4DegDif = abs(XTv4LEmu - XTv4REmu)
+
+WUv1DegDif = abs(WUv1LEmu - WUv1REmu)
+WUv4DegDif = abs(WUv4LEmu - WUv4REmu)
+
+WVv1DegDif = abs(WVv1LEmu - WVv1REmu)
+WVv4DegDif = abs(WVv4LEmu - WVv4REmu)
+
+% figure
+% hold on
+% 
+% plot(XTv1DegDif

@@ -31,41 +31,41 @@ V1data = GlassTR_bestSumDOris(V1data);
 V4data = GlassTR_bestSumDOris(V4data);
 
 close all
-%% get d' for all included channels at 100% coherence
-% chs = 1:96;
-% 
-% V1t = (squeeze(V1data.linNoiseDprime(:,end,:,:,:)));
-% V4t = (squeeze(V4data.linNoiseDprime(:,end,:,:,:)));
-
+%% narrow d', OSI, and spike counts down to included channels
 V1useCh = (V1data.inStim == 1) & (V1data.goodCh == 1);
 V4useCh = (V4data.inStim == 1) & (V4data.goodCh == 1);
 
-DpsV1t  = (squeeze(V1data.linNoiseDprime(:,end,:,:,V1useCh)));
-DpsV4t  = (squeeze(V4data.linNoiseDprime(:,end,:,:,V4useCh)));
-%% get OSIs and preferred orientations for included channels 
+DpsV1t  = abs(squeeze(V1data.linNoiseDprime(:,end,:,:,V1useCh)));
+DpsV4t  = abs(squeeze(V4data.linNoiseDprime(:,end,:,:,V4useCh)));
+
 OSIv1t = squeeze(V1data.OSI(end,:,:,V1useCh));
 OSIv4t = squeeze(V4data.OSI(end,:,:,V4useCh));
 
-%% find best density
-v1dpT = squeeze(mean(abs(DpsV1t),1)); % get the mean orientation
+spikesV1t = squeeze(nanmean(V1data.GlassTRSpikeCount(:,end,:,:,V1useCh,:),6));
+spikesV4t = squeeze(nanmean(V4data.GlassTRSpikeCount(:,end,:,:,V4useCh,:),6));
+%% find the preferred density
+v1dpT = squeeze(mean(DpsV1t,1)); % get the mean orientation
 v1dpT = squeeze(mean(v1dpT,2)); % get the mean dx
 [~,ndxV1] = max(v1dpT); % find the density with the max d'
 
 
-v4dpT = squeeze(mean(abs(DpsV4t),1)); % get the mean orientation
+v4dpT = squeeze(mean(DpsV4t,1)); % get the mean orientation
 v4dpT = squeeze(mean(v4dpT,2)); % get the mean dx
 [~,ndxV4] = max(v4dpT); % find the density with the max d'
-%% limit OSI and d' to best density
+%% limit spike counts, OSI, and d' to best density
 for ch = 1:length(ndxV1)
     if ndxV1(ch) == 1
         DpsV1(:,:,ch) = squeeze(DpsV1t(:,1,:,ch));
         OSIv1(:,:,ch) = squeeze(OSIv1t(1,:,ch));
+        spikesV1(:,:,ch) = squeeze(spikesV1t(:,1,:,ch));
     elseif ndxV1(ch) == 2
         DpsV1(:,:,ch) = squeeze(DpsV1t(:,2,:,ch));
         OSIv1(:,:,ch) = squeeze(OSIv1t(2,:,ch));
+        spikesV1(:,:,ch) = squeeze(spikesV1t(:,2,:,ch));
     else
         DpsV1(:,:,ch) = squeeze(DpsV1t(:,3,:,ch));
         OSIv1(:,:,ch) = squeeze(OSIv1t(3,:,ch));
+        spikesV1(:,:,ch) = squeeze(spikesV1t(:,3,:,ch));
     end
 end
 
@@ -73,15 +73,18 @@ for ch = 1:length(ndxV4)
     if ndxV4(ch) == 1
         DpsV4(:,:,ch) = squeeze(DpsV4t(:,1,:,ch));
         OSIv4(:,:,ch) = squeeze(OSIv4t(1,:,ch));
+        spikesV4(:,:,ch) = squeeze(spikesV4t(:,1,:,ch));
     elseif ndxV4(ch) == 2
         DpsV4(:,:,ch) = squeeze(DpsV4t(:,2,:,ch));
         OSIv4(:,:,ch) = squeeze(OSIv4t(2,:,ch));
+        spikesV4(:,:,ch) = squeeze(spikesV4t(:,2,:,ch));
     else
         DpsV4(:,:,ch) = squeeze(DpsV4t(:,3,:,ch));
         OSIv4(:,:,ch) = squeeze(OSIv4t(3,:,ch));
+        spikesV4(:,:,ch) = squeeze(spikesV4t(:,3,:,ch));
     end
 end
-%%
+%% plot distributions of d' and OSI, and identify the channels that have high values
 figure(1)
 clf
 subplot(2,2,1)
@@ -112,8 +115,6 @@ ylim([0 0.3])
 xlim([0 1.75])
 set(gca,'tickdir','out','box','off')
 
-
-
 bigDpv4 = find(abs(DpsV4)>0.5);
 nBig = numel(bigDpv4);
 text(0.45,0.25,sprintf('%d channels with d'' > 0.5',nBig))
@@ -136,7 +137,6 @@ bigOSIv1 = find(OSIv1>0.7);
 nBig = numel(bigOSIv1);
 text(0.65,0.25,sprintf('%d channels with OSI > 0.7',nBig))
 
-
 subplot(2,2,4)
 hold on
 plot([0.7 0.7],[0 0.25],':k') 
@@ -149,7 +149,6 @@ set(gca,'tickdir','out','box','off')
 bigOSIv4 = find(OSIv4>0.7);
 nBig = numel(bigOSIv4);
 text(0.65,0.25,sprintf('%d channels with OSI > 0.7',nBig))
-
 %% find channels that are highly selective by both metrics
 bigOSIchV1 = [];
 bigOSIchV4 = [];
@@ -176,14 +175,14 @@ v1Selective = intersect(bigOSIchV1, bigDpchV1)
 v4Selective = intersect(bigOSIchV4, bigDpchV4)
 %% create matrices for what will be plotted
 
-v1dx1 = DpsV1(:,1,v1Selective);    v4dx1 = DpsV4(:,1,v4Selective);
-v1dx2 = DpsV1(:,2,v1Selective);    v4dx2 = DpsV4(:,2,v4Selective);
-v1dx3 = DpsV1(:,3,v1Selective);    v4dx3 = DpsV4(:,3,v4Selective);
+v1dx1 = spikesV1(:,1,v1Selective);    v4dx1 = spikesV4(:,1,v4Selective);
+v1dx2 = spikesV1(:,2,v1Selective);    v4dx2 = spikesV4(:,2,v4Selective);
+v1dx3 = spikesV1(:,3,v1Selective);    v4dx3 = spikesV4(:,3,v4Selective);
 
 v1OSI1 = OSIv1(:,1,v1Selective);    v4OSI1 = squeeze(OSIv4(:,1,v4Selective));
 v1OSI2 = OSIv1(:,2,v1Selective);    v4OSI2 = squeeze(OSIv4(:,2,v4Selective));
 v1OSI3 = OSIv1(:,3,v1Selective);    v4OSI3 = squeeze(OSIv4(:,3,v4Selective));
-%%
+
 location = determineComputer;
 if location == 1
     figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/GlassTR/dxTuning/',V1data.animal);
@@ -200,7 +199,7 @@ oris(end+1) = 0;
 oris = deg2rad(oris);
 dxs = unique(V1data.dxDeg);
 
-maxLim = 0.7;
+maxLim = 12;
 
 figure(2)
 clf
@@ -227,12 +226,12 @@ title(sprintf('ch %d',v1Selective(1)),'FontSize',12)
 % d.Position(1) = d.Position(1) - 0.035;
 d.Position(2) = d.Position(2) - 0.015;
 
-text(3.14,1.25,sprintf('\\Deltax %.2f%c',dxs(2),char(176)),'FontSize',11,'FontWeight','bold')
-text(0,1,sprintf('OSI %.2f',v1OSI1),'FontSize',11,'FontWeight','bold')
+text(3.14,20,sprintf('\\Deltax %.2f%c',dxs(2),char(176)),'FontSize',11,'FontWeight','bold')
+text(0,15,sprintf('OSI %.2f',v1OSI1),'FontSize',11,'FontWeight','bold')
 
 ax = gca;
-%ax.RLim   = [0,maxLim];
-%ax.RTick = [0,maxLim/2,maxLim];
+ax.RLim   = [0,maxLim];
+ax.RTick = [0,maxLim/2,maxLim];
 
 d = subplot(3,1,2,polaraxes);
 hold on
@@ -245,12 +244,12 @@ l.LineWidth = 1.2;
 clear lin;
 % d.Position(1) = d.Position(1) - 0.035;
 d.Position(2) = d.Position(2) - 0.015;
-text(3.14,1.25,sprintf('\\Deltax %.2f%c',dxs(3),char(176)),'FontSize',11,'FontWeight','bold')
-text(0,1,sprintf('OSI %.2f',v1OSI2),'FontSize',11,'FontWeight','bold')
+text(3.14,20,sprintf('\\Deltax %.2f%c',dxs(3),char(176)),'FontSize',11,'FontWeight','bold')
+text(0,15,sprintf('OSI %.2f',v1OSI2),'FontSize',11,'FontWeight','bold')
 
 ax = gca;
-%ax.RLim   = [0,maxLim];
-%ax.RTick = [0,maxLim/2,maxLim];
+ax.RLim   = [0,maxLim];
+ax.RTick = [0,maxLim/2,maxLim];
 
 d = subplot(3,1,3,polaraxes);
 hold on
@@ -263,21 +262,21 @@ l.LineWidth = 1.2;
 clear lin;
 % d.Position(1) = d.Position(1) - 0.035;
 d.Position(2) = d.Position(2) - 0.015;
-text(3.14,1.25,sprintf('\\Deltax %.2f%c',dxs(4),char(176)),'FontSize',11,'FontWeight','bold')
-text(0,1,sprintf('OSI %.2f',v1OSI3),'FontSize',11,'FontWeight','bold')
+text(3.14,20,sprintf('\\Deltax %.2f%c',dxs(4),char(176)),'FontSize',11,'FontWeight','bold')
+text(0,15,sprintf('OSI %.2f',v1OSI3),'FontSize',11,'FontWeight','bold')
 
 ax = gca;
-%ax.RLim   = [0,maxLim];
-%ax.RTick = [0,maxLim/2,maxLim];
+ax.RLim   = [0,maxLim];
+ax.RTick = [0,maxLim/2,maxLim];
 
-figName = ['WU_V1V2_dxTuning','.pdf'];
+figName = ['WU_V1V2_dxTuning_spikeCount','.pdf'];
 print(gcf, figName,'-dpdf','-fillpage')
 %%
 figure
 clf
 pos = get(gcf,'Position');
 set(gcf,'Position',[pos(1) pos(2) 600 1000])
-maxLim = 2;
+maxLim = 45;
 
 s = suptitle('WU V4 dx tuning in highly selective channels');
 s.Position(2) = s.Position(2)+0.03;
@@ -299,10 +298,10 @@ title({sprintf('Ch %d',v4Selective(1)); sprintf('OSI %.2f',v4OSI1(1))})
 d.Position(1) = d.Position(1) - 0.035;
 d.Position(2) = d.Position(2) - 0.015;
 
-text(0,2.725,sprintf('\\Deltax %.2f%c',dxs(2),char(176)),'FontSize',11,'FontWeight','bold')
+text(0,65,sprintf('\\Deltax %.2f%c',dxs(2),char(176)),'FontSize',11,'FontWeight','bold')
 ax = gca;
-%ax.RLim   = [0,maxLim];
-%ax.RTick = [0,maxLim/2,maxLim];
+ax.RLim   = [0,maxLim];
+ax.RTick = [0,maxLim/2,maxLim];
 
 d = subplot(3,2,3,polaraxes);
 hold on
@@ -316,11 +315,11 @@ clear lin;
 title(sprintf('OSI %.2f',v4OSI2(1)))
 d.Position(1) = d.Position(1) - 0.035;
 d.Position(2) = d.Position(2) - 0.015;
-text(0,2.725,sprintf('\\Deltax %.2f%c',dxs(3),char(176)),'FontSize',11,'FontWeight','bold')
+text(0,65,sprintf('\\Deltax %.2f%c',dxs(3),char(176)),'FontSize',11,'FontWeight','bold')
 
 ax = gca;
-%ax.RLim   = [0,maxLim];
-%ax.RTick = [0,maxLim/2,maxLim];
+ax.RLim   = [0,maxLim];
+ax.RTick = [0,maxLim/2,maxLim];
 
 d = subplot(3,2,5,polaraxes);
 hold on
@@ -334,11 +333,11 @@ clear lin;
 title(sprintf('OSI %.2f',v4OSI3(1)))
 d.Position(1) = d.Position(1) - 0.035;
 d.Position(2) = d.Position(2) - 0.015;
-text(0,2.725,sprintf('\\Deltax %.2f%c',dxs(4),char(176)),'FontSize',11,'FontWeight','bold')
+text(0,65,sprintf('\\Deltax %.2f%c',dxs(4),char(176)),'FontSize',11,'FontWeight','bold')
 
 ax = gca;
-%ax.RLim   = [0,maxLim];
-%ax.RTick = [0,maxLim/2,maxLim];
+ax.RLim  = [0,maxLim];
+ax.RTick = [0,maxLim/2,maxLim];
 
 d = subplot(3,2,2,polaraxes);
 hold on
@@ -349,13 +348,13 @@ lin(end+1) = lin(1);
 l = polarplot(oris',lin,'-o');
 l.LineWidth = 1.2;
 clear lin;
-title({sprintf('Ch %d',v4Selective(1)); sprintf('OSI %.2f',v4OSI1(2))})
+title({sprintf('Ch %d',v4Selective(2)); sprintf('OSI %.2f',v4OSI1(2))})
 d.Position(1) = d.Position(1) + 0.035;
 d.Position(2) = d.Position(2) - 0.015;
 
 ax = gca;
-%ax.RLim   = [0,maxLim];
-%ax.RTick = [0,maxLim/2,maxLim];
+ax.RLim   = [0,maxLim];
+ax.RTick = [0,maxLim/2,maxLim];
 
 d = subplot(3,2,4,polaraxes);
 hold on
@@ -371,8 +370,8 @@ d.Position(1) = d.Position(1) + 0.035;
 d.Position(2) = d.Position(2) - 0.015;
 
 ax = gca;
-%ax.RLim   = [0,maxLim];
-%ax.RTick = [0,maxLim/2,maxLim];
+ax.RLim   = [0,maxLim];
+ax.RTick = [0,maxLim/2,maxLim];
 
 d = subplot(3,2,6,polaraxes);
 hold on
@@ -388,10 +387,10 @@ d.Position(1) = d.Position(1) + 0.035;
 d.Position(2) = d.Position(2) - 0.015;
 
 ax = gca;
-%ax.RLim   = [0,maxLim];
-%ax.RTick = [0,maxLim/2,maxLim];
+ax.RLim   = [0,maxLim];
+ax.RTick = [0,maxLim/2,maxLim];
 
-figName = ['WU_V4_dxTuning_gp1','.pdf'];
+figName = ['WU_V4_dxTuning_spikeCount_gp1','.pdf'];
 
 print(gcf, figName,'-dpdf','-fillpage')
 %%
@@ -421,10 +420,10 @@ title({sprintf('ch %d',v4Selective(3)); sprintf('OSI %.2f',v4OSI1(3))})
 d.Position(1) = d.Position(1) - 0.035;
 d.Position(2) = d.Position(2) - 0.015;
 
-text(0,2.725,sprintf('\\Deltax %.2f%c',dxs(2),char(176)),'FontSize',11,'FontWeight','bold')
+text(0,65,sprintf('\\Deltax %.2f%c',dxs(2),char(176)),'FontSize',11,'FontWeight','bold')
 ax = gca;
-%ax.RLim   = [0,maxLim];
-%ax.RTick = [0,maxLim/2,maxLim];
+ax.RLim   = [0,maxLim];
+ax.RTick = [0,maxLim/2,maxLim];
 
 d = subplot(3,2,3,polaraxes);
 hold on
@@ -438,11 +437,11 @@ clear lin;
 title(sprintf('OSI %.2f',v4OSI2(3)))
 d.Position(1) = d.Position(1) - 0.035;
 d.Position(2) = d.Position(2) - 0.015;
-text(0,2.725,sprintf('\\Deltax %.2f%c',dxs(3),char(176)),'FontSize',11,'FontWeight','bold')
+text(0,65,sprintf('\\Deltax %.2f%c',dxs(3),char(176)),'FontSize',11,'FontWeight','bold')
 
 ax = gca;
-%ax.RLim   = [0,maxLim];
-%ax.RTick = [0,maxLim/2,maxLim];
+ax.RLim   = [0,maxLim];
+ax.RTick = [0,maxLim/2,maxLim];
 
 d = subplot(3,2,5,polaraxes);
 hold on
@@ -456,11 +455,11 @@ clear lin;
 title(sprintf('OSI %.2f',v4OSI3(3)))
 d.Position(1) = d.Position(1) - 0.035;
 d.Position(2) = d.Position(2) - 0.015;
-text(0,2.725,sprintf('\\Deltax %.2f%c',dxs(4),char(176)),'FontSize',11,'FontWeight','bold')
+text(0,65,sprintf('\\Deltax %.2f%c',dxs(4),char(176)),'FontSize',11,'FontWeight','bold')
 
 ax = gca;
-%ax.RLim   = [0,maxLim];
-%ax.RTick = [0,maxLim/2,maxLim];
+ax.RLim   = [0,maxLim];
+ax.RTick = [0,maxLim/2,maxLim];
 
 d = subplot(3,2,2,polaraxes);
 hold on
@@ -476,8 +475,8 @@ d.Position(1) = d.Position(1) + 0.035;
 d.Position(2) = d.Position(2) - 0.015;
 
 ax = gca;
-%ax.RLim   = [0,maxLim];
-%ax.RTick = [0,maxLim/2,maxLim];
+ax.RLim   = [0,maxLim];
+ax.RTick = [0,maxLim/2,maxLim];
 
 d = subplot(3,2,4,polaraxes);
 hold on
@@ -493,8 +492,8 @@ d.Position(1) = d.Position(1) + 0.035;
 d.Position(2) = d.Position(2) - 0.015;
 
 ax = gca;
-%ax.RLim   = [0,maxLim];
-%ax.RTick = [0,maxLim/2,maxLim];
+ax.RLim   = [0,maxLim];
+ax.RTick = [0,maxLim/2,maxLim];
 
 d = subplot(3,2,6,polaraxes);
 hold on
@@ -510,10 +509,10 @@ d.Position(1) = d.Position(1) + 0.035;
 d.Position(2) = d.Position(2) - 0.015;
 
 ax = gca;
-%ax.RLim   = [0,maxLim];
-%ax.RTick = [0,maxLim/2,maxLim];
+ax.RLim   = [0,maxLim];
+ax.RTick = [0,maxLim/2,maxLim];
 
-figName = ['WU_V4_dxTuning_gp2','.pdf'];
+figName = ['WU_V4_dxTuning_spikeCount_gp2','.pdf'];
 print(gcf, figName,'-dpdf','-fillpage')
 %%
 figure
@@ -542,10 +541,10 @@ title({sprintf('ch %d',v4Selective(5));sprintf('OSI %.2f',v4OSI1(5))});
 d.Position(1) = d.Position(1) - 0.035;
 d.Position(2) = d.Position(2) - 0.015;
 
-text(0,2.725,sprintf('\\Deltax %.2f%c',dxs(2),char(176)),'FontSize',11,'FontWeight','bold')
+text(0,65,sprintf('\\Deltax %.2f%c',dxs(2),char(176)),'FontSize',11,'FontWeight','bold')
 ax = gca;
-%ax.RLim   = [0,maxLim];
-%ax.RTick = [0,maxLim/2,maxLim];
+ax.RLim   = [0,maxLim];
+ax.RTick = [0,maxLim/2,maxLim];
 
 d = subplot(3,2,3,polaraxes);
 hold on
@@ -559,11 +558,11 @@ clear lin;
 title(sprintf('OSI %.2f',v4OSI2(5)))
 d.Position(1) = d.Position(1) - 0.035;
 d.Position(2) = d.Position(2) - 0.015;
-text(0,2.725,sprintf('\\Deltax %.2f%c',dxs(3),char(176)),'FontSize',11,'FontWeight','bold')
+text(0,65,sprintf('\\Deltax %.2f%c',dxs(3),char(176)),'FontSize',11,'FontWeight','bold')
 
 ax = gca;
-%ax.RLim   = [0,maxLim];
-%ax.RTick = [0,maxLim/2,maxLim];
+ax.RLim   = [0,maxLim];
+ax.RTick = [0,maxLim/2,maxLim];
 
 d = subplot(3,2,5,polaraxes);
 hold on
@@ -577,11 +576,11 @@ clear lin;
 title(sprintf('OSI %.2f',v4OSI3(5)))
 d.Position(1) = d.Position(1) - 0.035;
 d.Position(2) = d.Position(2) - 0.015;
-text(0,2.725,sprintf('\\Deltax %.2f%c',dxs(4),char(176)),'FontSize',11,'FontWeight','bold')
+text(0,65,sprintf('\\Deltax %.2f%c',dxs(4),char(176)),'FontSize',11,'FontWeight','bold')
 
 ax = gca;
-%ax.RLim   = [0,maxLim];
-%ax.RTick = [0,maxLim/2,maxLim];
+ax.RLim   = [0,maxLim];
+ax.RTick = [0,maxLim/2,maxLim];
 
 d = subplot(3,2,2,polaraxes);
 hold on
@@ -597,8 +596,8 @@ d.Position(1) = d.Position(1) + 0.035;
 d.Position(2) = d.Position(2) - 0.015;
 
 ax = gca;
-%ax.RLim   = [0,maxLim];
-%ax.RTick = [0,maxLim/2,maxLim];
+ax.RLim   = [0,maxLim];
+ax.RTick = [0,maxLim/2,maxLim];
 
 d = subplot(3,2,4,polaraxes);
 hold on
@@ -614,8 +613,8 @@ d.Position(1) = d.Position(1) + 0.035;
 d.Position(2) = d.Position(2) - 0.015;
 
 ax = gca;
-%ax.RLim   = [0,maxLim];
-%ax.RTick = [0,maxLim/2,maxLim];
+ax.RLim   = [0,maxLim];
+ax.RTick = [0,maxLim/2,maxLim];
 
 d = subplot(3,2,6,polaraxes);
 hold on
@@ -631,10 +630,10 @@ d.Position(1) = d.Position(1) + 0.035;
 d.Position(2) = d.Position(2) - 0.015;
 
 ax = gca;
-%ax.RLim   = [0,maxLim];
-%ax.RTick = [0,maxLim/2,maxLim];
+ax.RLim   = [0,maxLim];
+ax.RTick = [0,maxLim/2,maxLim];
 
-figName = ['WU_V4_dxTuning_gp3','.pdf'];
+figName = ['WU_V4_dxTuning_spikeCount_gp3','.pdf'];
 print(gcf, figName,'-dpdf','-fillpage')
 %%
 figure
@@ -663,10 +662,10 @@ title({sprintf('ch %d',v4Selective(7)); sprintf('OSI %.2f',v4OSI1(7))})
 d.Position(1) = d.Position(1) - 0.035;
 d.Position(2) = d.Position(2) - 0.015;
 
-text(0,2.725,sprintf('\\Deltax %.2f%c',dxs(2),char(176)),'FontSize',11,'FontWeight','bold')
+text(0,65,sprintf('\\Deltax %.2f%c',dxs(2),char(176)),'FontSize',11,'FontWeight','bold')
 ax = gca;
-%ax.RLim   = [0,maxLim];
-%ax.RTick = [0,maxLim/2,maxLim];
+ax.RLim   = [0,maxLim];
+ax.RTick = [0,maxLim/2,maxLim];
 
 d = subplot(3,2,3,polaraxes);
 hold on
@@ -680,11 +679,11 @@ clear lin;
 title(sprintf('OSI %.2f',v4OSI2(7)))
 d.Position(1) = d.Position(1) - 0.035;
 d.Position(2) = d.Position(2) - 0.015;
-text(0,2.725,sprintf('\\Deltax %.2f%c',dxs(3),char(176)),'FontSize',11,'FontWeight','bold')
+text(0,65,sprintf('\\Deltax %.2f%c',dxs(3),char(176)),'FontSize',11,'FontWeight','bold')
 
 ax = gca;
-%ax.RLim   = [0,maxLim];
-%ax.RTick = [0,maxLim/2,maxLim];
+ax.RLim   = [0,maxLim];
+ax.RTick = [0,maxLim/2,maxLim];
 
 d = subplot(3,2,5,polaraxes);
 hold on
@@ -698,11 +697,11 @@ clear lin;
 title(sprintf('OSI %.2f',v4OSI3(7)))
 d.Position(1) = d.Position(1) - 0.035;
 d.Position(2) = d.Position(2) - 0.015;
-text(0,2.725,sprintf('\\Deltax %.2f%c',dxs(4),char(176)),'FontSize',11,'FontWeight','bold')
+text(0,65,sprintf('\\Deltax %.2f%c',dxs(4),char(176)),'FontSize',11,'FontWeight','bold')
 
 ax = gca;
-%ax.RLim   = [0,maxLim];
-%ax.RTick = [0,maxLim/2,maxLim];
+ax.RLim   = [0,maxLim];
+ax.RTick = [0,maxLim/2,maxLim];
 
 d = subplot(3,2,2,polaraxes);
 hold on
@@ -718,8 +717,8 @@ d.Position(1) = d.Position(1) + 0.035;
 d.Position(2) = d.Position(2) - 0.015;
 
 ax = gca;
-%ax.RLim   = [0,maxLim];
-%ax.RTick = [0,maxLim/2,maxLim];
+ax.RLim   = [0,maxLim];
+ax.RTick = [0,maxLim/2,maxLim];
 
 d = subplot(3,2,4,polaraxes);
 hold on
@@ -735,8 +734,8 @@ d.Position(1) = d.Position(1) + 0.035;
 d.Position(2) = d.Position(2) - 0.015;
 
 ax = gca;
-%ax.RLim   = [0,maxLim];
-%ax.RTick = [0,maxLim/2,maxLim];
+ax.RLim   = [0,maxLim];
+ax.RTick = [0,maxLim/2,maxLim];
 
 d = subplot(3,2,6,polaraxes);
 hold on
@@ -752,10 +751,10 @@ d.Position(1) = d.Position(1) + 0.035;
 d.Position(2) = d.Position(2) - 0.015;
 
 ax = gca;
-%ax.RLim   = [0,maxLim];
-%ax.RTick = [0,maxLim/2,maxLim];
+ax.RLim   = [0,maxLim];
+ax.RTick = [0,maxLim/2,maxLim];
 
-figName = ['WU_V4_dxTuning_gp4','.pdf'];
+figName = ['WU_V4_dxTuning_spikeCount_gp4','.pdf'];
 print(gcf, figName,'-dpdf','-fillpage')
 %%
 
@@ -785,10 +784,10 @@ title({sprintf('ch %d',v4Selective(9));sprintf('OSI %.2f',v4OSI1(9))});
 d.Position(1) = d.Position(1) - 0.035;
 d.Position(2) = d.Position(2) - 0.015;
 
-text(0,2.725,sprintf('\\Deltax %.2f%c',dxs(2),char(176)),'FontSize',11,'FontWeight','bold')
+text(0,65,sprintf('\\Deltax %.2f%c',dxs(2),char(176)),'FontSize',11,'FontWeight','bold')
 ax = gca;
-%ax.RLim   = [0,maxLim];
-%ax.RTick = [0,maxLim/2,maxLim];
+ax.RLim   = [0,maxLim];
+ax.RTick = [0,maxLim/2,maxLim];
 
 d = subplot(3,2,3,polaraxes);
 hold on
@@ -802,11 +801,11 @@ clear lin;
 title(sprintf('OSI %.2f',v4OSI2(9)))
 d.Position(1) = d.Position(1) - 0.035;
 d.Position(2) = d.Position(2) - 0.015;
-text(0,2.725,sprintf('\\Deltax %.2f%c',dxs(3),char(176)),'FontSize',11,'FontWeight','bold')
+text(0,65,sprintf('\\Deltax %.2f%c',dxs(3),char(176)),'FontSize',11,'FontWeight','bold')
 
 ax = gca;
-%ax.RLim   = [0,maxLim];
-%ax.RTick = [0,maxLim/2,maxLim];
+ax.RLim   = [0,maxLim];
+ax.RTick = [0,maxLim/2,maxLim];
 
 d = subplot(3,2,5,polaraxes);
 hold on
@@ -820,11 +819,11 @@ clear lin;
 title(sprintf('OSI %.2f',v4OSI3(9)))
 d.Position(1) = d.Position(1) - 0.035;
 d.Position(2) = d.Position(2) - 0.015;
-text(0,2.725,sprintf('\\Deltax %.2f%c',dxs(4),char(176)),'FontSize',11,'FontWeight','bold')
+text(0,65,sprintf('\\Deltax %.2f%c',dxs(4),char(176)),'FontSize',11,'FontWeight','bold')
 
 ax = gca;
-%ax.RLim   = [0,maxLim];
-%ax.RTick = [0,maxLim/2,maxLim];
+ax.RLim   = [0,maxLim];
+ax.RTick = [0,maxLim/2,maxLim];
 
 d = subplot(3,2,2,polaraxes);
 hold on
@@ -835,13 +834,13 @@ lin(end+1) = lin(1);
 l = polarplot(oris',lin,'-o');
 l.LineWidth = 1.2;
 clear lin;
-title({sprintf('ch %d',v4Selective(10)); sprintf('OSI %.2f',v4OSI2(10))});
+title({sprintf('ch %d',v4Selective(10)); sprintf('OSI %.2f',v4OSI1(10))});
 d.Position(1) = d.Position(1) + 0.035;
 d.Position(2) = d.Position(2) - 0.015;
 
 ax = gca;
-%ax.RLim   = [0,maxLim];
-%ax.RTick = [0,maxLim/2,maxLim];
+ax.RLim   = [0,maxLim];
+ax.RTick = [0,maxLim/2,maxLim];
 
 d = subplot(3,2,4,polaraxes);
 hold on
@@ -857,8 +856,8 @@ d.Position(1) = d.Position(1) + 0.035;
 d.Position(2) = d.Position(2) - 0.015;
 
 ax = gca;
-%ax.RLim   = [0,maxLim];
-%ax.RTick = [0,maxLim/2,maxLim];
+ax.RLim   = [0,maxLim];
+ax.RTick = [0,maxLim/2,maxLim];
 
 d = subplot(3,2,6,polaraxes);
 hold on
@@ -874,9 +873,9 @@ d.Position(1) = d.Position(1) + 0.035;
 d.Position(2) = d.Position(2) - 0.015;
 
 ax = gca;
-%ax.RLim   = [0,maxLim];
-%ax.RTick = [0,maxLim/2,maxLim];
+ax.RLim   = [0,maxLim];
+ax.RTick = [0,maxLim/2,maxLim];
 
-figName = ['WU_V4_dxTuning_gp5','.pdf'];
+figName = ['WU_V4_dxTuning_spikeCount_gp5','.pdf'];
 print(gcf, figName,'-dpdf','-fillpage')
 %%

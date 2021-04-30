@@ -38,7 +38,7 @@ cd(figDir)
 plotGlassOSIpatterns(WUV1, WUV4, WVV1, WVV4, XTV1, XTV4) % figs 4-8
 %%
 makeGlassOrixTypeDiffThesisFigs(XTV1,XTV4,WUV1, WUV4,WVV1, WVV4)
-MakeOriTuningThesisFigs(XTV1,XTV4,WUV1, WUV4,WVV1, WVV4)
+makeGlassOriThesisFigs(XTV1,XTV4,WUV1, WUV4,WVV1, WVV4)
 MakeTriploThesisFigs(XTV1,XTV4,WUV1, WUV4,WVV1, WVV4)
 dPrimeVdipole_thesis(XTdata,WUdata,WVdata)
 dPrimeVblank_thesis(XTdata,WUdata,WVdata)
