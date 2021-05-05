@@ -111,7 +111,8 @@ files = {'WV_LE_RadFreqHighSF_nsp2_20190313_001_thresh35_ogcorrupt.mat';
     'WU_LE_RadFreqLoc2_nsp1_20170705_005_thresh35_info.mat';              
     'WU_LE_RadFreqLoc2_nsp1_20170706_004_thresh35_info.mat';              
     'WU_LE_RadFreqLoc2_nsp1_20170707_002_thresh35_info.mat';              
-    'WU_LE_RadFreqSparse_nsp1_20170522_002_thresh35_info.mat';            
+    'WU_LE_RadFreqSparse_nsp1_20170522_002_thresh35_info.mat'; 
+    
     'WU_RE_RadFreqLoc1_nsp2_20170626_006_thresh35_info.mat';              
     'WU_RE_RadFreqLoc1_nsp2_20170627_002_thresh35_info.mat';              
     'WU_RE_RadFreqLoc1_nsp2_20170628_002_thresh35_info.mat';              

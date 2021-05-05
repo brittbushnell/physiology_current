@@ -169,14 +169,12 @@ for fi = 1:length(files)
         %% save data    
         if location == 1
             outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/radialFrequency/info/',dataT.array);
-            if ~exist(outputDir,'dir')
-                mkdir(outputDir)
-            end
         elseif location == 0
             outputDir =  sprintf('~/Dropbox/ArrayData/matFiles/%s/radialFrequency/info/',dataT.array);
-            if ~exist(outputDir,'dir')
-                mkdir(outputDir)
-            end
+        end
+        
+        if ~exist(outputDir,'dir')
+            mkdir(outputDir)
         end
         
         if contains(filename,'LE')

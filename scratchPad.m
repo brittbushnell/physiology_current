@@ -1,17 +1,16 @@
-XTCRIv1RE = XTV1.conRadRE.CRI;
-XTCRIv1LE = XTV1.conRadLE.CRI;
+% numRows = 7; % to account for the first 7 rows of stimulus information
+% for ses = 1:length(dataComp)
+% numRows =  numRows + size(dataComp{ses}.RFStimResps{1},1) - 10;
+% end
 
-XTCRIv4RE = XTV4.conRadRE.CRI;
-XTCRIv4LE = XTV4.conRadLE.CRI;
-
-WUCRIv1RE = WUV1.conRadRE.CRI;
-WUCRIv1LE = WUV1.conRadLE.CRI;
-
-WUCRIv4RE = WUV4.conRadRE.CRI;
-WUCRIv4LE = WUV4.conRadLE.CRI;
-
-WVCRIv1RE = WVV1.conRadRE.CRI;
-WVCRIv1LE = WVV1.conRadLE.CRI;
-
-WVCRIv4RE = WVV4.conRadRE.CRI;
-WVCRIv4LE = WVV4.conRadLE.CRI;
+RFStimResps = cell(1,96);
+for i = 1:length(dataComp)
+    rfResp = dataComp{i}.RFStimResps;
+    
+    for ch = 1:96
+        if i == 1
+            RFStimResps{ch}(1:7,:) = dataComp{1}.RFStimResps{1}(1:7,:);
+        end
+        RFStimResps{ch} =  vertcat(RFStimResps{ch},rfResp{ch}(8:end-3,:));
+    end
+end

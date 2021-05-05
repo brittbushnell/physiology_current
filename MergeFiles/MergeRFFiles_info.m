@@ -1,8 +1,3 @@
-% MergeGratFiles
-% This version of the merge code will combine good channels from each day
-% input files need to be from one eye only. Run this first if combining
-% days
-
 
 %%
 clear
@@ -62,8 +57,43 @@ for fi = 1:size(files,1)
      
     dataComp{fi} = dataT;
 end
-%% Concatenate sections
+%% sanity check histograms
+stimSpikesCh = [];
+blankSpikesCh = [];
 
+% stimSpikes = {};
+% blankSpikes = {};
+
+figure(1)
+clf
+for ses = 1:length(dataComp)
+    for ch = 1:96
+        s = dataComp{ses}.RFspikeCount{ch}(8:end-3,:);
+        stimSpikesCh = vertcat(stimSpikesCh, s);
+        
+        b = dataComp{ses}.blankSpikeCount{ch}(8:end-3,:);
+        blankSpikesCh = vertcat(blankSpikesCh, b);
+    end
+    stimSpikes = reshape(stimSpikesCh,1,numel(stimSpikesCh));
+    blankSpikes = reshape(blankSpikesCh,1,numel(blankSpikesCh));
+    
+    subplot(2,1,1)
+    hold on
+    histogram(stimSpikes,'binWidth',2,'normalization','probability','FaceAlpha',0.3)
+    title('stimulus reponses')
+    ylabel( 'probability')
+    xlim([-2 60])
+    set(gca,'box','off','tickdir','out','YTick',0:0.1:0.4)
+    
+    subplot(2,1,2)
+    hold on
+    histogram(blankSpikes,'binWidth',2,'normalization','probability','FaceAlpha',0.3)
+    title('blank spike count')
+    ylabel( 'probability')
+    xlim([-2 60])
+    set(gca,'box','off','tickdir','out','YTick',0:0.1:0.4)
+end
+%% setup all of the matrices to concatenate the data
 bins =     [];
 stimOn =   [];
 stimOff =  [];
@@ -79,15 +109,15 @@ spatialFrequency = [];
 radius = [];
 name = [];
 
-RFStimResps = [];
-blankResps = [];
-stimResps = [];
-RFspikeCount = [];
-blankSpikeCount = [];
-RFzScore = [];
-blankZscore = []; 
+RFStimResps = cell(1,96);
+RFspikeCount = cell(1,96);
+RFzScore = cell(1,96);
 
+blankResps = cell(1,96);
+blankSpikeCount = cell(1,96);
+blankZscore = cell(1,96);
 
+%%
 for i = 1:length(dataComp)
     bT     = dataComp{i}.bins;
     stmOn  = dataComp{i}.stimOn;
@@ -128,16 +158,32 @@ for i = 1:length(dataComp)
     radius = [radius; rad];
     name = cat(1, name, nom);
     
-    for ch = 1:96
-        RFStimResps = [RFStimResps, ];
-        blankResps = [];
-        stimResps = [];
-        RFspikeCount = [];
-        blankSpikeCount = [];
-        RFzScore = [];
-        blankZscore = [];
-    end
+    rfResp = dataComp{i}.RFStimResps;
+    rfSpikes = dataComp{i}.RFspikeCount;
+    rfzs = dataComp{i}.RFzScore;
     
+    blankR = dataComp{i}.blankResps;
+    blankSpikes = dataComp{i}.blankSpikeCount;
+    blankzs = dataComp{i}.blankZscore;
+    
+    for ch = 1:96
+        if i == 1
+            RFStimResps{ch}(1:7,:) = rfResp{1}(1:7,:);
+            RFspikeCount{ch}(1:7,:) = rfSpikes{1}(1:7,:);
+            RFzScore{ch}(1:7,:) = rfzs{1}(1:7,:);
+            
+            blankResps{ch}(1:7,:) = blankR{1}(1:7,:);
+            blankSpikeCount{ch}(1:7,:) = blankSpikes{1}(1:7,:);
+            blankZscore{ch}(1:7,:) = blankzs{1}(1:7,:);
+        end
+        RFStimResps{ch} =  vertcat(RFStimResps{ch},rfResp{ch}(8:end-3,:));
+        RFspikeCount{ch} =  vertcat(RFspikeCount{ch},rfSpikes{ch}(8:end-3,:));
+        RFzScore{ch} =  vertcat(RFzScore{ch},rfzs{ch}(8:end-3,:));
+        
+        blankResps{ch} =  vertcat(blankResps{ch},blankR{ch}(8:end-3,:));
+        blankSpikeCount{ch} =  vertcat(blankSpikeCount{ch},blankSpikes{ch}(8:end-3,:));
+        blankZscore{ch} =  vertcat(blankZscore{ch},blankzs{ch}(8:end-3,:));
+    end 
 end
 
 if exist('data.amap') == 0  
