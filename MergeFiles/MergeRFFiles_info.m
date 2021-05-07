@@ -10,14 +10,14 @@ location = 0; %0 = laptop 1 = Desktop 2 = zemina
 % WU LE radFreqLoc1 is one file.
 % Hopefully radFreqLoc1 is best in terms of locations - that was the set
 % where V1/V2 and V4 were collected simultaneously. 
-
+% 
 % files = {'WU_RE_RadFreqLoc1_nsp2_20170627_002_thresh35_info.mat';
 %     'WU_RE_RadFreqLoc1_nsp2_20170628_002_thresh35_info.mat'};
 % newName = 'WU_RE_radFreqLoc1_nsp2_June2017_info';
 
-% files = {'WU_RE_RadFreqLoc1_nsp1_20170627_002_thresh35_info.mat';              
-%     'WU_RE_RadFreqLoc1_nsp1_20170628_002_thresh35_info.mat'};
-% newName = 'WU_RE_radFreqLoc1_nsp1_June2017_info';
+files = {'WU_RE_RadFreqLoc1_nsp1_20170627_002_thresh35_info.mat';              
+    'WU_RE_RadFreqLoc1_nsp1_20170628_002_thresh35_info.mat'};
+newName = 'WU_RE_radFreqLoc1_nsp1_June2017_info';
  
 % files = {'WU_LE_RadFreqLoc2_nsp2_20170703_003_thresh35_info.mat';              
 %     'WU_LE_RadFreqLoc2_nsp2_20170704_005_thresh35_info.mat';              
@@ -39,10 +39,10 @@ location = 0; %0 = laptop 1 = Desktop 2 = zemina
 %     'WU_RE_RadFreqLoc2_nsp2_20170707_005_thresh35_info.mat'};
 % newName = 'WU_RE_RadFreqLoc2_nsp2_July2017_info';
 
-files = {'WU_RE_RadFreqLoc2_nsp1_20170705_002_thresh35_info.mat';              
-    'WU_RE_RadFreqLoc2_nsp1_20170706_002_thresh35_info.mat';              
-    'WU_RE_RadFreqLoc2_nsp1_20170707_005_thresh35_info.mat'};
-newName = 'WU_RE_RadFreqLoc2_nsp1_July2017_info';
+% files = {'WU_RE_RadFreqLoc2_nsp1_20170705_002_thresh35_info.mat';              
+%     'WU_RE_RadFreqLoc2_nsp1_20170706_002_thresh35_info.mat';              
+%     'WU_RE_RadFreqLoc2_nsp1_20170707_005_thresh35_info.mat'};
+% newName = 'WU_RE_RadFreqLoc2_nsp1_July2017_info';
 %% Extract stimulus information
 
 for fi = 1:size(files,1)

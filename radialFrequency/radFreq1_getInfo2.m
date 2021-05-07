@@ -5,8 +5,8 @@ tic
 %%
 monks = {
     'WU';
-    'WV';
-    'XT';
+%     'WV';
+%     'XT';
     };
 ez = {
     'LE';
