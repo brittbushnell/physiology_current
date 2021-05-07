@@ -124,11 +124,11 @@ end
 figure%(5)
 clf
 viscircles([glassX,glassY],6,...
-    'color',[0.2 0.2 0.2],'LineWidth',0.5);
+    'color',[0.2 0.2 0.2],'LineWidth',0.5);%2deg outside stimulus
 viscircles([glassX,glassY],4,...
-    'color',[0.2 0.2 0.2],'LineWidth',0.6);
+    'color',[0.2 0.2 0.2],'LineWidth',0.6); % stimulus bounds
 viscircles([glassX,glassY],2,...
-    'color',[0.2 0.2 0.2],'LineWidth',0.6);
+    'color',[0.2 0.2 0.2],'LineWidth',0.6);% center two degrees
 grid on;
 
 for ch = 1:96    

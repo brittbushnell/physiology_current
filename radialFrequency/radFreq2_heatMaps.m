@@ -18,11 +18,12 @@ tic
 %%
 
 files = {
-'WU_RE_radFreqLoc1_nsp2_June2017_info';
-'WU_LE_RadFreqLoc1_nsp2_20170626_002_thresh35_info.mat';
-'WU_RE_radFreqLoc1_nsp1_June2017_info';
-'WU_LE_RadFreqLoc1_nsp1_20170626_002_thresh35_info.mat';
-};
+%     'WU_RE_radFreqLoc1_nsp2_June2017_info';
+    'WU_LE_RadFreqLoc1_nsp2_20170626_002_thresh35_info.mat';
+    
+%     'WU_RE_radFreqLoc1_nsp1_June2017_info';
+%     'WU_LE_RadFreqLoc1_nsp1_20170626_002_thresh35_info.mat';
+    };
 %%
 nameEnd = 'goodRuns';
 numPerm = 200;
@@ -37,25 +38,33 @@ failNdx = 0;
 for fi = 1:length(files)
     %%
     %try
-        filename = files{fi};
-        fprintf('\n *** Analyzing %s file %d/%d ***\n',filename,fi,length(files));
-        
-        if contains(filename,'all') % data has been merged across sessions
-            dataT = load(filename);
+    filename = files{fi};
+    fparts = strsplit(filename,'_');
+    fprintf('\n *** Analyzing %s file %d/%d ***\n',filename,fi,length(files));
+    
+    if length(fparts) < 7
+        dataT = load(filename);
+    else
+        load(filename);
+        if contains(filename,'RE')
+            dataT = data.RE;
         else
-            load(filename);
-            if contains(filename,'RE')
-                dataT = data.RE;
-            else
-                dataT = data.LE;
-            end
+            dataT = data.LE;
         end
-        %%
-        figure(1)
-        clf
-        pos = get(gca,'Position');
-        set(gca,'Position',[pos(1), pos(2), 1200, 900])
-        for ch = 1:96
-            
-        end
+    end
+%% plot receptive fields relative to stimulus locations
+[stimLoc] = plotRadFreqLoc_relRFs(dataT);
+%% Organize data for heatmaps
+
+
+
+    %%
+%     figure(2)
+%     clf
+%     pos = get(gca,'Position');
+%     set(gca,'Position',[pos(1), pos(2), 1200, 900])
+%     
+%     for ch = 1:96
+%         
+%     end
 end

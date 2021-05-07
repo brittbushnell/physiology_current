@@ -116,9 +116,6 @@ conRadRE.rfQuadrant   = trRE.rfQuadrant;
 conRadRE.inStim       = trRE.inStim;
 conRadRE.inStimCenter = trRE.inStimCenter;
 conRadRE.within2Deg   = trRE.within2Deg;
-
-%% plot responses by dt,dx
-% getGlass_dtdxByCh(trLE,trRE,conRadLE,conRadRE)
 %%
 if location == 1
     figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/GlassCombo/%s/',trLE.animal,trLE.array);

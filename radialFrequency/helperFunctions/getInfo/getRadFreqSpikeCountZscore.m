@@ -23,7 +23,7 @@ function [RFspikeCount,blankSpikeCount,RFzScore,blankZscore] = getRadFreqSpikeCo
 %        6)   Size (mean radius)
 %        7)   X position
 %        8)   Y position
-%        9-#reps) spike count
+%        9-#reps) zScores
 %     
 %   RFzScore and blankZscore are identical to the spike count cell arrays,
 %   but instead of rows 9:end containing spike counts for each repeat, it
@@ -96,7 +96,7 @@ end
 typeTps = types';  % Transpose the stimulus type array so it's now each column is a unique stimulus.
 blankParams = typeTps(:,(end-(legitLocs - 1)):end); % Define which stimuli are the blanks
 
-numBlank = size(blankParams,1) + (legitLocs .* size(stimResps{end},1)) + 4; % multiplying by legitLocs because there are three blanks, and adding 4 onto the end for mean, median, ste, and normalized response.
+numBlank = size(blankParams,1) + (legitLocs .* size(stimResps{end},1)); % multiplying by legitLocs because there are three blanks, and adding 4 onto the end for mean, median, ste, and normalized response.
 
 blankSpikeCount  = cell(1,96);
 blankZscore = cell(1,96);
@@ -111,7 +111,7 @@ RFzScore = cell(1,96);
 for r = 1:(size(stimResps,1) - legitLocs)
     numTrials(r,1) = size(stimResps{r},1);
 end
-tmpRows = size(typeTps,1) + max(numTrials) + 4; % parameters + trials + summary data
+tmpRows = size(typeTps,1) + max(numTrials); % parameters + trials + summary data
 tmpCols = size(typeTps,2);
 countTmp = nan(tmpRows,tmpCols);
 zTmp = nan(tmpRows,tmpCols);

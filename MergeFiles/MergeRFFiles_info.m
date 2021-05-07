@@ -31,18 +31,18 @@ location = 0; %0 = laptop 1 = Desktop 2 = zemina
 %     'WU_LE_RadFreqLoc2_nsp1_20170706_004_thresh35_info.mat';
 %     'WU_LE_RadFreqLoc2_nsp1_20170707_002_thresh35_info.mat'};
 % newName = 'WU_LE_RadFreqLoc2_nsp1_July2017_info';
-% 
+
 % files = {'WU_RE_RadFreqLoc2_nsp2_20170704_002_thresh35_info.mat';
 %     'WU_RE_RadFreqLoc2_nsp2_20170704_003_thresh35_info.mat';
 %     'WU_RE_RadFreqLoc2_nsp2_20170705_002_thresh35_info.mat';
 %     'WU_RE_RadFreqLoc2_nsp2_20170706_002_thresh35_info.mat';
 %     'WU_RE_RadFreqLoc2_nsp2_20170707_005_thresh35_info.mat'};
 % newName = 'WU_RE_RadFreqLoc2_nsp2_July2017_info';
-% 
-% files = {'WU_RE_RadFreqLoc2_nsp1_20170705_002_thresh35_info.mat';              
-%     'WU_RE_RadFreqLoc2_nsp1_20170706_002_thresh35_info.mat';              
-%     'WU_RE_RadFreqLoc2_nsp1_20170707_005_thresh35_info.mat'};
-% newName = 'WU_RE_RadFreqLoc2_nsp1_July2017_info';
+
+files = {'WU_RE_RadFreqLoc2_nsp1_20170705_002_thresh35_info.mat';              
+    'WU_RE_RadFreqLoc2_nsp1_20170706_002_thresh35_info.mat';              
+    'WU_RE_RadFreqLoc2_nsp1_20170707_005_thresh35_info.mat'};
+newName = 'WU_RE_RadFreqLoc2_nsp1_July2017_info';
 %% Extract stimulus information
 
 for fi = 1:size(files,1)
