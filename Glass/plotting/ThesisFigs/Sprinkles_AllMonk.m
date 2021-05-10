@@ -9,8 +9,13 @@ function [] = Sprinkles_AllMonk(XT,WU, WV)
 % direction.
 
 %%
+location = determineComputer;
 
-figDir = ('/Users/brittany/Dropbox/Thesis/Glass/figures/CrossAnimals/Glass');
+if location == 1
+    figDir =  ('~/bushnell-local/Dropbox/Thesis/Glass/figures/CrossAnimals/Glass');
+elseif location == 0
+    figDir = ('/Users/brittany/Dropbox/Thesis/Glass/figures/CrossAnimals/Glass');
+end
 
 if ~exist(figDir,'dir')
     mkdir(figDir)
@@ -137,12 +142,12 @@ h.Position
             x2 = rfX +(lLen*cos(pOri));
             y2 = rfY +(lLen*sin(pOri));
             
-            if prefPattern(ndx) == 1
+            if prefPattern(ndx) == 2
                 plot([rfX, x2], [rfY, y2],'-','color',[0.7 0 0.7],'lineWidth',lLen)
-            elseif prefPattern(ndx) == 2
+            elseif prefPattern(ndx) == 1
                 plot([rfX, x2], [rfY, y2],'-','color',[0 0.6 0.2],'lineWidth',lLen)
             elseif prefPattern(ndx) == 3
-                plot([rfX, x2], [rfY, y2],'-','color',[1 0.5 0.1],'lineWidth',lLen)
+                plot([rfX, x2], [rfY, y2],'-','color',[0.2 0.4 1],'lineWidth',lLen)
             end
             ndx = ndx+1;
         end
@@ -150,7 +155,7 @@ h.Position
     end
     if spt == 1
         text(-14, 14, 'Concentric','Color',[0.7 0 0.7],'FontWeight','Bold','FontSize',11)
-        text(-14, 12, 'Dipole','Color',[1 0.5 0.1],'FontWeight','Bold','FontSize',11)
+        text(-14, 12, 'Translational','Color',[1 0.5 0.1],'FontWeight','Bold','FontSize',11)
         text(-14, 10, 'Radial','Color',[0 0.6 0.2],'FontWeight','Bold','FontSize',11)
         text(-25, 0,  'Control','FontWeight','Bold','FontSize',12)
         title('LE/FE')

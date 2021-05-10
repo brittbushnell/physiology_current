@@ -1,6 +1,8 @@
 function makeSprinkleThesisFigs(XTV1,XTV4,WUV1, WUV4,WVV1, WVV4)
 %%
 Sprinkles_AllMonk(XTV4,WUV4, WVV4)
+
+%%
 Sprinkles_AllMonk(XTV1,WUV1, WVV1)
 
 %% individual figures

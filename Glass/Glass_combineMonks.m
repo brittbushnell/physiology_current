@@ -39,10 +39,11 @@ cd(figDir)
 %%
 makeGlassOrixTypeDiffThesisFigs(XTV1,XTV4,WUV1, WUV4,WVV1, WVV4)
 makeGlassOriThesisFigs(XTV1,XTV4,WUV1, WUV4,WVV1, WVV4)
+%%
 [XTV1,XTV4,WUV1, WUV4,WVV1, WVV4] = MakeTriploThesisFigs(XTV1,XTV4,WUV1, WUV4,WVV1, WVV4);
 
 makeSprinkleThesisFigs(XTV1,XTV4,WUV1, WUV4,WVV1, WVV4)
 %%
-dPrimeVdipole_thesis(XTdata,WUdata,WVdata)
-dPrimeVblank_thesis(XTdata,WUdata,WVdata)
+% dPrimeVdipole_thesis(XTdata,WUdata,WVdata)
+% dPrimeVblank_thesis(XTdata,WUdata,WVdata)
 
