@@ -9,6 +9,14 @@ function [] = Sprinkles_AllMonk(XT,WU, WV)
 % direction.
 
 %%
+
+figDir = ('/Users/brittany/Dropbox/Thesis/Glass/figures/CrossAnimals/Glass');
+
+if ~exist(figDir,'dir')
+    mkdir(figDir)
+end
+cd(figDir)
+%%
 figure(1)
 clf
 hold on
@@ -17,7 +25,7 @@ pos = get(gcf,'Position');
 set(gcf,'Position',[pos(1), pos(2), 900, 1200])
 
 s = suptitle(sprintf('Preferred orientation and pattern type in %s for each channel and their receptive field locations',XT.trLE.array));
-s.Position(2) = s.Position(2) + 0.02;
+s.Position(2) = s.Position(2) + 0.025;
 s.FontSize = 18;
 s.FontWeight = 'bold';
 axis off

@@ -3,7 +3,7 @@ function makeSprinkleThesisFigs(XTV1,XTV4,WUV1, WUV4,WVV1, WVV4)
 Sprinkles_AllMonk(XTV4,WUV4, WVV4)
 Sprinkles_AllMonk(XTV1,WUV1, WVV1)
 
-% %%
+%% individual figures
 % getRFsRelGlass_ecc_Sprinkles2(XTV1.trRE, XTV1.conRadRE, XTV1.REsort)
 % getRFsRelGlass_ecc_Sprinkles2(XTV1.trLE, XTV1.conRadLE, XTV1.LEsort)
 % getRFsRelGlass_ecc_Sprinkles2(XTV4.trRE, XTV4.conRadRE, XTV4.REsort)
