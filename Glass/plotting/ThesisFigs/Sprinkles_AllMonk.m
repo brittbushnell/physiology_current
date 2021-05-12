@@ -155,7 +155,7 @@ h.Position
     end
     if spt == 1
         text(-14, 14, 'Concentric','Color',[0.7 0 0.7],'FontWeight','Bold','FontSize',11)
-        text(-14, 12, 'Translational','Color',[1 0.5 0.1],'FontWeight','Bold','FontSize',11)
+        text(-14, 12, 'Translational','Color',[0.2 0.4 1],'FontWeight','Bold','FontSize',11)
         text(-14, 10, 'Radial','Color',[0 0.6 0.2],'FontWeight','Bold','FontSize',11)
         text(-25, 0,  'Control','FontWeight','Bold','FontSize',12)
         title('LE/FE')
