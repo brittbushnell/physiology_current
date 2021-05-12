@@ -18,7 +18,7 @@ tic
 %%
 
 files = {
-    %     'WU_RE_radFreqLoc1_nsp2_June2017_info';
+    'WU_RE_radFreqLoc1_nsp2_June2017_info';
     'WU_LE_RadFreqLoc1_nsp2_20170626_002_thresh35_info.mat';
     
     %     'WU_RE_radFreqLoc1_nsp1_June2017_info';
