@@ -19,7 +19,6 @@ function [RFspikeCount,blankSpikeCount,RFzScore,blankZscore] = getRadFreqSpikeCo
 %        2)   Amplitude (Weber fraction)
 %        3)   Phase (Orientation)
 %        4)   Spatial frequency
-%        5)   Amplitude
 %        6)   Size (mean radius)
 %        7)   X position
 %        8)   Y position
