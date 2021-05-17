@@ -34,7 +34,7 @@ rads = unique(dataT.radius);
 % colormap(cmap)
 %ch = 48;%[3, 8, 52, 96];
 
-DO A ZSCORE VERSION OF THIS TOO
+% DO A ZSCORE VERSION OF THIS TOO
 
 for ch = 10%:10
     figure

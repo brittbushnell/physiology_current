@@ -4,9 +4,9 @@ clc
 tic
 %%
 monks = {
-    'WU';
-%     'WV';
-%     'XT';
+%    'WU';
+     'WV';
+     'XT';
     };
 ez = {
     'LE';
