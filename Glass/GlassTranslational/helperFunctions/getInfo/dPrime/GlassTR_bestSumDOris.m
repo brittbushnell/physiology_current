@@ -20,6 +20,7 @@ end
 
 pOris = squeeze(dataT.prefOri(end,:,:,:)); % get the preferred orientations for all 100% coherence stimuli
 rSI = squeeze(dataT.OSI(end,:,:,:));
+pSI = squeeze(dataT.OSISig(end,:,:,:));
 
 siA = [squeeze(vSum(1,1,:)),squeeze(vSum(1,2,:)),squeeze(vSum(2,1,:)),squeeze(vSum(2,2,:))]; % rearrange the dPrimes so each row is a ch and each dt,dx is a column
 [~,indR] = max(siA,[],2);% get the indices for the dt,dx that gives the highest summed d' vSum
@@ -31,6 +32,7 @@ for ch = 1:96
     if indR(ch) == 1
         pOrisR(ch) = pOris(1,1,ch);
         SIR(ch) = rSI(1,1,ch);
+        pvalOSI(ch) = pSI(1,1,ch);
         if contains(dataT.animal,'XT')
             prefParamResps(:,ch) = squeeze(dataT.GlassTRZscore(:,1,1,1,ch));
         else
@@ -40,6 +42,7 @@ for ch = 1:96
     elseif indR(ch) == 2
         pOrisR(ch) = pOris(1,2,ch);
         SIR(ch) = rSI(1,2,ch);
+        pvalOSI(ch) = pSI(1,2,ch);
         if contains(dataT.animal,'XT')
             prefParamResps(:,ch) = squeeze(dataT.GlassTRZscore(:,1,1,2,ch));
         else
@@ -49,6 +52,7 @@ for ch = 1:96
     elseif indR(ch) == 3
         pOrisR(ch) = pOris(2,1,ch);
         SIR(ch) = rSI(2,1,ch);
+        pvalOSI(ch) = pSI(2,1,ch);
         if contains(dataT.animal,'XT')
             prefParamResps(:,ch) = squeeze(dataT.GlassTRZscore(:,1,2,1,ch));
         else
@@ -58,6 +62,7 @@ for ch = 1:96
     elseif indR(ch) == 4
         pOrisR(ch) = pOris(2,2,ch);
         SIR(ch) = rSI(2,2,ch);
+        pvalOSI(ch) = pSI(2,2,ch);
         if contains(dataT.animal,'XT')
             prefParamResps(:,ch) = squeeze(dataT.GlassTRZscore(:,1,2,2,ch));
         else

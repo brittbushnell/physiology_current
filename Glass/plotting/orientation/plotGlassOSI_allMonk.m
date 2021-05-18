@@ -65,11 +65,11 @@ clf
 pos = get(gcf,'Position');
 set(gcf,'Position',[pos(1) pos(2) 1100 500])
 set(gcf,'PaperOrientation','Landscape');
-suptitle({'OSI distributions for channels within 2 degrees across all dt dx combinations';...
+suptitle({'OSI distributions for channels across all dt dx combinations';...
     'dotted lines denote medians'})
 
 % XT
-s = subplot(2,6,1);
+s = subplot(6,2,1);
 hold on
 histogram(XTv1LEOSI,minOSI:0.035:maxOSI,'normalization','probability','FaceColor',[0 0.6 1],'EdgeColor','w')
 plot([nanmedian(XTv1LEOSI),nanmedian(XTv1LEOSI)],[0 0.3],':k')
@@ -78,18 +78,18 @@ text(0.04,0.29,sprintf('\\sigma %.2f',nanstd(XTv1LEOSI)))
 text(0.04,0.25,sprintf('k %.2f',kurtosis(XTv1LEOSI)))
 set(gca,'tickdir', 'out','YTick',0:0.1:0.5,'Layer','top','box','off','FontSize',12,'FontWeight','bold','FontAngle','italic')
 title('LE','FontSize',14,'FontWeight','bold','FontAngle','italic')
-ylabel('V1','FontSize',14,'FontWeight','bold','FontAngle','italic')
+ylabel('V1/V2','FontSize',14,'FontWeight','bold','FontAngle','italic')
 
-ylim([0 0.3])
+ylim([0 0.25])
 xlim([-0.05,1])
 
-s.Position(1) = s.Position(1) - 0.078;
-s.Position(2) = s.Position(2) - 0.04;
-s.Position(3) = s.Position(3) + 0.025;
-s.Position(4) = s.Position(4) - 0.2;
+%s.Position(1) = %s.Position(1) - 0.078;
+%s.Position(2) = %s.Position(2) - 0.04;
+%s.Position(3) = %s.Position(3) - 0.02;
+s.Position(4) = s.Position(4) - 0.01;
 
 
-s = subplot(2,6,2);
+s = subplot(6,2,2);
 hold on
 histogram(XTv1REOSI,minOSI:0.035:maxOSI,'normalization','probability','FaceColor','r','EdgeColor','w')
 plot([nanmedian(XTv1REOSI),nanmedian(XTv1REOSI)],[0 0.3],':k')
@@ -101,15 +101,15 @@ title('RE','FontSize',14,'FontWeight','bold','FontAngle','italic')
 
 text(-0.25,0.5,'XT','FontSize',14,'FontWeight','bold','FontAngle','italic')
 
-ylim([0 0.3])
+ylim([0 0.25])
 xlim([-0.05,1])
 
-s.Position(1) = s.Position(1) - 0.06;
-s.Position(2) = s.Position(2) - 0.04;
-s.Position(3) = s.Position(3) + 0.025;
-s.Position(4) = s.Position(4) - 0.2;
+%s.Position(1) = %s.Position(1) - 0.06;
+%s.Position(2) = %s.Position(2) - 0.04;
+%s.Position(3) = %s.Position(3) - 0.02;
+s.Position(4) = s.Position(4) - 0.01;
 
-s = subplot(2,6,7);
+s = subplot(6,2,7);
 hold on
 histogram(XTv4LEOSI,minOSI:0.035:maxOSI,'normalization','probability','FaceColor',[0 0.6 1],'EdgeColor','w')
 plot([nanmedian(XTv4LEOSI),nanmedian(XTv4LEOSI)],[0 0.3],':k')
@@ -120,15 +120,15 @@ set(gca,'tickdir', 'out','YTick',0:0.1:0.5,'Layer','top','box','off','FontSize',
 ylabel('V4','FontSize',14,'FontWeight','bold','FontAngle','italic')
 xlabel('OSI','FontSize',14,'FontWeight','bold','FontAngle','italic')
 
-ylim([0 0.3])
+ylim([0 0.25])
 xlim([-0.05,1])
 
-s.Position(1) = s.Position(1) - 0.078;
-s.Position(2) = s.Position(2) + 0.12;
-s.Position(3) = s.Position(3) + 0.025;
-s.Position(4) = s.Position(4) - 0.2;
+%s.Position(1) = %s.Position(1) - 0.078;
+%s.Position(2) = %s.Position(2) + 0.12;
+%s.Position(3) = %s.Position(3) - 0.02;
+s.Position(4) = s.Position(4) - 0.01;
 
-s = subplot(2,6,8);
+s = subplot(6,2,8);
 hold on
 histogram(XTv4REOSI,minOSI:0.035:maxOSI,'normalization','probability','FaceColor','r','EdgeColor','w')
 plot([nanmedian(XTv4REOSI),nanmedian(XTv4REOSI)],[0 0.3],':k')
@@ -138,16 +138,16 @@ text(0.04,0.25,sprintf('k %.2f',kurtosis(XTv4REOSI)))
 set(gca,'tickdir', 'out','YTick',0:0.1:0.5,'Layer','top','box','off','FontSize',12,'FontWeight','bold','FontAngle','italic')
 xlabel('OSI','FontSize',14,'FontWeight','bold','FontAngle','italic')
 
-ylim([0 0.3])
+ylim([0 0.25])
 xlim([-0.05,1])
 
-s.Position(1) = s.Position(1) - 0.06;
-s.Position(2) = s.Position(2) + 0.12;
-s.Position(3) = s.Position(3) + 0.025;
-s.Position(4) = s.Position(4) - 0.2;
+%s.Position(1) = %s.Position(1) - 0.06;
+%s.Position(2) = %s.Position(2) + 0.12;
+%s.Position(3) = %s.Position(3) - 0.02;
+s.Position(4) = s.Position(4) - 0.01;
 
 % WV
-s = subplot(2,6,3);
+s = subplot(6,2,3);
 hold on
 histogram(WVv1LEOSI,minOSI:0.035:maxOSI,'normalization','probability','FaceColor',[0 0.6 1],'EdgeColor','w')
 plot([nanmedian(WVv1LEOSI),nanmedian(WVv1LEOSI)],[0 0.3],':k')
@@ -157,15 +157,15 @@ text(0.04,0.25,sprintf('k %.2f',kurtosis(WVv1LEOSI)))
 set(gca,'tickdir', 'out','YTick',0:0.1:0.5,'Layer','top','box','off','FontSize',12,'FontWeight','bold','FontAngle','italic')
 title('FE','FontSize',14,'FontWeight','bold','FontAngle','italic')
 
-ylim([0 0.3])
+ylim([0 0.25])
 xlim([-0.05,1])
 
-s.Position(1) = s.Position(1) - 0.015;
-s.Position(2) = s.Position(2) - 0.04;
-s.Position(3) = s.Position(3) + 0.025;
-s.Position(4) = s.Position(4) - 0.2;
+%s.Position(1) = %s.Position(1) - 0.015;
+%s.Position(2) = %s.Position(2) - 0.04;
+%s.Position(3) = %s.Position(3) - 0.02;
+s.Position(4) = s.Position(4) - 0.01;
 
-s = subplot(2,6,4);
+s = subplot(6,2,4);
 hold on
 histogram(WVv1REOSI,minOSI:0.035:maxOSI,'normalization','probability','FaceColor','r','EdgeColor','w')
 plot([nanmedian(WVv1REOSI),nanmedian(WVv1REOSI)],[0 0.3],':k')
@@ -175,14 +175,14 @@ text(0.04,0.25,sprintf('k %.2f',kurtosis(WVv1REOSI)))
 set(gca,'tickdir', 'out','YTick',0:0.1:0.5,'Layer','top','box','off','FontSize',12,'FontWeight','bold','FontAngle','italic')
 title('AE','FontSize',14,'FontWeight','bold','FontAngle','italic')
 text(-0.25,0.5,'WV','FontSize',14,'FontWeight','bold','FontAngle','italic')
-ylim([0 0.3])
+ylim([0 0.25])
 xlim([-0.05,1])
-s.Position(1) = s.Position(1) - 0.005;
-s.Position(2) = s.Position(2) - 0.04;
-s.Position(3) = s.Position(3) + 0.025;
-s.Position(4) = s.Position(4) - 0.2;
+%s.Position(1) = %s.Position(1) - 0.005;
+%s.Position(2) = %s.Position(2) - 0.04;
+%s.Position(3) = %s.Position(3) - 0.02;
+s.Position(4) = s.Position(4) - 0.01;
 
-s = subplot(2,6,9);
+s = subplot(6,2,9);
 hold on
 histogram(WVv4LEOSI,minOSI:0.035:maxOSI,'normalization','probability','FaceColor',[0 0.6 1],'EdgeColor','w')
 plot([nanmedian(WVv4LEOSI),nanmedian(WVv4LEOSI)],[0 0.3],':k')
@@ -192,15 +192,15 @@ text(0.04,0.25,sprintf('k %.2f',kurtosis(WVv4LEOSI)))
 set(gca,'tickdir', 'out','YTick',0:0.1:0.5,'Layer','top','box','off','FontSize',12,'FontWeight','bold','FontAngle','italic')
 xlabel('OSI','FontSize',14,'FontWeight','bold','FontAngle','italic')
 
-ylim([0 0.3])
+ylim([0 0.25])
 xlim([-0.05,1])
 
-s.Position(1) = s.Position(1) - 0.015;
-s.Position(2) = s.Position(2) + 0.12;
-s.Position(3) = s.Position(3) + 0.025;
-s.Position(4) = s.Position(4) - 0.2;
+%s.Position(1) = %s.Position(1) - 0.015;
+%s.Position(2) = %s.Position(2) + 0.12;
+%s.Position(3) = %s.Position(3) - 0.02;
+s.Position(4) = s.Position(4) - 0.01;
 
-s = subplot(2,6,10);
+s = subplot(6,2,10);
 hold on
 histogram(WVv4REOSI,minOSI:0.035:maxOSI,'normalization','probability','FaceColor','r','EdgeColor','w')
 plot([nanmedian(WVv4REOSI),nanmedian(WVv4REOSI)],[0 0.3],':k')
@@ -210,15 +210,15 @@ text(0.04,0.25,sprintf('k %.2f',kurtosis(WVv4REOSI)))
 set(gca,'tickdir', 'out','YTick',0:0.1:0.5,'Layer','top','box','off','FontSize',12,'FontWeight','bold','FontAngle','italic')
 xlabel('OSI','FontSize',14,'FontWeight','bold','FontAngle','italic')
 
-ylim([0 0.3])
+ylim([0 0.25])
 xlim([-0.05,1])
-s.Position(1) = s.Position(1) - 0.005;
-s.Position(2) = s.Position(2) + 0.12;
-s.Position(3) = s.Position(3) + 0.025;
-s.Position(4) = s.Position(4) - 0.2;
+%s.Position(1) = %s.Position(1) - 0.005;
+%s.Position(2) = %s.Position(2) + 0.12;
+%s.Position(3) = %s.Position(3) - 0.02;
+s.Position(4) = s.Position(4) - 0.01;
 
 % WU
-s = subplot(2,6,6);
+s = subplot(6,2,6);
 hold on
 histogram(WUv1REOSI,minOSI:0.035:maxOSI,'normalization','probability','FaceColor','r','EdgeColor','w')
 plot([nanmedian(WUv1REOSI),nanmedian(WUv1REOSI)],[0 0.3],':k')
@@ -228,15 +228,15 @@ text(0.04,0.25,sprintf('k %.2f',kurtosis(WUv1REOSI)))
 set(gca,'tickdir', 'out','YTick',0:0.1:0.5,'Layer','top','box','off','FontSize',12,'FontWeight','bold','FontAngle','italic')
 title('AE','FontSize',14,'FontWeight','bold','FontAngle','italic')
 text(-0.25,0.5,'WU','FontSize',14,'FontWeight','bold','FontAngle','italic')
-ylim([0 0.3])
+ylim([0 0.25])
 xlim([-0.05,1])
 
-s.Position(1) = s.Position(1) + 0.055;
-s.Position(2) = s.Position(2) - 0.04;
-s.Position(3) = s.Position(3) + 0.025;
-s.Position(4) = s.Position(4) - 0.2;
+%s.Position(1) = %s.Position(1) + 0.055;
+%s.Position(2) = %s.Position(2) - 0.04;
+%s.Position(3) = %s.Position(3) - 0.02;
+s.Position(4) = s.Position(4) - 0.01;
 
-s = subplot(2,6,5);
+s = subplot(6,2,5);
 hold on
 histogram(WUv1LEOSI,minOSI:0.035:maxOSI,'normalization','probability','FaceColor',[0 0.6 1],'EdgeColor','w')
 plot([nanmedian(WUv1LEOSI),nanmedian(WUv1LEOSI)],[0 0.3],':k')
@@ -246,16 +246,16 @@ text(0.04,0.25,sprintf('k %.2f',kurtosis(WUv1LEOSI)))
 set(gca,'tickdir', 'out','YTick',0:0.1:0.5,'Layer','top','box','off','FontSize',12,'FontWeight','bold','FontAngle','italic')
 title('FE','FontSize',14,'FontWeight','bold','FontAngle','italic')
 
-ylim([0 0.3])
+ylim([0 0.25])
 xlim([-0.05,1])
 
-s.Position(1) = s.Position(1) + 0.042;
-s.Position(2) = s.Position(2) - 0.04;
-s.Position(3) = s.Position(3) + 0.025;
-s.Position(4) = s.Position(4) - 0.2;
+%s.Position(1) = %s.Position(1) + 0.042;
+%s.Position(2) = %s.Position(2) - 0.04;
+%s.Position(3) = %s.Position(3) - 0.02;
+s.Position(4) = s.Position(4) - 0.01;
 
 %
-s = subplot(2,6,12);
+s = subplot(6,2,12);
 hold on
 histogram(WUv4REOSI,minOSI:0.035:maxOSI,'normalization','probability','FaceColor','r','EdgeColor','w')
 plot([nanmedian(WUv4REOSI),nanmedian(WUv4REOSI)],[0 0.3],':k')
@@ -265,15 +265,15 @@ text(0.04,0.25,sprintf('k %.2f',kurtosis(WUv4REOSI)))
 set(gca,'tickdir', 'out','YTick',0:0.1:0.5,'Layer','top','box','off','FontSize',12,'FontWeight','bold','FontAngle','italic')
 xlabel('OSI','FontSize',14,'FontWeight','bold','FontAngle','italic')
 
-ylim([0 0.3])
+ylim([0 0.25])
 xlim([-0.05,1])
 
-s.Position(1) = s.Position(1) + 0.055;
-s.Position(2) = s.Position(2) + 0.12;
-s.Position(3) = s.Position(3) + 0.025;
-s.Position(4) = s.Position(4) - 0.2;
+%s.Position(1) = %s.Position(1) + 0.055;
+%s.Position(2) = %s.Position(2) + 0.12;
+%s.Position(3) = %s.Position(3) - 0.02;
+s.Position(4) = s.Position(4) - 0.01;
 
-s = subplot(2,6,11);
+s = subplot(6,2,11);
 hold on
 histogram(WUv4LEOSI,minOSI:0.035:maxOSI,'normalization','probability','FaceColor',[0 0.6 1],'EdgeColor','w')
 plot([nanmedian(WUv4LEOSI),nanmedian(WUv4LEOSI)],[0 0.3],':k')
@@ -283,13 +283,13 @@ text(0.04,0.25,sprintf('k %.2f',kurtosis(WUv4LEOSI)))
 set(gca,'tickdir', 'out','YTick',0:0.1:0.5,'Layer','top','box','off','FontSize',12,'FontWeight','bold','FontAngle','italic')
 xlabel('OSI','FontSize',14,'FontWeight','bold','FontAngle','italic')
 
-ylim([0 0.3])
+ylim([0 0.25])
 xlim([-0.05,1])
 
-s.Position(1) = s.Position(1) + 0.042;
-s.Position(2) = s.Position(2) + 0.12;
-s.Position(3) = s.Position(3) + 0.025;
-s.Position(4) = s.Position(4) - 0.2;
+%s.Position(1) = %s.Position(1) + 0.042;
+%s.Position(2) = %s.Position(2) + 0.12;
+%s.Position(3) = %s.Position(3) - 0.02;
+s.Position(4) = s.Position(4) - 0.01;
 
  figName = 'OSIdistributions_allMonks_allParams.pdf';
  print(gcf, figName,'-dpdf','-fillpage')
@@ -319,233 +319,237 @@ maxOSI = max(allPrefOSI);
 figure(6)
 clf
 pos = get(gcf,'Position');
-set(gcf,'Position',[pos(1) pos(2) 1100 500])
-set(gcf,'PaperOrientation','Landscape');
-suptitle({'OSI distributions for channels within 2 degrees across preferred dt dx combinations';...
-    'dotted lines denote medians'})
+set(gcf,'Position',[pos(1) pos(2) 500 1100],'PaperSize',[7.5, 10])
+t = suptitle('OSI distributions for channels across preferred dt dx combinations');
+t.Position(2) = t.Position(2) + +0.025;
+t.FontSize = 14;
+t.FontWeight = 'bold';
 
 % XT
-s = subplot(2,6,1);
+s = subplot(6,2,1);
 hold on
 histogram(XTv1LEprefOSI,minOSI:0.035:maxOSI,'normalization','probability','FaceColor',[0 0.6 1],'EdgeColor','w')
 plot([nanmedian(XTv1LEprefOSI),nanmedian(XTv1LEprefOSI)],[0 0.3],':k')
 text(nanmedian(XTv1LEprefOSI),0.25,sprintf('%.2f',nanmedian(XTv1LEprefOSI)))
-text(0.04,0.29,sprintf('\\sigma %.2f',nanstd(XTv1LEprefOSI)))
-text(0.04,0.25,sprintf('k %.2f',kurtosis(XTv1LEprefOSI)))
-set(gca,'tickdir', 'out','YTick',0:0.1:0.5,'Layer','top','box','off','FontSize',12,'FontWeight','bold','FontAngle','italic')
-title('LE','FontSize',14,'FontWeight','bold','FontAngle','italic')
-ylabel('V1','FontSize',14,'FontWeight','bold','FontAngle','italic')
+% text(0.04,0.29,sprintf('\\sigma %.2f',nanstd(XTv1LEprefOSI)))
+% text(0.04,0.25,sprintf('k %.2f',kurtosis(XTv1LEprefOSI)))
+set(gca,'tickdir', 'out','YTick',0:0.1:0.5,'Layer','top','box','off','FontSize',10,'FontAngle','italic')
+title('LE','FontSize',12,'FontWeight','bold','FontAngle','italic')
+ylabel('V1/V2','FontSize',12,'FontWeight','bold','FontAngle','italic')
+text(-0.25,0.3,'XT','FontSize',13,'FontWeight','bold','FontAngle','italic')
 
-ylim([0 0.3])
+ylim([0 0.25])
 xlim([-0.05,1])
 
-s.Position(1) = s.Position(1) - 0.078;
-s.Position(2) = s.Position(2) - 0.04;
-s.Position(3) = s.Position(3) + 0.025;
-s.Position(4) = s.Position(4) - 0.2;
+%s.Position(1) = %s.Position(1) - 0.078;
+%s.Position(2) = %s.Position(2) - 0.04;
+%s.Position(3) = %s.Position(3) - 0.02;
+s.Position(4) = s.Position(4) - 0.01;
 
 
-s = subplot(2,6,2);
+s = subplot(6,2,2);
 hold on
 histogram(XTv1REprefOSI,minOSI:0.035:maxOSI,'normalization','probability','FaceColor','r','EdgeColor','w')
 plot([nanmedian(XTv1REprefOSI),nanmedian(XTv1REprefOSI)],[0 0.3],':k')
 text(nanmedian(XTv1REprefOSI),0.25,sprintf('%.2f',nanmedian(XTv1REprefOSI)))
-text(0.04,0.29,sprintf('\\sigma %.2f',nanstd(XTv1REprefOSI)))
-text(0.04,0.25,sprintf('k %.2f',kurtosis(XTv1REprefOSI)))
-set(gca,'tickdir', 'out','YTick',0:0.1:0.5,'Layer','top','box','off','FontSize',12,'FontWeight','bold','FontAngle','italic')
-title('RE','FontSize',14,'FontWeight','bold','FontAngle','italic')
+% text(0.04,0.29,sprintf('\\sigma %.2f',nanstd(XTv1REprefOSI)))
+% text(0.04,0.25,sprintf('k %.2f',kurtosis(XTv1REprefOSI)))
+set(gca,'tickdir', 'out','YTick',0:0.1:0.5,'Layer','top','box','off','FontSize',10,'FontAngle','italic')
+title('RE','FontSize',12,'FontWeight','bold','FontAngle','italic')
 
-text(-0.25,0.5,'XT','FontSize',14,'FontWeight','bold','FontAngle','italic')
 
-ylim([0 0.3])
+
+ylim([0 0.25])
 xlim([-0.05,1])
 
-s.Position(1) = s.Position(1) - 0.06;
-s.Position(2) = s.Position(2) - 0.04;
-s.Position(3) = s.Position(3) + 0.025;
-s.Position(4) = s.Position(4) - 0.2;
+%s.Position(1) = %s.Position(1) - 0.06;
+%s.Position(2) = %s.Position(2) - 0.04;
+%s.Position(3) = %s.Position(3) - 0.02;
+s.Position(4) = s.Position(4) - 0.01;
 
-s = subplot(2,6,7);
+s = subplot(6,2,3);
 hold on
 histogram(XTv4LEprefOSI,minOSI:0.035:maxOSI,'normalization','probability','FaceColor',[0 0.6 1],'EdgeColor','w')
 plot([nanmedian(XTv4LEprefOSI),nanmedian(XTv4LEprefOSI)],[0 0.3],':k')
 text(nanmedian(XTv4LEprefOSI),0.25,sprintf('%.2f',nanmedian(XTv4LEprefOSI)))
-text(0.04,0.29,sprintf('\\sigma %.2f',nanstd(XTv4LEprefOSI)))
-text(0.04,0.25,sprintf('k %.2f',kurtosis(XTv4LEprefOSI)))
-set(gca,'tickdir', 'out','YTick',0:0.1:0.5,'Layer','top','box','off','FontSize',12,'FontWeight','bold','FontAngle','italic')
-ylabel('V4','FontSize',14,'FontWeight','bold','FontAngle','italic')
-xlabel('OSI','FontSize',14,'FontWeight','bold','FontAngle','italic')
+% text(0.04,0.29,sprintf('\\sigma %.2f',nanstd(XTv4LEprefOSI)))
+% text(0.04,0.25,sprintf('k %.2f',kurtosis(XTv4LEprefOSI)))
+set(gca,'tickdir', 'out','YTick',0:0.1:0.5,'Layer','top','box','off','FontSize',10,'FontAngle','italic')
+ylabel('V4','FontSize',12,'FontWeight','bold','FontAngle','italic')
+% xlabel('OSI','FontSize',12,'FontWeight','bold','FontAngle','italic')
 
-ylim([0 0.3])
+ylim([0 0.25])
 xlim([-0.05,1])
 
-s.Position(1) = s.Position(1) - 0.078;
-s.Position(2) = s.Position(2) + 0.12;
-s.Position(3) = s.Position(3) + 0.025;
-s.Position(4) = s.Position(4) - 0.2;
+%s.Position(1) = %s.Position(1) - 0.078;
+%s.Position(2) = %s.Position(2) + 0.12;
+%s.Position(3) = %s.Position(3) - 0.02;
+s.Position(4) = s.Position(4) - 0.01;
 
-s = subplot(2,6,8);
+s = subplot(6,2,4);
 hold on
 histogram(XTv4REprefOSI,minOSI:0.035:maxOSI,'normalization','probability','FaceColor','r','EdgeColor','w')
 plot([nanmedian(XTv4REprefOSI),nanmedian(XTv4REprefOSI)],[0 0.3],':k')
 text(nanmedian(XTv4REprefOSI),0.25,sprintf('%.2f',nanmedian(XTv4REprefOSI)))
-text(0.04,0.29,sprintf('\\sigma %.2f',nanstd(XTv4REprefOSI)))
-text(0.04,0.25,sprintf('k %.2f',kurtosis(XTv4REprefOSI)))
-set(gca,'tickdir', 'out','YTick',0:0.1:0.5,'Layer','top','box','off','FontSize',12,'FontWeight','bold','FontAngle','italic')
-xlabel('OSI','FontSize',14,'FontWeight','bold','FontAngle','italic')
+% text(0.04,0.29,sprintf('\\sigma %.2f',nanstd(XTv4REprefOSI)))
+% text(0.04,0.25,sprintf('k %.2f',kurtosis(XTv4REprefOSI)))
+set(gca,'tickdir', 'out','YTick',0:0.1:0.5,'Layer','top','box','off','FontSize',10,'FontAngle','italic')
+% xlabel('OSI','FontSize',14,'FontWeight','bold','FontAngle','italic')
 
-ylim([0 0.3])
+ylim([0 0.25])
 xlim([-0.05,1])
 
-s.Position(1) = s.Position(1) - 0.06;
-s.Position(2) = s.Position(2) + 0.12;
-s.Position(3) = s.Position(3) + 0.025;
-s.Position(4) = s.Position(4) - 0.2;
+%s.Position(1) = %s.Position(1) - 0.06;
+%s.Position(2) = %s.Position(2) + 0.12;
+%s.Position(3) = %s.Position(3) - 0.02;
+s.Position(4) = s.Position(4) - 0.01;
 
 % WV
-s = subplot(2,6,3);
+s = subplot(6,2,9);
 hold on
 histogram(WVv1LEprefOSI,minOSI:0.035:maxOSI,'normalization','probability','FaceColor',[0 0.6 1],'EdgeColor','w')
 plot([nanmedian(WVv1LEprefOSI),nanmedian(WVv1LEprefOSI)],[0 0.3],':k')
 text(nanmedian(WVv1LEprefOSI),0.25,sprintf('%.2f',nanmedian(WVv1LEprefOSI)))
-text(0.04,0.29,sprintf('\\sigma %.2f',nanstd(WVv1LEprefOSI)))
-text(0.04,0.25,sprintf('k %.2f',kurtosis(WVv1LEprefOSI)))
-set(gca,'tickdir', 'out','YTick',0:0.1:0.5,'Layer','top','box','off','FontSize',12,'FontWeight','bold','FontAngle','italic')
-title('FE','FontSize',14,'FontWeight','bold','FontAngle','italic')
+% text(0.04,0.29,sprintf('\\sigma %.2f',nanstd(WVv1LEprefOSI)))
+% text(0.04,0.25,sprintf('k %.2f',kurtosis(WVv1LEprefOSI)))
+set(gca,'tickdir', 'out','YTick',0:0.1:0.5,'Layer','top','box','off','FontSize',10,'FontAngle','italic')
+% title('FE','FontSize',12,'FontWeight','bold','FontAngle','italic')
+text(-0.25,0.3,'WV','FontSize',14,'FontWeight','bold','FontAngle','italic')
 
-ylim([0 0.3])
+ylim([0 0.25])
 xlim([-0.05,1])
 
-s.Position(1) = s.Position(1) - 0.015;
-s.Position(2) = s.Position(2) - 0.04;
-s.Position(3) = s.Position(3) + 0.025;
-s.Position(4) = s.Position(4) - 0.2;
+%s.Position(1) = %s.Position(1) - 0.015;
+%s.Position(2) = %s.Position(2) - 0.04;
+%s.Position(3) = %s.Position(3) - 0.02;
+s.Position(4) = s.Position(4) - 0.01;
 
-s = subplot(2,6,4);
+s = subplot(6,2,10);
 hold on
 histogram(WVv1REprefOSI,minOSI:0.035:maxOSI,'normalization','probability','FaceColor','r','EdgeColor','w')
 plot([nanmedian(WVv1REprefOSI),nanmedian(WVv1REprefOSI)],[0 0.3],':k')
 text(nanmedian(WVv1REprefOSI),0.25,sprintf('%.2f',nanmedian(WVv1REprefOSI)))
-text(0.04,0.29,sprintf('\\sigma %.2f',nanstd(WVv1REprefOSI)))
-text(0.04,0.25,sprintf('k %.2f',kurtosis(WVv1REprefOSI)))
-set(gca,'tickdir', 'out','YTick',0:0.1:0.5,'Layer','top','box','off','FontSize',12,'FontWeight','bold','FontAngle','italic')
-title('AE','FontSize',14,'FontWeight','bold','FontAngle','italic')
-text(-0.25,0.5,'WV','FontSize',14,'FontWeight','bold','FontAngle','italic')
-ylim([0 0.3])
-xlim([-0.05,1])
-s.Position(1) = s.Position(1) - 0.005;
-s.Position(2) = s.Position(2) - 0.04;
-s.Position(3) = s.Position(3) + 0.025;
-s.Position(4) = s.Position(4) - 0.2;
+% text(0.04,0.29,sprintf('\\sigma %.2f',nanstd(WVv1REprefOSI)))
+% text(0.04,0.25,sprintf('k %.2f',kurtosis(WVv1REprefOSI)))
+set(gca,'tickdir', 'out','YTick',0:0.1:0.5,'Layer','top','box','off','FontSize',10,'FontAngle','italic')
+% title('AE','FontSize',12,'FontWeight','bold','FontAngle','italic')
 
-s = subplot(2,6,9);
+ylim([0 0.25])
+xlim([-0.05,1])
+%s.Position(1) = %s.Position(1) - 0.005;
+%s.Position(2) = %s.Position(2) - 0.04;
+%s.Position(3) = %s.Position(3) - 0.02;
+s.Position(4) = s.Position(4) - 0.01;
+
+s = subplot(6,2,11);
 hold on
 histogram(WVv4LEprefOSI,minOSI:0.035:maxOSI,'normalization','probability','FaceColor',[0 0.6 1],'EdgeColor','w')
 plot([nanmedian(WVv4LEprefOSI),nanmedian(WVv4LEprefOSI)],[0 0.3],':k')
 text(nanmedian(WVv4LEprefOSI),0.25,sprintf('%.2f',nanmedian(WVv4LEprefOSI)))
-text(0.04,0.29,sprintf('\\sigma %.2f',nanstd(WVv4LEprefOSI)))
-text(0.04,0.25,sprintf('k %.2f',kurtosis(WVv4LEprefOSI)))
-set(gca,'tickdir', 'out','YTick',0:0.1:0.5,'Layer','top','box','off','FontSize',12,'FontWeight','bold','FontAngle','italic')
-xlabel('OSI','FontSize',14,'FontWeight','bold','FontAngle','italic')
+% text(0.04,0.29,sprintf('\\sigma %.2f',nanstd(WVv4LEprefOSI)))
+% text(0.04,0.25,sprintf('k %.2f',kurtosis(WVv4LEprefOSI)))
+set(gca,'tickdir', 'out','YTick',0:0.1:0.5,'Layer','top','box','off','FontSize',10,'FontAngle','italic')
+% xlabel('OSI','FontSize',14,'FontWeight','bold','FontAngle','italic')
 
-ylim([0 0.3])
+ylim([0 0.25])
 xlim([-0.05,1])
 
-s.Position(1) = s.Position(1) - 0.015;
-s.Position(2) = s.Position(2) + 0.12;
-s.Position(3) = s.Position(3) + 0.025;
-s.Position(4) = s.Position(4) - 0.2;
+%s.Position(1) = %s.Position(1) - 0.015;
+%s.Position(2) = %s.Position(2) + 0.12;
+%s.Position(3) = %s.Position(3) - 0.02;
+s.Position(4) = s.Position(4) - 0.01;
 
-s = subplot(2,6,10);
+s = subplot(6,2,12);
 hold on
 histogram(WVv4REprefOSI,minOSI:0.035:maxOSI,'normalization','probability','FaceColor','r','EdgeColor','w')
 plot([nanmedian(WVv4REprefOSI),nanmedian(WVv4REprefOSI)],[0 0.3],':k')
 text(nanmedian(WVv4REprefOSI),0.25,sprintf('%.2f',nanmedian(WVv4REprefOSI)))
-text(0.04,0.29,sprintf('\\sigma %.2f',nanstd(WVv4REprefOSI)))
-text(0.04,0.25,sprintf('k %.2f',kurtosis(WVv4REprefOSI)))
-set(gca,'tickdir', 'out','YTick',0:0.1:0.5,'Layer','top','box','off','FontSize',12,'FontWeight','bold','FontAngle','italic')
+% text(0.04,0.29,sprintf('\\sigma %.2f',nanstd(WVv4REprefOSI)))
+% text(0.04,0.25,sprintf('k %.2f',kurtosis(WVv4REprefOSI)))
+set(gca,'tickdir', 'out','YTick',0:0.1:0.5,'Layer','top','box','off','FontSize',10,'FontAngle','italic')
 xlabel('OSI','FontSize',14,'FontWeight','bold','FontAngle','italic')
 
-ylim([0 0.3])
+ylim([0 0.25])
 xlim([-0.05,1])
-s.Position(1) = s.Position(1) - 0.005;
-s.Position(2) = s.Position(2) + 0.12;
-s.Position(3) = s.Position(3) + 0.025;
-s.Position(4) = s.Position(4) - 0.2;
+%s.Position(1) = %s.Position(1) - 0.005;
+%s.Position(2) = %s.Position(2) + 0.12;
+%s.Position(3) = %s.Position(3) - 0.02;
+s.Position(4) = s.Position(4) - 0.01;
 
 % WU
-s = subplot(2,6,6);
+s = subplot(6,2,6);
 hold on
 histogram(WUv1REprefOSI,minOSI:0.035:maxOSI,'normalization','probability','FaceColor','r','EdgeColor','w')
 plot([nanmedian(WUv1REprefOSI),nanmedian(WUv1REprefOSI)],[0 0.3],':k')
 text(nanmedian(WUv1REprefOSI),0.25,sprintf('%.2f',nanmedian(WUv1REprefOSI)))
-text(0.04,0.29,sprintf('\\sigma %.2f',nanstd(WUv1REprefOSI)))
-text(0.04,0.25,sprintf('k %.2f',kurtosis(WUv1REprefOSI)))
-set(gca,'tickdir', 'out','YTick',0:0.1:0.5,'Layer','top','box','off','FontSize',12,'FontWeight','bold','FontAngle','italic')
-title('AE','FontSize',14,'FontWeight','bold','FontAngle','italic')
-text(-0.25,0.5,'WU','FontSize',14,'FontWeight','bold','FontAngle','italic')
-ylim([0 0.3])
+% text(0.04,0.29,sprintf('\\sigma %.2f',nanstd(WUv1REprefOSI)))
+% text(0.04,0.25,sprintf('k %.2f',kurtosis(WUv1REprefOSI)))
+set(gca,'tickdir', 'out','YTick',0:0.1:0.5,'Layer','top','box','off','FontSize',10,'FontAngle','italic')
+title('AE','FontSize',12,'FontWeight','bold','FontAngle','italic')
+
+ylim([0 0.25])
 xlim([-0.05,1])
 
-s.Position(1) = s.Position(1) + 0.055;
-s.Position(2) = s.Position(2) - 0.04;
-s.Position(3) = s.Position(3) + 0.025;
-s.Position(4) = s.Position(4) - 0.2;
+%s.Position(1) = %s.Position(1) + 0.055;
+%s.Position(2) = %s.Position(2) - 0.04;
+%s.Position(3) = %s.Position(3) - 0.02;
+s.Position(4) = s.Position(4) - 0.01;
 
-s = subplot(2,6,5);
+s = subplot(6,2,5);
 hold on
 histogram(WUv1LEprefOSI,minOSI:0.035:maxOSI,'normalization','probability','FaceColor',[0 0.6 1],'EdgeColor','w')
 plot([nanmedian(WUv1LEprefOSI),nanmedian(WUv1LEprefOSI)],[0 0.3],':k')
 text(nanmedian(WUv1LEprefOSI),0.25,sprintf('%.2f',nanmedian(WUv1LEprefOSI)))
-text(0.04,0.29,sprintf('\\sigma %.2f',nanstd(WUv1LEprefOSI)))
-text(0.04,0.25,sprintf('k %.2f',kurtosis(WUv1LEprefOSI)))
-set(gca,'tickdir', 'out','YTick',0:0.1:0.5,'Layer','top','box','off','FontSize',12,'FontWeight','bold','FontAngle','italic')
-title('FE','FontSize',14,'FontWeight','bold','FontAngle','italic')
+% text(0.04,0.29,sprintf('\\sigma %.2f',nanstd(WUv1LEprefOSI)))
+% text(0.04,0.25,sprintf('k %.2f',kurtosis(WUv1LEprefOSI)))
+set(gca,'tickdir', 'out','YTick',0:0.1:0.5,'Layer','top','box','off','FontSize',10,'FontAngle','italic')
+title('FE','FontSize',12,'FontWeight','bold','FontAngle','italic')
+text(-0.25,0.3,'WU','FontSize',13,'FontWeight','bold','FontAngle','italic')
 
-ylim([0 0.3])
+ylim([0 0.25])
 xlim([-0.05,1])
 
-s.Position(1) = s.Position(1) + 0.042;
-s.Position(2) = s.Position(2) - 0.04;
-s.Position(3) = s.Position(3) + 0.025;
-s.Position(4) = s.Position(4) - 0.2;
+%s.Position(1) = %s.Position(1) + 0.042;
+%s.Position(2) = %s.Position(2) - 0.04;
+%s.Position(3) = %s.Position(3) - 0.02;
+s.Position(4) = s.Position(4) - 0.01;
 
 %
-s = subplot(2,6,12);
+s = subplot(6,2,8);
 hold on
 histogram(WUv4REprefOSI,minOSI:0.035:maxOSI,'normalization','probability','FaceColor','r','EdgeColor','w')
 plot([nanmedian(WUv4REprefOSI),nanmedian(WUv4REprefOSI)],[0 0.3],':k')
 text(nanmedian(WUv4REprefOSI),0.25,sprintf('%.2f',nanmedian(WUv4REprefOSI)))
-text(0.04,0.29,sprintf('\\sigma %.2f',nanstd(WUv4REprefOSI)))
-text(0.04,0.25,sprintf('k %.2f',kurtosis(WUv4REprefOSI)))
-set(gca,'tickdir', 'out','YTick',0:0.1:0.5,'Layer','top','box','off','FontSize',12,'FontWeight','bold','FontAngle','italic')
-xlabel('OSI','FontSize',14,'FontWeight','bold','FontAngle','italic')
+% text(0.04,0.29,sprintf('\\sigma %.2f',nanstd(WUv4REprefOSI)))
+% text(0.04,0.25,sprintf('k %.2f',kurtosis(WUv4REprefOSI)))
+set(gca,'tickdir', 'out','YTick',0:0.1:0.5,'Layer','top','box','off','FontSize',10','FontAngle','italic')
+% xlabel('OSI','FontSize',14,'FontWeight','bold','FontAngle','italic')
 
-ylim([0 0.3])
+ylim([0 0.25])
 xlim([-0.05,1])
 
-s.Position(1) = s.Position(1) + 0.055;
-s.Position(2) = s.Position(2) + 0.12;
-s.Position(3) = s.Position(3) + 0.025;
-s.Position(4) = s.Position(4) - 0.2;
+%s.Position(1) = %s.Position(1) + 0.055;
+%s.Position(2) = %s.Position(2) + 0.12;
+%s.Position(3) = %s.Position(3) - 0.02;
+s.Position(4) = s.Position(4) - 0.01;
 
-s = subplot(2,6,11);
+s = subplot(6,2,7);
 hold on
 histogram(WUv4LEprefOSI,minOSI:0.035:maxOSI,'normalization','probability','FaceColor',[0 0.6 1],'EdgeColor','w')
 plot([nanmedian(WUv4LEprefOSI),nanmedian(WUv4LEprefOSI)],[0 0.3],':k')
 text(nanmedian(WUv4LEprefOSI),0.25,sprintf('%.2f',nanmedian(WUv4LEprefOSI)))
-text(0.04,0.29,sprintf('\\sigma %.2f',nanstd(WUv4LEprefOSI)))
-text(0.04,0.25,sprintf('k %.2f',kurtosis(WUv4LEprefOSI)))
-set(gca,'tickdir', 'out','YTick',0:0.1:0.5,'Layer','top','box','off','FontSize',12,'FontWeight','bold','FontAngle','italic')
-xlabel('OSI','FontSize',14,'FontWeight','bold','FontAngle','italic')
+% text(0.04,0.29,sprintf('\\sigma %.2f',nanstd(WUv4LEprefOSI)))
+% text(0.04,0.25,sprintf('k %.2f',kurtosis(WUv4LEprefOSI)))
+set(gca,'tickdir', 'out','YTick',0:0.1:0.5,'Layer','top','box','off','FontSize',10,'FontAngle','italic')
+% xlabel('OSI','FontSize',14,'FontWeight','bold','FontAngle','italic')
 
-ylim([0 0.3])
+ylim([0 0.25])
 xlim([-0.05,1])
 
-s.Position(1) = s.Position(1) + 0.042;
-s.Position(2) = s.Position(2) + 0.12;
-s.Position(3) = s.Position(3) + 0.025;
-s.Position(4) = s.Position(4) - 0.2;
+%s.Position(1) = %s.Position(1) + 0.042;
+%s.Position(2) = %s.Position(2) + 0.12;
+%s.Position(3) = %s.Position(3) - 0.02;
+s.Position(4) = s.Position(4) - 0.01;
 
 figName = 'OSIdistributions_allMonks_PrefParams.pdf';
 print(gcf, figName,'-dpdf','-fillpage')
