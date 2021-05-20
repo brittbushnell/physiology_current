@@ -7,7 +7,7 @@
 %        7)   Y position
 
 clear
-close all
+%close all
 clc
 %%
 filename = 'WU_LE_RadFreqLoc1_nsp2_20170626_002_thresh35_info.mat';
@@ -36,7 +36,7 @@ rads = unique(dataT.radius);
 
 % DO A ZSCORE VERSION OF THIS TOO
 
-for ch = 10%:10
+for ch = 37
     figure
     clf
     hold on
@@ -44,6 +44,7 @@ for ch = 10%:10
     colormap(cmap)
     
     suptitle(sprintf('ch %d mean spike counts',ch))
+    
     for cond = 1:4
         for loc = 2%1:3
             if loc == 1
@@ -51,26 +52,26 @@ for ch = 10%:10
                     subplot(3,4,1)
                     hold on
                     rfSpikes = loc1Spikes{ch}.sf1Rad1(:,1:end-1);
-                    cSpike = loc3Spikes{ch}.sf1Rad1(:,end);
+                    cSpike = loc1Spikes{ch}.sf1Rad1(:,end);
                     title(sprintf('(%.1f, %.1f) SF %d radius %d',stimLoc(1,1), stimLoc(1,2),sfs(1),rads(1)))
                     
                 elseif cond == 2
                     subplot(3,4,2)
                     hold on
                     rfSpikes = loc1Spikes{ch}.sf1Rad2(:,1:end-1);
-                    cSpike = loc3Spikes{ch}.sf1Rad1(:,end);
+                    cSpike = loc1Spikes{ch}.sf1Rad1(:,end);
                     title('SF 1 radius 2')
                 elseif cond == 3
                     subplot(3,4,3)
                     hold on
                     rfSpikes = loc1Spikes{ch}.sf2Rad1(:,1:end-1);
-                    cSpike = loc3Spikes{ch}.sf1Rad1(:,end);
+                    cSpike = loc1Spikes{ch}.sf1Rad1(:,end);
                     title('SF 2 radius 1')
                 else
                     subplot(3,4,4)
                     hold on
                     rfSpikes = loc1Spikes{ch}.sf2Rad2(:,1:end-1);
-                    cSpike = loc3Spikes{ch}.sf1Rad1(:,end);
+                    cSpike = loc1Spikes{ch}.sf1Rad1(:,end);
                     title('SF 2 radius 2')
                 end
             elseif loc == 2
@@ -78,25 +79,25 @@ for ch = 10%:10
                     subplot(3,4,5)
                     hold on
                     rfSpikes = loc2Spikes{ch}.sf1Rad1(:,1:end-1);
-                    cSpike = loc3Spikes{ch}.sf1Rad1(:,end);
+                    cSpike = loc2Spikes{ch}.sf1Rad1(:,end);
                     title(sprintf('(%.1f, %.1f) SF %d radius %d',stimLoc(2,1), stimLoc(2,2),sfs(1),rads(1)))
                 elseif cond == 2
                     subplot(3,4,6)
                     hold on
                     rfSpikes = loc2Spikes{ch}.sf1Rad2(:,1:end-1);
-                    cSpike = loc3Spikes{ch}.sf1Rad1(:,end);
+                    cSpike = loc2Spikes{ch}.sf1Rad1(:,end);
                     title('SF 1 radius 2')
                 elseif cond == 3
                     subplot(3,4,7)
                     hold on
                     rfSpikes = loc2Spikes{ch}.sf2Rad1(:,1:end-1);
-                    cSpike = loc3Spikes{ch}.sf1Rad1(:,end);
+                    cSpike = loc2Spikes{ch}.sf1Rad1(:,end);
                     title('SF 2 radius 1')
                 else
                     subplot(3,4,8)
                     hold on
                     rfSpikes = loc2Spikes{ch}.sf2Rad2(:,1:end-1);
-                    cSpike = loc3Spikes{ch}.sf1Rad1(:,end);
+                    cSpike = loc2Spikes{ch}.sf1Rad1(:,end);
                     title('SF 2 radius 2')
                 end
             else
@@ -127,15 +128,20 @@ for ch = 10%:10
                 end
             end
             
-            rfSpikes(end+1,:) = median(rfSpikes(8:end,:)); % mean Spikecount
-            cSpike(end+1) = median(cSpike(8:end));
+            bResp = cell2mat(dataT.blankSpikeCount(ch));
+            blankSpikes = mean(bResp(8:end,:));
+            
+            rfSpikes(end+1,:) = mean(rfSpikes(8:end,:)); % mean Spikecount
+            rfSpikes = rfSpikes - blankSpikes;
+            cSpike(end+1) = mean(cSpike(8:end));
+            cSpike = cSpike - blankSpikes;
             circ =[cSpike(end);cSpike(end);cSpike(end);cSpike(end);cSpike(end);cSpike(end)];
             
             meanSpikes = reshape(rfSpikes(end,:),6,6)';
             spikes = [circ,meanSpikes];
-            meanSpikes = flipud(spikes)
+            meanSpikes = flipud(spikes);
             
-            clims = [min(meanSpikes,[],'all'), max(meanSpikes,[],'all')];
+            clims = [-max(meanSpikes,[],'all'), max(meanSpikes,[],'all')];
             imagesc(meanSpikes,clims)
             colorbar
             axis tight
@@ -148,8 +154,8 @@ for ch = 10%:10
         end
     end
 end
-%%
-ch = 10;% 4, 8;
+%% plot PSTHs
+ch = 37;% 4, 8;
 
 
 
@@ -169,6 +175,8 @@ for spf = 1:2
         radNdx = dataT.radius == rads(ra);
         circResp = nanmean(dataT.bins((circRF & xLoc & yLoc & sfNdx & radNdx),1:35,ch));
         figure
+        pos = get(gcf,'Position');
+        set(gcf,'Position',[pos(1), pos(2), 500, 450])
         clf
         
         suptitle(sprintf('Channel %d PSTH spike counts sf %d radius %d',ch,sfs(spf),rads(ra)))
@@ -181,7 +189,7 @@ for spf = 1:2
                     if ndx == 1 || ndx == 8 || ndx == 15 || ndx == 22 || ndx == 29 || ndx == 36
                         subplot(6,7,ndx)
                         hold on
-                        ylim([0 1.5])
+                        ylim([0 5])
                         plot(circResp,'b','LineWidth',0.5)
                         plot(blankResp,'k','LineWidth',0.5)
                     elseif ndx > 1 && ndx < 15
@@ -192,7 +200,7 @@ for spf = 1:2
                         
                         subplot(6,7,ndx)
                         hold on
-                        ylim([0 2.25])
+                        ylim([0 5])
                         plot(stimResp,'r','LineWidth',0.5)
                         plot(blankResp,'k','LineWidth',0.5)
                         
@@ -204,7 +212,7 @@ for spf = 1:2
                         
                         subplot(6,7,ndx)
                         hold on
-                        ylim([0 2.25])
+                        ylim([0 5])
                         plot(stimResp,'r','LineWidth',0.5)
                         plot(blankResp,'k','LineWidth',0.5)
                     else
@@ -215,7 +223,7 @@ for spf = 1:2
                         
                         subplot(6,7,ndx)
                         hold on
-                        ylim([0 2.25])
+                        ylim([0 5])
                         plot(stimResp,'r','LineWidth',0.5)
                         plot(blankResp,'k','LineWidth',0.5)
                     end

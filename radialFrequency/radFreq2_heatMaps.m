@@ -59,7 +59,7 @@ for fi = 1:length(files)
     cmap = (redblue(36));
     sfs = unique(dataT.spatialFrequency);
     rads = unique(dataT.radius);
-   %% figure directories
+    %% figure directories
     if location == 1
         figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/radialFrequency/%s/%s/heatmaps/',dataT.animal,dataT.array, dataT.eye);
     elseif location == 0
@@ -70,7 +70,7 @@ for fi = 1:length(files)
         mkdir(figDir)
     end
     cd(figDir)
-     %% heatmaps by spikecounts
+    %% heatmaps by spikecounts
     for lo = 1:3
         for rd =1:2
             for sp = 1:2
@@ -78,7 +78,7 @@ for fi = 1:length(files)
                 figure
                 clf
                 pos = get(gcf,'Position');
-                set(gcf,'Position',[pos(1), pos(2), 1200, 800])
+                set(gcf,'Position',[pos(1), pos(2), 1200, 800],'PaperOrientation','landscape')
                 
                 s = suptitle(sprintf('%s %s %s spikecount by stimulus sf %d mean radius %d at (%.1f, %.1f)',...
                     dataT.animal, dataT.eye, dataT.array, sfs(sp), rads(rd), stimLoc(lo,1), stimLoc(lo,2)));
@@ -136,26 +136,34 @@ for fi = 1:length(files)
                         rfSpikes = loc3Spikes{ch}.sf2Rad2(:,1:end-1);
                     end
                     
-                    rfSpikes(end+1,:) = nanmedian(rfSpikes(8:end,:)); % mean Spikecount
-                    cSpike(end+1) = nanmedian(cSpike(8:end));
+                    bResp = cell2mat(dataT.blankSpikeCount(ch));
+                    blankSpikes = nanmean(bResp(8:end,:));
+                    
+                    rfSpikes(end+1,:) = nanmean(rfSpikes(8:end,:)); % mean Spikecount
+                    rfSpikes = rfSpikes - blankSpikes;
+                    cSpike(end+1) = nanmean(cSpike(8:end));
+                    cSpike = cSpike - blankSpikes;
                     circ =[cSpike(end);cSpike(end);cSpike(end);cSpike(end);cSpike(end);cSpike(end)];
                     
                     meanSpikes = reshape(rfSpikes(end,:),6,6)';
                     spikes = [circ,meanSpikes];
                     meanSpikes = flipud(spikes);
+                    meanSpikes = meanSpikes/max(meanSpikes,[],'all');
                     
-                    clims = [min(meanSpikes,[],'all'), max(meanSpikes,[],'all')];
+                    clims = [-1, 1];
                     imagesc(meanSpikes,clims)
                     axis tight
+                    
                     set(gca,'YTick',1:6,'XTick',1:7,'YTickLabel',{'','16','','8','','4'},...
-                        'XTickLabel',{'c',' low','','','','','high'},...
-                        'FontSize',9,'FontAngle','italic');
-                    title(ch)
+                        'XTickLabel',[],...
+                        'FontSize',8,'FontAngle','italic');
+                    title(ch,'FontSize',9)
                     
                     clear meanSpikes; clear cSpike; clear rfSpikes; clear circ;
                 end
+%                 squeezesubplots(gcf,0.75)
                 figName = [dataT.animal,'_',dataT.eye, '_',dataT.array,'_sf',num2str(sp),'_rad',num2str(rd),'_loc',num2str(lo),'.pdf'];
-                print(gcf, figName,'-dpdf','-bestfit')
+                print(gcf, figName,'-dpdf','-fillpage')
             end
         end
     end

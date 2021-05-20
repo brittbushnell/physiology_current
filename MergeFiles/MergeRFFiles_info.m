@@ -6,7 +6,7 @@ clc
 tic
 
 location = 0; %0 = laptop 1 = Desktop 2 = zemina
-%%
+%% WU
 % WU LE radFreqLoc1 is one file.
 % Hopefully radFreqLoc1 is best in terms of locations - that was the set
 % where V1/V2 and V4 were collected simultaneously. 
@@ -15,17 +15,17 @@ location = 0; %0 = laptop 1 = Desktop 2 = zemina
 %     'WU_RE_RadFreqLoc1_nsp2_20170628_002_thresh35_info.mat'};
 % newName = 'WU_RE_radFreqLoc1_nsp2_June2017_info';
 
-files = {'WU_RE_RadFreqLoc1_nsp1_20170627_002_thresh35_info.mat';              
-    'WU_RE_RadFreqLoc1_nsp1_20170628_002_thresh35_info.mat'};
-newName = 'WU_RE_radFreqLoc1_nsp1_June2017_info';
- 
+% files = {'WU_RE_RadFreqLoc1_nsp1_20170627_002_thresh35_info.mat';              
+%     'WU_RE_RadFreqLoc1_nsp1_20170628_002_thresh35_info.mat'};
+% newName = 'WU_RE_radFreqLoc1_nsp1_June2017_info';
+
 % files = {'WU_LE_RadFreqLoc2_nsp2_20170703_003_thresh35_info.mat';              
 %     'WU_LE_RadFreqLoc2_nsp2_20170704_005_thresh35_info.mat';              
 %     'WU_LE_RadFreqLoc2_nsp2_20170705_005_thresh35_info.mat';              
 %     'WU_LE_RadFreqLoc2_nsp2_20170706_004_thresh35_info.mat';              
 %     'WU_LE_RadFreqLoc2_nsp2_20170707_002_thresh35_info.mat'};
 % newName ='WU_LE_RadFreqLoc2_nsp2_July2017_info';
-% 
+
 % files = {'WU_LE_RadFreqLoc2_nsp1_20170703_003_thresh35_info.mat';
 %     'WU_LE_RadFreqLoc2_nsp1_20170705_005_thresh35_info.mat';
 %     'WU_LE_RadFreqLoc2_nsp1_20170706_004_thresh35_info.mat';
@@ -43,6 +43,69 @@ newName = 'WU_RE_radFreqLoc1_nsp1_June2017_info';
 %     'WU_RE_RadFreqLoc2_nsp1_20170706_002_thresh35_info.mat';              
 %     'WU_RE_RadFreqLoc2_nsp1_20170707_005_thresh35_info.mat'};
 % newName = 'WU_RE_RadFreqLoc2_nsp1_July2017_info';
+%% WV
+
+%  files = {%'WV_LE_RadFreqHighSF_nsp2_20190313_001_thresh35_ogcorrupt_info.mat';  
+%     'WV_LE_RadFreqHighSF_nsp2_20190313_002_thresh35_ogcorrupt_info.mat';  
+%     'WV_LE_RadFreqHighSF_nsp2_20190315_001_thresh35_ogcorrupt_info.mat'};
+% newName = 'WV_LE_RadFreqHighSF_nsp2_March2019';
+
+% files = {%'WV_LE_RadFreqHighSF_nsp1_20190313_002_thresh35_ogcorrupt_info.mat';
+%     'WV_LE_RadFreqHighSF_nsp1_20190315_001_thresh35_ogcorrupt_info.mat';
+%     'WV_LE_RadFreqHighSF_nsp1_20190313_001_thresh35_info.mat';};
+% newName = 'WV_LE_RadFreqHighSF_nsp1_March2019';  
+ 
+% files = {%'WV_RE_RadFreqHighSF_nsp1_20190315_002_thresh35_ogcorrupt_info.mat';
+%     'WV_RE_RadFreqHighSF_nsp1_20190318_001_thresh35_ogcorrupt_info.mat';  
+%     'WV_RE_RadFreqHighSF_nsp1_20190318_002_thresh35_ogcorrupt_info.mat';  
+%     'WV_RE_RadFreqHighSF_nsp1_20190319_001_thresh35_ogcorrupt_info.mat';  
+%     'WV_RE_RadFreqHighSF_nsp1_20190319_002_thresh35_ogcorrupt_info.mat'};
+% newName = 'WV_RE_RadFreqHighSF_nsp1_March2019';
+ 
+% files = {%'WV_RE_RadFreqHighSF_nsp2_20190315_002_thresh35_info.mat';
+%     'WV_RE_RadFreqHighSF_nsp2_20190318_001_thresh35_info.mat';
+%     'WV_RE_RadFreqHighSF_nsp2_20190318_002_thresh35_info.mat';
+%     'WV_RE_RadFreqHighSF_nsp2_20190319_001_thresh35_info.mat';
+%     'WV_RE_RadFreqHighSF_nsp2_20190319_002_thresh35_info.mat'};
+% newName = 'WV_RE_RadFreqHighSF_nsp2_March2019';
+
+% files = {%'WV_LE_RadFreqLowSF_nsp2_20190328_001_thresh35_ogcorrupt_info.mat';   
+%     %'WV_LE_RadFreqLowSF_nsp2_20190328_002_thresh35_ogcorrupt_info.mat';   
+%     'WV_LE_RadFreqLowSF_nsp2_20190329_001_thresh35_ogcorrupt_info.mat';   
+%     'WV_LE_RadFreqLowSF_nsp2_20190329_002_thresh35_ogcorrupt_info.mat';   
+%     'WV_LE_RadFreqLowSF_nsp2_20190401_001_thresh35_ogcorrupt_info.mat';   
+%     'WV_LE_RadFreqLowSF_nsp2_20190402_001_thresh35_ogcorrupt_info.mat'};    
+% newName = 'WV_LE_RadFreqLowSF_nsp2_March2019';
+
+% files = {%'WV_LE_RadFreqLowSF_nsp1_20190328_001_thresh35_ogcorrupt_info.mat';   
+%     %'WV_LE_RadFreqLowSF_nsp1_20190328_002_thresh35_ogcorrupt_info.mat';   
+%     'WV_LE_RadFreqLowSF_nsp1_20190329_001_thresh35_ogcorrupt_info.mat';   
+%     'WV_LE_RadFreqLowSF_nsp1_20190329_002_thresh35_ogcorrupt_info.mat';   
+%     'WV_LE_RadFreqLowSF_nsp1_20190401_001_thresh35_ogcorrupt_info.mat';   
+%     'WV_LE_RadFreqLowSF_nsp1_20190402_001_thresh35_ogcorrupt_info.mat'};    
+% newName = 'WV_LE_RadFreqLowSF_nsp1_March2019';
+% 
+% files = {'WV_RE_RadFreqLowSF_nsp2_20190320_001_thresh35_info.mat';
+%     'WV_RE_RadFreqLowSF_nsp2_20190321_001_thresh35_info.mat';
+%     'WV_RE_RadFreqLowSF_nsp2_20190321_002_thresh35_info.mat';
+%     'WV_RE_RadFreqLowSF_nsp2_20190322_001_thresh35_ogcorrupt_info.mat';   
+%     'WV_RE_RadFreqLowSF_nsp2_20190325_002_thresh35_ogcorrupt_info.mat';   
+%     'WV_RE_RadFreqLowSF_nsp2_20190325_003_thresh35_ogcorrupt_info.mat'; 
+%     'WV_RE_RadFreqLowSF_nsp2_20190327_001_thresh35_info.mat';
+%     'WV_RE_RadFreqLowSF_nsp2_20190327_002_thresh35_info.mat'};
+% newName = 'WV_RE_RadFreqLowSF_nsp2_March2019';
+ 
+files = {'WV_RE_RadFreqLowSF_nsp1_20190320_001_thresh35_ogcorrupt_info.mat';   
+    'WV_RE_RadFreqLowSF_nsp1_20190321_001_thresh35_ogcorrupt_info.mat';   
+    'WV_RE_RadFreqLowSF_nsp1_20190321_002_thresh35_ogcorrupt_info.mat';   
+    'WV_RE_RadFreqLowSF_nsp1_20190322_001_thresh35_ogcorrupt_info.mat';   
+    'WV_RE_RadFreqLowSF_nsp1_20190325_002_thresh35_ogcorrupt_info.mat';   
+    'WV_RE_RadFreqLowSF_nsp1_20190325_003_thresh35_ogcorrupt_info.mat';   
+    'WV_RE_RadFreqLowSF_nsp1_20190327_001_thresh35_ogcorrupt_info.mat';   
+    'WV_RE_RadFreqLowSF_nsp1_20190327_002_thresh35_ogcorrupt_info.mat'};
+newName = 'WV_RE_RadFreqLowSF_nsp1_March2019';
+%%
+
 %% Extract stimulus information
 
 for fi = 1:size(files,1)
@@ -64,7 +127,7 @@ blankSpikesCh = [];
 % stimSpikes = {};
 % blankSpikes = {};
 
-figure(1)
+figure%(1)
 clf
 for ses = 1:length(dataComp)
     for ch = 1:96
