@@ -5,11 +5,31 @@ tic
 %%
 
 files = {
+    % WU loc1
     'WU_RE_radFreqLoc1_nsp2_June2017_info';
     'WU_LE_RadFreqLoc1_nsp2_20170626_002_thresh35_info.mat';
     
     'WU_RE_radFreqLoc1_nsp1_June2017_info';
     'WU_LE_RadFreqLoc1_nsp1_20170626_002_thresh35_info.mat';
+    % WU loc 2
+    'WU_RE_RadFreqLoc2_nsp1_July2017_info';
+    'WU_RE_RadFreqLoc2_nsp2_July2017_info';
+    
+    'WU_LE_RadFreqLoc2_nsp1_July2017_info';
+    'WU_LE_RadFreqLoc2_nsp2_July2017_info';
+    
+    % WV
+    'WV_LE_RadFreqHighSF_nsp2_March2019';
+    'WV_LE_RadFreqHighSF_nsp1_March2019';
+    
+    'WV_RE_RadFreqHighSF_nsp1_March2019';
+    'WV_RE_RadFreqHighSF_nsp2_March2019';
+    
+    'WV_LE_RadFreqLowSF_nsp2_March2019';
+    'WV_LE_RadFreqLowSF_nsp1_March2019';
+    
+    'WV_RE_RadFreqLowSF_nsp2_March2019';
+    'WV_RE_RadFreqLowSF_nsp1_March2019';
     };
 %%
 plotHeat = 0; %change to 1 if you do want to do the heatmaps
