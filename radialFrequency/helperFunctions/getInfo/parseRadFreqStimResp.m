@@ -17,11 +17,10 @@ function [RFStimResps,blankResps, stimResps] = parseRadFreqStimResp(data)
 %        2)   Amplitude (Weber fraction)
 %        3)   Phase (Orientation)
 %        4)   Spatial frequency
-%        5)   Amplitude
-%        6)   Size (mean radius)
-%        7)   X position
-%        8)   Y position
-%        9 - ?) mean response to the stimulus on every repeat
+%        5)   Size (mean radius)
+%        6)   X position
+%        7)   Y position
+%        8 - ?) mean response to the stimulus on every repeat
 %        end - 3) mean response
 %        end - 2) median response
 %        end - 1) standard error
@@ -105,9 +104,9 @@ end
 typeTps = types';  % Transpose the stimulus type array so it's now each column is a unique stimulus.
 blankParams = typeTps(:,(end-(legitLocs - 1)):end); % Define which stimuli are the blanks
 
-numBlank = size(blankParams,1) + (legitLocs .* size(stimResps{end},1)) + 3; % multiplying by legitLocs because there are three blanks, and adding 4 onto the end for mean, median, ste, and normalized response.
+numBlank = size(blankParams,1) + (legitLocs .* size(stimResps{end},1)); % multiplying by legitLocs because there are three blanks, and adding 4 onto the end for mean, median, ste, and normalized response.
 
-blankTmp = nan(numBlank,1);
+% blankTmp = nan(numBlank,1);
 blankResps  = cell(1,96);
 %% initialize data structures for stimulus data
 typeTps = typeTps(:,1:end-legitLocs); % Define which stimuli are not blanks.
@@ -118,14 +117,13 @@ RFStimResps = cell(1,96);
 for r = 1:(size(stimResps,1) - legitLocs)
     numTrials(r,1) = size(stimResps{r},1);
 end
-tmpRows = size(typeTps,1) + max(numTrials) + 3; % parameters + trials + summary data
-tmpCols = size(typeTps,2);
-tmp = nan(tmpRows,tmpCols);
+% tmpRows = size(typeTps,1) + max(numTrials); % parameters + trials + summary data
+% tmpCols = size(typeTps,2);
 %% Make the matrices of responses to a blank stimulus for each channel
 for ch = 1:96
 %     stmTmp = nan(tmpRows,tmpCols);
     blankTmp = nan(numBlank,1);
-    blankTmp(1:size(blankParams,1),1) = blankParams(:,1);
+
     
     for t = 1:legitLocs-1
         if t == 1
@@ -139,12 +137,9 @@ for ch = 1:96
     end
     
     meanBlankResps =  nanmean(a,2)./.01;
-        
-    blankTmp(8:8+length(a)-1) = meanBlankResps;
     
-    blankTmp(end-2,1) = nanmean(meanBlankResps);
-    blankTmp(end-1,1) = nanmedian(meanBlankResps);
-    blankTmp(end,1) = nanstd(meanBlankResps)/sqrt(length(meanBlankResps));
+    blankTmp = [blankParams(:,1); meanBlankResps];
+
     blankTmp(isnan(blankTmp)) = [];
     blankResps{ch} = blankTmp; 
     % the size of blankTmp should equal 3xsize(stimResps{end},1) +10. 
@@ -152,13 +147,9 @@ for ch = 1:96
     %% Make the matrices of responses to each stimulus for each channel
     %tmp = nan(21,size(typeTps,2));
     for r = 1:size(typeTps,2)
-        tmp(1:size(typeTps,1),:) = typeTps;
-        muResp = nanmean(stimResps{r}(:,startBin:endBin,ch),2)./0.01;
-
-        tmp(numParams+1:(numParams+1)+length(muResp)-1,r) = muResp;
-        tmp(end-2,r) = nanmean(muResp);
-        tmp(end-1,r) = nanmedian(muResp);
-        tmp(end,r) = nanstd(muResp)/sqrt(length(muResp));
+        muResp(:,r) = nanmean(stimResps{r}(:,startBin:endBin,ch),2)./0.01;
     end
+    
+    tmp = [typeTps; muResp];
     RFStimResps{ch} = tmp;
 end

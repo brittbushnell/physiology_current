@@ -83,31 +83,9 @@ for an = 1:length(monks)
         end
     end
 end
-%%
-files = {'WU_LE_RadFreqLoc1_nsp2_20170626_002_thresh35.mat';
-%     'WU_RE_RadFreqLoc1_nsp2_20170627_002_thresh35.mat';
-%     'WU_RE_RadFreqLoc1_nsp1_20170627_002_thresh35.mat';
-%     'WU_RE_RadFreqLoc1_nsp2_20170628_002_thresh35.mat';
-%     'WU_RE_RadFreqLoc1_nsp1_20170627_002_thresh35.mat';
-%     'WU_RE_RadFreqLoc1_nsp1_20170628_002_thresh35.mat';
-%     'WU_LE_RadFreqLoc2_nsp2_20170703_003_thresh35.mat';
-%     'WU_LE_RadFreqLoc2_nsp2_20170704_005_thresh35.mat';
-%     'WU_LE_RadFreqLoc2_nsp2_20170705_005_thresh35.mat';
-%     'WU_LE_RadFreqLoc2_nsp2_20170706_004_thresh35.mat';
-%     'WU_LE_RadFreqLoc2_nsp2_20170707_002_thresh35.mat';
-%     'WU_LE_RadFreqLoc2_nsp1_20170703_003_thresh35.mat';
-%     'WU_LE_RadFreqLoc2_nsp1_20170705_005_thresh35.mat';
-%     'WU_LE_RadFreqLoc2_nsp1_20170706_004_thresh35.mat';
-%     'WU_LE_RadFreqLoc2_nsp1_20170707_002_thresh35.mat';
-%     'WU_RE_RadFreqLoc2_nsp2_20170704_002_thresh35.mat';
-%     'WU_RE_RadFreqLoc2_nsp2_20170704_003_thresh35.mat';
-%     'WU_RE_RadFreqLoc2_nsp2_20170705_002_thresh35.mat';
-%     'WU_RE_RadFreqLoc2_nsp2_20170706_002_thresh35.mat';
-%     'WU_RE_RadFreqLoc2_nsp2_20170707_005_thresh35.mat';
-%     'WU_RE_RadFreqLoc2_nsp1_20170705_002_thresh35.mat';
-%     'WU_RE_RadFreqLoc2_nsp1_20170706_002_thresh35.mat';
-%     'WU_RE_RadFreqLoc2_nsp1_20170707_005_thresh35.mat'
-    };
+%% Debugging specific files
+% files = {
+%     };
 
 %%
 ndx = 1;

@@ -101,9 +101,10 @@ for ch = 1:96
     
     blankSpikeCount{ch} = blankDataCh;
     %% stimulus spike counts
-    
+    stimSpikes = nan(max(numTrials,[],'all'),size(typeCol,2));
     for r = 1:size(typeCol,2)
-        stimSpikes(:,r) = nansum(stimResps{r}(:,startBin:endBin,ch),2);
+        spikesT = nansum(stimResps{r}(:,startBin:endBin,ch),2);
+        stimSpikes(1:length(spikesT),r) = spikesT;
     end
     
     stimCount = [typeCol; stimSpikes];
