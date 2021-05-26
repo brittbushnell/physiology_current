@@ -1,4 +1,4 @@
-clear all
+clear
 close all
 clc
 %% NOTE
@@ -61,10 +61,8 @@ for ch = 1:numCh
     
     % Get mean of the mean responses, and the mean of the  median responses
     LEbaseMu = nanmean(LEblanks(end-3,:));
-    LEbaseMd = nanmean(LEblanks(end-2,:));
     
     REbaseMu = nanmean(REblanks(end-3,:));
-    REbaseMd = nanmean(REblanks(end-2,:));
     %% Get responses to RF stimuli
     % Combine cells to get a 3D matrix of each channel's response that's easier
     % to use than cells.
