@@ -19,13 +19,13 @@ function [RFspikeCount,blankSpikeCount,RFzScore,blankZscore] = getRadFreqSpikeCo
 %        2)   Amplitude (Weber fraction)
 %        3)   Phase (Orientation)
 %        4)   Spatial frequency
-%        6)   Size (mean radius)
-%        7)   X position
-%        8)   Y position
-%        9-#reps) zScores
+%        5)   Size (mean radius)
+%        6)   X position
+%        7)   Y position
+%        8-#reps) zScores
 %     
 %   RFzScore and blankZscore are identical to the spike count cell arrays,
-%   but instead of rows 9:end containing spike counts for each repeat, it
+%   but instead of rows 8:end containing spike counts for each repeat, it
 %   contains the zscores. 
 %
 % September 9, 2020 Brittany Bushnell

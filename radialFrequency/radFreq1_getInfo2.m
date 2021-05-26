@@ -4,7 +4,7 @@ clc
 tic
 %%
 monks = {
-%    'WU';
+     'WU';
      'WV';
      'XT';
     };
@@ -84,9 +84,35 @@ for an = 1:length(monks)
     end
 end
 %%
+files = {'WU_LE_RadFreqLoc1_nsp2_20170626_002_thresh35.mat';
+%     'WU_RE_RadFreqLoc1_nsp2_20170627_002_thresh35.mat';
+%     'WU_RE_RadFreqLoc1_nsp1_20170627_002_thresh35.mat';
+%     'WU_RE_RadFreqLoc1_nsp2_20170628_002_thresh35.mat';
+%     'WU_RE_RadFreqLoc1_nsp1_20170627_002_thresh35.mat';
+%     'WU_RE_RadFreqLoc1_nsp1_20170628_002_thresh35.mat';
+%     'WU_LE_RadFreqLoc2_nsp2_20170703_003_thresh35.mat';
+%     'WU_LE_RadFreqLoc2_nsp2_20170704_005_thresh35.mat';
+%     'WU_LE_RadFreqLoc2_nsp2_20170705_005_thresh35.mat';
+%     'WU_LE_RadFreqLoc2_nsp2_20170706_004_thresh35.mat';
+%     'WU_LE_RadFreqLoc2_nsp2_20170707_002_thresh35.mat';
+%     'WU_LE_RadFreqLoc2_nsp1_20170703_003_thresh35.mat';
+%     'WU_LE_RadFreqLoc2_nsp1_20170705_005_thresh35.mat';
+%     'WU_LE_RadFreqLoc2_nsp1_20170706_004_thresh35.mat';
+%     'WU_LE_RadFreqLoc2_nsp1_20170707_002_thresh35.mat';
+%     'WU_RE_RadFreqLoc2_nsp2_20170704_002_thresh35.mat';
+%     'WU_RE_RadFreqLoc2_nsp2_20170704_003_thresh35.mat';
+%     'WU_RE_RadFreqLoc2_nsp2_20170705_002_thresh35.mat';
+%     'WU_RE_RadFreqLoc2_nsp2_20170706_002_thresh35.mat';
+%     'WU_RE_RadFreqLoc2_nsp2_20170707_005_thresh35.mat';
+%     'WU_RE_RadFreqLoc2_nsp1_20170705_002_thresh35.mat';
+%     'WU_RE_RadFreqLoc2_nsp1_20170706_002_thresh35.mat';
+%     'WU_RE_RadFreqLoc2_nsp1_20170707_005_thresh35.mat'
+    };
+
+%%
 ndx = 1;
 for fi = 1:length(files)
-    try
+%     try
         %% get basic information about what was run overall, and for each trial.
         filename = files{fi};
         dataT = load(filename);
@@ -125,9 +151,9 @@ for fi = 1:length(files)
         %
         %% Plot PSTH
         if location == 1
-            figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/%s/%s/PSTH/singleSession/',dataT.animal,dataT.programID,dataT.array);
+            figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/RadialFrequency/%s/PSTH/singleSession/',dataT.animal,dataT.array);
         elseif location == 0
-            figDir =  sprintf('~/Dropbox/Figures/%s/%s/%s/PSTH/singleSession/',dataT.animal,dataT.programID,dataT.array);
+            figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/%s/PSTH/singleSession/',dataT.animal,dataT.array);
         end
         
         if ~exist(figDir,'dir')
@@ -162,10 +188,10 @@ for fi = 1:length(files)
         
         fname2 = strrep(filename,'.mat','');
         figName = [fname2,'_PSTHstimVBlank.pdf'];
-        %print(gcf, figName,'-dpdf','-fillpage')
+        print(gcf, figName,'-dpdf','-fillpage')
         %% get spike counts and z scores
         [dataT.RFStimResps,dataT.blankResps, dataT.stimResps] = parseRadFreqStimResp(dataT); 
-        [dataT.RFspikeCount,dataT.blankSpikeCount,dataT.RFzScore,dataT.blankZscore] = getRadFreqSpikeCountZscore(dataT, dataT.stimResps);
+        [dataT.RFspikeCount,dataT.blankSpikeCount,dataT.RFzScore,dataT.blankZscore] = getRadFreqSpikeCountZscore2(dataT);
         %% save data    
         if location == 1
             outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/radialFrequency/info/',dataT.array);
@@ -188,12 +214,12 @@ for fi = 1:length(files)
         saveName = [outputDir fname2 '_' nameEnd '.mat'];
         save(saveName,'data');
         fprintf('%s saved\n\n',saveName)
-    catch ME
-        fprintf('%s did not work. \nError message: %s \n',filename,ME.message)
-        failNdx = failNdx+1;
-        failedFiles{failNdx,1} = filename;
-        failedME{failNdx,1} = ME;
-    end
+%     catch ME
+%         fprintf('%s did not work. \nError message: %s \n',filename,ME.message)
+%         failNdx = failNdx+1;
+%         failedFiles{failNdx,1} = filename;
+%         failedME{failNdx,1} = ME;
+%     end
 end
 
 toc/60

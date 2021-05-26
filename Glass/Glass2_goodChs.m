@@ -95,7 +95,8 @@ for fi = 1:length(files)
             zScoreReshape = reshape(glassZchLast,12,size(glassZchLast,5),96);
         end
         %% do split half correlations and permutations
-        [dataT.zScoreReliabilityIndex, dataT.zScoreReliabilityPvals,dataT.zScoreSplitHalfSigChs,dataT.zScoreReliabilityIndexPerm] = getHalfCorrPerm(zScoreReshape,filename);
+        [dataT.zScoreReliabilityIndex, dataT.zScoreReliabilityPvals,dataT.zScoreSplitHalfSigChs,dataT.zScoreReliabilityIndexPerm]...
+            = getHalfCorrPerm(zScoreReshape,filename);
         %     plotResponsePvalsVSreliabilityPvals_inStim(dataT)
         plotResponsePvalsVSreliabilityPvals(dataT)
         fprintf('Split-Half correlations computed and permuted %.2f minutes\n',toc/60)

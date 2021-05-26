@@ -74,7 +74,7 @@ for ch = 1:96
         end
     end
     if plotFlag == 1
-        figure(1)
+        figure(3)
         clf
         hold on
         histogram(permDataCh,7,'FaceColor',[0 0.6 0.2],'Normalization','probability');

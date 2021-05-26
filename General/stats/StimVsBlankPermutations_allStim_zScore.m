@@ -56,8 +56,8 @@ for ch = 1:96
     stimBlankBoot = nan(1,numBoot);
     
     for nb = 1:numBoot
-        stimTrials = length(stimZscores); % assuming there will be more than 96 trials
-        blankTrials = length(blankZscores);
+        stimTrials = size(stimZscores,2); 
+        blankTrials = size(blankZscores,2);
         
         numStimTrials = round(stimTrials*holdout);
         numBlankTrials = round(blankTrials*holdout);
