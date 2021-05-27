@@ -122,7 +122,11 @@ for fi = 1:length(files)
     
     [dataT.stimBlankChPvals, dataT.responsiveCh]...
         = getPermutationStatsAndGoodCh(dataT.allStimBlankDprime,dataT.allStimBlankDprimeBootPerm,2,1);
-    fprintf('responsive channels defined\n')
+    fprintf('%d responsive channels defined\n', sum(dataT.responsiveCh))
+    
+    if sum(dataT.responsiveCh) == 0
+        error('There were no responsive channels found, something''s funky')
+    end
     
     %% do split half correlations and permutations
     % needs to be (conditions x repeats x channels)

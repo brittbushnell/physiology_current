@@ -126,47 +126,6 @@ for fi = 1:length(files)
         dataT.size_x = dataT.size_x';
         
         dataT.amap = getBlackrockArrayMap(files(1,:));
-        %
-        %% Plot PSTH
-        if location == 1
-            figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/RadialFrequency/%s/PSTH/singleSession/',dataT.animal,dataT.array);
-        elseif location == 0
-            figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/%s/PSTH/singleSession/',dataT.animal,dataT.array);
-        end
-        
-        if ~exist(figDir,'dir')
-            mkdir(figDir)
-        end
-        cd(figDir)
-        %% plot LE
-        figure(1);
-        clf
-        pos = get(gcf,'Position');
-        set(gcf,'Position',[pos(1) pos(2) 1000 800])
-        set(gcf,'PaperOrientation','Landscape');
-        for ch = 1:96
-            
-            subplot(dataT.amap,10,10,ch)
-            hold on;
-            
-            blankResp = nanmean(smoothdata(dataT.bins((dataT.rf == 10000), 1:35 ,ch),'gaussian',3))./0.01;
-            stimResp = nanmean(smoothdata(dataT.bins((dataT.rf ~= 10000), 1:35 ,ch),'gaussian',3))./0.01;
-            plot(1:35,blankResp,'Color',[0.2 0.2 0.2],'LineWidth',0.5);
-            plot(1:35,stimResp,'-k','LineWidth',2);
-            
-            title(ch)
-            
-            set(gca,'Color','none','tickdir','out','XTickLabel',[],'FontAngle','italic');
-            ylim([0 inf])
-        end
-        
-        fname = strrep(filename,'_',' ');
-        suptitle({sprintf('%s %s %s %s stim vs blank', dataT.animal, dataT.array, dataT.programID, dataT.eye);...
-            sprintf(sprintf('%s',string(fname)))});
-        
-        fname2 = strrep(filename,'.mat','');
-        figName = [fname2,'_PSTHstimVBlank.pdf'];
-        print(gcf, figName,'-dpdf','-fillpage')
         %% get spike counts and z scores
         [dataT.RFStimResps,dataT.blankResps, dataT.stimResps] = parseRadFreqStimResp(dataT); 
         [dataT.RFspikeCount,dataT.blankSpikeCount,dataT.RFzScore,dataT.blankZscore] = getRadFreqSpikeCountZscore2(dataT);
@@ -189,6 +148,7 @@ for fi = 1:length(files)
             data.LE = [];
         end
         
+        fname2 = strrep(filename,'.mat','');
         saveName = [outputDir fname2 '_' nameEnd '.mat'];
         save(saveName,'data');
         fprintf('%s saved\n\n',saveName)
