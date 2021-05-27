@@ -32,7 +32,7 @@ files = {
     'WV_RE_RadFreqLowSF_nsp1_March2019';
     };
 %%
-plotHeat = 0; %change to 1 if you do want to do the heatmaps
+plotHeat = 1; %change to 1 if you do want to do the heatmaps
 
 nameEnd = 'goodCh';
 numPerm = 200;
@@ -139,7 +139,7 @@ for fi = 1:length(files)
     fprintf('%d channels passed inclusion criteria\n',sum(dataT.goodCh))
     %% make heatmaps
     if plotHeat == 1
-        makeRadfreqHeatmaps(dataT)
+        makeRadfreqHeatmaps(dataT,stimLoc)
     end
     %% save data
     if location == 1

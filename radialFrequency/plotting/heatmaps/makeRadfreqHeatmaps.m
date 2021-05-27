@@ -1,4 +1,4 @@
-function [] = makeRadfreqHeatmaps(dataT)
+function [] = makeRadfreqHeatmaps(dataT,stimLoc)
 
 %%
 [~,~,~, loc1Spikes, loc2Spikes, loc3Spikes] = getRadFreq_zSbyParam(dataT,stimLoc);
@@ -6,6 +6,7 @@ cmap = (redblue(36));
 sfs = unique(dataT.spatialFrequency);
 rads = unique(dataT.radius);
 %% figure directories
+location = determineComputer;
 if location == 1
     figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/radialFrequency/%s/%s/heatmaps/',dataT.animal,dataT.array, dataT.eye);
 elseif location == 0
