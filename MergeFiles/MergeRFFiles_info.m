@@ -9,20 +9,20 @@ location = 0; %0 = laptop 1 = Desktop 2 = zemina
 %% WU
 % WU LE radFreqLoc1 is one file.
 % Hopefully radFreqLoc1 is best in terms of locations - that was the set
-% where V1/V2 and V4 were collected simultaneously. 
-% 
+% where V1/V2 and V4 were collected simultaneously.
+%
 % files = {'WU_RE_RadFreqLoc1_nsp2_20170627_002_thresh35_info.mat';
 %     'WU_RE_RadFreqLoc1_nsp2_20170628_002_thresh35_info.mat'};
 % newName = 'WU_RE_radFreqLoc1_nsp2_June2017_info';
 
-% files = {'WU_RE_RadFreqLoc1_nsp1_20170627_002_thresh35_info.mat';              
+% files = {'WU_RE_RadFreqLoc1_nsp1_20170627_002_thresh35_info.mat';
 %     'WU_RE_RadFreqLoc1_nsp1_20170628_002_thresh35_info.mat'};
 % newName = 'WU_RE_radFreqLoc1_nsp1_June2017_info';
 
-% files = {'WU_LE_RadFreqLoc2_nsp2_20170703_003_thresh35_info.mat';              
-%     'WU_LE_RadFreqLoc2_nsp2_20170704_005_thresh35_info.mat';              
-%     'WU_LE_RadFreqLoc2_nsp2_20170705_005_thresh35_info.mat';              
-%     'WU_LE_RadFreqLoc2_nsp2_20170706_004_thresh35_info.mat';              
+% files = {'WU_LE_RadFreqLoc2_nsp2_20170703_003_thresh35_info.mat';
+%     'WU_LE_RadFreqLoc2_nsp2_20170704_005_thresh35_info.mat';
+%     'WU_LE_RadFreqLoc2_nsp2_20170705_005_thresh35_info.mat';
+%     'WU_LE_RadFreqLoc2_nsp2_20170706_004_thresh35_info.mat';
 %     'WU_LE_RadFreqLoc2_nsp2_20170707_002_thresh35_info.mat'};
 % newName ='WU_LE_RadFreqLoc2_nsp2_July2017_info';
 
@@ -39,29 +39,29 @@ location = 0; %0 = laptop 1 = Desktop 2 = zemina
 %     'WU_RE_RadFreqLoc2_nsp2_20170707_005_thresh35_info.mat'};
 % newName = 'WU_RE_RadFreqLoc2_nsp2_July2017_info';
 
-% files = {'WU_RE_RadFreqLoc2_nsp1_20170705_002_thresh35_info.mat';              
-%     'WU_RE_RadFreqLoc2_nsp1_20170706_002_thresh35_info.mat';              
+% files = {'WU_RE_RadFreqLoc2_nsp1_20170705_002_thresh35_info.mat';
+%     'WU_RE_RadFreqLoc2_nsp1_20170706_002_thresh35_info.mat';
 %     'WU_RE_RadFreqLoc2_nsp1_20170707_005_thresh35_info.mat'};
 % newName = 'WU_RE_RadFreqLoc2_nsp1_July2017_info';
 %% WV
 
-%  files = {%'WV_LE_RadFreqHighSF_nsp2_20190313_001_thresh35_ogcorrupt_info.mat';  
-%     'WV_LE_RadFreqHighSF_nsp2_20190313_002_thresh35_ogcorrupt_info.mat';  
+%  files = {%'WV_LE_RadFreqHighSF_nsp2_20190313_001_thresh35_ogcorrupt_info.mat';
+%     'WV_LE_RadFreqHighSF_nsp2_20190313_002_thresh35_ogcorrupt_info.mat';
 %     'WV_LE_RadFreqHighSF_nsp2_20190315_001_thresh35_ogcorrupt_info.mat'};
 % newName = 'WV_LE_RadFreqHighSF_nsp2_March2019';
 
 % files = {%'WV_LE_RadFreqHighSF_nsp1_20190313_002_thresh35_ogcorrupt_info.mat';
 %     'WV_LE_RadFreqHighSF_nsp1_20190315_001_thresh35_ogcorrupt_info.mat';
 %     'WV_LE_RadFreqHighSF_nsp1_20190313_001_thresh35_info.mat';};
-% newName = 'WV_LE_RadFreqHighSF_nsp1_March2019';  
- 
+% newName = 'WV_LE_RadFreqHighSF_nsp1_March2019';
+
 % files = {%'WV_RE_RadFreqHighSF_nsp1_20190315_002_thresh35_ogcorrupt_info.mat';
-%     'WV_RE_RadFreqHighSF_nsp1_20190318_001_thresh35_ogcorrupt_info.mat';  
-%     'WV_RE_RadFreqHighSF_nsp1_20190318_002_thresh35_ogcorrupt_info.mat';  
-%     'WV_RE_RadFreqHighSF_nsp1_20190319_001_thresh35_ogcorrupt_info.mat';  
+%     'WV_RE_RadFreqHighSF_nsp1_20190318_001_thresh35_ogcorrupt_info.mat';
+%     'WV_RE_RadFreqHighSF_nsp1_20190318_002_thresh35_ogcorrupt_info.mat';
+%     'WV_RE_RadFreqHighSF_nsp1_20190319_001_thresh35_ogcorrupt_info.mat';
 %     'WV_RE_RadFreqHighSF_nsp1_20190319_002_thresh35_ogcorrupt_info.mat'};
 % newName = 'WV_RE_RadFreqHighSF_nsp1_March2019';
- 
+
 % files = {%'WV_RE_RadFreqHighSF_nsp2_20190315_002_thresh35_info.mat';
 %     'WV_RE_RadFreqHighSF_nsp2_20190318_001_thresh35_info.mat';
 %     'WV_RE_RadFreqHighSF_nsp2_20190318_002_thresh35_info.mat';
@@ -69,41 +69,41 @@ location = 0; %0 = laptop 1 = Desktop 2 = zemina
 %     'WV_RE_RadFreqHighSF_nsp2_20190319_002_thresh35_info.mat'};
 % newName = 'WV_RE_RadFreqHighSF_nsp2_March2019';
 
-% files = {%'WV_LE_RadFreqLowSF_nsp2_20190328_001_thresh35_ogcorrupt_info.mat';   
-%     %'WV_LE_RadFreqLowSF_nsp2_20190328_002_thresh35_ogcorrupt_info.mat';   
-%     'WV_LE_RadFreqLowSF_nsp2_20190329_001_thresh35_ogcorrupt_info.mat';   
-%     'WV_LE_RadFreqLowSF_nsp2_20190329_002_thresh35_ogcorrupt_info.mat';   
-%     'WV_LE_RadFreqLowSF_nsp2_20190401_001_thresh35_ogcorrupt_info.mat';   
-%     'WV_LE_RadFreqLowSF_nsp2_20190402_001_thresh35_ogcorrupt_info.mat'};    
+% files = {%'WV_LE_RadFreqLowSF_nsp2_20190328_001_thresh35_ogcorrupt_info.mat';
+%     %'WV_LE_RadFreqLowSF_nsp2_20190328_002_thresh35_ogcorrupt_info.mat';
+%     'WV_LE_RadFreqLowSF_nsp2_20190329_001_thresh35_ogcorrupt_info.mat';
+%     'WV_LE_RadFreqLowSF_nsp2_20190329_002_thresh35_ogcorrupt_info.mat';
+%     'WV_LE_RadFreqLowSF_nsp2_20190401_001_thresh35_ogcorrupt_info.mat';
+%     'WV_LE_RadFreqLowSF_nsp2_20190402_001_thresh35_ogcorrupt_info.mat'};
 % newName = 'WV_LE_RadFreqLowSF_nsp2_March2019';
 
-% files = {%'WV_LE_RadFreqLowSF_nsp1_20190328_001_thresh35_ogcorrupt_info.mat';   
-%     %'WV_LE_RadFreqLowSF_nsp1_20190328_002_thresh35_ogcorrupt_info.mat';   
-%     'WV_LE_RadFreqLowSF_nsp1_20190329_001_thresh35_ogcorrupt_info.mat';   
-%     'WV_LE_RadFreqLowSF_nsp1_20190329_002_thresh35_ogcorrupt_info.mat';   
-%     'WV_LE_RadFreqLowSF_nsp1_20190401_001_thresh35_ogcorrupt_info.mat';   
-%     'WV_LE_RadFreqLowSF_nsp1_20190402_001_thresh35_ogcorrupt_info.mat'};    
+% files = {%'WV_LE_RadFreqLowSF_nsp1_20190328_001_thresh35_ogcorrupt_info.mat';
+%     %'WV_LE_RadFreqLowSF_nsp1_20190328_002_thresh35_ogcorrupt_info.mat';
+%     'WV_LE_RadFreqLowSF_nsp1_20190329_001_thresh35_ogcorrupt_info.mat';
+%     'WV_LE_RadFreqLowSF_nsp1_20190329_002_thresh35_ogcorrupt_info.mat';
+%     'WV_LE_RadFreqLowSF_nsp1_20190401_001_thresh35_ogcorrupt_info.mat';
+%     'WV_LE_RadFreqLowSF_nsp1_20190402_001_thresh35_ogcorrupt_info.mat'};
 % newName = 'WV_LE_RadFreqLowSF_nsp1_March2019';
 
 % files = {'WV_RE_RadFreqLowSF_nsp2_20190320_001_thresh35_info.mat';
 %     'WV_RE_RadFreqLowSF_nsp2_20190321_001_thresh35_info.mat';
 %     'WV_RE_RadFreqLowSF_nsp2_20190321_002_thresh35_info.mat';
-%     'WV_RE_RadFreqLowSF_nsp2_20190322_001_thresh35_ogcorrupt_info.mat';   
-%     'WV_RE_RadFreqLowSF_nsp2_20190325_002_thresh35_ogcorrupt_info.mat';   
-%     'WV_RE_RadFreqLowSF_nsp2_20190325_003_thresh35_ogcorrupt_info.mat'; 
+%     'WV_RE_RadFreqLowSF_nsp2_20190322_001_thresh35_ogcorrupt_info.mat';
+%     'WV_RE_RadFreqLowSF_nsp2_20190325_002_thresh35_ogcorrupt_info.mat';
+%     'WV_RE_RadFreqLowSF_nsp2_20190325_003_thresh35_ogcorrupt_info.mat';
 %     'WV_RE_RadFreqLowSF_nsp2_20190327_001_thresh35_info.mat';
 %     'WV_RE_RadFreqLowSF_nsp2_20190327_002_thresh35_info.mat'};
 % newName = 'WV_RE_RadFreqLowSF_nsp2_March2019';
-  
-files = {'WV_RE_RadFreqLowSF_nsp1_20190320_001_thresh35_ogcorrupt_info.mat';   
-    'WV_RE_RadFreqLowSF_nsp1_20190321_001_thresh35_ogcorrupt_info.mat';   
-    'WV_RE_RadFreqLowSF_nsp1_20190321_002_thresh35_ogcorrupt_info.mat';   
-    'WV_RE_RadFreqLowSF_nsp1_20190322_001_thresh35_ogcorrupt_info.mat';   
-    'WV_RE_RadFreqLowSF_nsp1_20190325_002_thresh35_ogcorrupt_info.mat';   
-    'WV_RE_RadFreqLowSF_nsp1_20190325_003_thresh35_ogcorrupt_info.mat';   
-    'WV_RE_RadFreqLowSF_nsp1_20190327_001_thresh35_ogcorrupt_info.mat';   
-    'WV_RE_RadFreqLowSF_nsp1_20190327_002_thresh35_ogcorrupt_info.mat'};
-newName = 'WV_RE_RadFreqLowSF_nsp1_March2019';
+
+% files = {'WV_RE_RadFreqLowSF_nsp1_20190320_001_thresh35_ogcorrupt_info.mat';
+%     'WV_RE_RadFreqLowSF_nsp1_20190321_001_thresh35_ogcorrupt_info.mat';
+%     'WV_RE_RadFreqLowSF_nsp1_20190321_002_thresh35_ogcorrupt_info.mat';
+%     'WV_RE_RadFreqLowSF_nsp1_20190322_001_thresh35_ogcorrupt_info.mat';
+%     'WV_RE_RadFreqLowSF_nsp1_20190325_002_thresh35_ogcorrupt_info.mat';
+%     'WV_RE_RadFreqLowSF_nsp1_20190325_003_thresh35_ogcorrupt_info.mat';
+%     'WV_RE_RadFreqLowSF_nsp1_20190327_001_thresh35_ogcorrupt_info.mat';
+%     'WV_RE_RadFreqLowSF_nsp1_20190327_002_thresh35_ogcorrupt_info.mat'};
+% newName = 'WV_RE_RadFreqLowSF_nsp1_March2019';
 %%
 
 %% Extract stimulus information
@@ -111,13 +111,13 @@ newName = 'WV_RE_RadFreqLowSF_nsp1_March2019';
 for fi = 1:size(files,1)
     filename = files{fi};
     load(filename);
-   
+
     if contains(filename,'RE') == 1
         dataT = data.RE;
     elseif contains(filename,'LE') == 1
         dataT = data.LE;
     end
-     
+
     dataComp{fi} = dataT;
 end
 %% sanity check histograms
@@ -133,13 +133,13 @@ for ses = 1:length(dataComp)
     for ch = 1:96
         s = dataComp{ses}.RFspikeCount{ch}(8:end-3,:);
         stimSpikesCh = vertcat(stimSpikesCh, s);
-        
+
         b = dataComp{ses}.blankSpikeCount{ch}(8:end-3,:);
         blankSpikesCh = vertcat(blankSpikesCh, b);
     end
     stimSpikes = reshape(stimSpikesCh,1,numel(stimSpikesCh));
     blankSpikes = reshape(blankSpikesCh,1,numel(blankSpikesCh));
-    
+
     subplot(2,1,1)
     hold on
     histogram(stimSpikes,'binWidth',2,'normalization','probability','FaceAlpha',0.3)
@@ -147,7 +147,7 @@ for ses = 1:length(dataComp)
     ylabel( 'probability')
     xlim([-2 60])
     set(gca,'box','off','tickdir','out','YTick',0:0.1:0.4)
-    
+
     subplot(2,1,2)
     hold on
     histogram(blankSpikes,'binWidth',2,'normalization','probability','FaceAlpha',0.3)
@@ -187,7 +187,7 @@ for i = 1:length(dataComp)
     stmOff = dataComp{i}.stimOff;
     tStim  = dataComp{i}.t_stim;
     fName  = dataComp{i}.filename;
-    
+
     xPos = dataComp{i}.pos_x;
     yPos = dataComp{i}.pos_y;
     radF = dataComp{i}.rf;
@@ -196,22 +196,22 @@ for i = 1:length(dataComp)
     sf = dataComp{i}.spatialFrequency;
     rad = dataComp{i}.radius;
     nom = dataComp{i}.name;
-    
+
     rfResp = dataComp{i}.RFStimResps;
     bResp = dataComp{i}.blankResps;
     sResp = dataComp{i}.stimResps;
-    
+
     Rsc = dataComp{i}.RFspikeCount;
     bsc = dataComp{i}.blankSpikeCount;
     rz = dataComp{i}.RFzScore;
     bz = dataComp{i}.blankZscore;
-    
+
     bins = cat(1, bins, bT);
     stimOn = [stimOn, stmOn];
     stimOff = [stimOff, stmOff];
     t_stim = [t_stim, tStim];
     filename = cat(1, filename, fName);
-    
+
     pos_x = vertcat(pos_x, xPos);
     pos_y = vertcat(pos_y, yPos);
     rf = [rf; radF];
@@ -220,21 +220,21 @@ for i = 1:length(dataComp)
     spatialFrequency = [spatialFrequency; sf];
     radius = [radius; rad];
     name = cat(1, name, nom);
-    
+
     rfResp = dataComp{i}.RFStimResps;
     rfSpikes = dataComp{i}.RFspikeCount;
     rfzs = dataComp{i}.RFzScore;
-    
+
     blankR = dataComp{i}.blankResps;
     blankSpikes = dataComp{i}.blankSpikeCount;
     blankzs = dataComp{i}.blankZscore;
-    
+
     for ch = 1:96
         if i == 1
             RFStimResps{ch}(1:7,:) = rfResp{1}(1:7,:);
             RFspikeCount{ch}(1:7,:) = rfSpikes{1}(1:7,:);
             RFzScore{ch}(1:7,:) = rfzs{1}(1:7,:);
-            
+
             blankResps{ch}(1:7,:) = blankR{1}(1:7,:);
             blankSpikeCount{ch}(1:7,:) = blankSpikes{1}(1:7,:);
             blankZscore{ch}(1:7,:) = blankzs{1}(1:7,:);
@@ -242,11 +242,11 @@ for i = 1:length(dataComp)
         RFStimResps{ch} =  vertcat(RFStimResps{ch},rfResp{ch}(8:end-3,:));
         RFspikeCount{ch} =  vertcat(RFspikeCount{ch},rfSpikes{ch}(8:end-3,:));
         RFzScore{ch} =  vertcat(RFzScore{ch},rfzs{ch}(8:end-3,:));
-        
+
         blankResps{ch} =  vertcat(blankResps{ch},blankR{ch}(8:end-3,:));
         blankSpikeCount{ch} =  vertcat(blankSpikeCount{ch},blankSpikes{ch}(8:end-3,:));
         blankZscore{ch} =  vertcat(blankZscore{ch},blankzs{ch}(8:end-3,:));
-    end 
+    end
 end
 
 
@@ -272,11 +272,3 @@ save(newName,'animal','eye','array','programID','amap','bins','stimOn','stimOff'
              'radius','name','RFStimResps','RFspikeCount','RFzScore','blankResps','blankSpikeCount','blankZscore')
 
 fprintf('file %s done \n', newName)
-
-
-
-
-
-
-
-

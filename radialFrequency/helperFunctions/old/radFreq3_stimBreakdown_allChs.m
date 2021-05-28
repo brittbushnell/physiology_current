@@ -1,4 +1,4 @@
-function  [LEcleanData, REcleanData] = radFreq3_stimBreakdown_allChs(LEcleanData, REcleanData,print)
+function  [LEData, REData] = radFreq3_stimBreakdown_allChs(LEData, REData,print)
 % clear all
 % close all
 % clc
@@ -14,9 +14,8 @@ function  [LEcleanData, REcleanData] = radFreq3_stimBreakdown_allChs(LEcleanData
 %% Get blank responses
 
 % Combine blank responses across all channels
-LEblanks = cell2mat(LEcleanData.blankResps);
-REblanks = cell2mat(REcleanData.blankResps);
-
+LEblanks = cell2mat(LEData.blankResps);
+REblanks = cell2mat(REData.blankResps); 
 
 % Get mean of the mean responses, and the mean of the  median responses
 LEbaseMu = nanmean(LEblanks(end-3,:));
@@ -27,8 +26,8 @@ REbaseMd = nanmean(REblanks(end-2,:));
 %% Get responses to RF stimuli
 % Combine cells to get a 3D matrix of each channel's response that's easier
 % to use than cells.
-LEresps = cat(3,LEcleanData.stimResps{:});
-REresps = cat(3,REcleanData.stimResps{:});
+LEresps = cat(3,LEData.stimResps{:});
+REresps = cat(3,REData.stimResps{:});
 
 % take the mean across all channels
 LEresps = nanmean(LEresps,3);
@@ -149,18 +148,18 @@ if length(xloc) > 1
     LECircleLoc2 = LEcircResps(:,useStim,:);
     RECircleLoc2 = REcircResps(:,useStim,:);
 end
-%% add to the cleanData cell structure to save for later use.
-REcleanData.rfResps_allCh = RErfResps2;
-REcleanData.circleResps_allCh = REcircResps;
-REcleanData.rfPhases_allCh = RErfPhases;
-REcleanData.rfLocsMuPhase_allCh = cat(4,RERadFreqLoc1, RERadFreqCenterLoc, RERadFreqLoc2);
-REcleanData.circleLocsMuPhase_allCh = cat(4, RECircleLoc1, RECircleCenterLoc, RECircleLoc2);
+%% add to the Data cell structure to save for later use.
+REData.rfResps_allCh = RErfResps2;
+REData.circleResps_allCh = REcircResps;
+REData.rfPhases_allCh = RErfPhases;
+REData.rfLocsMuPhase_allCh = cat(4,RERadFreqLoc1, RERadFreqCenterLoc, RERadFreqLoc2);
+REData.circleLocsMuPhase_allCh = cat(4, RECircleLoc1, RECircleCenterLoc, RECircleLoc2);
 
-LEcleanData.rfPhases_allCh = LErfPhases;
-LEcleanData.rfResps_allCh = LErfResps2;
-LEcleanData.circleResps_allCh = LEcircResps;
-LEcleanData.rfLocsMuPhase_allCh = cat(4,LERadFreqLoc1, LERadFreqCenterLoc, LERadFreqLoc2);
-LEcleanData.circleLocsMuPhase_allCh = cat(4, LECircleLoc1, LECircleCenterLoc, LECircleLoc2);
+LEData.rfPhases_allCh = LErfPhases;
+LEData.rfResps_allCh = LErfResps2;
+LEData.circleResps_allCh = LEcircResps;
+LEData.rfLocsMuPhase_allCh = cat(4,LERadFreqLoc1, LERadFreqCenterLoc, LERadFreqLoc2);
+LEData.circleLocsMuPhase_allCh = cat(4, LECircleLoc1, LECircleCenterLoc, LECircleLoc2);
 %% plot (center stimuli only)
 if print == 1
     xdata = [4,8,16,32,64,128];
@@ -206,8 +205,6 @@ if print == 1
             title('rf4')
             ylim([0 y]);
             axis square
-            
-            
             
             subplot(2,3,2)
             hold on
