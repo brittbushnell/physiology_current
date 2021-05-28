@@ -122,14 +122,18 @@ end
 %% Make the matrices of responses to a blank stimulus for each channel
 for ch = 1:96
     %% blank responses
-    for t = 1:legitLocs-1
-        if t == 1
-            a = stimResps{end}(:,startBin:endBin,ch); 
-            b = stimResps{end-t}(:,startBin:endBin,ch); % still need end-1, otherwise it gets skipped
-            a = [a; b];
-        else
-            b = stimResps{end-t}(:,startBin:endBin,ch);
-            a = [a; b];
+    if legitLocs == 1
+        a =stimResps{end}(:,startBin:endBin,ch);
+    else
+        for t = 1:legitLocs-1
+            if t == 1
+                a = stimResps{end}(:,startBin:endBin,ch);
+                b = stimResps{end-t}(:,startBin:endBin,ch); % still need end-1, otherwise it gets skipped
+                a = [a; b];
+            else
+                b = stimResps{end-t}(:,startBin:endBin,ch);
+                a = [a; b];
+            end
         end
     end
     
@@ -140,9 +144,10 @@ for ch = 1:96
     % the size of blankTmp should equal 3xsize(stimResps{end},1) +10. 
     %The 10 comes from the 7 rows of stimulus information at the top, and the three rows of mean, median, and std at the end
     %% Make the matrices of responses to each stimulus for each channel
-    %tmp = nan(21,size(typeTps,2));
+    muResp = nan(21,size(typeCol,2));
     for r = 1:size(typeCol,2)
-        muResp(:,r) = nanmean(stimResps{r}(:,startBin:endBin,ch),2)./0.01;
+        tmp = nanmean(stimResps{r}(:,startBin:endBin,ch),2)./0.01;
+        muResp(1:length(tmp),r) = tmp;
     end
 
     tmp = [typeCol; muResp];
