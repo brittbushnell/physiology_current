@@ -90,7 +90,7 @@ end
 %%
 ndx = 1;
 for fi = 1:length(files)
-    try
+%     try
         %% get basic information about what was run overall, and for each trial.
         filename = files{fi};
         dataT = load(filename);
@@ -152,12 +152,12 @@ for fi = 1:length(files)
         saveName = [outputDir fname2 '_' nameEnd '.mat'];
         save(saveName,'data');
         fprintf('%s saved\n\n',saveName)
-    catch ME
-        fprintf('%s did not work. \nError message: %s \n',filename,ME.message)
-        failNdx = failNdx+1;
-        failedFiles{failNdx,1} = filename;
-        failedME{failNdx,1} = ME;
-    end
+%     catch ME
+%         fprintf('%s did not work. \nError message: %s \n',filename,ME.message)
+%         failNdx = failNdx+1;
+%         failedFiles{failNdx,1} = filename;
+%         failedME{failNdx,1} = ME;
+%     end
 end
 
 toc/60
