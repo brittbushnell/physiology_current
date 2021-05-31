@@ -257,7 +257,7 @@ array = dataComp{1}.array;
 amap = dataComp{1}.amap;
 %% save new matrix
 if location  == 1
-    saveDir = sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/RadialFrequency/mergedMats/',dataT.array);
+    saveDir = sprintf('/users/bushnell/bushnell-local/Dropbox/ArrayData/matFiles/%s/RadialFrequency/mergedMats/',dataT.array);
 elseif location  == 0
    saveDir = sprintf('~/Dropbox/ArrayData/matFiles/%s/RadialFrequency/mergedMats/',dataT.array);
 end

@@ -60,7 +60,7 @@ plot(0,0,'ko','MarkerFaceColor','k')
 %%
 location = determineComputer;
 if location == 1
-    figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/RadialFrequency/%s/receptiveFields',dataT.animal,dataT.array);
+    figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/%s/receptiveFields',dataT.animal,dataT.array);
 elseif location == 0
     figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/%s/receptiveFields',dataT.animal,dataT.array);
 end

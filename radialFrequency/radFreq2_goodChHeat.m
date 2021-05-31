@@ -6,8 +6,8 @@ tic
 
 files = {
     % WU loc1
-    %'WU_RE_radFreqLoc1_nsp2_June2017_info';
-    %'WU_LE_RadFreqLoc1_nsp2_20170626_002_thresh35_info.mat';
+    'WU_RE_radFreqLoc1_nsp2_June2017_info';
+    'WU_LE_RadFreqLoc1_nsp2_20170626_002_thresh35_info.mat';
     
     'WU_RE_radFreqLoc1_nsp1_June2017_info';
     'WU_LE_RadFreqLoc1_nsp1_20170626_002_thresh35_info.mat';
@@ -30,6 +30,9 @@ files = {
     
     'WV_RE_RadFreqLowSF_nsp2_March2019';
     'WV_RE_RadFreqLowSF_nsp1_March2019';
+    
+    % XT
+    
     };
 %%
 plotHeat = 1; %change to 1 if you do want to do the heatmaps
@@ -65,7 +68,7 @@ for fi = 1:length(files)
     [stimLoc] = plotRadFreqLoc_relRFs(dataT);
     %% plot PSTH
     if location == 1
-        figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/RadialFrequency/%s/PSTH/',dataT.animal,dataT.array);
+        figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/%s/PSTH/',dataT.animal,dataT.array);
     elseif location == 0
         figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/%s/PSTH/',dataT.animal,dataT.array);
     end
@@ -147,9 +150,9 @@ for fi = 1:length(files)
     end
     %% save data
     if location == 1
-        outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/radialFrequency/info/',dataT.array);
+        outputDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/ArrayData/matFiles/%s/radialFrequency/goodCh/',dataT.array);
     elseif location == 0
-        outputDir =  sprintf('~/Dropbox/ArrayData/matFiles/%s/radialFrequency/info/',dataT.array);
+        outputDir =  sprintf('~/Dropbox/ArrayData/matFiles/%s/radialFrequency/goodCh/',dataT.array);
     end
     
     if ~exist(outputDir,'dir')

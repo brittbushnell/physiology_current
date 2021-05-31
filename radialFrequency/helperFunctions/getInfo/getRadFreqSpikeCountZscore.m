@@ -197,7 +197,7 @@ suptitle({sprintf('%s %s %s %s spike count and zscore distributions',data.animal
 %% 
 location = determineComputer;
 if location == 0
-    figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/%s/%s/spikeZscoreDists/%s/%s/',data.animal, data.programID, data.array,data.eye,data.date2);
+    figDir =  sprintf( '/users/bushnell/bushnell-local/Dropbox/Figures/%s/%s/%s/spikeZscoreDists/%s/%s/',data.animal, data.programID, data.array,data.eye,data.date2);
 else
     figDir =  sprintf( '/Local/Users/bushnell/Dropbox/Figures/%s/%s/%s/spikeZscoreDists/%s/%s/',data.animal, data.programID, data.array,data.eye,data.date2);
 end

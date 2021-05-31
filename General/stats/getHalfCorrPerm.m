@@ -160,36 +160,36 @@ if plotFlag == 1
     end
     cd(figDir)
     
-    figName = [filePartInfo{1},'_',filePartInfo{2},'_',array,'_splitHalfPermDist_',filePartInfo{3},'_',filePartInfo{5},'_',filePartInfo{6},'.pdf'];
+    figName = [filePartInfo{1},'_',filePartInfo{2},'_',array,'_splitHalfPermDist_',filePartInfo{3},'_',filePartInfo{5},'.pdf'];
     print(gcf, figName,'-dpdf','-fillpage')
-    %%
-    figure%(1)
-    clf
-    pos = get(gcf,'Position');
-    set(gcf,'Position',[pos(1) pos(2) 1200 900])
-    set(gcf,'PaperOrientation','Landscape');
-    
-    for ch = 1:96
-        %         pValCh = pVals(ch);
-        subplot(10,10,ch)
-        hold on
-        histogram(splitHalf(ch,:),10,'FaceColor','b','EdgeColor',[0.5 0.5 0.5],'EdgeAlpha',0.3,'Normalization','probability')
-        plot([reliabilityIndex(ch), reliabilityIndex(ch)], [0, 0.7],'-r')
-        %         text((0.1),0.65,sprintf('p %.2f',pValCh))
-        %xlim([-0.1 0.55])
-        ylim([0 1])
-        t = title(ch);
-        t.Position(2) = t.Position(2)-0.25; % move the title down a bit so it doesn't hit the x axis from figures above
-        if ch >= 91
-            xlabel('reliability index')
-        end
-        
-        if ch == 91
-            ylabel('probability')
-        end
-    end
-    suptitle('Split-half correlations distributions and reliability index (red line)')
-    
-    figName = [filePartInfo{1},'_',filePartInfo{2},'_',filePartInfo{4},'_splitHalfRealDist_',filePartInfo{3},'_',filePartInfo{5},'_',filePartInfo{6},'.pdf'];
-    print(gcf, figName,'-dpdf','-fillpage')
+     %%
+%     figure%(1)
+%     clf
+%     pos = get(gcf,'Position');
+%     set(gcf,'Position',[pos(1) pos(2) 1200 900])
+%     set(gcf,'PaperOrientation','Landscape');
+%     
+%     for ch = 1:96
+%         %         pValCh = pVals(ch);
+%         subplot(10,10,ch)
+%         hold on
+%         histogram(splitHalf(ch,:),10,'FaceColor','b','EdgeColor',[0.5 0.5 0.5],'EdgeAlpha',0.3,'Normalization','probability')
+%         plot([reliabilityIndex(ch), reliabilityIndex(ch)], [0, 0.7],'-r')
+%         %         text((0.1),0.65,sprintf('p %.2f',pValCh))
+%         %xlim([-0.1 0.55])
+%         ylim([0 1])
+%         t = title(ch);
+%         t.Position(2) = t.Position(2)-0.25; % move the title down a bit so it doesn't hit the x axis from figures above
+%         if ch >= 91
+%             xlabel('reliability index')
+%         end
+%         
+%         if ch == 91
+%             ylabel('probability')
+%         end
+%     end
+%     suptitle('Split-half correlations distributions and reliability index (red line)')
+%     
+%     figName = [filePartInfo{1},'_',filePartInfo{2},'_',filePartInfo{4},'_splitHalfRealDist_',filePartInfo{3},'_',filePartInfo{5},'_',filePartInfo{6},'.pdf'];
+%     print(gcf, figName,'-dpdf','-fillpage')
 end
