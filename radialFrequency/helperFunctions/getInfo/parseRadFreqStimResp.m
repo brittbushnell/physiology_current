@@ -144,10 +144,18 @@ for ch = 1:96
     % the size of blankTmp should equal 3xsize(stimResps{end},1) +10. 
     %The 10 comes from the 7 rows of stimulus information at the top, and the three rows of mean, median, and std at the end
     %% Make the matrices of responses to each stimulus for each channel
-    muResp = nan(21,size(typeCol,2));
+
+    %tmp = nan(21,size(typeTps,2));
+    for i = 1:size(typeCol,2)
+        a(i,1) = size(stimResps{i},1);
+    end
+    maxReps = max(a,[],'all');
+    muResp = nan(maxReps,size(typeCol,2));
+    
     for r = 1:size(typeCol,2)
-        tmp = nanmean(stimResps{r}(:,startBin:endBin,ch),2)./0.01;
-        muResp(1:length(tmp),r) = tmp;
+         tmpMu = nanmean(stimResps{r}(:,startBin:endBin,ch),2)./0.01;
+         muResp(1:length(tmpMu),r) = tmpMu;
+
     end
 
     tmp = [typeCol; muResp];

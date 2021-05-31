@@ -43,7 +43,7 @@ if contains(dataT.animal,'WU')
         cSpike   = loc3Spikes{ch}.sf2Rad2(:,end);
         rfSpikes = loc3Spikes{ch}.sf2Rad2(:,1:end-1);
     end
-    
+
 elseif contains(dataT.programID,'High')
     %sf2 rad1
     if lo == 1 && rd == 1
@@ -91,3 +91,5 @@ else
         rfSpikes = loc3Spikes{ch}.sf1Rad2(:,1:end-1);
     end
 end
+end
+
