@@ -30,6 +30,31 @@ files = {
     
     'WV_RE_RadFreqLowSF_nsp2_March2019';
     'WV_RE_RadFreqLowSF_nsp1_March2019';
+    
+    % XT
+    'XT_RE_radFreqLowSF_nsp2_Dec2019_info';
+    'XT_RE_radFreqLowSF_nsp1_Dec2019_info';
+    
+    'XT_LE_RadFreqLowSF_nsp2_Dec2018_info';
+    'XT_LE_RadFreqLowSF_nsp1_Dec2018_info';
+    
+    'XT_RE_radFreqHighSF_nsp2_Dec2018_info';
+    'XT_RE_radFreqHighSF_nsp1_Dec2018_info';
+    
+    'XT_LE_radFreqHighSF_nsp2_Jan2019_info';
+    'XT_LE_radFreqHighSF_nsp1_Jan2019_info';
+    
+    'XT_RE_RadFreqLowSFV4_nsp2_Feb2019_info';
+    'XT_RE_RadFreqLowSFV4_nsp1_Feb2019_info';
+    
+    'XT_LE_RadFreqLowSFV4_nsp2_Feb2019_info';
+    'XT_LE_RadFreqLowSFV4_nsp1_Feb2019_info';
+    
+    'XT_LE_RadFreqHighSFV4_nsp2_March2019_info';
+    'XT_LE_RadFreqHighSFV4_nsp1_March2019_info';
+    
+    'XT_LE_RadFreqHighSFV4_nsp2_March2019_info';
+    'XT_LE_RadFreqHighSFV4_nsp1_March2019_info';
     };
 %%
 plotHeat = 1; %change to 1 if you do want to do the heatmaps

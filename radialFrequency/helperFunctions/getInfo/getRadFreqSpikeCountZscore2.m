@@ -96,8 +96,7 @@ for ch = 1:96
     
     blankSpikes =  nansum(a,2); % summed spikes on each repeat
     
-    blankDataCh(1:size(blankParams,1),1) = blankParams(:,1);
-    blankDataCh(8:8+length(a)-1) = blankSpikes;
+    blankDataCh = [blankParams(:,1);blankSpikes];
     
     blankSpikeCount{ch} = blankDataCh;
     %% stimulus spike counts
