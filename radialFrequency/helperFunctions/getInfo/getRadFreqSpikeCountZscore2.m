@@ -82,22 +82,23 @@ blankZsAllCh = [];
 for ch = 1:96
     %% blank stimuli
     blankDataCh = nan(numBlank,1);
-    
-    for t = 1:legitLocs-1
-        if t == 1
-            a = stimResps{end}(:,startBin:endBin,ch);
-            b = stimResps{end-t}(:,startBin:endBin,ch); % still need end-1, otherwise it gets skipped
-            a = [a; b];
-        else
-            b = stimResps{end-t}(:,startBin:endBin,ch);
-            a = [a; b]; % a is reps x bins for that channel
+    if legitLocs == 1
+        a =stimResps{end}(:,startBin:endBin,ch);
+    else
+        for t = 1:legitLocs-1
+            if t == 1
+                a = stimResps{end}(:,startBin:endBin,ch);
+                b = stimResps{end-t}(:,startBin:endBin,ch); % still need end-1, otherwise it gets skipped
+                a = [a; b];
+            else
+                b = stimResps{end-t}(:,startBin:endBin,ch);
+                a = [a; b]; % a is reps x bins for that channel
+            end
         end
     end
-    
     blankSpikes =  nansum(a,2); % summed spikes on each repeat
-    
-    blankDataCh = [blankParams(:,1);blankSpikes];
-    
+
+    blankDataCh = [blankParams(:,1); blankSpikes];
     blankSpikeCount{ch} = blankDataCh;
     %% stimulus spike counts
     stimSpikes = nan(max(numTrials,[],'all'),size(typeCol,2));

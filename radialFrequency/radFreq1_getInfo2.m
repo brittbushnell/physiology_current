@@ -158,11 +158,13 @@ files = {
 
 %%
 ndx = 1;
-for fi = 1:length(files)
+for fi = 127:length(files)
 %     try
         %% get basic information about what was run overall, and for each trial.
+        if ~isempty(files{fi})
         filename = files{fi};
         dataT = load(filename);
+        fprintf('*** Running file %d/%d ***\n',fi,length(files))
         
         tmp = strsplit(filename,'_');
         dataT.animal = tmp{1};  dataT.eye = tmp{2}; dataT.programID = tmp{3}; dataT.array = tmp{4}; dataT.date2 = tmp{5};
@@ -227,6 +229,7 @@ for fi = 1:length(files)
 %         failedFiles{failNdx,1} = filename;
 %         failedME{failNdx,1} = ME;
 %     end
+        end
 end
 
 toc/60

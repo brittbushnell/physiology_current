@@ -6,8 +6,8 @@ tic
 
 files = {
     % WU loc1
-    'WU_RE_radFreqLoc1_nsp2_June2017_info';
-    'WU_LE_RadFreqLoc1_nsp2_20170626_002_thresh35_info.mat';
+    %'WU_RE_radFreqLoc1_nsp2_June2017_info';
+    %'WU_LE_RadFreqLoc1_nsp2_20170626_002_thresh35_info.mat';
     
     'WU_RE_radFreqLoc1_nsp1_June2017_info';
     'WU_LE_RadFreqLoc1_nsp1_20170626_002_thresh35_info.mat';
@@ -193,5 +193,5 @@ for fi = 1:length(files)
     save(saveName,'data');
     fprintf('%s saved\n\n',saveName)
     %% clean up workspace
-    clearvars -except files fi nameEnd numPerm failedFiles failNdx numBoot location holdout
+    clearvars -except files fi nameEnd numPerm failedFiles failNdx numBoot location holdout plotHeat
 end
