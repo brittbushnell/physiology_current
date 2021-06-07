@@ -118,7 +118,7 @@ location = 0; %0 = laptop 1 = Desktop 2 = zemina
 % };
 % newName = 'XT_RE_radFreqLowSF_nsp1_Dec2019_info';
 
-% files = {'XT_LE_RadFreqLowSF_nsp2_20181210_002_thresh35_info.mat';
+% files = {
 % 'XT_LE_RadFreqLowSF_nsp2_20181211_001_thresh35_info.mat';
 % 'XT_LE_RadFreqLowSF_nsp2_20181211_002_thresh35_info.mat';
 % 'XT_LE_RadFreqLowSF_nsp2_20181213_001_thresh35_info.mat';
@@ -126,13 +126,13 @@ location = 0; %0 = laptop 1 = Desktop 2 = zemina
 %     };
 % newName = 'XT_LE_RadFreqLowSF_nsp2_Dec2018_info';
 
-% files = {'XT_LE_RadFreqLowSF_nsp1_20181210_002_thresh35_ogcorrupt_info.mat';
-% 'XT_LE_RadFreqLowSF_nsp1_20181211_001_thresh35_ogcorrupt_info.mat';
-% 'XT_LE_RadFreqLowSF_nsp1_20181211_002_thresh35_ogcorrupt_info.mat';
-% 'XT_LE_RadFreqLowSF_nsp1_20181213_001_thresh35_ogcorrupt_info.mat';
-% 'XT_LE_RadFreqLowSF_nsp1_20181213_002_thresh35_ogcorrupt_info.mat';
-% };
-% newName = 'XT_LE_RadFreqLowSF_nsp1_Dec2018_info';
+files = {
+'XT_LE_RadFreqLowSF_nsp1_20181211_001_thresh35_ogcorrupt_info.mat';
+'XT_LE_RadFreqLowSF_nsp1_20181211_002_thresh35_ogcorrupt_info.mat';
+'XT_LE_RadFreqLowSF_nsp1_20181213_001_thresh35_ogcorrupt_info.mat';
+'XT_LE_RadFreqLowSF_nsp1_20181213_002_thresh35_ogcorrupt_info.mat';
+};
+newName = 'XT_LE_RadFreqLowSF_nsp1_Dec2018_info';
 
 % files = {'XT_RE_radFreqHighSF_nsp2_20181227_001_thresh35_info.mat';
 % 'XT_RE_radFreqHighSF_nsp2_20181228_001_thresh35_info.mat';
@@ -233,7 +233,7 @@ for fi = 1:size(files,1)
     elseif contains(filename,'LE') == 1
         dataT = data.LE;
     end
-
+    unique(dataT.pos_y)
     dataComp{fi} = dataT;
 end
 %% sanity check histograms
