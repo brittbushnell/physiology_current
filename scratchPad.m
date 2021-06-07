@@ -1,95 +1,32 @@
-if contains(dataT.animal,'WU')
-    %sf1 rad1
-    if lo == 1 && rd == 1 && sp == 1
-        rfSpikes = loc1Spikes{ch}.sf1Rad1(:,1:end-1);
-        cSpike   = loc1Spikes{ch}.sf1Rad1(:,end);
-    elseif lo == 2 && rd == 1 && sp == 1
-        rfSpikes = loc2Spikes{ch}.sf1Rad1(:,1:end-1);
-        cSpike   = loc2Spikes{ch}.sf1Rad1(:,end);
-    elseif lo == 3 && rd == 1 && sp == 1
-        cSpike   = loc3Spikes{ch}.sf1Rad1(:,end);
-        rfSpikes = loc3Spikes{ch}.sf1Rad1(:,1:end-1);
-        
-        %sf1 rad2
-    elseif lo == 1 && rd == 2 && sp == 1
-        rfSpikes = loc1Spikes{ch}.sf1Rad2(:,1:end-1);
-        cSpike   = loc1Spikes{ch}.sf1Rad2(:,end);
-    elseif lo == 2 && rd == 2 && sp == 1
-        rfSpikes = loc2Spikes{ch}.sf1Rad2(:,1:end-1);
-        cSpike   = loc2Spikes{ch}.sf1Rad2(:,end);
-    elseif lo == 3 && rd == 2 && sp == 1
-        cSpike   = loc3Spikes{ch}.sf1Rad2(:,end);
-        rfSpikes = loc3Spikes{ch}.sf1Rad2(:,1:end-1);
-        
-        %sf2 rad1
-    elseif lo == 1 && rd == 1 && sp == 2
-        rfSpikes = loc1Spikes{ch}.sf2Rad1(:,1:end-1);
-        cSpike   = loc1Spikes{ch}.sf2Rad1(:,end);
-    elseif lo == 2 && rd == 1 && sp == 2
-        rfSpikes = loc2Spikes{ch}.sf2Rad1(:,1:end-1);
-        cSpike   = loc2Spikes{ch}.sf2Rad1(:,end);
-    elseif lo == 3 && rd == 1 && sp == 2
-        cSpike   = loc3Spikes{ch}.sf2Rad1(:,end);
-        rfSpikes = loc3Spikes{ch}.sf2Rad1(:,1:end-1);
-        
-        %sf2 rad2
-    elseif lo == 1 && rd == 2 && sp == 2
-        rfSpikes = loc1Spikes{ch}.sf2Rad2(:,1:end-1);
-        cSpike   = loc1Spikes{ch}.sf2Rad2(:,end);
-    elseif lo == 2 && rd == 2 && sp == 2
-        rfSpikes = loc2Spikes{ch}.sf2Rad2(:,1:end-1);
-        cSpike   = loc2Spikes{ch}.sf2Rad2(:,end);
-    elseif lo == 3 && rd == 2 && sp == 2
-        cSpike   = loc3Spikes{ch}.sf2Rad2(:,end);
-        rfSpikes = loc3Spikes{ch}.sf2Rad2(:,1:end-1);
-    end
-
-elseif contains(dataT.programID,'High')
-    %sf2 rad1
-    if lo == 1 && rd == 1
-        rfSpikes = loc1Spikes{ch}.sf2Rad1(:,1:end-1);
-        cSpike   = loc1Spikes{ch}.sf2Rad1(:,end);
-    elseif lo == 2 && rd == 1
-        rfSpikes = loc2Spikes{ch}.sf2Rad1(:,1:end-1);
-        cSpike   = loc2Spikes{ch}.sf2Rad1(:,end);
-    elseif lo == 3 && rd == 1
-        cSpike   = loc3Spikes{ch}.sf2Rad1(:,end);
-        rfSpikes = loc3Spikes{ch}.sf2Rad1(:,1:end-1);
-        
-        %sf2 rad2
-    elseif lo == 1 && rd == 2
-        rfSpikes = loc1Spikes{ch}.sf2Rad2(:,1:end-1);
-        cSpike   = loc1Spikes{ch}.sf2Rad2(:,end);
-    elseif lo == 2 && rd == 2 && sp == 2
-        rfSpikes = loc2Spikes{ch}.sf2Rad2(:,1:end-1);
-        cSpike   = loc2Spikes{ch}.sf2Rad2(:,end);
-    elseif lo == 3 && rd == 2
-        cSpike   = loc3Spikes{ch}.sf2Rad2(:,end);
-        rfSpikes = loc3Spikes{ch}.sf2Rad2(:,1:end-1);
-    end
-else
-    %sf1 rad1
-    if lo == 1 && rd == 1
-        rfSpikes = loc1Spikes{ch}.sf1Rad1(:,1:end-1);
-        cSpike   = loc1Spikes{ch}.sf1Rad1(:,end);
-    elseif lo == 2 && rd == 1
-        rfSpikes = loc2Spikes{ch}.sf1Rad1(:,1:end-1);
-        cSpike   = loc2Spikes{ch}.sf1Rad1(:,end);
-    elseif lo == 3 && rd == 1
-        cSpike   = loc3Spikes{ch}.sf1Rad1(:,end);
-        rfSpikes = loc3Spikes{ch}.sf1Rad1(:,1:end-1);
-        
-        %sf1 rad2
-    elseif lo == 1 && rd == 2
-        rfSpikes = loc1Spikes{ch}.sf1Rad2(:,1:end-1);
-        cSpike   = loc1Spikes{ch}.sf1Rad2(:,end);
-    elseif lo == 2 && rd == 2
-        rfSpikes = loc2Spikes{ch}.sf1Rad2(:,1:end-1);
-        cSpike   = loc2Spikes{ch}.sf1Rad2(:,end);
-    elseif lo == 3 && rd == 2
-        cSpike   = loc3Spikes{ch}.sf1Rad2(:,end);
-        rfSpikes = loc3Spikes{ch}.sf1Rad2(:,1:end-1);
-    end
-end
-end
-
+                rf4Ndx0Sc  = (spikeCh(1,:) == 4) & (spikeCh(3,:) == 0); % index of all RF4 stimuli with 0 phase
+                rf4Ndx2Sc  = (spikeCh(1,:) == 4) & (spikeCh(3,:) == 45);
+                rf8Ndx0Sc  = (spikeCh(1,:) == 8) & (spikeCh(3,:) == 0); % index of all RF4 stimuli with 0 phase
+                rf8Ndx2Sc  = (spikeCh(1,:) == 8) & (spikeCh(3,:) == 22.5);
+                rf16Ndx0Sc  = (spikeCh(1,:) == 16) & (spikeCh(3,:) == 0); % index of all RF4 stimuli with 0 phase
+                rf16Ndx2Sc  = (spikeCh(1,:) == 16) & (spikeCh(3,:) == 11.25);
+                
+                rf4rot0Sc = spikeCh(8:end,rf4Ndx0Sc & sfNdx & radNdx & locNdx);
+                rf4rot2Sc = spikeCh(8:end,rf4Ndx2Sc & sfNdx & radNdx & locNdx);
+                rf8rot0Sc = spikeCh(8:end,rf8Ndx0Sc & sfNdx & radNdx & locNdx);
+                rf8rot2Sc = spikeCh(8:end,rf8Ndx2Sc & sfNdx & radNdx & locNdx);
+                rf16rot0Sc = spikeCh(8:end,rf16Ndx0Sc & sfNdx & radNdx & locNdx);
+                rf16rot2Sc = spikeCh(8:end,rf16Ndx2Sc & sfNdx & radNdx & locNdx);
+                
+                circSCs = spikeCh(8:end,circNdx & sfNdx & radNdx & locNdx);
+                
+                rfMuSC(1,1,:,sf,rad,loc,ch) = mean(rf4rot0Sc);
+                rfMuSC(1,2,:,sf,rad,loc,ch) = mean(rf4rot2Sc);
+                rfMuSC(2,1,:,sf,rad,loc,ch) = mean(rf8rot0Sc);
+                rfMuSC(2,2,:,sf,rad,loc,ch) = mean(rf8rot2Sc);
+                rfMuSC(3,1,:,sf,rad,loc,ch) = mean(rf16rot0Sc);
+                rfMuSC(3,2,:,sf,rad,loc,ch) = mean(rf16rot2Sc);
+                
+                rfStErSC(1,1,:,sf,rad,loc,ch) = std(rf4rot0Sc)/sqrt(length(rf4rot0Sc));
+                rfStErSC(1,2,:,sf,rad,loc,ch) = std(rf4rot0Sc)/sqrt(length(rf4rot2Sc));
+                rfStErSC(2,1,:,sf,rad,loc,ch) = std(rf8rot0Sc)/sqrt(length(rf8rot0Sc));
+                rfStErSC(2,2,:,sf,rad,loc,ch) = std(rf8rot0Sc)/sqrt(length(rf8rot2Sc));
+                rfStErSC(3,1,:,sf,rad,loc,ch) = std(rf16rot0Sc)/sqrt(length(rf16rot0Sc));
+                rfStErSC(3,2,:,sf,rad,loc,ch) = std(rf16rot0Sc)/sqrt(length(rf16rot2Sc));
+                
+                circMuSC(sf,rad,loc,ch) = mean(circSCs);
+                circStErSC(sf,rad,loc,ch) = std(circSCs)/sqrt(length(circSCs));

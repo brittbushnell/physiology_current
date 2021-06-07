@@ -1,5 +1,5 @@
 function [rfMuZ, rfStErZ,circMuZ, circStErZ,...
-    rfMuSc, rfStErSc,circMuSc, circStErSc] = radFreq_getMuSEzscores(dataT)
+    rfMuSc, rfStErSc,circMuSc, circStErSc] = radFreq_getMuSerrSCandZ(dataT,plotFlag)
 
 %% separate zscores into RF and phase matrices
 % phases per RF:
@@ -70,7 +70,7 @@ end
 
 for ch = 1:96
     ndx = 1;
-    
+    if plotFlag == 1
     figure (2)
     clf
     hold on
@@ -81,7 +81,8 @@ for ch = 1:96
     s.Position(2) = s.Position(2) + 0.02;
     
     fillCirc = sprintf('\x25CF');
-    openCirc = sprintf('\x25CB');       
+    openCirc = sprintf('\x25CB');      
+    end
     %%
     for loc = 1:3
         for sf = 1:2
@@ -107,12 +108,6 @@ for ch = 1:96
                 rf16rot0 = zCh(8:end,rf16Ndx0 & sfNdx & radNdx & locNdx);
                 rf16rot2 = zCh(8:end,rf16Ndx2 & sfNdx & radNdx & locNdx);
                 
-                rf4Params  = zCh(1:7,rf4Ndx0 & sfNdx & radNdx & locNdx);
-                rf8Params  = zCh(1:7,rf8Ndx0 & sfNdx & radNdx & locNdx);
-                rf16Params = zCh(1:7,rf16Ndx0 & sfNdx & radNdx & locNdx);
-                
-                circZs = zCh(8:end,circNdx & sfNdx & radNdx & locNdx);
-                
                 rfMuZ(1,1,:,sf,rad,loc,ch) = mean(rf4rot0);
                 rfMuZ(1,2,:,sf,rad,loc,ch) = mean(rf4rot2);
                 rfMuZ(2,1,:,sf,rad,loc,ch) = mean(rf8rot0);
@@ -127,12 +122,73 @@ for ch = 1:96
                 rfStErZ(3,1,:,sf,rad,loc,ch) = std(rf16rot0)/sqrt(length(rf16rot0));
                 rfStErZ(3,2,:,sf,rad,loc,ch) = std(rf16rot0)/sqrt(length(rf16rot2));
                 
+                circZs = zCh(8:end,circNdx & sfNdx & radNdx & locNdx);
                 circMuZ(sf,rad,loc,ch) = mean(circZs);
                 circStErZ(sf,rad,loc,ch) = std(circZs)/sqrt(length(circZs));
                 %% spike counts
-                sc =  sCount{ch};
+                spikeCh =  sCount{ch};
                 
+                rf4Ndx0Sc  = (spikeCh(1,:) == 4) & (spikeCh(3,:) == 0); % index of all RF4 stimuli with 0 phase
+                rf4Ndx2Sc  = (spikeCh(1,:) == 4) & (spikeCh(3,:) == 45);
+                rf8Ndx0Sc  = (spikeCh(1,:) == 8) & (spikeCh(3,:) == 0); % index of all RF4 stimuli with 0 phase
+                rf8Ndx2Sc  = (spikeCh(1,:) == 8) & (spikeCh(3,:) == 22.5);
+                rf16Ndx0Sc  = (spikeCh(1,:) == 16) & (spikeCh(3,:) == 0); % index of all RF4 stimuli with 0 phase
+                rf16Ndx2Sc  = (spikeCh(1,:) == 16) & (spikeCh(3,:) == 11.25);
+                
+                rf4rot0Sc = spikeCh(8:end,rf4Ndx0Sc & sfNdx & radNdx & locNdx);
+                rf4rot2Sc = spikeCh(8:end,rf4Ndx2Sc & sfNdx & radNdx & locNdx);
+                rf8rot0Sc = spikeCh(8:end,rf8Ndx0Sc & sfNdx & radNdx & locNdx);
+                rf8rot2Sc = spikeCh(8:end,rf8Ndx2Sc & sfNdx & radNdx & locNdx);
+                rf16rot0Sc = spikeCh(8:end,rf16Ndx0Sc & sfNdx & radNdx & locNdx);
+                rf16rot2Sc = spikeCh(8:end,rf16Ndx2Sc & sfNdx & radNdx & locNdx);
+
+                rfMuSc(1,1,:,sf,rad,loc,ch) = mean(rf4rot0Sc);
+                rfMuSc(1,2,:,sf,rad,loc,ch) = mean(rf4rot2Sc);
+                rfMuSc(2,1,:,sf,rad,loc,ch) = mean(rf8rot0Sc);
+                rfMuSc(2,2,:,sf,rad,loc,ch) = mean(rf8rot2Sc);
+                rfMuSc(3,1,:,sf,rad,loc,ch) = mean(rf16rot0Sc);
+                rfMuSc(3,2,:,sf,rad,loc,ch) = mean(rf16rot2Sc);
+                
+                rfStErSc(1,1,:,sf,rad,loc,ch) = std(rf4rot0Sc)/sqrt(length(rf4rot0Sc));
+                rfStErSc(1,2,:,sf,rad,loc,ch) = std(rf4rot0Sc)/sqrt(length(rf4rot2Sc));
+                rfStErSc(2,1,:,sf,rad,loc,ch) = std(rf8rot0Sc)/sqrt(length(rf8rot0Sc));
+                rfStErSc(2,2,:,sf,rad,loc,ch) = std(rf8rot0Sc)/sqrt(length(rf8rot2Sc));
+                rfStErSc(3,1,:,sf,rad,loc,ch) = std(rf16rot0Sc)/sqrt(length(rf16rot0Sc));
+                rfStErSc(3,2,:,sf,rad,loc,ch) = std(rf16rot0Sc)/sqrt(length(rf16rot2Sc));
+                
+                circSCs = spikeCh(8:end,circNdx & sfNdx & radNdx & locNdx);
+                circMuSc(sf,rad,loc,ch) = mean(circSCs);
+                circStErSc(sf,rad,loc,ch) = std(circSCs)/sqrt(length(circSCs));               
+                %% verify spike count and zscore parameters are identical 
+                rf4ParamsZ  = zCh(1:7,rf4Ndx0 & sfNdx & radNdx & locNdx);
+                rf8ParamsZ  = zCh(1:7,rf8Ndx0 & sfNdx & radNdx & locNdx);
+                rf16ParamsZ = zCh(1:7,rf16Ndx0 & sfNdx & radNdx & locNdx);
+                
+                rf4ParamsSc  = spikeCh(1:7,rf4Ndx0 & sfNdx & radNdx & locNdx);
+                rf8ParamsSc  = spikeCh(1:7,rf8Ndx0 & sfNdx & radNdx & locNdx);
+                rf16ParamsSc = spikeCh(1:7,rf16Ndx0 & sfNdx & radNdx & locNdx);
+                
+                if size(rf4ParamsZ) ~= size(rf4ParamsSc)
+                    error('z score and spike count matrices are different sizes')
+                end
+                
+                rf4ParamDiff = rf4ParamsZ - rf4ParamsSc;
+                rf8ParamDiff = rf8ParamsZ - rf8ParamsSc;
+                rf16ParamDiff = rf16ParamsZ - rf16ParamsSc;
+                
+                if sum(rf4ParamDiff) > 0
+                    error('There is a difference in RF 4 parameters between Zscores and spike counts')
+                end
+                
+                 if sum(rf8ParamDiff) > 0
+                    error('There is a difference in RF 8 parameters between Zscores and spike counts')
+                 end
+                
+                if sum(rf16ParamDiff) > 0
+                    error('There is a difference in RF 16 parameters between Zscores and spike counts')
+                end
                 %% plot curves
+                if plotFlag == 1
                 subplot(3,4,ndx)
                 
                 rf4a = squeeze(rfMuZ(1,1,:,sf,rad,loc,ch));
@@ -178,9 +234,11 @@ for ch = 1:96
                 end
                 %%
                 ndx = ndx+1;
+                end
             end
         end
     end
+    if plotFlag == 1
     minY = min(yMins);
     maxY = max(yMaxs);
     yLimits = ([minY maxY]);
@@ -202,6 +260,7 @@ for ch = 1:96
     %%
     figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_radFreqTuningCurves_ch',num2str(ch),'.pdf'];
     print(gcf, figName,'-dpdf','-bestfit')
+    end
 end
 
 
