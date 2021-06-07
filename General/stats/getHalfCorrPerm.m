@@ -150,10 +150,22 @@ if plotFlag == 1
         array = 'V4';
     end
         
-    if location == 0
-        figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/%s/%s/stats/halfCorr/dist/',filePartInfo{1}, filePartInfo{3}, array);
+    if location == 0        
+        if contains(dataT.animal,'WU')
+            figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/%s/stats/halfCorr/',filePartInfo{1}, array,filePartInfo{3});
+        elseif contains(dataT.programID,'low','IgnoreCase')
+            figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/lowSF/%s/stats/halfCorr/',filePartInfo{1}, array,  filePartInfo{3});
+        else
+            figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/halfCorr/',filePartInfo{1}, array,  filePartInfo{3});
+        end
     else
-        figDir =  sprintf( '/Local/Users/bushnell/Dropbox/Figures/%s/%s/%s/stats/halfCorr/dist/',filePartInfo{1}, filePartInfo{3}, array);
+        if contains(dataT.animal,'WU')
+            figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/%s/stats/halfCorr/',filePartInfo{1},array,  filePartInfo{3});
+        elseif contains(dataT.programID,'low','IgnoreCase')
+            figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/lowSF/%s/stats/halfCorr/',filePartInfo{1},array,  filePartInfo{3});
+        else
+            figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/halfCorr/',filePartInfo{1},array,  filePartInfo{3});
+        end
     end
     if ~exist(figDir,'dir')
         mkdir(figDir)

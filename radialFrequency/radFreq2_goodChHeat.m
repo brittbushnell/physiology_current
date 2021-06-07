@@ -5,18 +5,18 @@ tic
 %%
 
 files = {
-    % WU loc1
-    'WU_RE_radFreqLoc1_nsp2_June2017_info';
-    'WU_LE_RadFreqLoc1_nsp2_20170626_002_thresh35_info.mat';
-    
-    'WU_RE_radFreqLoc1_nsp1_June2017_info';
-    'WU_LE_RadFreqLoc1_nsp1_20170626_002_thresh35_info.mat';
-    % WU loc 2
-    'WU_RE_RadFreqLoc2_nsp1_July2017_info';
-    'WU_RE_RadFreqLoc2_nsp2_July2017_info';
-    
-    'WU_LE_RadFreqLoc2_nsp1_July2017_info';
-    'WU_LE_RadFreqLoc2_nsp2_July2017_info';
+%     % WU loc1
+%     'WU_RE_radFreqLoc1_nsp2_June2017_info';
+%     'WU_LE_RadFreqLoc1_nsp2_20170626_002_thresh35_info.mat';
+%     
+%     'WU_RE_radFreqLoc1_nsp1_June2017_info';
+%     'WU_LE_RadFreqLoc1_nsp1_20170626_002_thresh35_info.mat';
+%     % WU loc 2
+%     'WU_RE_RadFreqLoc2_nsp1_July2017_info';
+%     'WU_RE_RadFreqLoc2_nsp2_July2017_info';
+%     
+%     'WU_LE_RadFreqLoc2_nsp1_July2017_info';
+%     'WU_LE_RadFreqLoc2_nsp2_July2017_info';
     
     % WV
     'WV_LE_RadFreqHighSF_nsp2_March2019';
@@ -89,10 +89,24 @@ for fi = 1:length(files)
     %% plot receptive fields relative to stimulus locations
     [stimLoc] = plotRadFreqLoc_relRFs(dataT);
     %% plot PSTH
+    
     if location == 1
-        figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/%s/PSTH/',dataT.animal,dataT.array);
-    elseif location == 0
-        figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/%s/PSTH/',dataT.animal,dataT.array);
+        if contains(dataT.animal,'WU')
+            figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/%s/PSTH/',dataT.animal,dataT.array);
+        elseif contains(dataT.programID,'low','IgnoreCase')
+            figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/lowSF/%s/PSTH/',dataT.animal,dataT.array);
+        else
+            figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/highSF/%s/PSTH/',dataT.animal,dataT.array);
+        end
+        
+    elseif location == 0        
+        if contains(dataT.animal,'WU')
+            figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/%s/PSTH/',dataT.animal,dataT.array);
+        elseif contains(dataT.programID,'low','IgnoreCase')
+            figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/lowSF/%s/PSTH/',dataT.animal,dataT.array);
+        else
+            figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/highSF/%s/PSTH/',dataT.animal,dataT.array);
+        end
     end
     
     if ~exist(figDir,'dir')
