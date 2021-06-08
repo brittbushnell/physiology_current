@@ -1,4 +1,4 @@
-function [zTr] = radFreq_getCorrFisherTr(dataT)
+function [zTr] = radFreq_getFisher_allStim(dataT)
 %zTr = (RF,phase,sf,radius,location, ch)
 % zTr contains the fisher transformed correlations based on spike counts
 % with the response to a circle subtracted from it.
@@ -61,33 +61,34 @@ xScale = get(gca,'xlim');
 
 ylim([0, yScale(2)+0.02])
 
-plot(mean(allZs),yScale(2),'v','MarkerFaceColor','k','MarkerEdgeColor','w','MarkerSize',9)
-text(mean(allZs)+0.15,yScale(2),sprintf('\\mu %.2f',mean(allZs)))
-plot(0,yScale(2),':k')
+plot(nanmean(allZs),yScale(2),'v','MarkerFaceColor','k','MarkerEdgeColor','w','MarkerSize',9)
+text(nanmean(allZs)+0.15,yScale(2),sprintf('\\mu %.2f',nanmean(allZs)))
 
 pos = get(gca,'Position');
-set(gca,'tickdir','out', 'Position',[pos(1), pos(2), pos(3), pos(4) - 0.15],'Layer','top');
+set(gca,'tickdir','out', 'Position',[pos(1), pos(2), pos(3), pos(4) - 0.15],'Layer','top','FontSize',10,'FontAngle','italic');
 
 text(xScale(1)+ 0.5, yScale(2)+0.01, sprintf('n ch: %d',sum(dataT.goodCh)))
+ylabel('probability','FontSize',11,'FontAngle','italic')
+xlabel('Fisher transformed r to z','FontSize',11,'FontAngle','italic')
 
 %%
 location = determineComputer;
 
 if location == 1
     if contains(dataT.animal,'WU')
-        figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/%s/stats/FisherTransform/',dataT.animal,dataT.array,dataT.eye);
+        figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/%s/stats/FisherTransform/%s/',dataT.animal,dataT.array,dataT.eye);
     elseif contains(dataT.programID,'low','IgnoreCase')
-        figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/lowSF/%s/stats/FisherTransform/',dataT.animal,dataT.array,dataT.eye);
+        figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/lowSF/%s/stats/FisherTransform/%s/',dataT.animal,dataT.array,dataT.eye);
     else
-        figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/FisherTransform/',dataT.animal,dataT.array,dataT.eye);
+        figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/FisherTransform/%s/',dataT.animal,dataT.array,dataT.eye);
     end
 elseif location == 0
     if contains(dataT.animal,'WU')
-        figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/%s/stats/FisherTransform/',dataT.animal,dataT.array,dataT.eye);
+        figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/%s/stats/FisherTransform/%s/',dataT.animal,dataT.array,dataT.eye);
     elseif contains(dataT.programID,'low','IgnoreCase')
-        figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/lowSF/%s/stats/FisherTransform/',dataT.animal,dataT.array,dataT.eye);
+        figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/lowSF/%s/stats/FisherTransform/%s/',dataT.animal,dataT.array,dataT.eye);
     else
-        figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/FisherTransform/',dataT.animal,dataT.array,dataT.eye);
+        figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/FisherTransform/%s/',dataT.animal,dataT.array,dataT.eye);
     end
 end
 

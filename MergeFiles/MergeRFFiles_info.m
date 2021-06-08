@@ -8,7 +8,7 @@ location = 0; %0 = laptop 1 = Desktop 2 = zemina
 %% WU
 % WU LE radFreqLoc1 is one file.
 % Hopefully radFreqLoc1 is best in terms of locations - that was the set
-% where V1/V2 and V4 were collected simultaneously. 
+% where V1/V2 and V4 were collected simultaneously.
 
 % files = {'WU_RE_RadFreqLoc1_nsp2_20170627_002_thresh35_info.mat';
 %     'WU_RE_RadFreqLoc1_nsp2_20170628_002_thresh35_info.mat'};
@@ -107,7 +107,7 @@ location = 0; %0 = laptop 1 = Desktop 2 = zemina
 files = {'XT_RE_radFreqLowSF_nsp2_20181217_002_thresh35_info.mat';
 'XT_RE_radFreqLowSF_nsp2_20181217_003_thresh35_info.mat';
 'XT_RE_radFreqLowSF_nsp2_20181217_004_thresh35_info.mat';
-'XT_RE_radFreqLowSF_nsp2_20181217_005_thresh35_info.mat';  
+'XT_RE_radFreqLowSF_nsp2_20181217_005_thresh35_info.mat';
 };
 newName = 'XT_RE_radFreqLowSF_nsp2_Dec2019_info';
 
@@ -217,10 +217,10 @@ newName = 'XT_RE_radFreqLowSF_nsp2_Dec2019_info';
 % };
 % newName = 'XT_LE_RadFreqHighSFV4_nsp2_March2019_info';
 
-% files = {'XT_LE_RadFreqHighSFV4_nsp1_20190306_003_thresh35_ogcorrupt_info.mat';
-% 'XT_LE_RadFreqHighSFV4_nsp1_20190307_001_thresh35_ogcorrupt_info.mat';
-% };
-% newName = 'XT_LE_RadFreqHighSFV4_nsp1_March2019_info';
+files = {'XT_LE_RadFreqHighSFV4_nsp1_20190306_003_thresh35_ogcorrupt_info.mat';
+'XT_LE_RadFreqHighSFV4_nsp1_20190307_001_thresh35_ogcorrupt_info.mat';
+};
+newName = 'XT_LE_RadFreqHighSFV4_nsp1_March2019_info';
 
 %% Extract stimulus information
 
@@ -249,7 +249,7 @@ for ses = 1:length(dataComp)
     for ch = 1:96
         s = dataComp{ses}.RFspikeCount{ch}(8:end,:);
         stimSpikesCh = vertcat(stimSpikesCh, s);
-        
+
         b = dataComp{ses}.blankSpikeCount{ch}(8:end,:);
 
         blankSpikesCh = vertcat(blankSpikesCh, b);
@@ -359,11 +359,11 @@ for i = 1:length(dataComp)
         RFStimResps{ch} =  vertcat(RFStimResps{ch},rfResp{ch}(8:end,:));
         RFspikeCount{ch} =  vertcat(RFspikeCount{ch},rfSpikes{ch}(8:end,:));
         RFzScore{ch} =  vertcat(RFzScore{ch},rfzs{ch}(8:end,:));
-        
+
         blankResps{ch} =  vertcat(blankResps{ch},blankR{ch}(8:end,:));
         blankSpikeCount{ch} =  vertcat(blankSpikeCount{ch},blankSpikes{ch}(8:end,:));
         blankZscore{ch} =  vertcat(blankZscore{ch},blankzs{ch}(8:end,:));
-    end 
+    end
 
 end
 

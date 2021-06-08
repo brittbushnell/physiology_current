@@ -10,19 +10,7 @@ function [rfMuZ, rfStErZ,circMuZ, circStErZ,...
 zScores = dataT.RFzScore;
 sCount  = dataT.RFspikeCount;
 
-xPoss = unique(dataT.pos_x);
-yPoss = unique(dataT.pos_y);
-locPair = nan(1,2);
-
-for xs = 1:length(xPoss)
-    for ys = 1:length(yPoss)
-        flerp = sum((dataT.pos_x == xPoss(xs)) & (dataT.pos_y == yPoss(ys)));
-        if flerp >1
-            locPair(end+1,:) = [xPoss(xs), yPoss(ys)];
-        end
-    end
-end
-locPair = locPair(2:end,:);
+locPair = dataT.locPair;
 %%
 %(RF,ori,amp,sf,radius,location, ch) 
 rfMuZ = nan(3,2,6,2,2,3,96);
