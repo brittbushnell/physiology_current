@@ -5,50 +5,7 @@ tic
 %%
 
 files = {
-    % WU loc1
-    % 'WU_RE_radFreqLoc1_nsp2_June2017_info_goodCh';
-    'WU_LE_RadFreqLoc1_nsp2_20170626_002_thresh35_info_goodCh';
-    %
-    %     'WU_RE_radFreqLoc1_nsp1_June2017_info_goodCh';
-    %     'WU_LE_RadFreqLoc1_nsp1_20170626_002_thresh35_info_goodCh';
-    %
-    %     % WV
-    %     'WV_LE_RadFreqHighSF_nsp2_March2019_goodCh';
-    %     'WV_LE_RadFreqHighSF_nsp1_March2019_goodCh';
-    %
-    %     'WV_RE_RadFreqHighSF_nsp1_March2019_goodCh';
-    %     'WV_RE_RadFreqHighSF_nsp2_March2019_goodCh';
-    %
-    %     'WV_LE_RadFreqLowSF_nsp2_March2019_goodCh';
-    %     'WV_LE_RadFreqLowSF_nsp1_March2019_goodCh';
-    %
-    %     'WV_RE_RadFreqLowSF_nsp2_March2019_goodCh';
-    %     'WV_RE_RadFreqLowSF_nsp1_March2019_goodCh';
-    %
-    %     % XT
-    %     'XT_RE_radFreqLowSF_nsp2_Dec2019_info_goodCh';
-    %     'XT_RE_radFreqLowSF_nsp1_Dec2019_info_goodCh';
-    %
-    %     'XT_LE_RadFreqLowSF_nsp2_Dec2018_info_goodCh';
-    %     'XT_LE_RadFreqLowSF_nsp1_Dec2018_info_goodCh';
-    %
-    %     'XT_RE_radFreqHighSF_nsp2_Dec2018_info_goodCh';
-    %     'XT_RE_radFreqHighSF_nsp1_Dec2018_info_goodCh';
-    %
-    %     'XT_LE_radFreqHighSF_nsp2_Jan2019_info_goodCh';
-    %     'XT_LE_radFreqHighSF_nsp1_Jan2019_info_goodCh';
-    %
-    %     'XT_RE_RadFreqLowSFV4_nsp2_Feb2019_info_goodCh';
-    %     'XT_RE_RadFreqLowSFV4_nsp1_Feb2019_info_goodCh';
-    %
-    %     'XT_LE_RadFreqLowSFV4_nsp2_Feb2019_info_goodCh';
-    %     'XT_LE_RadFreqLowSFV4_nsp1_Feb2019_info_goodCh';
-    %
-    %     'XT_LE_RadFreqHighSFV4_nsp2_March2019_info_goodCh';
-    %     'XT_LE_RadFreqHighSFV4_nsp1_March2019_info_goodCh';
-    %
-    %     'XT_LE_RadFreqHighSFV4_nsp2_March2019_info_goodCh';
-    %     'XT_LE_RadFreqHighSFV4_nsp1_March2019_info_goodCh';
+  'WU_BE_radFreqLoc1_V4';
     };
 %%
 plotNeuro = 0;
@@ -61,17 +18,8 @@ for fi = 1:length(files)
     fprintf('\n *** Analyzing %s file %d/%d ***\n',filename,fi,length(files));
     
     load(filename);
-    if contains(filename,'RE')
-        dataT = data.RE;
-        if ~contains(dataT.animal,'XT')
-            dataT.eye = 'AE';
-        end
-    else
-        dataT = data.LE;
-        if ~contains(dataT.animal,'XT')
-            dataT.eye = 'FE';
-        end
-    end
+    REdata = data.RE;
+    LEdata = data.LE;
     %% get stimulus locations
     xPoss = unique(dataT.pos_x);
     yPoss = unique(dataT.pos_y);

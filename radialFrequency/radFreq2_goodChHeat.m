@@ -53,8 +53,8 @@ files = {
     'XT_LE_RadFreqHighSFV4_nsp2_March2019_info';
     'XT_LE_RadFreqHighSFV4_nsp1_March2019_info';
     
-    'XT_LE_RadFreqHighSFV4_nsp2_March2019_info';
-    'XT_LE_RadFreqHighSFV4_nsp1_March2019_info';
+    'XT_RE_RadFreqHighSFV4_nsp2_March2019_info';
+    'XT_RE_RadFreqHighSFV4_nsp1_March2019_info';
     };
 %%
 plotHeat = 1; %change to 1 if you do want to do the heatmaps
