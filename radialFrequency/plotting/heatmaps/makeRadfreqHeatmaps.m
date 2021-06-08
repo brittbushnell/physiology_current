@@ -8,14 +8,27 @@ rads = unique(dataT.radius);
 %% figure directories
 location = determineComputer;
 if location == 1
-    figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/radialFrequency/%s/%s/heatmaps/',dataT.animal,dataT.array, dataT.eye);
+    if contains(dataT.animal,'WU')
+        figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/%s/%s/heatmaps/',dataT.animal,dataT.array,dataT.eye);
+    elseif contains(dataT.programID,'low','IgnoreCase')
+        figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/lowSF/%s/%s/heatmaps/',dataT.animal,dataT.array,dataT.eye);
+    else
+        figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/highSF/%s/%s/heatmaps/',dataT.animal,dataT.array,dataT.eye);
+    end
 elseif location == 0
-    figDir =  sprintf('~/Dropbox/Figures/%s/radialFrequency/%s/%s/heatmaps/',dataT.animal,dataT.array, dataT.eye);
+    if contains(dataT.animal,'WU')
+        figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/%s/%s/heatmaps/',dataT.animal,dataT.array,dataT.eye);
+    elseif contains(dataT.programID,'low','IgnoreCase')
+        figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/lowSF/%s/%s/heatmaps/',dataT.animal,dataT.array,dataT.eye);
+    else
+        figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/highSF/%s/%s/heatmaps/',dataT.animal,dataT.array,dataT.eye);
+    end
 end
 
 if ~exist(figDir,'dir')
     mkdir(figDir)
 end
+
 cd(figDir)
 %% heatmaps by spikecounts
 for lo = 1:3
