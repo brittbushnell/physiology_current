@@ -152,19 +152,19 @@ if plotFlag == 1
         
     if location == 0        
         if contains(dataT.animal,'WU')
-            figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/%s/stats/halfCorr/',filePartInfo{1}, array,filePartInfo{3});
+            figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/%s/stats/halfCorr/',filePartInfo{1}, array);
         elseif contains(dataT.programID,'low','IgnoreCase')
-            figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/lowSF/%s/stats/halfCorr/',filePartInfo{1}, array,  filePartInfo{3});
+            figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/lowSF/%s/stats/halfCorr/',filePartInfo{1}, array);
         else
-            figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/halfCorr/',filePartInfo{1}, array,  filePartInfo{3});
+            figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/halfCorr/',filePartInfo{1}, array);
         end
     else
         if contains(dataT.animal,'WU')
-            figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/%s/stats/halfCorr/',filePartInfo{1},array,  filePartInfo{3});
+            figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/%s/stats/halfCorr/',filePartInfo{1},array);
         elseif contains(dataT.programID,'low','IgnoreCase')
-            figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/lowSF/%s/stats/halfCorr/',filePartInfo{1},array,  filePartInfo{3});
+            figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/lowSF/%s/stats/halfCorr/',filePartInfo{1},array);
         else
-            figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/halfCorr/',filePartInfo{1},array,  filePartInfo{3});
+            figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/halfCorr/',filePartInfo{1},array);
         end
     end
     if ~exist(figDir,'dir')

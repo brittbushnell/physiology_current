@@ -60,9 +60,21 @@ plot(0,0,'ko','MarkerFaceColor','k')
 %%
 location = determineComputer;
 if location == 1
-    figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/%s/receptiveFields',dataT.animal,dataT.array);
+    if contains(dataT.animal,'WU')
+        figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/%s/receptiveFields',dataT.animal,dataT.array);
+    elseif contains(dataT.programID,'low','IgnoreCase',true)
+        figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/lowSF/%s/receptiveFields',dataT.animal,dataT.array);
+    else
+        figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/highSF/%s/receptiveFields',dataT.animal,dataT.array);
+    end
 elseif location == 0
-    figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/%s/receptiveFields',dataT.animal,dataT.array);
+    if contains(dataT.animal,'WU')
+        figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/%s/receptiveFields',dataT.animal,dataT.array);
+    elseif contains(dataT.programID,'low','IgnoreCase',true)
+        figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/lowSF/%s/receptiveFields',dataT.animal,dataT.array);
+    else
+        figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/highSF/%s/receptiveFields',dataT.animal,dataT.array);
+    end
 end
 
 if ~exist(figDir,'dir')

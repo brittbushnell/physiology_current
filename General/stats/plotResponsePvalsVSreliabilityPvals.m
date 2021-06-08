@@ -91,9 +91,21 @@ title({sprintf('%s %s %s %s split half p-value vs visual response p-value', data
 location = determineComputer;
 
 if location == 0
-    figDir =  sprintf( '/Users/brittany/Dropbox/Figures/%s/%s/%s/stats/halfCorr/',data.animal, data.array, data.programID);
+    if contains(dataT.animal,'WU')
+        figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/%s/stats/halfCorr/',dataT.animal, dataT.array);
+    elseif contains(dataT.programID,'low','IgnoreCase')
+        figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/lowSF/%s/stats/halfCorr/',dataT.animal, dataT.array);
+    else
+        figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/halfCorr/',dataT.animal, dataT.array);
+    end
 else
-    figDir =  sprintf( '/Local/Users/bushnell/Dropbox/Figures/%s/%s/%s/stats/halfCorr/',data.animal, data.array, data.programID);
+    if contains(dataT.animal,'WU')
+        figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/%s/stats/halfCorr/',dataT.animal, dataT.array);
+    elseif contains(dataT.programID,'low','IgnoreCase')
+        figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/lowSF/%s/stats/halfCorr/',dataT.animal, dataT.array);
+    else
+        figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/halfCorr/',dataT.animal, dataT.array);
+    end
 end
 
 if ~exist(figDir,'dir')

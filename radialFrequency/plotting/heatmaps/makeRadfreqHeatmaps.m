@@ -9,6 +9,7 @@ rads = unique(dataT.radius);
 location = determineComputer;
 if location == 1
     figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/radialFrequency/%s/%s/heatmaps/',dataT.animal,dataT.array, dataT.eye);
+    
 elseif location == 0
     figDir =  sprintf('~/Dropbox/Figures/%s/radialFrequency/%s/%s/heatmaps/',dataT.animal,dataT.array, dataT.eye);
 end
