@@ -6,7 +6,7 @@ tic
 
 files = {
     % WU loc1
-    'WU_RE_radFreqLoc1_nsp2_June2017_info_goodCh';
+    % 'WU_RE_radFreqLoc1_nsp2_June2017_info_goodCh';
     'WU_LE_RadFreqLoc1_nsp2_20170626_002_thresh35_info_goodCh';
     %
     %     'WU_RE_radFreqLoc1_nsp1_June2017_info_goodCh';
@@ -52,6 +52,7 @@ files = {
     };
 %%
 plotNeuro = 0;
+plotLocCh = 1;
 %%
 for fi = 1:length(files)
     %%
@@ -95,9 +96,9 @@ for fi = 1:length(files)
     [dataT.rfMuZ, dataT.rfStErZ, dataT.circMuZ, dataT.circStErZ,...
         dataT.rfMuSc, dataT.rfStErSc, dataT.circMuSc, dataT.circStErSc] = radFreq_getMuSerrSCandZ(dataT,plotNeuro);
     %% get fisher transformed correlations
-    dataT.FisherTrCorr = radFreq_getCorrFisherTr(dataT);
+    dataT.FisherTrCorr = radFreq_getFisher_allStim(dataT);
     %% find preferred location
-    dataT.prefLoc = radFreq_getFisherLoc(dataT);
+    dataT.prefLoc = radFreq_getFisherLoc(dataT,plotLocCh);
     %% find preferred RF and phase pairing
     
     %% find preferred spatial frequency

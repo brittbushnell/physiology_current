@@ -110,7 +110,7 @@ location = 0; %0 = laptop 1 = Desktop 2 = zemina
 % 'XT_RE_radFreqLowSF_nsp2_20181217_005_thresh35_info.mat';  
 % };
 % newName = 'XT_RE_radFreqLowSF_nsp2_Dec2019_info';
-
+ 
 % files = {'XT_RE_radFreqLowSF_nsp1_20181217_002_thresh35_ogcorrupt_info.mat';
 % 'XT_RE_radFreqLowSF_nsp1_20181217_003_thresh35_ogcorrupt_info.mat';
 % 'XT_RE_radFreqLowSF_nsp1_20181217_004_thresh35_ogcorrupt_info.mat';
@@ -126,13 +126,13 @@ location = 0; %0 = laptop 1 = Desktop 2 = zemina
 %     };
 % newName = 'XT_LE_RadFreqLowSF_nsp2_Dec2018_info';
 
-files = {
-'XT_LE_RadFreqLowSF_nsp1_20181211_001_thresh35_ogcorrupt_info.mat';
-'XT_LE_RadFreqLowSF_nsp1_20181211_002_thresh35_ogcorrupt_info.mat';
-'XT_LE_RadFreqLowSF_nsp1_20181213_001_thresh35_ogcorrupt_info.mat';
-'XT_LE_RadFreqLowSF_nsp1_20181213_002_thresh35_ogcorrupt_info.mat';
-};
-newName = 'XT_LE_RadFreqLowSF_nsp1_Dec2018_info';
+% files = {
+% 'XT_LE_RadFreqLowSF_nsp1_20181211_001_thresh35_ogcorrupt_info.mat';
+% 'XT_LE_RadFreqLowSF_nsp1_20181211_002_thresh35_ogcorrupt_info.mat';
+% 'XT_LE_RadFreqLowSF_nsp1_20181213_001_thresh35_ogcorrupt_info.mat';
+% 'XT_LE_RadFreqLowSF_nsp1_20181213_002_thresh35_ogcorrupt_info.mat';
+% };
+% newName = 'XT_LE_RadFreqLowSF_nsp1_Dec2018_info';
 
 % files = {'XT_RE_radFreqHighSF_nsp2_20181227_001_thresh35_info.mat';
 % 'XT_RE_radFreqHighSF_nsp2_20181228_001_thresh35_info.mat';
@@ -217,10 +217,10 @@ newName = 'XT_LE_RadFreqLowSF_nsp1_Dec2018_info';
 % };
 % newName = 'XT_LE_RadFreqHighSFV4_nsp2_March2019_info';
 
-% files = {'XT_LE_RadFreqHighSFV4_nsp1_20190306_003_thresh35_ogcorrupt_info.mat';
-% 'XT_LE_RadFreqHighSFV4_nsp1_20190307_001_thresh35_ogcorrupt_info.mat';
-% };
-% newName = 'XT_LE_RadFreqHighSFV4_nsp1_March2019_info';
+files = {'XT_LE_RadFreqHighSFV4_nsp1_20190306_003_thresh35_ogcorrupt_info.mat';
+'XT_LE_RadFreqHighSFV4_nsp1_20190307_001_thresh35_ogcorrupt_info.mat';
+};
+newName = 'XT_LE_RadFreqHighSFV4_nsp1_March2019_info';
 
 %% Extract stimulus information
 

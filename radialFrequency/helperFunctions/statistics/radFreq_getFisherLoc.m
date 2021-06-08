@@ -1,4 +1,4 @@
-function  [prefLoc] = radFreq_getFisherLoc(dataT)
+function  [prefLoc] = radFreq_getFisherLoc(dataT,plotAll)
 %%
 location = determineComputer;
 
@@ -39,13 +39,15 @@ xs = 1:6;
 for ch = 1:96
     scCh = spikes{ch};
     if dataT.goodCh == 1
-        figure(1)
-        clf
-        pos = get(gcf,'Position');
-        set(gcf,'Position',[pos(1), pos(2), 300, 700])
-        
-        s = suptitle(sprintf('%s %s %s Fisher r to z ch %d',dataT.animal, dataT.eye, dataT.array, ch));
-        s.Position(2) = s.Position(2)+0.025;
+        if plotAll == 1
+            figure(1)
+            clf
+            pos = get(gcf,'Position');
+            set(gcf,'Position',[pos(1), pos(2), 300, 700])
+            
+            s = suptitle(sprintf('%s %s %s Fisher r to z ch %d',dataT.animal, dataT.eye, dataT.array, ch));
+            s.Position(2) = s.Position(2)+0.0272;
+        end
         
         for loc = 1:3
             muSc = nan(1,6);
@@ -62,46 +64,60 @@ for ch = 1:96
             end
             sCorr = corr2(xs,muSc);
             zTr(loc,ch) = atanh(sCorr);
+            if abs(zTr) > 2
+                
             
-            h = subplot(3,1,loc);
-            hold on
-            plot(muSc,'o-')
+            [~,prefLoc(ch)] = max(zTr(:,ch));
             
-            xlim([0.5 6.5])
-            title({sprintf('location %d (%.1f, %.1f)',loc,locPair(loc,1),locPair(loc,2));...
-                sprintf('r %.2f   Fisher z %.2f',sCorr, zTr(loc,ch))})
-            if loc == 2
-                ylabel('mean spike count circle subtracted')
+            if plotAll == 1
+                h = subplot(3,1,loc);
+                hold on
+                plot(muSc,'o-')
+                
+                xlim([0.5 6.5])
+                title({sprintf('location %d (%.1f, %.1f)',loc,locPair(loc,1),locPair(loc,2));...
+                    sprintf('r %.2f   Fisher z %.2f',sCorr, zTr(loc,ch))}, 'FontSize',12,'FontWeight','normal');
+
+                if loc == 2
+                    ylabel('mean spike count circle subtracted')
+                end
+                
+                if loc == 3
+                    xlabel('amplitude')
+                end
+                set(gca,'XTick',1:6,'XTickLabel',1:6,'tickdir','out','FontSize',10,'FontAngle','italic')
+                
+                mygca(loc) = gca;
+                b = get(gca,'YLim');
+                yMaxs(loc) = max(b);
+                yMins(loc) = min(b);
+                
+                h.Position(1) = h.Position(1) + 0.05;
+                h.Position(2) = h.Position(2) - 0.02;
             end
-            
-            if loc == 3
-                xlabel('amplitude')
-            end
-            set(gca,'XTick',1:6,'XTickLabel',1:6,'tickdir','out','FontSize',10,'FontAngle','italic')
-            
-            mygca(loc) = gca;
-            b = get(gca,'YLim');
-            yMaxs(loc) = max(b);
-            yMins(loc) = min(b);
-%             
-%             text(0.6,max(b) - 0.05, sprintf('r %.2f',sCorr),'FontSize',10,'FontAngle','italic')
-%             text(0.6,max(b) - 0.12, sprintf('Fisher z %.2f',zTr(loc,ch)),'FontSize',10,'FontAngle','italic')
-            h.Position(1) = h.Position(1) + 0.05;
         end
-        
-        minY = min(yMins);
-        maxY = max(yMaxs);
-        yLimits = ([minY maxY]);
-        set(mygca,'YLim',yLimits);
-        
-        [~,prefLoc(ch)] = max(zTr(:,ch));
-        
-        figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_FisherT_location_ch',num2str(ch),'.pdf'];
-        print(gcf, figName,'-dpdf','-bestfit')
+        if plotAll == 1
+            minY = min(yMins);
+            maxY = max(yMaxs);
+            yLimits = ([minY maxY]);
+            set(mygca,'YLim',yLimits);
+
+            if prefLoc(ch) == 1
+                text(1,maxY*4.25,'*','FontSize',24)
+            elseif prefLoc(ch) == 2
+                text(1,maxY*2.5,'*','FontSize',24)
+           else
+                text(1,maxY - 0.5,'*','FontSize',24)
+            end
+            figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_FisherT_location_ch',num2str(ch),'.pdf'];
+            print(gcf, figName,'-dpdf','-bestfit')
+        end
     end
 end
+
 %% plot distribition
 cd ../
+
 figure(2)
 clf
 pos = get(gcf,'Position');
@@ -138,7 +154,7 @@ for l = 1:3
     set(gca,'tickdir','out','Layer','top','FontSize',10,'FontAngle','italic');
     
     if l == 1
-    text(xScale(1)+ 0.5, yScale(2)+0.01, sprintf('n ch: %d',sum(dataT.goodCh)))
+        text(xScale(1)+ 0.5, yScale(2)+0.01, sprintf('n ch: %d',sum(dataT.goodCh)))
     end
     
     text(xScale(1)+ 0.5, yScale(2), sprintf('# ch prefer this location: %d',sum(prefLoc == l)))
