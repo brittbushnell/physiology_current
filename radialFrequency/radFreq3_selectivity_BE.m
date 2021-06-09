@@ -34,7 +34,8 @@ for fi = 1:length(files)
         end
     end
     locPair = locPair(2:end,:);
-    data.locPair = locPair;
+    REdata.locPair = locPair;
+    LEdata.locPair = locPair;
     %% get spike count matrices
     % rfSCmtx: (repeats, RF, ori, amp, sf, radius, location, ch)
     % blankSCmtx: (repeats, ch)
@@ -53,8 +54,13 @@ for fi = 1:length(files)
     LEdata.FisherTrCorr = radFreq_getFisher_allStim(LEdata);
     radFreq_plotAllFisherZs(REdata,LEdata);
     %% find preferred location
-    REdata.prefLoc = radFreq_getFisherLoc(REdata,plotLocCh);
-    LEdata.prefLoc = radFreq_getFisherLoc(LEdata,plotLocCh);
+    radFreq_plotFisherDist_Loc(REdata, LEdata)
+    [REdata.prefLoc, LEdata.prefLoc] = radFreq_getFisherLoc_BE(REdata, LEdata);
+    %% find preferred RF/Phase combo
+    radFreq_plotFisherDist_RFphase(REdata, LEdata)
+    
+%     REdata.prefLoc = radFreq_getFisherLoc(REdata,plotLocCh);
+%     LEdata.prefLoc = radFreq_getFisherLoc(LEdata,plotLocCh);
     %% find preferred RF and phase pairing
     
     %% find preferred spatial frequency

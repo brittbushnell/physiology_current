@@ -1,4 +1,4 @@
-function [zTr] = radFreq_getFisher_allStim(dataT)
+function [zTr,sCorr] = radFreq_getFisher_allStim(dataT)
 %zTr = (RF,phase,sf,radius,location, ch)
 % zTr contains the fisher transformed correlations based on spike counts
 % with the response to a circle subtracted from it.
@@ -12,6 +12,7 @@ circSpks = dataT.circMuSc;
 %(RF,phase,sf,radius,location, ch) no dimension for amplitude b/c the
 %correlations are computed across the amplitudes.
 zTr = nan(3,2,2,2,3,96);
+sCorr = nan(3,2,2,2,3,96);
 %%
 xVals = 1:size(spikes,3);
 xVals = log2(xVals);
@@ -27,8 +28,9 @@ for ch = 1:96
                             circCh  = squeeze(circSpks(sf,rad,loc,ch));
                             
                             circSubSpikes = spikeCh - circCh;
-                            sCorr = corr2(xVals, circSubSpikes');
-                            zTr(rf,ph,sf,rad,loc,ch)  = atanh(sCorr); 
+                            sCorrT = corr2(xVals, circSubSpikes');
+                            sCorr(rf,ph,sf,rad,loc,ch) = sCorrT;
+                            zTr(rf,ph,sf,rad,loc,ch)  = atanh(sCorrT); 
                             
                         end
                     end

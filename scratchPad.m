@@ -1,70 +1,110 @@
-files = {    % WV
-%     'WV_LE_RadFreqHighSF_nsp2_March2019';
-%     'WV_LE_RadFreqHighSF_nsp1_March2019';
-%     
-%     'WV_RE_RadFreqHighSF_nsp1_March2019';
-%     'WV_RE_RadFreqHighSF_nsp2_March2019';
-%     
-%     'WV_LE_RadFreqLowSF_nsp2_March2019';
-%     'WV_LE_RadFreqLowSF_nsp1_March2019';
-%     
-%     'WV_RE_RadFreqLowSF_nsp2_March2019';
-%     'WV_RE_RadFreqLowSF_nsp1_March2019';
-    
-    % XT
-    'XT_RE_radFreqLowSF_nsp2_Dec2019_info';
-    'XT_RE_radFreqLowSF_nsp1_Dec2019_info';
-    
-    'XT_LE_RadFreqLowSF_nsp2_Dec2018_info';
-    'XT_LE_RadFreqLowSF_nsp1_Dec2018_info';
-    
-    'XT_RE_radFreqHighSF_nsp2_Dec2018_info';
-    'XT_RE_radFreqHighSF_nsp1_Dec2018_info';
-    
-    'XT_LE_radFreqHighSF_nsp2_Jan2019_info';
-    'XT_LE_radFreqHighSF_nsp1_Jan2019_info';
-    
-    'XT_RE_RadFreqLowSFV4_nsp2_Feb2019_info';
-    'XT_RE_RadFreqLowSFV4_nsp1_Feb2019_info';
-    
-    'XT_LE_RadFreqLowSFV4_nsp2_Feb2019_info';
-    'XT_LE_RadFreqLowSFV4_nsp1_Feb2019_info';
-    
-    'XT_LE_RadFreqHighSFV4_nsp2_March2019_info';
-    'XT_LE_RadFreqHighSFV4_nsp1_March2019_info';
-    
-    'XT_LE_RadFreqHighSFV4_nsp2_March2019_info';
-    'XT_LE_RadFreqHighSFV4_nsp1_March2019_info';
-    };
-%%
-location = determineComputer;
+h = subplot(3,4,9);
+hold on
+zs = squeeze(LEzTR(3,1,:,:,:));
+zs = reshape(zs,1,numel(zs));
 
-%%
-for fi = 1:length(files)
-    %%
-    %try
-    filename = files{fi};
-    fparts = strsplit(filename,'_');
-    fprintf('\n *** Analyzing %s file %d/%d ***\n',filename,fi,length(files));
-    
-    if length(fparts) < 7
-        dataT = load(filename);
-    else
-        load(filename);
-        if contains(filename,'RE')
-            dataT = data.RE;
-            if ~contains(dataT.animal,'XT')
-                dataT.eye = 'AE';
-            end
-        else
-            dataT = data.LE;
-            if ~contains(dataT.animal,'XT')
-                dataT.eye = 'FE';
-            end
-        end
-    end
-    
-    [stimLoc] = plotRadFreqLoc_relRFs(dataT);
-    makeRadfreqHeatmaps(dataT,stimLoc)
-    
-end
+histogram(zs,'Normalization','probability','FaceColor','b','EdgeColor','w','BinWidth',0.25)
+yScale = get(gca,'ylim');
+ylim([0, yScale(2)+0.02])
+
+plot(nanmean(zs),yScale(2)+0.01,'v','MarkerFaceColor','b','MarkerEdgeColor','w','MarkerSize',7)
+text(nanmean(zs)+0.15,yScale(2)+0.01,sprintf('\\mu %.2f',nanmean(zs)))
+plot([0 0],[0,yScale(2)+0.013],'-k')
+
+title(sprintf('%s',LEdata.eye))
+
+set(gca,'tickdir','out','Layer','top','FontSize',10,'FontAngle','italic');
+ylabel('probability','FontSize',11,'FontAngle','italic')
+
+mygca(1) = gca;
+b = get(gca,'YLim');
+yMaxs(1) = max(b);
+yMins(1) = min(b);
+
+b = get(gca,'XLim');
+xMaxs(1) = max(b);
+xMins(1) = min(b);
+
+h.Position(4) = h.Position(4) - 0.03;
+clear zs
+
+h = subplot(3,4,10);
+hold on
+zs = squeeze(LEzTR(3,2,:,:,:));
+zs = reshape(zs,1,numel(zs));
+
+histogram(zs,'Normalization','probability','FaceColor','b','EdgeColor','w','BinWidth',0.25)
+yScale = get(gca,'ylim');
+ylim([0, yScale(2)+0.02])
+
+plot(nanmean(zs),yScale(2)+0.01,'v','MarkerFaceColor','b','MarkerEdgeColor','w','MarkerSize',7)
+text(nanmean(zs)+0.15,yScale(2)+0.01,sprintf('\\mu %.2f',nanmean(zs)))
+plot([0 0],[0,yScale(2)+0.013],'-k')
+
+set(gca,'tickdir','out','Layer','top','FontSize',10,'FontAngle','italic');
+
+mygca(1) = gca;
+b = get(gca,'YLim');
+yMaxs(1) = max(b);
+yMins(1) = min(b);
+
+b = get(gca,'XLim');
+xMaxs(1) = max(b);
+xMins(1) = min(b);
+
+h.Position(4) = h.Position(4) - 0.03;
+clear zs
+%
+h = subplot(3,4,11);
+hold on
+zs = squeeze(REzTR(3,1,:,:,:));
+zs = reshape(zs,1,numel(zs));
+
+histogram(zs,'Normalization','probability','FaceColor','r','EdgeColor','w','BinWidth',0.25)
+yScale = get(gca,'ylim');
+ylim([0, yScale(2)+0.02])
+
+plot(nanmean(zs),yScale(2)+0.01,'v','MarkerFaceColor','r','MarkerEdgeColor','w','MarkerSize',7)
+text(nanmean(zs)+0.15,yScale(2)+0.01,sprintf('\\mu %.2f',nanmean(zs)))
+plot([0 0],[0,yScale(2)+0.013],'-k')
+
+set(gca,'tickdir','out','Layer','top','FontSize',10,'FontAngle','italic');
+
+mygca(1) = gca;
+b = get(gca,'YLim');
+yMaxs(1) = max(b);
+yMins(1) = min(b);
+
+b = get(gca,'XLim');
+xMaxs(1) = max(b);
+xMins(1) = min(b);
+
+h.Position(4) = h.Position(4) - 0.03;
+clear zs
+
+h = subplot(3,4,12);
+hold on
+zs = squeeze(REzTR(3,2,:,:,:));
+zs = reshape(zs,1,numel(zs));
+
+histogram(zs,'Normalization','probability','FaceColor','r','EdgeColor','w','BinWidth',0.25)
+yScale = get(gca,'ylim');
+ylim([0, yScale(2)+0.02])
+
+plot(nanmean(zs),yScale(2)+0.01,'v','MarkerFaceColor','r','MarkerEdgeColor','w','MarkerSize',7)
+text(nanmean(zs)+0.15,yScale(2)+0.01,sprintf('\\mu %.2f',nanmean(zs)))
+plot([0 0],[0,yScale(2)+0.013],'-k')
+
+set(gca,'tickdir','out','Layer','top','FontSize',10,'FontAngle','italic');
+
+mygca(1) = gca;
+b = get(gca,'YLim');
+yMaxs(1) = max(b);
+yMins(1) = min(b);
+
+b = get(gca,'XLim');
+xMaxs(1) = max(b);
+xMins(1) = min(b);
+
+h.Position(4) = h.Position(4) - 0.03;
+clear zs
