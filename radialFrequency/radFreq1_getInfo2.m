@@ -196,7 +196,7 @@ for fi = 127:length(files)
         dataT.pos_y = dataT.pos_y';
         dataT.size_x = dataT.size_x';
         
-        dataT.amap = getBlackrockArrayMap(files(1,:));
+        dataT.amap = getBlackrockArrayMap(files(fi,:));
         %% get spike counts and z scores
         [dataT.RFStimResps,dataT.blankResps, dataT.stimResps] = parseRadFreqStimResp(dataT); 
         [dataT.RFspikeCount,dataT.blankSpikeCount,dataT.RFzScore,dataT.blankZscore] = getRadFreqSpikeCountZscore2(dataT);

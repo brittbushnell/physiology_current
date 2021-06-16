@@ -38,9 +38,9 @@ LEprefLoc = nan(1,96);
 locPair = LEdata.locPair;
 amps48 = [6.25 12.5 25 50 100 200];
 amps16 = [3.12 6.25 12.5 25 50 100];
-xs = 1:6;
+xs = 0:6;
 %%
-for ch = 1:96
+for ch = 1:20%:96
     ndx2 = 1;
     
     figure(1)
@@ -61,7 +61,7 @@ for ch = 1:96
         mygca(1,foo) = gca;
     end
     
-    for ey = 1:2
+    for ey = 1%:2
         if ey == 1
             dataT = LEdata;
             scCh = LEspikes{ch};
@@ -74,22 +74,67 @@ for ch = 1:96
         
         if dataT.goodCh(ch) == 1
             
-            muSc = nan(size(locPair,1),6);
+            muSc = nan(size(locPair,1)+1,7);
+            muSc(:,1) = 0;
             corrP = nan(3,2);
             
-            for loc = 1:size(locPair,1)
+            for loc = 2%1:size(locPair,1)
                 for amp = 1:6
                     % get spike counts for the applicable stimuli
                     noCircNdx = (scCh(1,:) < 32);
                     circNdx = (scCh(1,:) == 32);
                     locNdx = (scCh(6,:) == locPair(loc,1)) & (scCh(7,:) == locPair(loc,2));
-                    ampNdx = (scCh(2,:) == amps48(amp)) | (scCh(2,:) == amps16(amp));
-                    stimSpikes = squeeze(scCh(8:end,locNdx & ampNdx & noCircNdx));
+                    amp48Ndx = (scCh(2,:) == amps48(amp) & (scCh(1,:) < 16));
+                    amp16Ndx = (scCh(2,:) == amps16(amp)& (scCh(1,:) == 16));
+                    stim48Spikes = squeeze(scCh(8:end,locNdx & amp48Ndx & noCircNdx));
+                    stim16Spikes = squeeze(scCh(8:end,locNdx & amp16Ndx & noCircNdx));
+                    stimSpikes = [stim48Spikes, stim16Spikes];
                     circSpikes = squeeze(scCh(8:end,locNdx & circNdx));
                     
                     % get mean spike count for each amplitude and subtract
                     % response to circle from that.
-                    muSc(loc,amp) = (nanmean(stimSpikes,'all')) - (nanmean(circSpikes,'all'));
+                    muSc(loc,amp+1) = (nanmean(stimSpikes,'all')) - (nanmean(circSpikes,'all'));
+                    
+                    stim4Spikes = stim48Spikes(:,1:size(stim48Spikes/2));
+                    stim8Spikes = stim48Spikes(:,size(stim48Spikes/2)+1:end);
+                    
+                    figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/%s/stats/FisherTransform/%s/checks',LEdata.animal,LEdata.array, dataT.eye);
+                    if ~exist(figDir,'dir')
+                        mkdir(figDir)
+                    end
+                    
+                    cd(figDir)
+                    figure(13)
+                    clf
+                    s = suptitle(sprintf('%s %s %s spike counts per repeat amplitude %d location %d',dataT.animal, dataT.eye, dataT.array, amp, loc));
+                    s.Position(2) = s.Position(2) + 0.02;
+                    
+                    subplot(2,2,1)
+                    plot(circSpikes)
+                    title('circle')
+                    ylabel('spike count')
+                    set(gca,'box','off')
+                    
+                    subplot(2,2,2)
+                    plot(stim4Spikes)
+                    title('RF4')
+                    set(gca,'box','off')
+                    
+                    subplot(2,2,3)
+                    plot(stim8Spikes)
+                    title('RF8')
+                    ylabel('spike count')
+                    xlabel('repeat')
+                    set(gca,'box','off')
+                    
+                    subplot(2,2,4)
+                    plot(stim16Spikes)
+                    title('RF16')
+                    xlabel('repeat')
+                    set(gca,'box','off')
+                    
+                    figName = [LEdata.animal,'_BE_',LEdata.array,'_spikesByRep_location',num2str(loc),'_amp',num2str(amp),'_ch',num2str(ch),'.pdf'];
+                    print(gcf, figName,'-dpdf','-bestfit')
                 end
                 
                 % get the correlation, and p-value
@@ -128,7 +173,7 @@ for ch = 1:96
                     plot(muScLoc,'o-r')
                 end
                 
-                xlim([0.5 6.5])
+                xlim([-0.5 7.5])
                 
                 title(sprintf('r %.2f  Fisher z %.2f', sCorr, zCh), 'FontSize',12,'FontWeight','normal');
                 
@@ -139,7 +184,7 @@ for ch = 1:96
                 if ndx == 5 || ndx == 6
                     xlabel('amplitude')
                 end
-                set(gca,'XTick',1:6,'XTickLabel',1:6,'tickdir','out','FontSize',10,'FontAngle','italic')
+                set(gca,'XTick',1:7,'XTickLabel',0:6,'tickdir','out','FontSize',10,'FontAngle','italic')
                 
                 mygca(1,ndx2) = gca;
                 b = get(gca,'YLim');
@@ -150,13 +195,13 @@ for ch = 1:96
                 h.Position(2) = h.Position(2) - 0.02;
                 
                 if ndx == 1
-                    lbl = text(-0.75,(b(1)+b(2))/2,'Location 1','FontWeight','bold','FontSize',12);
+                    lbl = text(-2.75,(b(1)+b(2))/2,'Location 1','FontWeight','bold','FontSize',12);
                     lbl.Rotation = 90;
                 elseif ndx == 3
-                    lbl = text(-0.75,(b(1)+b(2))/2,'Location 2','FontWeight','bold','FontSize',12);
+                    lbl = text(-2.75,(b(1)+b(2))/2,'Location 2','FontWeight','bold','FontSize',12);
                     lbl.Rotation = 90;
                 elseif ndx == 5
-                    lbl = text(-0.75,(b(1)+b(2))/2,'Location 3','FontWeight','bold','FontSize',12);
+                    lbl = text(-2.75,(b(1)+b(2))/2,'Location 3','FontWeight','bold','FontSize',12);
                     lbl.Rotation = 90;
                 end
                 
@@ -179,7 +224,7 @@ for ch = 1:96
                 if sum(corrP(:,2)) == 1
                     ploc = find(corrP(:,2) == 1);
                     LEprefLoc(1,ch) = ploc;
-
+                    
                 elseif sum(corrP(:,2)) > 1
                     [~,mxNdx] = max(muSc,[],'all','linear');
                     [ploc,~] = ind2sub(size(muSc),mxNdx);
@@ -193,7 +238,7 @@ for ch = 1:96
                 if sum(corrP(:,2)) == 1
                     ploc = find(corrP(:,2) == 1);
                     REprefLoc(1,ch) = ploc;
- 
+                    
                 elseif sum(corrP(:,2)) > 1
                     [~,mxNdx] = max(muSc,[],'all','linear');
                     [ploc,~] = ind2sub(size(muSc),mxNdx);
@@ -207,20 +252,17 @@ for ch = 1:96
             
             
             if ploc == 1
-%                 t1.Position(2) = minY+abs((minY/4));
                 t1.FontWeight = 'bold';
                 
                 t2.Visible = 'off';
                 t3.Visible = 'off';
             elseif ploc == 2
-%                 t2.Position(2) = minY+abs((minY/4));
                 t2.FontWeight = 'bold';
                 
                 t1.Visible = 'off';
                 t3.Visible = 'off';
                 
             else
-%                 t3.Position(2) = minY+abs((minY/4));
                 t3.FontWeight = 'bold';
                 
                 t1.Visible = 'off';
@@ -236,7 +278,7 @@ for ch = 1:96
     set(mygca,'YLim',yLimits);
     
     figName = [LEdata.animal,'_BE_',LEdata.array,'_FisherT_location_ch',num2str(ch),'.pdf'];
-    print(gcf, figName,'-dpdf','-bestfit')
+%     print(gcf, figName,'-dpdf','-bestfit')
 end
 %% Plot relative number of channels with each location preference
 location = determineComputer;

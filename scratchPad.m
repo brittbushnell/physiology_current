@@ -1,110 +1,121 @@
-h = subplot(3,4,9);
-hold on
-zs = squeeze(LEzTR(3,1,:,:,:));
-zs = reshape(zs,1,numel(zs));
 
-histogram(zs,'Normalization','probability','FaceColor','b','EdgeColor','w','BinWidth',0.25)
-yScale = get(gca,'ylim');
-ylim([0, yScale(2)+0.02])
+% files = {'WU_RE_RadFreqLoc1_nsp2_20170627_002_thresh35_info.mat';
+%     'WU_RE_RadFreqLoc1_nsp2_20170628_002_thresh35_info.mat'};
+% newName = 'WU_RE_radFreqLoc1_nsp2_June2017_info';
 
-plot(nanmean(zs),yScale(2)+0.01,'v','MarkerFaceColor','b','MarkerEdgeColor','w','MarkerSize',7)
-text(nanmean(zs)+0.15,yScale(2)+0.01,sprintf('\\mu %.2f',nanmean(zs)))
-plot([0 0],[0,yScale(2)+0.013],'-k')
 
-title(sprintf('%s',LEdata.eye))
+filename = 'WU_LE_RadFreqLoc1_nsp2_20170626_002_thresh35_info_goodCh';
 
-set(gca,'tickdir','out','Layer','top','FontSize',10,'FontAngle','italic');
-ylabel('probability','FontSize',11,'FontAngle','italic')
+load(filename)
+if contains(filename,'RE')
+    dataT = data.RE;
+else
+    dataT = data.LE;
+end
+%%
+spikes = dataT.RFspikeCount;
+zTr = nan(3,96);
+prefLoc = nan(1,96);
 
-mygca(1) = gca;
-b = get(gca,'YLim');
-yMaxs(1) = max(b);
-yMins(1) = min(b);
+xPoss = unique(dataT.pos_x);
+yPoss = unique(dataT.pos_y);
+locPair = nan(1,2);
 
-b = get(gca,'XLim');
-xMaxs(1) = max(b);
-xMins(1) = min(b);
+for xs = 1:length(xPoss)
+    for ys = 1:length(yPoss)
+        flerp = sum((dataT.pos_x == xPoss(xs)) & (dataT.pos_y == yPoss(ys)));
+        if flerp >1
+            locPair(end+1,:) = [xPoss(xs), yPoss(ys)];
+        end
+    end
+end
+locPair = locPair(2:end,:);
 
-h.Position(4) = h.Position(4) - 0.03;
-clear zs
-
-h = subplot(3,4,10);
-hold on
-zs = squeeze(LEzTR(3,2,:,:,:));
-zs = reshape(zs,1,numel(zs));
-
-histogram(zs,'Normalization','probability','FaceColor','b','EdgeColor','w','BinWidth',0.25)
-yScale = get(gca,'ylim');
-ylim([0, yScale(2)+0.02])
-
-plot(nanmean(zs),yScale(2)+0.01,'v','MarkerFaceColor','b','MarkerEdgeColor','w','MarkerSize',7)
-text(nanmean(zs)+0.15,yScale(2)+0.01,sprintf('\\mu %.2f',nanmean(zs)))
-plot([0 0],[0,yScale(2)+0.013],'-k')
-
-set(gca,'tickdir','out','Layer','top','FontSize',10,'FontAngle','italic');
-
-mygca(1) = gca;
-b = get(gca,'YLim');
-yMaxs(1) = max(b);
-yMins(1) = min(b);
-
-b = get(gca,'XLim');
-xMaxs(1) = max(b);
-xMins(1) = min(b);
-
-h.Position(4) = h.Position(4) - 0.03;
-clear zs
-%
-h = subplot(3,4,11);
-hold on
-zs = squeeze(REzTR(3,1,:,:,:));
-zs = reshape(zs,1,numel(zs));
-
-histogram(zs,'Normalization','probability','FaceColor','r','EdgeColor','w','BinWidth',0.25)
-yScale = get(gca,'ylim');
-ylim([0, yScale(2)+0.02])
-
-plot(nanmean(zs),yScale(2)+0.01,'v','MarkerFaceColor','r','MarkerEdgeColor','w','MarkerSize',7)
-text(nanmean(zs)+0.15,yScale(2)+0.01,sprintf('\\mu %.2f',nanmean(zs)))
-plot([0 0],[0,yScale(2)+0.013],'-k')
-
-set(gca,'tickdir','out','Layer','top','FontSize',10,'FontAngle','italic');
-
-mygca(1) = gca;
-b = get(gca,'YLim');
-yMaxs(1) = max(b);
-yMins(1) = min(b);
-
-b = get(gca,'XLim');
-xMaxs(1) = max(b);
-xMins(1) = min(b);
-
-h.Position(4) = h.Position(4) - 0.03;
-clear zs
-
-h = subplot(3,4,12);
-hold on
-zs = squeeze(REzTR(3,2,:,:,:));
-zs = reshape(zs,1,numel(zs));
-
-histogram(zs,'Normalization','probability','FaceColor','r','EdgeColor','w','BinWidth',0.25)
-yScale = get(gca,'ylim');
-ylim([0, yScale(2)+0.02])
-
-plot(nanmean(zs),yScale(2)+0.01,'v','MarkerFaceColor','r','MarkerEdgeColor','w','MarkerSize',7)
-text(nanmean(zs)+0.15,yScale(2)+0.01,sprintf('\\mu %.2f',nanmean(zs)))
-plot([0 0],[0,yScale(2)+0.013],'-k')
-
-set(gca,'tickdir','out','Layer','top','FontSize',10,'FontAngle','italic');
-
-mygca(1) = gca;
-b = get(gca,'YLim');
-yMaxs(1) = max(b);
-yMins(1) = min(b);
-
-b = get(gca,'XLim');
-xMaxs(1) = max(b);
-xMins(1) = min(b);
-
-h.Position(4) = h.Position(4) - 0.03;
-clear zs
+amps48 = [6.25 12.5 25 50 100 200];
+amps16 = [3.12 6.25 12.5 25 50 100];
+xs = 0:6;
+%%
+testChs = [13, 19, 28, 62];
+for chx = 1:length(testChs)
+    ch = testChs(chx);
+    for ey = 1:2
+        if ey == 1
+%             dataT = dataT;
+            scCh = spikes{ch};
+            ndx = 1;
+        else
+%             dataT = dataT;
+            scCh = spikes{ch};
+            ndx = 2;
+        end
+        
+%         figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/%s/stats/FisherTransform/%s/checks/ch%d',dataT.animal,dataT.array, dataT.eye,ch);
+        figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/%s/stats/FisherTransform/%s/checks/',dataT.animal,dataT.array, dataT.eye);
+        if ~exist(figDir,'dir')
+            mkdir(figDir)
+        end
+        
+        cd(figDir)
+        
+        if dataT.goodCh(ch) == 1
+            
+            muSc = nan(size(locPair,1)+1,7);
+            muSc(:,1) = 0;
+            corrP = nan(3,2);
+            
+            for loc = 2%1:size(locPair,1)
+                for amp = 1%:6
+                    % get spike counts for the applicable stimuli
+                    noCircNdx = (scCh(1,:) < 32);
+                    circNdx = (scCh(1,:) == 32);
+                    locNdx = (scCh(6,:) == locPair(loc,1)) & (scCh(7,:) == locPair(loc,2));
+                    amp48Ndx = (scCh(2,:) == amps48(amp) & (scCh(1,:) < 16));
+                    amp16Ndx = (scCh(2,:) == amps16(amp)& (scCh(1,:) == 16));
+                    stim48Spikes = squeeze(scCh(8:end,locNdx & amp48Ndx & noCircNdx));
+                    stim16Spikes = squeeze(scCh(8:end,locNdx & amp16Ndx & noCircNdx));
+                    stimSpikes = [stim48Spikes, stim16Spikes];
+                    circSpikes = squeeze(scCh(8:end,locNdx & circNdx));
+                    
+                    % get mean spike count for each amplitude and subtract
+                    % response to circle from that.
+                    muSc(loc,amp+1) = (nanmean(stimSpikes,'all')) - (nanmean(circSpikes,'all'));
+                    
+                    stim4Spikes = stim48Spikes(:,1:(size(stim48Spikes,2)/2));
+                    stim8Spikes = stim48Spikes(:,(size(stim48Spikes,2)/2)+1:end);
+                    
+                    figure%(13)
+                    clf
+                    s = suptitle(sprintf('%s %s %s spike counts per repeat ch %d amplitude %d location %d',dataT.animal, dataT.eye, dataT.array, ch, amp, loc));
+                    s.Position(2) = s.Position(2) + 0.02;
+                    
+                    subplot(2,2,1)
+                    plot(circSpikes)
+                    title('circle')
+                    ylabel('spike count')
+                    set(gca,'box','off')
+                    
+                    subplot(2,2,2)
+                    plot(stim4Spikes)
+                    title('RF4')
+                    set(gca,'box','off')
+                    
+                    subplot(2,2,3)
+                    plot(stim8Spikes)
+                    title('RF8')
+                    ylabel('spike count')
+                    xlabel('repeat')
+                    set(gca,'box','off')
+                    
+                    subplot(2,2,4)
+                    plot(stim16Spikes)
+                    title('RF16')
+                    xlabel('repeat')
+                    set(gca,'box','off')
+                    
+                    figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_spikesByRep_location',num2str(loc),'_amp',num2str(amp),'_ch',num2str(ch),'.pdf'];
+%                     print(gcf, figName,'-dpdf','-bestfit')
+                end
+            end
+        end
+    end
+end

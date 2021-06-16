@@ -19,6 +19,5 @@ for dt = 1:2
     end
 end
 %% get index of greatest d'
-
 sumMtx = [squeeze(vSum(1,1,:)),squeeze(vSum(1,2,:)),squeeze(vSum(2,1,:)),squeeze(vSum(2,2,:))]; % rearrange the dPrimess so each row is a ch and each dt,dx is a column
 [~,prefIndex] = max(sumMtx,[],2);% get the indices for the dt,dx that gives the highest summed d'
