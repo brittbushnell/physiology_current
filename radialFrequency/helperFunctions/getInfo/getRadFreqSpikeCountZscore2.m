@@ -1,4 +1,4 @@
-function [RFspikeCount,blankSpikeCount,RFzScore,blankZscore] = getRadFreqSpikeCountZscore2(dataT)
+function [RFspikeCount,blankSpikeCount,RFzScore,blankZscore,RFspikeCountBlankSub,RFzScoreSub] = getRadFreqSpikeCountZscore2(dataT)
 % getRadFreqSpikeCount function will return an cell matrix of the
 % spike counts of each channel to each unique stimulus. Run this after
 % parseRadFreqStimResp to get the stimResps cell array, that way you don't
@@ -78,6 +78,7 @@ countTmp = nan(tmpRows,tmpCols);
 zTmp = nan(tmpRows,tmpCols);
 stimZsAllCh = [];
 blankZsAllCh = [];
+stimZsSubAllCh = [];
 %% spike counts
 for ch = 1:96
     %% blank stimuli
@@ -107,8 +108,11 @@ for ch = 1:96
         stimSpikes(1:length(spikesT),r) = spikesT;
     end
     
+    subSpikes = stimSpikes - mean(blankSpikes);
     stimCount = [typeCol; stimSpikes];
+    stimCountSub = [typeCol; subSpikes];
     RFspikeCount{ch} = stimCount;
+    RFspikeCountBlankSub{ch} = stimCountSub;
     %% zscore spike counts
     spikeVect = reshape(stimSpikes,[numel(stimSpikes),1]);
     chSpikes = [spikeVect; blankSpikes];
@@ -124,13 +128,18 @@ for ch = 1:96
     % stimulus zscores
     for r = 1:size(typeCol,2)
         stimZtmp(:,r) = (stimSpikes(:,r) - chMu)/chStd;
-    end
+        subZtmp(:,r)  = (subSpikes(:,r) - chMu)/chStd;
+    end 
     
     zTmp = [typeCol; stimZtmp];
+    zSubTmp = [typeCol; subZtmp];
     RFzScore{ch} = zTmp;
+    RFzScoreSub{ch} = zSubTmp;
     %%
     stimZsAllCh = [stimZsAllCh; stimZtmp];
     blankZsAllCh = [blankZsAllCh; bTmp];
+
+    stimZsSubAllCh = [stimZsSubAllCh; subZtmp];
 end
 
 %% sanity check figure

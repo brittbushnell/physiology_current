@@ -255,7 +255,7 @@ for fi = 1:length(files)  %length(test)
     
     amap = getBlackrockArrayMap(files(fi,:));
     %     amap = getBlackrockArrayMap(files(t,:));
-    
+    %%
     figure(1)
     clf
     pos = get(gcf,'Position');

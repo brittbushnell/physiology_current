@@ -42,6 +42,9 @@ cd(figDir)
 %%
 [XTV1,XTV4,WUV1, WUV4,WVV1, WVV4] = MakeTriploThesisFigs(XTV1,XTV4,WUV1, WUV4,WVV1, WVV4);
 %%
+
+plotGlass_crNdxvsOriDiff(V1data, V4data)
+
 % makeSprinkleThesisFigs(XTV1,XTV4,WUV1, WUV4,WVV1, WVV4)
 [XTV1.conConsist, XTV1.radConsist] = GlassPrefOrivsExpected(XTV1);
 [XTV4.conConsist, XTV4.radConsist] = GlassPrefOrivsExpected(XTV4);
