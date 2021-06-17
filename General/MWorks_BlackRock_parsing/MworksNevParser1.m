@@ -256,12 +256,13 @@ if contains(programID,'grat','IgnoreCase',true) || contains(programID,'edge','Ig
                 else
                     new_stim = 1;
                 end
-                
+                stim_display_update_events(ind).data{2}.contrast
                 % add the stimulus:
                 if new_stim == 1
                     t_stim = [t_stim, cur_time.*regressionResutls(2) + regressionResutls(1)];
                     for kk = 1:length(stim_var_names)
-                        eval([stim_var_names{kk}, ' = [', stim_var_names{kk},  ', stim_display_update_events(ind).data{2}.', stim_var_names{kk}, '];']);
+                        eval([stim_var_names{kk}, ' = [', stim_var_names{kk},  ', double(stim_display_update_events(ind).data{2}.', stim_var_names{kk}, ')];']);
+                        %eval([stim_var_names{kk}, ' = [', stim_var_names{kk},  ', stim_display_update_events(ind).data{2}.', stim_var_names{kk}, '];']);
                     end
                     n_stim = n_stim + 1;
                 end
