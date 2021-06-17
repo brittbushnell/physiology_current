@@ -192,7 +192,6 @@ files = {
     'XT_RE_RadFreqLowSFV4_nsp2_20190304_001_thresh35';
     'XT_RE_RadFreqLowSFV4_nsp1_20190301_002_thresh35_ogcorrupt';
     'XT_RE_RadFreqLowSFV4_nsp1_20190228_001_thresh35';
-    'XT_RE_RadFreqLowSFV4_nsp1_20190228_002_thresh35';
     'XT_RE_RadFreqLowSFV4_nsp1_20190301_001_thresh35';
     'XT_RE_RadFreqLowSFV4_nsp1_20190304_001_thresh35';
     'XT_LE_RadFreqLowSFV4_nsp2_20190226_002_thresh35';
