@@ -85,26 +85,26 @@ set(gca,'tickdir','out','Layer','top','YTick',0:0.25:1,'XTick',0:0.2:1)
 xlabel('Visual response permutation p-value','FontAngle','italic','FontSize',12)
 ylabel('Half-Split permutation p-value','FontAngle','italic','FontSize',12)
 
-title({sprintf('%s %s %s %s split half p-value vs visual response p-value', data.animal, data.eye, data.programID, data.array);...
+title({sprintf('%s %s %s %s %s %s split half p-value vs visual response p-value', data.animal, data.eye, data.array, data.programID, data.date2, data.runNum);...
     'data in gray areas are excluded'},'FontAngle','italic','FontSize',14)
 %% save
 location = determineComputer;
 
-if location == 0
-    if contains(dataT.animal,'WU')
-        figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/%s/stats/halfCorr/',dataT.animal, dataT.array);
-    elseif contains(dataT.programID,'low','IgnoreCase')
-        figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/lowSF/%s/stats/halfCorr/',dataT.animal, dataT.array);
+if location == 1
+    if contains(data.animal,'WU')
+        figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/%s/stats/halfCorr/',data.animal, data.array);
+    elseif contains(data.programID,'low','IgnoreCase',true)
+        figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/lowSF/%s/stats/halfCorr/',data.animal, data.array);
     else
-        figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/halfCorr/',dataT.animal, dataT.array);
+        figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/halfCorr/',data.animal, data.array);
     end
 else
-    if contains(dataT.animal,'WU')
-        figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/%s/stats/halfCorr/',dataT.animal, dataT.array);
-    elseif contains(dataT.programID,'low','IgnoreCase')
-        figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/lowSF/%s/stats/halfCorr/',dataT.animal, dataT.array);
+    if contains(data.animal,'WU')
+        figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/%s/stats/halfCorr/',data.animal, data.array);
+    elseif contains(data.programID,'low','IgnoreCase',true)
+        figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/lowSF/%s/stats/halfCorr/',data.animal, data.array);
     else
-        figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/halfCorr/',dataT.animal, dataT.array);
+        figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/halfCorr/',data.animal, data.array);
     end
 end
 
@@ -113,5 +113,5 @@ if ~exist(figDir,'dir')
 end
 cd(figDir)
 
-figName = [data.animal,'_',data.eye,'_',data.programID,'_reliableVvisual_',data.array,'.pdf'];
+figName = [data.animal,'_',data.eye,'_',data.programID,'_',data.date2,'_',data.runNum,'_reliableVvisual_',data.array,'.pdf'];
 print(gcf, figName,'-dpdf','-fillpage')

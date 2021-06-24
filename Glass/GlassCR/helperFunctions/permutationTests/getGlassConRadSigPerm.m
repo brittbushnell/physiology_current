@@ -8,7 +8,7 @@ shuffData = nan(size(conRadData));
 crNdxShuffle = nan(numBoot,1);
 %%
 conRadNdx = (conRadData(:,2) - conRadData(:,1))./ (conRadData(:,2) + conRadData(:,1));
-conRadMean = mean(conRadNdx);  
+conRadMean = nanmean(conRadNdx);  
 conRadVect = reshape(conRadData,[numel(conRadData),1]);
 
 for nb = 1:numBoot
@@ -16,7 +16,7 @@ for nb = 1:numBoot
     shuffData(:,1) = conRadVect(r(1:size(conRadData,1)));
     shuffData(:,2) = conRadVect(r(size(conRadData,1)+1:end));
     
-    crNdxShuffle(nb,1) = mean((shuffData(:,2) - shuffData(:,1))./ (shuffData(:,2) + shuffData(:,1)));  
+    crNdxShuffle(nb,1) = nanmean((shuffData(:,2) - shuffData(:,1))./ (shuffData(:,2) + shuffData(:,1)));  
 end
 %%
 high = find(crNdxShuffle>conRadMean);
@@ -31,13 +31,13 @@ else
     sigDif = 0;
 end
 %%
-figDir =  sprintf('~/Dropbox/Figures/%s/Glass/stats/conRadNdx/',animal,array);
+figDir =  sprintf('~/Dropbox/Figures/%s/Glass/stats/conRadNdx/',animal);
 if ~exist(figDir,'dir')
     mkdir(figDir)
 end
 cd(figDir)
 %%
-figure %(1)
+figure(1)
 clf
 s = suptitle(sprintf('%s %s %s permutations for concentric/radial index',animal, array,eye));
 s.Position(2) = s.Position(2) +0.02;
@@ -55,8 +55,9 @@ else
 end
 
 ylim([0 0.6])
+xlim([-1 1])
 set(gca,'tickdir','out','layer','top')
-xlabel('permuted mean conRad index')
+xlabel('permuted nanmean conRad index')
 ylabel('proportion of channels')
 
 figName = [animal,'_',array,'_',eye,'_conRadNdx_hist'];

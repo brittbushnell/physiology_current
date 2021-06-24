@@ -1,121 +1,124 @@
-
-% files = {'WU_RE_RadFreqLoc1_nsp2_20170627_002_thresh35_info.mat';
-%     'WU_RE_RadFreqLoc1_nsp2_20170628_002_thresh35_info.mat'};
-% newName = 'WU_RE_radFreqLoc1_nsp2_June2017_info';
-
-
-filename = 'WU_LE_RadFreqLoc1_nsp2_20170626_002_thresh35_info_goodCh';
-
-load(filename)
-if contains(filename,'RE')
-    dataT = data.RE;
-else
-    dataT = data.LE;
-end
+clear 
+close all
+tic
 %%
-spikes = dataT.RFspikeCount;
-zTr = nan(3,96);
-prefLoc = nan(1,96);
+files = {
+    'XT_RE_radFreqLowSF_nsp1_20181217_002_thresh35_ogcorrupt_info.mat';
+    'XT_RE_radFreqLowSF_nsp1_20181217_003_thresh35_ogcorrupt_info.mat';
+    'XT_RE_radFreqLowSF_nsp1_20181217_004_thresh35_ogcorrupt_info.mat';
+    'XT_RE_radFreqLowSF_nsp1_20181217_005_thresh35_ogcorrupt_info.mat'; % ONLY 2 REPEATS
 
-xPoss = unique(dataT.pos_x);
-yPoss = unique(dataT.pos_y);
-locPair = nan(1,2);
+    'XT_LE_RadFreqLowSF_nsp1_20181211_001_thresh35_ogcorrupt_info.mat';
+    'XT_LE_RadFreqLowSF_nsp1_20181211_002_thresh35_ogcorrupt_info.mat';
+    'XT_LE_RadFreqLowSF_nsp1_20181213_001_thresh35_ogcorrupt_info.mat';
+    'XT_LE_RadFreqLowSF_nsp1_20181213_002_thresh35_ogcorrupt_info.mat';
 
-for xs = 1:length(xPoss)
-    for ys = 1:length(yPoss)
-        flerp = sum((dataT.pos_x == xPoss(xs)) & (dataT.pos_y == yPoss(ys)));
-        if flerp >1
-            locPair(end+1,:) = [xPoss(xs), yPoss(ys)];
-        end
-    end
-end
-locPair = locPair(2:end,:);
+    'XT_RE_radFreqHighSF_nsp1_20181227_001_thresh35_ogcorrupt_info.mat';
+    'XT_RE_radFreqHighSF_nsp1_20181228_001_thresh35_ogcorrupt_info.mat';
+    'XT_RE_radFreqHighSF_nsp1_20181228_002_thresh35_ogcorrupt_info.mat';
+    'XT_RE_radFreqHighSF_nsp1_20181231_001_thresh35_ogcorrupt_info.mat';
 
-amps48 = [6.25 12.5 25 50 100 200];
-amps16 = [3.12 6.25 12.5 25 50 100];
-xs = 0:6;
+    'XT_LE_radFreqHighSF_nsp1_20190102_001_thresh35_ogcorrupt_info.mat';
+    'XT_LE_radFreqHighSF_nsp1_20190102_002_thresh35_ogcorrupt_info.mat';
+    'XT_LE_radFreqHighSF_nsp1_20190103_001_thresh35_ogcorrupt_info.mat';
+    'XT_LE_radFreqHighSF_nsp1_20190103_002_thresh35_ogcorrupt_info.mat';
+
+    'XT_RE_RadFreqLowSFV4_nsp1_20190301_002_thresh35_ogcorrupt_info.mat';
+    'XT_RE_RadFreqLowSFV4_nsp1_20190228_001_thresh35_info.mat';
+    'XT_RE_RadFreqLowSFV4_nsp1_20190228_002_thresh35_info.mat';
+    'XT_RE_RadFreqLowSFV4_nsp1_20190301_001_thresh35_info.mat';
+
+    'XT_LE_RadFreqLowSFV4_nsp1_20190226_002_thresh35_ogcorrupt_info.mat';
+    'XT_LE_RadFreqLowSFV4_nsp1_20190226_003_thresh35_ogcorrupt_info.mat';
+    'XT_LE_RadFreqLowSFV4_nsp1_20190227_001_thresh35_ogcorrupt_info.mat';
+    'XT_LE_RadFreqLowSFV4_nsp1_20190227_002_thresh35_ogcorrupt_info.mat';
+    'XT_LE_RadFreqLowSFV4_nsp1_20190227_003_thresh35_ogcorrupt_info.mat';
+
+    'XT_RE_RadFreqHighSFV4_nsp1_20190304_002_thresh35_info.mat';
+    'XT_RE_RadFreqHighSFV4_nsp1_20190305_002_thresh35_info.mat';
+    'XT_RE_RadFreqHighSFV4_nsp1_20190306_001_thresh35_info.mat';
+    'XT_RE_RadFreqHighSFV4_nsp1_20190306_002_thresh35_info.mat';
+    'XT_LE_RadFreqHighSFV4_nsp1_20190307_002_thresh35_info.mat';
+
+    'XT_LE_RadFreqHighSFV4_nsp1_20190306_003_thresh35_ogcorrupt_info.mat';
+    'XT_LE_RadFreqHighSFV4_nsp1_20190307_001_thresh35_ogcorrupt_info.mat';
+};
 %%
-testChs = [13, 19, 28, 62];
-for chx = 1:length(testChs)
-    ch = testChs(chx);
-    for ey = 1:2
-        if ey == 1
-%             dataT = dataT;
-            scCh = spikes{ch};
-            ndx = 1;
-        else
-%             dataT = dataT;
-            scCh = spikes{ch};
-            ndx = 2;
-        end
-        
-%         figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/%s/stats/FisherTransform/%s/checks/ch%d',dataT.animal,dataT.array, dataT.eye,ch);
-        figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/%s/stats/FisherTransform/%s/checks/',dataT.animal,dataT.array, dataT.eye);
-        if ~exist(figDir,'dir')
-            mkdir(figDir)
-        end
-        
-        cd(figDir)
-        
-        if dataT.goodCh(ch) == 1
-            
-            muSc = nan(size(locPair,1)+1,7);
-            muSc(:,1) = 0;
-            corrP = nan(3,2);
-            
-            for loc = 2%1:size(locPair,1)
-                for amp = 1%:6
-                    % get spike counts for the applicable stimuli
-                    noCircNdx = (scCh(1,:) < 32);
-                    circNdx = (scCh(1,:) == 32);
-                    locNdx = (scCh(6,:) == locPair(loc,1)) & (scCh(7,:) == locPair(loc,2));
-                    amp48Ndx = (scCh(2,:) == amps48(amp) & (scCh(1,:) < 16));
-                    amp16Ndx = (scCh(2,:) == amps16(amp)& (scCh(1,:) == 16));
-                    stim48Spikes = squeeze(scCh(8:end,locNdx & amp48Ndx & noCircNdx));
-                    stim16Spikes = squeeze(scCh(8:end,locNdx & amp16Ndx & noCircNdx));
-                    stimSpikes = [stim48Spikes, stim16Spikes];
-                    circSpikes = squeeze(scCh(8:end,locNdx & circNdx));
-                    
-                    % get mean spike count for each amplitude and subtract
-                    % response to circle from that.
-                    muSc(loc,amp+1) = (nanmean(stimSpikes,'all')) - (nanmean(circSpikes,'all'));
-                    
-                    stim4Spikes = stim48Spikes(:,1:(size(stim48Spikes,2)/2));
-                    stim8Spikes = stim48Spikes(:,(size(stim48Spikes,2)/2)+1:end);
-                    
-                    figure%(13)
-                    clf
-                    s = suptitle(sprintf('%s %s %s spike counts per repeat ch %d amplitude %d location %d',dataT.animal, dataT.eye, dataT.array, ch, amp, loc));
-                    s.Position(2) = s.Position(2) + 0.02;
-                    
-                    subplot(2,2,1)
-                    plot(circSpikes)
-                    title('circle')
-                    ylabel('spike count')
-                    set(gca,'box','off')
-                    
-                    subplot(2,2,2)
-                    plot(stim4Spikes)
-                    title('RF4')
-                    set(gca,'box','off')
-                    
-                    subplot(2,2,3)
-                    plot(stim8Spikes)
-                    title('RF8')
-                    ylabel('spike count')
-                    xlabel('repeat')
-                    set(gca,'box','off')
-                    
-                    subplot(2,2,4)
-                    plot(stim16Spikes)
-                    title('RF16')
-                    xlabel('repeat')
-                    set(gca,'box','off')
-                    
-                    figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_spikesByRep_location',num2str(loc),'_amp',num2str(amp),'_ch',num2str(ch),'.pdf'];
-%                     print(gcf, figName,'-dpdf','-bestfit')
-                end
-            end
-        end
+location = determineComputer;
+numBoot = 500;
+numPerm = 500;
+%%
+for fi = 1:length(files)
+    filename = files{fi};
+    load(filename);
+    
+    if contains(filename,'RE')
+        dataT = data.RE;
+    else
+        dataT = data.LE;
     end
+    %% plot PSTHs
+    figure(2);
+    clf
+    pos = get(gcf,'Position');
+    set(gcf,'Position',[pos(1) pos(2) 1200 900])
+    set(gcf,'PaperOrientation','Landscape');
+    for ch = 1:96
+        
+        subplot(dataT.amap,10,10,ch)
+        hold on;
+        
+        blankResp = nanmean(smoothdata(dataT.bins((dataT.rf == 10000), 1:35 ,ch),'gaussian',3))./0.01;
+        stimResp = nanmean(smoothdata(dataT.bins((dataT.rf ~= 10000), 1:35 ,ch),'gaussian',3))./0.01;
+        plot(1:35,blankResp,'Color',[0.2 0.2 0.2],'LineWidth',0.5);
+        plot(1:35,stimResp,'-k','LineWidth',2);
+        
+        title(ch)
+        
+        set(gca,'Color','none','tickdir','out','XTickLabel',[],'FontAngle','italic');
+        ylim([0 inf])
+    end
+    
+    fname = strrep(filename,'_',' ');
+    suptitle({sprintf('%s %s %s %s stim vs blank', dataT.animal, dataT.array, dataT.programID, dataT.eye);...
+        sprintf(sprintf('%s',string(fname)))});
+    %% determine visually responsive channels
+    % input needs to be (ch x trials)
+    zBlank = nan(96,9000);
+    zStim = nan(96,9000);
+    
+    for ch = 1:96
+        zStimT = dataT.RFzScore{ch}(8:end,:);
+        zBlankT = dataT.blankZscore{ch}(8:end);
+        
+        zStim(ch,1:numel(zStimT)) = reshape(zStimT,[1,numel(zStimT)]);
+        zBlank(ch,1:numel(zBlankT)) = zBlankT;
+    end
+
+    [dataT.allStimBlankDprime, dataT.allStimBlankDprimeBootPerm, dataT.stimBlankDprimePerm, dataT.stimBlankSDPerm]...
+        = StimVsBlankPermutations_allStim_zScore(zStim,zBlank,1000,0.75);
+    fprintf('stim vs Blank permutations done %.2f\n minutes',round(toc/60,2))
+    
+    [dataT.stimBlankChPvals, dataT.responsiveCh]...
+        = getPermutationStatsAndGoodCh(dataT.allStimBlankDprime,dataT.allStimBlankDprimeBootPerm,2,1);
+    fprintf('%d responsive channels defined\n', sum(dataT.responsiveCh))
+    
+    if sum(dataT.responsiveCh) == 0
+        fprintf('There were no responsive channels found, something''s funky')
+        keyboard
+    end
+    %% do split half correlations and permutations
+    % needs to be (conditions x repeats x channels)
+    for ch = 1:96
+        tmpZs = dataT.RFzScore{ch}(8:end,:)';
+        stimZs(:,:,ch) = tmpZs;
+        clear tmpZs;
+    end
+
+    [dataT.zScoreReliabilityIndex, dataT.zScoreReliabilityPvals,dataT.zScoreSplitHalfSigChs,dataT.zScoreReliabilityIndexPerm]...
+        = getHalfCorrPerm(stimZs,filename,numPerm,numBoot);
+    %%
+    plotResponsePvalsVSreliabilityPvals(dataT)
+    fprintf('Split-Half correlations computed and permuted %.2f minutes\n',round(toc/60,2))
+    clear stimZs zStim zBlank 
 end

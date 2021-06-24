@@ -5,35 +5,32 @@ function [] = plotGlass_crNdxvsOriDiff(V1data, V4data)
 [v4LEconRadNdx] = getGlassConRadSigPerm(V4data.LEsort(:,1:2),V4data.trLE.animal,'V4','LE');
 [v4REconRadNdx] = getGlassConRadSigPerm(V4data.REsort(:,1:2),V4data.trRE.animal,'V4','RE');
 %%
-stimX = unique(V1data.trLE.pos_x);
-stimY = unique(V1data.trLE.pos_y);
+% stimX = unique(V1data.trLE.pos_x);
+% stimY = unique(V1data.trLE.pos_y);
 %%
 % for each eye:
 % x-axis: conRad index
-% y-axis: angular difference between preferred and expected oris
-% open symbols for V1/V2 filled for V4
-figure(1)
+
+figure%(1)
 clf
 hold on
 
 pos = get(gcf,'Position');
 set(gcf,'Position',[pos(1), pos(2), 800, 900])
-% suptitle ('
+s = suptitle (sprintf('%s orientation differences using translational patterns vs concentric radial indices',V1data.trLE.animal));
+s.Position(2) = s.Position(2)+0.02;
+
 for eye = 1:2
     if eye == 1
         V1trData = V1data.trLE;
         V4trData = V4data.trLE;
         V1crData = V1data.conRadLE;
         V4crData = V4data.conRadLE;
-        V1triMtx = V1data.LEsort;
-        V4triMtx = V4data.LEsort;
     else
         V1trData = V1data.trRE;
         V4trData = V4data.trRE;
         V1crData = V1data.conRadRE;
         V4crData = V4data.conRadRE;
-        V1triMtx = V1data.REsort;
-        V4triMtx = V4data.REsort;
     end
     
     if contains(V1trData.animal,'XT')
@@ -61,113 +58,309 @@ for eye = 1:2
             V4rfParamsRelGlassFix{ch}(2) = V4rfParamsOrig{ch}(2);
         end
     end
-    
-    rct = V1triMtx(:,1:3);
-    [~,V1prefPattern] = max(rct,[],2);
-    clear rct
-    
-    rct = V4triMtx(:,1:3);
-    [~,V4prefPattern] = max(rct,[],2);
     %%
+    oriDiffV1 = nan(1,96);
+    oriDiffV4 = nan(1,96);
     v1ndx = 1; v4ndx = 1;
     for ch = 1:96
         if V1trData.goodCh(ch) == 1 && V1trData.inStim(ch) == 1 && V1crData.inStim(ch) == 1 && V1crData.goodCh(ch) == 1
             
-            pOri = V1trData.prefParamsPrefOri(ch);
+            pOri = (V1trData.prefParamsPrefOri(ch));
             rfX  = V1rfParamsRelGlassFix{ch}(1);
-            rfY  = V1rfParamsRelGlassFix{ch}(2);
+            rfY  = V1rfParamsRelGlassFix{ch}(2);            
             
-            lLen = 0.5;
-            x2 = rfX +(lLen*cos(pOri));
-            y2 = rfY +(lLen*sin(pOri));
+            hyp = sqrt(((rfX)^2)+((rfY)^2));
+            sinThet = rfY/hyp;
+            radAng  = asind(sinThet);% the angle of the line from fixation to the center of the receptive field is the same as the dot pairs in a radial pattern
+            radAng = mod(radAng,180);
+            cAng = (radAng - 90);  % 90 degrees off of the radial orientation
             
-            x1 = rfX -(lLen*cos(pOri));
-            y1 = rfY -(lLen*sin(pOri));
-            
-            vertex = [stimX;stimY];
-            rfPts  = [rfX; rfY];
-            horzEnd = [-stimX, stimY];
-            
-            x10 = rfX - stimX;
-            y10 = rfY - stimY;
-            x20 = -stimX - stimY;
-            y20 = stimY -  rfY;
-            radAng = rad2deg(atan2(abs(x10*y20-x20*y10),x10*y10+x20*y20));
-            conAng = radAng - 90;
-            
+            oD(ch) = angdiff(cAng, pOri);
+            oriDiffV1(1,ch) = mod(oD(ch),90); %oD(ch);
+
             if eye == 1
+                
                 subplot(2,2,1)
                 hold on
                 
-                plot(v1LEconRadNdx(v1ndx),conAng,'ob')
-                ylabel('local orientation relative to concentric')
-                xlabel('c-r/c+r')
+                plot(v1LEconRadNdx(v1ndx),oriDiffV1(ch),'ob')
+                plot([0 0], [0 90],':k')
+                plot([0 90],[0 0],':k')
+                            
                 xlim([-1.2 1.2])
-                ylim([-95 95])
+                ylim([0 92])
                 
-                set(gca,'box','off','tickdir','out','XTick',-1:0.25:1,'Ytick',-90:30:90)
+                set(gca,'box','off','tickdir','out','XTick',-1:0.25:1,'Ytick',-90:30:90,'XTickLabel',{'radial','','','','no preference','','','','concentric'},'FontSize',10,'FontAngle','italic')
+                
+                if v1ndx == 1
+                    if contains(V1data.trLE.animal,'XT')
+                        title('LE','FontSize',12,'FontAngle','italic','FontWeight','bold')
+                    else
+                        title('FE','FontSize',12,'FontAngle','italic','FontWeight','bold')
+                    end
+                    
+                    
+                    text(-1.8, 45, 'V1','FontSize',12,'FontAngle','italic','FontWeight','bold')
+                end
+                ylabel('Local orientation relative to concentric','FontSize',11,'FontAngle','italic')
+                xlabel('C-R/C+R','FontSize',11,'FontAngle','italic')
                 v1ndx = v1ndx+1;
             else
                 subplot(2,2,2)
                 hold on
                 
-                plot(v1REconRadNdx(v1ndx),conAng,'or')
-                ylabel('local orientation relative to concentric')
-                xlabel('c-r/c+r')
+                plot(v1REconRadNdx(v1ndx),oriDiffV1(ch),'or')
+                plot([0 0], [0 90],':k')
+                plot([0 90],[0 0],':k')
+                
                 xlim([-1.2 1.2])
-                set(gca,'box','off','tickdir','out','XTick',-1:0.25:1,'Ytick',-90:30:90)
-                v1ndx = v1ndx+1;  
+                ylim([0 92])
+                if v1ndx == 1
+                    if contains(V1data.trLE.animal,'XT')
+                        title('RE','FontSize',12,'FontAngle','italic','FontWeight','bold')
+                    else
+                        title('AE','FontSize',12,'FontAngle','italic','FontWeight','bold')
+                    end
+                end
+                
+                ylabel('Local orientation relative to concentric','FontSize',11,'FontAngle','italic')
+                xlabel('C-R/C+R','FontSize',11,'FontAngle','italic')
+                set(gca,'box','off','tickdir','out','XTick',-1:0.25:1,'Ytick',-90:30:90,'XTickLabel',{'radial','','','','no preference','','','','concentric'},'FontSize',10,'FontAngle','italic')
+                v1ndx = v1ndx+1;
             end
-            
+            clear radAng cAng
         end
+        
         if V4trData.goodCh(ch) == 1 && V4trData.inStim(ch) == 1 && V4crData.inStim(ch) == 1 && V4crData.goodCh(ch) == 1
-            
-            pOri = V4trData.prefParamsPrefOri(ch);
+                       
+            pOri = (V4trData.prefParamsPrefOri(ch));
             rfX  = V4rfParamsRelGlassFix{ch}(1);
-            rfY  = V4rfParamsRelGlassFix{ch}(2);
+            rfY  = V4rfParamsRelGlassFix{ch}(2);            
             
-            lLen = 0.5;
-            x2 = rfX +(lLen*cos(pOri));
-            y2 = rfY +(lLen*sin(pOri));
+            hyp = sqrt(((rfX)^2)+((rfY)^2));
+            sinThet = rfY/hyp;
+            radAng  = asind(sinThet);% the angle of the line from fixation to the center of the receptive field is the same as the dot pairs in a radial pattern
+            radAng  = mod(radAng,180); 
+            cAng = (radAng - 90);  % 90 degrees off of the radial orientation
             
-            x1 = rfX -(lLen*cos(pOri));
-            y1 = rfY -(lLen*sin(pOri));
-            
-            vertex = [stimX;stimY];
-            rfPts  = [rfX; rfY];
-            horzEnd = [-stimX, stimY];
-            
-            x10 = rfX - stimX;
-            y10 = rfY - stimY;
-            x20 = -stimX - stimY;
-            y20 = stimY -  rfY;
-            radAng = rad2deg(atan2(abs(x10*y20-x20*y10),x10*y10+x20*y20));
-            conAng = radAng - 90;
+            oD(ch) =angdiff(cAng, pOri);
+            oriDiffV4(1,ch) = mod(oD(ch),90); %oD(ch);
             
             if eye == 1
                 subplot(2,2,3)
                 hold on
                 
-                plot(v4LEconRadNdx(v4ndx),conAng,'ob')
-                ylabel('local orientation relative to concentric')
-                xlabel('c-r/c+r')
-                xlim([-1.2 1.2])
-                ylim([-95 95])
+                plot(v4LEconRadNdx(v4ndx),oriDiffV4(ch),'ob')
+                plot([0 0], [0 90],':k')
+                plot([0 90],[0 0],':k')
                 
-                set(gca,'box','off','tickdir','out','XTick',-1:0.25:1,'Ytick',-90:30:90)
+                xlim([-1.2 1.2])
+                ylim([0 92])
+                if v4ndx == 1
+                    text(-1.8, 45, 'V4','FontSize',12,'FontAngle','italic','FontWeight','bold')
+                end
+                set(gca,'box','off','tickdir','out','XTick',-1:0.25:1,'Ytick',-90:30:90,'XTickLabel',{'radial','','','','no preference','','','','concentric'},'FontSize',10,'FontAngle','italic')
+                ylabel('Local orientation relative to concentric','FontSize',11,'FontAngle','italic')
+                xlabel('C-R/C+R','FontSize',11,'FontAngle','italic')
                 v4ndx = v4ndx+1;
             else
                 subplot(2,2,4)
                 hold on
                 
-                plot(v4REconRadNdx(v4ndx),conAng,'or')
-                ylabel('local orientation relative to concentric')
-                xlabel('c-r/c+r')
+                plot(v4REconRadNdx(v4ndx),oriDiffV4(ch),'or')
+                plot([0 0], [0 90],':k')
+                plot([0 90],[0 0],':k')
+                
                 xlim([-1.2 1.2])
-                set(gca,'box','off','tickdir','out','XTick',-1:0.25:1,'Ytick',-90:30:90)
-                v4ndx = v4ndx+1;  
+                ylim([0 92])
+                set(gca,'box','off','tickdir','out','XTick',-1:0.25:1,'Ytick',-90:30:90,'XTickLabel',{'radial','','','','no preference','','','','concentric'},'FontSize',10,'FontAngle','italic')
+                ylabel('Local orientation relative to concentric','FontSize',11,'FontAngle','italic')
+                xlabel('C-R/C+R','FontSize',11,'FontAngle','italic')
+                v4ndx = v4ndx+1;
             end
-            
+             clear radAng cAng
         end
     end
+    if eye == 1
+        LEoriDiffV1 = oriDiffV1;
+        LEoriDiffV4 = oriDiffV4;
+    else
+        REoriDiffV1 = oriDiffV1;
+        REoriDiffV4 = oriDiffV4;
+    end
 end
+%% save figure
+figDir =  sprintf('~/Dropbox/Figures/%s/Glass/stats/conRadNdx/',V1data.trLE.animal);
+if ~exist(figDir,'dir')
+    mkdir(figDir)
+end
+cd(figDir)
+
+figName = [V1data.trLE.animal,'_conRadNdxVStrOriDiff'];
+print(gcf, figName,'-dpdf','-bestfit')
+%%
+figure%(4)
+clf
+pos = get(gcf,'Position');
+set(gcf,'Position',[pos(1) pos(2) 1100 600],'PaperOrientation','landscape')
+
+suptitle(sprintf('%s distribution of local orientations relative to concentric',V1data.trLE.animal));
+
+
+LElowNdx = v1LEconRadNdx < 0;
+LEhiNdx  = v1LEconRadNdx > 0;
+
+LElow = LEoriDiffV1((LElowNdx));
+LEhi  = LEoriDiffV1((LEhiNdx));
+
+
+h = subplot(2,4,1);
+hold on
+histogram(LElow,'Normalization','probability','FaceColor','b','EdgeColor','w','BinWidth',10)
+xlim([-5 95])
+ylim([0 0.5])
+set(gca,'XTick', 0:10:90,'TickDir','out','layer','top')
+ylabel('probability','FontSize',11,'FontAngle','italic')
+title('Channels in radial half','FontSize',12,'FontWeight','bold','FontAngle','italic')
+h.Position(4) = h.Position(4) - 0.12;
+h.Position(3) = h.Position(3) + 0.03;
+h.Position(1) = h.Position(1) - 0.04;
+
+if contains(V1data.trLE.animal,'XT')
+    text(110, 0.65,'LE','FontSize',12,'FontWeight','bold')
+else
+    text(110, 0.65,'FE','FontSize',12,'FontWeight','bold')
+end
+
+text(-170,0.25','V1','FontSize',12,'FontWeight','bold')
+text(0,0.45,sprintf('n %d',length(LElow)))
+
+h = subplot(2,4,2);
+hold on
+histogram(LEhi,'Normalization','probability','FaceColor','b','EdgeColor','w','BinWidth',10)
+xlim([-5 95])
+ylim([0 0.5])
+set(gca,'XTick', 0:10:90,'TickDir','out','layer','top')
+title('Channels in con half','FontSize',12,'FontWeight','bold','FontAngle','italic')
+h.Position(4) = h.Position(4) - 0.12;
+h.Position(3) = h.Position(3) + 0.03;
+h.Position(1) = h.Position(1) - 0.027;
+text(0,0.45,sprintf('n %d',length(LEhi)))
+
+RElowNdx = v1REconRadNdx < 0;
+REhiNdx  = v1REconRadNdx > 0;
+
+RElow = REoriDiffV1(RElowNdx);
+REhi  = REoriDiffV1(REhiNdx);
+
+
+h = subplot(2,4,4);
+hold on
+histogram(REhi,'Normalization','probability','FaceColor','r','EdgeColor','w','BinWidth',10)
+xlim([-5 95])
+ylim([0 0.5])
+set(gca,'XTick', 0:10:90,'TickDir','out','layer','top')
+title('Channels in con half','FontSize',12,'FontWeight','bold','FontAngle','italic')
+h.Position(4) = h.Position(4) - 0.12;
+h.Position(3) = h.Position(3) + 0.03;
+h.Position(1) = h.Position(1) + 0.03;
+text(0,0.45,sprintf('n %d',length(REhi)))
+
+h = subplot(2,4,3);
+hold on
+histogram(RElow,'Normalization','probability','FaceColor','r','EdgeColor','w','BinWidth',10)
+xlim([-5 95])
+ylim([0 0.5])
+set(gca,'XTick', 0:10:90,'TickDir','out','layer','top')
+title('Channels in radial half','FontSize',12,'FontWeight','bold','FontAngle','italic')
+h.Position(4) = h.Position(4) - 0.12;
+h.Position(3) = h.Position(3) + 0.03;
+h.Position(1) = h.Position(1) + 0.02;
+
+if contains(V1data.trLE.animal,'XT')
+    text(110, 0.65,'RE','FontSize',12,'FontWeight','bold')
+else
+    text(110, 0.65,'AE','FontSize',12,'FontWeight','bold')
+end
+text(0,0.45,sprintf('n %d',length(RElow)))
+
+clear RElowNdx; clear RElow;
+clear REhiNdx;  clear REhi;
+
+clear LElowNdx; clear LElow;
+clear LEhiNdx;  clear LEhi;
+
+LElowNdx = v4LEconRadNdx < 0;
+LEhiNdx  = v4LEconRadNdx > 0;
+
+LElow = LEoriDiffV4(LElowNdx);
+LEhi  = LEoriDiffV4(LEhiNdx);
+
+
+h = subplot(2,4,5);
+hold on
+histogram(LElow,'Normalization','probability','FaceColor','b','EdgeColor','w','BinWidth',10)
+xlim([-5 95])
+ylim([0 0.5])
+set(gca,'XTick', 0:10:90,'TickDir','out','layer','top')
+ylabel('probability','FontSize',11,'FontAngle','italic')
+h.Position(4) = h.Position(4) - 0.12;
+h.Position(3) = h.Position(3) + 0.03;
+h.Position(2) = h.Position(2) + 0.05;
+h.Position(1) = h.Position(1) - 0.04;
+
+text(0,0.45,sprintf('n %d',length(LElow)))
+text(-170,0.25','V4','FontSize',12,'FontWeight','bold')
+t = xlabel('Local concentric orientation vs translational pref orientation','FontAngle','italic','FontSize',11);
+t.Position(1) = t.Position(1)+80;
+t.Position(2) = t.Position(2)-0.05;
+
+h = subplot(2,4,6);
+hold on
+histogram(LEhi,'Normalization','probability','FaceColor','b','EdgeColor','w','BinWidth',10)
+xlim([-5 95])
+ylim([0 0.5])
+set(gca,'XTick', 0:10:90,'TickDir','out','layer','top')
+h.Position(4) = h.Position(4) - 0.12;
+h.Position(3) = h.Position(3) + 0.03;
+h.Position(2) = h.Position(2) + 0.05;
+h.Position(1) = h.Position(1) - 0.027;
+text(0,0.45,sprintf('n %d',length(LEhi)))
+
+RElowNdx = v4REconRadNdx < 0;
+REhiNdx  = v4REconRadNdx > 0;
+
+RElow = REoriDiffV4(RElowNdx);
+REhi  = REoriDiffV4(REhiNdx);
+
+h = subplot(2,4,8);
+hold on
+histogram(REhi,'Normalization','probability','FaceColor','r','EdgeColor','w','BinWidth',10)
+xlim([-5 95])
+ylim([0 0.5])
+set(gca,'XTick', 0:10:90,'TickDir','out','layer','top')
+text(0,0.45,sprintf('n %d',length(REhi)))
+
+h.Position(4) = h.Position(4) - 0.12;
+h.Position(3) = h.Position(3) + 0.03;
+h.Position(2) = h.Position(2) + 0.05;
+h.Position(1) = h.Position(1) + 0.03;
+
+h = subplot(2,4,7);
+hold on
+histogram(RElow,'Normalization','probability','FaceColor','r','EdgeColor','w','BinWidth',10)
+xlim([-5 95])
+ylim([0 0.5])
+set(gca,'XTick', 0:10:90,'TickDir','out','layer','top')
+text(0,0.45,sprintf('n %d',length(RElow)))
+
+h.Position(4) = h.Position(4) - 0.12;
+h.Position(3) = h.Position(3) + 0.03;
+h.Position(2) = h.Position(2) + 0.05;
+h.Position(1) = h.Position(1) + 0.02;
+t = xlabel('Local concentric orientation vs translational pref orientation','FontAngle','italic','FontSize',11);
+t.Position(1) = t.Position(1)+80;
+t.Position(2) = t.Position(2)-0.05;
+%%
+figName = [V1data.trLE.animal,'_conRadNdxVStrOri_dist'];    
+print(gcf, figName,'-dpdf','-bestfit')

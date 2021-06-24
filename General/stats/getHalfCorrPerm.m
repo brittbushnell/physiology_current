@@ -141,39 +141,39 @@ if plotFlag == 1
     suptitle({'Reliability index permutation distributions vs observed (red line)';...
         'Permutating conditions'})
     %%
-    location = determineComputer;
-    filePartInfo = strsplit(filename,'_');
-    
-    if contains(filename,'nsp1')
-        array = 'V1';
-    else
-        array = 'V4';
-    end
-        
-    if location == 0        
-        if contains(dataT.animal,'WU')
-            figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/%s/stats/halfCorr/',filePartInfo{1}, array);
-        elseif contains(dataT.programID,'low','IgnoreCase')
-            figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/lowSF/%s/stats/halfCorr/',filePartInfo{1}, array);
-        else
-            figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/halfCorr/',filePartInfo{1}, array);
-        end
-    else
-        if contains(dataT.animal,'WU')
-            figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/%s/stats/halfCorr/',filePartInfo{1},array);
-        elseif contains(dataT.programID,'low','IgnoreCase')
-            figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/lowSF/%s/stats/halfCorr/',filePartInfo{1},array);
-        else
-            figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/halfCorr/',filePartInfo{1},array);
-        end
-    end
-    if ~exist(figDir,'dir')
-        mkdir(figDir)
-    end
-    cd(figDir)
-    
-    figName = [filePartInfo{1},'_',filePartInfo{2},'_',array,'_splitHalfPermDist_',filePartInfo{3},'_',filePartInfo{5},'.pdf'];
-    print(gcf, figName,'-dpdf','-fillpage')
+%     location = determineComputer;
+%     filePartInfo = strsplit(filename,'_');
+%     
+%     if contains(filename,'nsp1')
+%         array = 'V1';
+%     else
+%         array = 'V4';
+%     end
+%         
+%     if location == 1        
+%         if contains(filename,'WU')
+%             figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/%s/stats/halfCorr/',filePartInfo{1}, array);
+% %         elseif contains(filename,'low','IgnoreCase',true)
+% %             figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/lowSF/%s/stats/halfCorr/',filePartInfo{1}, array);
+%         else
+%             figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/%s/stats/halfCorr/',filePartInfo{1}, array);
+%         end
+%     else
+%         if contains(filename,'WU')
+%             figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/%s/stats/halfCorr/',filePartInfo{1},array);
+% %         elseif contains(filename,'low','IgnoreCase',true)
+% %             figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/lowSF/%s/stats/halfCorr/',filePartInfo{1},array);
+%         else
+%             figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/%s/stats/halfCorr/',filePartInfo{1},array);
+%         end
+%     end
+%     if ~exist(figDir,'dir')
+%         mkdir(figDir)
+%     end
+%     cd(figDir)
+%     
+%     figName = [filePartInfo{1},'_',filePartInfo{2},'_',array,'_splitHalfPermDist_',filePartInfo{3},'_',filePartInfo{5},'.pdf'];
+%     print(gcf, figName,'-dpdf','-fillpage')
      %%
 %     figure%(1)
 %     clf

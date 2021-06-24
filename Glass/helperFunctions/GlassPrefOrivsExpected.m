@@ -16,17 +16,26 @@ hold on
 
 pos = get(gcf,'Position');
 set(gcf,'Position',[pos(1), pos(2), 800, 900])
+%%
 
+[cDpLE, rDpLE] = getGlassConRadPrefDprime_allCh(dataT.conRadLE.radNoiseDprime, dataT.conRadLE.conNoiseDprime);
+[cDpRE, rDpRE] = getGlassConRadPrefDprime_allCh(dataT.conRadRE.radNoiseDprime, dataT.conRadRE.conNoiseDprime);
+
+conRadLE = [rDpLE, cDpLE];
+conRadRE = [rDpRE, cDpRE];
+[LEconRadNdx] = getGlassConRadSigPerm(conRadLE,dataT.trLE.animal,dataT.trLE.array,'LE');
+[REconRadNdx] = getGlassConRadSigPerm(conRadRE,dataT.trRE.animal,dataT.trRE.array,'RE');
+
+%%
 for eye = 1:2
     if eye == 1
         trData = dataT.trLE;
         crData = dataT.conRadLE;
-        triMtx = dataT.LEsort;
-        
+        crNdx  = LEconRadNdx;
     else
         trData = dataT.trRE;
         crData = dataT.conRadRE;
-        triMtx = dataT.REsort;
+        crNdx  = REconRadNdx;
     end
     
     s = suptitle(sprintf('%s %s preferred stim and orientation expectations',trData.animal, trData.array));
@@ -53,8 +62,9 @@ for eye = 1:2
         end
     end
     
-    rct = triMtx(:,1:3);
-    [~,prefPattern] = max(rct,[],2);
+%     rct = triMtx(:,1:3);
+%     [~,prefPattern] = max(rct,[],2);
+
     %%
     if contains(dataT.trLE.animal,'WU')
         xval = ([-8, 2]);
@@ -145,7 +155,7 @@ for eye = 1:2
             radAng = rad2deg(atan2(abs(x10*y20-x20*y10),x10*y10+x20*y20));
             conAng = radAng - 90;
             
-            if prefPattern(ndx) == 2 % con
+            if crNdx(ch) > 0 % con
                 if eye == 1
                     h = subplot(2,2,1);
                     hold on
@@ -153,13 +163,14 @@ for eye = 1:2
                     h = subplot(2,2,2);
                     hold on
                 end
+                 t = plot([x2, x1], [y2, y1],'-','color',[0.7 0 0.7 0.6],'lineWidth',1.5);
                 if abs(conAng-pOri) <=15
-                    t = plot([x2, x1], [y2, y1],'-','color',[0.7 0 0.7],'lineWidth',1.5);
-                    conConsist(1,eye) = conConsist(1,eye)+1;
+%                     t = plot([x2, x1], [y2, y1],'-','color',[0.7 0 0.7],'lineWidth',1.5);
+%                     conConsist(1,eye) = conConsist(1,eye)+1;
                 else
-                    t = plot([x2, x1], [y2, y1],'-','color',[0.7 0 0.7 0.4],'lineWidth',1);
+%                     t = plot([x2, x1], [y2, y1],'-','color',[0.7 0 0.7 0.4],'lineWidth',1);
                 end
-            elseif prefPattern(ndx) == 1 % rad
+            elseif crNdx(ch) < 0 % rad
                 if eye == 1
                     h = subplot(2,2,3);
                     hold on
@@ -167,18 +178,27 @@ for eye = 1:2
                     h = subplot(2,2,4);
                     hold on
                 end
+                 t = plot([x2, x1], [y2, y1],'-','color',[0 0.6 0.2 0.6],'lineWidth',1.5);
                 if abs(radAng-pOri) <= 15
-                    t = plot([x2, x1], [y2, y1],'-','color',[0 0.6 0.2],'lineWidth',1.5);
-                    radConsist(1,eye) = radConsist(1,eye)+1;
+%                     radConsist(1,eye) = radConsist(1,eye)+1;
                 else
-                    t = plot([x2, x1], [y2, y1],'-','color',[0 0.6 0.2 0.4],'lineWidth',1);
+%                     t = plot([x2, x1], [y2, y1],'-','color',[0 0.6 0.2 0.4],'lineWidth',1);
                 end
             end
             ndx = ndx+1;
         end
+        pause
     end
-    pause(.5)
 end
+
+% h1.YLim = yval;
+% h1.XLim = xval;
+% h2.YLim = yval;
+% h2.XLim = xval;
+% h3.YLim = yval;
+% h3.XLim = xval;
+% h4.YLim = yval;
+% h4.XLim = xval;
 
 wd = h1.Position(3);
 ht = h1.Position(4);
@@ -189,14 +209,7 @@ h3.Position(4) = ht;
 h4.Position(3) = wd;
 h4.Position(4) = ht;
 
-h1.YLim = yval;
-h1.XLim = xval;
-h2.YLim = yval;
-h2.XLim = xval;
-h3.YLim = yval;
-h3.XLim = xval;
-h4.YLim = yval;
-h4.XLim = xval;
+
 %%
 figName = [dataT.trLE.animal,'_',dataT.trLE.array,'_sprinkleConsistency','.pdf'];
 print(gcf, figName,'-dpdf','-bestfit')
