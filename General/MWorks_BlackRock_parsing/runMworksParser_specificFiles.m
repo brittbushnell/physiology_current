@@ -1,16 +1,21 @@
 
 %%
-clear all
+clear
 close all
 clc
 clear
 tic
 %%
 files = {
-'WU_RE_GratingsCon_nsp2_20170809_003_thresh35'
+    'WU_LE_GratingsCon_nsp1_20170809_002_thresh35';
+% 'WU_RE_GratingsCon_nsp1_20170809_003_thresh35';
+% 'WU_LE_GratingsCon_nsp1_20170811_003_thresh35';
+% 'WU_RE_GratingsCon_nsp1_20170809_003_thresh35';
+% 'WU_RE_GratingsCon_nsp1_20170811_001_thresh35';
+% 'WU_RE_GratingsCon_nsp1_20170811_002_thresh35';
     };
 %%
-stimType = 'png'; %'gratings';
+stimType = 'gratings'; %'png'
 
 %%
 failNdx = 0;
