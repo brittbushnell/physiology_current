@@ -1,5 +1,5 @@
-function [REprefLoc, LEprefLoc] = radFreq_getFisherLoc_BE(REdata, LEdata)
-
+function  [REprefLoc, LEprefLoc] = radFreq_getFisherLoc_BE_check(REdata, LEdata)
+%%
 location = determineComputer;
 
 if location == 1
@@ -26,6 +26,7 @@ end
 
 cd(figDir)
 %%
+%(RF,ori,amp,sf,radius,location, ch)
 REspikes = REdata.RFspikeCount;
 REzTr = nan(3,96);
 REprefLoc = nan(1,96);
@@ -49,11 +50,17 @@ for ch = 1:96
     
     s = suptitle(sprintf('%s %s Fisher r to z ch %d',REdata.animal, REdata.array, ch));
     s.Position(2) = s.Position(2)+0.0272;
-    
+    % make dummy subplots to get correct dimensions of mygca. Otherwise it
+    % throws an error if one eye isn't included when trying to redo the y
+    % axis
+    % if ch == 94
+    %     keyboard
+    % end
     for foo = 1:6
         subplot(3,2,foo)
         mygca(1,foo) = gca;
     end
+    
     for ey = 1:2
         if ey == 1
             dataT = LEdata;
@@ -64,6 +71,7 @@ for ch = 1:96
             scCh = REspikes{ch};
             ndx = 2;
         end
+        
         if dataT.goodCh(ch) == 1
             
             muSc = nan(size(locPair,1)+1,7);
@@ -86,9 +94,51 @@ for ch = 1:96
                     % get mean spike count for each amplitude and subtract
                     % response to circle from that.
                     muSc(loc,amp+1) = (nanmean(stimSpikes,'all')) - (nanmean(circSpikes,'all'));
+                    
+                    stim4Spikes = stim48Spikes(:,1:size(stim48Spikes/2));
+                    stim8Spikes = stim48Spikes(:,size(stim48Spikes/2)+1:end);
+                    
+                    figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/%s/stats/FisherTransform/%s/checks',LEdata.animal,LEdata.array, dataT.eye);
+                    if ~exist(figDir,'dir')
+                        mkdir(figDir)
+                    end
+                    
+                    cd(figDir)
+                    figure(13)
+                    clf
+                    s = suptitle(sprintf('%s %s %s spike counts per repeat amplitude %d location %d',dataT.animal, dataT.eye, dataT.array, amp, loc));
+                    s.Position(2) = s.Position(2) + 0.02;
+                    
+                    subplot(2,2,1)
+                    plot(circSpikes)
+                    title('circle')
+                    ylabel('spike count')
+                    set(gca,'box','off')
+                    
+                    subplot(2,2,2)
+                    plot(stim4Spikes)
+                    title('RF4')
+                    set(gca,'box','off')
+                    
+                    subplot(2,2,3)
+                    plot(stim8Spikes)
+                    title('RF8')
+                    ylabel('spike count')
+                    xlabel('repeat')
+                    set(gca,'box','off')
+                    
+                    subplot(2,2,4)
+                    plot(stim16Spikes)
+                    title('RF16')
+                    xlabel('repeat')
+                    set(gca,'box','off')
+                    
+                    figName = [LEdata.animal,'_BE_',LEdata.array,'_spikesByRep_location',num2str(loc),'_amp',num2str(amp),'_ch',num2str(ch),'.pdf'];
+                    print(gcf, figName,'-dpdf','-bestfit')
                 end
                 
-                % get the correlation and p-value
+                % get the correlation, and p-value
+                
                 muScLoc = squeeze(muSc(loc,:));
                 [corMtx,corPmtx] = corrcoef(xs,muScLoc);
                 sCorr = corMtx(2);
@@ -158,13 +208,13 @@ for ch = 1:96
                 % make a text in each figure, then once you know which
                 % location is preferred, make * in the other subplots not
                 % visible
-                if loc == 1
-                    t1 = text(6,b(1),'*','FontSize',24);
-                elseif loc == 2
-                    t2 = text(6,b(1),'*','FontSize',24);
-                else
-                    t3 = text(6,b(1),'*','FontSize',24);
-                end
+%                 if loc == 1
+%                     t1 = text(6,b(1),'*','FontSize',24);
+%                 elseif loc == 2
+%                     t2 = text(6,b(1),'*','FontSize',24);
+%                 else
+%                     t3 = text(6,b(1),'*','FontSize',24);
+%                 end
                 
                 ndx = ndx+2;
                 ndx2 = ndx2+1;
@@ -200,35 +250,36 @@ for ch = 1:96
                 end
             end
             
-            if ploc == 1
-                t1.FontWeight = 'bold';
-                
-                t2.Visible = 'off';
-                t3.Visible = 'off';
-            elseif ploc == 2
-                t2.FontWeight = 'bold';
-                
-                t1.Visible = 'off';
-                t3.Visible = 'off';
-                
-            else
-                t3.FontWeight = 'bold';
-                
-                t1.Visible = 'off';
-                t2.Visible = 'off';
-            end
+            
+%             if ploc == 1
+%                 t1.FontWeight = 'bold';
+%                 
+%                 t2.Visible = 'off';
+%                 t3.Visible = 'off';
+%             elseif ploc == 2
+%                 t2.FontWeight = 'bold';
+%                 
+%                 t1.Visible = 'off';
+%                 t3.Visible = 'off';
+%                 
+%             else
+%                 t3.FontWeight = 'bold';
+%                 
+%                 t1.Visible = 'off';
+%                 t2.Visible = 'off';
+%             end
             clear ploc;
         end
     end
+    
     minY = min(yMins);
     maxY = max(yMaxs);
     yLimits = ([minY maxY]);
     set(mygca,'YLim',yLimits);
     
     figName = [LEdata.animal,'_BE_',LEdata.array,'_FisherT_location_ch',num2str(ch),'.pdf'];
-    %     print(gcf, figName,'-dpdf','-bestfit')
+%     print(gcf, figName,'-dpdf','-bestfit')
 end
-%%
 %% Plot relative number of channels with each location preference
 location = determineComputer;
 
@@ -298,4 +349,3 @@ ylim([0 0.5])
 
 figName = [LEdata.animal,'_BE_',LEdata.array,'_FisherT_location_Prefs','.pdf'];
 print(gcf, figName,'-dpdf','-bestfit')
-

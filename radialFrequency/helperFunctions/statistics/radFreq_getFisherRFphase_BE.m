@@ -1,8 +1,15 @@
 function [REprefRFphase, LEprefRFphase] = radFreq_getFisherRFphase_BE(REdata, LEdata)
-%%
-RFphase = determineComputer;
+% This function should be called after running radFreq_getFisherLoc_BE to
+% get the preferred location for each good channel. Looking at the
+% preferred location, this function will find the preferred rotation (if there is one)
+% for each RF.
 
-if RFphase == 1
+% Brittany Bushnell 6/24/21
+
+%%
+location = determineComputer;
+
+if location == 1
     if contains(LEdata.animal,'WU')
         figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/%s/stats/FisherTransform/BE/RFphase',LEdata.animal,LEdata.array);
     elseif contains(LEdata.programID,'low','IgnoreCase')
@@ -10,7 +17,7 @@ if RFphase == 1
     else
         figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/FisherTransform/BE/RFphase',LEdata.animal,LEdata.array);
     end
-elseif RFphase == 0
+elseif location == 0
     if contains(LEdata.animal,'WU')
         figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/%s/stats/FisherTransform/BE/RFphase',LEdata.animal,LEdata.array);
     elseif contains(LEdata.programID,'low','IgnoreCase')

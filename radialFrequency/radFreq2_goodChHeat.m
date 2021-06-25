@@ -86,6 +86,7 @@ for fi = 1:length(files)
             dataT = data.LE;
         end
     end
+    dataT.amap = getBlackrockArrayMap(filename);
     %% plot receptive fields relative to stimulus locations
     [stimLoc] = plotRadFreqLoc_relRFs(dataT);
     %% plot PSTH

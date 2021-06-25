@@ -6,6 +6,9 @@ tic
 
 files = {
     'WU_BE_radFreqLoc1_V4';
+%     'WU_BE_radFreqLoc1_V1';
+%     'WV_BE_radFreqHighSF_V4';
+%     'WV_BE_radFreqHighSF_V1';
     };
 %%
 plotNeuro = 0;
@@ -20,22 +23,6 @@ for fi = 1:length(files)
     load(filename);
     REdata = data.RE;
     LEdata = data.LE;
-    %% get stimulus locations
-    xPoss = unique(LEdata.pos_x);
-    yPoss = unique(LEdata.pos_y);
-    locPair = nan(1,2);
-    
-    for xs = 1:length(xPoss)
-        for ys = 1:length(yPoss)
-            flerp = sum((LEdata.pos_x == xPoss(xs)) & (LEdata.pos_y == yPoss(ys)));
-            if flerp >1
-                locPair(end+1,:) = [xPoss(xs), yPoss(ys)];
-            end
-        end
-    end
-    locPair = locPair(2:end,:);
-    REdata.locPair = locPair;
-    LEdata.locPair = locPair;
     %% get spike count matrices
     % rfSCmtx: (repeats, RF, ori, amp, sf, radius, location, ch)
     % blankSCmtx: (repeats, ch)
@@ -56,12 +43,8 @@ for fi = 1:length(files)
     %% find preferred location
     radFreq_plotFisherDist_Loc(REdata, LEdata)
     [REdata.prefLoc, LEdata.prefLoc] = radFreq_getFisherLoc_BE(REdata, LEdata);
-    %% find preferred RF/Phase combo
+    %% find preferred RF/Rotation combo
     radFreq_plotFisherDist_RFphase(REdata, LEdata)
-    
-%     REdata.prefLoc = radFreq_getFisherLoc(REdata,plotLocCh);
-%     LEdata.prefLoc = radFreq_getFisherLoc(LEdata,plotLocCh);
-    %% find preferred RF and phase pairing
-    
+% [REprefRFrot, LEprefRFrot] = radFreq_getFisherRFrot_BE(REdata, LEdata)
     %% find preferred spatial frequency
 end
