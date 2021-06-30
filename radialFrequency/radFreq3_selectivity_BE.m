@@ -6,7 +6,7 @@ tic
 
 files = {
     'WU_BE_radFreqLoc1_V4';
-%     'WU_BE_radFreqLoc1_V1';
+    'WU_BE_radFreqLoc1_V1';
 %     'WV_BE_radFreqHighSF_V4';
 %     'WV_BE_radFreqHighSF_V1';
     };
@@ -44,7 +44,9 @@ for fi = 1:length(files)
     radFreq_plotFisherDist_Loc(REdata, LEdata)
     [REdata.prefLoc, LEdata.prefLoc] = radFreq_getFisherLoc_BE(REdata, LEdata);
     %% find preferred RF/Rotation combo
-    radFreq_plotFisherDist_RFphase(REdata, LEdata)
-% [REprefRFrot, LEprefRFrot] = radFreq_getFisherRFrot_BE(REdata, LEdata)
+%     radFreq_plotFisherDist_RFphase(REdata, LEdata)
+close all
+    [REdata.prefRot, LEdata.prefRot] = radFreq_getFisherRFrot_BE(REdata, LEdata,0);
+    [REdata.prefRot, LEdata.prefRot] = radFreq_getFisherRFrot_BE(REdata, LEdata,1);
     %% find preferred spatial frequency
 end
