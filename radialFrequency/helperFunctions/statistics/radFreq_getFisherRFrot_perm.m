@@ -44,7 +44,7 @@ REprefLoc = REdata.prefLoc;
 REspikes = REdata.RFspikeCount;
 LEspikes = LEdata.RFspikeCount;
 
-REzTrfmPerm = nan(3,96,numBoot);
+REzTrfmPerm = nan(3,96,numBoot); 
 REcorrPerm = nan(3,96,numBoot);
 
 LEzTrfmPerm = nan(3,96,numBoot);
@@ -152,10 +152,10 @@ for ch = 1:10%96
     end %eye
 end
 %% sanity figures
-for ch = 1:10
+for ch = 1%:10
     figure%(12)
     clf
-    s = suptitle(sprintf('%s %s rotation permutation test ch %d',LEdata.eye,LEdata.array,ch));
+    s = suptitle(sprintf('%s %s rotation permutation test ch %d',LEdata.animal,LEdata.array,ch));
     s.Position(2) = s.Position(2) + 0.024;
     
     subplot(3,2,1)
@@ -169,8 +169,11 @@ for ch = 1:10
     text(muCorr+0.1,0.42,sprintf('\\mu %.2f',muCorr))
     xlim([-1 1])
     ylim([0 0.6])
-    set(gca,'tickdir','out')
-    ylabel('RF4')
+    
+    set(gca,'tickdir','out','Xtick',[-1 0 1],'XTickLabel',{sprintf('45%c', char(176)),'No preference',sprintf('0%c', char(176))},...
+        'FontSize',10,'FontAngle','italic')
+    ylabel('Proportion of chs','FontSize',11)
+    text(-1.7,0.3,'RF4','FontSize',12,'FontWeight','bold')
     clear corr
     
     subplot(3,2,2)
@@ -184,7 +187,9 @@ for ch = 1:10
     text(muCorr+0.1,0.42,sprintf('\\mu %.2f',muCorr))
     xlim([-1 1])
     ylim([0 0.6])
-    set(gca,'tickdir','out')
+  
+    set(gca,'tickdir','out','Xtick',[-1 0 1],'XTickLabel',{sprintf('45%c', char(176)),'No preference',sprintf('0%c', char(176))},...
+        'FontSize',10,'FontAngle','italic')
     clear corr
     
     subplot(3,2,3)
@@ -198,8 +203,12 @@ for ch = 1:10
     text(muCorr+0.1,0.42,sprintf('\\mu %.2f',muCorr))
     xlim([-1 1])
     ylim([0 0.6])
-    set(gca,'tickdir','out')
-    ylabel('RF8')
+    
+    set(gca,'tickdir','out','Xtick',[-1 0 1],'XTickLabel',{sprintf('22.5%c', char(176)),'No preference',sprintf('0%c', char(176))},...
+        'FontSize',10,'FontAngle','italic')
+    
+    ylabel('Proportion of chs','FontSize',11)
+    text(-1.7,0.3,'RF8','FontSize',12,'FontWeight','bold')
     clear corr
     
     subplot(3,2,4)
@@ -213,7 +222,9 @@ for ch = 1:10
     text(muCorr+0.1,0.42,sprintf('\\mu %.2f',muCorr))
     xlim([-1 1])
     ylim([0 0.6])
-    set(gca,'tickdir','out')
+    
+    set(gca,'tickdir','out','Xtick',[-1 0 1],'XTickLabel',{sprintf('22.5%c', char(176)),'No preference',sprintf('0%c', char(176))},...
+        'FontSize',10,'FontAngle','italic')
     clear corr
     
     subplot(3,2,5)
@@ -227,9 +238,12 @@ for ch = 1:10
     text(muCorr+0.1,0.42,sprintf('\\mu %.2f',muCorr))
     xlim([-1 1])
     ylim([0 0.6])
-    set(gca,'tickdir','out')
-    xlabel('permuted correlation')
-    ylabel('RF16')
+    set(gca,'tickdir','out','Xtick',[-1 0 1],'XTickLabel',{sprintf('11.25%c', char(176)),'No preference',sprintf('0%c', char(176))},...
+        'FontSize',10,'FontAngle','italic')
+    
+%     xlabel('permuted correlation','FontSize',11)
+    ylabel('Proportion of chs','FontSize',11)
+    text(-1.7,0.3,'RF16','FontSize',12,'FontWeight','bold')
     clear corr
     
     subplot(3,2,6)
@@ -243,7 +257,8 @@ for ch = 1:10
     text(muCorr+0.1,0.42,sprintf('\\mu %.2f',muCorr))
     xlim([-1 1])
     ylim([0 0.6])
-    set(gca,'tickdir','out')
-    clear corr
-    xlabel('permuted correlation')
+    set(gca,'tickdir','out','Xtick',[-1 0 1],'XTickLabel',{sprintf('45%c', char(176)),'No preference',sprintf('0%c', char(176))},...
+        'FontSize',10,'FontAngle','italic')
+   
+%        xlabel('permuted correlation','FontSize',11)
 end
