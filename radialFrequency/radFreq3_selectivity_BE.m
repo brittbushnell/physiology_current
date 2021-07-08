@@ -6,9 +6,9 @@ tic
 
 files = {
     'WU_BE_radFreqLoc1_V4';
-    'WU_BE_radFreqLoc1_V1';
-%     'WV_BE_radFreqHighSF_V4';
-%     'WV_BE_radFreqHighSF_V1';
+    %     'WU_BE_radFreqLoc1_V1';
+    %     'WV_BE_radFreqHighSF_V4';
+    %     'WV_BE_radFreqHighSF_V1';
     };
 %%
 plotNeuro = 0;
@@ -43,10 +43,13 @@ for fi = 1:length(files)
     %% find preferred location
     radFreq_plotFisherDist_Loc(REdata, LEdata)
     [REdata.prefLoc, LEdata.prefLoc] = radFreq_getFisherLoc_BE(REdata, LEdata);
+    %% find preferred stimulus size
+    
     %% find preferred RF/Rotation combo
-%     radFreq_plotFisherDist_RFphase(REdata, LEdata)
-close all
-    [REdata.prefRot, LEdata.prefRot] = radFreq_getFisherRFrot_BE(REdata, LEdata,0);
-    [REdata.prefRot, LEdata.prefRot] = radFreq_getFisherRFrot_BE(REdata, LEdata,1);
+    %     radFreq_plotFisherDist_RFphase(REdata, LEdata)
+    close all
+    [REdata.sigOri, LEdata.sigOri, REdata.stimCorr, LEdata.stimCorr, REdata.prefRot, LEdata.prefRot, REdata.corrPerm, LEdatacorrPerm] = radFreq_getFisherRFrot_BE(REdata, LEdata,0,1000);
+    plotRF_SigOriBars(LEdata,REdata) 
     %% find preferred spatial frequency
+
 end

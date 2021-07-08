@@ -1,4 +1,4 @@
-function [REprefRot, LEprefRot] = radFreq_getFisherRFrot_BE(REdata, LEdata,plotEbar)
+function [REsigPerms, LEsigPerms, RECorrDiff, LEcorrDiff, REprefRot, LEprefRot, REcorrPerm, LEcorrPerm] = radFreq_getFisherRFrot_BE(REdata, LEdata,plotEbar,numBoot)
 % This function should be called after running radFreq_getFisherLoc_BE to
 % get the preferred location for each good channel. Looking at the
 % preferred location, this function will find the preferred rotation (if there is one)
@@ -60,16 +60,13 @@ REprefLoc = REdata.prefLoc;
 
 %(RF,ori,amp,sf,radius,location, ch)
 REspikes = REdata.RFspikeCount;
-REzTr = nan(3,2,96);
 REprefRot = nan(3,2,96);
 
 LEspikes = LEdata.RFspikeCount;
-LEzTr = nan(3,2,96);
 LEprefRot = nan(3,2,96);
 
-% REzPloc = nan(3, 2, 2, 2, 96);
-% LEzPloc = nan(3, 2, 2, 2, 96);
-
+stimCorr = nan(2,3,2,96); %(eye, rf, ori, ch)
+corrDiff = nan(2,3,96);
 % subplot indices for each eye
 LEsubs = [1,2,5,6,9,10];
 REsubs = [3,4,7,8,11,12];
@@ -97,7 +94,7 @@ for ch = 1:96
     pos = get(gcf,'Position');
     set(gcf,'Position',[pos(1), pos(2), 600, 700])
     
-    s = suptitle(sprintf('%s %s Fisher r to z rotation x RF ch %d',REdata.animal, REdata.array, ch));
+    s = suptitle(sprintf('%s %s spike counts per amplitude rotation x RF ch %d',REdata.animal, REdata.array, ch));
     s.Position(2) = s.Position(2)+0.0272;
     
     % make dummy subplots to get correct dimensions of mygca. Otherwise it
@@ -109,7 +106,7 @@ for ch = 1:96
         mygca(1,foo) = gca;
         xlim([-0.5 7.5])
         
-        title(sprintf('%.2f deg',rotTitles(foo)),'FontSize',12,'FontWeight','normal');
+        title(sprintf('%.2f deg',rotTitles(foo)),'FontSize',12,'FontWeight','normal','FontAngle','italic');
     end
     
     for ey = 1:2
@@ -127,7 +124,7 @@ for ch = 1:96
         if dataT.goodCh(ch) == 1
             
             muSc = nan(3,2,6);
-            corrP = nan(3,2,2); %RF, rotation, corr, significance
+            %             corrPval = nan(3,2,2); %RF, rotation, corr, significance
             
             if ey == 1
                 locNdx = (scCh(6,:) == locPair(LEprefLoc(ch),1)) & (scCh(7,:) == locPair(LEprefLoc(ch),2));
@@ -170,33 +167,12 @@ for ch = 1:96
                         clear muStim
                     end %amplitude
                     
-                    % get the correlation and p-value
+                    % get the correlation
                     muSct = squeeze(muSc(rf,rot,:));
                     muScRFrot = [0; muSct];
-                    [corMtx,corPmtx] = corrcoef(xs,muScRFrot);
-                    sCorr = corMtx(2);
-                    corrP(rf,rot,1) = corPmtx(2);
-                    
-                    % make a logical for whether or not the correlation is
-                    % significant. This is just to make it easier to determine if
-                    % there are more than one  significant locations and if I need
-                    % to use the max response to pick preferred location
-                    if corrP(rf,rot,1) <= 0.05
-                        corrP(rf,rot,2) = 1;
-                    else
-                        corrP(rf,rot,2) = 0;
-                    end
-                    
-                    % get the Fisher r to z transform
-                    if ey == 1
-                        zCh = atanh(sCorr);
-                        LEzTr(rf,rot,ch) = zCh;
-                    else
-                        zCh = atanh(sCorr);
-                        REzTr(rf,rot,ch) = zCh;
-                    end
-                    
-                    % plot mean spike counts as a function of amplitude.
+                    corMtx = corrcoef(xs,muScRFrot);
+                    stimCorr(ey,rf,rot,ch) = corMtx(2);                  
+                    %% plot mean spike counts as a function of amplitude.
                     
                     h = subplot(3,4,sub);
                     hold on
@@ -215,9 +191,7 @@ for ch = 1:96
                         end
                     end
                     
-                    xlim([-0.5 7.5])
-%                     title(sprintf('r %.2f z %.2f', sCorr, zCh), 'FontSize',12,'FontWeight','normal');
-                    
+                    xlim([-0.5 7.5])                    
                     set(gca,'XTick',1:7,'XTickLabel',0:6,'tickdir','out','FontSize',10,'FontAngle','italic')
                     
                     mygca(1,sub) = gca;
@@ -242,37 +216,29 @@ for ch = 1:96
                     
                     ndx = ndx+1;
                 end %rot
+                rot1 = squeeze(stimCorr(ey,rf,1,ch));  rot2 = squeeze(stimCorr(ey,rf,2,ch));  
+                corrDiff(ey,rf,ch) = rot1 - rot2;
                 
-                scTmp = squeeze(muSc(rf,:,:));
-                if sum(corrP(rf,:,2)) == 1
-                    prpt = find(corrP(rf,:,2) == 1);
-                elseif sum(corrP(rf,:,2)) > 1
-                    [~,mxNdx] = max(abs(scTmp),[],'all','linear');
-                    [prpt,~] = ind2sub(size(scTmp),mxNdx);
-                elseif sum(corrP(rf,:,2)) == 0
-                    [~,mxNdx] = max(muSc,[],'all','linear');
-                    [prpt,~] = ind2sub(size(muSc),mxNdx);
-                end
-                
-                if ey == 1
-                    LEprefRot(rf,ch) = prpt;
-                else
-                    REprefRot(rf,ch) = prpt;
-                end
-                
-                if prpt == 1
-                    subplot(3,4,subNdx(ndx-2))
-                    hold on
-                    text(6,0,'*','FontSize',22,'FontWeight','bold')
-                elseif prpt == 2
-                    subplot(3,4,sub)
-                    hold on
-                    text(6,0,'*','FontSize',22,'FontWeight','bold')
-                end
+%                 scTmp = squeeze(muSc(rf,:,:));
+%                 if sum(corrP(rf,:,2)) == 1
+%                     prpt = find(corrP(rf,:,2) == 1);
+%                 elseif sum(corrP(rf,:,2)) > 1
+%                     [~,mxNdx] = max(abs(scTmp),[],'all','linear');
+%                     [prpt,~] = ind2sub(size(scTmp),mxNdx);
+%                 elseif sum(corrP(rf,:,2)) == 0
+%                     [~,mxNdx] = max(muSc,[],'all','linear');
+%                     [prpt,~] = ind2sub(size(muSc),mxNdx);
+%                 end
+%                 
+%                 if ey == 1
+%                     LEprefRot(rf,ch) = prpt;
+%                 else
+%                     REprefRot(rf,ch) = prpt;
+%                 end
             end %RF
-            
         end % goodCh
     end %eye
+    
     minY = min(yMins);
     maxY = max(yMaxs);
     yLimits = ([minY maxY]);
@@ -283,5 +249,9 @@ for ch = 1:96
     else
         figName = [LEdata.animal,'_BE_',LEdata.array,'_rotationPrefs_eBar_ch',num2str(ch),'.pdf'];
     end
-    print(gcf, figName,'-dpdf','-bestfit')  
+%     print(gcf, figName,'-dpdf','-bestfit')
 end
+%%
+LEcorrDiff = squeeze(stimCorr(1,:,:,:));
+RECorrDiff = squeeze(stimCorr(2,:,:,:));
+[REsigPerms, LEsigPerms, REcorrPerm, LEcorrPerm] = radFreq_getFisherRFrot_perm(REdata, LEdata,numBoot, corrDiff);

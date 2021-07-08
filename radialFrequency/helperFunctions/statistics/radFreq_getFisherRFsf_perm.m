@@ -1,4 +1,4 @@
-function [REsigPerms, LEsigPerms, REcorrPerm, LEcorrPerm] = radFreq_getFisherRFrot_perm(REdata, LEdata,numBoot,realCorr)
+function [REsigPerms, LEsigPerms, REcorrPerm, LEcorrPerm] = radFreq_getFisherRFsf_perm(REdata, LEdata,numBoot,realCorr)
 % This function should be called after running radFreq_getFisherLoc_BE to
 % get the preferred location for each good channel. Looking at the
 % preferred location, this function will do a permutation test for orientation
@@ -15,11 +15,11 @@ location = determineComputer;
 
 if location == 1
     if contains(LEdata.animal,'WU')
-        figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/%s/stats/FisherTransform/BE/RFrot/perm',LEdata.animal,LEdata.array);
+        figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/%s/stats/FisherTransform/BE/SF/perm',LEdata.animal,LEdata.array);
     elseif contains(LEdata.programID,'low','IgnoreCase')
-        figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/lowSF/%s/stats/FisherTransform/BE/RFrot/perm',LEdata.animal,LEdata.array);
+        figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/lowSF/%s/stats/FisherTransform/BE/SF/perm',LEdata.animal,LEdata.array);
     else
-        figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/FisherTransform/BE/RFrot/perm',LEdata.animal,LEdata.array);
+        figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/FisherTransform/BE/SF/perm',LEdata.animal,LEdata.array);
     end
 elseif location == 0
     if contains(LEdata.animal,'WU')
