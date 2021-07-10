@@ -6,55 +6,55 @@ tic
 
 files = {
 %     % WU loc1
-    'WU_RE_radFreqLoc1_nsp2_June2017_info';
-    'WU_LE_RadFreqLoc1_nsp2_20170626_002_thresh35_info.mat';
+%     'WU_RE_radFreqLoc1_nsp2_June2017_info';
+%     'WU_LE_RadFreqLoc1_nsp2_20170626_002_thresh35_info.mat';
     
     'WU_RE_radFreqLoc1_nsp1_June2017_info';
     'WU_LE_RadFreqLoc1_nsp1_20170626_002_thresh35_info.mat';
     % WU loc 2
-    'WU_RE_RadFreqLoc2_nsp1_July2017_info';
-    'WU_RE_RadFreqLoc2_nsp2_July2017_info';
-    
-    'WU_LE_RadFreqLoc2_nsp1_July2017_info';
-    'WU_LE_RadFreqLoc2_nsp2_July2017_info';
-    
-    % WV
-    'WV_LE_RadFreqHighSF_nsp2_March2019';
-    'WV_LE_RadFreqHighSF_nsp1_March2019';
-    
-    'WV_RE_RadFreqHighSF_nsp1_March2019';
-    'WV_RE_RadFreqHighSF_nsp2_March2019';
-    
-    'WV_LE_RadFreqLowSF_nsp2_March2019';
-    'WV_LE_RadFreqLowSF_nsp1_March2019';
-    
-    'WV_RE_RadFreqLowSF_nsp2_March2019';
-    'WV_RE_RadFreqLowSF_nsp1_March2019';
-    
-    % XT
-    'XT_RE_radFreqLowSF_nsp2_Dec2019_info';
-    'XT_RE_radFreqLowSF_nsp1_Dec2019_info';
-    
-    'XT_LE_RadFreqLowSF_nsp2_Dec2018_info';
-    'XT_LE_RadFreqLowSF_nsp1_Dec2018_info';
-    
-    'XT_RE_radFreqHighSF_nsp2_Dec2018_info';
-    'XT_RE_radFreqHighSF_nsp1_Dec2018_info';
-    
-    'XT_LE_radFreqHighSF_nsp2_Jan2019_info';
-    'XT_LE_radFreqHighSF_nsp1_Jan2019_info';
-    
-    'XT_RE_RadFreqLowSFV4_nsp2_Feb2019_info';
-    'XT_RE_RadFreqLowSFV4_nsp1_Feb2019_info';
-    
-    'XT_LE_RadFreqLowSFV4_nsp2_Feb2019_info';
-    'XT_LE_RadFreqLowSFV4_nsp1_Feb2019_info';
-    
-    'XT_LE_RadFreqHighSFV4_nsp2_March2019_info';
-    'XT_LE_RadFreqHighSFV4_nsp1_March2019_info';
-    
-    'XT_RE_RadFreqHighSFV4_nsp2_March2019_info';
-    'XT_RE_RadFreqHighSFV4_nsp1_March2019_info';
+%     'WU_RE_RadFreqLoc2_nsp1_July2017_info';
+%     'WU_RE_RadFreqLoc2_nsp2_July2017_info';
+%     
+%     'WU_LE_RadFreqLoc2_nsp1_July2017_info';
+%     'WU_LE_RadFreqLoc2_nsp2_July2017_info';
+%     
+%     % WV
+%     'WV_LE_RadFreqHighSF_nsp2_March2019';
+%     'WV_LE_RadFreqHighSF_nsp1_March2019';
+%     
+%     'WV_RE_RadFreqHighSF_nsp1_March2019';
+%     'WV_RE_RadFreqHighSF_nsp2_March2019';
+%     
+%     'WV_LE_RadFreqLowSF_nsp2_March2019';
+%     'WV_LE_RadFreqLowSF_nsp1_March2019';
+%     
+%     'WV_RE_RadFreqLowSF_nsp2_March2019';
+%     'WV_RE_RadFreqLowSF_nsp1_March2019';
+%     
+%     % XT
+%     'XT_RE_radFreqLowSF_nsp2_Dec2019_info';
+%     'XT_RE_radFreqLowSF_nsp1_Dec2019_info';
+%     
+%     'XT_LE_RadFreqLowSF_nsp2_Dec2018_info';
+%     'XT_LE_RadFreqLowSF_nsp1_Dec2018_info';
+%     
+%     'XT_RE_radFreqHighSF_nsp2_Dec2018_info';
+%     'XT_RE_radFreqHighSF_nsp1_Dec2018_info';
+%     
+%     'XT_LE_radFreqHighSF_nsp2_Jan2019_info';
+%     'XT_LE_radFreqHighSF_nsp1_Jan2019_info';
+%     
+%     'XT_RE_RadFreqLowSFV4_nsp2_Feb2019_info';
+%     'XT_RE_RadFreqLowSFV4_nsp1_Feb2019_info';
+%     
+%     'XT_LE_RadFreqLowSFV4_nsp2_Feb2019_info';
+%     'XT_LE_RadFreqLowSFV4_nsp1_Feb2019_info';
+%     
+%     'XT_LE_RadFreqHighSFV4_nsp2_March2019_info';
+%     'XT_LE_RadFreqHighSFV4_nsp1_March2019_info';
+%     
+%     'XT_RE_RadFreqHighSFV4_nsp2_March2019_info';
+%     'XT_RE_RadFreqHighSFV4_nsp1_March2019_info';
     };
 %%
 plotHeat = 1; %change to 1 if you do want to do the heatmaps

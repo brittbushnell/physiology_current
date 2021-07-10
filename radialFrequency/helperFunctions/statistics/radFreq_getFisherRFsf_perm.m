@@ -10,7 +10,7 @@ function [REsigPerms, LEsigPerms, REcorrPerm, LEcorrPerm] = radFreq_getFisherRFs
 % Brittany Bushnell 6/29/21
 
 %%
-tic
+% tic
 location = determineComputer;
 
 if location == 1
@@ -122,12 +122,12 @@ for ch = 1:96
                         clear muStim stimSpikes
                     end %amplitude
                     
-                    for rot = 1:2
+                    for sf = 1:2
                         % get the correlation
-                        muSct = squeeze(muSc(rf,rot,:)); %(rf,rot,amp)
+                        muSct = squeeze(muSc(rf,sf,:)); %(rf,rot,amp)
                         muScRFrot = [0, muSct'];
                         corMtx = corrcoef(xs,muScRFrot);
-                        sCorr(rot) = corMtx(2);
+                        sCorr(sf) = corMtx(2);
                     end
                     if ey == 1
                         LEcorrPerm(rf,ch,nb) = sCorr(1) - sCorr(2);
@@ -182,7 +182,7 @@ end
 for ch = 1:96
     figure(12)
     clf
-    s = suptitle(sprintf('%s %s rotation permutation test ch %d',LEdata.animal,LEdata.array,ch));
+    s = suptitle(sprintf('%s %s spatial frequency permutation test ch %d',LEdata.animal,LEdata.array,ch));
     s.Position(2) = s.Position(2) + 0.024;
     
     subplot(3,2,1)
@@ -311,10 +311,10 @@ for ch = 1:96
     end
     
     set(gca,'tickdir','out','Xtick',[-1 0 1],'FontSize',10,'FontAngle','italic','layer','top')
-    xlabel('Difference in orientation correlations','FontSize',11)
+    xlabel('Difference in spatial frequency correlations','FontSize',11)
     
-    figName = [LEdata.animal,'_BE_',LEdata.array,'_rotationPerm_ch',num2str(ch),'.pdf'];
-    %     print(gcf, figName,'-dpdf','-bestfit')
+    figName = [LEdata.animal,'_BE_',LEdata.array,'_rSFperm_ch',num2str(ch),'.pdf'];
+    print(gcf, figName,'-dpdf','-bestfit')
 end
 fprintf('time to do rotation permutations %.2f minutes\n',toc/60)
 

@@ -249,7 +249,7 @@ for ch = 1:96
     else
         figName = [LEdata.animal,'_BE_',LEdata.array,'_rotationPrefs_eBar_ch',num2str(ch),'.pdf'];
     end
-%     print(gcf, figName,'-dpdf','-bestfit')
+    print(gcf, figName,'-dpdf','-bestfit')
 end
 %%
 LEcorrDiff = squeeze(stimCorr(1,:,:,:));

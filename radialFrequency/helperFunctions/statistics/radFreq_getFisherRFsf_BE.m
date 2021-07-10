@@ -1,11 +1,11 @@
-function [REsigPerms, LEsigPerms, RECorrDiff, LEcorrDiff, REprefRot, LEprefRot, REcorrPerm, LEcorrPerm] = radFreq_getFisherRFsf_BE(REdata, LEdata,numBoot)
+function [REsigPerms, LEsigPerms, RECorrDiff, LEcorrDiff, REprefSF, LEprefSF, REcorrPerm, LEcorrPerm] = radFreq_getFisherRFsf_BE(REdata, LEdata,numBoot)
 % This function should be called after running radFreq_getFisherLoc_BE to
 % get the preferred location for each good channel. Looking at the
 % preferred location, this function will find the preferred carrier SF (if there is one)
 % for each RF.
 
 % Brittany Bushnell 7/8/21
-
+% numBoot = 1000;
 %%
 location = determineComputer;
 
@@ -39,10 +39,10 @@ REprefLoc = REdata.prefLoc;
 
 %(RF,ori,amp,sf,radius,location, ch)
 REspikes = REdata.RFspikeCount;
-REprefRot = nan(3,2,96);
+REprefSF = nan(3,2,96);
 
 LEspikes = LEdata.RFspikeCount;
-LEprefRot = nan(3,2,96);
+LEprefSF = nan(3,2,96);
 
 stimCorr = nan(2,3,2,96); %(eye, rf, sf, ch)
 corrDiff = nan(2,3,96);
@@ -58,7 +58,7 @@ xs = 0:6;
 sfTitles = [1 2 1 2];
 %%
 % close all
-for ch = 1%:96
+for ch = 1:96
     %%
     figure(1)
     clf
@@ -134,7 +134,7 @@ for ch = 1%:96
                         
                         muStim = (nanmean(stimSpikes,'all'));
                         muSc(rf,sf,amp) = muStim - muCirc;
-                        stErr(rf,sf,amp) = (std(stimSpikes - circSpikes))/(sqrt(size(stimSpikes,1)));
+%                         stErr(rf,sf,amp) = (std(stimSpikes - circSpikes))/(sqrt(size(stimSpikes,1)));
                         clear muStim
                     end %amplitude
                     
@@ -197,4 +197,4 @@ end
 %%
 LEcorrDiff = squeeze(corrDiff(1,:,:));
 RECorrDiff = squeeze(corrDiff(2,:,:));
-[REsigPerms, LEsigPerms, REcorrPerm, LEcorrPerm] = radFreq_getFisherSF_perm(REdata, LEdata,numBoot, corrDiff);
+[REsigPerms, LEsigPerms, REcorrPerm, LEcorrPerm] = radFreq_getFisherRFsf_perm(REdata, LEdata,numBoot, corrDiff);

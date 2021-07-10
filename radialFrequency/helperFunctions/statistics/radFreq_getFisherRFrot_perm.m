@@ -180,7 +180,7 @@ end
 %% sanity figures
 %
 for ch = 1:96
-    figure(12)
+    figure(6)
     clf
     s = suptitle(sprintf('%s %s rotation permutation test ch %d',LEdata.animal,LEdata.array,ch));
     s.Position(2) = s.Position(2) + 0.024;
@@ -314,7 +314,7 @@ for ch = 1:96
     xlabel('Difference in orientation correlations','FontSize',11)
     
     figName = [LEdata.animal,'_BE_',LEdata.array,'_rotationPerm_ch',num2str(ch),'.pdf'];
-    %     print(gcf, figName,'-dpdf','-bestfit')
+    print(gcf, figName,'-dpdf','-bestfit')
 end
 fprintf('time to do rotation permutations %.2f minutes\n',toc/60)
 

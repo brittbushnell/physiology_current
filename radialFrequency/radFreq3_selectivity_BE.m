@@ -5,8 +5,8 @@ tic
 %%
 
 files = {
-    'WU_BE_radFreqLoc1_V4';
-    %     'WU_BE_radFreqLoc1_V1';
+%     'WU_BE_radFreqLoc1_V4';
+    'WU_BE_radFreqLoc1_V1';
     %     'WV_BE_radFreqHighSF_V4';
     %     'WV_BE_radFreqHighSF_V1';
     };
@@ -44,12 +44,13 @@ for fi = 1:length(files)
     radFreq_plotFisherDist_Loc(REdata, LEdata)
     [REdata.prefLoc, LEdata.prefLoc] = radFreq_getFisherLoc_BE(REdata, LEdata);
     %% find preferred stimulus size
-    
+    radFreq_plotFisherDist_Size(REdata, LEdata)
     %% find preferred RF/Rotation combo
     %     radFreq_plotFisherDist_RFphase(REdata, LEdata)
-    close all
-    [REdata.sigOri, LEdata.sigOri, REdata.stimCorr, LEdata.stimCorr, REdata.prefRot, LEdata.prefRot, REdata.corrPerm, LEdatacorrPerm] = radFreq_getFisherRFrot_BE(REdata, LEdata,0,1000);
+%     close all
+    [REdata.sigOri, LEdata.sigOri, REdata.oriCorrDiff, LEdata.oriCorrDiff, REdata.prefRot, LEdata.prefRot, REdata.oriCorr, LEdata.oriCorr] = radFreq_getFisherRFrot_BE(REdata, LEdata,0,1000);
     plotRF_SigOriBars(LEdata,REdata) 
     %% find preferred spatial frequency
-
+    [REdata.sigSF, LEdata.sigSF, REdata.SFcorrDiff, LEdata.SFcorrDiff, REdata.prefSF, LEdata.prefSF, REdata.SFcorr, LEdata.SFcorr] = radFreq_getFisherRFsf_BE(REdata, LEdata,1000);
+    plotRF_SigSFbars(LEdata,REdata) 
 end
