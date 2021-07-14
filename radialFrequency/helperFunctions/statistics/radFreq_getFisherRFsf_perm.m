@@ -314,7 +314,7 @@ for ch = 1:96
     xlabel('Difference in spatial frequency correlations','FontSize',11)
     
     figName = [LEdata.animal,'_BE_',LEdata.array,'_rSFperm_ch',num2str(ch),'.pdf'];
-    print(gcf, figName,'-dpdf','-bestfit')
+%     print(gcf, figName,'-dpdf','-bestfit')
 end
 fprintf('time to do rotation permutations %.2f minutes\n',toc/60)
 

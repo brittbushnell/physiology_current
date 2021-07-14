@@ -1,7 +1,26 @@
-zs1 = LEzTR(:,:,:,2,:,(LEprefLoc == 1));
-zs1 = reshape(zs1,1,numel(zs1));
-zs2 = LEzTR(:,:,:,2,:,(LEprefLoc == 2));
-zs2 = reshape(zs2,2,numel(zs2));
-zs3 = LEzTR(:,:,:,2,:,(LEprefLoc == 3));
-zs3 = reshape(zs3,1,numel(zs3));
-zs = [zs1 zs2 zs3];
+WUV1gratRE = length(find(WUV1.conRadRE.goodCh & WUV1.conRadRE.inStim & WUV1.gratRE.good_ch))
+WUV4gratRE = length(find(WUV4.conRadRE.goodCh & WUV4.conRadRE.inStim & WUV4.gratRE.good_ch))
+WVV1gratRE = length(find(WVV1.conRadRE.goodCh & WVV1.conRadRE.inStim & WVV1.gratRE.good_ch))
+WVV4gratRE = length(find(WVV4.conRadRE.goodCh & WVV4.conRadRE.inStim & WVV4.gratRE.good_ch))
+XTV4gratRE = length(find(XTV4.conRadRE.goodCh & XTV4.conRadRE.inStim & XTV4.gratRE.good_ch))
+
+WUV1gratLE = length(find(WUV1.conRadLE.goodCh & WUV1.conRadLE.inStim & WUV1.gratLE.good_ch))
+WUV4gratLE = length(find(WUV4.conRadLE.goodCh & WUV4.conRadLE.inStim & WUV4.gratLE.good_ch))
+WVV1gratLE = length(find(WVV1.conRadLE.goodCh & WVV1.conRadLE.inStim & WVV1.gratLE.good_ch))
+WVV4gratLE = length(find(WVV4.conRadLE.goodCh & WVV4.conRadLE.inStim & WVV4.gratLE.good_ch))
+XTV4gratLE = length(find(XTV4.conRadLE.goodCh & XTV4.conRadLE.inStim & XTV4.gratLE.good_ch))
+
+%%
+WUV1glassRE = length(find(WUV1.conRadRE.goodCh & WUV1.conRadRE.inStim & WUV1.trRE.goodCh & WUV1.trRE.inStim))
+WUV4glassRE = length(find(WUV4.conRadRE.goodCh & WUV4.conRadRE.inStim & WUV4.trRE.goodCh & WUV4.trRE.inStim))
+WVV1glassRE = length(find(WVV1.conRadRE.goodCh & WVV1.conRadRE.inStim & WVV1.trRE.goodCh & WVV1.trRE.inStim))
+WVV4glassRE = length(find(WVV4.conRadRE.goodCh & WVV4.conRadRE.inStim & WVV4.trRE.goodCh & WVV4.trRE.inStim))
+XTV1glassRE = length(find(XTV1.conRadRE.goodCh & XTV1.conRadRE.inStim & XTV1.trRE.goodCh & XTV1.trRE.inStim))
+XTV4glassRE = length(find(XTV4.conRadRE.goodCh & XTV4.conRadRE.inStim & XTV4.trRE.goodCh & XTV4.trRE.inStim))
+
+WUV1glassLE = length(find(WUV1.conRadLE.goodCh & WUV1.conRadLE.inStim & WUV1.trLE.goodCh & WUV1.trLE.inStim))
+WUV4glassLE = length(find(WUV1.conRadLE.goodCh & WUV1.conRadLE.inStim & WUV4.trLE.goodCh & WUV4.trLE.inStim))
+WVV1glassLE = length(find(WVV1.conRadLE.goodCh & WVV1.conRadLE.inStim & WVV1.trLE.goodCh & WVV1.trLE.inStim))
+WVV4glassLE = length(find(WVV4.conRadLE.goodCh & WVV4.conRadLE.inStim & WVV4.trLE.goodCh & WVV4.trLE.inStim))
+XTV1glassLE = length(find(XTV1.conRadLE.goodCh & XTV1.conRadLE.inStim & XTV1.trLE.goodCh & XTV1.trLE.inStim))
+XTV4glassLE = length(find(XTV4.conRadLE.goodCh & XTV4.conRadLE.inStim & XTV4.trLE.goodCh & XTV4.trLE.inStim))

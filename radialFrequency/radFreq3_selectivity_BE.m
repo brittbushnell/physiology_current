@@ -5,11 +5,12 @@ tic
 %%
 
 files = {
-%     'WU_BE_radFreqLoc1_V4';
-    'WU_BE_radFreqLoc1_V1';
+    'WU_BE_radFreqLoc1_V4';
+%     'WU_BE_radFreqLoc1_V1';
     %     'WV_BE_radFreqHighSF_V4';
     %     'WV_BE_radFreqHighSF_V1';
     };
+nameEnd = 'perm';
 %%
 plotNeuro = 0;
 plotLocCh = 1;
@@ -53,4 +54,23 @@ for fi = 1:length(files)
     %% find preferred spatial frequency
     [REdata.sigSF, LEdata.sigSF, REdata.SFcorrDiff, LEdata.SFcorrDiff, REdata.prefSF, LEdata.prefSF, REdata.SFcorr, LEdata.SFcorr] = radFreq_getFisherRFsf_BE(REdata, LEdata,1000);
     plotRF_SigSFbars(LEdata,REdata) 
+%%
+location = determineComputer;
+        if location == 1
+            outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/radialFrequency/info/',REdata.array);
+        elseif location == 0
+            outputDir =  sprintf('~/Dropbox/ArrayData/matFiles/%s/radialFrequency/info/',REdata.array);
+        end
+        
+        if ~exist(outputDir,'dir')
+            mkdir(outputDir)
+        end
+        
+        data.RE = REdata;
+        data.LE = LEdata;
+        
+        fname2 = strrep(filename,'.mat','');
+        saveName = [outputDir fname2 '_' nameEnd '.mat'];
+        save(saveName,'data');
+        fprintf('%s saved\n\n',saveName)
 end

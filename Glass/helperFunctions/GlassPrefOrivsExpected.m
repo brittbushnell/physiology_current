@@ -1,5 +1,5 @@
 function [conConsist, radConsist] = GlassPrefOrivsExpected(dataT)
-figDir = sprintf('/Users/brittany/Dropbox/Thesis/Glass/figures/sprinkle/%s',dataT.trLE.animal);
+figDir = sprintf('/Users/brittany/Dropbox/Thesis/Glass/figures/sprinkle/grat/%s',dataT.trLE.animal);
 if~exist(figDir,'dir')
     mkdir(figDir)
 end
@@ -165,10 +165,10 @@ for eye = 1:2
                 end
                  t = plot([x2, x1], [y2, y1],'-','color',[0.7 0 0.7 0.6],'lineWidth',1.5);
                 if abs(conAng-pOri) <=15
-%                     t = plot([x2, x1], [y2, y1],'-','color',[0.7 0 0.7],'lineWidth',1.5);
-%                     conConsist(1,eye) = conConsist(1,eye)+1;
+                    t = plot([x2, x1], [y2, y1],'-','color',[0.7 0 0.7],'lineWidth',1.5);
+                    conConsist(1,eye) = conConsist(1,eye)+1;
                 else
-%                     t = plot([x2, x1], [y2, y1],'-','color',[0.7 0 0.7 0.4],'lineWidth',1);
+                    t = plot([x2, x1], [y2, y1],'-','color',[0.7 0 0.7 0.4],'lineWidth',1);
                 end
             elseif crNdx(ch) < 0 % rad
                 if eye == 1
@@ -180,14 +180,14 @@ for eye = 1:2
                 end
                  t = plot([x2, x1], [y2, y1],'-','color',[0 0.6 0.2 0.6],'lineWidth',1.5);
                 if abs(radAng-pOri) <= 15
-%                     radConsist(1,eye) = radConsist(1,eye)+1;
+                    radConsist(1,eye) = radConsist(1,eye)+1;
                 else
-%                     t = plot([x2, x1], [y2, y1],'-','color',[0 0.6 0.2 0.4],'lineWidth',1);
+                    t = plot([x2, x1], [y2, y1],'-','color',[0 0.6 0.2 0.4],'lineWidth',1);
                 end
             end
             ndx = ndx+1;
         end
-        pause
+%         pause
     end
 end
 
