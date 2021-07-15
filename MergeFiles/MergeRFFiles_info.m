@@ -194,33 +194,30 @@ newName = 'XT_RE_radFreqLowSF_nsp2_Dec2019_info';
 % };
 % newName = 'XT_LE_RadFreqLowSFV4_nsp1_Feb2019_info';
 
-% files = {
-% 'XT_RE_RadFreqHighSFV4_nsp2_20190304_002_thresh35_info.mat';
-% 'XT_RE_RadFreqHighSFV4_nsp2_20190305_002_thresh35_info.mat';
-% 'XT_RE_RadFreqHighSFV4_nsp2_20190306_001_thresh35_info.mat';
-% 'XT_RE_RadFreqHighSFV4_nsp2_20190306_002_thresh35_info.mat';
-% 'XT_LE_RadFreqHighSFV4_nsp2_20190306_003_thresh35_info.mat';
-% 'XT_LE_RadFreqHighSFV4_nsp2_20190307_001_thresh35_info.mat';
-% };
-% newName = 'XT_LE_RadFreqHighSFV4_nsp2_March2019_info';
+files = {
+'XT_RE_RadFreqHighSFV4_nsp2_20190304_002_thresh35_info.mat';
+'XT_RE_RadFreqHighSFV4_nsp2_20190305_002_thresh35_info.mat';
+'XT_RE_RadFreqHighSFV4_nsp2_20190306_001_thresh35_info.mat';
+'XT_RE_RadFreqHighSFV4_nsp2_20190306_002_thresh35_info.mat';
+};
+newName = 'XT_RE_RadFreqHighSFV4_nsp2_March2019_info';
 
 % files = {'XT_RE_RadFreqHighSFV4_nsp1_20190304_002_thresh35_info.mat';
 % 'XT_RE_RadFreqHighSFV4_nsp1_20190305_002_thresh35_info.mat';
 % 'XT_RE_RadFreqHighSFV4_nsp1_20190306_001_thresh35_info.mat';
 % 'XT_RE_RadFreqHighSFV4_nsp1_20190306_002_thresh35_info.mat';
-% 'XT_LE_RadFreqHighSFV4_nsp1_20190307_002_thresh35_info.mat';
 % };
-% newName = 'XT_LE_RadFreqHighSFV4_nsp1_March2019_info';
+% newName = 'XT_RE_RadFreqHighSFV4_nsp1_March2019_info';
 
 % files = {'XT_LE_RadFreqHighSFV4_nsp2_20190306_003_thresh35_info.mat';
 % 'XT_LE_RadFreqHighSFV4_nsp2_20190307_001_thresh35_info.mat';
 % };
 % newName = 'XT_LE_RadFreqHighSFV4_nsp2_March2019_info';
 
-files = {'XT_LE_RadFreqHighSFV4_nsp1_20190306_003_thresh35_ogcorrupt_info.mat';
-'XT_LE_RadFreqHighSFV4_nsp1_20190307_001_thresh35_ogcorrupt_info.mat';
-};
-newName = 'XT_LE_RadFreqHighSFV4_nsp1_March2019_info';
+% files = {'XT_LE_RadFreqHighSFV4_nsp1_20190306_003_thresh35_ogcorrupt_info.mat';
+% 'XT_LE_RadFreqHighSFV4_nsp1_20190307_001_thresh35_ogcorrupt_info.mat';
+% };
+% newName = 'XT_LE_RadFreqHighSFV4_nsp1_March2019_info';
 
 %% Extract stimulus information
 
@@ -375,9 +372,9 @@ array = dataComp{1}.array;
 amap = dataComp{1}.amap;
 %% save new matrix
 % if location  == 1
-    saveDir = sprintf('/users/bushnell/bushnell-local/Dropbox/ArrayData/matFiles/%s/RadialFrequency/mergedMats/',dataT.array);
+%     saveDir = sprintf('/users/bushnell/bushnell-local/Dropbox/ArrayData/matFiles/%s/RadialFrequency/mergedMats/',dataT.array);
 % elseif location  == 0
-%    saveDir = sprintf('~/Dropbox/ArrayData/matFiles/%s/RadialFrequency/mergedMats/',dataT.array);
+   saveDir = sprintf('~/Dropbox/ArrayData/matFiles/%s/RadialFrequency/mergedMats/',dataT.array);
 % end
 
 if ~exist(saveDir,'dir')

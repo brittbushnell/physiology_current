@@ -1,124 +1,26 @@
-clear 
-close all
-tic
+WUV1gratRE = length(find(WUV1.conRadRE.goodCh & WUV1.conRadRE.inStim & WUV1.gratRE.good_ch))
+WUV4gratRE = length(find(WUV4.conRadRE.goodCh & WUV4.conRadRE.inStim & WUV4.gratRE.good_ch))
+WVV1gratRE = length(find(WVV1.conRadRE.goodCh & WVV1.conRadRE.inStim & WVV1.gratRE.good_ch))
+WVV4gratRE = length(find(WVV4.conRadRE.goodCh & WVV4.conRadRE.inStim & WVV4.gratRE.good_ch))
+XTV4gratRE = length(find(XTV4.conRadRE.goodCh & XTV4.conRadRE.inStim & XTV4.gratRE.good_ch))
+
+WUV1gratLE = length(find(WUV1.conRadLE.goodCh & WUV1.conRadLE.inStim & WUV1.gratLE.good_ch))
+WUV4gratLE = length(find(WUV4.conRadLE.goodCh & WUV4.conRadLE.inStim & WUV4.gratLE.good_ch))
+WVV1gratLE = length(find(WVV1.conRadLE.goodCh & WVV1.conRadLE.inStim & WVV1.gratLE.good_ch))
+WVV4gratLE = length(find(WVV4.conRadLE.goodCh & WVV4.conRadLE.inStim & WVV4.gratLE.good_ch))
+XTV4gratLE = length(find(XTV4.conRadLE.goodCh & XTV4.conRadLE.inStim & XTV4.gratLE.good_ch))
+
 %%
-files = {
-    'XT_RE_radFreqLowSF_nsp1_20181217_002_thresh35_ogcorrupt_info.mat';
-    'XT_RE_radFreqLowSF_nsp1_20181217_003_thresh35_ogcorrupt_info.mat';
-    'XT_RE_radFreqLowSF_nsp1_20181217_004_thresh35_ogcorrupt_info.mat';
-    'XT_RE_radFreqLowSF_nsp1_20181217_005_thresh35_ogcorrupt_info.mat'; % ONLY 2 REPEATS
+WUV1glassRE = length(find(WUV1.conRadRE.goodCh & WUV1.conRadRE.inStim & WUV1.trRE.goodCh & WUV1.trRE.inStim))
+WUV4glassRE = length(find(WUV4.conRadRE.goodCh & WUV4.conRadRE.inStim & WUV4.trRE.goodCh & WUV4.trRE.inStim))
+WVV1glassRE = length(find(WVV1.conRadRE.goodCh & WVV1.conRadRE.inStim & WVV1.trRE.goodCh & WVV1.trRE.inStim))
+WVV4glassRE = length(find(WVV4.conRadRE.goodCh & WVV4.conRadRE.inStim & WVV4.trRE.goodCh & WVV4.trRE.inStim))
+XTV1glassRE = length(find(XTV1.conRadRE.goodCh & XTV1.conRadRE.inStim & XTV1.trRE.goodCh & XTV1.trRE.inStim))
+XTV4glassRE = length(find(XTV4.conRadRE.goodCh & XTV4.conRadRE.inStim & XTV4.trRE.goodCh & XTV4.trRE.inStim))
 
-    'XT_LE_RadFreqLowSF_nsp1_20181211_001_thresh35_ogcorrupt_info.mat';
-    'XT_LE_RadFreqLowSF_nsp1_20181211_002_thresh35_ogcorrupt_info.mat';
-    'XT_LE_RadFreqLowSF_nsp1_20181213_001_thresh35_ogcorrupt_info.mat';
-    'XT_LE_RadFreqLowSF_nsp1_20181213_002_thresh35_ogcorrupt_info.mat';
-
-    'XT_RE_radFreqHighSF_nsp1_20181227_001_thresh35_ogcorrupt_info.mat';
-    'XT_RE_radFreqHighSF_nsp1_20181228_001_thresh35_ogcorrupt_info.mat';
-    'XT_RE_radFreqHighSF_nsp1_20181228_002_thresh35_ogcorrupt_info.mat';
-    'XT_RE_radFreqHighSF_nsp1_20181231_001_thresh35_ogcorrupt_info.mat';
-
-    'XT_LE_radFreqHighSF_nsp1_20190102_001_thresh35_ogcorrupt_info.mat';
-    'XT_LE_radFreqHighSF_nsp1_20190102_002_thresh35_ogcorrupt_info.mat';
-    'XT_LE_radFreqHighSF_nsp1_20190103_001_thresh35_ogcorrupt_info.mat';
-    'XT_LE_radFreqHighSF_nsp1_20190103_002_thresh35_ogcorrupt_info.mat';
-
-    'XT_RE_RadFreqLowSFV4_nsp1_20190301_002_thresh35_ogcorrupt_info.mat';
-    'XT_RE_RadFreqLowSFV4_nsp1_20190228_001_thresh35_info.mat';
-    'XT_RE_RadFreqLowSFV4_nsp1_20190228_002_thresh35_info.mat';
-    'XT_RE_RadFreqLowSFV4_nsp1_20190301_001_thresh35_info.mat';
-
-    'XT_LE_RadFreqLowSFV4_nsp1_20190226_002_thresh35_ogcorrupt_info.mat';
-    'XT_LE_RadFreqLowSFV4_nsp1_20190226_003_thresh35_ogcorrupt_info.mat';
-    'XT_LE_RadFreqLowSFV4_nsp1_20190227_001_thresh35_ogcorrupt_info.mat';
-    'XT_LE_RadFreqLowSFV4_nsp1_20190227_002_thresh35_ogcorrupt_info.mat';
-    'XT_LE_RadFreqLowSFV4_nsp1_20190227_003_thresh35_ogcorrupt_info.mat';
-
-    'XT_RE_RadFreqHighSFV4_nsp1_20190304_002_thresh35_info.mat';
-    'XT_RE_RadFreqHighSFV4_nsp1_20190305_002_thresh35_info.mat';
-    'XT_RE_RadFreqHighSFV4_nsp1_20190306_001_thresh35_info.mat';
-    'XT_RE_RadFreqHighSFV4_nsp1_20190306_002_thresh35_info.mat';
-    'XT_LE_RadFreqHighSFV4_nsp1_20190307_002_thresh35_info.mat';
-
-    'XT_LE_RadFreqHighSFV4_nsp1_20190306_003_thresh35_ogcorrupt_info.mat';
-    'XT_LE_RadFreqHighSFV4_nsp1_20190307_001_thresh35_ogcorrupt_info.mat';
-};
-%%
-location = determineComputer;
-numBoot = 500;
-numPerm = 500;
-%%
-for fi = 1:length(files)
-    filename = files{fi};
-    load(filename);
-    
-    if contains(filename,'RE')
-        dataT = data.RE;
-    else
-        dataT = data.LE;
-    end
-    %% plot PSTHs
-    figure(2);
-    clf
-    pos = get(gcf,'Position');
-    set(gcf,'Position',[pos(1) pos(2) 1200 900])
-    set(gcf,'PaperOrientation','Landscape');
-    for ch = 1:96
-        
-        subplot(dataT.amap,10,10,ch)
-        hold on;
-        
-        blankResp = nanmean(smoothdata(dataT.bins((dataT.rf == 10000), 1:35 ,ch),'gaussian',3))./0.01;
-        stimResp = nanmean(smoothdata(dataT.bins((dataT.rf ~= 10000), 1:35 ,ch),'gaussian',3))./0.01;
-        plot(1:35,blankResp,'Color',[0.2 0.2 0.2],'LineWidth',0.5);
-        plot(1:35,stimResp,'-k','LineWidth',2);
-        
-        title(ch)
-        
-        set(gca,'Color','none','tickdir','out','XTickLabel',[],'FontAngle','italic');
-        ylim([0 inf])
-    end
-    
-    fname = strrep(filename,'_',' ');
-    suptitle({sprintf('%s %s %s %s stim vs blank', dataT.animal, dataT.array, dataT.programID, dataT.eye);...
-        sprintf(sprintf('%s',string(fname)))});
-    %% determine visually responsive channels
-    % input needs to be (ch x trials)
-    zBlank = nan(96,9000);
-    zStim = nan(96,9000);
-    
-    for ch = 1:96
-        zStimT = dataT.RFzScore{ch}(8:end,:);
-        zBlankT = dataT.blankZscore{ch}(8:end);
-        
-        zStim(ch,1:numel(zStimT)) = reshape(zStimT,[1,numel(zStimT)]);
-        zBlank(ch,1:numel(zBlankT)) = zBlankT;
-    end
-
-    [dataT.allStimBlankDprime, dataT.allStimBlankDprimeBootPerm, dataT.stimBlankDprimePerm, dataT.stimBlankSDPerm]...
-        = StimVsBlankPermutations_allStim_zScore(zStim,zBlank,1000,0.75);
-    fprintf('stim vs Blank permutations done %.2f\n minutes',round(toc/60,2))
-    
-    [dataT.stimBlankChPvals, dataT.responsiveCh]...
-        = getPermutationStatsAndGoodCh(dataT.allStimBlankDprime,dataT.allStimBlankDprimeBootPerm,2,1);
-    fprintf('%d responsive channels defined\n', sum(dataT.responsiveCh))
-    
-    if sum(dataT.responsiveCh) == 0
-        fprintf('There were no responsive channels found, something''s funky')
-        keyboard
-    end
-    %% do split half correlations and permutations
-    % needs to be (conditions x repeats x channels)
-    for ch = 1:96
-        tmpZs = dataT.RFzScore{ch}(8:end,:)';
-        stimZs(:,:,ch) = tmpZs;
-        clear tmpZs;
-    end
-
-    [dataT.zScoreReliabilityIndex, dataT.zScoreReliabilityPvals,dataT.zScoreSplitHalfSigChs,dataT.zScoreReliabilityIndexPerm]...
-        = getHalfCorrPerm(stimZs,filename,numPerm,numBoot);
-    %%
-    plotResponsePvalsVSreliabilityPvals(dataT)
-    fprintf('Split-Half correlations computed and permuted %.2f minutes\n',round(toc/60,2))
-    clear stimZs zStim zBlank 
-end
+WUV1glassLE = length(find(WUV1.conRadLE.goodCh & WUV1.conRadLE.inStim & WUV1.trLE.goodCh & WUV1.trLE.inStim))
+WUV4glassLE = length(find(WUV1.conRadLE.goodCh & WUV1.conRadLE.inStim & WUV4.trLE.goodCh & WUV4.trLE.inStim))
+WVV1glassLE = length(find(WVV1.conRadLE.goodCh & WVV1.conRadLE.inStim & WVV1.trLE.goodCh & WVV1.trLE.inStim))
+WVV4glassLE = length(find(WVV4.conRadLE.goodCh & WVV4.conRadLE.inStim & WVV4.trLE.goodCh & WVV4.trLE.inStim))
+XTV1glassLE = length(find(XTV1.conRadLE.goodCh & XTV1.conRadLE.inStim & XTV1.trLE.goodCh & XTV1.trLE.inStim))
+XTV4glassLE = length(find(XTV4.conRadLE.goodCh & XTV4.conRadLE.inStim & XTV4.trLE.goodCh & XTV4.trLE.inStim))

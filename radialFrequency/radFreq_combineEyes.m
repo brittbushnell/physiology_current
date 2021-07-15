@@ -12,9 +12,9 @@ close all
 % REfile = 'WU_RE_radFreqLoc1_nsp1_June2017_info_goodCh';
 % newName = 'WU_BE_radFreqLoc1_V1';
 %% WV
-LEfile = 'WV_LE_RadFreqHighSF_nsp2_March2019_goodCh';
-REfile = 'WV_RE_RadFreqHighSF_nsp2_March2019_goodCh';
-newName = 'WV_BE_radFreqHighSF_V4';
+% LEfile = 'WV_LE_RadFreqHighSF_nsp2_March2019_goodCh';
+% REfile = 'WV_RE_RadFreqHighSF_nsp2_March2019_goodCh';
+% newName = 'WV_BE_radFreqHighSF_V4';
 %
 % LEfile = 'WV_LE_RadFreqHighSF_nsp1_March2019_goodCh';
 % REfile = 'WV_RE_RadFreqHighSF_nsp1_March2019_goodCh';
@@ -52,14 +52,14 @@ newName = 'WV_BE_radFreqHighSF_V4';
 % LEfile = 'XT_LE_RadFreqLowSFV4_nsp1_Feb2019_info_goodCh';
 % REfile = 'XT_RE_RadFreqLowSFV4_nsp1_Feb2019_info_goodCh';
 % newName = 'XT_BE_radFreqLowSFV4_V1';
-%% missing RE for these
-% LEfile = 'XT_LE_RadFreqHighSFV4_nsp2_March2019_info_goodCh';
-% REfile =
-% newName = 'XT_BE_radFreqHighSFV4_V4';
-%
+
+LEfile = 'XT_LE_RadFreqHighSFV4_nsp2_March2019_info_goodCh';
+REfile = 'XT_RE_RadFreqHighSFV4_nsp2_March2019_info_goodCh';
+newName = 'XT_BE_radFreqHighSFV4_V4';
+
 % LEfile = 'XT_LE_RadFreqHighSFV4_nsp1_March2019_info_goodCh';
-% REfile =
-% newName = 'XT_BE_radFreqHighSFV4_V4';
+% REfile = 'XT_RE_RadFreqHighSFV4_nsp1_March2019_info_goodCh';
+% newName = 'XT_BE_radFreqHighSFV4_V1';
 %%
 files = {LEfile; REfile};
 

@@ -47,7 +47,7 @@ for ch = 1:96
     pos = get(gcf,'Position');
     set(gcf,'Position',[pos(1), pos(2), 600, 700])
     
-    s = suptitle(sprintf('%s %s Fisher r to z ch %d',REdata.animal, REdata.array, ch));
+    s = suptitle(sprintf('%s %s Fisher r to z for locations ch %d',REdata.animal, REdata.array, ch));
     s.Position(2) = s.Position(2)+0.0272;
     
     for foo = 1:6
@@ -176,11 +176,11 @@ for ch = 1:96
                     LEprefLoc(1,ch) = ploc;
                     
                 elseif sum(corrP(:,2)) > 1
-                    [~,mxNdx] = max(muSc,[],'all','linear');
+                    [~,mxNdx] = max(abs(muSc),[],'all','linear');
                     [ploc,~] = ind2sub(size(muSc),mxNdx);
                     LEprefLoc(1,ch) = ploc;
                 elseif sum(corrP(:,2)) == 0
-                    [~,mxNdx] = max(muSc,[],'all','linear');
+                    [~,mxNdx] = max(abs(muSc),[],'all','linear');
                     [ploc,~] = ind2sub(size(muSc),mxNdx);
                     LEprefLoc(1,ch) = ploc;
                 end
@@ -190,11 +190,11 @@ for ch = 1:96
                     REprefLoc(1,ch) = ploc;
                     
                 elseif sum(corrP(:,2)) > 1
-                    [~,mxNdx] = max(muSc,[],'all','linear');
+                    [~,mxNdx] = max(abs(muSc),[],'all','linear');
                     [ploc,~] = ind2sub(size(muSc),mxNdx);
                     REprefLoc(1,ch) = ploc;
                 elseif sum(corrP(:,2)) == 0
-                    [~,mxNdx] = max(muSc,[],'all','linear');
+                    [~,mxNdx] = max(abs(muSc),[],'all','linear');
                     [ploc,~] = ind2sub(size(muSc),mxNdx);
                     REprefLoc(1,ch) = ploc;
                 end
@@ -226,7 +226,7 @@ for ch = 1:96
     set(mygca,'YLim',yLimits);
     
     figName = [LEdata.animal,'_BE_',LEdata.array,'_FisherT_location_ch',num2str(ch),'.pdf'];
-    %     print(gcf, figName,'-dpdf','-bestfit')
+    print(gcf, figName,'-dpdf','-bestfit')
 end
 %%
 %% Plot relative number of channels with each location preference
