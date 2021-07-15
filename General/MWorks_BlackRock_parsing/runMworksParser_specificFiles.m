@@ -7,15 +7,19 @@ clear
 tic
 %%
 files = {
-    'WU_LE_GratingsCon_nsp1_20170809_002_thresh35';
+%     'WU_LE_GratingsCon_nsp1_20170809_002_thresh35';
 % 'WU_RE_GratingsCon_nsp1_20170809_003_thresh35';
 % 'WU_LE_GratingsCon_nsp1_20170811_003_thresh35';
 % 'WU_RE_GratingsCon_nsp1_20170809_003_thresh35';
 % 'WU_RE_GratingsCon_nsp1_20170811_001_thresh35';
 % 'WU_RE_GratingsCon_nsp1_20170811_002_thresh35';
+
+'WU_LE_RadFreqLoc1_nsp1_20170628_004_thresh35';
+'WU_LE_RadFreqLoc1_nsp2_20170628_004_thresh35';
+
     };
 %%
-stimType = 'gratings'; %'png'
+stimType = 'png'; %'gratings';
 
 %%
 failNdx = 0;

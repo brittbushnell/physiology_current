@@ -202,6 +202,9 @@ end
 %first find the times when mworks sends out a word, mworks data is stored in microseconds, IMAGINE THAT
 mworks_wordout_times = double(cell2mat({sent(cell2mat({sent.data})~=0).time_us}));
 
+fprintf('\n\n ******* REMOVING FIRST 463 TRIALS TO ALIGN MWORKS AND NEV******** \n\n')
+mworks_wordout_times = mworks_wordout_times(464:end);
+
 nev_wordout_times_step1 = fp.Data.SerialDigitalIO.TimeStampSec;
 nev_wordout_times = double(nev_wordout_times_step1).*(10^6);
 
@@ -213,6 +216,7 @@ minimum_interword_interval = min(diff(mworks_wordout_times));
 %choose the later of the two close values as the starting point
 bad_nev_times = find(diff(nev_wordout_times)<minimum_interword_interval/2) + 1; %find nev inter_word_intervals that are too short
 nev_wordout_times(bad_nev_times) = []; %remove these times
+nev_wordout_times = nev_wordout_times(463:end);
 nev_wordout_times = nev_wordout_times./(10^6);
 
 lastwarn('');
