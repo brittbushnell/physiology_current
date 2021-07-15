@@ -84,8 +84,8 @@ set(gca,'tickdir','out','Layer','top','YTick',0:0.25:1,'XTick',0:0.2:1)
 
 xlabel('Visual response permutation p-value','FontAngle','italic','FontSize',12)
 ylabel('Half-Split permutation p-value','FontAngle','italic','FontSize',12)
-
-title({sprintf('%s %s %s %s %s %s split half p-value vs visual response p-value', data.animal, data.eye, data.array, data.programID, data.date2, data.runNum);...
+%%
+title({sprintf('%s %s %s %s split half p-value vs visual response p-value', data.animal, data.eye, data.array, data.programID);...
     'data in gray areas are excluded'},'FontAngle','italic','FontSize',14)
 %% save
 location = determineComputer;
@@ -113,5 +113,5 @@ if ~exist(figDir,'dir')
 end
 cd(figDir)
 
-figName = [data.animal,'_',data.eye,'_',data.programID,'_',data.date2,'_',data.runNum,'_reliableVvisual_',data.array,'.pdf'];
+figName = [data.animal,'_',data.eye,'_',data.programID,'_reliableVvisual_',data.array,'.pdf'];
 print(gcf, figName,'-dpdf','-fillpage')

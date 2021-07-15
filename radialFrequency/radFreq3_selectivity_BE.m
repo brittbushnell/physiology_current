@@ -6,11 +6,23 @@ tic
 
 files = {
     'WU_BE_radFreqLoc1_V4';
-%     'WU_BE_radFreqLoc1_V1';
-    %     'WV_BE_radFreqHighSF_V4';
-    %     'WV_BE_radFreqHighSF_V1';
+    'WU_BE_radFreqLoc1_V1';
+    
+    'WV_BE_radFreqHighSF_V4';
+    'WV_BE_radFreqHighSF_V1';
+    'WV_BE_radFreqLowSF_V4';
+    'WV_BE_radFreqLowSF_V1';
+    
+    'XT_BE_radFreqLowSF_V4';
+    'XT_BE_radFreqLowSF_V1';
+    'XT_BE_radFreqHighSF_V4';
+    'XT_BE_radFreqHighSF_V1';
+    'XT_BE_radFreqLowSFV4_V4';
+    'XT_BE_radFreqLowSFV4_V1';
+    'XT_BE_radFreqHighSFV4_V4';
+    'XT_BE_radFreqHighSFV4_V1';
     };
-nameEnd = 'perm';
+nameEnd = 'LocSize';
 %%
 plotNeuro = 0;
 plotLocCh = 1;
@@ -28,10 +40,15 @@ for fi = 1:length(files)
     % rfSCmtx: (repeats, RF, ori, amp, sf, radius, location, ch)
     % blankSCmtx: (repeats, ch)
     % circSCmtx: (repeats, sf, radius, location, ch)
-    
-    REdata = radFreq_getSpikeCountCondMtx(REdata);
-    LEdata = radFreq_getSpikeCountCondMtx(LEdata);
-    %% plot neurometric curves
+    if contains(REdata.trLE.animal,'WU')
+        REdata = radFreq_getSpikeCountCondMtx(REdata);
+        LEdata = radFreq_getSpikeCountCondMtx(LEdata);
+    else
+        REdata = radFreq_getSpikeCountCondMtx_XTWV(REdata);
+        LEdata = radFreq_getSpikeCountCondMtx_XTWV(LEdata);
+    end
+    %% plot neurometric curve
+    %         NOTE: need to adjust to only use preferred location
     [REdata.rfMuZ, REdata.rfStErZ, REdata.circMuZ, REdata.circStErZ,...
         REdata.rfMuSc, REdata.rfStErSc, REdata.circMuSc, REdata.circStErSc] = radFreq_getMuSerrSCandZ(REdata,plotNeuro);
     
@@ -45,32 +62,24 @@ for fi = 1:length(files)
     radFreq_plotFisherDist_Loc(REdata, LEdata)
     [REdata.prefLoc, LEdata.prefLoc] = radFreq_getFisherLoc_BE(REdata, LEdata);
     %% find preferred stimulus size
-    radFreq_plotFisherDist_Size(REdata, LEdata)
-    %% find preferred RF/Rotation combo
-    %     radFreq_plotFisherDist_RFphase(REdata, LEdata)
-%     close all
-    [REdata.sigOri, LEdata.sigOri, REdata.oriCorrDiff, LEdata.oriCorrDiff, REdata.prefRot, LEdata.prefRot, REdata.oriCorr, LEdata.oriCorr] = radFreq_getFisherRFrot_BE(REdata, LEdata,0,1000);
-    plotRF_SigOriBars(LEdata,REdata) 
-    %% find preferred spatial frequency
-    [REdata.sigSF, LEdata.sigSF, REdata.SFcorrDiff, LEdata.SFcorrDiff, REdata.prefSF, LEdata.prefSF, REdata.SFcorr, LEdata.SFcorr] = radFreq_getFisherRFsf_BE(REdata, LEdata,1000);
-    plotRF_SigSFbars(LEdata,REdata) 
-%%
-location = determineComputer;
-        if location == 1
-            outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/radialFrequency/info/',REdata.array);
-        elseif location == 0
-            outputDir =  sprintf('~/Dropbox/ArrayData/matFiles/%s/radialFrequency/info/',REdata.array);
-        end
-        
-        if ~exist(outputDir,'dir')
-            mkdir(outputDir)
-        end
-        
-        data.RE = REdata;
-        data.LE = LEdata;
-        
-        fname2 = strrep(filename,'.mat','');
-        saveName = [outputDir fname2 '_' nameEnd '.mat'];
-        save(saveName,'data');
-        fprintf('%s saved\n\n',saveName)
+    [REdata.sigSize, LEdata.sigSize, REdata.sizeCorrDiff, LEdata.sizeCorrDiff, REdata.prefSize, LEdata.prefSize, REdata.sizeCorr, LEdata.sizeCorr] = radFreq_getFisherRFsize_BE(REdata, LEdata,1000);
+    %%
+    location = determineComputer;
+    if location == 1
+        outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/%s/radialFrequency/info/',REdata.array);
+    elseif location == 0
+        outputDir =  sprintf('~/Dropbox/ArrayData/matFiles/%s/radialFrequency/info/',REdata.array);
+    end
+    
+    if ~exist(outputDir,'dir')
+        mkdir(outputDir)
+    end
+    
+    data.RE = REdata;
+    data.LE = LEdata;
+    
+    fname2 = strrep(filename,'.mat','');
+    saveName = [outputDir fname2 '_' nameEnd '.mat'];
+    save(saveName,'data');
+    fprintf('%s saved\n\n',saveName)
 end
