@@ -5,7 +5,7 @@ location = determineComputer;
 if location == 1
     if contains(LEdata.animal,'WU')
         figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/%s/stats/FisherTransform/BE/location',LEdata.animal,LEdata.array);
-    elseif contains(LEdata.programID,'low','IgnoreCase')
+    elseif contains(LEdata.programID,'low','IgnoreCase',true)
         figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/lowSF/%s/stats/FisherTransform/BE/location',LEdata.animal,LEdata.array);
     else
         figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/FisherTransform/BE/location',LEdata.animal,LEdata.array);
@@ -13,7 +13,7 @@ if location == 1
 elseif location == 0
     if contains(LEdata.animal,'WU')
         figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/%s/stats/FisherTransform/BE/location',LEdata.animal,LEdata.array);
-    elseif contains(LEdata.programID,'low','IgnoreCase')
+    elseif contains(LEdata.programID,'low','IgnoreCase',true)
         figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/lowSF/%s/stats/FisherTransform/BE/location',LEdata.animal,LEdata.array);
     else
         figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/FisherTransform/BE/location',LEdata.animal,LEdata.array);
@@ -40,6 +40,7 @@ amps16 = [3.12 6.25 12.5 25 50 100];
 xs = 0:6;
 %%
 for ch = 1:96
+    if REdata.goodCh(ch) || LEdata.goodCh(ch) % skip to next channel if neither eye is included
     ndx2 = 1;
     
     figure(1)
@@ -75,13 +76,15 @@ for ch = 1:96
                     % get spike counts for the applicable stimuli
                     noCircNdx = (scCh(1,:) < 32);
                     circNdx = (scCh(1,:) == 32);
-                    locNdx = (scCh(6,:) == locPair(loc,1)) & (scCh(7,:) == locPair(loc,2));
                     amp48Ndx = (scCh(2,:) == amps48(amp) & (scCh(1,:) < 16));
                     amp16Ndx = (scCh(2,:) == amps16(amp)& (scCh(1,:) == 16));
+                    
+                    locNdx = (scCh(6,:) == locPair(loc,1)) & (scCh(7,:) == locPair(loc,2));
                     stim48Spikes = squeeze(scCh(8:end,locNdx & amp48Ndx & noCircNdx));
                     stim16Spikes = squeeze(scCh(8:end,locNdx & amp16Ndx & noCircNdx));
-                    stimSpikes = [stim48Spikes, stim16Spikes];
                     circSpikes = squeeze(scCh(8:end,locNdx & circNdx));
+                    
+                    stimSpikes = [stim48Spikes, stim16Spikes];
                     
                     % get mean spike count for each amplitude and subtract
                     % response to circle from that.
@@ -227,6 +230,7 @@ for ch = 1:96
     
     figName = [LEdata.animal,'_BE_',LEdata.array,'_FisherT_location_ch',num2str(ch),'.pdf'];
     print(gcf, figName,'-dpdf','-bestfit')
+    end
 end
 %%
 %% Plot relative number of channels with each location preference
@@ -235,7 +239,7 @@ location = determineComputer;
 if location == 1
     if contains(REdata.animal,'WU')
         figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/%s/stats/FisherTransform/%s/',REdata.animal,REdata.array);
-    elseif contains(REdata.programID,'low','IgnoreCase')
+    elseif contains(REdata.programID,'low','IgnoreCase',true)
         figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/lowSF/%s/stats/FisherTransform/%s/',REdata.animal,REdata.array);
     else
         figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/FisherTransform/%s/',REdata.animal,REdata.array);
@@ -243,7 +247,7 @@ if location == 1
 elseif location == 0
     if contains(REdata.animal,'WU')
         figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/%s/stats/FisherTransform/%s/',REdata.animal,REdata.array);
-    elseif contains(REdata.programID,'low','IgnoreCase')
+    elseif contains(REdata.programID,'low','IgnoreCase',true)
         figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/lowSF/%s/stats/FisherTransform/%s/',REdata.animal,REdata.array);
     else
         figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/FisherTransform/%s/',REdata.animal,REdata.array);

@@ -42,6 +42,8 @@ REprefLoc = REdata.prefLoc;
 RErealCorr = squeeze(realCorr(2,:,:));
 LErealCorr = squeeze(realCorr(1,:,:));
 
+LEprefRad = LEdata.prefSize;
+REprefRad = REdata.prefSize;
 %(RF,ori,amp,sf,radius,location, ch)
 REspikes = REdata.RFspikeCount;
 LEspikes = LEdata.RFspikeCount;
@@ -60,7 +62,12 @@ amps48 = [6.25 12.5 25 50 100 200];
 amps16 = [3.12 6.25 12.5 25 50 100];
 xs = 0:6;
 holdout = 0.2; % percentage of the data you want to withold when doing the permutations
-%%
+
+if contains(REdata.animal,'WU')
+    spikeStart = 8;
+else
+    spikeStart = 7;
+end
 %%
 % close all
 for ch = 1:96
@@ -78,17 +85,29 @@ for ch = 1:96
         if dataT.goodCh(ch) == 1
             muSc = nan(3,6);
             
-            if ey == 1
-                locNdx = (scCh(6,:) == locPair(LEprefLoc(ch),1)) & (scCh(7,:) == locPair(LEprefLoc(ch),2));
+            if contains(dataT.animal,'WU')
+                if ey == 1
+                    locNdx = (scCh(6,:) == locPair(LEprefLoc(ch),1)) & (scCh(7,:) == locPair(LEprefLoc(ch),2));
+                    radNdx = (scCh(5,:) == LEprefRad(ch));
+                else
+                    locNdx = (scCh(6,:) == locPair(REprefLoc(ch),1)) & (scCh(7,:) == locPair(REprefLoc(ch),2));
+                    radNdx = (scCh(5,:) == REprefRad(ch));
+                end
             else
-                locNdx = (scCh(6,:) == locPair(REprefLoc(ch),1)) & (scCh(7,:) == locPair(REprefLoc(ch),2));
+                if ey == 1
+                    locNdx = (scCh(5,:) == locPair(LEprefLoc(ch),1)) & (scCh(6,:) == locPair(LEprefLoc(ch),2));
+                    radNdx = (scCh(4,:) == LEprefRad(ch));
+                else
+                    locNdx = (scCh(5,:) == locPair(REprefLoc(ch),1)) & (scCh(6,:) == locPair(REprefLoc(ch),2));
+                    radNdx = (scCh(4,:) == REprefRad(ch));
+                end
             end
             
             for rf = 1:3
                 circNdx = (scCh(1,:) == 32);
                 rfNdx   = (scCh(1,:) == radfreqs(rf));
                 
-                circSpikes = squeeze(scCh(8:end,locNdx & circNdx));
+                circSpikes = squeeze(scCh(spikeStart:end,locNdx & circNdx & radNdx));
                 circSpikes = reshape(circSpikes,[1,numel(circSpikes)]);
                 muCirc = (nanmean(circSpikes,'all'));
                 
@@ -104,17 +123,17 @@ for ch = 1:96
                     for amp = 1:6
                         ampNdx = (scCh(2,:) == ampRef(amp));
                         
-                        stimSpikes = squeeze(scCh(:,rfNdx & ampNdx & locNdx));
+                        stimSpikes = squeeze(scCh(spikeStart:end,rfNdx & ampNdx & locNdx & radNdx));
                         numStimTrials = round((size(stimSpikes,2)/2) * (1-holdout));
                         
                         stimSub1 = randperm(size(stimSpikes,2),numStimTrials);
-                        useStim1 = stimSpikes(8:end,stimSub1);
+                        useStim1 = stimSpikes(spikeStart:end,stimSub1);
                         
                         muStim1 = (nanmean(useStim1,'all'));
                         muSc(rf,1,amp) = muStim1 - muCirc;
                         
                         stimSub2 = datasample(setdiff(1:(size(stimSpikes,2)), stimSub1),numStimTrials);
-                        useStim2 = stimSpikes(8:end,stimSub2);
+                        useStim2 = stimSpikes(spikeStart:end,stimSub2);
                         
                         muStim2 = (nanmean(useStim2,'all'));
                         muSc(rf,2,amp) = muStim2 - muCirc;
@@ -314,7 +333,7 @@ for ch = 1:96
     xlabel('Difference in spatial frequency correlations','FontSize',11)
     
     figName = [LEdata.animal,'_BE_',LEdata.array,'_rSFperm_ch',num2str(ch),'.pdf'];
-%     print(gcf, figName,'-dpdf','-bestfit')
+    print(gcf, figName,'-dpdf','-bestfit')
 end
 fprintf('time to do rotation permutations %.2f minutes\n',toc/60)
 

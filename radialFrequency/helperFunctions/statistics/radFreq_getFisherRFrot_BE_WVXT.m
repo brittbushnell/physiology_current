@@ -1,4 +1,4 @@
-function [REsigPerms, LEsigPerms, RECorrDiff, LEcorrDiff, REprefRot, LEprefRot, REcorrPerm, LEcorrPerm] = radFreq_getFisherRFrot_BE(REdata, LEdata,plotEbar,numBoot)
+function [REsigPerms, LEsigPerms, RECorrDiff, LEcorrDiff, REprefRot, LEprefRot, REcorrPerm, LEcorrPerm] = radFreq_getFisherRFrot_BE_WVXT(REdata, LEdata,plotEbar,numBoot)
 % This function should be called after running radFreq_getFisherLoc_BE to
 % get the preferred location for each good channel. Looking at the
 % preferred location, this function will find the preferred rotation (if there is one)
@@ -84,12 +84,6 @@ amps16 = [3.12 6.25 12.5 25 50 100];
 xs = 0:6;
 
 rotTitles = [0 45 0 45 0 22.5 0 22.5 0 11.25 0 11.25];
-
-if contains(REdata.animal,'WU')
-    spikeStart = 8;
-else
-    spikeStart = 7;
-end
 %%
 % close all
 for ch = 1:96
@@ -134,22 +128,13 @@ for ch = 1:96
             
             muSc = nan(3,2,6);
             %             corrPval = nan(3,2,2); %RF, rotation, corr, significance
-            if contains(dataT.animal,'WU')
-                if ey == 1
-                    locNdx = (scCh(6,:) == locPair(LEprefLoc(ch),1)) & (scCh(7,:) == locPair(LEprefLoc(ch),2));
-                    radNdx = (scCh(5,:) == LEprefRad(ch));
-                else
-                    locNdx = (scCh(6,:) == locPair(REprefLoc(ch),1)) & (scCh(7,:) == locPair(REprefLoc(ch),2));
-                    radNdx = (scCh(5,:) == REprefRad(ch));
-                end
+            
+            if ey == 1
+                locNdx = (scCh(6,:) == locPair(LEprefLoc(ch),1)) & (scCh(7,:) == locPair(LEprefLoc(ch),2));
+                radNdx = (scCh(5,:) == locPair(LEprefRad(ch),1));
             else
-                if ey == 1
-                    locNdx = (scCh(5,:) == locPair(LEprefLoc(ch),1)) & (scCh(6,:) == locPair(LEprefLoc(ch),2));
-                    radNdx = (scCh(4,:) == LEprefRad(ch));
-                else
-                    locNdx = (scCh(5,:) == locPair(REprefLoc(ch),1)) & (scCh(6,:) == locPair(REprefLoc(ch),2));
-                    radNdx = (scCh(4,:) == REprefRad(ch));
-                end
+                locNdx = (scCh(6,:) == locPair(REprefLoc(ch),1)) & (scCh(7,:) == locPair(REprefLoc(ch),2));
+                radNdx = (scCh(5,:) == locPair(REprefRad(ch),1));
             end
             
             for rf = 1:3
@@ -169,8 +154,8 @@ for ch = 1:96
                         rotNdx = scCh(3,:) == rot16(rot);
                         ampRef = amps16;
                     end
-                    circSpikes = squeeze(scCh(spikeStart:end,locNdx & circNdx & radNdx));
                     
+                    circSpikes = squeeze(scCh(8:end,locNdx & circNdx & radNdx));
                     circSpikes = reshape(circSpikes,[1,numel(circSpikes)]);
                     cirErr = (std(circSpikes))/(sqrt(size(circSpikes,1)));
                     muCirc = (nanmean(circSpikes,'all'));
@@ -178,8 +163,7 @@ for ch = 1:96
                     for amp = 1:6
                         ampNdx = (scCh(2,:) == ampRef(amp));
                         
-                        stimSpikes = squeeze(scCh(spikeStart:end,rfNdx & ampNdx & rotNdx & locNdx & radNdx));
-                        
+                        stimSpikes = squeeze(scCh(8:end,rfNdx & ampNdx & rotNdx & locNdx & radNdx));
                         stimSpikes = reshape(stimSpikes,[1,numel(stimSpikes)]);
                         
                         muStim = (nanmean(stimSpikes,'all'));
@@ -192,7 +176,7 @@ for ch = 1:96
                     muSct = squeeze(muSc(rf,rot,:));
                     muScRFrot = [0; muSct];
                     corMtx = corrcoef(xs,muScRFrot);
-                    stimCorr(ey,rf,rot,ch) = corMtx(2);
+                    stimCorr(ey,rf,rot,ch) = corMtx(2);                  
                     %% plot mean spike counts as a function of amplitude.
                     
                     h = subplot(3,4,sub);
@@ -212,7 +196,7 @@ for ch = 1:96
                         end
                     end
                     
-                    xlim([-0.5 7.5])
+                    xlim([-0.5 7.5])                    
                     set(gca,'XTick',1:7,'XTickLabel',0:6,'tickdir','out','FontSize',10,'FontAngle','italic')
                     
                     mygca(1,sub) = gca;
@@ -237,9 +221,25 @@ for ch = 1:96
                     
                     ndx = ndx+1;
                 end %rot
-                rot1 = squeeze(stimCorr(ey,rf,1,ch));  rot2 = squeeze(stimCorr(ey,rf,2,ch));
+                rot1 = squeeze(stimCorr(ey,rf,1,ch));  rot2 = squeeze(stimCorr(ey,rf,2,ch));  
                 corrDiff(ey,rf,ch) = rot1 - rot2;
                 
+%                 scTmp = squeeze(muSc(rf,:,:));
+%                 if sum(corrP(rf,:,2)) == 1
+%                     prpt = find(corrP(rf,:,2) == 1);
+%                 elseif sum(corrP(rf,:,2)) > 1
+%                     [~,mxNdx] = max(abs(scTmp),[],'all','linear');
+%                     [prpt,~] = ind2sub(size(scTmp),mxNdx);
+%                 elseif sum(corrP(rf,:,2)) == 0
+%                     [~,mxNdx] = max(muSc,[],'all','linear');
+%                     [prpt,~] = ind2sub(size(muSc),mxNdx);
+%                 end
+%                 
+%                 if ey == 1
+%                     LEprefRot(rf,ch) = prpt;
+%                 else
+%                     REprefRot(rf,ch) = prpt;
+%                 end
             end %RF
         end % goodCh
     end %eye

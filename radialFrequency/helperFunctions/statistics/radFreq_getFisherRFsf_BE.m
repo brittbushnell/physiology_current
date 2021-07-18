@@ -37,6 +37,9 @@ locPair = LEdata.locPair;
 LEprefLoc = LEdata.prefLoc;
 REprefLoc = REdata.prefLoc;
 
+LEprefRad = LEdata.prefSize;
+REprefRad = REdata.prefSize;
+
 %(RF,ori,amp,sf,radius,location, ch)
 REspikes = REdata.RFspikeCount;
 REprefSF = nan(3,2,96);
@@ -56,6 +59,12 @@ amps48 = [6.25 12.5 25 50 100 200];
 amps16 = [3.12 6.25 12.5 25 50 100];
 xs = 0:6;
 sfTitles = [1 2 1 2];
+
+if contains(REdata.animal,'WU')
+    spikeStart = 8;
+else
+    spikeStart = 7;
+end
 %%
 % close all
 for ch = 1:96
@@ -99,10 +108,22 @@ for ch = 1:96
             muSc = nan(3,2,6);
             %             corrPval = nan(3,2,2); %RF, rotation, corr, significance
             
-            if ey == 1
-                locNdx = (scCh(6,:) == locPair(LEprefLoc(ch),1)) & (scCh(7,:) == locPair(LEprefLoc(ch),2));
+            if contains(dataT.animal,'WU')
+                if ey == 1
+                    locNdx = (scCh(6,:) == locPair(LEprefLoc(ch),1)) & (scCh(7,:) == locPair(LEprefLoc(ch),2));
+                    radNdx = (scCh(5,:) == LEprefRad(ch));
+                else
+                    locNdx = (scCh(6,:) == locPair(REprefLoc(ch),1)) & (scCh(7,:) == locPair(REprefLoc(ch),2));
+                    radNdx = (scCh(5,:) == REprefRad(ch));
+                end
             else
-                locNdx = (scCh(6,:) == locPair(REprefLoc(ch),1)) & (scCh(7,:) == locPair(REprefLoc(ch),2));
+                if ey == 1
+                    locNdx = (scCh(5,:) == locPair(LEprefLoc(ch),1)) & (scCh(6,:) == locPair(LEprefLoc(ch),2));
+                    radNdx = (scCh(4,:) == LEprefRad(ch));
+                else
+                    locNdx = (scCh(5,:) == locPair(REprefLoc(ch),1)) & (scCh(6,:) == locPair(REprefLoc(ch),2));
+                    radNdx = (scCh(4,:) == REprefRad(ch));
+                end
             end
             
             for rf = 1:3
@@ -121,7 +142,7 @@ for ch = 1:96
                         ampRef = amps16;
                     end
                     
-                    circSpikes = squeeze(scCh(8:end,locNdx & circNdx));
+                    circSpikes = squeeze(scCh(spikeStart:end,locNdx & circNdx));
                     circSpikes = reshape(circSpikes,[1,numel(circSpikes)]);
                     cirErr = (std(circSpikes))/(sqrt(size(circSpikes,1)));
                     muCirc = (nanmean(circSpikes,'all'));
@@ -129,12 +150,11 @@ for ch = 1:96
                     for amp = 1:6
                         ampNdx = (scCh(2,:) == ampRef(amp));
                         
-                        stimSpikes = squeeze(scCh(8:end,rfNdx & ampNdx & sfNdx & locNdx));
+                        stimSpikes = squeeze(scCh(spikeStart:end,rfNdx & ampNdx & sfNdx & locNdx & radNdx));
                         stimSpikes = reshape(stimSpikes,[1,numel(stimSpikes)]);
                         
                         muStim = (nanmean(stimSpikes,'all'));
                         muSc(rf,sf,amp) = muStim - muCirc;
-%                         stErr(rf,sf,amp) = (std(stimSpikes - circSpikes))/(sqrt(size(stimSpikes,1)));
                         clear muStim
                     end %amplitude
                     

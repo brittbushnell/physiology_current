@@ -5,8 +5,8 @@ tic
 %%
 
 files = {
-    'WU_BE_radFreqLoc1_V4';
-    'WU_BE_radFreqLoc1_V1';
+%     'WU_BE_radFreqLoc1_V4';
+%     'WU_BE_radFreqLoc1_V1';
     
     'WV_BE_radFreqHighSF_V4';
     'WV_BE_radFreqHighSF_V1';
@@ -40,7 +40,7 @@ for fi = 1:length(files)
     % rfSCmtx: (repeats, RF, ori, amp, sf, radius, location, ch)
     % blankSCmtx: (repeats, ch)
     % circSCmtx: (repeats, sf, radius, location, ch)
-    if contains(REdata.trLE.animal,'WU')
+    if contains(REdata.animal,'WU')
         REdata = radFreq_getSpikeCountCondMtx(REdata);
         LEdata = radFreq_getSpikeCountCondMtx(LEdata);
     else
@@ -49,14 +49,27 @@ for fi = 1:length(files)
     end
     %% plot neurometric curve
     %         NOTE: need to adjust to only use preferred location
-    [REdata.rfMuZ, REdata.rfStErZ, REdata.circMuZ, REdata.circStErZ,...
-        REdata.rfMuSc, REdata.rfStErSc, REdata.circMuSc, REdata.circStErSc] = radFreq_getMuSerrSCandZ(REdata,plotNeuro);
-    
-    [LEdata.rfMuZ, LEdata.rfStErZ, LEdata.circMuZ, LEdata.circStErZ,...
-        LEdata.rfMuSc, LEdata.rfStErSc, LEdata.circMuSc, LEdata.circStErSc] = radFreq_getMuSerrSCandZ(LEdata,plotNeuro);
+    if contains(REdata.animal,'WU')
+        [REdata.rfMuZ, REdata.rfStErZ, REdata.circMuZ, REdata.circStErZ,...
+            REdata.rfMuSc, REdata.rfStErSc, REdata.circMuSc, REdata.circStErSc] = radFreq_getMuSerrSCandZ(REdata,plotNeuro);
+        
+        [LEdata.rfMuZ, LEdata.rfStErZ, LEdata.circMuZ, LEdata.circStErZ,...
+            LEdata.rfMuSc, LEdata.rfStErSc, LEdata.circMuSc, LEdata.circStErSc] = radFreq_getMuSerrSCandZ(LEdata,plotNeuro);
+    else
+        [REdata.rfMuZ, REdata.rfStErZ, REdata.circMuZ, REdata.circStErZ,...
+            REdata.rfMuSc, REdata.rfStErSc, REdata.circMuSc, REdata.circStErSc] = radFreq_getMuSerrSCandZ_WVXT(REdata,plotNeuro);
+        
+        [LEdata.rfMuZ, LEdata.rfStErZ, LEdata.circMuZ, LEdata.circStErZ,...
+            LEdata.rfMuSc, LEdata.rfStErSc, LEdata.circMuSc, LEdata.circStErSc] = radFreq_getMuSerrSCandZ_WVXT(LEdata,plotNeuro);
+    end
     %% get fisher transformed correlations
-    REdata.FisherTrCorr = radFreq_getFisher_allStim(REdata);
-    LEdata.FisherTrCorr = radFreq_getFisher_allStim(LEdata);
+    if contains(REdata.animal,'WU')
+        REdata.FisherTrCorr = radFreq_getFisher_allStim(REdata);
+        LEdata.FisherTrCorr = radFreq_getFisher_allStim(LEdata);
+    else
+        REdata.FisherTrCorr = radFreq_getFisher_allStim_WVXT(REdata);
+        LEdata.FisherTrCorr = radFreq_getFisher_allStim_WVXT(LEdata);        
+    end
     radFreq_plotAllFisherZs(REdata,LEdata);
     %% find preferred location
     radFreq_plotFisherDist_Loc(REdata, LEdata)

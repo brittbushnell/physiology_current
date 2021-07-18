@@ -12,7 +12,7 @@ location = determineComputer;
 if location == 1
     if contains(LEdata.animal,'WU')
         figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/%s/stats/FisherTransform/BE/Size/tuning/',LEdata.animal,LEdata.array);
-    elseif contains(LEdata.programID,'low','IgnoreCase')
+    elseif contains(LEdata.programID,'low','IgnoreCase',true)
         figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/lowSize/%s/stats/FisherTransform/BE/Size/tuning/',LEdata.animal,LEdata.array);
     else
         figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/highSize/%s/stats/FisherTransform/BE/Size/tuning/',LEdata.animal,LEdata.array);
@@ -20,7 +20,7 @@ if location == 1
 elseif location == 0
     if contains(LEdata.animal,'WU')
         figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/%s/stats/FisherTransform/BE/Size/tuning/',LEdata.animal,LEdata.array);
-    elseif contains(LEdata.programID,'low','IgnoreCase')
+    elseif contains(LEdata.programID,'low','IgnoreCase',true)
         figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/lowSize/%s/stats/FisherTransform/BE/Size/tuning/',LEdata.animal,LEdata.array);
     else
         figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/highSize/%s/stats/FisherTransform/BE/Size/tuning/',LEdata.animal,LEdata.array);
@@ -52,118 +52,126 @@ amps48 = [6.25 12.5 25 50 100 200];
 amps16 = [3.12 6.25 12.5 25 50 100];
 xs = 0:6;
 sfTitles = [1 2 1 2];
+
+spikeStart = 8;
 %%
 % close all
 for ch = 1:96
-    %%
-    ndx = 1;
-     
-    figure(1)
-    clf
-    pos = get(gcf,'Position');
-    set(gcf,'Position',[pos(1), pos(2), 700, 300],'PaperOrientation','landscape')
-    
-    s = suptitle(sprintf('%s %s spike counts per amplitude mean radius x RF ch %d',REdata.animal, REdata.array, ch));
-%     s.Position(2) = s.Position(2)+0.0272;
-    
-    % make dummy subplots to get correct dimensions of mygca. Otherwise it
-    % throws an error if one eye isn't included when trying to redo the y
-    % axis
-    
-    for foo = 1:4
-        subplot(1,4,foo)
-        mygca(1,foo) = gca;
-        xlim([-0.5 7.5])
-        axis square
-        title(sprintf('mean radius %d%c',sfTitles(foo),char(176)),'FontSize',12,'FontWeight','normal','FontAngle','italic');
-    end
-    
-    for ey = 1:2
-        if ey == 1
-            dataT = LEdata;
-            scCh = LEspikes{ch};
-        else
-            dataT = REdata;
-            scCh = REspikes{ch};
+    if REdata.goodCh(ch) || LEdata.goodCh(ch)
+        %%
+        ndx = 1;
+        
+        figure(1)
+        clf
+        pos = get(gcf,'Position');
+        set(gcf,'Position',[pos(1), pos(2), 700, 300],'PaperOrientation','landscape')
+        
+        s = suptitle(sprintf('%s %s spike counts per amplitude mean radius x RF ch %d',REdata.animal, REdata.array, ch));
+        %     s.Position(2) = s.Position(2)+0.0272;
+        
+        % make dummy subplots to get correct dimensions of mygca. Otherwise it
+        % throws an error if one eye isn't included when trying to redo the y
+        % axis
+        
+        for foo = 1:4
+            subplot(1,4,foo)
+            mygca(1,foo) = gca;
+            xlim([-0.5 7.5])
+            axis square
+            title(sprintf('mean radius %d%c',sfTitles(foo),char(176)),'FontSize',12,'FontWeight','normal','FontAngle','italic');
         end
         
-        if dataT.goodCh(ch) == 1
-            
+        for ey = 1:2
             if ey == 1
-                locNdx = (scCh(6,:) == locPair(LEprefLoc(ch),1)) & (scCh(7,:) == locPair(LEprefLoc(ch),2));
+                dataT = LEdata;
+                scCh = LEspikes{ch};
             else
-                locNdx = (scCh(6,:) == locPair(REprefLoc(ch),1)) & (scCh(7,:) == locPair(REprefLoc(ch),2));
+                dataT = REdata;
+                scCh = REspikes{ch};
             end
             
-            for sz = 1:2
-                muSc = nan(1,6);
-%                 corrP = nan(3,2);
+            if dataT.goodCh(ch) == 1
                 
-                noCircNdx = (scCh(1,:) < 32);
-                circNdx = (scCh(1,:) == 32);
-
-                circSpikes = squeeze(scCh(8:end,locNdx & circNdx));
-                circSpikes = reshape(circSpikes,[1,numel(circSpikes)]);
-                muCirc = (nanmean(circSpikes,'all'));
-                
-                for amp = 1:6
-                    
-                    amp48Ndx = (scCh(2,:) == amps48(amp) & (scCh(1,:) < 16));
-                    amp16Ndx = (scCh(2,:) == amps16(amp)& (scCh(1,:) == 16));
-                    sizeNdx = scCh(5,:) == sz;
-                    stim48Spikes = squeeze(scCh(8:end,locNdx & amp48Ndx & noCircNdx & sizeNdx));
-                    stim16Spikes = squeeze(scCh(8:end,locNdx & amp16Ndx & noCircNdx & sizeNdx));
-                    stimSpikes = [stim48Spikes, stim16Spikes];
-                    
-                    muStim = (nanmean(stimSpikes,'all'));
-                    muSc(1,amp) = muStim - muCirc;
-                    clear muStim
-                end %amplitude
-                
-                % get the correlation
-                muScSize = [0 muSc];
-                corMtx = corrcoef(xs,muScSize);
-                stimCorr(sz,ch) = corMtx(2);
-                %% plot mean spike counts as a function of amplitude.
-                
-                subplot(1,4,ndx);
-                hold on
-                
-                if contains(dataT.eye,'LE') || contains(dataT.eye,'FE')
-                    plot(muScSize,'o-b') 
+                if ey == 1
+                    locNdx = (scCh(6,:) == locPair(LEprefLoc(ch),1)) & (scCh(7,:) == locPair(LEprefLoc(ch),2));
                 else
-                    plot(muScSize,'o-r')
+                    locNdx = (scCh(6,:) == locPair(REprefLoc(ch),1)) & (scCh(7,:) == locPair(REprefLoc(ch),2));
                 end
                 
-                xlim([-0.5 7.5])
-                set(gca,'XTick',1:7,'XTickLabel',0:6,'tickdir','out','FontSize',10,'FontAngle','italic')
+                for sz = 1:2
+                    muSc = nan(1,6);
+                    %                 corrP = nan(3,2);
+                    
+                    noCircNdx = (scCh(1,:) < 32);
+                    circNdx = (scCh(1,:) == 32);
+                    
+                    circSpikes = squeeze(scCh(spikeStart:end,locNdx & circNdx));
+                    
+                    circSpikes = reshape(circSpikes,[1,numel(circSpikes)]);
+                    muCirc = (nanmean(circSpikes,'all'));
+                    
+                    for amp = 1:6
+                        
+                        amp48Ndx = (scCh(2,:) == amps48(amp) & (scCh(1,:) < 16));
+                        amp16Ndx = (scCh(2,:) == amps16(amp)& (scCh(1,:) == 16));
+                        sizeNdx = scCh(5,:) == sz;
+                        
+                        
+                        stim48Spikes = squeeze(scCh(spikeStart:end,locNdx & amp48Ndx & noCircNdx & sizeNdx));
+                        stim16Spikes = squeeze(scCh(spikeStart:end,locNdx & amp16Ndx & noCircNdx & sizeNdx));
+                        
+                        stimSpikes = [stim48Spikes, stim16Spikes];
+                        
+                        muStim = (nanmean(stimSpikes,'all'));
+                        muSc(1,amp) = muStim - muCirc;
+                        clear muStim
+                    end %amplitude
+                    
+                    % get the correlation
+                    muScSize = [0 muSc];
+                    corMtx = corrcoef(xs,muScSize);
+                    stimCorr(sz,ch) = corMtx(2);
+                    %% plot mean spike counts as a function of amplitude.
+                    
+                    subplot(1,4,ndx);
+                    hold on
+                    
+                    if contains(dataT.eye,'LE') || contains(dataT.eye,'FE')
+                        plot(muScSize,'o-b')
+                    else
+                        plot(muScSize,'o-r')
+                    end
+                    
+                    xlim([-0.5 7.5])
+                    set(gca,'XTick',1:7,'XTickLabel',0:6,'tickdir','out','FontSize',10,'FontAngle','italic')
+                    
+                    mygca(1,ndx) = gca;
+                    b = get(gca,'YLim');
+                    yMaxs(ndx) = b(2);
+                    yMins(ndx) = b(1);
+                    
+                    if ndx == 1
+                        ylabel('Mean spike count')
+                    end
+                    xlabel('Amplitude')
+                    
+                    ndx = ndx+1;
+                end %size
+                clear muSc
                 
-                mygca(1,ndx) = gca;
-                b = get(gca,'YLim');
-                yMaxs(ndx) = b(2);
-                yMins(ndx) = b(1);
-                
-                if ndx == 1
-                    ylabel('Mean spike count')
-                end
-                xlabel('Amplitude')
-                
-                ndx = ndx+1;
-            end %size
-            clear muSc 
-            
-            size1 = squeeze(stimCorr(1,ch));  size2 = squeeze(stimCorr(2,ch));
-            corrDiff(ey,ch) = size1 - size2;
-        end % goodCh
-    end %eye
-    
-    minY = min(yMins);
-    maxY = max(yMaxs);
-    yLimits = ([minY maxY]);
-    set(mygca,'YLim',yLimits);
-
-    figName = [LEdata.animal,'_BE_',LEdata.array,'_rotationPrefs_ch',num2str(ch),'.pdf'];
-    print(gcf, figName,'-dpdf','-bestfit')
+                size1 = squeeze(stimCorr(1,ch));  size2 = squeeze(stimCorr(2,ch));
+                corrDiff(ey,ch) = size1 - size2; % if it's negative, responses to the larger stimuli are higher
+            end % goodCh
+        end %eye
+        
+        minY = min(yMins);
+        maxY = max(yMaxs);
+        yLimits = ([minY maxY]);
+        set(mygca,'YLim',yLimits);
+        
+        figName = [LEdata.animal,'_BE_',LEdata.array,'_rotationPrefs_ch',num2str(ch),'.pdf'];
+        print(gcf, figName,'-dpdf','-bestfit')
+    end
 end
 %%
 LEcorrDiff = corrDiff(1,:);

@@ -7,8 +7,20 @@ tic
 files = {
     'WU_BE_radFreqLoc1_V4_LocSize';
     'WU_BE_radFreqLoc1_V1_LocSize';
-    %     'WV_BE_radFreqHighSF_V4_LocSize';
-    %     'WV_BE_radFreqHighSF_V1_LocSize';
+    
+    'WV_BE_radFreqHighSF_V4_LocSize';
+    'WV_BE_radFreqHighSF_V1_LocSize';
+    'WV_BE_radFreqLowSF_V4_LocSize';
+    'WV_BE_radFreqLowSF_V1_LocSize';
+    
+    'XT_BE_radFreqLowSF_V4_LocSize';
+    'XT_BE_radFreqLowSF_V1_LocSize';
+    'XT_BE_radFreqHighSF_V4_LocSize';
+    'XT_BE_radFreqHighSF_V1_LocSize';
+    'XT_BE_radFreqLowSFV4_V4_LocSize';
+    'XT_BE_radFreqLowSFV4_V1_LocSize';
+    'XT_BE_radFreqHighSFV4_V4_LocSize';
+    'XT_BE_radFreqHighSFV4_V1_LocSize';
     };
 nameEnd = 'oriSF';
 %%
@@ -24,12 +36,16 @@ for fi = 1:length(files)
     load(filename);
     REdata = data.RE;
     LEdata = data.LE;
+    %% set which of the two sizes is preferred
+    [REdata, LEdata] = radFreq_getPrefSizeID(REdata,LEdata);
     %% find preferred RF/Rotation combo
     [REdata.sigOri, LEdata.sigOri, REdata.oriCorrDiff, LEdata.oriCorrDiff, REdata.prefRot, LEdata.prefRot, REdata.oriCorr, LEdata.oriCorr] = radFreq_getFisherRFrot_BE(REdata, LEdata,0,1000);
     plotRF_SigOriBars(LEdata,REdata)
     %% find preferred spatial frequency
+    if contains(filename,'WU')
     [REdata.sigSF, LEdata.sigSF, REdata.SFcorrDiff, LEdata.SFcorrDiff, REdata.prefSF, LEdata.prefSF, REdata.SFcorr, LEdata.SFcorr] = radFreq_getFisherRFsf_BE(REdata, LEdata,1000);
     plotRF_SigSFbars(LEdata,REdata)
+    end
     %%
     location = determineComputer;
     if location == 1

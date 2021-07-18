@@ -15,7 +15,7 @@ location = determineComputer;
 if location == 1
     if contains(LEdata.animal,'WU')
         figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/%s/stats/FisherTransform/BE/Size/perm',LEdata.animal,LEdata.array);
-    elseif contains(LEdata.programID,'low','IgnoreCase')
+    elseif contains(LEdata.programID,'low','IgnoreCase',true)
         figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/lowSF/%s/stats/FisherTransform/BE/Size/perm',LEdata.animal,LEdata.array);
     else
         figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/FisherTransform/BE/Size/perm',LEdata.animal,LEdata.array);
@@ -23,7 +23,7 @@ if location == 1
 elseif location == 0
     if contains(LEdata.animal,'WU')
         figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/%s/stats/FisherTransform/BE/Size/perm',LEdata.animal,LEdata.array);
-    elseif contains(LEdata.programID,'low','IgnoreCase')
+    elseif contains(LEdata.programID,'low','IgnoreCase',true)
         figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/lowSF/%s/stats/FisherTransform/BE/Size/perm',LEdata.animal,LEdata.array);
     else
         figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/FisherTransform/BE/Size/perm',LEdata.animal,LEdata.array);
@@ -58,6 +58,9 @@ amps48 = [6.25 12.5 25 50 100 200];
 amps16 = [3.12 6.25 12.5 25 50 100];
 xs = 0:6;
 holdout = 0.2; % percentage of the data you want to withold when doing the permutations
+
+spikeStart = 8;
+
 %%
 %%
 % close all
@@ -71,7 +74,7 @@ for ch = 1:96
             dataT = REdata;
             scCh = REspikes{ch};
         end
-%         sigDiff = nan(2,96);
+        %         sigDiff = nan(2,96);
         
         if dataT.goodCh(ch) == 1
             muSc = nan(3,6);
@@ -81,31 +84,33 @@ for ch = 1:96
             else
                 locNdx = (scCh(6,:) == locPair(REprefLoc(ch),1)) & (scCh(7,:) == locPair(REprefLoc(ch),2));
             end
+                        
+            circNdx = (scCh(1,:) == 32);
             
-                circNdx = (scCh(1,:) == 32);
-                
-                circSpikes = squeeze(scCh(8:end,locNdx & circNdx));
-                circSpikes = reshape(circSpikes,[1,numel(circSpikes)]);
-                muCirc = (nanmean(circSpikes,'all'));
-                %%
+            circSpikes = squeeze(scCh(spikeStart:end,locNdx & circNdx));
+            circSpikes = reshape(circSpikes,[1,numel(circSpikes)]);
+            muCirc = (nanmean(circSpikes,'all'));
+            %%
                 for nb = 1:numBoot
                     for amp = 1:6
                         amp48Ndx = (scCh(2,:) == amps48(amp) & (scCh(1,:) < 16));
                         amp16Ndx = (scCh(2,:) == amps16(amp)& (scCh(1,:) == 16));
                         
-                        stim48Spikes = squeeze(scCh(8:end, amp48Ndx & locNdx));
-                        stim16Spikes = squeeze(scCh(8:end, amp16Ndx & locNdx));
+                       
+                        stim48Spikes = squeeze(scCh(spikeStart:end, amp48Ndx & locNdx));
+                        stim16Spikes = squeeze(scCh(spikeStart:end, amp16Ndx & locNdx));
+                        
                         stimSpikes = [stim48Spikes, stim16Spikes];
                         numStimTrials = round((size(stimSpikes,2)/2) * (1-holdout));
                         
                         stimSub1 = randperm(size(stimSpikes,2),numStimTrials);
-                        useStim1 = stimSpikes(8:end,stimSub1);
+                        useStim1 = stimSpikes(spikeStart:end,stimSub1);
                         
                         muStim1 = (nanmean(useStim1,'all'));
                         muSc(1,amp) = muStim1 - muCirc;
                         
                         stimSub2 = datasample(setdiff(1:(size(stimSpikes,2)), stimSub1),numStimTrials);
-                        useStim2 = stimSpikes(8:end,stimSub2);
+                        useStim2 = stimSpikes(spikeStart:end,stimSub2);
                         
                         muStim2 = (nanmean(useStim2,'all'));
                         muSc(2,amp) = muStim2 - muCirc;

@@ -1,6 +1,12 @@
 function plotRF_SigOriBars(LEdata,REdata)    
 %%
-    figDir = sprintf('/Users/brittany/Dropbox/Figures/%s/RadialFrequency/%s/stats/',REdata.animal, REdata.array);
+location = determineComputer;
+
+    if location == 1
+        figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/RadialFrequency/%s/stats/',REdata.animal, REdata.array);
+    elseif location == 0
+        figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/%s/stats/',REdata.animal,REdata.array);
+    end
     
     if ~exist(figDir,'dir')
         mkdir(figDir)

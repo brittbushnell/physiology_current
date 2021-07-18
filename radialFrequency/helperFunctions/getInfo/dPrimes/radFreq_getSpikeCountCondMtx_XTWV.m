@@ -41,6 +41,7 @@ for ch = 1:96
     for loc = 1:3
         for sz = 1:2
             circNdx = (scCh(1,:) == 32);
+            
             locNdx = (scCh(6,:) == locPair(loc,1)) & (scCh(7,:) == locPair(loc,2));
             
             rf4Ndx0  = (scCh(1,:) == 4) & (scCh(3,:) == 0); % index of all RF4 stimuli with 0 phase
@@ -57,8 +58,8 @@ for ch = 1:96
             rf16rot0 = scCh(8:end,rf16Ndx0 & locNdx);
             rf16rot2 = scCh(8:end,rf16Ndx2 & locNdx);
             
-            circSCs = scCh(8:end,circNdx & radNdx & locNdx);
-            circSc(:,sz,loc,ch) = mean(circSCs);
+            circSCs = scCh(8:end,circNdx & locNdx);
+            circSc(:,sz,loc,ch) = nanmean(circSCs,'all');
             
             for amp = 1:6
                 
