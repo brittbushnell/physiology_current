@@ -119,7 +119,7 @@ pos2 = get(gca,'Position');
 set(gca,'Position',[pos2(1),pos2(2)+0.1,pos2(3),pos2(4) - 0.2])
 
 ylabel('Proportion of included channels','FontSize',11)
-t = title(sprintf('%s %s Proportion of channels with significant SF preferences',REdata.animal, REdata.array), 'FontSize',14);
+t = title(sprintf('%s %s %s Proportion of channels with significant SF preferences',REdata.animal, REdata.array,REdata.programID), 'FontSize',14);
 t.Position(2) = t.Position(2) +0.012;
 
 l = legend('LE SF1','LE SF2', 'RE SF1', 'RE SF2');

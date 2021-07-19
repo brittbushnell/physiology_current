@@ -15,50 +15,50 @@ location = determineComputer;
 
 if location == 1
     if contains(LEdata.animal,'WU')
-        figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/%s/stats/FisherTransform/BE/ori/perm',LEdata.animal,LEdata.array);
+        figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/%s/stats/FisherTransform/ori/perm',LEdata.animal,LEdata.array);
     elseif contains(LEdata.animal,'XT')
         if contains(LEdata.programID,'low','IgnoreCase',true)
             if contains(LEdata.programID,'V1')
-                figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/lowSF/V1locations/%s/stats/FisherTransform/BE/ori/perm',LEdata.animal,LEdata.array);
+                figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/lowSF/V1locations/%s/stats/FisherTransform/ori/perm',LEdata.animal,LEdata.array);
             else
-                figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/lowSF/V4locations/%s/stats/FisherTransform/BE/ori/perm',LEdata.animal,LEdata.array);
+                figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/lowSF/V4locations/%s/stats/FisherTransform/ori/perm',LEdata.animal,LEdata.array);
             end
         else
             if contains(LEdata.programID,'V1')
-                figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/highSF/V1locations/%s/stats/FisherTransform/BE/ori/perm',LEdata.animal,LEdata.array);
+                figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/highSF/V1locations/%s/stats/FisherTransform/ori/perm',LEdata.animal,LEdata.array);
             else
-                figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/highSF/V4locations/%s/stats/FisherTransform/BE/ori/perm',LEdata.animal,LEdata.array);
+                figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/highSF/V4locations/%s/stats/FisherTransform/ori/perm',LEdata.animal,LEdata.array);
             end
         end
     else
         if contains(LEdata.programID,'low','IgnoreCase',true)
-            figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/FisherTransform/BE/ori/perm',LEdata.animal,LEdata.array);
+            figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/FisherTransform/ori/perm',LEdata.animal,LEdata.array);
         else
-            figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/FisherTransform/BE/ori/perm',LEdata.animal,LEdata.array);
+            figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/FisherTransform/ori/perm',LEdata.animal,LEdata.array);
         end
     end
 elseif location == 0
     if contains(LEdata.animal,'WU')
-        figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/%s/stats/FisherTransform/BE/ori/perm',LEdata.animal,LEdata.array);
+        figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/%s/stats/FisherTransform/ori/perm',LEdata.animal,LEdata.array);
     elseif contains(LEdata.animal,'XT')
         if contains(LEdata.programID,'low','IgnoreCase',true)
             if contains(LEdata.programID,'V1')
-                figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/lowSF/V1locations/%s/stats/FisherTransform/BE/ori/perm',LEdata.animal,LEdata.array);
+                figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/lowSF/V1locations/%s/stats/FisherTransform/ori/perm',LEdata.animal,LEdata.array);
             else
-                figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/lowSF/V4locations/%s/stats/FisherTransform/BE/ori/perm',LEdata.animal,LEdata.array);
+                figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/lowSF/V4locations/%s/stats/FisherTransform/ori/perm',LEdata.animal,LEdata.array);
             end
         else
             if contains(LEdata.programID,'V1')
-                figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/highSF/V1locations/%s/stats/FisherTransform/BE/ori/perm',LEdata.animal,LEdata.array);
+                figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/highSF/V1locations/%s/stats/FisherTransform/ori/perm',LEdata.animal,LEdata.array);
             else
-                figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/highSF/V4locations/%s/stats/FisherTransform/BE/ori/perm',LEdata.animal,LEdata.array);
+                figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/highSF/V4locations/%s/stats/FisherTransform/ori/perm',LEdata.animal,LEdata.array);
             end
         end
     else
         if contains(LEdata.programID,'low','IgnoreCase',true)
-            figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/FisherTransform/BE/ori/perm',LEdata.animal,LEdata.array);
+            figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/FisherTransform/ori/perm',LEdata.animal,LEdata.array);
         else
-            figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/FisherTransform/BE/ori/perm',LEdata.animal,LEdata.array);
+            figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/FisherTransform/ori/perm',LEdata.animal,LEdata.array);
         end
     end
 end
@@ -220,7 +220,7 @@ end
 for ch = 1:96
     figure(6)
     clf
-    s = suptitle(sprintf('%s %s rotation permutation test ch %d',LEdata.animal,LEdata.array,ch));
+    s = suptitle(sprintf('%s %s %s rotation permutation test ch %d',LEdata.animal,LEdata.array, LEdata.programID,ch));
     s.Position(2) = s.Position(2) + 0.024;
     
     subplot(3,2,1)

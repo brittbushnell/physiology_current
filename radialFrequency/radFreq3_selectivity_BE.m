@@ -23,9 +23,8 @@ files = {
     'XT_BE_radFreqHighSFV4_V1';
     };
 nameEnd = 'LocSize';
-%%
-plotNeuro = 0;
-plotLocCh = 1;
+
+saveData = 0; % set to 1 if doing new analyses, or not previously saved. set to 0 if just redoing figures.
 %%
 for fi = 1:length(files)
     %%
@@ -48,19 +47,18 @@ for fi = 1:length(files)
         LEdata = radFreq_getSpikeCountCondMtx_XTWV(LEdata);
     end
     %% plot neurometric curve
-    %         NOTE: need to adjust to only use preferred location
     if contains(REdata.animal,'WU')
         [REdata.rfMuZ, REdata.rfStErZ, REdata.circMuZ, REdata.circStErZ,...
-            REdata.rfMuSc, REdata.rfStErSc, REdata.circMuSc, REdata.circStErSc] = radFreq_getMuSerrSCandZ(REdata,plotNeuro);
+            REdata.rfMuSc, REdata.rfStErSc, REdata.circMuSc, REdata.circStErSc] = radFreq_getMuSerrSCandZ(REdata);
         
         [LEdata.rfMuZ, LEdata.rfStErZ, LEdata.circMuZ, LEdata.circStErZ,...
-            LEdata.rfMuSc, LEdata.rfStErSc, LEdata.circMuSc, LEdata.circStErSc] = radFreq_getMuSerrSCandZ(LEdata,plotNeuro);
+            LEdata.rfMuSc, LEdata.rfStErSc, LEdata.circMuSc, LEdata.circStErSc] = radFreq_getMuSerrSCandZ(LEdata);
     else
         [REdata.rfMuZ, REdata.rfStErZ, REdata.circMuZ, REdata.circStErZ,...
-            REdata.rfMuSc, REdata.rfStErSc, REdata.circMuSc, REdata.circStErSc] = radFreq_getMuSerrSCandZ_WVXT(REdata,plotNeuro);
+            REdata.rfMuSc, REdata.rfStErSc, REdata.circMuSc, REdata.circStErSc] = radFreq_getMuSerrSCandZ_WVXT(REdata);
         
         [LEdata.rfMuZ, LEdata.rfStErZ, LEdata.circMuZ, LEdata.circStErZ,...
-            LEdata.rfMuSc, LEdata.rfStErSc, LEdata.circMuSc, LEdata.circStErSc] = radFreq_getMuSerrSCandZ_WVXT(LEdata,plotNeuro);
+            LEdata.rfMuSc, LEdata.rfStErSc, LEdata.circMuSc, LEdata.circStErSc] = radFreq_getMuSerrSCandZ_WVXT(LEdata);
     end
     %% get fisher transformed correlations
     if contains(REdata.animal,'WU')
@@ -93,6 +91,8 @@ for fi = 1:length(files)
     
     fname2 = strrep(filename,'.mat','');
     saveName = [outputDir fname2 '_' nameEnd '.mat'];
-    save(saveName,'data');
+    if saveData == 1
+        save(saveName,'data');
+    end
     fprintf('%s saved\n\n',saveName)
 end

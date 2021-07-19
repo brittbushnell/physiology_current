@@ -1,26 +1,101 @@
-WUV1gratRE = length(find(WUV1.conRadRE.goodCh & WUV1.conRadRE.inStim & WUV1.gratRE.good_ch))
-WUV4gratRE = length(find(WUV4.conRadRE.goodCh & WUV4.conRadRE.inStim & WUV4.gratRE.good_ch))
-WVV1gratRE = length(find(WVV1.conRadRE.goodCh & WVV1.conRadRE.inStim & WVV1.gratRE.good_ch))
-WVV4gratRE = length(find(WVV4.conRadRE.goodCh & WVV4.conRadRE.inStim & WVV4.gratRE.good_ch))
-XTV4gratRE = length(find(XTV4.conRadRE.goodCh & XTV4.conRadRE.inStim & XTV4.gratRE.good_ch))
+if contains(dataT.animal,'XT')
+    if contains(dataT.eye,'LE')
+        eye = 'LE';
+    else
+        eye = 'RE';
+    end
+else
+    if contains(dataT.eye,'LE')
+        eye = 'FE';
+    else
+        eye = 'AE';
+    end
+end
+   
 
-WUV1gratLE = length(find(WUV1.conRadLE.goodCh & WUV1.conRadLE.inStim & WUV1.gratLE.good_ch))
-WUV4gratLE = length(find(WUV4.conRadLE.goodCh & WUV4.conRadLE.inStim & WUV4.gratLE.good_ch))
-WVV1gratLE = length(find(WVV1.conRadLE.goodCh & WVV1.conRadLE.inStim & WVV1.gratLE.good_ch))
-WVV4gratLE = length(find(WVV4.conRadLE.goodCh & WVV4.conRadLE.inStim & WVV4.gratLE.good_ch))
-XTV4gratLE = length(find(XTV4.conRadLE.goodCh & XTV4.conRadLE.inStim & XTV4.gratLE.good_ch))
+ndx = 1;
+    if plotFlag == 1
+        figure (2)
+        clf
+        hold on
+        pos = get(gcf,'Position');
+        set(gcf, 'Position',[pos(1) pos(2) 850 900])
+        
+        s = suptitle(sprintf('%s %s %s mean zscores as a funciton of amplitude ch %d',dataT.animal, dataT.array, eye,ch));
+        s.Position(2) = s.Position(2) + 0.02;
+        
+        fillCirc = sprintf('\x25CF');
+        openCirc = sprintf('\x25CB');
+    end
 
-%%
-WUV1glassRE = length(find(WUV1.conRadRE.goodCh & WUV1.conRadRE.inStim & WUV1.trRE.goodCh & WUV1.trRE.inStim))
-WUV4glassRE = length(find(WUV4.conRadRE.goodCh & WUV4.conRadRE.inStim & WUV4.trRE.goodCh & WUV4.trRE.inStim))
-WVV1glassRE = length(find(WVV1.conRadRE.goodCh & WVV1.conRadRE.inStim & WVV1.trRE.goodCh & WVV1.trRE.inStim))
-WVV4glassRE = length(find(WVV4.conRadRE.goodCh & WVV4.conRadRE.inStim & WVV4.trRE.goodCh & WVV4.trRE.inStim))
-XTV1glassRE = length(find(XTV1.conRadRE.goodCh & XTV1.conRadRE.inStim & XTV1.trRE.goodCh & XTV1.trRE.inStim))
-XTV4glassRE = length(find(XTV4.conRadRE.goodCh & XTV4.conRadRE.inStim & XTV4.trRE.goodCh & XTV4.trRE.inStim))
+                %% plot curves
+                if plotFlag == 1
+                subplot(3,4,ndx)
+                
+                rf4a = squeeze(rfMuZ(1,1,:,sf,rad,loc,ch));
+                rf4b = squeeze(rfMuZ(1,2,:,sf,rad,loc,ch));
+                
+                rf8a = squeeze(rfMuZ(2,1,:,sf,rad,loc,ch));
+                rf8b = squeeze(rfMuZ(2,2,:,sf,rad,loc,ch));
+                
+                rf16a = squeeze(rfMuZ(3,1,:,sf,rad,loc,ch));
+                rf16b = squeeze(rfMuZ(3,2,:,sf,rad,loc,ch));
+                
+                circ = squeeze(circMuZ(sf,rad,loc,ch));
+                
+                hold on
+                plot(1,circ,'ok','MarkerFaceColor','k','MarkerSize',4)
+                plot(2:7,rf4a,'o-','Color',[0 0.6 0.2],'MarkerFaceColor',[0 0.6 0.2],'MarkerEdgeColor',[0 0.6 0.2],'MarkerSize',4)
+                plot(2:7,rf4b,'o--','Color',[0 0.6 0.2],'MarkerFaceColor','w','MarkerEdgeColor',[0 0.6 0.2],'MarkerSize',4)
+                
+                plot(2:7,rf8a,'o-','Color',[1 0.5 0.1],'MarkerFaceColor',[1 0.5 0.1],'MarkerEdgeColor',[1 0.5 0.1],'MarkerSize',4)
+                plot(2:7,rf8b,'o--','Color',[1 0.5 0.1],'MarkerFaceColor','w','MarkerEdgeColor',[1 0.5 0.1],'MarkerSize',4)
+                
+                plot(2:7,rf16a,'o-','Color',[0.7 0 0.7],'MarkerFaceColor',[0.7 0 0.7],'MarkerEdgeColor',[0.7 0 0.7],'MarkerSize',4)
+                plot(2:7,rf16b,'o--','Color',[0.7 0 0.7],'MarkerFaceColor','w','MarkerEdgeColor',[0.7 0 0.7],'MarkerSize',4)
+                
+                xlim([0.75 10])
+                
+                mygca(ndx) = gca;
+                
+                b = get(gca,'YLim');
+                yMaxs(ndx) = max(b);
+                yMins(ndx) = min(b);
+                
+                title(sprintf('sf %d rad %d loc %d',sf,rad,loc))
+                set(gca,'Box','off','XScale','log','tickdir','out','TickLength',[0.03 0.025],'XTickLabel',[])
+                axis square
+                
+                if ndx == 1 || ndx == 5 || ndx == 9
+                    ylabel('zscore')
+                end
+                
+                if ndx >= 9
+                    xlabel('amplitude')
+                end
+                %%
+                ndx = ndx+1;
+                end
+                    if plotFlag == 1
+    minY = min(yMins);
+    maxY = max(yMaxs);
+    yLimits = ([minY maxY]);
+    set(mygca,'YLim',yLimits);
+    %%
+    subplot(3,4,9)
+    hold on
+    text(20, minY - 1, 'RF4','Color',[0 0.6 0.2],'FontWeight','bold','FontSize',12)
+    text(80, minY - 1, 'RF8','Color',[1 0.5 0.1],'FontWeight','bold','FontSize',12)
+    text(200, minY - 1, 'RF16','Color',[0.7 0 0.7],'FontWeight','bold','FontSize',12)
+    text(500, minY - 1, 'Circle','FontWeight','bold','FontSize',12)
+    
+    text(30, minY - 1.35, fillCirc,'FontWeight','bold','FontSize',20);    
+    text(40, minY - 1.4,'0 deg','FontWeight','bold','FontSize',12)
+    text(150, minY - 1.35, openCirc,'FontWeight','bold','FontSize',20);
+    text(200, minY - 1.4, 'alternate phase','FontWeight','bold','FontSize',12)
 
-WUV1glassLE = length(find(WUV1.conRadLE.goodCh & WUV1.conRadLE.inStim & WUV1.trLE.goodCh & WUV1.trLE.inStim))
-WUV4glassLE = length(find(WUV1.conRadLE.goodCh & WUV1.conRadLE.inStim & WUV4.trLE.goodCh & WUV4.trLE.inStim))
-WVV1glassLE = length(find(WVV1.conRadLE.goodCh & WVV1.conRadLE.inStim & WVV1.trLE.goodCh & WVV1.trLE.inStim))
-WVV4glassLE = length(find(WVV4.conRadLE.goodCh & WVV4.conRadLE.inStim & WVV4.trLE.goodCh & WVV4.trLE.inStim))
-XTV1glassLE = length(find(XTV1.conRadLE.goodCh & XTV1.conRadLE.inStim & XTV1.trLE.goodCh & XTV1.trLE.inStim))
-XTV4glassLE = length(find(XTV4.conRadLE.goodCh & XTV4.conRadLE.inStim & XTV4.trLE.goodCh & XTV4.trLE.inStim))
+    
+    %%
+    figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_radFreqTuningCurves_ch',num2str(ch),'.pdf'];
+    print(gcf, figName,'-dpdf','-bestfit')
+                    end

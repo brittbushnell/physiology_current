@@ -11,50 +11,50 @@ location = determineComputer;
 
 if location == 1
     if contains(LEdata.animal,'WU')
-        figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/%s/stats/FisherTransform/BE/ori/',LEdata.animal,LEdata.array);
+        figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/%s/stats/FisherTransform/ori/',LEdata.animal,LEdata.array);
     elseif contains(LEdata.animal,'XT')
         if contains(LEdata.programID,'low','IgnoreCase',true)
             if contains(LEdata.programID,'V1')
-                figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/lowSF/V1locations/%s/stats/FisherTransform/BE/ori/',LEdata.animal,LEdata.array);
+                figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/lowSF/V1locations/%s/stats/FisherTransform/ori/',LEdata.animal,LEdata.array);
             else
-                figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/lowSF/V4locations/%s/stats/FisherTransform/BE/ori/',LEdata.animal,LEdata.array);
+                figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/lowSF/V4locations/%s/stats/FisherTransform/ori/',LEdata.animal,LEdata.array);
             end
         else
             if contains(LEdata.programID,'V1')
-                figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/highSF/V1locations/%s/stats/FisherTransform/BE/ori/',LEdata.animal,LEdata.array);
+                figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/highSF/V1locations/%s/stats/FisherTransform/ori/',LEdata.animal,LEdata.array);
             else
-                figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/highSF/V4locations/%s/stats/FisherTransform/BE/ori/',LEdata.animal,LEdata.array);
+                figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/highSF/V4locations/%s/stats/FisherTransform/ori/',LEdata.animal,LEdata.array);
             end
         end
     else
         if contains(LEdata.programID,'low','IgnoreCase',true)
-            figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/FisherTransform/BE/ori/',LEdata.animal,LEdata.array);
+            figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/FisherTransform/ori/',LEdata.animal,LEdata.array);
         else
-            figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/FisherTransform/BE/ori/',LEdata.animal,LEdata.array);
+            figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/FisherTransform/ori/',LEdata.animal,LEdata.array);
         end
     end
 elseif location == 0
     if contains(LEdata.animal,'WU')
-        figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/%s/stats/FisherTransform/BE/ori/',LEdata.animal,LEdata.array);
+        figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/%s/stats/FisherTransform/ori/',LEdata.animal,LEdata.array);
     elseif contains(LEdata.animal,'XT')
         if contains(LEdata.programID,'low','IgnoreCase',true)
             if contains(LEdata.programID,'V1')
-                figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/lowSF/V1locations/%s/stats/FisherTransform/BE/ori/',LEdata.animal,LEdata.array);
+                figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/lowSF/V1locations/%s/stats/FisherTransform/ori/',LEdata.animal,LEdata.array);
             else
-                figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/lowSF/V4locations/%s/stats/FisherTransform/BE/ori/',LEdata.animal,LEdata.array);
+                figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/lowSF/V4locations/%s/stats/FisherTransform/ori/',LEdata.animal,LEdata.array);
             end
         else
             if contains(LEdata.programID,'V1')
-                figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/highSF/V1locations/%s/stats/FisherTransform/BE/ori/',LEdata.animal,LEdata.array);
+                figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/highSF/V1locations/%s/stats/FisherTransform/ori/',LEdata.animal,LEdata.array);
             else
-                figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/highSF/V4locations/%s/stats/FisherTransform/BE/ori/',LEdata.animal,LEdata.array);
+                figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/highSF/V4locations/%s/stats/FisherTransform/ori/',LEdata.animal,LEdata.array);
             end
         end
     else
         if contains(LEdata.programID,'low','IgnoreCase',true)
-            figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/FisherTransform/BE/ori/',LEdata.animal,LEdata.array);
+            figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/FisherTransform/ori/',LEdata.animal,LEdata.array);
         else
-            figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/FisherTransform/BE/ori/',LEdata.animal,LEdata.array);
+            figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/FisherTransform/ori/',LEdata.animal,LEdata.array);
         end
     end
 end
@@ -105,16 +105,13 @@ end
 % close all
 for ch = 1:96
     %%
-    if plotEbar == 0
-        figure(1)
-    else
-        figure(2)
-    end
+    figure(2)
+
     clf
     pos = get(gcf,'Position');
     set(gcf,'Position',[pos(1), pos(2), 600, 700])
     
-    s = suptitle(sprintf('%s %s spike counts per amplitude rotation x RF ch %d',REdata.animal, REdata.array, ch));
+    s = suptitle(sprintf('%s %s %s spike counts per amplitude rotation x RF ch %d',REdata.animal, REdata.array, REdata.programID,ch));
     s.Position(2) = s.Position(2)+0.0272;
     
     % make dummy subplots to get correct dimensions of mygca. Otherwise it
@@ -144,24 +141,15 @@ for ch = 1:96
         if dataT.goodCh(ch) == 1
             
             muSc = nan(3,2,6);
-            %             corrPval = nan(3,2,2); %RF, rotation, corr, significance
-%             if contains(dataT.animal,'WU')
-                if ey == 1
-                    locNdx = (scCh(6,:) == locPair(LEprefLoc(ch),1)) & (scCh(7,:) == locPair(LEprefLoc(ch),2));
-                    radNdx = (scCh(5,:) == LEprefRad(ch));
-                else
-                    locNdx = (scCh(6,:) == locPair(REprefLoc(ch),1)) & (scCh(7,:) == locPair(REprefLoc(ch),2));
-                    radNdx = (scCh(5,:) == REprefRad(ch));
-                end
-%             else
-%                 if ey == 1
-%                     locNdx = (scCh(5,:) == locPair(LEprefLoc(ch),1)) & (scCh(6,:) == locPair(LEprefLoc(ch),2));
-%                     radNdx = (scCh(4,:) == LEprefRad(ch));
-%                 else
-%                     locNdx = (scCh(5,:) == locPair(REprefLoc(ch),1)) & (scCh(6,:) == locPair(REprefLoc(ch),2));
-%                     radNdx = (scCh(4,:) == REprefRad(ch));
-%                 end
-%             end
+            
+            if ey == 1
+                locNdx = (scCh(6,:) == locPair(LEprefLoc(ch),1)) & (scCh(7,:) == locPair(LEprefLoc(ch),2));
+                radNdx = (scCh(5,:) == LEprefRad(ch));
+            else
+                locNdx = (scCh(6,:) == locPair(REprefLoc(ch),1)) & (scCh(7,:) == locPair(REprefLoc(ch),2));
+                radNdx = (scCh(5,:) == REprefRad(ch));
+            end
+            
             
             for rf = 1:3
                 for rot = 1:2

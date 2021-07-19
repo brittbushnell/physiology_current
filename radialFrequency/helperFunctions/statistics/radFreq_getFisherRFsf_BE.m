@@ -106,7 +106,7 @@ for ch = 1:96
     pos = get(gcf,'Position');
     set(gcf,'Position',[pos(1), pos(2), 600, 700])
     
-    s = suptitle(sprintf('%s %s spike counts per amplitude carrier SF x RF ch %d',REdata.animal, REdata.array, ch));
+    s = suptitle(sprintf('%s %s %s spike counts per amplitude carrier SF x RF ch %d',REdata.animal, REdata.array, REdata.programID,ch));
     s.Position(2) = s.Position(2)+0.0272;
     
     % make dummy subplots to get correct dimensions of mygca. Otherwise it

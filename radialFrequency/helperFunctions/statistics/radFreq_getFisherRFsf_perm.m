@@ -232,7 +232,7 @@ end
 for ch = 1:96
     figure(12)
     clf
-    s = suptitle(sprintf('%s %s spatial frequency permutation test ch %d',LEdata.animal,LEdata.array,ch));
+    s = suptitle(sprintf('%s %s %s spatial frequency permutation test ch %d',LEdata.animal,LEdata.array,LEdata.programID,ch));
     s.Position(2) = s.Position(2) + 0.024;
     
     subplot(3,2,1)
