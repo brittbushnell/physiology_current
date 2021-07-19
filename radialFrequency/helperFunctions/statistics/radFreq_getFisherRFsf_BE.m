@@ -12,18 +12,50 @@ location = determineComputer;
 if location == 1
     if contains(LEdata.animal,'WU')
         figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/%s/stats/FisherTransform/BE/SF/',LEdata.animal,LEdata.array);
-    elseif contains(LEdata.programID,'low','IgnoreCase')
-        figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/lowSF/%s/stats/FisherTransform/BE/SF/',LEdata.animal,LEdata.array);
+    elseif contains(LEdata.animal,'XT')
+        if contains(LEdata.programID,'low','IgnoreCase',true)
+            if contains(LEdata.programID,'V1')
+                figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/lowSF/V1locations/%s/stats/FisherTransform/BE/SF/',LEdata.animal,LEdata.array);
+            else
+                figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/lowSF/V4locations/%s/stats/FisherTransform/BE/SF/',LEdata.animal,LEdata.array);
+            end
+        else
+            if contains(LEdata.programID,'V1')
+                figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/highSF/V1locations/%s/stats/FisherTransform/BE/SF/',LEdata.animal,LEdata.array);
+            else
+                figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/highSF/V4locations/%s/stats/FisherTransform/BE/SF/',LEdata.animal,LEdata.array);
+            end
+        end
     else
-        figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/FisherTransform/BE/SF/',LEdata.animal,LEdata.array);
+        if contains(LEdata.programID,'low','IgnoreCase',true)
+            figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/FisherTransform/BE/SF/',LEdata.animal,LEdata.array);
+        else
+            figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/FisherTransform/BE/SF/',LEdata.animal,LEdata.array);
+        end
     end
 elseif location == 0
     if contains(LEdata.animal,'WU')
         figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/%s/stats/FisherTransform/BE/SF/',LEdata.animal,LEdata.array);
-    elseif contains(LEdata.programID,'low','IgnoreCase')
-        figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/lowSF/%s/stats/FisherTransform/BE/SF/',LEdata.animal,LEdata.array);
+    elseif contains(LEdata.animal,'XT')
+        if contains(LEdata.programID,'low','IgnoreCase',true)
+            if contains(LEdata.programID,'V1')
+                figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/lowSF/V1locations/%s/stats/FisherTransform/BE/SF/',LEdata.animal,LEdata.array);
+            else
+                figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/lowSF/V4locations/%s/stats/FisherTransform/BE/SF/',LEdata.animal,LEdata.array);
+            end
+        else
+            if contains(LEdata.programID,'V1')
+                figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/highSF/V1locations/%s/stats/FisherTransform/BE/SF/',LEdata.animal,LEdata.array);
+            else
+                figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/highSF/V4locations/%s/stats/FisherTransform/BE/SF/',LEdata.animal,LEdata.array);
+            end
+        end
     else
-        figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/FisherTransform/BE/SF/',LEdata.animal,LEdata.array);
+        if contains(LEdata.programID,'low','IgnoreCase',true)
+            figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/FisherTransform/BE/SF/',LEdata.animal,LEdata.array);
+        else
+            figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/FisherTransform/BE/SF/',LEdata.animal,LEdata.array);
+        end
     end
 end
 
@@ -87,7 +119,7 @@ for ch = 1:96
         xlim([-0.5 7.5])
         
         if foo <5
-        title(sprintf('SF %d',sfTitles(foo)),'FontSize',12,'FontWeight','normal','FontAngle','italic');
+            title(sprintf('SF %d',sfTitles(foo)),'FontSize',12,'FontWeight','normal','FontAngle','italic');
         end
     end
     
@@ -108,24 +140,26 @@ for ch = 1:96
             muSc = nan(3,2,6);
             %             corrPval = nan(3,2,2); %RF, rotation, corr, significance
             
-            if contains(dataT.animal,'WU')
-                if ey == 1
-                    locNdx = (scCh(6,:) == locPair(LEprefLoc(ch),1)) & (scCh(7,:) == locPair(LEprefLoc(ch),2));
-                    radNdx = (scCh(5,:) == LEprefRad(ch));
-                else
-                    locNdx = (scCh(6,:) == locPair(REprefLoc(ch),1)) & (scCh(7,:) == locPair(REprefLoc(ch),2));
-                    radNdx = (scCh(5,:) == REprefRad(ch));
-                end
+            %             if contains(dataT.animal,'WU')
+            if ey == 1
+                locNdx = (scCh(6,:) == locPair(LEprefLoc(ch),1)) & (scCh(7,:) == locPair(LEprefLoc(ch),2));
+                radNdx = (scCh(5,:) == LEprefRad(ch));
             else
-                if ey == 1
-                    locNdx = (scCh(5,:) == locPair(LEprefLoc(ch),1)) & (scCh(6,:) == locPair(LEprefLoc(ch),2));
-                    radNdx = (scCh(4,:) == LEprefRad(ch));
-                else
-                    locNdx = (scCh(5,:) == locPair(REprefLoc(ch),1)) & (scCh(6,:) == locPair(REprefLoc(ch),2));
-                    radNdx = (scCh(4,:) == REprefRad(ch));
-                end
+                locNdx = (scCh(6,:) == locPair(REprefLoc(ch),1)) & (scCh(7,:) == locPair(REprefLoc(ch),2));
+                radNdx = (scCh(5,:) == REprefRad(ch));
             end
-            
+            %             else
+            %                 if ey == 1
+            %                     locNdx = (scCh(5,:) == locPair(LEprefLoc(ch),1)) & (scCh(6,:) == locPair(LEprefLoc(ch),2));
+            %                     radNdx = (scCh(4,:) == LEprefRad(ch));
+            %                 else
+            %                     locNdx = (scCh(5,:) == locPair(REprefLoc(ch),1)) & (scCh(6,:) == locPair(REprefLoc(ch),2));
+            %                     radNdx = (scCh(4,:) == REprefRad(ch));
+            %                 end
+            %             end
+            if isnan(radNdx)
+                keyboard
+            end
             for rf = 1:3
                 for sf = 1:2
                     
@@ -162,19 +196,19 @@ for ch = 1:96
                     muSct = squeeze(muSc(rf,sf,:));
                     muScSF = [0; muSct];
                     corMtx = corrcoef(xs,muScSF);
-                    stimCorr(ey,rf,sf,ch) = corMtx(2);                  
+                    stimCorr(ey,rf,sf,ch) = corMtx(2);
                     %% plot mean spike counts as a function of amplitude.
                     
                     h = subplot(3,4,sub);
                     hold on
-
+                    
                     if contains(dataT.eye,'LE') || contains(dataT.eye,'FE')
                         plot(muScSF,'o-b')
                     else
                         plot(muScSF,'o-r')
                     end
                     
-                    xlim([-0.5 7.5])                    
+                    xlim([-0.5 7.5])
                     set(gca,'XTick',1:7,'XTickLabel',0:6,'tickdir','out','FontSize',10,'FontAngle','italic')
                     
                     mygca(1,sub) = gca;
@@ -199,7 +233,7 @@ for ch = 1:96
                     
                     ndx = ndx+1;
                 end %rot
-                rot1 = squeeze(stimCorr(ey,rf,1,ch));  rot2 = squeeze(stimCorr(ey,rf,2,ch));  
+                rot1 = squeeze(stimCorr(ey,rf,1,ch));  rot2 = squeeze(stimCorr(ey,rf,2,ch));
                 corrDiff(ey,rf,ch) = rot1 - rot2;
             end %RF
         end % goodCh
@@ -210,8 +244,11 @@ for ch = 1:96
     yLimits = ([minY maxY]);
     set(mygca,'YLim',yLimits);
     
-
-    figName = [LEdata.animal,'_BE_',LEdata.array,'_rotationPrefs_ch',num2str(ch),'.pdf'];
+    if ~contains(LEdata.animal,'WU')
+        figName = [LEdata.animal,'_BE_',LEdata.array,'_',LEdata.programID,'_rotationPrefs_ch',num2str(ch),'.pdf'];
+    else
+        figName = [LEdata.animal,'_BE_',LEdata.array,'_rotationPrefs_ch',num2str(ch),'.pdf'];
+    end
     print(gcf, figName,'-dpdf','-bestfit')
 end
 %%

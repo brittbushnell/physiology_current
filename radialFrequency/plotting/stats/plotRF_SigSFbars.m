@@ -1,12 +1,61 @@
 function plotRF_SigSFbars(LEdata,REdata)
 %%
-figDir = sprintf('/Users/brittany/Dropbox/Figures/%s/RadialFrequency/%s/stats/',REdata.animal, REdata.array);
+location = determineComputer;
+
+if location == 1
+    if contains(LEdata.animal,'WU')
+        figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/%s/stats/',LEdata.animal,LEdata.array);
+    elseif contains(LEdata.animal,'XT')
+        if contains(LEdata.programID,'low','IgnoreCase',true)
+            if contains(LEdata.programID,'V1')
+                figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/lowSF/V1locations/%s/stats/',LEdata.animal,LEdata.array);
+            else
+                figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/lowSF/V4locations/%s/stats/',LEdata.animal,LEdata.array);
+            end
+        else
+            if contains(LEdata.programID,'V1')
+                figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/highSF/V1locations/%s/stats/',LEdata.animal,LEdata.array);
+            else
+                figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/highSF/V4locations/%s/stats/',LEdata.animal,LEdata.array);
+            end
+        end
+    else
+        if contains(LEdata.programID,'low','IgnoreCase',true)
+            figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/',LEdata.animal,LEdata.array);
+        else
+            figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/',LEdata.animal,LEdata.array);
+        end
+    end
+elseif location == 0
+    if contains(LEdata.animal,'WU')
+        figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/%s/stats/',LEdata.animal,LEdata.array);
+    elseif contains(LEdata.animal,'XT')
+        if contains(LEdata.programID,'low','IgnoreCase',true)
+            if contains(LEdata.programID,'V1')
+                figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/lowSF/V1locations/%s/stats/',LEdata.animal,LEdata.array);
+            else
+                figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/lowSF/V4locations/%s/stats/',LEdata.animal,LEdata.array);
+            end
+        else
+            if contains(LEdata.programID,'V1')
+                figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/highSF/V1locations/%s/stats/',LEdata.animal,LEdata.array);
+            else
+                figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/highSF/V4locations/%s/stats/',LEdata.animal,LEdata.array);
+            end
+        end
+    else
+        if contains(LEdata.programID,'low','IgnoreCase',true)
+            figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/',LEdata.animal,LEdata.array);
+        else
+            figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/',LEdata.animal,LEdata.array);
+        end
+    end
+end
 
 if ~exist(figDir,'dir')
     mkdir(figDir)
 end
 cd(figDir)
-
 %% get the summary info
 LE4  = squeeze(LEdata.sigSF(1,:));       RE4  = squeeze(REdata.sigSF(1,:));
 LE8  = squeeze(LEdata.sigSF(2,:));       RE8  = squeeze(REdata.sigSF(2,:));
@@ -77,5 +126,9 @@ l = legend('LE SF1','LE SF2', 'RE SF1', 'RE SF2');
 l.Box = 'off'; l.NumColumns = 2;
 l.FontSize = 10;
 
-figName = [LEdata.animal,'_BE_',LEdata.array,'_sigSF','.pdf'];
+if contains(LEdata.animal,'WU')
+    figName = [LEdata.animal,'_BE_',LEdata.array,'_sigSF','.pdf'];
+else
+    figName = [LEdata.animal,'_BE_',LEdata.array,'_',LEdata.programID,'_sigSF','.pdf'];
+end
 print(gcf, figName,'-dpdf','-bestfit')
