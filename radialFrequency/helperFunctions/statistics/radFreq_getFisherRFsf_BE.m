@@ -28,7 +28,7 @@ if location == 1
         end
     else
         if contains(LEdata.programID,'low','IgnoreCase',true)
-            figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/FisherTransform/BE/SF/',LEdata.animal,LEdata.array);
+            figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/lowSF/%s/stats/FisherTransform/BE/SF/',LEdata.animal,LEdata.array);
         else
             figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/FisherTransform/BE/SF/',LEdata.animal,LEdata.array);
         end
@@ -52,7 +52,7 @@ elseif location == 0
         end
     else
         if contains(LEdata.programID,'low','IgnoreCase',true)
-            figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/FisherTransform/BE/SF/',LEdata.animal,LEdata.array);
+            figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/lowSF/%s/stats/FisherTransform/BE/SF/',LEdata.animal,LEdata.array);
         else
             figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/FisherTransform/BE/SF/',LEdata.animal,LEdata.array);
         end
@@ -245,9 +245,9 @@ for ch = 1:96
     set(mygca,'YLim',yLimits);
     
     if ~contains(LEdata.animal,'WU')
-        figName = [LEdata.animal,'_BE_',LEdata.array,'_',LEdata.programID,'_rotationPrefs_ch',num2str(ch),'.pdf'];
+        figName = [LEdata.animal,'_BE_',LEdata.array,'_',LEdata.programID,'_sfPrefs_ch',num2str(ch),'.pdf'];
     else
-        figName = [LEdata.animal,'_BE_',LEdata.array,'_rotationPrefs_ch',num2str(ch),'.pdf'];
+        figName = [LEdata.animal,'_BE_',LEdata.array,'_sfPrefs_ch',num2str(ch),'.pdf'];
     end
     print(gcf, figName,'-dpdf','-bestfit')
 end

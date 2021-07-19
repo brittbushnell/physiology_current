@@ -28,7 +28,7 @@ if location == 1
         end
     else
         if contains(LEdata.programID,'low','IgnoreCase',true)
-            figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/FisherTransform/ori/',LEdata.animal,LEdata.array);
+            figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/lowSF/%s/stats/FisherTransform/ori/',LEdata.animal,LEdata.array);
         else
             figDir =  sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/FisherTransform/ori/',LEdata.animal,LEdata.array);
         end
@@ -52,7 +52,7 @@ elseif location == 0
         end
     else
         if contains(LEdata.programID,'low','IgnoreCase',true)
-            figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/FisherTransform/ori/',LEdata.animal,LEdata.array);
+            figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/lowSF/%s/stats/FisherTransform/ori/',LEdata.animal,LEdata.array);
         else
             figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/highSF/%s/stats/FisherTransform/ori/',LEdata.animal,LEdata.array);
         end
@@ -111,7 +111,7 @@ for ch = 1:96
     pos = get(gcf,'Position');
     set(gcf,'Position',[pos(1), pos(2), 600, 700])
     
-    s = suptitle(sprintf('%s %s %s spike counts per amplitude rotation x RF ch %d',REdata.animal, REdata.array, REdata.programID,ch));
+    s = suptitle(sprintf('%s %s %s spike counts per amplitude orientation x RF ch %d',REdata.animal, REdata.array, REdata.programID,ch));
     s.Position(2) = s.Position(2)+0.0272;
     
     % make dummy subplots to get correct dimensions of mygca. Otherwise it
