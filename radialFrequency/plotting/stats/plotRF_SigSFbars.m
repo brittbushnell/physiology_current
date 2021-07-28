@@ -88,7 +88,7 @@ RERF16pref2 = sum(squeeze(REdata.SFcorrDiff(3,:)) < 0 & RE16 == 1);
 REy = [RERF4pref1/REgCh, RERF4pref2/REgCh; RERF8pref1/REgCh, RERF8pref2/REgCh; RERF16pref1/REgCh, RERF16pref2/REgCh];
 REx = [1.8 5.87 10];
 %%
-figure(5)
+figure(4)
 clf
 hold on
 pos = get(gcf,'Position');
