@@ -112,8 +112,8 @@ end
 
 %%
 %% save figure
-figDir =  sprintf('~/Dropbox/Figures/%s/Glass/stats/conRadNdx/',V1data.trLE.animal);
-if ~exist(figDir,'dir')
+figDir = '/Users/brittany/Dropbox/Thesis/Glass/figures/conRadvOri';
+if~exist(figDir,'dir')
     mkdir(figDir)
 end
 cd(figDir)

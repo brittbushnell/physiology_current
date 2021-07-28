@@ -138,9 +138,7 @@ for ch = 1:96
         if dataT.goodCh(ch) == 1
             
             muSc = nan(3,2,6);
-            %             corrPval = nan(3,2,2); %RF, rotation, corr, significance
-            
-            %             if contains(dataT.animal,'WU')
+
             if ey == 1
                 locNdx = (scCh(6,:) == locPair(LEprefLoc(ch),1)) & (scCh(7,:) == locPair(LEprefLoc(ch),2));
                 radNdx = (scCh(5,:) == LEprefRad(ch));
@@ -148,15 +146,7 @@ for ch = 1:96
                 locNdx = (scCh(6,:) == locPair(REprefLoc(ch),1)) & (scCh(7,:) == locPair(REprefLoc(ch),2));
                 radNdx = (scCh(5,:) == REprefRad(ch));
             end
-            %             else
-            %                 if ey == 1
-            %                     locNdx = (scCh(5,:) == locPair(LEprefLoc(ch),1)) & (scCh(6,:) == locPair(LEprefLoc(ch),2));
-            %                     radNdx = (scCh(4,:) == LEprefRad(ch));
-            %                 else
-            %                     locNdx = (scCh(5,:) == locPair(REprefLoc(ch),1)) & (scCh(6,:) == locPair(REprefLoc(ch),2));
-            %                     radNdx = (scCh(4,:) == REprefRad(ch));
-            %                 end
-            %             end
+
             if isnan(radNdx)
                 keyboard
             end
@@ -178,7 +168,6 @@ for ch = 1:96
                     
                     circSpikes = squeeze(scCh(spikeStart:end,locNdx & circNdx));
                     circSpikes = reshape(circSpikes,[1,numel(circSpikes)]);
-                    cirErr = (std(circSpikes))/(sqrt(size(circSpikes,1)));
                     muCirc = (nanmean(circSpikes,'all'));
                     
                     for amp = 1:6

@@ -86,6 +86,7 @@ REsigPerms = nan(3,96);
 
 LEpVal = nan(3,96);
 REpVal = nan(3,96);
+
 % define ranges for each option
 radfreqs = [4,8,16];
 amps48 = [6.25 12.5 25 50 100 200];

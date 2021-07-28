@@ -51,7 +51,7 @@ cd(figDir)
 %% OSI figures
 % [WUV1, WUV4, WVV1, WVV4, XTV1, XTV4] = plotPrefDomOriDiffVsOSI_allQuad(WUV1, WUV4, WVV1, WVV4, XTV1, XTV4); % fig 1-3
 %  plotGlassOSIpatterns(WUV1, WUV4, WVV1, WVV4, XTV1, XTV4) % figs 4-8
- %%
+%%
 % makeGlassOrixTypeDiffThesisFigs(XTV1,XTV4,WUV1, WUV4,WVV1, WVV4)
 % makeGlassOriThesisFigs(XTV1,XTV4,WUV1, WUV4,WVV1, WVV4)
 %%
@@ -77,25 +77,25 @@ plotGlass_crNdxvsOriDiff_grat(XTV1, XTV4)
 [WVV4.gratLE,WVV4.gratRE] = Glass_gratOriVSglassOri(WVV4);
 
 [XTV4.gratLE,XTV4.gratRE] = Glass_gratOriVSglassOri(XTV4);
-%% 
+%%
 % if plotSprinkles == 1
-    [XTV1.conConsistGlass, XTV1.radConsistGlass] = GlassPrefOrivsExpected(XTV1);
-    [XTV4.conConsistGlass, XTV4.radConsistGlass] = GlassPrefOrivsExpected(XTV4);
-    
-    [WUV1.conConsistGlass, WUV1.radConsistGlass] = GlassPrefOrivsExpected(WUV1);
-    [WUV4.conConsistGlass, WUV4.radConsistGlass] = GlassPrefOrivsExpected(WUV4);
-    
-    [WVV1.conConsistGlass, WVV1.radConsistGlass] = GlassPrefOrivsExpected(WVV1);
-    [WVV4.conConsistGlass, WVV4.radConsistGlass] = GlassPrefOrivsExpected(WVV4);
+[XTV1.conConsistGlass, XTV1.radConsistGlass] = GlassPrefOrivsExpected(XTV1);
+[XTV4.conConsistGlass, XTV4.radConsistGlass] = GlassPrefOrivsExpected(XTV4);
+
+[WUV1.conConsistGlass, WUV1.radConsistGlass] = GlassPrefOrivsExpected(WUV1);
+[WUV4.conConsistGlass, WUV4.radConsistGlass] = GlassPrefOrivsExpected(WUV4);
+
+[WVV1.conConsistGlass, WVV1.radConsistGlass] = GlassPrefOrivsExpected(WVV1);
+[WVV4.conConsistGlass, WVV4.radConsistGlass] = GlassPrefOrivsExpected(WVV4);
 
 %     [XTV1.conConsistGrat, XTV1.radConsistGrat] = gratPrefOriVSglassexpected(XTV1);
-    [XTV4.conConsistGrat, XTV4.radConsistGrat] = gratPrefOriVSglassexpected(XTV4);
-    
-    [WUV1.conConsistGrat, WUV1.radConsistGrat] = gratPrefOriVSglassexpected(WUV1);
-    [WUV4.conConsistGrat, WUV4.radConsistGrat] = gratPrefOriVSglassexpected(WUV4);
-    
-    [WVV1.conConsistGrat, WVV1.radConsistGrat] = gratPrefOriVSglassexpected(WVV1);
-    [WVV4.conConsistGrat, WVV4.radConsistGrat] = gratPrefOriVSglassexpected(WVV4);
+[XTV4.conConsistGrat, XTV4.radConsistGrat] = gratPrefOriVSglassexpected(XTV4);
+
+[WUV1.conConsistGrat, WUV1.radConsistGrat] = gratPrefOriVSglassexpected(WUV1);
+[WUV4.conConsistGrat, WUV4.radConsistGrat] = gratPrefOriVSglassexpected(WUV4);
+
+[WVV1.conConsistGrat, WVV1.radConsistGrat] = gratPrefOriVSglassexpected(WVV1);
+[WVV4.conConsistGrat, WVV4.radConsistGrat] = gratPrefOriVSglassexpected(WVV4);
 % end
 
 %%
