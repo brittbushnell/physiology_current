@@ -1,4 +1,4 @@
-function [LEcorr, REcorr] = radFreq_plotNeuroCurves(LEdata, REdata)
+function [LEcorr, REcorr] = radFreq_getNeuroCorr(LEdata, REdata)
 
 location = determineComputer;
 

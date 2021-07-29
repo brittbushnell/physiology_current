@@ -1,4 +1,4 @@
-function [dataT] = StimVsCirclePermutations_allStim_zScore(dataT,numBoot)
+function [dataT] = StimVsCirclePermutations_allStim_zScore2(dataT,numBoot)
 % function [realStimCircDprime,stimCircDprimeBootPerm,stimCircDprimePerm, stimCircSDPerm] = StimVsCirclePermutations_allStim_zScore(dataT, REdata, numBoot)
 
 % This function is a modified version of
@@ -226,12 +226,11 @@ for ch = 1:96
         set(mygca,'XLim',xLimits);
         
         figName = [dataT.animal,'_',dataT.eye,'_',dataT.array,'_',dataT.programID,'_dPrimePermDist_ch',num2str(ch),'.pdf'];
-        print(gcf, figName,'-dpdf','-bestfit')
-        pause(0.5)
+%         print(gcf, figName,'-dpdf','-bestfit')
+%         pause(0.5)
     end % goodCh
 end
 %%
-
 dataT.stimCircDprimeBootPerm = stimCircDprimeBootPerm;
 dataT.stimCircDprimePval     = stimCircDprimePval;
 dataT.stimCircDprimeSig      = stimCircDprimeSig;
