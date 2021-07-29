@@ -5,21 +5,21 @@ tic
 %%
 
 files = {
-    'WU_BE_radFreqLoc1_V4_LocSize';
-    'WU_BE_radFreqLoc1_V1_LocSize';
-    
-    'WV_BE_radFreqHighSF_V4_LocSize';
-    'WV_BE_radFreqHighSF_V1_LocSize';
-    'WV_BE_radFreqLowSF_V4_LocSize';
-    'WV_BE_radFreqLowSF_V1_LocSize';
-    
-    'XT_BE_radFreqLowSF_V4_LocSize';
-    'XT_BE_radFreqLowSF_V1_LocSize';
-    'XT_BE_radFreqHighSF_V4_LocSize';
-    'XT_BE_radFreqHighSF_V1_LocSize';
-    'XT_BE_radFreqLowSFV4_V4_LocSize';
-    'XT_BE_radFreqLowSFV4_V1_LocSize';
-    'XT_BE_radFreqHighSFV4_V4_LocSize';
+%     'WU_BE_radFreqLoc1_V4_LocSize';
+%     'WU_BE_radFreqLoc1_V1_LocSize';
+%     
+%     'WV_BE_radFreqHighSF_V4_LocSize';
+%     'WV_BE_radFreqHighSF_V1_LocSize';
+%     'WV_BE_radFreqLowSF_V4_LocSize';
+%     'WV_BE_radFreqLowSF_V1_LocSize';
+%     
+%     'XT_BE_radFreqLowSF_V4_LocSize';
+%     'XT_BE_radFreqLowSF_V1_LocSize';
+%     'XT_BE_radFreqHighSF_V4_LocSize';
+%     'XT_BE_radFreqHighSF_V1_LocSize';
+%     'XT_BE_radFreqLowSFV4_V4_LocSize';
+%     'XT_BE_radFreqLowSFV4_V1_LocSize';
+%     'XT_BE_radFreqHighSFV4_V4_LocSize';
     'XT_BE_radFreqHighSFV4_V1_LocSize';
     };
 nameEnd = 'oriSF';

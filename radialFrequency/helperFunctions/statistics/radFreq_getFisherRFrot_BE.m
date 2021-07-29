@@ -104,6 +104,7 @@ end
 %%
 % close all
 for ch = 1:96
+    if LEdata.goodCh(ch) || REdata.goodCh(ch)
     %%
     figure(2)
 
@@ -254,6 +255,7 @@ for ch = 1:96
         figName = [LEdata.animal,'_BE_',LEdata.array,'_',LEdata.programID,'_rotationPrefs_ch',num2str(ch),'.pdf'];
     end
     print(gcf, figName,'-dpdf','-bestfit')
+    end
 end
 %%
 LEcorrDiff = squeeze(stimCorr(1,:,:,:));
