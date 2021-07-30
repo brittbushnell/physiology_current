@@ -18,7 +18,7 @@
 %
 % TvG Aug 2017, copied from read_behaveraw
 
-function S = read_behavraw_win(file)
+function S = read_behavraw_win2(file)
 
 %% initialize
 

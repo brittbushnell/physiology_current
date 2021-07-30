@@ -132,7 +132,7 @@ function [H,M] = p_H_nl_R_nl(fid)
             
             % check if nr of col is similar
             if numel(val{1}) ~= numel(H) || iscell(M)
-                warning([mfilename ':headermatrixmismatch'],'The header and matrix have different number of columns. Likely some extra parsing needed.')
+%                 warning([mfilename ':headermatrixmismatch'],'The header and matrix have different number of columns. Likely some extra parsing needed.')
                 
                 if c==2
                     M = {}; % reconfigure M into cell array
