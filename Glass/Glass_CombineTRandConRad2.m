@@ -58,13 +58,18 @@ end
 cd(figDir)
 %%
 filename = [trLE.animal,'_',trLE.array];
+
 trLE.amap = getBlackrockArrayMap(filename);
 trRE.amap = getBlackrockArrayMap(filename);
+
 conRadLE.amap = getBlackrockArrayMap(filename);
 conRadRE.amap = getBlackrockArrayMap(filename);
 %%  get receptive field information
 trLE = callReceptiveFieldParameters(trLE);
 trRE = callReceptiveFieldParameters(trRE);
+
+data = plotGlassTR_prefOriDist_BE_bestDprimeSum(data.RE, data.LE);
+plotGlassTR_OSIdist_binoc(data)
 %% print to command window number of channels that don't match on inclusion
 fprintf('\n%d channels in %s %s array LE differ on inclusion\n',sum(trLE.goodCh ~= conRadLE.goodCh),trLE.animal,trLE.array)
 fprintf('%d channels in %s %s array RE differ on inclusion\n',sum(trRE.goodCh ~= conRadRE.goodCh),trRE.animal,trRE.array)
