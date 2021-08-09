@@ -92,8 +92,8 @@ for ey = 1:2
                 
                 clear  corMtx zero
             end %ch
-            meanMaxDp(rf,nb) = nanmean(squeeze(maxDpBoot(rf,:,nb)));
-            meanCorr(rf,nb) = nanmean(squeeze(corrBoot(rf,:,nb)));
+            meanMaxDp(rf,nb) = nanmedian(squeeze(maxDpBoot(rf,:,nb)));
+            meanCorr(rf,nb) = nanmdiean(squeeze(corrBoot(rf,:,nb)));
             
         end %bootstrap
         %% sanity check figures

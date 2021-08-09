@@ -27,13 +27,14 @@ end
 
 xlim([-1 1])
 ylim([0, yMax])
-text( -2.3, (0+yMax)/2, 'RF4','FontSize',12,'FontWeight','bold')
+%text( -2.3, (0+yMax)/2, 'RF4','FontSize',12,'FontWeight','bold')
 
 for ch = 1:96
     if LEdata.goodCh(ch)
         [y, maxAmp] = max(abs(LEdata.stimCircDprime(1,:,ch)));
         x = LEdata.stimCorrs(1,ch);
-        
+        dps(ch) = y;
+        cors(ch) = x;
         dPrimeSig = squeeze(LEdata.stimCircDprimeSig(1,maxAmp,ch));
         corrSig   = squeeze(LEdata.stimCorrSig(1,ch));
         
@@ -44,6 +45,15 @@ for ch = 1:96
         end
     end
 end
+
+dPmedian = nanmedian(dps);
+corMedian = nanmedian(cors);
+
+plot([-1 1], [dPmedian dPmedian],':k')
+plot([corMedian corMedian], [0 yMax],':k')
+
+%text(-0.8, dPmedian+0.15, sprintf('median d'' %.2f',dPmedian))
+%text(corMedian-0.05,yMax-1.5, sprintf('median correlation %.2f',corMedian),'rotation',90)
 
 set(gca,'tickdir','out','FontAngle','italic','FontSize',10)
 
@@ -60,13 +70,14 @@ end
 
 xlim([-1 1])
 ylim([0, yMax])
-text( -2.3, (0+yMax)/2, 'RF8','FontSize',12,'FontWeight','bold')
+%text( -2.3, (0+yMax)/2, 'RF8','FontSize',12,'FontWeight','bold')
 
 for ch = 1:96
     if LEdata.goodCh(ch)
         [y, maxAmp] = max(abs(LEdata.stimCircDprime(2,:,ch)));
         x = LEdata.stimCorrs(1,ch);
-        
+        dps(ch) = y;
+        cors(ch) = x;
         dPrimeSig = squeeze(LEdata.stimCircDprimeSig(2,maxAmp,ch));
         corrSig   = squeeze(LEdata.stimCorrSig(1,ch));
         
@@ -77,6 +88,15 @@ for ch = 1:96
         end
     end
 end
+
+dPmedian = nanmedian(dps);
+corMedian = nanmedian(cors);
+
+plot([-1 1], [dPmedian dPmedian],':k')
+plot([corMedian corMedian], [0 yMax],':k')
+
+%text(-0.8, dPmedian+0.15, sprintf('median d'' %.2f',dPmedian))
+%text(corMedian-0.05,yMax-1.5, sprintf('median correlation %.2f',corMedian),'rotation',90)
 
 set(gca,'tickdir','out','FontAngle','italic','FontSize',10)
 
@@ -93,13 +113,14 @@ end
 
 xlim([-1 1])
 ylim([0, yMax])
-text( -2.3, (0+yMax)/2, 'RF16','FontSize',12,'FontWeight','bold')
+%text( -2.3, (0+yMax)/2, 'RF16','FontSize',12,'FontWeight','bold')
 
 for ch = 1:96
     if LEdata.goodCh(ch)
         [y, maxAmp] = max(abs(LEdata.stimCircDprime(3,:,ch)));
         x = LEdata.stimCorrs(1,ch);
-        
+        dps(ch) = y;
+        cors(ch) = x;
         dPrimeSig = squeeze(LEdata.stimCircDprimeSig(3,maxAmp,ch));
         corrSig   = squeeze(LEdata.stimCorrSig(1,ch));
         
@@ -110,6 +131,15 @@ for ch = 1:96
         end
     end
 end
+
+dPmedian = nanmedian(dps);
+corMedian = nanmedian(cors);
+
+plot([-1 1], [dPmedian dPmedian],':k')
+plot([corMedian corMedian], [0 yMax],':k')
+
+%text(-0.8, dPmedian+0.15, sprintf('median d'' %.2f',dPmedian))
+%text(corMedian-0.05,yMax-1.5, sprintf('median correlation %.2f',corMedian),'rotation',90)
 
 set(gca,'tickdir','out','FontAngle','italic','FontSize',10)
 
@@ -132,7 +162,8 @@ for ch = 1:96
     if REdata.goodCh(ch)
         [y, maxAmp] = max(abs(REdata.stimCircDprime(1,:,ch)));
         x = REdata.stimCorrs(1,ch);
-        
+        dps(ch) = y;
+        cors(ch) = x;
         dPrimeSig = squeeze(REdata.stimCircDprimeSig(1,maxAmp,ch));
         corrSig   = squeeze(REdata.stimCorrSig(1,ch));
         
@@ -143,6 +174,15 @@ for ch = 1:96
         end
     end
 end
+
+dPmedian = nanmedian(dps);
+corMedian = nanmedian(cors);
+
+plot([-1 1], [dPmedian dPmedian],':k')
+plot([corMedian corMedian], [0 yMax],':k')
+
+%text(-0.8, dPmedian+0.15, sprintf('median d'' %.2f',dPmedian))
+%text(corMedian-0.05,yMax-1.5, sprintf('median correlation %.2f',corMedian),'rotation',90)
 
 set(gca,'tickdir','out','FontAngle','italic','FontSize',10)
 
@@ -164,7 +204,8 @@ for ch = 1:96
     if REdata.goodCh(ch)
         [y, maxAmp] = max(abs(REdata.stimCircDprime(2,:,ch)));
         x = REdata.stimCorrs(1,ch);
-        
+        dps(ch) = y;
+        cors(ch) = x;
         dPrimeSig = squeeze(REdata.stimCircDprimeSig(2,maxAmp,ch));
         corrSig   = squeeze(REdata.stimCorrSig(1,ch));
         
@@ -175,6 +216,15 @@ for ch = 1:96
         end
     end
 end
+
+dPmedian = nanmedian(dps);
+corMedian = nanmedian(cors);
+
+plot([-1 1], [dPmedian dPmedian],':k')
+plot([corMedian corMedian], [0 yMax],':k')
+
+%text(-0.8, dPmedian+0.15, sprintf('median d'' %.2f',dPmedian))
+%text(corMedian-0.05,yMax-1.5, sprintf('median correlation %.2f',corMedian),'rotation',90)
 
 set(gca,'tickdir','out','FontAngle','italic','FontSize',10)
 
@@ -196,7 +246,8 @@ for ch = 1:96
     if REdata.goodCh(ch)
         [y, maxAmp] = max(abs(REdata.stimCircDprime(3,:,ch)));
         x = REdata.stimCorrs(1,ch);
-        
+        dps(ch) = y;
+        cors(ch) = x;
         dPrimeSig = squeeze(REdata.stimCircDprimeSig(3,maxAmp,ch));
         corrSig   = squeeze(REdata.stimCorrSig(1,ch));
         
@@ -207,6 +258,15 @@ for ch = 1:96
         end
     end
 end
+
+dPmedian = nanmedian(dps);
+corMedian = nanmedian(cors);
+
+plot([-1 1], [dPmedian dPmedian],':k')
+plot([corMedian corMedian], [0 yMax],':k')
+
+%text(-0.8, dPmedian+0.15, sprintf('median d'' %.2f',dPmedian))
+%text(corMedian-0.05,yMax-1.5, sprintf('median correlation %.2f',corMedian),'rotation',90)
 
 set(gca,'tickdir','out','FontAngle','italic','FontSize',10)
 %%

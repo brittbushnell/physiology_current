@@ -1,67 +1,44 @@
-load('WU_LE_GlassTR_nsp2_Aug2017_all_thresh35_info3_goodRuns_stimPerm');
-dataT = data.LE;
-%%
-[numOris,numDots,numDxs,numCoh,~,oris,~,~,coherences,~] = getGlassTRParameters(dataT);
-radOri = deg2rad(oris);
-%%
-SI = nan(numCoh,numDots,numDxs,96);
-prefOri = nan(numCoh,numDots,numDxs,96);
-%%
-for ch = 1:96
-    % if dataT.goodCh(ch) == 1
-        for dt = 1:numDots
-            for dx = 1:numDxs
-                for co = 1:numCoh
-                    % for nb = 1:numBoot
-                    for or = 1:numOris
-                        
-                        linTrials = squeeze(dataT.GlassTRZscore(or,co,dt,dx,ch,:));
-                        linTrials(isnan(linTrials)) = [];
-                        linResp = mean(linTrials); 
-                        % numTrials = round(length(linTrials)*holdout);
-                        % linNdx = randi(length(linTrials),[1,numTrials]);
-                        % linResp = mean(linTrials(linNdx));
-                        
-                        % get inputs for calculating orientation
-                        % selectivity
-                        
-                        ori2 = 2*(radOri(or));
-                        expon = 1i*(ori2);
-                        exVar = exp(expon);
-                        respVect(or,1) = linResp*exVar;
-                        denomVect(or,1) = (abs(linResp));
-                        
-                        % preferred orientation
-                        prefNum(or,1) = linResp .* (sin(ori2));
-                        prefDenom(or,1) = linResp .* (cos(ori2));
-                        
-                        clear linTrials linResp
-                    end % orientation
-                    v = sum(respVect);
-                    denom = sum((denomVect));   
-                    SItmp = abs(v) / denom;
-                    %  SItmp(nb,1) = abs(v) / denom;
-                     
-                    sumPrefNum = sum(prefNum);
-                    sumPrefDenom = sum(prefDenom);
-                    % oriTmp(nb,1) = (atan2d(sumPrefNum,sumPrefDenom))/2;
-                    oriTmp = (atan2d(sumPrefNum,sumPrefDenom))/2;
-                    % end %boot strap
-                    prefOri(co,dt,dx,ch) = oriTmp; %mean(oriTmp);
-                    SI(co,dt,dx,ch) = SItmp; %mean(SItmp);
-                    clear oriTmp
-                    clear SItmp
-                end % coherence
-            end
-        end
-    % end
-end
-
+% subplot(3,2,1)
 figure(1)
 clf
+hold on
+axis square
+ylabel('max |d''|')
 
-title('preferred orientations 100% coh max dots max dens')
-a = squeeze(prefOri(4,:,:,:));
-a = reshape(a,[1, numel(a)]);
-histogram(a)
-set(gca,'tickdir','out','box','off')
+if contains(REdata.animal,'XT')
+    title('RE')
+else
+    title('FE')
+end
+
+xlim([-1 1])
+ylim([0, yMax])
+text( -2.3, (0+yMax)/2, 'RF4','FontSize',12,'FontWeight','bold')
+
+for ch = 1:96
+    if REdata.goodCh(ch)
+        [y, maxAmp] = max(abs(REdata.stimCircDprime(1,:,ch)));
+        x = REdata.stimCorrs(1,ch);
+        dps(ch) = y;
+        cors(ch) = x;
+        dPrimeSig = squeeze(REdata.stimCircDprimeSig(1,maxAmp,ch));
+        corrSig   = squeeze(REdata.stimCorrSig(1,ch));
+        
+        if dPrimeSig || corrSig
+            scatter(x,y,'MarkerFaceColor',[0.7 0 0.7], 'MarkerEdgeColor','w','MarkerFaceAlpha',0.7, 'MarkerEdgeAlpha',0.7)
+        else
+            scatter(x,y,'MarkerFaceColor','none', 'MarkerEdgeColor',[0.7 0 0.7],'MarkerFaceAlpha',0.7, 'MarkerEdgeAlpha',0.7)
+        end
+    end
+end
+
+dPmedian = nanmedian(dps);
+corMedian = nanmedian(cors);
+
+plot([-1 1], [dPmedian dPmedian],':k')
+plot([corMedian corMedian], [0 yMax],':k')
+
+text(-0.8, dPmedian+0.15, sprintf('median d'' %.2f',dPmedian))
+text(corMedian-0.05,yMax-1.5, sprintf('median correlation %.2f',corMedian),'rotation',90)
+
+set(gca,'tickdir','out','FontAngle','italic','FontSize',10)

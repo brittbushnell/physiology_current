@@ -52,8 +52,8 @@ for nb = 1:numBoot
         end %RF
     end %ch
     for i = 1:3
-        maxDpPopDiff(i,nb) = abs(nanmean(squeeze(LEmaxDp(i,:,nb)))) - abs(nanmean(squeeze(REmaxDp(i,:,nb))));
-        corrPopDiff(i,nb) = nanmean(squeeze(LEcorrBoot(i,:,nb))) - nanmean(squeeze(REcorrBoot(i,:,nb)));
+        maxDpPopDiff(i,nb) = abs(nanmedian(squeeze(LEmaxDp(i,:,nb)))) - abs(nanmedian(squeeze(REmaxDp(i,:,nb))));
+        corrPopDiff(i,nb) = nanmedian(squeeze(LEcorrBoot(i,:,nb))) - nanmedian(squeeze(REcorrBoot(i,:,nb)));
     end
 end %bootstrap
 %% do permutation test
@@ -63,13 +63,13 @@ for ch = 1:96
         REmaxCh(rf,ch) = max(abs(REdata.stimCircDprime(rf,:,ch)));
     end
 end
-% mean of maximum d' across channels
-LErealDp = nanmean(LEmaxCh,2);
-RErealDp = nanmean(REmaxCh,2);
+% median of maximum d' across channels
+LErealDp = nanmedian(LEmaxCh,2);
+RErealDp = nanmedian(REmaxCh,2);
 
-% mean correlation across channels
-LErealCor = nanmean(squeeze(LEdata.stimCorrs(:,:)),2);
-RErealCor = nanmean(squeeze(REdata.stimCorrs(:,:)),2);
+% median correlation across channels
+LErealCor = nanmedian(squeeze(LEdata.stimCorrs(:,:)),2);
+RErealCor = nanmedian(squeeze(REdata.stimCorrs(:,:)),2);
 
 for i = 1:3
     %% d'
@@ -126,9 +126,9 @@ xMaxC = max([b d])+0.05;
 figure%(3)
 clf
 if contains(LEdata.animal,'XT')
-    s = suptitle(sprintf('%s %s population differences in means between LE and RE',LEdata.animal, LEdata.array));
+    s = suptitle(sprintf('%s %s population differences in medians between LE and RE',LEdata.animal, LEdata.array));
 else
-    s = suptitle(sprintf('%s %s population differences in means between FE and AE',LEdata.animal, LEdata.array));
+    s = suptitle(sprintf('%s %s population differences in medians between FE and AE',LEdata.animal, LEdata.array));
 end
 s.Position(2) = s.Position(2)+0.026;
 
