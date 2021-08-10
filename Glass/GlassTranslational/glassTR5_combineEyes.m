@@ -1,32 +1,32 @@
 clear
 close all
-clc
+% clc
 %%
  
-REfile = 'WU_RE_GlassTR_nsp2_Aug2017_all_thresh35_info3_goodRuns_stimPerm_OSI';
-LEfile = 'WU_LE_GlassTR_nsp2_Aug2017_all_thresh35_info3_goodRuns_stimPerm_OSI';
-newName = 'WU_BE_GlassTR_V4_cleanMerged';
+% REfile = 'WU_RE_GlassTR_nsp2_Aug2017_all_thresh35_info3_goodRuns_stimPerm_OSI2';
+% LEfile = 'WU_LE_GlassTR_nsp2_Aug2017_all_thresh35_info3_goodRuns_stimPerm_OSI2';
+% newName = 'WU_BE_GlassTR_V4_cleanMerged';
  
-% REfile = 'WV_RE_glassTRCoh_nsp2_April2019_all_thresh35_info3_goodRuns_stimPerm_OSI';
-% LEfile = 'WV_LE_glassTRCoh_nsp2_April2019_all_thresh35_info3_goodRuns_stimPerm_OSI';
+% REfile = 'WV_RE_glassTRCoh_nsp2_April2019_all_thresh35_info3_goodRuns_stimPerm_OSI2';
+% LEfile = 'WV_LE_glassTRCoh_nsp2_April2019_all_thresh35_info3_goodRuns_stimPerm_OSI2';
 % newName = 'WV_BE_GlassTRCoh_V4_cleanMerged';
  
-% REfile = 'XT_RE_GlassTR_nsp2_Jan2019_all_thresh35_info3_goodRuns_stimPerm_OSI';
-% LEfile = 'XT_LE_GlassTR_nsp2_Jan2019_all_thresh35_info3_goodRuns_stimPerm_OSI';
+% REfile = 'XT_RE_GlassTR_nsp2_Jan2019_all_thresh35_info3_goodRuns_stimPerm_OSI2';
+% LEfile = 'XT_LE_GlassTR_nsp2_Jan2019_all_thresh35_info3_goodRuns_stimPerm_OSI2';
 % newName = 'XT_BE_GlassTR_V4_cleanMerged';
 
 % V1
-% REfile = 'XT_RE_GlassTR_nsp1_Jan2019_all_thresh35_info3_goodRuns_stimPerm_OSI';
-% LEfile = 'XT_LE_GlassTR_nsp1_Jan2019_all_thresh35_info3_goodRuns_stimPerm_OSI';
+% REfile = 'XT_RE_GlassTR_nsp1_Jan2019_all_thresh35_info3_goodRuns_stimPerm_OSI2';
+% LEfile = 'XT_LE_GlassTR_nsp1_Jan2019_all_thresh35_info3_goodRuns_stimPerm_OSI2';
 % newName = 'XT_BE_GlassTR_V1_cleanMerged';
 
-% REfile = 'WU_RE_GlassTR_nsp1_Aug2017_all_thresh35_info3_goodRuns_stimPerm_OSI';
-% LEfile = 'WU_LE_GlassTR_nsp1_Aug2017_all_thresh35_info3_goodRuns_stimPerm_OSI';
+% REfile = 'WU_RE_GlassTR_nsp1_Aug2017_all_thresh35_info3_goodRuns_stimPerm_OSI2';
+% LEfile = 'WU_LE_GlassTR_nsp1_Aug2017_all_thresh35_info3_goodRuns_stimPerm_OSI2';
 % newName = 'WU_BE_GlassTR_V1_cleanMerged';
 
-% REfile = 'WV_RE_glassTRCoh_nsp1_April2019_all_thresh35_info3_goodRuns_stimPerm_OSI';
-% LEfile = 'WV_LE_glassTRCoh_nsp1_April2019_all_thresh35_info3_goodRuns_stimPerm_OSI';
-% newName = 'WV_BE_GlassTRCoh_V1_cleanMerged';
+REfile = 'WV_RE_glassTRCoh_nsp1_April2019_all_thresh35_info3_goodRuns_stimPerm_OSI2';
+LEfile = 'WV_LE_glassTRCoh_nsp1_April2019_all_thresh35_info3_goodRuns_stimPerm_OSI2';
+newName = 'WV_BE_GlassTRCoh_V1_cleanMerged';
 %%
 location = determineComputer;
 %% combine data from the two eyes into one pair of structures

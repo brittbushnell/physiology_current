@@ -49,19 +49,57 @@ for ch = 1:96
                     % end %boot strap
                     prefOri(co,dt,dx,ch) = oriTmp; %mean(oriTmp);
                     SI(co,dt,dx,ch) = SItmp; %mean(SItmp);
-                    clear oriTmp
-                    clear SItmp
+                    
+                    clear SItmp oriTmp denom v sumPrefNum sumPrefDenom prefNum prefDenom
                 end % coherence
             end
         end
     % end
 end
 
-figure(1)
+% figure(1)
+% clf
+% hold on
+% title('preferred orientations 100% coh all dots and dx','FontSize',14)
+% a = squeeze(prefOri(4,:,:,:));
+% a = reshape(a,[1, numel(a)]);
+% histogram(a,20)
+% xlim([-100 100])
+% set(gca,'tickdir','out','box','off')
+%%
+
+
+figure(12)
 clf
 
-title('preferred orientations 100% coh max dots max dens')
-a = squeeze(prefOri(4,:,:,:));
+subplot(3,1,1);
+hold on
+ylim([0 0.15])
+xlim([-100 100])
+a = squeeze(dataT.prefOri(end,:,:,:));
 a = reshape(a,[1, numel(a)]);
-histogram(a)
+title('preferred ori all parameters 100% coherence','FontSize',14)
+histogram(a,'BinWidth',10,'Normalization','probability');
 set(gca,'tickdir','out','box','off')
+
+subplot(3,1,2);
+hold on
+ylim([0 0.15])
+xlim([-10 190])
+a = squeeze(dataT.prefOri(end,:,:,:));
+a = reshape(a,[1, numel(a)]);
+a(a<0) = a(a<0)+180;
+title('preferred ori all parameters 100% coherence 0:180','FontSize',14)
+histogram(a,'BinWidth',10,'Normalization','probability');
+set(gca,'tickdir','out','box','off')
+
+
+subplot(3,1,3);
+hold on
+title('preferred ori preferred parameters 100% coherence','FontSize',14)
+histogram(dataT.prefParamsPrefOri,'BinWidth',10,'Normalization','probability');
+ylim([0 0.15])
+xlim([-10 190])
+set(gca,'tickdir','out','box','off')
+
+

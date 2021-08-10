@@ -34,18 +34,23 @@ for ch = 1:96
         for dt = 1:numDots
             for dx = 1:numDxs
                 for co = 1:numCoh
-                    
                     for nb = 1:numBoot
+                        respVect = nan(numOris,1);
+                        denomVect = nan(numOris,1);
+                        
+                        prefNum = nan(numOris,1);
+                        prefDenom = nan(numOris,1);
                         for or = 1:numOris
-                            
                             linTrials = squeeze(dataT.GlassTRZscore(:,co,dt,dx,ch,:));
                             noiseTrials = squeeze(dataT.GlassTRZscore(1,1,dt,dx,ch,:));
+                            
                             stimTrials = [linTrials;noiseTrials'];
                             stimTrials(isnan(stimTrials)) = [];  
+                            
                             numTrials = round(length(stimTrials)*holdout);
                             
-                            linNdx = randi(length(stimTrials),[1,numTrials]);
-                            linResp = mean(stimTrials(linNdx));
+                            linSamp = datasample(stimTrials, numTrials);  %randi(length(stimTrials),[1,numTrials]);
+                            linResp = mean(linSamp);
             
                             % get inputs for calculating orientation
                             % selectivity
@@ -74,8 +79,7 @@ for ch = 1:96
                     
                     prefOriPermBoot(co,dt,dx,ch,:) = oriTmp;
                     SIpermBoot(co,dt,dx,ch,:) = SItmp;
-                    clear oriTmp
-                    clear SItmp
+                    clear oriTmp SItmp prefNum prefDenom respVect denomVect
                 end
             end
         end

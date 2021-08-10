@@ -92,5 +92,6 @@ if~exist(figDir,'dir')
 end
 cd(figDir)
 
+set(gcf,'InvertHardcopy','off','color','w')
 figName = [glassRE.animal,'_',glassRE.array,'_prefOriGlassVgrat','.pdf'];
 print(gcf, figName,'-dpdf','-bestfit')

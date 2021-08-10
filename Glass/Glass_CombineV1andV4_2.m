@@ -1,6 +1,6 @@
 clear
 close all
-clc
+% clc
 %%
 % load('WV_BE_V1_bothGlass_cleanMerged');
 % V1data = data;
@@ -35,9 +35,9 @@ newName = 'XT_2eyes_2arrays_GlassPatterns';
  V1data.conRadLE.MeanConRadNdx,V1data.conRadLE.CRI,V1data.conRadRE.MeanConRadNdx,V1data.conRadRE.CRI,...
  V4data.conRadLE.MeanConRadNdx,V4data.conRadLE.CRI,V4data.conRadRE.MeanConRadNdx,V4data.conRadRE.CRI] = makeFig_triplotGlass_trNoise(V1data, V4data);
 %% coherence
-if ~contains(V1data.conRadRE.animal,'XT')
-  [V1data.NumSigCohCorrLE,V1data.NumSigCohCorrRE,V4data.NumSigCohCorrLE,V4data.NumSigCohCorrRE] = GlassCohCorrStats(V1data, V4data);
-end
+% if ~contains(V1data.conRadRE.animal,'XT')
+%   [V1data.NumSigCohCorrLE,V1data.NumSigCohCorrRE,V4data.NumSigCohCorrLE,V4data.NumSigCohCorrRE] = GlassCohCorrStats(V1data, V4data);
+% end
 
 %% d' scatter plots
 location = determineComputer;

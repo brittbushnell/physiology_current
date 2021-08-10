@@ -118,5 +118,6 @@ if~exist(figDir,'dir')
 end
 cd(figDir)
 
+set(gcf,'InvertHardcopy','off','color','w')
 figName = [V1data.trLE.animal,'_conRadNdxVStrOriDiff_Grat'];
 print(gcf, figName,'-dpdf','-bestfit')

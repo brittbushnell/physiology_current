@@ -208,5 +208,6 @@ h4.Position(4) = ht;
 
 
 %%
+set(gcf,'InvertHardcopy','off','color','w')
 figName = [dataT.trLE.animal,'_',dataT.trLE.array,'_sprinkle_gratOri','.pdf'];
 print(gcf, figName,'-dpdf','-bestfit')

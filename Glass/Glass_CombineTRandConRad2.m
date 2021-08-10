@@ -1,21 +1,21 @@
 clear
 close all
-clc
+% clc
 %%
-load('WV_BE_GlassTRCoh_V1_cleanMerged');
-trLE = data.LE; 
-trRE = data.RE;
-trData = data;
-clear data;
-
-load('WV_BE_V1_Glass_Aug2017_clean_merged');
-conRadLE = data.LE;
-conRadRE = data.RE;
-conRadData = data;
-clear data
-
-newName = 'WV_BE_V1_bothGlass_cleanMerged';
-%%
+% load('WV_BE_GlassTRCoh_V4_cleanMerged');
+% trLE = data.LE; 
+% trRE = data.RE;
+% trData = data;
+% clear data;
+% 
+% load('WV_BE_V4_Glass_Aug2017_clean_merged');
+% conRadLE = data.LE;
+% conRadRE = data.RE;
+% conRadData = data;
+% clear data
+% 
+% newName = 'WV_BE_V4_bothGlass_cleanMerged';
+% %%
 % load('WU_BE_GlassTR_V1_cleanMerged');
 % trLE = data.LE;
 % trRE = data.RE;
@@ -30,19 +30,19 @@ newName = 'WV_BE_V1_bothGlass_cleanMerged';
 % 
 % newName = 'WU_BE_V1_bothGlass_cleanMerged';
 %% 
-% load('XT_BE_GlassTR_V1_cleanMerged');
-% trLE = data.LE;
-% trRE = data.RE;
-% trData = data;
-% clear data;
-% 
-% load('XT_BE_V1_Glass_clean_merged');
-% conRadLE = data.LE;
-% conRadRE = data.RE;
-% conRadData = data;
-% clear data
-% 
-% newName = 'XT_BE_V1_bothGlass_cleanMerged';
+load('XT_BE_GlassTR_V4_cleanMerged');
+trLE = data.LE;
+trRE = data.RE;
+trData = data;
+clear data;
+
+load('XT_BE_V4_Glass_clean_merged');
+conRadLE = data.LE;
+conRadRE = data.RE;
+conRadData = data;
+clear data
+
+newName = 'XT_BE_V4_bothGlass_cleanMerged';
 %%
 location = determineComputer;
 
@@ -67,21 +67,100 @@ conRadRE.amap = getBlackrockArrayMap(filename);
 %%  get receptive field information
 trLE = callReceptiveFieldParameters(trLE);
 trRE = callReceptiveFieldParameters(trRE);
-
-data = plotGlassTR_prefOriDist_BE_bestDprimeSum(data.RE, data.LE);
-plotGlassTR_OSIdist_binoc(data)
 %% print to command window number of channels that don't match on inclusion
 fprintf('\n%d channels in %s %s array LE differ on inclusion\n',sum(trLE.goodCh ~= conRadLE.goodCh),trLE.animal,trLE.array)
 fprintf('%d channels in %s %s array RE differ on inclusion\n',sum(trRE.goodCh ~= conRadRE.goodCh),trRE.animal,trRE.array)
-%% get preferred parameters for translational
-trLE = GlassTR_bestSumDOris(trLE);
-trRE = GlassTR_bestSumDOris(trRE);
 %% get prefered dt,dx parameters for concentric and radial data
 conRadLE.prefParamsIndex = getGlassConRadPrefParamIndex(conRadLE);
 conRadRE.prefParamsIndex = getGlassConRadPrefParamIndex(conRadRE);
+%% get preferred parameters for translational
+trLE = GlassTR_bestSumDOris(trLE);
+trRE = GlassTR_bestSumDOris(trRE);
+%%
+figure(24)
+clf
+s = suptitle(sprintf('%s %s',trLE.animal, trLE.array));
+s.Position(2) = s.Position(2) +0.026;
+
+h = subplot(3,2,1);
+hold on
+ylim([0 0.15])
+xlim([-100 100])
+a = squeeze(trLE.prefOri(end,:,:,:));
+a = reshape(a,[1, numel(a)]);
+t = title('preferred ori all parameters 100% coherence','FontSize',14);
+
+t.Position(1) = t.Position(1) + 120;
+t.Position(2) = t.Position(2) + 0.01;
+histogram(a,'BinWidth',10,'Normalization','probability','FaceColor',[0.2 0.4 1]);
+set(gca,'tickdir','out','box','off')
+h.Position(3) = h.Position(3) - 0.01;
+
+h = subplot(3,2,3);
+hold on
+ylim([0 0.15])
+xlim([-10 190])
+a = squeeze(trLE.prefOri(end,:,:,:));
+a = reshape(a,[1, numel(a)]);
+a(a<0) = a(a<0)+180;
+t = title('preferred ori all parameters 100% coherence 0:180','FontSize',14);
+
+t.Position(1) = t.Position(1) + 120;
+t.Position(2) = t.Position(2) + 0.01;
+histogram(a,'BinWidth',10,'Normalization','probability','FaceColor',[0.2 0.4 1]);
+set(gca,'tickdir','out','box','off')
+h.Position(2) = h.Position(2) - 0.03;
+h.Position(3) = h.Position(3) - 0.01;
+
+h =subplot(3,2,5);
+hold on
+t = title('preferred ori preferred parameters 100% coherence','FontSize',14);
+
+histogram(trLE.prefParamsPrefOri,'BinWidth',10,'Normalization','probability','FaceColor',[0.2 0.4 1]);
+ylim([0 0.15])
+xlim([-10 190])
+set(gca,'tickdir','out','box','off')
+h.Position(2) = h.Position(2) - 0.05;
+h.Position(3) = h.Position(3) - 0.01;
+t.Position = [217.93,0.156,1.42e-14];
+
+h = subplot(3,2,2);
+hold on
+ylim([0 0.15])
+xlim([-100 100])
+a = squeeze(trRE.prefOri(end,:,:,:));
+a = reshape(a,[1, numel(a)]);
+% title('preferred ori all parameters 100% coherence','FontSize',14)
+histogram(a,'BinWidth',10,'Normalization','probability','FaceColor','r');
+set(gca,'tickdir','out','box','off')
+h.Position(3) = h.Position(3) - 0.01;
+
+h = subplot(3,2,4);
+hold on
+ylim([0 0.15])
+xlim([-10 190])
+a = squeeze(trRE.prefOri(end,:,:,:));
+a = reshape(a,[1, numel(a)]);
+a(a<0) = a(a<0)+180;
+% title('preferred ori all parameters 100% coherence 0:180','FontSize',14)
+histogram(a,'BinWidth',10,'Normalization','probability','FaceColor','r');
+set(gca,'tickdir','out','box','off')
+h.Position(2) = h.Position(2) - 0.03;
+h.Position(3) = h.Position(3) - 0.01;
+
+h = subplot(3,2,6);
+hold on
+% title('preferred ori preferred parameters 100% coherence','FontSize',14)
+histogram(trRE.prefParamsPrefOri,'BinWidth',10,'Normalization','probability','FaceColor','r');
+ylim([0 0.15])
+xlim([-10 190])
+set(gca,'tickdir','out','box','off')
+h.Position(2) = h.Position(2) - 0.05;
+h.Position(3) = h.Position(3) - 0.01;
 %% Get preferred pattern at the preferred dt,dx
 chRanksCRLE = nan(1,96);
 chRanksTRLE = nan(1,96);
+
 prefParamsCr = conRadLE.prefParamsIndex; % this says which dot,dx is preferred
 prefParamsTr = trLE.prefParamsIndex;
 for ch = 1:96
@@ -121,6 +200,9 @@ conRadRE.rfQuadrant   = trRE.rfQuadrant;
 conRadRE.inStim       = trRE.inStim;
 conRadRE.inStimCenter = trRE.inStimCenter;
 conRadRE.within2Deg   = trRE.within2Deg;
+%% plot preferred orientations
+data = plotGlassTR_prefOriDist_BE_bestDprimeSum(trRE, trLE);
+% plotGlassTR_OSIdist_binoc(data)
 %%
 if location == 1
     figDir =  sprintf('~/bushnell-local/Dropbox/Figures/%s/GlassCombo/%s/',trLE.animal,trLE.array);

@@ -103,7 +103,7 @@ cirMuL = circ_mean(deg2rad(SIL2(:)*2))/2;
 cirMuL2 = cirMuL+pi;
 
 %%
-figure (10)
+figure %(10)
 clf
 pos = get(gcf,'Position');
 set(gcf,'Position',[pos(1) pos(2) 800 500])

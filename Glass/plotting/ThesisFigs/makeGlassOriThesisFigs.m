@@ -13,7 +13,7 @@ end
 cd(figDir)
 %%
 close all
-figure(1)
+figure%(1)
 clf
 set(gcf,'Position',[34 177 600 1400],'PaperSize',[7.5,10.25],'InnerPosition',[50 1 600 1085]);
 
@@ -25,19 +25,19 @@ axis off
 % XT
 s = subplot(6,2,1,polaraxes);
 hold on
-pOrisL = XTV1.trLE.prefOriBestDprime;
-SIL2 = pOrisL;
-SIL2(SIL2<0) = SIL2(SIL2<0)+180;
+pOris = XTV1.trLE.prefParamsPrefOri;
+pOr = pOris;
+pOr(isnan(pOr)) = [];
 
-cirMuL = circ_mean(deg2rad(SIL2(:)*2))/2;
+cirMuL = circ_mean(deg2rad(pOr(:)*2))/2;
 cirMuL2 = cirMuL+pi;
 XTv1LEmu = cirMuL;
 
-[bins,edges] = histcounts(deg2rad(SIL2),0:pi/6:pi);
+[bins,edges] = histcounts(deg2rad(pOr),0:pi/6:pi);
 bins2 = sqrt(bins);
 polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor','b','EdgeColor','w')
 
-[bins,edges] = histcounts(deg2rad(SIL2)+pi,[0:pi/6:pi]+pi);
+[bins,edges] = histcounts(deg2rad(pOr)+pi,[0:pi/6:pi]+pi);
 bins2 = sqrt(bins);
 polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor','b','EdgeColor','w')
 polarplot([cirMuL 0 cirMuL2],[1.5 0 1.5],'b-','LineWidth',.85)
@@ -50,7 +50,7 @@ ax.RLim   = [0,0.7];
 text(2.7,1.75,'XT','FontSize',18,'FontWeight','bold')
 text(3.14,1.95,'V1/V2','FontSize',14,'FontWeight','bold')
 set(gca,'FontSize',11,'FontAngle','italic','RTickLabels',{'','',''})
-text(0,1.2,sprintf('n %d',length(SIL2)),'FontSize',12,'FontWeight','bold')
+text(0,1.2,sprintf('n %d',length(pOr)),'FontSize',12,'FontWeight','bold')
 title('LE/FE','FontSize',14)
 
 s.Position(2) = s.Position(2) - 0.0022;
@@ -58,19 +58,19 @@ s.Position(3) = s.Position(3) - 0.008;
 
 s = subplot(6,2,2,polaraxes);
 hold on
-pOrisL = XTV1.trRE.prefOriBestDprime;
-SIL2 = pOrisL;
-SIL2(SIL2<0) = SIL2(SIL2<0)+180;
+pOris = XTV1.trRE.prefParamsPrefOri;
+pOr = pOris;
+pOr(isnan(pOr)) = [];
 
-cirMuL = circ_mean(deg2rad(SIL2(:)*2))/2;
+cirMuL = circ_mean(deg2rad(pOr(:)*2))/2;
 cirMuL2 = cirMuL+pi;
 XTv1REmu = cirMuL;
 
-[bins,edges] = histcounts(deg2rad(SIL2),0:pi/6:pi);
+[bins,edges] = histcounts(deg2rad(pOr),0:pi/6:pi);
 bins2 = sqrt(bins);
 polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor','r','EdgeColor','w')
 
-[bins,edges] = histcounts(deg2rad(SIL2)+pi,[0:pi/6:pi]+pi);
+[bins,edges] = histcounts(deg2rad(pOr)+pi,[0:pi/6:pi]+pi);
 bins2 = sqrt(bins);
 polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor','r','EdgeColor','w')
 polarplot([cirMuL 0 cirMuL2],[1.5 0 1.5],'r-','LineWidth',.85)
@@ -82,7 +82,7 @@ ax.RLim   = [0,0.7];
 %text(cirMuL2+0.2,0.5,sprintf('\\mu %.1f%c',rad2deg(cirMuL2),char(176)),'FontSize',11,'HorizontalAlignment','center')
 
 set(gca,'FontSize',11,'FontAngle','italic','RTickLabels',{'','',''})
-text(0,1.2,sprintf('n %d',length(SIL2)),'FontSize',12,'FontWeight','bold')
+text(0,1.2,sprintf('n %d',length(pOr)),'FontSize',12,'FontWeight','bold')
 title('RE/AE','FontSize',14)
 
 s.Position(2) = s.Position(2) - 0.0022;
@@ -90,19 +90,19 @@ s.Position(3) = s.Position(3) - 0.008;
 
 s = subplot(6,2,3,polaraxes);
 hold on
-pOrisL = XTV4.trLE.prefOriBestDprime;
-SIL2 = pOrisL;
-SIL2(SIL2<0) = SIL2(SIL2<0)+180;
+pOris = XTV4.trLE.prefParamsPrefOri;
+pOr = pOris;
+pOr(isnan(pOr)) = [];
 
-cirMuL = circ_mean(deg2rad(SIL2(:)*2))/2;
+cirMuL = circ_mean(deg2rad(pOr(:)*2))/2;
 cirMuL2 = cirMuL+pi;
 XTv4LEmu = cirMuL;
 
-[bins,edges] = histcounts(deg2rad(SIL2),0:pi/6:pi);
+[bins,edges] = histcounts(deg2rad(pOr),0:pi/6:pi);
 bins2 = sqrt(bins);
 polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor','b','EdgeColor','w')
 
-[bins,edges] = histcounts(deg2rad(SIL2)+pi,[0:pi/6:pi]+pi);
+[bins,edges] = histcounts(deg2rad(pOr)+pi,[0:pi/6:pi]+pi);
 bins2 = sqrt(bins);
 polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor','b','EdgeColor','w')
 polarplot([cirMuL 0 cirMuL2],[1.5 0 1.5],'b-','LineWidth',.85)
@@ -114,26 +114,26 @@ ax.RLim   = [0,0.7];
 %text(cirMuL2+0.2,0.5,sprintf('\\mu %.1f%c',rad2deg(cirMuL2),char(176)),'FontSize',11,'HorizontalAlignment','center')
 text(3.14,1.5,'V4','FontSize',14,'FontWeight','bold')
 set(gca,'FontSize',11,'FontAngle','italic','RTickLabels',{'','',''})
-text(0,1.2,sprintf('n %d',length(SIL2)),'FontSize',12,'FontWeight','bold')
+text(0,1.2,sprintf('n %d',length(pOr)),'FontSize',12,'FontWeight','bold')
 
 s.Position(2) = s.Position(2) - 0.013;
 s.Position(3) = s.Position(3) - 0.008;
 
 s = subplot(6,2,4,polaraxes);
 hold on
-pOrisL = XTV4.trRE.prefOriBestDprime;
-SIL2 = pOrisL;
-SIL2(SIL2<0) = SIL2(SIL2<0)+180;
+pOris = XTV4.trRE.prefParamsPrefOri;
+pOr = pOris;
+pOr(isnan(pOr)) = [];
 
-cirMuL = circ_mean(deg2rad(SIL2(:)*2))/2;
+cirMuL = circ_mean(deg2rad(pOr(:)*2))/2;
 cirMuL2 = cirMuL+pi;
 XTv4REmu = cirMuL;
 
-[bins,edges] = histcounts(deg2rad(SIL2),0:pi/6:pi);
+[bins,edges] = histcounts(deg2rad(pOr),0:pi/6:pi);
 bins2 = sqrt(bins);
 polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor','r','EdgeColor','w')
 
-[bins,edges] = histcounts(deg2rad(SIL2)+pi,[0:pi/6:pi]+pi);
+[bins,edges] = histcounts(deg2rad(pOr)+pi,[0:pi/6:pi]+pi);
 bins2 = sqrt(bins);
 polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor','r','EdgeColor','w')
 polarplot([cirMuL 0 cirMuL2],[1.5 0 1.5],'r-','LineWidth',.85)
@@ -145,7 +145,7 @@ ax.RLim   = [0,0.7];
 %text(cirMuL2+0.2,0.5,sprintf('\\mu %.1f%c',rad2deg(cirMuL2),char(176)),'FontSize',11,'HorizontalAlignment','center')
 
 set(gca,'FontSize',11,'FontAngle','italic','RTickLabels',{'','',''})
-text(0,1.2,sprintf('n %d',length(SIL2)),'FontSize',12,'FontWeight','bold')
+text(0,1.2,sprintf('n %d',length(pOr)),'FontSize',12,'FontWeight','bold')
 
 s.Position(2) = s.Position(2) - 0.013;
 s.Position(3) = s.Position(3) - 0.008;
@@ -154,19 +154,19 @@ s.Position(3) = s.Position(3) - 0.008;
 % WU
 s = subplot(6,2,5,polaraxes);
 hold on
-pOrisL = WUV1.trLE.prefOriBestDprime;
-SIL2 = pOrisL;
-SIL2(SIL2<0) = SIL2(SIL2<0)+180;
+pOris = WUV1.trLE.prefParamsPrefOri;
+pOr = pOris;
+pOr(isnan(pOr)) = [];
 
-cirMuL = circ_mean(deg2rad(SIL2(:)*2))/2;
+cirMuL = circ_mean(deg2rad(pOr(:)*2))/2;
 cirMuL2 = cirMuL+pi;
 WUv1LEmu = cirMuL;
 
-[bins,edges] = histcounts(deg2rad(SIL2),0:pi/6:pi);
+[bins,edges] = histcounts(deg2rad(pOr),0:pi/6:pi);
 bins2 = sqrt(bins);
 polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor','b','EdgeColor','w')
 
-[bins,edges] = histcounts(deg2rad(SIL2)+pi,[0:pi/6:pi]+pi);
+[bins,edges] = histcounts(deg2rad(pOr)+pi,[0:pi/6:pi]+pi);
 bins2 = sqrt(bins);
 polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor','b','EdgeColor','w')
 polarplot([cirMuL 0 cirMuL2],[1.5 0 1.5],'b-','LineWidth',.85)
@@ -179,26 +179,26 @@ ax.RLim   = [0,0.7];
 text(2.7,1.75,'WU','FontSize',18,'FontWeight','bold')
 text(3.14,1.95,'V1/V2','FontSize',14,'FontWeight','bold')
 set(gca,'FontSize',11,'FontAngle','italic','RTickLabels',{'','',''})
-text(0,1.2,sprintf('n %d',length(SIL2)),'FontSize',12,'FontWeight','bold')
+text(0,1.2,sprintf('n %d',length(pOr)),'FontSize',12,'FontWeight','bold')
 
 s.Position(2) = s.Position(2) - 0.04;
 s.Position(3) = s.Position(3) - 0.008;
 
 s = subplot(6,2,6,polaraxes);
 hold on
-pOrisL = WUV1.trRE.prefOriBestDprime;
-SIL2 = pOrisL;
-SIL2(SIL2<0) = SIL2(SIL2<0)+180;
+pOris = WUV1.trRE.prefParamsPrefOri;
+pOr = pOris;
+pOr(isnan(pOr)) = [];
 
-cirMuL = circ_mean(deg2rad(SIL2(:)*2))/2;
+cirMuL = circ_mean(deg2rad(pOr(:)*2))/2;
 cirMuL2 = cirMuL+pi;
 WUv1REmu = cirMuL;
 
-[bins,edges] = histcounts(deg2rad(SIL2),0:pi/6:pi);
+[bins,edges] = histcounts(deg2rad(pOr),0:pi/6:pi);
 bins2 = sqrt(bins);
 polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor','r','EdgeColor','w')
 
-[bins,edges] = histcounts(deg2rad(SIL2)+pi,[0:pi/6:pi]+pi);
+[bins,edges] = histcounts(deg2rad(pOr)+pi,[0:pi/6:pi]+pi);
 bins2 = sqrt(bins);
 polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor','r','EdgeColor','w')
 polarplot([cirMuL 0 cirMuL2],[1.5 0 1.5],'r-','LineWidth',.85)
@@ -212,26 +212,26 @@ ax.RLim   = [0,0.7];
 set(gca,'FontSize',11,'FontAngle','italic','RTickLabels',{'','',''})
 
 
-text(0,1.2,sprintf('n %d',length(SIL2)),'FontSize',12,'FontWeight','bold')
+text(0,1.2,sprintf('n %d',length(pOr)),'FontSize',12,'FontWeight','bold')
 %s.Position(1) = %s.Position(1) - 0.1;
 s.Position(2) = s.Position(2) - 0.04;
 s.Position(3) = s.Position(3) - 0.008;
 
 s = subplot(6,2,7,polaraxes);
 hold on
-pOrisL = WUV4.trLE.prefOriBestDprime;
-SIL2 = pOrisL;
-SIL2(SIL2<0) = SIL2(SIL2<0)+180;
+pOris = WUV4.trLE.prefParamsPrefOri;
+pOr = pOris;
+pOr(isnan(pOr)) = [];
 
-cirMuL = circ_mean(deg2rad(SIL2(:)*2))/2;
+cirMuL = circ_mean(deg2rad(pOr(:)*2))/2;
 cirMuL2 = cirMuL+pi;
 WUv4LEmu = cirMuL;
 
-[bins,edges] = histcounts(deg2rad(SIL2),0:pi/6:pi);
+[bins,edges] = histcounts(deg2rad(pOr),0:pi/6:pi);
 bins2 = sqrt(bins);
 polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor','b','EdgeColor','w')
 
-[bins,edges] = histcounts(deg2rad(SIL2)+pi,[0:pi/6:pi]+pi);
+[bins,edges] = histcounts(deg2rad(pOr)+pi,[0:pi/6:pi]+pi);
 bins2 = sqrt(bins);
 polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor','b','EdgeColor','w')
 polarplot([cirMuL 0 cirMuL2],[1.5 0 1.5],'b-','LineWidth',.85)
@@ -245,26 +245,26 @@ text(3.14,1.5,'V4','FontSize',14,'FontWeight','bold')
 set(gca,'FontSize',11,'FontAngle','italic','RTickLabels',{'','',''})
 
 
-text(0,1.2,sprintf('n %d',length(SIL2)),'FontSize',12,'FontWeight','bold')
+text(0,1.2,sprintf('n %d',length(pOr)),'FontSize',12,'FontWeight','bold')
 %s.Position(1) = %s.Position(1) - 0.1;
 s.Position(2) = s.Position(2) - 0.06;
 s.Position(3) = s.Position(3) - 0.008;
 
 s = subplot(6,2,8,polaraxes);
 hold on
-pOrisL = WUV4.trRE.prefOriBestDprime;
-SIL2 = pOrisL;
-SIL2(SIL2<0) = SIL2(SIL2<0)+180;
+pOris = WUV4.trRE.prefParamsPrefOri;
+pOr = pOris;
+pOr(isnan(pOr)) = [];
 
-cirMuL = circ_mean(deg2rad(SIL2(:)*2))/2;
+cirMuL = circ_mean(deg2rad(pOr(:)*2))/2;
 cirMuL2 = cirMuL+pi;
 WUv4REmu = cirMuL;
 
-[bins,edges] = histcounts(deg2rad(SIL2),0:pi/6:pi);
+[bins,edges] = histcounts(deg2rad(pOr),0:pi/6:pi);
 bins2 = sqrt(bins);
 polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor','r','EdgeColor','w')
 
-[bins,edges] = histcounts(deg2rad(SIL2)+pi,[0:pi/6:pi]+pi);
+[bins,edges] = histcounts(deg2rad(pOr)+pi,[0:pi/6:pi]+pi);
 bins2 = sqrt(bins);
 polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor','r','EdgeColor','w')
 polarplot([cirMuL 0 cirMuL2],[1.5 0 1.5],'r-','LineWidth',.85)
@@ -278,7 +278,7 @@ ax.RLim   = [0,0.7];
 set(gca,'FontSize',11,'FontAngle','italic','RTickLabels',{'','',''})
 
 
-text(0,1.2,sprintf('n %d',length(SIL2)),'FontSize',12,'FontWeight','bold')
+text(0,1.2,sprintf('n %d',length(pOr)),'FontSize',12,'FontWeight','bold')
 %s.Position(1) = %s.Position(1) - 0.1;
 s.Position(2) = s.Position(2) - 0.06;
 s.Position(3) = s.Position(3) - 0.008;
@@ -286,19 +286,19 @@ s.Position(3) = s.Position(3) - 0.008;
 % WV
 s = subplot(6,2,9,polaraxes);
 hold on
-pOrisL = WVV1.trLE.prefOriBestDprime;
-SIL2 = pOrisL;
-SIL2(SIL2<0) = SIL2(SIL2<0)+180;
+pOris = WVV1.trLE.prefParamsPrefOri;
+pOr = pOris;
+pOr(isnan(pOr)) = [];
 
-cirMuL = circ_mean(deg2rad(SIL2(:)*2))/2;
+cirMuL = circ_mean(deg2rad(pOr(:)*2))/2;
 cirMuL2 = cirMuL+pi;
 WVv1LEmu = cirMuL;
 
-[bins,edges] = histcounts(deg2rad(SIL2),0:pi/6:pi);
+[bins,edges] = histcounts(deg2rad(pOr),0:pi/6:pi);
 bins2 = sqrt(bins);
 polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor','b','EdgeColor','w')
 
-[bins,edges] = histcounts(deg2rad(SIL2)+pi,[0:pi/6:pi]+pi);
+[bins,edges] = histcounts(deg2rad(pOr)+pi,[0:pi/6:pi]+pi);
 bins2 = sqrt(bins);
 polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor','b','EdgeColor','w')
 polarplot([cirMuL 0 cirMuL2],[1.5 0 1.5],'b-','LineWidth',.85)
@@ -313,26 +313,26 @@ text(3.14,1.95,'V1/V2','FontSize',14,'FontWeight','bold')
 set(gca,'FontSize',11,'FontAngle','italic','RTickLabels',{'','',''})
 
 
-text(0,1.2,sprintf('n %d',length(SIL2)),'FontSize',12,'FontWeight','bold')
+text(0,1.2,sprintf('n %d',length(pOr)),'FontSize',12,'FontWeight','bold')
 %s.Position(1) = %s.Position(1) - 0.1;
 s.Position(2) = s.Position(2) - 0.07;
 s.Position(3) = s.Position(3) - 0.008;
 
 s = subplot(6,2,10,polaraxes);
 hold on
-pOrisL = WVV1.trRE.prefOriBestDprime;
-SIL2 = pOrisL;
-SIL2(SIL2<0) = SIL2(SIL2<0)+180; 
+pOris = WVV1.trRE.prefParamsPrefOri;
+pOr = pOris;
+pOr(isnan(pOr)) = []; 
 
-cirMuL = circ_mean(deg2rad(SIL2(:)*2))/2;
+cirMuL = circ_mean(deg2rad(pOr(:)*2))/2;
 cirMuL2 = cirMuL+pi;
 WVv1REmu = cirMuL;
 
-[bins,edges] = histcounts(deg2rad(SIL2),0:pi/6:pi);
+[bins,edges] = histcounts(deg2rad(pOr),0:pi/6:pi);
 bins2 = sqrt(bins);
 polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor','r','EdgeColor','w')
 
-[bins,edges] = histcounts(deg2rad(SIL2)+pi,[0:pi/6:pi]+pi);
+[bins,edges] = histcounts(deg2rad(pOr)+pi,[0:pi/6:pi]+pi);
 bins2 = sqrt(bins);
 polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor','r','EdgeColor','w')
 polarplot([cirMuL 0 cirMuL2],[1.5 0 1.5],'r-','LineWidth',.85)
@@ -344,26 +344,26 @@ ax.RLim   = [0,0.7];
 %text(cirMuL2+0.2,0.5,sprintf('\\mu %.1f%c',rad2deg(cirMuL2),char(176)),'FontSize',11,'HorizontalAlignment','center')
 
 set(gca,'FontSize',11,'FontAngle','italic','RTickLabels',{'','',''})
-text(0,1.2,sprintf('n %d',length(SIL2)),'FontSize',12,'FontWeight','bold')
+text(0,1.2,sprintf('n %d',length(pOr)),'FontSize',12,'FontWeight','bold')
 
 s.Position(2) = s.Position(2) - 0.07;
 s.Position(3) = s.Position(3) - 0.008;
 
 s = subplot(6,2,11,polaraxes);
 hold on
-pOrisL = WVV4.trLE.prefOriBestDprime;
-SIL2 = pOrisL;
-SIL2(SIL2<0) = SIL2(SIL2<0)+180;
+pOris = WVV4.trLE.prefParamsPrefOri;
+pOr = pOris;
+pOr(isnan(pOr)) = [];
 
-cirMuL = circ_mean(deg2rad(SIL2(:)*2))/2;
+cirMuL = circ_mean(deg2rad(pOr(:)*2))/2;
 cirMuL2 = cirMuL+pi;
 WVv4LEmu = cirMuL;
 
-[bins,edges] = histcounts(deg2rad(SIL2),0:pi/6:pi);
+[bins,edges] = histcounts(deg2rad(pOr),0:pi/6:pi);
 bins2 = sqrt(bins);
 polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor','b','EdgeColor','w')
 
-[bins,edges] = histcounts(deg2rad(SIL2)+pi,[0:pi/6:pi]+pi);
+[bins,edges] = histcounts(deg2rad(pOr)+pi,[0:pi/6:pi]+pi);
 bins2 = sqrt(bins);
 polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor','b','EdgeColor','w')
 polarplot([cirMuL 0 cirMuL2],[1.5 0 1.5],'b-','LineWidth',.85)
@@ -375,26 +375,26 @@ ax.RLim   = [0,0.7];
 %text(cirMuL2+0.2,0.5,sprintf('\\mu %.1f%c',rad2deg(cirMuL2),char(176)),'FontSize',11,'HorizontalAlignment','center')
 text(3.14,1.5,'V4','FontSize',14,'FontWeight','bold')
 set(gca,'FontSize',11,'FontAngle','italic','RTickLabels',{'','',''})
-text(0,1.2,sprintf('n %d',length(SIL2)),'FontSize',12,'FontWeight','bold')
+text(0,1.2,sprintf('n %d',length(pOr)),'FontSize',12,'FontWeight','bold')
 
 s.Position(2) = s.Position(2) - 0.085;
 s.Position(3) = s.Position(3) - 0.008;
 
 s = subplot(6,2,12,polaraxes);
 hold on
-pOrisL = WVV4.trRE.prefOriBestDprime;
-SIL2 = pOrisL;
-SIL2(SIL2<0) = SIL2(SIL2<0)+180;
+pOris = WVV4.trRE.prefParamsPrefOri;
+pOr = pOris;
+pOr(isnan(pOr)) = [];
 
-cirMuL = circ_mean(deg2rad(SIL2(:)*2))/2;
+cirMuL = circ_mean(deg2rad(pOr(:)*2))/2;
 cirMuL2 = cirMuL+pi;
 WVv4REmu = cirMuL;
 
-[bins,edges] = histcounts(deg2rad(SIL2),0:pi/6:pi);
+[bins,edges] = histcounts(deg2rad(pOr),0:pi/6:pi);
 bins2 = sqrt(bins);
 polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor','r','EdgeColor','w')
 
-[bins,edges] = histcounts(deg2rad(SIL2)+pi,[0:pi/6:pi]+pi);
+[bins,edges] = histcounts(deg2rad(pOr)+pi,[0:pi/6:pi]+pi);
 bins2 = sqrt(bins);
 polarhistogram('BinEdges',edges,'BinCounts',bins2,'normalization','probability','FaceColor','r','EdgeColor','w')
 polarplot([cirMuL 0 cirMuL2],[1.5 0 1.5],'r-','LineWidth',.85)
@@ -406,7 +406,7 @@ ax.RLim   = [0,0.7];
 %text(cirMuL2+0.2,0.5,sprintf('\\mu %.1f%c',rad2deg(cirMuL2),char(176)),'FontSize',11,'HorizontalAlignment','center')
 
 set(gca,'FontSize',11,'FontAngle','italic','RTickLabels',{'','',''})
-text(0,1.2,sprintf('n %d',length(SIL2)),'FontSize',12,'FontWeight','bold')
+text(0,1.2,sprintf('n %d',length(pOr)),'FontSize',12,'FontWeight','bold')
 
 s.Position(2) = s.Position(2) - 0.085;
 s.Position(3) = s.Position(3) - 0.008;
@@ -450,7 +450,13 @@ WUv4DegDif = abs(WUv4LEmu - WUv4REmu)
 WVv1DegDif = abs(WVv1LEmu - WVv1REmu)
 WVv4DegDif = abs(WVv4LEmu - WVv4REmu)
 
-% figure
-% hold on
-% 
-% plot(XTv1DegDif
+% out = angdiff(ang1,ang2)
+
+XTv1AngDif = angdiff(abs(XTv1LEmu),XTv1REmu)
+XTv4AngDif = angdiff(XTv4LEmu,XTv4REmu)
+
+WUv1AngDif = angdiff(WUv1LEmu,WUv1REmu)
+WUv4AngDif = angdiff(WUv4LEmu,WUv4REmu)
+
+WVv1AngDif = angdiff(WVv1LEmu,WVv1REmu)
+WVv4AngDif = angdiff(WVv4LEmu,WVv4REmu)
