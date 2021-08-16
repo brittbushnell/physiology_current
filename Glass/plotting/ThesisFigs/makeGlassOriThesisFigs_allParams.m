@@ -1,4 +1,4 @@
-function [XTV1,XTV4,WUV1, WUV4,WVV1, WVV4] = makeGlassOriThesisFigs(XTV1,XTV4,WUV1, WUV4,WVV1, WVV4)
+function [XTV1,XTV4,WUV1, WUV4,WVV1, WVV4] = makeGlassOriThesisFigs_allParams(XTV1,XTV4,WUV1, WUV4,WVV1, WVV4)
 
 location = determineComputer;
 if location == 1
@@ -13,11 +13,30 @@ end
 cd(figDir)
 %%
 
+XTuseChV1LE = find(XTV1.conRadLE.goodCh & XTV1.conRadLE.inStim);
+XTuseChV1RE = find(XTV1.conRadRE.goodCh & XTV1.conRadRE.inStim);
+
+XTuseChV4LE = find(XTV4.conRadLE.goodCh & XTV4.conRadLE.inStim);
+XTuseChV4RE = find(XTV4.conRadRE.goodCh & XTV4.conRadRE.inStim);
+
+WUuseChV1LE = find(WUV1.conRadLE.goodCh & WUV1.conRadLE.inStim);
+WUuseChV1RE = find(WUV1.conRadRE.goodCh & WUV1.conRadRE.inStim);
+
+WUuseChV4LE = find(WUV4.conRadLE.goodCh & WUV4.conRadLE.inStim);
+WUuseChV4RE = find(WUV4.conRadRE.goodCh & WUV4.conRadRE.inStim);
+
+WVuseChV1LE = find(WVV1.conRadLE.goodCh & WVV1.conRadLE.inStim);
+WVuseChV1RE = find(WVV1.conRadRE.goodCh & WVV1.conRadRE.inStim);
+
+WVuseChV4LE = find(WVV4.conRadLE.goodCh & WVV4.conRadLE.inStim);
+WVuseChV4RE = find(WVV4.conRadRE.goodCh & WVV4.conRadRE.inStim);
+%%
+
 figure%(1)
 clf
-set(gcf,'Position',[34 177 600 1400],'PaperSize',[7.5,10.25],'InnerPosition',[50 1 600 1085]);
+set(gcf,'Position',[34 177 600 1400],'PaperSize',[7.5,10],'InnerPosition',[50 1 600 1085]);
 
-t = suptitle('Glass pattern orientation tuning preferred dt dx');
+t = suptitle('Glass pattern orientation tuning all dt,dx');
 t.Position(2) = t.Position(2) +0.042;
 t.FontSize = 20;
 axis off
@@ -25,7 +44,9 @@ axis off
 % XT
 s = subplot(6,2,1,polaraxes);
 hold on
-pOris = XTV1.trLE.prefParamsPrefOri;
+pOris = squeeze(XTV1.trLE.prefOri(end,:,:,XTuseChV1LE));
+pOris = reshape(pOris,[1,numel(pOris)]);
+pOris(pOris<0) = pOris(pOris<0)+180;
 pOr = pOris;
 pOr(isnan(pOr)) = [];
 
@@ -58,7 +79,9 @@ s.Position(3) = s.Position(3) - 0.008;
 
 s = subplot(6,2,2,polaraxes);
 hold on
-pOris = XTV1.trRE.prefParamsPrefOri;
+pOris = squeeze(XTV1.trRE.prefOri(end,:,:,XTuseChV1RE));
+pOris = reshape(pOris,[1,numel(pOris)]);
+pOris(pOris<0) = pOris(pOris<0)+180;
 pOr = pOris;
 pOr(isnan(pOr)) = [];
 
@@ -90,7 +113,9 @@ s.Position(3) = s.Position(3) - 0.008;
 
 s = subplot(6,2,3,polaraxes);
 hold on
-pOris = XTV4.trLE.prefParamsPrefOri;
+pOris = squeeze(XTV4.trLE.prefOri(end,:,:,XTuseChV4LE));
+pOris = reshape(pOris,[1,numel(pOris)]);
+pOris(pOris<0) = pOris(pOris<0)+180;
 pOr = pOris;
 pOr(isnan(pOr)) = [];
 
@@ -121,7 +146,9 @@ s.Position(3) = s.Position(3) - 0.008;
 
 s = subplot(6,2,4,polaraxes);
 hold on
-pOris = XTV4.trRE.prefParamsPrefOri;
+pOris = squeeze(XTV4.trRE.prefOri(end,:,:,XTuseChV4RE));
+pOris = reshape(pOris,[1,numel(pOris)]);
+pOris(pOris<0) = pOris(pOris<0)+180;
 pOr = pOris;
 pOr(isnan(pOr)) = [];
 
@@ -150,11 +177,12 @@ text(0,1.2,sprintf('n %d',length(pOr)),'FontSize',12,'FontWeight','bold')
 s.Position(2) = s.Position(2) - 0.013;
 s.Position(3) = s.Position(3) - 0.008;
 
-
 % WU
 s = subplot(6,2,5,polaraxes);
 hold on
-pOris = WUV1.trLE.prefParamsPrefOri;
+pOris = squeeze(WUV1.trLE.prefOri(end,:,:,WUuseChV1LE));
+pOris = reshape(pOris,[1,numel(pOris)]);
+pOris(pOris<0) = pOris(pOris<0)+180;
 pOr = pOris;
 pOr(isnan(pOr)) = [];
 
@@ -186,7 +214,9 @@ s.Position(3) = s.Position(3) - 0.008;
 
 s = subplot(6,2,6,polaraxes);
 hold on
-pOris = WUV1.trRE.prefParamsPrefOri;
+pOris = squeeze(WUV1.trRE.prefOri(end,:,:,WUuseChV1RE));
+pOris = reshape(pOris,[1,numel(pOris)]);
+pOris(pOris<0) = pOris(pOris<0)+180;
 pOr = pOris;
 pOr(isnan(pOr)) = [];
 
@@ -219,7 +249,9 @@ s.Position(3) = s.Position(3) - 0.008;
 
 s = subplot(6,2,7,polaraxes);
 hold on
-pOris = WUV4.trLE.prefParamsPrefOri;
+pOris = (WUV4.trLE.prefOri(end,:,:,WUuseChV4LE));
+pOris = reshape(pOris,[1,numel(pOris)]);
+pOris(pOris<0) = pOris(pOris<0)+180;
 pOr = pOris;
 pOr(isnan(pOr)) = [];
 
@@ -252,7 +284,9 @@ s.Position(3) = s.Position(3) - 0.008;
 
 s = subplot(6,2,8,polaraxes);
 hold on
-pOris = WUV4.trRE.prefParamsPrefOri;
+pOris = squeeze(WUV4.trRE.prefOri(end,:,:,WUuseChV4RE));
+pOris = reshape(pOris,[1,numel(pOris)]);
+pOris(pOris<0) = pOris(pOris<0)+180;
 pOr = pOris;
 pOr(isnan(pOr)) = [];
 
@@ -286,7 +320,9 @@ s.Position(3) = s.Position(3) - 0.008;
 % WV
 s = subplot(6,2,9,polaraxes);
 hold on
-pOris = WVV1.trLE.prefParamsPrefOri;
+pOris = squeeze(WVV1.trLE.prefOri(end,:,:,WVuseChV1LE));
+pOris = reshape(pOris,[1,numel(pOris)]);
+pOris(pOris<0) = pOris(pOris<0)+180;
 pOr = pOris;
 pOr(isnan(pOr)) = [];
 
@@ -320,7 +356,9 @@ s.Position(3) = s.Position(3) - 0.008;
 
 s = subplot(6,2,10,polaraxes);
 hold on
-pOris = WVV1.trRE.prefParamsPrefOri;
+pOris = squeeze(WVV1.trRE.prefOri(end,:,:,WVuseChV1RE));
+pOris = reshape(pOris,[1,numel(pOris)]);
+pOris(pOris<0) = pOris(pOris<0)+180;
 pOr = pOris;
 pOr(isnan(pOr)) = []; 
 
@@ -351,7 +389,9 @@ s.Position(3) = s.Position(3) - 0.008;
 
 s = subplot(6,2,11,polaraxes);
 hold on
-pOris = WVV4.trLE.prefParamsPrefOri;
+pOris = squeeze(WVV4.trLE.prefOri(end,:,:,WVuseChV4LE));
+pOris = reshape(pOris,[1,numel(pOris)]);
+pOris(pOris<0) = pOris(pOris<0)+180;
 pOr = pOris;
 pOr(isnan(pOr)) = [];
 
@@ -382,7 +422,9 @@ s.Position(3) = s.Position(3) - 0.008;
 
 s = subplot(6,2,12,polaraxes);
 hold on
-pOris = WVV4.trRE.prefParamsPrefOri;
+pOris = squeeze(WVV4.trRE.prefOri(end,:,:,WVuseChV4RE));
+pOris = reshape(pOris,[1,numel(pOris)]);
+pOris(pOris<0) = pOris(pOris<0)+180;
 pOr = pOris;
 pOr(isnan(pOr)) = [];
 
@@ -420,38 +462,23 @@ WUv4LEmu = rad2deg(WUv4LEmu);   WUv4REmu = rad2deg(WUv4REmu);
 WVv1LEmu = rad2deg(WVv1LEmu);   WVv1REmu = rad2deg(WVv1REmu);
 WVv4LEmu = rad2deg(WVv4LEmu);   WVv4REmu = rad2deg(WVv4REmu);
 %%
-figName = ['AllMonk_prefOri_bestDprimeSum','.pdf'];
+figName = ['AllMonk_prefOri_allParams','.pdf'];
 print(gcf, figName,'-dpdf','-fillpage')
 %%
-% 
-% figure
-% hold on
-% 
-% plot(rad2deg(XTv1LEmu),rad2deg(XTv1REmu),'ok')
-% plot(rad2deg(XTv4LEmu),rad2deg(XTv4REmu),'ok','MarkerFaceColor','k')
-% 
-% plot(rad2deg(WUv1LEmu),rad2deg(WUv1REmu),'ob')
-% plot(rad2deg(WUv4LEmu),rad2deg(WUv4REmu),'ob','MarkerFaceColor','b')
-% 
-% plot(rad2deg(WVv1LEmu),rad2deg(WVv1REmu),'or')
-% plot(rad2deg(WVv4LEmu),rad2deg(WVv4REmu),'or','MarkerFaceColor','r')
-% 
-% ylim([-30 30])
-% xlim([-30 30])
-%%
 
 
-XTV1.meanOriDegDifPrefStim = abs(XTv1LEmu - XTv1REmu)
-XTV4.meanOriDegDifPrefStim = abs(XTv4LEmu - XTv4REmu)
 
-WUV1.meanOriDegDifPrefStim = abs(WUv1LEmu - WUv1REmu)
-WUV4.meanOriDegDifPrefStim = abs(WUv4LEmu - WUv4REmu)
+XTV1.meanOriDegDifAllStim = abs(XTv1LEmu - XTv1REmu)
+XTV4.meanOriDegDifAllStim = abs(XTv4LEmu - XTv4REmu)
 
-WVV1.meanOriDegDifPrefStim = abs(WVv1LEmu - WVv1REmu)
-WVV4.meanOriDegDifPrefStim = abs(WVv4LEmu - WVv4REmu)
+WUV1.meanOriDegDifAllStim = abs(WUv1LEmu - WUv1REmu)
+WUV4.meanOriDegDifAllStim = abs(WUv4LEmu - WUv4REmu)
+
+WVV1.meanOriDegDifAllStim = abs(WVv1LEmu - WVv1REmu)
+WVV4.meanOriDegDifAllStim = abs(WVv4LEmu - WVv4REmu)
 
 % out = angdiff(ang1,ang2)
-% 
+
 % XTv1AngDif = angdiff(abs(XTv1LEmu),XTv1REmu)
 % XTv4AngDif = angdiff(XTv4LEmu,XTv4REmu)
 % 

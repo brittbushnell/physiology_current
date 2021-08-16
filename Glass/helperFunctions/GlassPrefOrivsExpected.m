@@ -23,8 +23,8 @@ set(gcf,'Position',[pos(1), pos(2), 800, 900])
 
 conRadLE = [rDpLE, cDpLE];
 conRadRE = [rDpRE, cDpRE];
-[LEconRadNdx] = getGlassConRadSigPerm(conRadLE,dataT.trLE.animal,dataT.trLE.array,'LE');
-[REconRadNdx] = getGlassConRadSigPerm(conRadRE,dataT.trRE.animal,dataT.trRE.array,'RE');
+[LEconRadNdx] = getGlassConRadSigPerm(conRadLE);%,dataT.trLE.animal,dataT.trLE.array,'LE');
+[REconRadNdx] = getGlassConRadSigPerm(conRadRE);%,dataT.trRE.animal,dataT.trRE.array,'RE');
 
 %%
 for eye = 1:2

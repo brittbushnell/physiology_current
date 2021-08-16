@@ -1,12 +1,14 @@
 function [] = plotGlass_crNdxvsOriDiff_grat(V1data, V4data)
 %%
-[v1LEconRadNdx] = getGlassConRadSigPerm(V1data.LEsort(:,1:2),V1data.trLE.animal,'V1','LE');
-[v1REconRadNdx] = getGlassConRadSigPerm(V1data.REsort(:,1:2),V1data.trRE.animal,'V1','RE');
-[v4LEconRadNdx] = getGlassConRadSigPerm(V4data.LEsort(:,1:2),V4data.trLE.animal,'V4','LE');
-[v4REconRadNdx] = getGlassConRadSigPerm(V4data.REsort(:,1:2),V4data.trRE.animal,'V4','RE');
+[V1LEsort, V1REsort, V4LEsort, V4REsort,cmap,sortDps] = getGlassSortedMats(V1data,V4data);
 %%
-stimX = unique(V1data.trLE.pos_x);
-stimY = unique(V1data.trLE.pos_y);
+[v1LEconRadNdx] = getGlassConRadSigPerm(V1LEsort(:,1:2));%,V1data.trLE.animal,'V1','LE');
+[v1REconRadNdx] = getGlassConRadSigPerm(V1REsort(:,1:2));%,V1data.trRE.animal,'V1','RE');
+[v4LEconRadNdx] = getGlassConRadSigPerm(V4LEsort(:,1:2));%,V4data.trLE.animal,'V4','LE');
+[v4REconRadNdx] = getGlassConRadSigPerm(V4REsort(:,1:2));%,V4data.trRE.animal,'V4','RE');
+%%
+% stimX = unique(V1data.trLE.pos_x);
+% stimY = unique(V1data.trLE.pos_y);
 %% load gratings information
 if contains(V1data.trLE.animal,'WU')
     if contains(V1data.trLE.array,'V1')
@@ -90,11 +92,11 @@ for eye = 1:2
         end
     end
     %%
-    useChV1LE = find(V1data.conRadLE.goodCh & V1data.conRadLE.inStim & V1data.trLE.goodCh & V1data.trLE.inStim);
-    useChV1RE = find(V1data.conRadRE.goodCh & V1data.conRadRE.inStim & V1data.trRE.goodCh & V1data.trRE.inStim);
+    useChV1LE = find(V1data.conRadLE.goodCh & V1data.conRadLE.inStim & V1trData.good_ch);
+    useChV1RE = find(V1data.conRadRE.goodCh & V1data.conRadRE.inStim & V1trData.good_ch);
     
-    useChV4LE = find(V4data.conRadLE.goodCh & V4data.conRadLE.inStim & V4data.trLE.goodCh & V4data.trLE.inStim);
-    useChV4RE = find(V4data.conRadRE.goodCh & V4data.conRadRE.inStim & V4data.trRE.goodCh & V4data.trRE.inStim);
+    useChV4LE = find(V4data.conRadLE.goodCh & V4data.conRadLE.inStim & V4trData.good_ch);
+    useChV4RE = find(V4data.conRadRE.goodCh & V4data.conRadRE.inStim & V4trData.good_ch);
     
     if eye == 1
         if ~contains(V1data.trLE.animal,'XT')
@@ -109,7 +111,6 @@ for eye = 1:2
     end
     
 end
-
 %%
 %% save figure
 figDir = '/Users/brittany/Dropbox/Thesis/Glass/figures/conRadvOri';

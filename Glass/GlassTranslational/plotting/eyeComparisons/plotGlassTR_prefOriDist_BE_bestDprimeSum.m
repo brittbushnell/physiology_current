@@ -1,4 +1,4 @@
-function [REdata,LEdata] = plotGlassTR_prefOriDist_BE_bestDprimeSum(REdata,LEdata)
+function [pOrisR,pOrisL] = plotGlassTR_prefOriDist_BE_bestDprimeSum(REdata,LEdata)
 %%
 location = determineComputer;
 if location == 1

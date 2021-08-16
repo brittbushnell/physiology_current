@@ -48,10 +48,10 @@ v4REsort = sortDps(sortDps(:,5) == 4,:);
 %% test for significant difference between concentric and radial
 % conc - radial / conc + radial
 % [conRadNdx,conRadMean,pVal,sigDif]
-[v1LEconRadch,v1LEmeanConRad,v1LEconRadpVal,v1LEConRadsigDif] = getGlassConRadSigPerm(v1LEsort(:,1:2),V1data.trLE.animal,'V1','LE');
-[v1REconRadch,v1REmeanConRad,v1REconRadpVal,v1REConRadsigDif] = getGlassConRadSigPerm(v1REsort(:,1:2),V1data.trLE.animal,'V1','RE');
-[v4LEconRadch,v4LEmeanConRad,v4LEconRadpVal,v4LEConRadsigDif] = getGlassConRadSigPerm(v4LEsort(:,1:2),V1data.trLE.animal,'V4','LE');
-[v4REconRadch,v4REmeanConRad,v4REconRadpVal,v4REConRadsigDif] = getGlassConRadSigPerm(v4REsort(:,1:2),V1data.trLE.animal,'V4','RE');
+[v1LEconRadch,v1LEmeanConRad,v1LEconRadpVal,v1LEConRadsigDif] = getGlassConRadSigPerm(v1LEsort(:,1:2));%,V1data.trLE.animal,'V1','LE');
+[v1REconRadch,v1REmeanConRad,v1REconRadpVal,v1REConRadsigDif] = getGlassConRadSigPerm(v1REsort(:,1:2));%,V1data.trLE.animal,'V1','RE');
+[v4LEconRadch,v4LEmeanConRad,v4LEconRadpVal,v4LEConRadsigDif] = getGlassConRadSigPerm(v4LEsort(:,1:2));%,V1data.trLE.animal,'V4','LE');
+[v4REconRadch,v4REmeanConRad,v4REconRadpVal,v4REConRadsigDif] = getGlassConRadSigPerm(v4REsort(:,1:2));%,V1data.trLE.animal,'V4','RE');
 
 figure(22)
 clf

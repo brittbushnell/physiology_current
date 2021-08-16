@@ -31,28 +31,35 @@ gratRE = load(REgratFile);
 gratLE = load(LEgratFile);
 %%
 
-LEuseCh = find(glassLE.goodCh & gratLE.good_ch);
-REuseCh = find(glassRE.goodCh & gratLE.good_ch);
+LEuseCh = find(glassLE.goodCh & glassLE.inStim & gratLE.good_ch);
+REuseCh = find(glassRE.goodCh & glassRE.inStim & gratRE.good_ch);
 
 LEgratOri = gratLE.ori_pref(LEuseCh);
 REgratOri = gratRE.ori_pref(REuseCh);
 
 LEglassOri = glassLE.prefParamsPrefOri(LEuseCh);
+LEglassOri(isnan(LEglassOri)) = [];
 REglassOri = glassRE.prefParamsPrefOri(REuseCh);
+REglassOri(isnan(REglassOri)) = [];
 
 figure%(1)
 clf
+pos = get(gcf,'Position');
+set(gcf,'Position',[pos(1), pos(2), 500, 400],'PaperSize',[6.5 4])
+
 hold on
-s = suptitle(sprintf('%s %s preferred orientations in Glass patterns vs gratings',glassLE.animal,glassLE.array));
+s = suptitle(sprintf('%s %s preferred orientations in Glass patterns vs gratings preferred density and dx',glassLE.animal,glassLE.array));
 s.Position(2) = s.Position(2)+0.02;
 
 subplot(1,2,1)
 
 hold on
 if contains(fname,'XT')
-    title('LE')
+    t = title('LE');
+%     t.Position(2) = t.Position(2) +0.025;
 else
-    title('FE')
+    t = title('FE');
+%     t.Position(2) = t.Position(2) +0.025;
 end
 
 axis square
@@ -62,9 +69,17 @@ plot([0 180],[0 180],'k:')
 
 xlim([-10 190])
 ylim([-10 190])
-set(gca,'tickdir','out','XTick',0:30:180,'YTick',0:30:180)
+set(gca,'tickdir','out','XTick',0:30:180,'YTick',0:30:180,'XTickLabelRotation',45)
 xlabel('preferred gratings orientation')
 ylabel('preferred Glass orientation')
+
+[rho pval] = circ_corrcc(LEgratOri, LEglassOri);
+if pval > 0.05
+    text(1,190,sprintf('r = %.2f',rho))
+else
+    text(1,190,sprintf('r = %.2f*',rho),'FontWeight','bold')
+end
+clear pval
 
 subplot(1,2,2)
 hold on
@@ -81,10 +96,16 @@ plot([0 180],[0 180],'k:')
 
 xlim([-10 190])
 ylim([-10 190])
-set(gca,'tickdir','out','XTick',0:30:180,'YTick',0:30:180)
+set(gca,'tickdir','out','XTick',0:30:180,'YTick',0:30:180,'XTickLabelRotation',45)
 xlabel('preferred gratings orientation')
 ylabel('preferred Glass orientation')
 
+[rho pval] = circ_corrcc(REgratOri, REglassOri)
+if pval > 0.05
+    text(1,190,sprintf('r = %.2f',rho))
+else
+    text(1,190,sprintf('r = %.2f*',rho),'FontWeight','bold')
+end
 
 figDir = '/Users/brittany/Dropbox/Thesis/Glass/figures/oriTuning/GlassVgrat';
 if~exist(figDir,'dir')

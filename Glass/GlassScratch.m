@@ -1,4 +1,5 @@
-load('WU_LE_GlassTR_nsp2_Aug2017_all_thresh35_info3_goodRuns_stimPerm');
+% load('WU_LE_GlassTR_nsp2_Aug2017_all_thresh35_info3_goodRuns_stimPerm');
+load('XT_LE_GlassTR_nsp1_Jan2019_all_thresh35_info3_goodRuns_stimPerm');
 dataT = data.LE;
 %%
 [numOris,numDots,numDxs,numCoh,~,oris,~,~,coherences,~] = getGlassTRParameters(dataT);

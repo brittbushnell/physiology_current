@@ -26,7 +26,7 @@ vSumMtx = [squeeze(vSum(1,1,:)),squeeze(vSum(1,2,:)),squeeze(vSum(2,1,:)),squeez
 [~,prefParamsNdx] = max(abs(vSumMtx),[],2);% get the indices for the dt,dx that gives the highest summed d' vSum
 %%
 for ch = 1:96
-    if dataT.goodCh(ch) == 1 %&& dataT.inStim == 1
+    if dataT.goodCh(ch) == 1 && dataT.inStim(ch) == 1
         % go through each of the parameter combinations and figure out
         % which one is preferred for that channel. 
     if prefParamsNdx(ch) == 1

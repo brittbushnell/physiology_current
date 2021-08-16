@@ -11,10 +11,10 @@ cd(figDir)
 
 [v1LEsort, v1REsort, v4LEsort, v4REsort, cmap, sortDps] = getGlassTriplotSortedMats(V1data,V4data);
 
-V1data.LEsort = v1LEsort;
-V1data.REsort = v1REsort;
-V4data.LEsort = v4LEsort;
-V4data.REsort = v4REsort;
+% V1data.LEsort = v1LEsort;
+% V1data.REsort = v1REsort;
+% V4data.LEsort = v4LEsort;
+% V4data.REsort = v4REsort;
 %%
 %close all
 figure(1)

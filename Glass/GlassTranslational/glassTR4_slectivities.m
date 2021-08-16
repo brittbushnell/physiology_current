@@ -6,21 +6,21 @@ tic
 files = {
 %     'WU_LE_GlassTR_nsp2_Aug2017_all_thresh35_info3_goodRuns_stimPerm';
 %     'WU_RE_GlassTR_nsp2_Aug2017_all_thresh35_info3_goodRuns_stimPerm';
-    'WU_LE_GlassTR_nsp1_Aug2017_all_thresh35_info3_goodRuns_stimPerm';
-    'WU_RE_GlassTR_nsp1_Aug2017_all_thresh35_info3_goodRuns_stimPerm';
+%     'WU_LE_GlassTR_nsp1_Aug2017_all_thresh35_info3_goodRuns_stimPerm';
+%     'WU_RE_GlassTR_nsp1_Aug2017_all_thresh35_info3_goodRuns_stimPerm';
     
-    'XT_LE_GlassTR_nsp2_Jan2019_all_thresh35_info3_goodRuns_stimPerm';
+%     'XT_LE_GlassTR_nsp2_Jan2019_all_thresh35_info3_goodRuns_stimPerm';
     'XT_LE_GlassTR_nsp1_Jan2019_all_thresh35_info3_goodRuns_stimPerm';
-    'XT_RE_GlassTR_nsp2_Jan2019_all_thresh35_info3_goodRuns_stimPerm';
+%     'XT_RE_GlassTR_nsp2_Jan2019_all_thresh35_info3_goodRuns_stimPerm';
     'XT_RE_GlassTR_nsp1_Jan2019_all_thresh35_info3_goodRuns_stimPerm';
     
-    'WV_LE_glassTRCoh_nsp1_April2019_all_thresh35_info3_goodRuns_stimPerm';
-    'WV_LE_glassTRCoh_nsp2_April2019_all_thresh35_info3_goodRuns_stimPerm';
-    'WV_RE_glassTRCoh_nsp1_April2019_all_thresh35_info3_goodRuns_stimPerm';
-    'WV_RE_glassTRCoh_nsp2_April2019_all_thresh35_info3_goodRuns_stimPerm';
-    
-    'WU_LE_GlassTR_nsp1_Aug2019_all_thresh35_DxComp_goodRuns_stimPerm';
-    'WU_LE_GlassTR_nsp2_Aug2019_all_thresh35_DxComp_goodRuns_stimPerm';
+%     'WV_LE_glassTRCoh_nsp1_April2019_all_thresh35_info3_goodRuns_stimPerm';
+%     'WV_LE_glassTRCoh_nsp2_April2019_all_thresh35_info3_goodRuns_stimPerm';
+%     'WV_RE_glassTRCoh_nsp1_April2019_all_thresh35_info3_goodRuns_stimPerm';
+%     'WV_RE_glassTRCoh_nsp2_April2019_all_thresh35_info3_goodRuns_stimPerm';
+%     
+%     'WU_LE_GlassTR_nsp1_Aug2019_all_thresh35_DxComp_goodRuns_stimPerm';
+%     'WU_LE_GlassTR_nsp2_Aug2019_all_thresh35_DxComp_goodRuns_stimPerm';
 };
 
 nameEnd = 'OSI2';

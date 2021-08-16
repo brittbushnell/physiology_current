@@ -11,8 +11,8 @@ radConsist = [0 0];
 
 conRadLE = [rDpLE, cDpLE];
 conRadRE = [rDpRE, cDpRE];
-[LEconRadNdx] = getGlassConRadSigPerm(conRadLE,dataT.trLE.animal,dataT.trLE.array,'LE');
-[REconRadNdx] = getGlassConRadSigPerm(conRadRE,dataT.trRE.animal,dataT.trRE.array,'RE');
+[LEconRadNdx] = getGlassConRadSigPerm(conRadLE);%,dataT.trLE.animal,dataT.trLE.array,'LE');
+[REconRadNdx] = getGlassConRadSigPerm(conRadRE);%,dataT.trRE.animal,dataT.trRE.array,'RE');
 %%
 figDir = sprintf('/Users/brittany/Dropbox/Thesis/Glass/figures/sprinkle/grat/%s',dataT.trLE.animal);
 if~exist(figDir,'dir')
