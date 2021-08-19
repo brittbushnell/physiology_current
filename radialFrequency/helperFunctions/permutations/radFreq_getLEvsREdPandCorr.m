@@ -2,8 +2,8 @@ function [dpPval,dpSigPerms,corrPval,corrSigPerms, maxDpPopDiff,maxDpChDiff,corr
 
 
 %%
-LEdPrimes = LEdata.stimCircDprimeBootPerm;
-REdPrimes = REdata.stimCircDprimeBootPerm;
+LEdPrimes = LEdata.stimCircDprime;
+REdPrimes = REdata.stimCircDprime;
 
 maxDpPopDiff = nan(3,numBoot);
 maxDpChDiff = nan(3,96,numBoot);
@@ -16,47 +16,64 @@ REcorrBoot = nan(3,96,numBoot);
 
 corrChDiff = nan(3,96,numBoot);
 corrPopDiff = nan(3,numBoot);
-
-for nb = 1:numBoot
+%%
+for rf = 1:3
     for ch = 1:96
-        for rf = 1:3
-            LEdP = squeeze(LEdPrimes(rf,:,ch,:));
-            REdP = squeeze(REdPrimes(rf,:,ch,:));
-            
-            LEuseAmp = nan(1,6);
-            REuseAmp = nan(1,6);
+        LEdP = squeeze(LEdPrimes(rf,:,ch));
+        REdP = squeeze(REdPrimes(rf,:,ch));
+        
+        for nb = 1:numBoot
+            LEpermAmp = nan(1,6);
+            REpermAmp = nan(1,6);
             
             for amp = 1:6
-                LEuseAmp(1,amp) = datasample(LEdP(amp,:),1);
-                REuseAmp(1,amp) = datasample(REdP(amp,:),1);
+                LEamp = datasample(LEdP(amp),1);
+                REamp = datasample(REdP(amp),1);
+                
+                randOrder = randperm(2);
+                
+                if randOrder(1) == 1
+                    LEpermAmp(1,amp) = LEamp;
+                else
+                    LEpermAmp(1,amp) = REamp;
+                end
+                
+                if randOrder(2) == 1
+                    REpermAmp(1,amp) = LEamp;
+                else
+                    REpermAmp(1,amp) = REamp;
+                end
+                
+                clear LEamp REamp randOrder
             end %amp
             
-            LEdT = max(abs(LEuseAmp));
-            REdT = max(abs(REuseAmp));
+            LEdT = max(abs(LEpermAmp));
+            REdT = max(abs(REpermAmp));
             
             LEmaxDp(rf,ch,nb) = LEdT;
             REmaxDp(rf,ch,nb) = REdT;
             
-            LEzed = [0, LEuseAmp];
+            LEzed = [0, LEpermAmp];
             LEcorMtx = corrcoef(0:6,LEzed);
             LEcorrBoot(rf,ch,nb) = LEcorMtx(2);
             
-            REzed = [0, REuseAmp];
+            REzed = [0, REpermAmp];
             REcorMtx = corrcoef(0:6,REzed);
             REcorrBoot(rf,ch,nb) = REcorMtx(2);
             
             maxDpChDiff(rf,ch,nb) = LEdT - REdT;
             corrChDiff(rf,ch,nb) = LEcorMtx(2) - REcorMtx(2);
             
-            clear LEdT REdT LEuseAmp REuseAmp
-        end %RF
+            clear LEdT REdT LEpermAmp REpermAmp LEzed REzed LEcorMtx REcorMtx
+        end %bootstrap
     end %ch
-    for i = 1:3
-        maxDpPopDiff(i,nb) = abs(nanmedian(squeeze(LEmaxDp(i,:,nb)))) - abs(nanmedian(squeeze(REmaxDp(i,:,nb))));
-        corrPopDiff(i,nb) = nanmedian(squeeze(LEcorrBoot(i,:,nb))) - nanmedian(squeeze(REcorrBoot(i,:,nb)));
-    end
-end %bootstrap
+    maxDpPopDiff(rf,:) = (nanmedian(squeeze(LEmaxDp(rf,:,:)))) - (nanmedian(squeeze(REmaxDp(rf,:,:))));
+    corrPopDiff(rf,:) = nanmedian(squeeze(LEcorrBoot(rf,:,:))) - nanmedian(squeeze(REcorrBoot(rf,:,:)));
+end %rf
 %% do permutation test
+LEmaxCh = nan(3,96);
+REmaxCh = nan(3,96);
+
 for ch = 1:96
     for rf = 1:3
         LEmaxCh(rf,ch) = max(abs(LEdata.stimCircDprime(rf,:,ch)));
@@ -71,12 +88,24 @@ RErealDp = nanmedian(REmaxCh,2);
 LErealCor = nanmedian(squeeze(LEdata.stimCorrs(:,:)),2);
 RErealCor = nanmedian(squeeze(REdata.stimCorrs(:,:)),2);
 
+trueDp = LErealDp - RErealDp;
+
+LEcorr = LErealCor;
+REcorr = RErealCor;
+trueCorr = LEcorr - REcorr;
+
+dpPval = nan(3,1);
+dpSigPerms = nan(3,1);
+corrPval = nan(3,1);
+corrSigPerms = nan(3,1);
+
+
 for i = 1:3
     %% d'
-    trueDp(i) = LErealDp(i) - RErealDp(i);
+    
     dPdiff = squeeze(maxDpPopDiff(i,:));
     
-    high = find(dPdiff >trueDp(i));
+    high = find(dPdiff >trueDp(i,1));
     pV = round(((length(high)+1)/(length(dPdiff )+1)),3);
     
     if pV > 0.5
@@ -93,11 +122,8 @@ for i = 1:3
     clear pV
     %% correlations
     corrs = squeeze(corrPopDiff(i,:));
-    LEcorr = LErealCor(i);
-    REcorr = RErealCor(i);
-    trueCorr(i) = LEcorr - REcorr;
     
-    high = find(corrs>trueCorr(i));
+    high = find(corrs>trueCorr(i,1));
     pV = round(((length(high)+1)/(length(corrs)+1)),3);
     
     if pV > 0.5
@@ -114,21 +140,21 @@ for i = 1:3
     clear pV
 end
 %%
-a = max(maxDpPopDiff,[],'all');
-b = max(corrPopDiff,[],'all');
+a = max(abs(maxDpPopDiff),[],'all');
+b = max(abs(corrPopDiff),[],'all');
 
-c = max(trueDp);
-d = max(trueCorr);
+c = max(abs(trueDp));
+d = max(abs(trueCorr));
 
-xMaxD = max([a c])+0.05;
-xMaxC = max([b d])+0.05;
+xMaxD = max([a c])+0.15;
+xMaxC = max([b d])+0.15;
 
 figure%(3)
 clf
 if contains(LEdata.animal,'XT')
     s = suptitle(sprintf('%s %s population differences in medians between LE and RE',LEdata.animal, LEdata.array));
 else
-    s = suptitle(sprintf('%s %s population differences in medians between FE and AE',LEdata.animal, LEdata.array));
+    s = suptitle(sprintf('%s %s population differences in medians between LE and RE',LEdata.animal, LEdata.array));
 end
 s.Position(2) = s.Position(2)+0.026;
 
@@ -287,3 +313,11 @@ cd(figDir)
 
 figName = [REdata.animal,'_',REdata.array,'_',REdata.programID,'_DistPermLEvsRE','.pdf'];
 print(gcf, figName,'-dpdf','-bestfit')
+%%
+figName = [LEdata.animal,'_BE_',LEdata.array,'_',LEdata.programID,'_dPrimeVsCorr_IOD','.pdf'];
+
+if contains(LEdata.animal,'XT')
+    plotRadFreq_DprimeVsCorr_sig(LEdata,REdata,'LE','RE', corrSigPerms, dpSigPerms, figName)
+else
+    plotRadFreq_DprimeVsCorr_sig(LEdata,REdata,'FE','AE', corrSigPerms, dpSigPerms, figName)
+end
