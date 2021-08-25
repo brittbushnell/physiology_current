@@ -312,7 +312,7 @@ cd(figDir)
 
 
 figName = [REdata.animal,'_',REdata.array,'_',REdata.programID,'_DistPermLEvsRE','.pdf'];
-print(gcf, figName,'-dpdf','-bestfit')
+% print(gcf, figName,'-dpdf','-bestfit')
 %%
 figName = [LEdata.animal,'_BE_',LEdata.array,'_',LEdata.programID,'_dPrimeVsCorr_IOD','.pdf'];
 

@@ -35,7 +35,6 @@ for fi = 1:length(files)
     %% get neurometric correlations
     [LEdata.stimCorrs, REdata.stimCorrs] =  radFreq_getNeuroCorr_dPrime(LEdata, REdata);
     %% permutation test for neuro curve correlations
-    %      CHANGE TO USE D' INSTEAD OF SPIKE COUNT
     [LEdata.stimCorrSig, LEdata.stimCorrPerm] = radFreq_prefStimCorrPerm_dPrime(LEdata,numBoot,LEdata.stimCorrs);
     [REdata.stimCorrSig, REdata.stimCorrPerm] = radFreq_prefStimCorrPerm_dPrime(REdata,numBoot,REdata.stimCorrs);
     %% plot d' vs correlation

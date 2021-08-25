@@ -6,11 +6,11 @@ function dataOut = callReceptiveFieldParameters(dataT)
 % the fixation point. If the fixation point was moved to allow for more
 % space, then all points were adjusted so fixation = (0,0).
 
-fprintf( 'Receptive field locations are relative to origin, not fixation point.\n') 
+% fprintf( 'Receptive field locations are relative to origin, not fixation point.\n') 
 
 dataOut = dataT;
 if contains(dataT.animal,'WU')
-    if contains(dataT.eye,'LE')
+    if contains(dataT.eye,'LE') || contains(dataT.eye,'FE')
         if contains(dataT.array,'V4')
             load('WU_LE_GratingsMapRF_nsp2_20170426_003_thresh35_info4_resps');
             rfData = data.LE;
@@ -28,7 +28,7 @@ if contains(dataT.animal,'WU')
         end
     end
 elseif contains(dataT.animal,'WV')
-    if contains(dataT.eye,'RE')
+    if contains(dataT.eye,'RE') || contains(dataT.eye,'AE')
         if contains(dataT.array,'V4')
             load('WV_RE_MapNoise_nsp2_Jan2019_all_thresh35_resps');
             rfData = data.RE;

@@ -23,8 +23,8 @@ for xs = 1:length(xPoss)
 end
 locPair = locPair(2:end,:);
 
-figure(1)
-clf
+figure(2)
+% clf
 pos = get(gcf,'Position');
 set(gcf,'Position',[pos(1), pos(2), 500, 500],'PaperSize',[5,5])
 
@@ -41,7 +41,7 @@ set(gca,'XAxisLocation','origin','YAxisLocation','origin','tickdir','both')
 grid on
 
 for ch = 1:96
-    if contains(dataT.eye,'RE')
+    if contains(dataT.eye,'RE') || contains(dataT.eye,'AE')
         scatter(rfParams{ch}(1),rfParams{ch}(2),'r','filled')
     else
         scatter(rfParams{ch}(1),rfParams{ch}(2),'b','filled')

@@ -21,14 +21,17 @@ trueCor = corr1 - corr2;
 %%
 figure
 clf
+figTitle = strrep(figName,'.pdf','');
+figTitle = strrep(figTitle,'_',' ');
+s = suptitle(figTitle);
 
-if ~contains(data1Label,'LE') || ~contains(data1Label,'FE')
-    s = suptitle(sprintf('%s %s %s max |d''| versus best stimulus correlation', data2.animal, data2.array, data2.eye));
-elseif contains(data1label,'V1') || contains(data1label,'V4')
-    s = suptitle(sprintf('%s max |d''| versus best stimulus correlation', data2.animal));
-else
-    s = suptitle(sprintf('%s %s max |d''| versus best stimulus correlation', data2.animal, data2.array));  
-end
+% if ~contains(data1Label,'LE') || ~contains(data1Label,'FE')
+%     s = suptitle(sprintf('%s %s %s max |d''| versus best stimulus correlation', data2.animal, data2.array, data2.eye));
+% elseif contains(data1label,'V1') || contains(data1label,'V4')
+%     s = suptitle(sprintf('%s max |d''| versus best stimulus correlation', data2.animal));
+% else
+%     s = suptitle(sprintf('%s %s max |d''| versus best stimulus correlation', data2.animal, data2.array));  
+% end
 s.Position(2) = s.Position(2) + 0.025;
 
 subplot(3,2,1)

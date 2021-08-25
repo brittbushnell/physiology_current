@@ -1,7 +1,7 @@
-function [LEdata, REdata] = radFreq_PermuteMaxDpAndRFcorr(LEdata,REdata,numBoot)
+function [LEdata, REdata] = radFreq_dPandCorrRFsigTest(LEdata,REdata,numBoot)
 %%
 
-figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/%s/stats/Perm/maxDpCorr/',LEdata.animal,LEdata.array);
+figDir =  sprintf('~/Dropbox/Figures/%s/RadialFrequency/%s/stats/Perm/RFsigTest/',LEdata.animal,LEdata.array);
 
 if ~exist(figDir,'dir')
     mkdir(figDir)

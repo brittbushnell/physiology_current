@@ -1,11 +1,5 @@
 function [sigPerms, corrPerm] = radFreq_prefStimCorrPerm_dPrime(dataT,numBoot,realCorr)
-% This function should be called after running radFreq_getFisherLoc_BE to
-% get the preferred location for each good channel. Looking at the
-% preferred location, this function will do a permutation test for orientation
-% in each RF.
-%
-% organization of real correlations should be: (RF, ori, ch)
-%    eye 1 = LE   ori 1 = 0deg
+% 
 
 % Brittany Bushnell 6/29/21
 
