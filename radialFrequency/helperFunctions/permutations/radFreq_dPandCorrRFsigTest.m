@@ -41,7 +41,7 @@ for ey = 1:2
                 corMtx = corrcoef(0:6,zed);
                 corrBoot(rf,ch,nb) = corMtx(2);
                 
-                clear  corMtx zero
+                clear  corMtx 
             end %ch
             meanMaxDp(rf,nb) = nanmedian(squeeze(maxDpBoot(rf,:,nb)));
             meanCorr(rf,nb) = nanmdiean(squeeze(corrBoot(rf,:,nb)));
