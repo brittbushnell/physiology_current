@@ -37,8 +37,8 @@ numBoot = 2000;
 %     (LEdataXT, REdataXT,LEdataWU,REdataWU, LEdataWV, REdataWV)
 % The figure is started with XT's data, but needs to run with the large
 % monitor to setup the figure properly with everyone
-% plotRadFreqLoc_relRFs_prefLoc_allMonk(XTV4LE, XTV4RE, WUV4LE, WUV4RE, WVV4LE, WVV4RE)
-% plotRadFreqLoc_relRFs_prefLoc_allMonk(XTV1LE, XTV1RE, WUV1LE, WUV1RE, WVV1LE, WVV1RE)
+plotRadFreqLoc_relRFs_prefLoc_allMonk(XTV4LE, XTV4RE, WUV4LE, WUV4RE, WVV4LE, WVV4RE)
+plotRadFreqLoc_relRFs_prefLoc_allMonk(XTV1LE, XTV1RE, WUV1LE, WUV1RE, WVV1LE, WVV1RE)
 %%   Tuned for radial frequency 
 %   Responds similarly to all radial frequencies
 [XTV1LE.RFcorrPval,XTV1LE.RFcorrSigPerms,XTV1RE.RFcorrPval,XTV1RE.RFcorrSigPerms] = radFreq_getSigTuningRFs(XTV1LE, XTV1RE,numBoot);
@@ -144,6 +144,6 @@ plotRadFreq_tuningIOD(WVV4LE, WVV4RE)
 
 %% figure 4: IOD and array plotting differences 
 % radFreq_plotIODsummary
-% radFreq_plotArrayDiffsummary
+ radFreq_plotArrayDiffsummary
 %%
 toc/60
