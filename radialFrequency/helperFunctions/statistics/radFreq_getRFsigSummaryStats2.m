@@ -1,8 +1,8 @@
 function [numTunedChs, numUntunedChs, numChsTunedHighAmp, numChsTunedCircle, numChsMixedTuning,...
           numSigRFsPerCh, numRFsSigHighAmp, numRFsSigCircle, numSigChsHighAmpPerRF, numSigChsCirclePerRF] = radFreq_getRFsigSummaryStats2(dataT)
 %% Percentage of channels with significant tuning in at least one RF
-numSigRFsPerCh = nansum(dataT.RFcorrSigPerms & dataT.goodCh)
-numTunedChs = nansum(numSigRFsPerCh > 0)
+numSigRFsPerCh = nansum(dataT.RFcorrSigPerms & dataT.goodCh);
+numTunedChs = nansum(numSigRFsPerCh > 0);
 %% Breakdown of channels that are not significantly tuned for RF
 untunedNdx = (numSigRFsPerCh == 0);
 
@@ -12,7 +12,7 @@ numUntunedChs = nansum(untunedNdx & dataT.goodCh);
 posCorrNdx = dataT.stimCorrs > 0;
 
 numRFsSigHighAmp = nansum(dataT.RFcorrSigPerms.*posCorrNdx & dataT.goodCh);
-numSigChsHighAmpPerRF = nansum(dataT.RFcorrSigPerms.*posCorrNdx & dataT.goodCh,2)
+numSigChsHighAmpPerRF = nansum(dataT.RFcorrSigPerms.*posCorrNdx & dataT.goodCh,2);
 
 numChsTunedHighAmp = nansum(numRFsSigHighAmp > 0);
 numRFsTunedHighAmpPerCh(1,1) = sum(numRFsSigHighAmp == 0);
@@ -25,7 +25,7 @@ negCorrNdx = dataT.stimCorrs < 0;
 numRFsSigCircle = nansum(dataT.RFcorrSigPerms.*negCorrNdx & dataT.goodCh);
 numSigChsCirclePerRF = nansum(dataT.RFcorrSigPerms.*negCorrNdx & dataT.goodCh,2);
 
-numChsTunedCircle = nansum(numRFsSigCircle > 0)
+numChsTunedCircle = nansum(numRFsSigCircle > 0);
 numRFsTunedCirclePerCh(1,1) = sum(numRFsSigCircle == 0);
 numRFsTunedCirclePerCh(2,1) = sum(numRFsSigCircle == 1);
 numRFsTunedCirclePerCh(3,1) = sum(numRFsSigCircle == 2);
@@ -34,7 +34,7 @@ numRFsTunedCirclePerCh(4,1) = sum(numRFsSigCircle == 3);
 circleChs = find(numRFsSigCircle > 0);
 highAmpChs = find(numRFsSigHighAmp > 0);
 chsMixedTuning = intersect(circleChs, highAmpChs);
-numChsMixedTuning = length(chsMixedTuning)
+numChsMixedTuning = length(chsMixedTuning);
 %% number checks
 
 % if numChsTunedCircle + numChsTunedHighAmp ~= numTunedChs

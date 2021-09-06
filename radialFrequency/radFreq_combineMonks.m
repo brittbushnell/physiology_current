@@ -61,7 +61,7 @@ fprintf('*** XT V1 LE *** \n')
     XTV1LE.numChsMixedTuning, XTV1LE.numSigRFsPerCh, XTV1LE.numRFsSigHighAmp, XTV1LE.numRFsSigCircle,...
     XTV1LE.numSigChsHighAmpPerRF,  XTV1LE.numSigChsCirclePerRF]...
     = radFreq_getRFsigSummaryStats2(XTV1LE);
-
+%%
 fprintf('*** XT V4 RE ***\n')
 [XTV4RE.numTunedChs, XTV4RE.numUntunedChs, XTV4RE.numChsTunedHighAmp, XTV4RE.numChsTunedCircle,...
     XTV4RE.numChsMixedTuning, XTV4RE.numSigRFsPerCh, XTV4RE.numRFsSigHighAmp, XTV4RE.numRFsSigCircle,...
@@ -143,7 +143,7 @@ plotRadFreq_tuningIOD(WVV4LE, WVV4RE)
 % radFreq_plotTuningTypes_notSig(XTV4LE, XTV4RE, XTV1LE, XTV1RE, WUV4LE, WUV4RE, WUV1LE, WUV1RE, WVV4LE, WVV4RE, WVV1LE, WVV1RE)
 
 %% figure 4: IOD and array plotting differences 
-% radFreq_plotIODsummary
+ radFreq_plotIODsummary
  radFreq_plotArrayDiffsummary
 %%
 toc/60

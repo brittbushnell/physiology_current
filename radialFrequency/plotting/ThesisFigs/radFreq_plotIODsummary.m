@@ -1,7 +1,7 @@
 function radFreq_plotIODsummary%(XTV4LE, XTV4RE, XTV1LE, XTV1RE, WUV4LE, WUV4RE, WUV1LE, WUV1RE, WVV4LE, WVV4RE, WVV1LE, WVV1RE)
 %% median IODs
 
-% rows: rf 4,8,16. columns: LE medians RE medians, significance 
+% columns: rf 4,8,16. rows: LE medians RE medians, significance 
 XTv1MedIODdP = [0.35 0.36 0.37; 0.34 0.40 0.35; 0 1 0];
 XTv1MedIODcor = [0.36 0.48 0.43; 0.09 0.11 0.19; 1 1 1];
 
@@ -39,7 +39,7 @@ axis square
 plot([0 1], [0 1],':k')
 
 for i = 1:3
-    markerColor = rfColors(i,:);
+    markerColor = rfColors(i,:) ;
     if XTv1MedIODdP(3,i) == 1
         s1 = scatter(XTv1MedIODdP(1,i),XTv1MedIODdP(2,i),75,'s','MarkerFaceColor',markerColor,'MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7);
     else
@@ -78,7 +78,7 @@ axis square
 plot([0 1], [0 1],':k')
 
 for i = 1:3
-    markerColor = rfColors(i,:);
+    markerColor = rfColors(i,:) ;
     if XTv4MedIODdP(3,i) == 1
         s1 = scatter(XTv4MedIODdP(1,i),XTv4MedIODdP(2,i),75,'s','MarkerFaceColor',markerColor,'MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7);
     else
@@ -113,8 +113,8 @@ axis square
 plot([0 1], [0 1],':k')
 
 for i = 1:3
-    markerColor = rfColors(i,:);
-    if XTv1MedIODdP(3,i) == 1
+    markerColor = rfColors(i,:) ;
+    if XTv1MedIODcor(3,i) == 1
         s1 = scatter(XTv1MedIODcor(1,i),XTv1MedIODcor(2,i),75,'s','MarkerFaceColor',markerColor,'MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7);
     else
         scatter(XTv1MedIODcor(1,i),XTv1MedIODcor(2,i),70,'s','MarkerFaceColor','w','MarkerEdgeColor',markerColor,'MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)
@@ -148,8 +148,8 @@ axis square
 plot([0 1], [0 1],':k')
 
 for i = 1:3
-    markerColor = rfColors(i,:);
-    if XTv4MedIODdP(3,i) == 1
+    markerColor = rfColors(i,:) ;
+    if XTv4MedIODcor(3,i) == 1
         s1 = scatter(XTv4MedIODcor(1,i),XTv4MedIODcor(2,i),75,'s','MarkerFaceColor',markerColor,'MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7);
     else
         scatter(XTv4MedIODcor(1,i),XTv4MedIODcor(2,i),70,'s','MarkerFaceColor','w','MarkerEdgeColor',markerColor,'MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)

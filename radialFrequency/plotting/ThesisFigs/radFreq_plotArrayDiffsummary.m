@@ -41,21 +41,21 @@ plot([0 1], [0 1],':k')
 for i = 1:3
     markerColor = rfColors(i,:);
     if XTleMedArraydP(3,i) == 1
-        s1 = scatter(XTleMedArraydP(1,i),XTleMedArraydP(2,i),75,'s','MarkerFaceColor','k','MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.6);
+        s1 = scatter(XTleMedArraydP(1,i),XTleMedArraydP(2,i),75,'s','MarkerFaceColor',markerColor,'MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.6);
     else
-        scatter(XTleMedArraydP(1,i),XTleMedArraydP(2,i),70,'s','MarkerFaceColor','w','MarkerEdgeColor','k','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.6)
+        scatter(XTleMedArraydP(1,i),XTleMedArraydP(2,i),70,'s','MarkerFaceColor','w','MarkerEdgeColor',markerColor,'MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.6)
     end
     
     if WUleMedArraydP(3,i) == 1
-        s2 = scatter(WUleMedArraydP(1,i),WUleMedArraydP(2,i),75,'^','MarkerFaceColor','k','MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.6);
+        s2 = scatter(WUleMedArraydP(1,i),WUleMedArraydP(2,i),75,'^','MarkerFaceColor',markerColor,'MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.6);
     else
-        scatter(WUleMedArraydP(1,i),WUleMedArraydP(2,i),65,'^','MarkerFaceColor','w','MarkerEdgeColor','k','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.6)
+        scatter(WUleMedArraydP(1,i),WUleMedArraydP(2,i),65,'^','MarkerFaceColor','w','MarkerEdgeColor',markerColor,'MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.6)
     end
     
     if WVleMedArraydP(3,i) == 1
-        s3 = scatter(WVleMedArraydP(1,i),WVleMedArraydP(2,i),70,'v','MarkerFaceColor','k','MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.6);
+        s3 = scatter(WVleMedArraydP(1,i),WVleMedArraydP(2,i),70,'v','MarkerFaceColor',markerColor,'MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.6);
     else
-        scatter(WVleMedArraydP(1,i),WVleMedArraydP(2,i),65,'v','MarkerFaceColor','w','MarkerEdgeColor','k','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.6)
+        scatter(WVleMedArraydP(1,i),WVleMedArraydP(2,i),65,'v','MarkerFaceColor','w','MarkerEdgeColor',markerColor,'MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.6)
     end 
 end
 l = legend([s1 s2 s3],'Control','A1','A2','Location','southeast');
@@ -79,21 +79,21 @@ plot([0 1], [0 1],':k')
 for i = 1:3
     markerColor = rfColors(i,:);
     if XTreMedArraydP(3,i) == 1
-        scatter(XTreMedArraydP(1,i),XTreMedArraydP(2,i),75,'s','MarkerFaceColor','k','MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.6)
+        scatter(XTreMedArraydP(1,i),XTreMedArraydP(2,i),75,'s','MarkerFaceColor',markerColor,'MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.6)
     else
-        scatter(XTreMedArraydP(1,i),XTreMedArraydP(2,i),70,'s','MarkerFaceColor','w','MarkerEdgeColor','k','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.6)
+        scatter(XTreMedArraydP(1,i),XTreMedArraydP(2,i),70,'s','MarkerFaceColor','w','MarkerEdgeColor',markerColor,'MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.6)
     end
     
     if WUreMedArraydP(3,i) == 1
-        scatter(WUreMedArraydP(1,i),WUreMedArraydP(2,i),75,'^','MarkerFaceColor','k','MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.6)
+        scatter(WUreMedArraydP(1,i),WUreMedArraydP(2,i),75,'^','MarkerFaceColor',markerColor,'MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.6)
     else
-        scatter(WUreMedArraydP(1,i),WUreMedArraydP(2,i),65,'^','MarkerFaceColor','w','MarkerEdgeColor','k','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.6)
+        scatter(WUreMedArraydP(1,i),WUreMedArraydP(2,i),65,'^','MarkerFaceColor','w','MarkerEdgeColor',markerColor,'MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.6)
     end
     
     if WVreMedArraydP(3,i) == 1
-        scatter(WVreMedArraydP(1,i),WVreMedArraydP(2,i),70,'v','MarkerFaceColor','k','MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.6)
+        scatter(WVreMedArraydP(1,i),WVreMedArraydP(2,i),70,'v','MarkerFaceColor',markerColor,'MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.6)
     else
-        scatter(WVreMedArraydP(1,i),WVreMedArraydP(2,i),65,'v','MarkerFaceColor','w','MarkerEdgeColor','k','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.6)
+        scatter(WVreMedArraydP(1,i),WVreMedArraydP(2,i),65,'v','MarkerFaceColor','w','MarkerEdgeColor',markerColor,'MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.6)
     end
     
 end
@@ -113,21 +113,21 @@ plot([0 1], [0 1],':k')
 for i = 1:3
     markerColor = rfColors(i,:);
     if XTreMedArrayCor(3,i) == 1
-        scatter(XTreMedArrayCor(1,i),XTreMedArrayCor(2,i),75,'s','MarkerFaceColor','k','MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.6)
+        scatter(XTreMedArrayCor(1,i),XTreMedArrayCor(2,i),75,'s','MarkerFaceColor',markerColor,'MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.6)
     else
-        scatter(XTreMedArrayCor(1,i),XTreMedArrayCor(2,i),70,'s','MarkerFaceColor','w','MarkerEdgeColor','k','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.6)
+        scatter(XTreMedArrayCor(1,i),XTreMedArrayCor(2,i),70,'s','MarkerFaceColor','w','MarkerEdgeColor',markerColor,'MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.6)
     end
     
     if WUreMedArrayCor(3,i) == 1
-        scatter(WUreMedArrayCor(1,i),WUreMedArrayCor(2,i),75,'^','MarkerFaceColor','k','MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.6)
+        scatter(WUreMedArrayCor(1,i),WUreMedArrayCor(2,i),75,'^','MarkerFaceColor',markerColor,'MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.6)
     else
-        scatter(WUreMedArrayCor(1,i),WUreMedArrayCor(2,i),65,'^','MarkerFaceColor','w','MarkerEdgeColor','k','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.6)
+        scatter(WUreMedArrayCor(1,i),WUreMedArrayCor(2,i),65,'^','MarkerFaceColor','w','MarkerEdgeColor',markerColor,'MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.6)
     end
     
     if WVreMedArrayCor(3,i) == 1
-        scatter(WVreMedArrayCor(1,i),WVreMedArrayCor(2,i),70,'v','MarkerFaceColor','k','MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.6)
+        scatter(WVreMedArrayCor(1,i),WVreMedArrayCor(2,i),70,'v','MarkerFaceColor',markerColor,'MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.6)
     else
-        scatter(WVreMedArrayCor(1,i),WVreMedArrayCor(2,i),65,'v','MarkerFaceColor','w','MarkerEdgeColor','k','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.6)
+        scatter(WVreMedArrayCor(1,i),WVreMedArrayCor(2,i),65,'v','MarkerFaceColor','w','MarkerEdgeColor',markerColor,'MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.6)
     end
 end
 
@@ -148,21 +148,21 @@ plot([0 1], [0 1],':k')
 for i = 1:3
     markerColor = rfColors(i,:);
     if XTleMedArrayCor(3,i) == 1
-        scatter(XTleMedArrayCor(1,i),XTleMedArrayCor(2,i),65,'s','MarkerFaceColor','k','MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.6)
+        scatter(XTleMedArrayCor(1,i),XTleMedArrayCor(2,i),65,'s','MarkerFaceColor',markerColor,'MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.6)
     else
-        scatter(XTleMedArrayCor(1,i),XTleMedArrayCor(2,i),60,'s','MarkerFaceColor','w','MarkerEdgeColor','k','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.6)
+        scatter(XTleMedArrayCor(1,i),XTleMedArrayCor(2,i),60,'s','MarkerFaceColor','w','MarkerEdgeColor',markerColor,'MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.6)
     end
     
     if WUleMedArrayCor(3,i) == 1
-        scatter(WUleMedArrayCor(1,i),WUleMedArrayCor(2,i),60,'^','MarkerFaceColor','k','MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.6)
+        scatter(WUleMedArrayCor(1,i),WUleMedArrayCor(2,i),60,'^','MarkerFaceColor',markerColor,'MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.6)
     else
-        scatter(WUleMedArrayCor(1,i),WUleMedArrayCor(2,i),55,'^','MarkerFaceColor','w','MarkerEdgeColor','k','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.6)
+        scatter(WUleMedArrayCor(1,i),WUleMedArrayCor(2,i),55,'^','MarkerFaceColor','w','MarkerEdgeColor',markerColor,'MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.6)
     end
     
     if WVleMedArrayCor(3,i) == 1
-        scatter(WVleMedArrayCor(1,i),WVleMedArrayCor(2,i),60,'v','MarkerFaceColor','k','MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.6)
+        scatter(WVleMedArrayCor(1,i),WVleMedArrayCor(2,i),60,'v','MarkerFaceColor',markerColor,'MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.6)
     else
-        scatter(WVleMedArrayCor(1,i),WVleMedArrayCor(2,i),55,'v','MarkerFaceColor','w','MarkerEdgeColor','k','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.6)
+        scatter(WVleMedArrayCor(1,i),WVleMedArrayCor(2,i),55,'v','MarkerFaceColor','w','MarkerEdgeColor',markerColor,'MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.6)
     end
     
 end
