@@ -66,8 +66,8 @@ WVV4diff  = angdiff(WVV4.meanOriDegDifAllStim, WVV4.meanOriDegDifPrefStim)
 [XTV1,XTV4,WUV1, WUV4,WVV1, WVV4] = MakeTriploThesisFigs(XTV1,XTV4,WUV1, WUV4,WVV1, WVV4);
 %%
 % close all
-% plotGlass_crNdxvsOriDiff(WUV1, WUV4)
-% plotGlass_crNdxvsOriDiff(WVV1, WVV4)
+plotGlass_crNdxvsOriDiff(WUV1, WUV4)
+plotGlass_crNdxvsOriDiff(WVV1, WVV4)
 % plotGlass_crNdxvsOriDiff(XTV1, XTV4)
 
 % plotGlass_crNdxvsOriDiff_grat(WUV1, WUV4)

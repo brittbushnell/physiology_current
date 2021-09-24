@@ -1,4 +1,4 @@
-function [] = makeGlassPlots_crNdxVoriDiff_allMonk(XTv4RE, XTv4LE, WUv1RE, WUv1LE, WUv4RE, WUv4LE, WVv1RE, WVv1LE, WVv4RE, WVv4LE )
+function [] = makeGlassPlots_crNdxVoriDiff_allMonk(XTV4RE, XTV4LE, WUV1RE, WUV1LE, WUV4RE, WUV4LE, WVV1RE, WVV1LE, WVV4RE, WVV4LE)
 
 
 %%
@@ -13,12 +13,12 @@ s.Position(2) = s.Position(2)+0.012;
 
 % WV
 
-for chNdx = 1:length(WVv4RE.useCh)
-    ch = WVv4RE.useCh(chNdx);
+for chNdx = 1:length(WVV4RE.useCh)
+    ch = WVV4RE.useCh(chNdx);
     
-    pOri = WVv4RE.trData.ori_pref(ch);
-    rfX  = WVv4RE.rfParams{ch}(1);
-    rfY  = WVv4RE.rfParams{ch}(2);
+    pOri = WVV4RE.trData.ori_pref(ch);
+    rfX  = WVV4RE.rfParams{ch}(1);
+    rfY  = WVV4RE.rfParams{ch}(2);
     
     hyp = sqrt(((rfX)^2)+((rfY)^2));
     sinThet = rfY/hyp;
@@ -33,7 +33,7 @@ for chNdx = 1:length(WVv4RE.useCh)
     h = subplot(5,2,10);
     hold on
     axis square
-    plot(WVv4RE.conRadNdx(chNdx),oriDiff(1,ch),'or','MarkerFaceColor','r','MarkerEdgeColor','w','MarkerSize',7)
+    plot(WVV4RE.conRadNdx(chNdx),oriDiff(1,ch),'or','MarkerFaceColor','r','MarkerEdgeColor','w','MarkerSize',7)
     
     plot([0 0], [-95 95],':k')
     
@@ -47,12 +47,12 @@ h.Position(2) = h.Position(2) -0.035;
 % h.Position(3) = h.Position(3) +0.01;
 % h.Position(4) = h.Position(4) +0.01;
 
-for chNdx = 1:length(WVv4LE.useCh)
-    ch = WVv4LE.useCh(chNdx);
+for chNdx = 1:length(WVV4LE.useCh)
+    ch = WVV4LE.useCh(chNdx);
     
-    pOri = WVv4LE.trData.ori_pref(ch);
-    rfX  = WVv4LE.rfParams{ch}(1);
-    rfY  = WVv4LE.rfParams{ch}(2);
+    pOri = WVV4LE.trData.ori_pref(ch);
+    rfX  = WVV4LE.rfParams{ch}(1);
+    rfY  = WVV4LE.rfParams{ch}(2);
     
     hyp = sqrt(((rfX)^2)+((rfY)^2));
     sinThet = rfY/hyp;
@@ -67,7 +67,7 @@ for chNdx = 1:length(WVv4LE.useCh)
     h = subplot(5,2,9);
     hold on
     axis square
-    plot(WVv4LE.conRadNdx(chNdx),oriDiff(1,ch),'oc','MarkerFaceColor',[0.2 0.4 1],'MarkerEdgeColor','w','MarkerSize',7)
+    plot(WVV4LE.conRadNdx(chNdx),oriDiff(1,ch),'oc','MarkerFaceColor',[0.2 0.4 1],'MarkerEdgeColor','w','MarkerSize',7)
     
     plot([0 0], [-95 95],':k')
     
@@ -85,12 +85,12 @@ h.Position(2) = h.Position(2) -0.035;
 % h.Position(3) = h.Position(3) +0.01;
 % h.Position(4) = h.Position(4) +0.01;
 
-for chNdx = 1:length(WVv1RE.useCh)
-    ch = WVv1RE.useCh(chNdx);
+for chNdx = 1:length(WVV1RE.useCh)
+    ch = WVV1RE.useCh(chNdx);
     
-    pOri = WVv1RE.trData.ori_pref(ch);
-    rfX  = WVv1RE.rfParams{ch}(1);
-    rfY  = WVv1RE.rfParams{ch}(2);
+    pOri = WVV1RE.trData.ori_pref(ch);
+    rfX  = WVV1RE.rfParams{ch}(1);
+    rfY  = WVV1RE.rfParams{ch}(2);
     
     hyp = sqrt(((rfX)^2)+((rfY)^2));
     sinThet = rfY/hyp;
@@ -105,7 +105,7 @@ for chNdx = 1:length(WVv1RE.useCh)
     h = subplot(5,2,8);
     hold on
     axis square
-    plot(WVv1RE.conRadNdx(chNdx),oriDiff(1,ch),'or','MarkerFaceColor','r','MarkerEdgeColor','w','MarkerSize',7)
+    plot(WVV1RE.conRadNdx(chNdx),oriDiff(1,ch),'or','MarkerFaceColor','r','MarkerEdgeColor','w','MarkerSize',7)
     
     plot([0 0], [-95 95],':k')
     
@@ -118,12 +118,12 @@ h.Position(2) = h.Position(2) - 0.055;
 % h.Position(3) = h.Position(3) +0.01;
 % h.Position(4) = h.Position(4) +0.01;
 
-for chNdx = 1:length(WVv1LE.useCh)
-    ch = WVv1LE.useCh(chNdx);
+for chNdx = 1:length(WVV1LE.useCh)
+    ch = WVV1LE.useCh(chNdx);
     
-    pOri = WVv1LE.trData.ori_pref(ch);
-    rfX  = WVv1LE.rfParams{ch}(1);
-    rfY  = WVv1LE.rfParams{ch}(2);
+    pOri = WVV1LE.trData.ori_pref(ch);
+    rfX  = WVV1LE.rfParams{ch}(1);
+    rfY  = WVV1LE.rfParams{ch}(2);
     
     hyp = sqrt(((rfX)^2)+((rfY)^2));
     sinThet = rfY/hyp;
@@ -138,7 +138,7 @@ for chNdx = 1:length(WVv1LE.useCh)
     h = subplot(5,2,7);
     hold on
     axis square
-    plot(WVv1LE.conRadNdx(chNdx),oriDiff(1,ch),'oc','MarkerFaceColor',[0.2 0.4 1],'MarkerEdgeColor','w','MarkerSize',7)
+    plot(WVV1LE.conRadNdx(chNdx),oriDiff(1,ch),'oc','MarkerFaceColor',[0.2 0.4 1],'MarkerEdgeColor','w','MarkerSize',7)
     
     plot([0 0], [-95 95],':k')
     
@@ -154,12 +154,12 @@ h.Position(2) = h.Position(2) - 0.055;
 % h.Position(3) = h.Position(3) +0.01;
 % h.Position(4) = h.Position(4) +0.01;
 
-for chNdx = 1:length(WUv4RE.useCh)
-    ch = WUv4RE.useCh(chNdx);
+for chNdx = 1:length(WUV4RE.useCh)
+    ch = WUV4RE.useCh(chNdx);
     
-    pOri = WUv4RE.trData.ori_pref(ch);
-    rfX  = WUv4RE.rfParams{ch}(1);
-    rfY  = WUv4RE.rfParams{ch}(2);
+    pOri = WUV4RE.trData.ori_pref(ch);
+    rfX  = WUV4RE.rfParams{ch}(1);
+    rfY  = WUV4RE.rfParams{ch}(2);
     
     hyp = sqrt(((rfX)^2)+((rfY)^2));
     sinThet = rfY/hyp;
@@ -174,7 +174,7 @@ for chNdx = 1:length(WUv4RE.useCh)
     h = subplot(5,2,6);
     hold on
     axis square
-    plot(WUv4RE.conRadNdx(chNdx),oriDiff(1,ch),'or','MarkerFaceColor','r','MarkerEdgeColor','w','MarkerSize',7)
+    plot(WUV4RE.conRadNdx(chNdx),oriDiff(1,ch),'or','MarkerFaceColor','r','MarkerEdgeColor','w','MarkerSize',7)
     
     plot([0 0], [-95 95],':k')
     
@@ -187,12 +187,12 @@ h.Position(2) = h.Position(2) -0.03;
 % h.Position(3) = h.Position(3) +0.01;
 % h.Position(4) = h.Position(4) +0.01;
 
-for chNdx = 1:length(WUv4LE.useCh)
-    ch = WUv4LE.useCh(chNdx);
+for chNdx = 1:length(WUV4LE.useCh)
+    ch = WUV4LE.useCh(chNdx);
     
-    pOri = WUv4LE.trData.ori_pref(ch);
-    rfX  = WUv4LE.rfParams{ch}(1);
-    rfY  = WUv4LE.rfParams{ch}(2);
+    pOri = WUV4LE.trData.ori_pref(ch);
+    rfX  = WUV4LE.rfParams{ch}(1);
+    rfY  = WUV4LE.rfParams{ch}(2);
     
     hyp = sqrt(((rfX)^2)+((rfY)^2));
     sinThet = rfY/hyp;
@@ -207,7 +207,7 @@ for chNdx = 1:length(WUv4LE.useCh)
     h = subplot(5,2,5);
     hold on
     axis square
-    plot(WUv4LE.conRadNdx(chNdx),oriDiff(1,ch),'oc','MarkerFaceColor',[0.2 0.4 1],'MarkerEdgeColor','w','MarkerSize',7)
+    plot(WUV4LE.conRadNdx(chNdx),oriDiff(1,ch),'oc','MarkerFaceColor',[0.2 0.4 1],'MarkerEdgeColor','w','MarkerSize',7)
     
     plot([0 0], [-95 95],':k')
     
@@ -222,12 +222,12 @@ h.Position(2) = h.Position(2) -0.03;
 % h.Position(3) = h.Position(3) +0.01;
 % h.Position(4) = h.Position(4) +0.01;
 
-for chNdx = 1:length(WUv1RE.useCh)
-    ch = WUv1RE.useCh(chNdx);
+for chNdx = 1:length(WUV1RE.useCh)
+    ch = WUV1RE.useCh(chNdx);
     
-    pOri = WUv1RE.trData.ori_pref(ch);
-    rfX  = WUv1RE.rfParams{ch}(1);
-    rfY  = WUv1RE.rfParams{ch}(2);
+    pOri = WUV1RE.trData.ori_pref(ch);
+    rfX  = WUV1RE.rfParams{ch}(1);
+    rfY  = WUV1RE.rfParams{ch}(2);
     
     hyp = sqrt(((rfX)^2)+((rfY)^2));
     sinThet = rfY/hyp;
@@ -242,7 +242,7 @@ for chNdx = 1:length(WUv1RE.useCh)
     h = subplot(5,2,4);
     hold on
     axis square
-    plot(WUv1RE.conRadNdx(chNdx),oriDiff(1,ch),'or','MarkerFaceColor','r','MarkerEdgeColor','w','MarkerSize',7)
+    plot(WUV1RE.conRadNdx(chNdx),oriDiff(1,ch),'or','MarkerFaceColor','r','MarkerEdgeColor','w','MarkerSize',7)
     
     plot([0 0], [-95 95],':k')
     
@@ -256,12 +256,12 @@ h.Position(2) = h.Position(2) -0.055;
 % h.Position(3) = h.Position(3) +0.01;
 % h.Position(4) = h.Position(4) +0.01;
 
-for chNdx = 1:length(WUv1LE.useCh)
-    ch = WUv1LE.useCh(chNdx);
+for chNdx = 1:length(WUV1LE.useCh)
+    ch = WUV1LE.useCh(chNdx);
     
-    pOri = WUv1LE.trData.ori_pref(ch);
-    rfX  = WUv1LE.rfParams{ch}(1);
-    rfY  = WUv1LE.rfParams{ch}(2);
+    pOri = WUV1LE.trData.ori_pref(ch);
+    rfX  = WUV1LE.rfParams{ch}(1);
+    rfY  = WUV1LE.rfParams{ch}(2);
     
     hyp = sqrt(((rfX)^2)+((rfY)^2));
     sinThet = rfY/hyp;
@@ -276,7 +276,7 @@ for chNdx = 1:length(WUv1LE.useCh)
     h = subplot(5,2,3);
     hold on
     axis square
-    plot(WUv1LE.conRadNdx(chNdx),oriDiff(1,ch),'oc','MarkerFaceColor',[0.2 0.4 1],'MarkerEdgeColor','w','MarkerSize',7)
+    plot(WUV1LE.conRadNdx(chNdx),oriDiff(1,ch),'oc','MarkerFaceColor',[0.2 0.4 1],'MarkerEdgeColor','w','MarkerSize',7)
     
     plot([0 0], [-95 95],':k')
     
@@ -293,12 +293,12 @@ h.Position(2) = h.Position(2) -0.055;
 % h.Position(3) = h.Position(3) +0.01;
 % h.Position(4) = h.Position(4) +0.01;
 
-for chNdx = 1:length(XTv4RE.useCh)
-    ch = XTv4RE.useCh(chNdx);
+for chNdx = 1:length(XTV4RE.useCh)
+    ch = XTV4RE.useCh(chNdx);
     
-    pOri = XTv4RE.trData.ori_pref(ch);
-    rfX  = XTv4RE.rfParams{ch}(1);
-    rfY  = XTv4RE.rfParams{ch}(2);
+    pOri = XTV4RE.trData.ori_pref(ch);
+    rfX  = XTV4RE.rfParams{ch}(1);
+    rfY  = XTV4RE.rfParams{ch}(2);
     
     hyp = sqrt(((rfX)^2)+((rfY)^2));
     sinThet = rfY/hyp;
@@ -313,7 +313,7 @@ for chNdx = 1:length(XTv4RE.useCh)
     h = subplot(5,2,2);
     hold on
     axis square
-    plot(XTv4RE.conRadNdx(chNdx),oriDiff(1,ch),'or','MarkerFaceColor','r','MarkerEdgeColor','w','MarkerSize',7)
+    plot(XTV4RE.conRadNdx(chNdx),oriDiff(1,ch),'or','MarkerFaceColor','r','MarkerEdgeColor','w','MarkerSize',7)
     
     plot([0 0], [-95 95],':k')
     
@@ -327,12 +327,12 @@ h.Position(2) = h.Position(2) -0.015;
 % h.Position(3) = h.Position(3) +0.01;
 % h.Position(4) = h.Position(4) +0.01;
 
-for chNdx = 1:length(XTv4LE.useCh)
-    ch = XTv4LE.useCh(chNdx);
+for chNdx = 1:length(XTV4LE.useCh)
+    ch = XTV4LE.useCh(chNdx);
     
-    pOri = XTv4LE.trData.ori_pref(ch);
-    rfX  = XTv4LE.rfParams{ch}(1);
-    rfY  = XTv4LE.rfParams{ch}(2);
+    pOri = XTV4LE.trData.ori_pref(ch);
+    rfX  = XTV4LE.rfParams{ch}(1);
+    rfY  = XTV4LE.rfParams{ch}(2);
     
     hyp = sqrt(((rfX)^2)+((rfY)^2));
     sinThet = rfY/hyp;
@@ -347,7 +347,7 @@ for chNdx = 1:length(XTv4LE.useCh)
     h = subplot(5,2,1);
     hold on
     axis square
-    plot(XTv4LE.conRadNdx(chNdx),oriDiff(1,ch),'oc','MarkerFaceColor',[0.2 0.4 1],'MarkerEdgeColor','w','MarkerSize',7)
+    plot(XTV4LE.conRadNdx(chNdx),oriDiff(1,ch),'oc','MarkerFaceColor',[0.2 0.4 1],'MarkerEdgeColor','w','MarkerSize',7)
     
     plot([0 0], [-95 95],':k')
     
