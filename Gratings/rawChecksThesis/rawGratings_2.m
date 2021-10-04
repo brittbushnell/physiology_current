@@ -151,9 +151,9 @@ for s = 1:length(sfs)
             XTV4LEstimBlankDprime(or,s,ch) = simpleDiscrim(XTV4LEblank,XTV4LEstim);
             
             WUV1REstimMtx(or,s,ch) = nanmean(WUV1REstim);
-            WUV1lEstimMtx(or,s,ch) = nanmean(WUV1LEstim);
+            WUV1LEstimMtx(or,s,ch) = nanmean(WUV1LEstim);
             WUV4REstimMtx(or,s,ch) = nanmean(WUV4REstim);
-            WUV4lEstimMtx(or,s,ch) = nanmean(WUV4LEstim);
+            WUV4LEstimMtx(or,s,ch) = nanmean(WUV4LEstim);
 
             WVV1REstimMtx(or,s,ch) = nanmean(WVV1REstim);
             WVV1LEstimMtx(or,s,ch) = nanmean(WVV1LEstim);
@@ -211,130 +211,130 @@ XTV4grat.LE.stimBlankDprimeMtx = XTV4LEstimBlankDprime;
 [WVV4grat.ODI] = getGratODI(WVV4LEstimBlankDprime,WVV4grat.LE.goodCh,WVV4REstimBlankDprime,WVV4grat.RE.goodCh);
 %% plot ODI
 % V4
-figure(1)
-clf
-pos = get(gcf,'Position');
-set(gcf,'Position',[pos(1), pos(2), 800, 900],'PaperSize',[7.5 10])
-
-subplot(8,3,6)
-hold on
-ODI = WVV4grat.ODI;
-
-histogram(ODI,'Normalization','probability','facealpha',1,'BinWidth',0.4,'FaceColor','k','edgecolor','w');
-plot([0 0], [0 0.6], 'k:','LineWidth',1.5)
-plot(nanmedian(ODI),0.55,'vk','MarkerFaceColor','k','MarkerEdgeColor','w','MarkerSize',8)
-text(nanmedian(ODI+0.1),0.55,sprintf('%.2f',nanmedian(ODI)),'FontSize',10)
-xlim([-1.3 1.3])
-ylim([0 0.6])
-
-pos = get(gca,'Position');
-set(gca,'Position',[pos(1), pos(2)+0.013, pos(3) + 0.02, pos(4) - 0.02])
-set(gca,'box', 'off','color', 'none', 'tickdir','out',...
-    'XTickLabelRotation', 45,'FontAngle','italic','FontSize',10,'layer','top')
-
-set(gca,'XTick',[-1 -0.5 0 0.5 1],'XTickLabel',{'AE','','Binoc','','FE'})
-
-clear ODI
-
-
-subplot(8,3,5)
-hold on
-ODI = WUV4grat.ODI;
-
-histogram(ODI,'Normalization','probability','facealpha',1,'BinWidth',0.4,'FaceColor','k','edgecolor','w');
-plot([0 0], [0 0.6], 'k:','LineWidth',1.5)
-plot(nanmedian(ODI),0.55,'vk','MarkerFaceColor','k','MarkerEdgeColor','w','MarkerSize',8)
-text(nanmedian(ODI+0.1),0.55,sprintf('%.2f',nanmedian(ODI)),'FontSize',10)
-xlim([-1.3 1.3])
-ylim([0 0.6])
-
-pos = get(gca,'Position');
-set(gca,'Position',[pos(1), pos(2)+0.013, pos(3) + 0.02, pos(4) - 0.02])
-set(gca,'box', 'off','color', 'none', 'tickdir','out',...
-    'XTickLabelRotation', 45,'FontAngle','italic','FontSize',10,'layer','top')
-set(gca,'XTick',[-1 -0.5 0 0.5 1],'XTickLabel',{'AE','','Binoc','','FE'})
-
-clear ODI
-
-
-subplot(8,3,4)
-hold on
-ODI = XTV4grat.ODI;
-
-histogram(ODI,'Normalization','probability','facealpha',1,'BinWidth',0.4,'FaceColor','k','edgecolor','w');
-plot([0 0], [0 0.6], 'k:','LineWidth',1.5)
-plot(nanmedian(ODI),0.55,'vk','MarkerFaceColor','k','MarkerEdgeColor','w','MarkerSize',8)
-text(nanmedian(ODI+0.1),0.55,sprintf('%.2f',nanmedian(ODI)),'FontSize',10)
-xlim([-1.3 1.3])
-ylim([0 0.6])
-
-pos = get(gca,'Position');
-set(gca,'Position',[pos(1), pos(2)+0.013, pos(3) + 0.02, pos(4) - 0.02])
-set(gca,'box', 'off','color', 'none', 'tickdir','out',...
-    'XTickLabelRotation', 45,'FontAngle','italic','FontSize',10,'layer','top')
-set(gca,'XTick',[-1 -0.5 0 0.5 1],'XTickLabel',{'Contra','','Binoc','','Ipsi'})
-text(-1.9, 0.3, 'V4','FontWeight','bold','FontSize',11) 
-text(-2.2, 0.45, 'Gratings','Rotation',90,'FontWeight','bold','FontSize',12)
-clear ODI
-
-% V1
-subplot(8,3,3)
-hold on
-ODI = WVV1grat.ODI;
-
-histogram(ODI,'Normalization','probability','facealpha',1,'BinWidth',0.4,'FaceColor','k','edgecolor','w');
-plot([0 0], [0 0.6], 'k:','LineWidth',1.5)
-plot(nanmedian(ODI),0.55,'vk','MarkerFaceColor','k','MarkerEdgeColor','w','MarkerSize',8)
-text(nanmedian(ODI+0.1),0.55,sprintf('%.2f',nanmedian(ODI)),'FontSize',10)
-xlim([-1.3 1.3])
-ylim([0 0.6])
-
-pos = get(gca,'Position');
-set(gca,'Position',[pos(1), pos(2) + 0.0175, pos(3) + 0.02, pos(4) - 0.02])
-set(gca,'box', 'off','color', 'none', 'tickdir','out',...
-    'XTickLabel',{'','','','',''},'FontAngle','italic','FontSize',10,'layer','top')
-
-title('A2')
-clear ODI
-
-
-subplot(8,3,2)
-hold on
-ODI = WUV1grat.ODI;
-
-histogram(ODI,'Normalization','probability','facealpha',1,'BinWidth',0.4,'FaceColor','k','edgecolor','w');
-plot([0 0], [0 0.6], 'k:','LineWidth',1.5)
-plot(nanmedian(ODI),0.55,'vk','MarkerFaceColor','k','MarkerEdgeColor','w','MarkerSize',8)
-text(nanmedian(ODI+0.1),0.55,sprintf('%.2f',nanmedian(ODI)),'FontSize',10)
-xlim([-1.3 1.3])
-ylim([0 0.6])
-
-pos = get(gca,'Position');
-set(gca,'Position',[pos(1), pos(2) + 0.0175, pos(3) + 0.02, pos(4) - 0.02])
-set(gca,'box', 'off','color', 'none', 'tickdir','out',...
-    'XTickLabel',{'','','','',''},'FontAngle','italic','FontSize',10,'layer','top')
-title('A1')
-clear ODI
-
-
-subplot(8,3,1)
-hold on
-ODI = XTV1grat.ODI;
-
-histogram(ODI,'Normalization','probability','facealpha',1,'BinWidth',0.4,'FaceColor','k','edgecolor','w');
-plot([0 0], [0 0.6], 'k:','LineWidth',1.5)
-plot(nanmedian(ODI),0.55,'vk','MarkerFaceColor','k','MarkerEdgeColor','w','MarkerSize',8)
-text(nanmedian(ODI+0.1),0.55,sprintf('%.2f',nanmedian(ODI)),'FontSize',10)
-xlim([-1.3 1.3])
-ylim([0 0.6])
-
-pos = get(gca,'Position');
-set(gca,'Position',[pos(1), pos(2) + 0.0175, pos(3) + 0.02, pos(4) - 0.02])
-set(gca,'box', 'off','color', 'none', 'tickdir','out',...
-    'XTickLabel',{'','','','',''},'FontAngle','italic','FontSize',10,'layer','top')
-text(-1.9, 0.3, 'V1','FontWeight','bold','FontSize',11) 
-title('Control')
-clear ODI
+% figure(1)
+% clf
+% pos = get(gcf,'Position');
+% set(gcf,'Position',[pos(1), pos(2), 800, 900],'PaperSize',[7.5 10])
+% 
+% subplot(8,3,6)
+% hold on
+% ODI = WVV4grat.ODI;
+% 
+% histogram(ODI,'Normalization','probability','facealpha',1,'BinWidth',0.4,'FaceColor','k','edgecolor','w');
+% plot([0 0], [0 0.6], 'k:','LineWidth',1.5)
+% plot(nanmedian(ODI),0.55,'vk','MarkerFaceColor','k','MarkerEdgeColor','w','MarkerSize',8)
+% text(nanmedian(ODI+0.1),0.55,sprintf('%.2f',nanmedian(ODI)),'FontSize',10)
+% xlim([-1.3 1.3])
+% ylim([0 0.6])
+% 
+% pos = get(gca,'Position');
+% set(gca,'Position',[pos(1), pos(2)+0.013, pos(3) + 0.02, pos(4) - 0.02])
+% set(gca,'box', 'off','color', 'none', 'tickdir','out',...
+%     'XTickLabelRotation', 45,'FontAngle','italic','FontSize',10,'layer','top')
+% 
+% set(gca,'XTick',[-1 -0.5 0 0.5 1],'XTickLabel',{'AE','','Binoc','','FE'})
+% 
+% clear ODI
+% 
+% 
+% subplot(8,3,5)
+% hold on
+% ODI = WUV4grat.ODI;
+% 
+% histogram(ODI,'Normalization','probability','facealpha',1,'BinWidth',0.4,'FaceColor','k','edgecolor','w');
+% plot([0 0], [0 0.6], 'k:','LineWidth',1.5)
+% plot(nanmedian(ODI),0.55,'vk','MarkerFaceColor','k','MarkerEdgeColor','w','MarkerSize',8)
+% text(nanmedian(ODI+0.1),0.55,sprintf('%.2f',nanmedian(ODI)),'FontSize',10)
+% xlim([-1.3 1.3])
+% ylim([0 0.6])
+% 
+% pos = get(gca,'Position');
+% set(gca,'Position',[pos(1), pos(2)+0.013, pos(3) + 0.02, pos(4) - 0.02])
+% set(gca,'box', 'off','color', 'none', 'tickdir','out',...
+%     'XTickLabelRotation', 45,'FontAngle','italic','FontSize',10,'layer','top')
+% set(gca,'XTick',[-1 -0.5 0 0.5 1],'XTickLabel',{'AE','','Binoc','','FE'})
+% 
+% clear ODI
+% 
+% 
+% subplot(8,3,4)
+% hold on
+% ODI = XTV4grat.ODI;
+% 
+% histogram(ODI,'Normalization','probability','facealpha',1,'BinWidth',0.4,'FaceColor','k','edgecolor','w');
+% plot([0 0], [0 0.6], 'k:','LineWidth',1.5)
+% plot(nanmedian(ODI),0.55,'vk','MarkerFaceColor','k','MarkerEdgeColor','w','MarkerSize',8)
+% text(nanmedian(ODI+0.1),0.55,sprintf('%.2f',nanmedian(ODI)),'FontSize',10)
+% xlim([-1.3 1.3])
+% ylim([0 0.6])
+% 
+% pos = get(gca,'Position');
+% set(gca,'Position',[pos(1), pos(2)+0.013, pos(3) + 0.02, pos(4) - 0.02])
+% set(gca,'box', 'off','color', 'none', 'tickdir','out',...
+%     'XTickLabelRotation', 45,'FontAngle','italic','FontSize',10,'layer','top')
+% set(gca,'XTick',[-1 -0.5 0 0.5 1],'XTickLabel',{'Contra','','Binoc','','Ipsi'})
+% text(-1.9, 0.3, 'V4','FontWeight','bold','FontSize',11) 
+% text(-2.2, 0.45, 'Gratings','Rotation',90,'FontWeight','bold','FontSize',12)
+% clear ODI
+% 
+% % V1
+% subplot(8,3,3)
+% hold on
+% ODI = WVV1grat.ODI;
+% 
+% histogram(ODI,'Normalization','probability','facealpha',1,'BinWidth',0.4,'FaceColor','k','edgecolor','w');
+% plot([0 0], [0 0.6], 'k:','LineWidth',1.5)
+% plot(nanmedian(ODI),0.55,'vk','MarkerFaceColor','k','MarkerEdgeColor','w','MarkerSize',8)
+% text(nanmedian(ODI+0.1),0.55,sprintf('%.2f',nanmedian(ODI)),'FontSize',10)
+% xlim([-1.3 1.3])
+% ylim([0 0.6])
+% 
+% pos = get(gca,'Position');
+% set(gca,'Position',[pos(1), pos(2) + 0.0175, pos(3) + 0.02, pos(4) - 0.02])
+% set(gca,'box', 'off','color', 'none', 'tickdir','out',...
+%     'XTickLabel',{'','','','',''},'FontAngle','italic','FontSize',10,'layer','top')
+% 
+% title('A2')
+% clear ODI
+% 
+% 
+% subplot(8,3,2)
+% hold on
+% ODI = WUV1grat.ODI;
+% 
+% histogram(ODI,'Normalization','probability','facealpha',1,'BinWidth',0.4,'FaceColor','k','edgecolor','w');
+% plot([0 0], [0 0.6], 'k:','LineWidth',1.5)
+% plot(nanmedian(ODI),0.55,'vk','MarkerFaceColor','k','MarkerEdgeColor','w','MarkerSize',8)
+% text(nanmedian(ODI+0.1),0.55,sprintf('%.2f',nanmedian(ODI)),'FontSize',10)
+% xlim([-1.3 1.3])
+% ylim([0 0.6])
+% 
+% pos = get(gca,'Position');
+% set(gca,'Position',[pos(1), pos(2) + 0.0175, pos(3) + 0.02, pos(4) - 0.02])
+% set(gca,'box', 'off','color', 'none', 'tickdir','out',...
+%     'XTickLabel',{'','','','',''},'FontAngle','italic','FontSize',10,'layer','top')
+% title('A1')
+% clear ODI
+% 
+% 
+% subplot(8,3,1)
+% hold on
+% ODI = XTV1grat.ODI;
+% 
+% histogram(ODI,'Normalization','probability','facealpha',1,'BinWidth',0.4,'FaceColor','k','edgecolor','w');
+% plot([0 0], [0 0.6], 'k:','LineWidth',1.5)
+% plot(nanmedian(ODI),0.55,'vk','MarkerFaceColor','k','MarkerEdgeColor','w','MarkerSize',8)
+% text(nanmedian(ODI+0.1),0.55,sprintf('%.2f',nanmedian(ODI)),'FontSize',10)
+% xlim([-1.3 1.3])
+% ylim([0 0.6])
+% 
+% pos = get(gca,'Position');
+% set(gca,'Position',[pos(1), pos(2) + 0.0175, pos(3) + 0.02, pos(4) - 0.02])
+% set(gca,'box', 'off','color', 'none', 'tickdir','out',...
+%     'XTickLabel',{'','','','',''},'FontAngle','italic','FontSize',10,'layer','top')
+% text(-1.9, 0.3, 'V1','FontWeight','bold','FontSize',11) 
+% title('Control')
+% clear ODI
 %%  make figures
 
 figure(1)
@@ -355,14 +355,14 @@ for s = 4:length(sfs)
         WVV1RE = squeeze(mean(WVV1REstimBlankDprime(or,s,:),3));
         WVV1LE = squeeze(mean(WVV1LEstimBlankDprime(or,s,:),3));
         
-        scatter(ndx,XTV1RE,70,'s','MarkerFaceColor','r','MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)
-        scatter(ndx,XTV1LE,70,'s','MarkerFaceColor',[0.2 0.4 1],'MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)
+        scatter(ndx,XTV1RE,75,'s','MarkerFaceColor','r','MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)
+        scatter(ndx,XTV1LE,75,'s','MarkerFaceColor',[0.2 0.4 1],'MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)
         
-        scatter(ndx,WUV1RE,65,'^','MarkerFaceColor','r','MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)
-        scatter(ndx,WUV1LE,65,'^','MarkerFaceColor',[0.2 0.4 1],'MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)
+        scatter(ndx,WUV1RE,70,'^','MarkerFaceColor','r','MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)
+        scatter(ndx,WUV1LE,70,'^','MarkerFaceColor',[0.2 0.4 1],'MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)
         
-        scatter(ndx,WVV1RE,65,'v','MarkerFaceColor','r','MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)
-        scatter(ndx,WVV1LE,65,'v','MarkerFaceColor',[0.2 0.4 1],'MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)
+        scatter(ndx,WVV1RE,70,'v','MarkerFaceColor','r','MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)
+        scatter(ndx,WVV1LE,70,'v','MarkerFaceColor',[0.2 0.4 1],'MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)
         
         ndx = ndx+1;
     end
@@ -400,14 +400,14 @@ for s = 4:length(sfs)
         WVV4LE = squeeze(mean(WVV4LEstimBlankDprime(or,s,:),3));
         
         
-        scatter(ndx,XTV4RE,70,'s','MarkerFaceColor','r','MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)
-        scatter(ndx,XTV4LE,70,'s','MarkerFaceColor',[0.2 0.4 1],'MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)
+        scatter(ndx,XTV4RE,75,'s','MarkerFaceColor','r','MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)
+        scatter(ndx,XTV4LE,75,'s','MarkerFaceColor',[0.2 0.4 1],'MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)
         
-        scatter(ndx,WUV4RE,65,'^','MarkerFaceColor','r','MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)
-        scatter(ndx,WUV4LE,65,'^','MarkerFaceColor',[0.2 0.4 1],'MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)
+        scatter(ndx,WUV4RE,70,'^','MarkerFaceColor','r','MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)
+        scatter(ndx,WUV4LE,70,'^','MarkerFaceColor',[0.2 0.4 1],'MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)
         
-        scatter(ndx,WVV4RE,65,'v','MarkerFaceColor','r','MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)
-        scatter(ndx,WVV4LE,65,'v','MarkerFaceColor',[0.2 0.4 1],'MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)
+        scatter(ndx,WVV4RE,70,'v','MarkerFaceColor','r','MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)
+        scatter(ndx,WVV4LE,70,'v','MarkerFaceColor',[0.2 0.4 1],'MarkerEdgeColor','w','MarkerFaceAlpha',0.7,'MarkerEdgeAlpha',0.7)
         
         ndx = ndx+1;
     end
