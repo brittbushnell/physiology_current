@@ -46,17 +46,18 @@ for fi = 1:length(files)
         newName = [shortname, sprintf('_thresh%d',threshold*10),'.nev'];
         
         if contains(programID,'grat','IgnoreCase',true)
-            output = sprintf('/mnt/vnlstorage3/bushnell_arrays/%s/reThreshold/gratings/%s/%s/%s',array,animal,eye,newName);
+            output = sprintf('/v/awake/%s/recordings/%sReThreshold/gratingsAndEdges/%s', animal, array, eye);
+%             output = sprintf('/mnt/vnlstorage3/bushnell_arrays/%s/reThreshold/gratings/%s/%s/%s',array,animal,eye,newName);
         else
-            output = sprintf('/mnt/vnlstorage3/bushnell_arrays/%s/reThreshold/png/%s/%s/%s',array,animal,eye,newName);
+%             output = sprintf('/mnt/vnlstorage3/bushnell_arrays/%s/reThreshold/png/%s/%s/%s',array,animal,eye,newName);
         end
 
-        if ~exist(output,'file')
+%         if ~exist(output,'file')
             car_nsx(nev,ns6,output,threshold);
-            fprintf('done cleaning and thresholding after %.2f minutes\n',toc/60)
-        else
-            fprintf('%s  already exists, moving to next file\n',newName)
-        end       
+%             fprintf('done cleaning and thresholding after %.2f minutes\n',toc/60)
+%         else
+%             fprintf('%s  already exists, moving to next file\n',newName)
+%         end       
         
     catch ME
         failedNdx = failedNdx+1;

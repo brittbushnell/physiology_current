@@ -18,8 +18,8 @@ brArray = {
     'nsp2';
     'nsp1';
     };
-stimType = 'png';
-% stimType = 'gratings';
+%stimType = 'png';
+stimType = 'gratings';
 %%
 
 failNdx = 0;
@@ -34,7 +34,6 @@ for an = 1:length(monks)
             array = brArray{ar};
             %%
             inputDir = sprintf('/users/bushnell/Desktop/my_zemina/vnlstorage3/bushnell_arrays/%s/reThreshold/%s/%s/%s/',array,stimType,animal,eye);
-            
             cd(inputDir);
             tmp = dir;
             %%
