@@ -1,22 +1,23 @@
 clear
 close all
-clc
+% clc
 tic
 %%
 animal = 'XT';
 prog = { % which file types do you want to run? Case doesn't matter in this scenario
-   'gratings'
+    'gratings'
     };
 %%
-
-for a = 1:2 % arrays
+failNdx = 0;
+for a = 2%1:2 % arrays
     %%
     if a == 1
         array = 'nsp2';
     else
         array = 'nsp1';
     end
-    dataDir = sprintf('/v/awake/%s/recordings/%sRaw/',animal, array);
+    dataDir = sprintf('/km/gr/awake/%s/recordings/%sRaw/',animal, array);
+    %             dataDir = sprintf('/km/gr/awake/%s/recordings/%sReThreshold/gratingsAndEdges/%s/',animal, array,eye);
     cd(dataDir)
     %%
     files = {};
@@ -37,8 +38,14 @@ for a = 1:2 % arrays
     files(contains(files,'Bar')) = [];
     files(contains(files,'test')) = [];
     files(contains(files,'BE')) = [];
-    
+    fTest = files{1};
     %%
     %threshold = 3.5;
-    reThreshold(files);
+    reThreshold(files,3);
+    %         catch ME
+    %             failNdx = failNdx+1;
+    %             failedFiles{failNdx} = ME;
+    %             fprintf('%s failed\n\n',filename)
+    %         end
+    %     end
 end

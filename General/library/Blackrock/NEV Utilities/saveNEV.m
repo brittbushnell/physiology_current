@@ -58,7 +58,7 @@ function saveNEV(NEV, varargin)
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Verify FilePath and establish overwrite paramaters
+%% Verify FilePath and establish overwrite paramaters
 if not(NEV.MetaTags.FileSpec == '2.3')
     disp(strcat('This function only functions on file spec 2.3,;this is your file spec:',NEV.MetaTags.FileSpec));
     return
@@ -103,6 +103,7 @@ FileID = fopen(FilePath, 'w', 'ieee-le');
     
 if (FileID <= 0)
     disp('No file was selected.');
+    keyboard
     return;
 end
 

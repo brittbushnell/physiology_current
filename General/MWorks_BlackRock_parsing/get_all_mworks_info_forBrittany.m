@@ -41,6 +41,7 @@ krock
     Version: 1.1
 
 %}
+%%
 function [outputFileFullPath] = get_all_mworks_info_forBrittany(mworks_filename, force_process, varargin)
 
 % filePath = mworks_filename(1);

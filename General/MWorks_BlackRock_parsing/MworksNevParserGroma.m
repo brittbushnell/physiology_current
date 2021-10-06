@@ -73,8 +73,8 @@ runNum = tmp{6};
 threshold = tmp{7};
 
 
-blackrockDir = sprintf('/v/awake/%s/recordings/%sRaw', animal, array);
-mworksDir = sprintf('/v/awake/%s/recordings/mwk', animal, array);
+blackrockDir = sprintf('/v/awake/%s/recordings/%sReThreshold/gratingsAndEdges/%s/', animal, array,eye);
+mworksDir = sprintf('/v/awake/%s/recordings/mwk/', animal);
 %%
 tSuccess = 4*250 * 1e3;
 pointsKeep = num_bins;
@@ -161,9 +161,9 @@ minimum_interword_interval = min(diff(mworks_wordout_times));
 %locate times in nev file when interword interval is less than half the
 %minimum interword interval detected above and remove (by convention
 %choose the later of the two close values as the starting point
-bad_nev_times = find(diff(nev_wordout_times)<minimum_interword_interval/2) + 1; %find nev inter_word_intervals that are too short
+bad_nev_times = find(diff(nev_wordout_times) < minimum_interword_interval/2) + 1; %find nev inter_word_intervals that are too short
 nev_wordout_times(bad_nev_times) = []; %remove these times
-nev_wordout_times = nev_wordout_times(463:end);
+nev_wordout_times = nev_wordout_times(464:end);
 nev_wordout_times = nev_wordout_times./(10^6);
 
 lastwarn('');
@@ -207,7 +207,7 @@ if contains(programID,'grat','IgnoreCase',true) || contains(programID,'edge','Ig
                 else
                     new_stim = 1;
                 end
-                stim_display_update_events(ind).data{2}.contrast
+                stim_display_update_events(ind).data{2}.contrast;
                 % add the stimulus:
                 if new_stim == 1
                     t_stim = [t_stim, cur_time.*regressionResutls(2) + regressionResutls(1)];
@@ -238,7 +238,7 @@ else % stimulus is a png image
                         clear tmpName1
                         clear tmpName2
                     else
-                        eval([stim_var_names{kk}, ' = [', stim_var_names{kk},  ', stim_display_update_events(ind).data{2}.', stim_var_names{kk}, '];'])%;
+                        eval([stim_var_names{kk}, ' = [', stim_var_names{kk},  ', stim_display_update_events(ind).data{2}.', stim_var_names{kk}, '];']);%;
                     end
                 end
                 n_stim = n_stim + 1;
@@ -246,7 +246,7 @@ else % stimulus is a png image
         end
     end
 end
-sprintf('stim shown: %i', n_stim)
+fprintf('stim shown: %i', n_stim)
 
 if contains(programID,'grat','IgnoreCase',true) || contains(programID,'edge','IgnoreCase',true)
     if size(xoffset,2) ~= size(spatial_frequency,2)
@@ -277,10 +277,10 @@ if contains(programID,'grat','IgnoreCase',true) || contains(programID,'edge','Ig
         'o_direction', 'rotation', 'xoffset','spatial_frequency', 'name',...
         'mask', 'o_rotation', 'o_spatial_frequency', 'action', 'stimOff', 'bins',...
         't_stim','fix_x','fix_y');
-    fprintf('saved as %s\n',saveName)
+    fprintf('\nsaved as %s\n\n',saveName)
 else
     save(saveName, 'stimOn', 'action', 'stimOff', 'bins','pos_x','pos_y','filename','size_x','action','rotation','fix_x','fix_y','t_stim');
-    fprintf('saved as %s\n',saveName)
+    fprintf('\n saved as %s\n\n',saveName)
 end
 %%
 

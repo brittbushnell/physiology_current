@@ -310,6 +310,7 @@ if ~exist('fileFullPath', 'var')
             varargout{1} = [];
         end
         disp('No file was selected.');
+        keyboard
         return
     end
 end

@@ -2,13 +2,15 @@ clear
 close all
 
 %%
-cd '/Users/brittany/Dropbox/ArrayData/matFiles/raw_Grat'
-
+% cd '/Users/brittany/Dropbox/ArrayData/matFiles/raw_Grat'
+cd '/users/bushnell/bushnell-local/Dropbox/ArrayData/matFiles/reThreshold/gratings/XT/postDefense/V1/'
 tmp = dir;
+location = determineComputer;
 %%
+
 for i = 3:length(tmp)
     
-    try
+%     try
         fname = tmp(i).name;
         data = load(fname);
         
@@ -22,7 +24,14 @@ for i = 3:length(tmp)
         else
             array = 'V4';
         end
-        figDir = sprintf('~/Dropbox/Figures/%s/Gratings/%s/cleanRawPSTH/raw',fnameParts{1},array);
+        
+        if location == 1 % laca
+        if contains(fname,'thresh')
+            figDir = sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/Gratings/%s/cleanRawPSTH/cleaned',fnameParts{1},array);
+        else
+            figDir = sprintf('/users/bushnell/bushnell-local/Dropbox/Figures/%s/Gratings/%s/cleanRawPSTH/raw',fnameParts{1},array);
+        end
+        end
         
         if ~exist(figDir,'dir')
             mkdir(figDir)
@@ -47,7 +56,8 @@ for i = 3:length(tmp)
         s = suptitle(sprintf('%s',fname));
         s.Position(2) = s.Position(2) +0.02;
         s.Interpreter = 'none';
+        fname = strrep(fname,'.mat',[]);
         figName = [fname,'_','PSTH','.pdf'];
         print(gcf, figName,'-dpdf','-bestfit')
-    end
+%     end
 end

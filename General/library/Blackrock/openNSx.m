@@ -364,6 +364,7 @@ if ~exist('fname', 'var')
     [fname, path] = getFile('*.ns1;*.ns2;*.ns3;*.ns4;*.ns5;*.ns6;*.ns6m', 'Choose an NSx file...');
     if fname == 0
         disp('No file was selected.');
+        keyboard
         if nargout; varargout{1} = -1; end
         return;
     end
