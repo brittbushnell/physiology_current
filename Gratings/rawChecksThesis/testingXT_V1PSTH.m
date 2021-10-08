@@ -4,14 +4,44 @@ close all
 %%
 % cd '/Users/brittany/Dropbox/ArrayData/matFiles/raw_Grat'
 cd '/users/bushnell/bushnell-local/Dropbox/ArrayData/matFiles/reThreshold/gratings/XT/postDefense/V1/'
-tmp = dir;
+% tmp = dir;
+tmp = {    
+%     'XT_LE_gratings_nsp1_20181027_003_thresh35_ogcorrupt'
+%     'XT_LE_gratings_nsp1_20181107_004_thresh35_ogcorrupt'
+%     'XT_LE_gratings_nsp1_20181206_001_thresh35_ogcorrupt'
+%     'XT_LE_gratings_nsp1_20181210_001_thresh35_ogcorrupt'
+%     'XT_LE_gratings_nsp1_20181212_001_thresh35_ogcorrupt'
+%     'XT_LE_gratings_nsp1_20181213_003_thresh35_ogcorrupt'
+    'XT_LE_gratings_nsp1_20181213_004_thresh35_ogcorrupt'
+    'XT_RE_Gratings_nsp1_20190122_002_thresh35_ogcorrupt'
+    'XT_RE_Gratings_nsp1_20190131_003_thresh35_ogcorrupt'
+    'XT_RE_gratings_nsp1_20181028_003_thresh35_ogcorrupt'
+    'XT_RE_gratings_nsp1_20181107_005_thresh35_ogcorrupt'
+    'XT_RE_gratings_nsp1_20181129_003_thresh35_ogcorrupt'
+    'XT_LE_Gratings_nsp1_20190131_002_thresh35_ogcorrupt'
+    
+    'XT_LE_Gratings_nsp2_20190131_002_thresh35'
+    'XT_LE_gratings_nsp2_20181027_003_thresh35'
+    'XT_LE_gratings_nsp2_20181107_004_thresh35'
+    'XT_LE_gratings_nsp2_20181206_001_thresh35'
+    'XT_LE_gratings_nsp2_20181210_001_thresh35'
+    'XT_LE_gratings_nsp2_20181212_001_thresh35'
+    'XT_LE_gratings_nsp2_20181213_003_thresh35'
+    'XT_LE_gratings_nsp2_20181213_004_thresh35'
+    'XT_RE_Gratings_nsp2_20190122_002_thresh35'
+    'XT_RE_Gratings_nsp2_20190131_003_thresh35'
+    'XT_RE_gratings_nsp2_20181028_003_thresh35'
+    'XT_RE_gratings_nsp2_20181107_005_thresh35'
+    'XT_RE_gratings_nsp2_20181129_003_thresh35'
+    };
+
 location = determineComputer;
 %%
 
-for i = 3:length(tmp)
+for i = 1:length(tmp)
     
-%     try
-        fname = tmp(i).name;
+   try
+        fname = tmp{i};
         data = load(fname);
         
         amap = getBlackrockArrayMap(fname);
@@ -59,5 +89,7 @@ for i = 3:length(tmp)
         fname = strrep(fname,'.mat',[]);
         figName = [fname,'_','PSTH','.pdf'];
         print(gcf, figName,'-dpdf','-bestfit')
-%     end
+   catch ME
+       fprintf('\n file %s failed\n %s\n',fname,ME.message)
+   end
 end
