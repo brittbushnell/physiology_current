@@ -28,7 +28,10 @@ end
 failedFiles = {};
 failedNdx = 0;
 
-for fi = 3%1:length(files)
+for fi = 1:length(files)
+    if contains(files{fi},'_thresh')
+        continue
+    else
 %     try
         filename = files{fi};
         fprintf('*** running file %s ***\n %d/%d\n ',filename,fi,length(files))
@@ -61,4 +64,5 @@ for fi = 3%1:length(files)
 %         failedNdx = failedNdx+1;
 %         failedFiles{failedNdx} = ME;
 %     end
+    end
 end

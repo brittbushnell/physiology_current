@@ -13,11 +13,16 @@ files = badFilesLookup;
 failNdx = 0;
 
 for fi = 1:length(files)
-     try
+%      try
         nev = string(files{fi});
         fprintf('\n***Running %s file %d/%d***\n', nev,fi,length(files))
         
-        short_name = strrep(nev,'_thresh35','');
+        if contains(nev,'thresh35')
+            short_name = strrep(nev,'_thresh35','');
+        elseif contains(nev,'thresh30')
+            short_name = strrep(nev,'_thresh30','');
+        end
+        
         file_info = strsplit(short_name,'_');
         short_name = char(short_name);
         cleanDir = sprintf('/v/awake/%s/recordings/%sReThreshold/gratingsAndEdges/%s', file_info(1), file_info(4), file_info(2));
@@ -65,11 +70,11 @@ for fi = 1:length(files)
         %             fprintf('%s was already realigned, moving on to the next one',nev)
         %     end
         
-     catch ME
-        failNdx = failNdx+1;
-        failFile{failNdx,1} = nev;
-        failInfo{failNdx,1} = ME.message;
-    end
+%      catch ME
+%         failNdx = failNdx+1;
+%         failFile{failNdx,1} = nev;
+%         failInfo{failNdx,1} = ME.message;
+%     end
 end
 % toc/60
 

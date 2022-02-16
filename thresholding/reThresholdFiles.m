@@ -1,15 +1,15 @@
 clear
 close all
-% clc
+ clc
 tic
 %%
-animal = 'XT';
+animal = 'WU';
 prog = { % which file types do you want to run? Case doesn't matter in this scenario
     'gratings'
     };
 %%
 failNdx = 0;
-for a = 2%1:2 % arrays
+for a = 1:2 % arrays
     %%
     if a == 1
         array = 'nsp2';
@@ -41,7 +41,7 @@ for a = 2%1:2 % arrays
     fTest = files{1};
     %%
     %threshold = 3.5;
-    reThreshold(files,3);
+    reThreshold(files);
     %         catch ME
     %             failNdx = failNdx+1;
     %             failedFiles{failNdx} = ME;
