@@ -63,5 +63,3 @@
         stimResp = mean(smoothdata(data.bins(stimNdx, 1:endBin ,ch),'gaussian',3))./0.01;
         plot(1:endBin,blankResp,'k','LineWidth',0.5);
         plot(1:endBin,stimResp,'k','LineWidth',2);
-        
-        
