@@ -46,3 +46,22 @@
         fname = strrep(fname,'.mat',[]);
         figName = [fname,'_','PSTH','.pdf'];
         print(gcf, figName,'-dpdf','-bestfit')
+        %%
+        data = XTV4LE;
+        ch = 50;
+        endBin = 90;
+        
+        figure(2)
+        clf
+        set(gcf,'PaperSize',[5 5])
+        
+        hold on
+        
+        blankNdx = data.rf > 40;
+        stimNdx = data.rf < 35;
+        blankResp = mean(smoothdata(data.bins(blankNdx, 1:endBin ,ch),'gaussian',3))./0.01;
+        stimResp = mean(smoothdata(data.bins(stimNdx, 1:endBin ,ch),'gaussian',3))./0.01;
+        plot(1:endBin,blankResp,'k','LineWidth',0.5);
+        plot(1:endBin,stimResp,'k','LineWidth',2);
+        
+        

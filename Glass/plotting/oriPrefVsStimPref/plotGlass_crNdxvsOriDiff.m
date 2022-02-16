@@ -120,9 +120,15 @@ for eye = 1:2
             clear radAng cAng
         end
     end
+    if eye == 1
+        y = 'LE';
+    else
+        y = 'RE';
+    end
+    fprintf('\n %s V1 %s has %d channels in plot \n',V1data.trLE.animal, y, sum(~isnan(oriDiffV1)))
 end
 %% save figure
-figDir =  '/Users/brittany/Dropbox/Thesis/Writing/Glass/figures/conRadvOri/noGrat';
+figDir =  '/Users/brittany/Dropbox/Thesis/Writing/Glass/figures/conRadvOri\noGrat';
 if ~exist(figDir,'dir')
     mkdir(figDir)
 end
@@ -238,6 +244,7 @@ for eye = 1:2
             clear radAng cAng
         end
     end
+    fprintf('\n %s V4 %s has %d channels in plot \n',V1data.trLE.animal, y, sum(~isnan(oriDiffV4)))
 end
 
 if eye == 1
@@ -249,7 +256,7 @@ else
 end
 
 %% save figure
-figDir =  '/Users/brittany/Dropbox/Thesis/Writing/Glass/figures/conRadvOri/noGrat';
+figDir =  '/Users/brittany/Dropbox/Thesis/Writing/Glass/figures/conRadvOri\noGrat';
 if ~exist(figDir,'dir')
     mkdir(figDir)
 end

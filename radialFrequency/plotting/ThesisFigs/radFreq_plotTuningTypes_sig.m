@@ -1,4 +1,4 @@
-% function radFreq_plotTuningTypes_sig(XTV4LE, XTV4RE, XTV1LE, XTV1RE, WUV4LE, WUV4RE, WUV1LE, WUV1RE, WVV4LE, WVV4RE, WVV1LE, WVV1RE)
+function radFreq_plotTuningTypes_sig(XTV4LE, XTV4RE, XTV1LE, XTV1RE, WUV4LE, WUV4RE, WUV1LE, WUV1RE, WVV4LE, WVV4RE, WVV1LE, WVV1RE)
 
 % XT
 XTsigCorrs4LEv4  = (XTV4LE.stimCorrSig(1,:)==1);
@@ -9,9 +9,9 @@ XTposCorrs4LEv4  = (squeeze(XTV4LE.stimCorrs(1,:)) > 0) & XTsigCorrs4LEv4;
 XTposCorrs8LEv4  = (squeeze(XTV4LE.stimCorrs(2,:)) > 0) & XTsigCorrs8LEv4;
 XTposCorrs16LEv4 = (squeeze(XTV4LE.stimCorrs(3,:)) > 0) & XTsigCorrs16LEv4;
 
-% XTnegCorrs4LEv4  = (squeeze(XTV4LE.stimCorrs(1,:)) < 0) & XTsigCorrs4LEv4;
-% XTnegCorrs8LEv4  = (squeeze(XTV4LE.stimCorrs(2,:)) < 0) & XTsigCorrs8LEv4;
-% XTnegCorrs16LEv4 = (squeeze(XTV4LE.stimCorrs(3,:)) < 0) & XTsigCorrs16LEv4;
+XTnegCorrs4LEv4  = (squeeze(XTV4LE.stimCorrs(1,:)) < 0) & XTsigCorrs4LEv4;
+XTnegCorrs8LEv4  = (squeeze(XTV4LE.stimCorrs(2,:)) < 0) & XTsigCorrs8LEv4;
+XTnegCorrs16LEv4 = (squeeze(XTV4LE.stimCorrs(3,:)) < 0) & XTsigCorrs16LEv4;
 
 [~, XTmaxAmp4LEv4] = max((squeeze(XTV4LE.stimCircDprime(1,:,:))));
 [~, XTmaxAmp8LEv4] = max((squeeze(XTV4LE.stimCircDprime(2,:,:))));
@@ -28,9 +28,9 @@ XTposCorrs4REv4  = (squeeze(XTV4RE.stimCorrs(1,:)) > 0) & XTsigCorrs4REv4;
 XTposCorrs8REv4  = (squeeze(XTV4RE.stimCorrs(2,:)) > 0) & XTsigCorrs8REv4;
 XTposCorrs16REv4 = (squeeze(XTV4RE.stimCorrs(3,:)) > 0) & XTsigCorrs16REv4;
 
-% XTnegCorrs4REv4  = (squeeze(XTV4RE.stimCorrs(1,:)) < 0) & XTsigCorrs4REv4;
-% XTnegCorrs8REv4  = (squeeze(XTV4RE.stimCorrs(2,:)) < 0) & XTsigCorrs8REv4;
-% XTnegCorrs16REv4 = (squeeze(XTV4RE.stimCorrs(3,:)) < 0) & XTsigCorrs16REv4;
+XTnegCorrs4REv4  = (squeeze(XTV4RE.stimCorrs(1,:)) < 0) & XTsigCorrs4REv4;
+XTnegCorrs8REv4  = (squeeze(XTV4RE.stimCorrs(2,:)) < 0) & XTsigCorrs8REv4;
+XTnegCorrs16REv4 = (squeeze(XTV4RE.stimCorrs(3,:)) < 0) & XTsigCorrs16REv4;
 
 [~, XTmaxAmp4REv4] = max((squeeze(XTV4RE.stimCircDprime(1,:,:))));
 [~, XTmaxAmp8REv4] = max((squeeze(XTV4RE.stimCircDprime(2,:,:))));
@@ -48,9 +48,9 @@ WUposCorrs4LEv4  = (squeeze(WUV4LE.stimCorrs(1,:)) > 0) & WUsigCorrs4LEv4;
 WUposCorrs8LEv4  = (squeeze(WUV4LE.stimCorrs(2,:)) > 0) & WUsigCorrs8LEv4;
 WUposCorrs16LEv4 = (squeeze(WUV4LE.stimCorrs(3,:)) > 0) & WUsigCorrs16LEv4;
 
-% WUnegCorrs4LEv4  = (squeeze(WUV4LE.stimCorrs(1,:)) < 0) & WUsigCorrs4LEv4;
-% WUnegCorrs8LEv4  = (squeeze(WUV4LE.stimCorrs(2,:)) < 0) & WUsigCorrs8LEv4;
-% WUnegCorrs16LEv4 = (squeeze(WUV4LE.stimCorrs(3,:)) < 0) & WUsigCorrs16LEv4;
+WUnegCorrs4LEv4  = (squeeze(WUV4LE.stimCorrs(1,:)) < 0) & WUsigCorrs4LEv4;
+WUnegCorrs8LEv4  = (squeeze(WUV4LE.stimCorrs(2,:)) < 0) & WUsigCorrs8LEv4;
+WUnegCorrs16LEv4 = (squeeze(WUV4LE.stimCorrs(3,:)) < 0) & WUsigCorrs16LEv4;
 
 [~, WUmaxAmp4LEv4] = max((squeeze(WUV4LE.stimCircDprime(1,:,:))));
 [~, WUmaxAmp8LEv4] = max((squeeze(WUV4LE.stimCircDprime(2,:,:))));
@@ -85,9 +85,9 @@ WVposCorrs4LEv4  = (squeeze(WVV4LE.stimCorrs(1,:)) > 0) & WVsigCorrs4LEv4;
 WVposCorrs8LEv4  = (squeeze(WVV4LE.stimCorrs(2,:)) > 0) & WVsigCorrs8LEv4;
 WVposCorrs16LEv4 = (squeeze(WVV4LE.stimCorrs(3,:)) > 0) & WVsigCorrs16LEv4;
 
-% WVnegCorrs4LEv4  = (squeeze(WVV4LE.stimCorrs(1,:)) < 0) & WVsigCorrs4LEv4;
-% WVnegCorrs8LEv4  = (squeeze(WVV4LE.stimCorrs(2,:)) < 0) & WVsigCorrs8LEv4;
-% WVnegCorrs16LEv4 = (squeeze(WVV4LE.stimCorrs(3,:)) < 0) & WVsigCorrs16LEv4;
+WVnegCorrs4LEv4  = (squeeze(WVV4LE.stimCorrs(1,:)) < 0) & WVsigCorrs4LEv4;
+WVnegCorrs8LEv4  = (squeeze(WVV4LE.stimCorrs(2,:)) < 0) & WVsigCorrs8LEv4;
+WVnegCorrs16LEv4 = (squeeze(WVV4LE.stimCorrs(3,:)) < 0) & WVsigCorrs16LEv4;
 
 [~, WVmaxAmp4LEv4] = max((squeeze(WVV4LE.stimCircDprime(1,:,:))));
 [~, WVmaxAmp8LEv4] = max((squeeze(WVV4LE.stimCircDprime(2,:,:))));
@@ -113,72 +113,71 @@ WVnegCorrs16REv4 = (squeeze(WVV4RE.stimCorrs(3,:)) < 0) & WVsigCorrs16REv4;
 
 WVnumGoodREv4 = sum(WVV4RE.goodCh);
 %%
-XTmonoInc4LE = (sum(XTposCorrs4LE & XTmaxAmp4LE>=5))/XTnumGoodLEv4;
-XTmonoInc8LE = (sum(XTposCorrs8LE & XTmaxAmp8LE>=5))/XTnumGoodLEv4;
-XTmonoInc16LE = (sum(XTposCorrs16LE & XTmaxAmp16LE>=5))/XTnumGoodLEv4;
+XTmonoInc4LEv4 = (sum(XTposCorrs4LEv4 & XTmaxAmp4LEv4 >= 5))/XTnumGoodLEv4;
+XTmonoInc8LEv4 = (sum(XTposCorrs8LEv4 & XTmaxAmp8LEv4 >= 5))/XTnumGoodLEv4;
+XTmonoInc16LEv4 = (sum(XTposCorrs16LEv4 & XTmaxAmp16LEv4 >= 5))/XTnumGoodLEv4;
 
-XTmonoDec4LE = (sum(XTnegCorrs4LE & XTmaxAmp4LE == 1))/XTnumGoodLEv4;
-XTmonoDec8LE = (sum(XTnegCorrs8LE & XTmaxAmp8LE == 1))/XTnumGoodLEv4;
-XTmonoDec16LE = (sum(XTnegCorrs16LE & XTmaxAmp16LE == 1))/XTnumGoodLEv4;
+XTmonoDec4LEv4 = (sum(XTnegCorrs4LEv4 & XTmaxAmp4LEv4 == 1))/XTnumGoodLEv4;
+XTmonoDec8LEv4 = (sum(XTnegCorrs8LEv4 & XTmaxAmp8LEv4 == 1))/XTnumGoodLEv4;
+XTmonoDec16LEv4 = (sum(XTnegCorrs16LEv4 & XTmaxAmp16LEv4 == 1))/XTnumGoodLEv4;
 
-WUmonoInc4LE = (sum(WUposCorrs4LE & WUmaxAmp4LE>=5))/WUnumGoodLE;
-WUmonoInc8LE = (sum(WUposCorrs8LE & WUmaxAmp8LE>=5))/WUnumGoodLE;
-WUmonoInc16LE = (sum(WUposCorrs16LE & WUmaxAmp16LE>=5))/WUnumGoodLE;
+WUmonoInc4LEv4 = (sum(WUposCorrs4LEv4 & WUmaxAmp4LEv4 >= 5))/WUnumGoodLEv4;
+WUmonoInc8LEv4 = (sum(WUposCorrs8LEv4 & WUmaxAmp8LEv4 >= 5))/WUnumGoodLEv4;
+WUmonoInc16LEv4 = (sum(WUposCorrs16LEv4 & WUmaxAmp16LEv4 >= 5))/WUnumGoodLEv4;
 
-WUmonoDec4LE = (sum(WUnegCorrs4LE & WUmaxAmp4LE == 1))/WUnumGoodLE;
-WUmonoDec8LE = (sum(WUnegCorrs8LE & WUmaxAmp8LE == 1))/WUnumGoodLE;
-WUmonoDec16LE = (sum(WUnegCorrs16LE & WUmaxAmp16LE == 1))/WUnumGoodLE;
+WUmonoDec4LEv4 = (sum(WUnegCorrs4LEv4 & WUmaxAmp4LEv4 == 1))/WUnumGoodLEv4;
+WUmonoDec8LEv4 = (sum(WUnegCorrs8LEv4 & WUmaxAmp8LEv4 == 1))/WUnumGoodLEv4;
+WUmonoDec16LEv4 = (sum(WUnegCorrs16LEv4 & WUmaxAmp16LEv4 == 1))/WUnumGoodLEv4;
 
-WVmonoInc4LE = (sum(WVposCorrs4LE & WVmaxAmp4LE>=5))/WVnumGoodLE;
-WVmonoInc8LE = (sum(WVposCorrs8LE & WVmaxAmp8LE>=5))/WVnumGoodLE;
-WVmonoInc16LE = (sum(WVposCorrs16LE & WVmaxAmp16LE>=5))/WVnumGoodLE;
+WVmonoInc4LEv4 = (sum(WVposCorrs4LEv4 & WVmaxAmp4LEv4 >= 5))/WVnumGoodLEv4;
+WVmonoInc8LEv4 = (sum(WVposCorrs8LEv4 & WVmaxAmp8LEv4 >= 5))/WVnumGoodLEv4;
+WVmonoInc16LEv4 = (sum(WVposCorrs16LEv4 & WVmaxAmp16LEv4 >= 5))/WVnumGoodLEv4;
 
-WVmonoDec4LE = (sum(WVnegCorrs4LE & WVmaxAmp4LE == 1))/WVnumGoodLE;
-WVmonoDec8LE = (sum(WVnegCorrs8LE & WVmaxAmp8LE == 1))/WVnumGoodLE;
-WVmonoDec16LE = (sum(WVnegCorrs16LE & WVmaxAmp16LE == 1))/WVnumGoodLE;
+WVmonoDec4LEv4 = (sum(WVnegCorrs4LEv4 & WVmaxAmp4LEv4 == 1))/WVnumGoodLEv4;
+WVmonoDec8LEv4 = (sum(WVnegCorrs8LEv4 & WVmaxAmp8LEv4 == 1))/WVnumGoodLEv4;
+WVmonoDec16LEv4 = (sum(WVnegCorrs16LEv4 & WVmaxAmp16LEv4 == 1))/WVnumGoodLEv4;
 
-% WVmonoSat4LE = (sum(WVposCorrs4LE & WVmaxAmp4LE == 5))/WVnumGoodLE;
-% WVmonoSat8LE = (sum(WVposCorrs8LE & WVmaxAmp4LE == 5))/WVnumGoodLE;
-% WVmonoSat16LE = (sum(WVposCorrs16LE & WVmaxAmp4LE == 5))/WVnumGoodLE;
+WVmonoSat4LEv4 = (sum(WVposCorrs4LEv4 & WVmaxAmp4LEv4 == 5))/WVnumGoodLEv4;
+WVmonoSat8LEv4 = (sum(WVposCorrs8LEv4 & WVmaxAmp4LEv4 == 5))/WVnumGoodLEv4;
+WVmonoSat16LEv4 = (sum(WVposCorrs16LEv4 & WVmaxAmp4LEv4 == 5))/WVnumGoodLEv4;
 
 %% RE
 
-XTmonoInc4RE = (sum(XTposCorrs4RE & XTmaxAmp4RE>=5))/XTnumGoodREv4;
-XTmonoInc8RE = (sum(XTposCorrs8RE & XTmaxAmp8RE>=5))/XTnumGoodREv4;
-XTmonoInc16RE = (sum(XTposCorrs16RE & XTmaxAmp16RE>=5))/XTnumGoodREv4;
+XTmonoInc4REv4 = (sum(XTposCorrs4REv4 & XTmaxAmp4REv4 >= 5))/XTnumGoodREv4;
+XTmonoInc8REv4 = (sum(XTposCorrs8REv4 & XTmaxAmp8REv4 >= 5))/XTnumGoodREv4;
+XTmonoInc16REv4 = (sum(XTposCorrs16REv4 & XTmaxAmp16REv4 >= 5))/XTnumGoodREv4;
 
-XTmonoDec4RE = (sum(XTnegCorrs4RE & XTmaxAmp4RE == 1))/XTnumGoodREv4;
-XTmonoDec8RE = (sum(XTnegCorrs8RE & XTmaxAmp8RE == 1))/XTnumGoodREv4;
-XTmonoDec16RE = (sum(XTnegCorrs16RE & XTmaxAmp16RE == 1))/XTnumGoodREv4;
+XTmonoDec4REv4 = (sum(XTnegCorrs4REv4 & XTmaxAmp4REv4 == 1))/XTnumGoodREv4;
+XTmonoDec8REv4 = (sum(XTnegCorrs8REv4 & XTmaxAmp8REv4 == 1))/XTnumGoodREv4;
+XTmonoDec16REv4 = (sum(XTnegCorrs16REv4 & XTmaxAmp16REv4 == 1))/XTnumGoodREv4;
 
-% XTmonoSat4RE = (sum(XTposCorrs4RE & XTmaxAmp4RE == 5))/XTnumGoodRE;
-% XTmonoSat8RE = (sum(XTposCorrs8RE & XTmaxAmp4RE == 5))/XTnumGoodRE;
-% XTmonoSat16RE = (sum(XTposCorrs16RE & XTmaxAmp4RE == 5))/XTnumGoodRE;
+XTmonoSat4REv4 = (sum(XTposCorrs4REv4 & XTmaxAmp4REv4 == 5))/XTnumGoodREv4;
+XTmonoSat8REv4 = (sum(XTposCorrs8REv4 & XTmaxAmp4REv4 == 5))/XTnumGoodREv4;
+XTmonoSat16REv4 = (sum(XTposCorrs16REv4 & XTmaxAmp4REv4 == 5))/XTnumGoodREv4;
 
+WUmonoInc4REv4 = (sum(WUposCorrs4REv4 & WUmaxAmp4REv4 >= 5))/WUnumGoodREv4;
+WUmonoInc8REv4 = (sum(WUposCorrs8REv4 & WUmaxAmp8REv4 >= 5))/WUnumGoodREv4;
+WUmonoInc16REv4 = (sum(WUposCorrs16REv4 & WUmaxAmp16REv4 >= 5))/WUnumGoodREv4;
 
-WUmonoInc4RE = (sum(WUposCorrs4RE & WUmaxAmp4RE>=5))/WUnumGoodRE;
-WUmonoInc8RE = (sum(WUposCorrs8RE & WUmaxAmp8RE>=5))/WUnumGoodRE;
-WUmonoInc16RE = (sum(WUposCorrs16RE & WUmaxAmp16RE>=5))/WUnumGoodRE;
+WUmonoDec4REv4 = (sum(WUnegCorrs4REv4 & WUmaxAmp4REv4 == 1))/WUnumGoodREv4;
+WUmonoDec8REv4 = (sum(WUnegCorrs8REv4 & WUmaxAmp8REv4 == 1))/WUnumGoodREv4;
+WUmonoDec16REv4 = (sum(WUnegCorrs16REv4 & WUmaxAmp16REv4 == 1))/WUnumGoodREv4;
 
-WUmonoDec4RE = (sum(WUnegCorrs4RE & WUmaxAmp4RE == 1))/WUnumGoodRE;
-WUmonoDec8RE = (sum(WUnegCorrs8RE & WUmaxAmp8RE == 1))/WUnumGoodRE;
-WUmonoDec16RE = (sum(WUnegCorrs16RE & WUmaxAmp16RE == 1))/WUnumGoodRE;
+WUmonoSat4REv4 = (sum(WUposCorrs4REv4 & WUmaxAmp4REv4 == 5))/WUnumGoodREv4;
+WUmonoSat8REv4 = (sum(WUposCorrs8REv4 & WUmaxAmp4REv4 == 5))/WUnumGoodREv4;
+WUmonoSat16REv4 = (sum(WUposCorrs16REv4 & WUmaxAmp4REv4 == 5))/WUnumGoodREv4;
 
-% WUmonoSat4RE = (sum(WUposCorrs4RE & WUmaxAmp4RE == 5))/WUnumGoodRE;
-% WUmonoSat8RE = (sum(WUposCorrs8RE & WUmaxAmp4RE == 5))/WUnumGoodRE;
-% WUmonoSat16RE = (sum(WUposCorrs16RE & WUmaxAmp4RE == 5))/WUnumGoodRE;
+WVmonoInc4REv4 = (sum(WVposCorrs4REv4 & WVmaxAmp4REv4 >= 5))/WVnumGoodREv4;
+WVmonoInc8REv4 = (sum(WVposCorrs8REv4 & WVmaxAmp8REv4 >= 5))/WVnumGoodREv4;
+WVmonoInc16REv4 = (sum(WVposCorrs16REv4 & WVmaxAmp16REv4 >= 5))/WVnumGoodREv4;
 
-WVmonoInc4RE = (sum(WVposCorrs4RE & WVmaxAmp4RE>=5))/WVnumGoodRE;
-WVmonoInc8RE = (sum(WVposCorrs8RE & WVmaxAmp8RE>=5))/WVnumGoodRE;
-WVmonoInc16RE = (sum(WVposCorrs16RE & WVmaxAmp16RE>=5))/WVnumGoodRE;
+WVmonoDec4REv4 = (sum(WVnegCorrs4REv4 & WVmaxAmp4REv4 == 1))/WVnumGoodREv4;
+WVmonoDec8REv4 = (sum(WVnegCorrs8REv4 & WVmaxAmp8REv4 == 1))/WVnumGoodREv4;
+WVmonoDec16REv4 = (sum(WVnegCorrs16REv4 & WVmaxAmp16REv4 == 1))/WVnumGoodREv4;
 
-WVmonoDec4RE = (sum(WVnegCorrs4RE & WVmaxAmp4RE == 1))/WVnumGoodRE;
-WVmonoDec8RE = (sum(WVnegCorrs8RE & WVmaxAmp8RE == 1))/WVnumGoodRE;
-WVmonoDec16RE = (sum(WVnegCorrs16RE & WVmaxAmp16RE == 1))/WVnumGoodRE;
-
-% WVmonoSat4RE = (sum(WVposCorrs4RE & WVmaxAmp4RE == 5))/WVnumGoodRE;
-% WVmonoSat8RE = (sum(WVposCorrs8RE & WVmaxAmp4RE == 5))/WVnumGoodRE;
-% WVmonoSat16RE = (sum(WVposCorrs16RE & WVmaxAmp4RE == 5))/WVnumGoodRE;
+WVmonoSat4REv4 = (sum(WVposCorrs4REv4 & WVmaxAmp4REv4 == 5))/WVnumGoodREv4;
+WVmonoSat8REv4 = (sum(WVposCorrs8REv4 & WVmaxAmp4REv4 == 5))/WVnumGoodREv4;
+WVmonoSat16REv4 = (sum(WVposCorrs16REv4 & WVmaxAmp4REv4 == 5))/WVnumGoodREv4;
 %% plot the things!
 
 figure(1)
@@ -189,9 +188,9 @@ set(gcf,'Position',[pos(1) pos(2),750, 450],'PaperSize',[7.5 10])
 subplot(2,4,3)
 hold on
 
-LEv4 = [XTmonoInc4LE WUmonoInc4LE WVmonoInc4LE;...
-   XTmonoInc8LE WUmonoInc8LE WVmonoInc8LE;...
-   XTmonoInc16LE WUmonoInc16LE WVmonoInc16LE];
+LEv4 = [XTmonoInc4LEv4  WUmonoInc4LEv4  WVmonoInc4LEv4;...
+        XTmonoInc8LEv4  WUmonoInc8LEv4  WVmonoInc8LEv4;...
+       XTmonoInc16LEv4 WUmonoInc16LEv4 WVmonoInc16LEv4];
 
 bar(LEv4,1)
 
@@ -210,11 +209,11 @@ set(gca,'Position',[pos(1),pos(2), pos(3) + 0.015, pos(4) - 0.2]);
 subplot(2,4,4)
 hold on
 
-REamp = [XTmonoInc4RE WUmonoInc4RE WVmonoInc4RE;...
-   XTmonoInc8RE WUmonoInc8RE WVmonoInc8RE;...
-   XTmonoInc16RE WUmonoInc16RE WVmonoInc16RE];
+REampv4 = [XTmonoInc4REv4  WUmonoInc4REv4  WVmonoInc4REv4;...
+           XTmonoInc8REv4  WUmonoInc8REv4  WVmonoInc8REv4;...
+          XTmonoInc16REv4 WUmonoInc16REv4 WVmonoInc16REv4];
 
-bar(REamp,1)
+bar(REampv4,1)
 
 title('RE/AE')
 ylim([0 0.8])
@@ -229,9 +228,9 @@ set(gca,'Position',[pos(1),pos(2), pos(3) + 0.015, pos(4) - 0.2]);
 subplot(2,4,7)
 hold on
 
-LEv4Circ = [XTmonoDec4LE WUmonoDec4LE WVmonoDec4LE;...
-   XTmonoDec8LE WUmonoDec8LE WVmonoDec8LE;...
-   XTmonoDec16LE WUmonoDec16LE WVmonoDec16LE];
+LEv4Circ = [ XTmonoDec4LEv4  WUmonoDec4LEv4  WVmonoDec4LEv4;...
+             XTmonoDec8LEv4  WUmonoDec8LEv4  WVmonoDec8LEv4;...
+            XTmonoDec16LEv4 WUmonoDec16LEv4 WVmonoDec16LEv4];
 
 bar(LEv4Circ,1)
 
@@ -249,9 +248,9 @@ set(gca,'Position',[pos(1),pos(2), pos(3) + 0.015, pos(4) - 0.2]);
 subplot(2,4,8)
 hold on
 
-REv4Circ = [XTmonoDec4RE WUmonoDec4RE WVmonoDec4RE;...
-   XTmonoDec8RE WUmonoDec8RE WVmonoDec8RE;...
-   XTmonoDec16RE WUmonoDec16RE WVmonoDec16RE];
+REv4Circ = [XTmonoDec4REv4  WUmonoDec4REv4  WVmonoDec4REv4;...
+            XTmonoDec8REv4  WUmonoDec8REv4  WVmonoDec8REv4;...
+           XTmonoDec16REv4 WUmonoDec16REv4 WVmonoDec16REv4];
 
 bar(REv4Circ,1)
 
@@ -264,201 +263,200 @@ set(gca,'Position',[pos(1),pos(2), pos(3) + 0.015, pos(4) - 0.2]);
 %% V1
 
 % XT
-XTsigCorrs4LEv4  = (XTV1LE.stimCorrSig(1,:)==1);
-XTsigCorrs8LEv4  = (XTV1LE.stimCorrSig(2,:)==1);
-XTsigCorrs16LE = (XTV1LE.stimCorrSig(3,:)==1);
+XTsigCorrs4LEv1  = (XTV1LE.stimCorrSig(1,:)==1);
+XTsigCorrs8LEv1  = (XTV1LE.stimCorrSig(2,:)==1);
+XTsigCorrs16LEv1 = (XTV1LE.stimCorrSig(3,:)==1);
 
-XTposCorrs4LEv4  = (squeeze(XTV1LE.stimCorrs(1,:)) > 0) & XTsigCorrs4LE;
-XTposCorrs8LEv4  = (squeeze(XTV1LE.stimCorrs(2,:)) > 0) & XTsigCorrs8LE;
-XTposCorrs16LE = (squeeze(XTV1LE.stimCorrs(3,:)) > 0) & XTsigCorrs16LE;
+XTposCorrs4LEv1  = (squeeze(XTV1LE.stimCorrs(1,:)) > 0) & XTsigCorrs4LEv1;
+XTposCorrs8LEv1  = (squeeze(XTV1LE.stimCorrs(2,:)) > 0) & XTsigCorrs8LEv1;
+XTposCorrs16LEv1 = (squeeze(XTV1LE.stimCorrs(3,:)) > 0) & XTsigCorrs16LEv1;
 
-XTnegCorrs4LEv4  = (squeeze(XTV1LE.stimCorrs(1,:)) < 0) & XTsigCorrs4LE;
-XTnegCorrs8LEv4  = (squeeze(XTV1LE.stimCorrs(2,:)) < 0) & XTsigCorrs8LE;
-XTnegCorrs16LE = (squeeze(XTV1LE.stimCorrs(3,:)) < 0) & XTsigCorrs16LE;
+XTnegCorrs4LEv1  = (squeeze(XTV1LE.stimCorrs(1,:)) < 0) & XTsigCorrs4LEv1;
+XTnegCorrs8LEv1  = (squeeze(XTV1LE.stimCorrs(2,:)) < 0) & XTsigCorrs8LEv1;
+XTnegCorrs16LEv1 = (squeeze(XTV1LE.stimCorrs(3,:)) < 0) & XTsigCorrs16LEv1;
 
-[~, XTmaxAmp4LE] = max((squeeze(XTV1LE.stimCircDprime(1,:,:))));
-[~, XTmaxAmp8LE] = max((squeeze(XTV1LE.stimCircDprime(2,:,:))));
-[~, XTmaxAmp16LE] = max((squeeze(XTV1LE.stimCircDprime(3,:,:))));
+[~, XTmaxAmp4LEv1] = max((squeeze(XTV1LE.stimCircDprime(1,:,:))));
+[~, XTmaxAmp8LEv1] = max((squeeze(XTV1LE.stimCircDprime(2,:,:))));
+[~, XTmaxAmp16LEv1] = max((squeeze(XTV1LE.stimCircDprime(3,:,:))));
 
-XTnumGoodLEv4 = sum(XTV1LE.goodCh);
+XTnumGoodLEv1 = sum(XTV1LE.goodCh);
 
 
-XTsigCorrs4RE  = (XTV1RE.stimCorrSig(1,:)==1);
-XTsigCorrs8RE  = (XTV1RE.stimCorrSig(2,:)==1);
-XTsigCorrs16RE = (XTV1RE.stimCorrSig(3,:)==1);
+XTsigCorrs4REv1  = (XTV1RE.stimCorrSig(1,:)==1);
+XTsigCorrs8REv1  = (XTV1RE.stimCorrSig(2,:)==1);
+XTsigCorrs16REv1 = (XTV1RE.stimCorrSig(3,:)==1);
 
-XTposCorrs4RE  = (squeeze(XTV1RE.stimCorrs(1,:)) > 0) & XTsigCorrs4RE;
-XTposCorrs8RE  = (squeeze(XTV1RE.stimCorrs(2,:)) > 0) & XTsigCorrs8RE;
-XTposCorrs16RE = (squeeze(XTV1RE.stimCorrs(3,:)) > 0) & XTsigCorrs16RE;
+XTposCorrs4REv1  = (squeeze(XTV1RE.stimCorrs(1,:)) > 0) & XTsigCorrs4REv1;
+XTposCorrs8REv1  = (squeeze(XTV1RE.stimCorrs(2,:)) > 0) & XTsigCorrs8REv1;
+XTposCorrs16REv1 = (squeeze(XTV1RE.stimCorrs(3,:)) > 0) & XTsigCorrs16REv1;
 
-XTnegCorrs4RE  = (squeeze(XTV1RE.stimCorrs(1,:)) < 0) & XTsigCorrs4RE;
-XTnegCorrs8RE  = (squeeze(XTV1RE.stimCorrs(2,:)) < 0) & XTsigCorrs8RE;
-XTnegCorrs16RE = (squeeze(XTV1RE.stimCorrs(3,:)) < 0) & XTsigCorrs16RE;
+XTnegCorrs4REv1  = (squeeze(XTV1RE.stimCorrs(1,:)) < 0) & XTsigCorrs4REv1;
+XTnegCorrs8REv1  = (squeeze(XTV1RE.stimCorrs(2,:)) < 0) & XTsigCorrs8REv1;
+XTnegCorrs16REv1 = (squeeze(XTV1RE.stimCorrs(3,:)) < 0) & XTsigCorrs16REv1;
 
-[~, XTmaxAmp4RE] = max((squeeze(XTV1RE.stimCircDprime(1,:,:))));
-[~, XTmaxAmp8RE] = max((squeeze(XTV1RE.stimCircDprime(2,:,:))));
-[~, XTmaxAmp16RE] = max((squeeze(XTV1RE.stimCircDprime(3,:,:))));
+[~, XTmaxAmp4REv1] = max((squeeze(XTV1RE.stimCircDprime(1,:,:))));
+[~, XTmaxAmp8REv1] = max((squeeze(XTV1RE.stimCircDprime(2,:,:))));
+[~, XTmaxAmp16REv1] = max((squeeze(XTV1RE.stimCircDprime(3,:,:))));
 
-XTnumGoodREv4 = sum(XTV1RE.goodCh);
+XTnumGoodREv1 = sum(XTV1RE.goodCh);
 
 % WU
 
-WUsigCorrs4LEv4  = (WUV1LE.stimCorrSig(1,:)==1);
-WUsigCorrs8LEv4  = (WUV1LE.stimCorrSig(2,:)==1);
-WUsigCorrs16LE = (WUV1LE.stimCorrSig(3,:)==1);
+WUsigCorrs4LEv1  = (WUV1LE.stimCorrSig(1,:)==1);
+WUsigCorrs8LEv1  = (WUV1LE.stimCorrSig(2,:)==1);
+WUsigCorrs16LEv1 = (WUV1LE.stimCorrSig(3,:)==1);
 
-WUposCorrs4LEv4  = (squeeze(WUV1LE.stimCorrs(1,:)) > 0) & WUsigCorrs4LE;
-WUposCorrs8LEv4  = (squeeze(WUV1LE.stimCorrs(2,:)) > 0) & WUsigCorrs8LE;
-WUposCorrs16LE = (squeeze(WUV1LE.stimCorrs(3,:)) > 0) & WUsigCorrs16LE;
+WUposCorrs4LEv1  = (squeeze(WUV1LE.stimCorrs(1,:)) > 0) & WUsigCorrs4LEv1;
+WUposCorrs8LEv1  = (squeeze(WUV1LE.stimCorrs(2,:)) > 0) & WUsigCorrs8LEv1;
+WUposCorrs16LEv1 = (squeeze(WUV1LE.stimCorrs(3,:)) > 0) & WUsigCorrs16LEv1;
 
-WUnegCorrs4LEv4  = (squeeze(WUV1LE.stimCorrs(1,:)) < 0) & WUsigCorrs4LE;
-WUnegCorrs8LEv4  = (squeeze(WUV1LE.stimCorrs(2,:)) < 0) & WUsigCorrs8LE;
-WUnegCorrs16LE = (squeeze(WUV1LE.stimCorrs(3,:)) < 0) & WUsigCorrs16LE;
+WUnegCorrs4LEv1  = (squeeze(WUV1LE.stimCorrs(1,:)) < 0) & WUsigCorrs4LEv1;
+WUnegCorrs8LEv1  = (squeeze(WUV1LE.stimCorrs(2,:)) < 0) & WUsigCorrs8LEv1;
+WUnegCorrs16LEv1 = (squeeze(WUV1LE.stimCorrs(3,:)) < 0) & WUsigCorrs16LEv1;
 
-[~, WUmaxAmp4LE] = max((squeeze(WUV1LE.stimCircDprime(1,:,:))));
-[~, WUmaxAmp8LE] = max((squeeze(WUV1LE.stimCircDprime(2,:,:))));
-[~, WUmaxAmp16LE] = max((squeeze(WUV1LE.stimCircDprime(3,:,:))));
+[~, WUmaxAmp4LEv1] = max((squeeze(WUV1LE.stimCircDprime(1,:,:))));
+[~, WUmaxAmp8LEv1] = max((squeeze(WUV1LE.stimCircDprime(2,:,:))));
+[~, WUmaxAmp16LEv1] = max((squeeze(WUV1LE.stimCircDprime(3,:,:))));
 
-WUnumGoodLE = sum(WUV1LE.goodCh);
+WUnumGoodLEv1 = sum(WUV1LE.goodCh);
 
-WUsigCorrs4REv4  = (WUV1RE.stimCorrSig(1,:)==1);
-WUsigCorrs8RE  = (WUV1RE.stimCorrSig(2,:)==1);
-WUsigCorrs16RE = (WUV1RE.stimCorrSig(3,:)==1);
+WUsigCorrs4REv1  = (WUV1RE.stimCorrSig(1,:)==1);
+WUsigCorrs8REv1  = (WUV1RE.stimCorrSig(2,:)==1);
+WUsigCorrs16REv1 = (WUV1RE.stimCorrSig(3,:)==1);
 
-WUposCorrs4RE  = (squeeze(WUV1RE.stimCorrs(1,:)) > 0) & WUsigCorrs4REv4;
-WUposCorrs8RE  = (squeeze(WUV1RE.stimCorrs(2,:)) > 0) & WUsigCorrs8RE;
-WUposCorrs16RE = (squeeze(WUV1RE.stimCorrs(3,:)) > 0) & WUsigCorrs16RE;
+WUposCorrs4REv1  = (squeeze(WUV1RE.stimCorrs(1,:)) > 0) & WUsigCorrs4REv1;
+WUposCorrs8REv1  = (squeeze(WUV1RE.stimCorrs(2,:)) > 0) & WUsigCorrs8REv1;
+WUposCorrs16REv1 = (squeeze(WUV1RE.stimCorrs(3,:)) > 0) & WUsigCorrs16REv1;
 
-WUnegCorrs4RE  = (squeeze(WUV1RE.stimCorrs(1,:)) < 0) & WUsigCorrs4REv4;
-WUnegCorrs8RE  = (squeeze(WUV1RE.stimCorrs(2,:)) < 0) & WUsigCorrs8RE;
-WUnegCorrs16RE = (squeeze(WUV1RE.stimCorrs(3,:)) < 0) & WUsigCorrs16RE;
+WUnegCorrs4REv1  = (squeeze(WUV1RE.stimCorrs(1,:)) < 0) & WUsigCorrs4REv1;
+WUnegCorrs8REv1  = (squeeze(WUV1RE.stimCorrs(2,:)) < 0) & WUsigCorrs8REv1;
+WUnegCorrs16REv1 = (squeeze(WUV1RE.stimCorrs(3,:)) < 0) & WUsigCorrs16REv1;
 
-[~, WUmaxAmp4RE] = max((squeeze(WUV1RE.stimCircDprime(1,:,:))));
-[~, WUmaxAmp8RE] = max((squeeze(WUV1RE.stimCircDprime(2,:,:))));
-[~, WUmaxAmp16RE] = max((squeeze(WUV1RE.stimCircDprime(3,:,:))));
+[~, WUmaxAmp4REv1] = max((squeeze(WUV1RE.stimCircDprime(1,:,:))));
+[~, WUmaxAmp8REv1] = max((squeeze(WUV1RE.stimCircDprime(2,:,:))));
+[~, WUmaxAmp16REv1] = max((squeeze(WUV1RE.stimCircDprime(3,:,:))));
 
-WUnumGoodRE = sum(WUV1RE.goodCh);
+WUnumGoodREv1 = sum(WUV1RE.goodCh);
 
 % WV
-WVsigCorrs4LEv4  = (WVV1LE.stimCorrSig(1,:)==1);
-WVsigCorrs8LEv4  = (WVV1LE.stimCorrSig(2,:)==1);
-WVsigCorrs16LE = (WVV1LE.stimCorrSig(3,:)==1);
+WVsigCorrs4LEv1  = (WVV1LE.stimCorrSig(1,:)==1);
+WVsigCorrs8LEv1  = (WVV1LE.stimCorrSig(2,:)==1);
+WVsigCorrs16LEv1 = (WVV1LE.stimCorrSig(3,:)==1);
 
-WVposCorrs4LEv4  = (squeeze(WVV1LE.stimCorrs(1,:)) > 0) & WVsigCorrs4LE;
-WVposCorrs8LEv4  = (squeeze(WVV1LE.stimCorrs(2,:)) > 0) & WVsigCorrs8LE;
-WVposCorrs16LE = (squeeze(WVV1LE.stimCorrs(3,:)) > 0) & WVsigCorrs16LE;
+WVposCorrs4LEv1  = (squeeze(WVV1LE.stimCorrs(1,:)) > 0) & WVsigCorrs4LEv1;
+WVposCorrs8LEv1  = (squeeze(WVV1LE.stimCorrs(2,:)) > 0) & WVsigCorrs8LEv1;
+WVposCorrs16LEv1 = (squeeze(WVV1LE.stimCorrs(3,:)) > 0) & WVsigCorrs16LEv1;
 
-WVnegCorrs4LEv4  = (squeeze(WVV1LE.stimCorrs(1,:)) < 0) & WVsigCorrs4LE;
-WVnegCorrs8LEv1  = (squeeze(WVV1LE.stimCorrs(2,:)) < 0) & WVsigCorrs8LE;
-WVnegCorrs16LE = (squeeze(WVV1LE.stimCorrs(3,:)) < 0) & WVsigCorrs16LE;
+WVnegCorrs4LEv1  = (squeeze(WVV1LE.stimCorrs(1,:)) < 0) & WVsigCorrs4LEv1;
+WVnegCorrs8LEv1  = (squeeze(WVV1LE.stimCorrs(2,:)) < 0) & WVsigCorrs8LEv1;
+WVnegCorrs16LEv1 = (squeeze(WVV1LE.stimCorrs(3,:)) < 0) & WVsigCorrs16LEv1;
 
-[~, WVmaxAmp4LE] = max((squeeze(WVV1LE.stimCircDprime(1,:,:))));
-[~, WVmaxAmp8LE] = max((squeeze(WVV1LE.stimCircDprime(2,:,:))));
-[~, WVmaxAmp16LE] = max((squeeze(WVV1LE.stimCircDprime(3,:,:))));
+[~, WVmaxAmp4LEv1] = max((squeeze(WVV1LE.stimCircDprime(1,:,:))));
+[~, WVmaxAmp8LEv1] = max((squeeze(WVV1LE.stimCircDprime(2,:,:))));
+[~, WVmaxAmp16LEv1] = max((squeeze(WVV1LE.stimCircDprime(3,:,:))));
 
-WVnumGoodLE = sum(WVV1LE.goodCh);
+WVnumGoodLEv1 = sum(WVV1LE.goodCh);
 
-WVsigCorrs4RE  = (WVV1RE.stimCorrSig(1,:)==1);
-WVsigCorrs8RE  = (WVV1RE.stimCorrSig(2,:)==1);
-WVsigCorrs16RE = (WVV1RE.stimCorrSig(3,:)==1);
+WVsigCorrs4REv1  = (WVV1RE.stimCorrSig(1,:)==1);
+WVsigCorrs8REv1  = (WVV1RE.stimCorrSig(2,:)==1);
+WVsigCorrs16REv1 = (WVV1RE.stimCorrSig(3,:)==1);
 
-WVposCorrs4RE  = (squeeze(WVV1RE.stimCorrs(1,:)) > 0) & WVsigCorrs4RE;
-WVposCorrs8RE  = (squeeze(WVV1RE.stimCorrs(2,:)) > 0) & WVsigCorrs8RE;
-WVposCorrs16RE = (squeeze(WVV1RE.stimCorrs(3,:)) > 0) & WVsigCorrs16RE;
+WVposCorrs4REv1  = (squeeze(WVV1RE.stimCorrs(1,:)) > 0) & WVsigCorrs4REv1;
+WVposCorrs8REv1  = (squeeze(WVV1RE.stimCorrs(2,:)) > 0) & WVsigCorrs8REv1;
+WVposCorrs16REv1 = (squeeze(WVV1RE.stimCorrs(3,:)) > 0) & WVsigCorrs16REv1;
 
-WVnegCorrs4RE  = (squeeze(WVV1RE.stimCorrs(1,:)) < 0) & WVsigCorrs4RE;
-WVnegCorrs8RE  = (squeeze(WVV1RE.stimCorrs(2,:)) < 0) & WVsigCorrs8RE;
-WVnegCorrs16RE = (squeeze(WVV1RE.stimCorrs(3,:)) < 0) & WVsigCorrs16RE;
+WVnegCorrs4REv1  = (squeeze(WVV1RE.stimCorrs(1,:)) < 0) & WVsigCorrs4REv1;
+WVnegCorrs8REv1  = (squeeze(WVV1RE.stimCorrs(2,:)) < 0) & WVsigCorrs8REv1;
+WVnegCorrs16REv1 = (squeeze(WVV1RE.stimCorrs(3,:)) < 0) & WVsigCorrs16REv1;
 
-[~, WVmaxAmp4RE] = max((squeeze(WVV1RE.stimCircDprime(1,:,:))));
-[~, WVmaxAmp8RE] = max((squeeze(WVV1RE.stimCircDprime(2,:,:))));
-[~, WVmaxAmp16RE] = max((squeeze(WVV1RE.stimCircDprime(3,:,:))));
+[~, WVmaxAmp4REv1] = max((squeeze(WVV1RE.stimCircDprime(1,:,:))));
+[~, WVmaxAmp8REv1] = max((squeeze(WVV1RE.stimCircDprime(2,:,:))));
+[~, WVmaxAmp16REv1] = max((squeeze(WVV1RE.stimCircDprime(3,:,:))));
 
-WVnumGoodRE = sum(WVV1RE.goodCh);
+WVnumGoodREv1 = sum(WVV1RE.goodCh);
 %%
-XTmonoInc4LE = (sum(XTposCorrs4LE & XTmaxAmp4LE>=5))/XTnumGoodLEv4;
-XTmonoInc8LE = (sum(XTposCorrs8LE & XTmaxAmp8LE>=5))/XTnumGoodLEv4;
-XTmonoInc16LE = (sum(XTposCorrs16LE & XTmaxAmp16LE>=5))/XTnumGoodLEv4;
+XTmonoInc4LEv1 = (sum(XTposCorrs4LEv1 & XTmaxAmp4LEv1 >= 5))/XTnumGoodLEv1;
+XTmonoInc8LEv1 = (sum(XTposCorrs8LEv1 & XTmaxAmp8LEv1 >= 5))/XTnumGoodLEv1;
+XTmonoInc16LEv1 = (sum(XTposCorrs16LEv1 & XTmaxAmp16LEv1 >= 5))/XTnumGoodLEv1;
 
-XTmonoDec4LE = (sum(XTnegCorrs4LE & XTmaxAmp4LE == 1))/XTnumGoodLEv4;
-XTmonoDec8LE = (sum(XTnegCorrs8LE & XTmaxAmp8LE == 1))/XTnumGoodLEv4;
-XTmonoDec16LE = (sum(XTnegCorrs16LE & XTmaxAmp16LE == 1))/XTnumGoodLEv4;
+XTmonoDec4LEv1 = (sum(XTnegCorrs4LEv1 & XTmaxAmp4LEv1 == 1))/XTnumGoodLEv1;
+XTmonoDec8LEv1 = (sum(XTnegCorrs8LEv1 & XTmaxAmp8LEv1 == 1))/XTnumGoodLEv1;
+XTmonoDec16LEv1 = (sum(XTnegCorrs16LEv1 & XTmaxAmp16LEv1 == 1))/XTnumGoodLEv1;
 
-% XTmonoSat4LE = (sum(XTposCorrs4LE & XTmaxAmp4LE == 5))/XTnumGoodLE;
-% XTmonoSat8LE = (sum(XTposCorrs8LE & XTmaxAmp4LE == 5))/XTnumGoodLE;
-% XTmonoSat16LE = (sum(XTposCorrs16LE & XTmaxAmp4LE == 5))/XTnumGoodLE;
+XTmonoSat4LEv1 = (sum(XTposCorrs4LEv1 & XTmaxAmp4LEv1 == 5))/XTnumGoodLEv1;
+XTmonoSat8LEv1 = (sum(XTposCorrs8LEv1 & XTmaxAmp4LEv1 == 5))/XTnumGoodLEv1;
+XTmonoSat16LEv1 = (sum(XTposCorrs16LEv1 & XTmaxAmp4LEv1 == 5))/XTnumGoodLEv1;
 
 
-WUmonoInc4LE = (sum(WUposCorrs4LE & WUmaxAmp4LE>=5))/WUnumGoodLE;
-WUmonoInc8LE = (sum(WUposCorrs8LE & WUmaxAmp8LE>=5))/WUnumGoodLE;
-WUmonoInc16LE = (sum(WUposCorrs16LE & WUmaxAmp16LE>=5))/WUnumGoodLE;
+WUmonoInc4LEv1 = (sum(WUposCorrs4LEv1   & WUmaxAmp4LEv1 >= 5))/WUnumGoodLEv1;
+WUmonoInc8LEv1 = (sum(WUposCorrs8LEv1   & WUmaxAmp8LEv1 >= 5))/WUnumGoodLEv1;
+WUmonoInc16LEv1 = (sum(WUposCorrs16LEv1 & WUmaxAmp16LEv1 >= 5))/WUnumGoodLEv1;
 
-WUmonoDec4LE = (sum(WUnegCorrs4LE & WUmaxAmp4LE == 1))/WUnumGoodLE;
-WUmonoDec8LE = (sum(WUnegCorrs8LE & WUmaxAmp8LE == 1))/WUnumGoodLE;
-WUmonoDec16LE = (sum(WUnegCorrs16LE & WUmaxAmp16LE == 1))/WUnumGoodLE;
+WUmonoDec4LEv1 = (sum(WUnegCorrs4LEv1   & WUmaxAmp4LEv1 == 1))/WUnumGoodLEv1;
+WUmonoDec8LEv1 = (sum(WUnegCorrs8LEv1   & WUmaxAmp8LEv1 == 1))/WUnumGoodLEv1;
+WUmonoDec16LEv1 = (sum(WUnegCorrs16LEv1 & WUmaxAmp16LEv1 == 1))/WUnumGoodLEv1;
 
-% WUmonoSat4LE = (sum(WUposCorrs4LE & WUmaxAmp4LE == 5))/WUnumGoodLE;
-% WUmonoSat8LE = (sum(WUposCorrs8LE & WUmaxAmp4LE == 5))/WUnumGoodLE;
-% WUmonoSat16LE = (sum(WUposCorrs16LE & WUmaxAmp4LE == 5))/WUnumGoodLE;
+WUmonoSat4LEv1 = (sum(WUposCorrs4LEv1   & WUmaxAmp4LEv1 == 5))/WUnumGoodLEv1;
+WUmonoSat8LEv1 = (sum(WUposCorrs8LEv1   & WUmaxAmp4LEv1 == 5))/WUnumGoodLEv1;
+WUmonoSat16LEv1 = (sum(WUposCorrs16LEv1 & WUmaxAmp4LEv1 == 5))/WUnumGoodLEv1;
 
-WVmonoInc4LE = (sum(WVposCorrs4LE & WVmaxAmp4LE>=5))/WVnumGoodLE;
-WVmonoInc8LE = (sum(WVposCorrs8LE & WVmaxAmp8LE>=5))/WVnumGoodLE;
-WVmonoInc16LE = (sum(WVposCorrs16LE & WVmaxAmp16LE>=5))/WVnumGoodLE;
+WVmonoInc4LEv1 = (sum(WVposCorrs4LEv1   & WVmaxAmp4LEv1 >= 5))/WVnumGoodLEv1;
+WVmonoInc8LEv1 = (sum(WVposCorrs8LEv1   & WVmaxAmp8LEv1 >= 5))/WVnumGoodLEv1;
+WVmonoInc16LEv1 = (sum(WVposCorrs16LEv1 & WVmaxAmp16LEv1 >= 5))/WVnumGoodLEv1;
 
-WVmonoDec4LE = (sum(WVnegCorrs4LE & WVmaxAmp4LE == 1))/WVnumGoodLE;
-WVmonoDec8LE = (sum(WVnegCorrs8LE & WVmaxAmp8LE == 1))/WVnumGoodLE;
-WVmonoDec16LE = (sum(WVnegCorrs16LE & WVmaxAmp16LE == 1))/WVnumGoodLE;
+WVmonoDec4LEv1 = (sum(WVnegCorrs4LEv1   & WVmaxAmp4LEv1 == 1))/WVnumGoodLEv1;
+WVmonoDec8LEv1 = (sum(WVnegCorrs8LEv1   & WVmaxAmp8LEv1 == 1))/WVnumGoodLEv1;
+WVmonoDec16LEv1 = (sum(WVnegCorrs16LEv1 & WVmaxAmp16LEv1 == 1))/WVnumGoodLEv1;
 
-% WVmonoSat4LE = (sum(WVposCorrs4LE & WVmaxAmp4LE == 5))/WVnumGoodLE;
-% WVmonoSat8LE = (sum(WVposCorrs8LE & WVmaxAmp4LE == 5))/WVnumGoodLE;
-% WVmonoSat16LE = (sum(WVposCorrs16LE & WVmaxAmp4LE == 5))/WVnumGoodLE;
+WVmonoSat4LEv1 = (sum(WVposCorrs4LEv1   & WVmaxAmp4LEv1 == 5))/WVnumGoodLEv1;
+WVmonoSat8LEv1 = (sum(WVposCorrs8LEv1   & WVmaxAmp4LEv1 == 5))/WVnumGoodLEv1;
+WVmonoSat16LEv1 = (sum(WVposCorrs16LEv1 & WVmaxAmp4LEv1 == 5))/WVnumGoodLEv1;
 
 %% RE
 
-XTmonoInc4RE = (sum(XTposCorrs4RE & XTmaxAmp4RE>=5))/XTnumGoodREv4;
-XTmonoInc8RE = (sum(XTposCorrs8RE & XTmaxAmp8RE>=5))/XTnumGoodREv4;
-XTmonoInc16RE = (sum(XTposCorrs16RE & XTmaxAmp16RE>=5))/XTnumGoodREv4;
+XTmonoInc4REv1 = (sum(XTposCorrs4REv1   & XTmaxAmp4REv1 >= 5))/XTnumGoodREv1;
+XTmonoInc8REv1 = (sum(XTposCorrs8REv1   & XTmaxAmp8REv1 >= 5))/XTnumGoodREv1;
+XTmonoInc16REv1 = (sum(XTposCorrs16REv1 & XTmaxAmp16REv1 >= 5))/XTnumGoodREv1;
 
-XTmonoDec4RE = (sum(XTnegCorrs4RE & XTmaxAmp4RE == 1))/XTnumGoodREv4;
-XTmonoDec8RE = (sum(XTnegCorrs8RE & XTmaxAmp8RE == 1))/XTnumGoodREv4;
-XTmonoDec16RE = (sum(XTnegCorrs16RE & XTmaxAmp16RE == 1))/XTnumGoodREv4;
+XTmonoDec4REv1 = (sum(XTnegCorrs4REv1   & XTmaxAmp4REv1 == 1))/XTnumGoodREv1;
+XTmonoDec8REv1 = (sum(XTnegCorrs8REv1   & XTmaxAmp8REv1 == 1))/XTnumGoodREv1;
+XTmonoDec16REv1 = (sum(XTnegCorrs16REv1 & XTmaxAmp16REv1 == 1))/XTnumGoodREv1;
 
-% XTmonoSat4RE = (sum(XTposCorrs4RE & XTmaxAmp4RE == 5))/XTnumGoodRE;
-% XTmonoSat8RE = (sum(XTposCorrs8RE & XTmaxAmp4RE == 5))/XTnumGoodRE;
-% XTmonoSat16RE = (sum(XTposCorrs16RE & XTmaxAmp4RE == 5))/XTnumGoodRE;
+XTmonoSat4REv1 = (sum(XTposCorrs4REv1 & XTmaxAmp4REv1 == 5))/XTnumGoodREv1;
+XTmonoSat8REv1 = (sum(XTposCorrs8REv1 & XTmaxAmp4REv1 == 5))/XTnumGoodREv1;
+XTmonoSat16REv1 = (sum(XTposCorrs16REv1 & XTmaxAmp4REv1 == 5))/XTnumGoodREv1;
 
+WUmonoInc4REv1 = (sum(WUposCorrs4REv1 & WUmaxAmp4REv1 >= 5))/WUnumGoodREv1;
+WUmonoInc8REv1 = (sum(WUposCorrs8REv1 & WUmaxAmp8REv1 >= 5))/WUnumGoodREv1;
+WUmonoInc16REv1 = (sum(WUposCorrs16REv1 & WUmaxAmp16REv1 >= 5))/WUnumGoodREv1;
 
-WUmonoInc4RE = (sum(WUposCorrs4RE & WUmaxAmp4RE>=5))/WUnumGoodRE;
-WUmonoInc8RE = (sum(WUposCorrs8RE & WUmaxAmp8RE>=5))/WUnumGoodRE;
-WUmonoInc16RE = (sum(WUposCorrs16RE & WUmaxAmp16RE>=5))/WUnumGoodRE;
+WUmonoDec4REv1 = (sum(WUnegCorrs4REv1 & WUmaxAmp4REv1 == 1))/WUnumGoodREv1;
+WUmonoDec8REv1 = (sum(WUnegCorrs8REv1 & WUmaxAmp8REv1 == 1))/WUnumGoodREv1;
+WUmonoDec16REv1 = (sum(WUnegCorrs16REv1 & WUmaxAmp16REv1 == 1))/WUnumGoodREv1;
 
-WUmonoDec4RE = (sum(WUnegCorrs4RE & WUmaxAmp4RE == 1))/WUnumGoodRE;
-WUmonoDec8RE = (sum(WUnegCorrs8RE & WUmaxAmp8RE == 1))/WUnumGoodRE;
-WUmonoDec16RE = (sum(WUnegCorrs16RE & WUmaxAmp16RE == 1))/WUnumGoodRE;
+WUmonoSat4REv1 = (sum(WUposCorrs4REv1 & WUmaxAmp4REv1 == 5))/WUnumGoodREv1;
+WUmonoSat8REv1 = (sum(WUposCorrs8REv1 & WUmaxAmp4REv1 == 5))/WUnumGoodREv1;
+WUmonoSat16REv1 = (sum(WUposCorrs16REv1 & WUmaxAmp4REv1 == 5))/WUnumGoodREv1;
 
-% WUmonoSat4RE = (sum(WUposCorrs4RE & WUmaxAmp4RE == 5))/WUnumGoodRE;
-% WUmonoSat8RE = (sum(WUposCorrs8RE & WUmaxAmp4RE == 5))/WUnumGoodRE;
-% WUmonoSat16RE = (sum(WUposCorrs16RE & WUmaxAmp4RE == 5))/WUnumGoodRE;
+WVmonoInc4REv1 = (sum(WVposCorrs4REv1 & WVmaxAmp4REv1 >= 5))/WVnumGoodREv1;
+WVmonoInc8REv1 = (sum(WVposCorrs8REv1 & WVmaxAmp8REv1 >= 5))/WVnumGoodREv1;
+WVmonoInc16REv1 = (sum(WVposCorrs16REv1 & WVmaxAmp16REv1 >= 5))/WVnumGoodREv1;
 
-WVmonoInc4RE = (sum(WVposCorrs4RE & WVmaxAmp4RE>=5))/WVnumGoodRE;
-WVmonoInc8RE = (sum(WVposCorrs8RE & WVmaxAmp8RE>=5))/WVnumGoodRE;
-WVmonoInc16RE = (sum(WVposCorrs16RE & WVmaxAmp16RE>=5))/WVnumGoodRE;
+WVmonoDec4REv1 = (sum(WVnegCorrs4REv1 & WVmaxAmp4REv1 == 1))/WVnumGoodREv1;
+WVmonoDec8REv1 = (sum(WVnegCorrs8REv1 & WVmaxAmp8REv1 == 1))/WVnumGoodREv1;
+WVmonoDec16REv1 = (sum(WVnegCorrs16REv1 & WVmaxAmp16REv1 == 1))/WVnumGoodREv1;
 
-WVmonoDec4RE = (sum(WVnegCorrs4RE & WVmaxAmp4RE == 1))/WVnumGoodRE;
-WVmonoDec8RE = (sum(WVnegCorrs8RE & WVmaxAmp8RE == 1))/WVnumGoodRE;
-WVmonoDec16RE = (sum(WVnegCorrs16RE & WVmaxAmp16RE == 1))/WVnumGoodRE;
-
-% WVmonoSat4RE = (sum(WVposCorrs4RE & WVmaxAmp4RE == 5))/WVnumGoodRE;
-% WVmonoSat8RE = (sum(WVposCorrs8RE & WVmaxAmp4RE == 5))/WVnumGoodRE;
-% WVmonoSat16RE = (sum(WVposCorrs16RE & WVmaxAmp4RE == 5))/WVnumGoodRE;
+WVmonoSat4REv1 = (sum(WVposCorrs4REv1 & WVmaxAmp4REv1 == 5))/WVnumGoodREv1;
+WVmonoSat8REv1 = (sum(WVposCorrs8REv1 & WVmaxAmp4REv1 == 5))/WVnumGoodREv1;
+WVmonoSat16REv1 = (sum(WVposCorrs16REv1 & WVmaxAmp4REv1 == 5))/WVnumGoodREv1;
 %% plot the things!
 
 subplot(2,4,1)
 hold on
 
-LEv1 = [XTmonoInc4LE WUmonoInc4LE WVmonoInc4LE;...
-   XTmonoInc8LE WUmonoInc8LE WVmonoInc8LE;...
-   XTmonoInc16LE WUmonoInc16LE WVmonoInc16LE];
+LEv1 = [ XTmonoInc4LEv1  WUmonoInc4LEv1  WVmonoInc4LEv1;...
+         XTmonoInc8LEv1  WUmonoInc8LEv1  WVmonoInc8LEv1;...
+        XTmonoInc16LEv1 WUmonoInc16LEv1 WVmonoInc16LEv1];
 
 bar(LEv1,1)
 
@@ -477,11 +475,11 @@ set(gca,'Position',[pos(1),pos(2), pos(3) + 0.015, pos(4) - 0.2]);
 subplot(2,4,2)
 hold on
 
-LEv1 = [XTmonoInc4RE WUmonoInc4RE WVmonoInc4RE;...
-   XTmonoInc8RE WUmonoInc8RE WVmonoInc8RE;...
-   XTmonoInc16RE WUmonoInc16RE WVmonoInc16RE];
+REv1 = [ XTmonoInc4REv1  WUmonoInc4REv1  WVmonoInc4REv1;...
+         XTmonoInc8REv1  WUmonoInc8REv1  WVmonoInc8REv1;...
+        XTmonoInc16REv1 WUmonoInc16REv1 WVmonoInc16REv1];
 
-bar(LEv1,1)
+bar(REv1,1)
 
 title('RE/AE')
 ylim([0 0.8])
@@ -496,9 +494,9 @@ set(gca,'Position',[pos(1),pos(2), pos(3) + 0.015, pos(4) - 0.2]);
 subplot(2,4,5)
 hold on
 
-LEv1Circ = [XTmonoDec4LE WUmonoDec4LE WVmonoDec4LE;...
-   XTmonoDec8LE WUmonoDec8LE WVmonoDec8LE;...
-   XTmonoDec16LE WUmonoDec16LE WVmonoDec16LE];
+LEv1Circ = [ XTmonoDec4LEv1  WUmonoDec4LEv1  WVmonoDec4LEv1;...
+               XTmonoDec8LEv1  WUmonoDec8LEv1  WVmonoDec8LEv1;...
+              XTmonoDec16LEv1 WUmonoDec16LEv1 WVmonoDec16LEv1];
 
 bar(LEv1Circ,1)
 
@@ -516,11 +514,11 @@ set(gca,'Position',[pos(1),pos(2), pos(3) + 0.015, pos(4) - 0.2]);
 subplot(2,4,6)
 hold on
 
-LEv1Circ = [XTmonoDec4RE WUmonoDec4RE WVmonoDec4RE;...
-   XTmonoDec8RE WUmonoDec8RE WVmonoDec8RE;...
-   XTmonoDec16RE WUmonoDec16RE WVmonoDec16RE];
+REv1Circ = [ XTmonoDec4REv1  WUmonoDec4REv1  WVmonoDec4REv1;...
+               XTmonoDec8REv1  WUmonoDec8REv1  WVmonoDec8REv1;...
+              XTmonoDec16REv1 WUmonoDec16REv1 WVmonoDec16REv1];
 
-bar(LEv4,1)
+bar(REv1Circ,1)
 
 ylim([0 0.1])
 %xlim([0.25 3.75])

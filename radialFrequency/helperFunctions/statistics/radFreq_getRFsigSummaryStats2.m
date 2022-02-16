@@ -31,18 +31,17 @@ numRFsTunedCirclePerCh(2,1) = sum(numRFsSigCircle == 1);
 numRFsTunedCirclePerCh(3,1) = sum(numRFsSigCircle == 2);
 numRFsTunedCirclePerCh(4,1) = sum(numRFsSigCircle == 3);
 %% channels that have mixed tuning depending on RF
-circleChs = find(numRFsSigCircle > 0);
-highAmpChs = find(numRFsSigHighAmp > 0);
+circleChs = find(numRFsSigCircle > 0 & dataT.goodCh == 1);
+highAmpChs = find(numRFsSigHighAmp > 0 & dataT.goodCh == 1);
 chsMixedTuning = intersect(circleChs, highAmpChs);
 numChsMixedTuning = length(chsMixedTuning);
 %% number checks
 
-% if numChsTunedCircle + numChsTunedHighAmp ~= numTunedChs
-%     fprintf('%s %s %s number of good channels and tuned and untuned are not equal', dataT.animal, dataT.array, dataT.eye)end
-
 if numTunedChs + numUntunedChs ~= sum(dataT.goodCh)
     fprintf('%s %s %s number of good channels and tuned and untuned are not equal', dataT.animal, dataT.array, dataT.eye)
 end
+
+fprintf('%s %s %s has %d channels with mixed tuning\n',dataT.animal, dataT.array, dataT.eye, length(chsMixedTuning));
 %% pie chart
 figure
 
@@ -50,6 +49,7 @@ s = suptitle(sprintf('%s %s %s RF tuning type breakdown',dataT.animal, dataT.arr
 s.Position(2) = s.Position(2) +0.025;
 
 tuningMtx = [numUntunedChs, numChsTunedHighAmp, numChsTunedCircle];
+fprintf('%s %s %s has %d data points per pie \n',dataT.animal, dataT.array, dataT.eye, sum(tuningMtx));
 axis off
 axis square
 

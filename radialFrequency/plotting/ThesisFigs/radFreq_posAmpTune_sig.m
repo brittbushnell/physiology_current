@@ -315,3 +315,4 @@ pos = get(gca,'Position');
 set(gca,'Position',[pos(1),pos(2), pos(3) + 0.015, pos(4) - 0.2]);
 
 legend('XT','WU','WV','Location','best')
+%%

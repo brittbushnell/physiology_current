@@ -61,7 +61,7 @@ fprintf('*** XT V1 LE *** \n')
     XTV1LE.numChsMixedTuning, XTV1LE.numSigRFsPerCh, XTV1LE.numRFsSigHighAmp, XTV1LE.numRFsSigCircle,...
     XTV1LE.numSigChsHighAmpPerRF,  XTV1LE.numSigChsCirclePerRF]...
     = radFreq_getRFsigSummaryStats2(XTV1LE);
-%%
+
 fprintf('*** XT V4 RE ***\n')
 [XTV4RE.numTunedChs, XTV4RE.numUntunedChs, XTV4RE.numChsTunedHighAmp, XTV4RE.numChsTunedCircle,...
     XTV4RE.numChsMixedTuning, XTV4RE.numSigRFsPerCh, XTV4RE.numRFsSigHighAmp, XTV4RE.numRFsSigCircle,...
@@ -74,7 +74,7 @@ fprintf('*** XT V4 LE *** \n')
     XTV4LE.numSigChsHighAmpPerRF,  XTV4LE.numSigChsCirclePerRF]...
     = radFreq_getRFsigSummaryStats2(XTV4LE);
 
-%% WU tuning summary stats
+% WU tuning summary stats
 fprintf('\n\n*** WU V1 RE ***\n')
 [WUV1RE.numTunedChs, WUV1RE.numUntunedChs, WUV1RE.numChsTunedHighAmp, WUV1RE.numChsTunedCircle,...
     WUV1RE.numChsMixedTuning, WUV1RE.numSigRFsPerCh, WUV1RE.numRFsSigHighAmp, WUV1RE.numRFsSigCircle,...
@@ -98,7 +98,7 @@ fprintf('*** WU V4 LE *** \n')
     WUV4LE.numChsMixedTuning, WUV4LE.numSigRFsPerCh, WUV4LE.numRFsSigHighAmp, WUV4LE.numRFsSigCircle,...
     WUV4LE.numSigChsHighAmpPerRF,  WUV4LE.numSigChsCirclePerRF]...
     = radFreq_getRFsigSummaryStats2(WUV4LE);
-%% WV tuning summary stats
+% WV tuning summary stats
 fprintf('\n\n*** WV V1 RE ***\n')
 [WVV1RE.numTunedChs, WVV1RE.numUntunedChs, WVV1RE.numChsTunedHighAmp, WVV1RE.numChsTunedCircle,...
     WVV1RE.numChsMixedTuning, WVV1RE.numSigRFsPerCh, WVV1RE.numRFsSigHighAmp, WVV1RE.numRFsSigCircle,...
@@ -123,13 +123,13 @@ fprintf('*** WV V4 LE *** \n')
     WVV4LE.numSigChsHighAmpPerRF,  WVV4LE.numSigChsCirclePerRF]...
     = radFreq_getRFsigSummaryStats2(WVV4LE);
 %% plot preference breakdowns
-
+fprintf('\n*** XT *** \n')
 plotRadFreq_tuningIOD(XTV1LE, XTV1RE)
 plotRadFreq_tuningIOD(XTV4LE, XTV4RE)
-
+fprintf('\n*** WU *** \n')
 plotRadFreq_tuningIOD(WUV1LE, WUV1RE)
 plotRadFreq_tuningIOD(WUV4LE, WUV4RE)
-
+fprintf('\n*** WV *** \n')
 plotRadFreq_tuningIOD(WVV1LE, WVV1RE)
 plotRadFreq_tuningIOD(WVV4LE, WVV4RE)
 %% figure 2: example tuning curves - get these from 
@@ -138,7 +138,7 @@ plotRadFreq_tuningIOD(WVV4LE, WVV4RE)
 %   amplitude is #5 or 6)
 
 % radFreq_posAmpTune_sig(XTV4LE, XTV4RE, XTV1LE, XTV1RE, WUV4LE, WUV4RE, WUV1LE, WUV1RE, WVV4LE, WVV4RE, WVV1LE, WVV1RE)
-
+% 
 % radFreq_plotTuningTypes_sig(XTV4LE, XTV4RE, XTV1LE, XTV1RE, WUV4LE, WUV4RE, WUV1LE, WUV1RE, WVV4LE, WVV4RE, WVV1LE, WVV1RE)
 % radFreq_plotTuningTypes_notSig(XTV4LE, XTV4RE, XTV1LE, XTV1RE, WUV4LE, WUV4RE, WUV1LE, WUV1RE, WVV4LE, WVV4RE, WVV1LE, WVV1RE)
 

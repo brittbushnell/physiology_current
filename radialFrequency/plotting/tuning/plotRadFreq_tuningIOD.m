@@ -11,9 +11,9 @@ REhighAmp = REdata.numChsTunedHighAmp;
 LEcircle  = LEdata.numChsTunedCircle;
 REcircle  = REdata.numChsTunedCircle;
 %%
-untunedIOD = LEuntuned - REuntuned;
-highAmpIOD = LEhighAmp - REhighAmp;
-circleIOD  = LEcircle  - REcircle;
+% untunedIOD = LEuntuned - REuntuned;
+% highAmpIOD = LEhighAmp - REhighAmp;
+% circleIOD  = LEcircle  - REcircle;
 %%
 
 LEhighAmpTunedChs = LEdata.numSigChsHighAmpPerRF./LEtuned;
@@ -43,6 +43,8 @@ b(1).FaceColor = [0.2 0.4 1];
 b(2).FaceColor = [1 0 0];
 
 ylim([0 maxY])
+text(1, maxY, sprintf('LE n %d',(LEhighAmp)))
+text(2, maxY, sprintf('RE n %d',(REhighAmp)))
 ylabel('% tuned channels')
 title('Channels with significant preference for high amplitudes')
 set(gca,'TickDir','out','FontAngle','italic','FontSize',10,...
@@ -58,6 +60,8 @@ b(1).FaceColor = [0.2 0.4 1];
 b(2).FaceColor = [1 0 0];
 
 ylim([0 maxY])
+text(1, maxY, sprintf('LE n %d',(LEcircle)))
+text(2, maxY, sprintf('RE n %d',(REcircle)))
 title('Channels with significant preference for circles')
 set(gca,'TickDir','out','FontAngle','italic','FontSize',10,...
     'XTick',1:3,'XTickLabel',{'RF4','RF8','RF16'},'YTick',ySpacing,'YTickLabel',ySpacing.*100)
@@ -91,27 +95,27 @@ REnumSigCirclePerRF = REdata.numRFsSigCircle;
 
 LEhigh = nan(4,1);  REhigh = nan(4,1);
 
-LEhigh(1,1) = sum(LEnumSigHighPerRF == 0);
-LEhigh(2,1) = sum(LEnumSigHighPerRF == 1);
-LEhigh(3,1) = sum(LEnumSigHighPerRF == 2);
-LEhigh(4,1) = sum(LEnumSigHighPerRF == 3);
+LEhigh(1,1) = sum(LEnumSigHighPerRF == 0 & LEdata.goodCh == 1);
+LEhigh(2,1) = sum(LEnumSigHighPerRF == 1 & LEdata.goodCh == 1);
+LEhigh(3,1) = sum(LEnumSigHighPerRF == 2 & LEdata.goodCh == 1);
+LEhigh(4,1) = sum(LEnumSigHighPerRF == 3 & LEdata.goodCh == 1);
 
-REhigh(1,1) = sum(REnumSigHighPerRF == 0);
-REhigh(2,1) = sum(REnumSigHighPerRF == 1);
-REhigh(3,1) = sum(REnumSigHighPerRF == 2);
-REhigh(4,1) = sum(REnumSigHighPerRF == 3);
+REhigh(1,1) = sum(REnumSigHighPerRF == 0 & REdata.goodCh == 1);
+REhigh(2,1) = sum(REnumSigHighPerRF == 1 & REdata.goodCh == 1);
+REhigh(3,1) = sum(REnumSigHighPerRF == 2 & REdata.goodCh == 1);
+REhigh(4,1) = sum(REnumSigHighPerRF == 3 & REdata.goodCh == 1);
 
 LEcirc = nan(4,1);  REcirc = nan(4,1);
 
-LEcirc(1,1) = sum(LEnumSigCirclePerRF == 0);
-LEcirc(2,1) = sum(LEnumSigCirclePerRF == 1);
-LEcirc(3,1) = sum(LEnumSigCirclePerRF == 2);
-LEcirc(4,1) = sum(LEnumSigCirclePerRF == 3);
+LEcirc(1,1) = sum(LEnumSigCirclePerRF == 0 & LEdata.goodCh == 1);
+LEcirc(2,1) = sum(LEnumSigCirclePerRF == 1 & LEdata.goodCh == 1);
+LEcirc(3,1) = sum(LEnumSigCirclePerRF == 2 & LEdata.goodCh == 1);
+LEcirc(4,1) = sum(LEnumSigCirclePerRF == 3 & LEdata.goodCh == 1);
 
-REcirc(1,1) = sum(REnumSigCirclePerRF == 0);
-REcirc(2,1) = sum(REnumSigCirclePerRF == 1);
-REcirc(3,1) = sum(REnumSigCirclePerRF == 2);
-REcirc(4,1) = sum(REnumSigCirclePerRF == 3);
+REcirc(1,1) = sum(REnumSigCirclePerRF == 0 & REdata.goodCh == 1);
+REcirc(2,1) = sum(REnumSigCirclePerRF == 1 & REdata.goodCh == 1);
+REcirc(3,1) = sum(REnumSigCirclePerRF == 2 & REdata.goodCh == 1);
+REcirc(4,1) = sum(REnumSigCirclePerRF == 3 & REdata.goodCh == 1);
 %%
 figure%(2)
 clf
@@ -126,6 +130,7 @@ axis square
 title('LE')
 
 p = pie(LEhigh);
+fprintf('%s %s %s high Amp has %d data points per pie \n',LEdata.animal, LEdata.array, LEdata.eye, sum(LEhigh));
 p(1).FaceColor = [0.4 0.8 1];
 if LEhigh(2) > 0
     p(3).FaceColor = [1 0.8 1];
@@ -136,7 +141,7 @@ elseif LEhigh(4) > 0
 end
 
 text(-2, 0.2, 'High Amp','FontWeight','bold','FontSize',12)
-legend('0','1','2','3')
+% legend('0','1','2','3')
 
 subplot(2,2,2)
 hold on
@@ -145,6 +150,7 @@ axis square
 title('RE')
 
 p = pie(REhigh);
+fprintf('%s %s %s high Amp has %d data points per pie \n',REdata.animal, REdata.array, REdata.eye, sum(REhigh));
 p(1).FaceColor = [0.4 0.8 1];
 if REhigh(2) > 0
     p(3).FaceColor = [1 0.8 1];
@@ -160,6 +166,7 @@ axis off
 axis square
 
 p = pie(LEcirc);
+fprintf('%s %s %s circle has %d data points per pie \n',LEdata.animal, LEdata.array, LEdata.eye, sum(LEcirc));
 p(1).FaceColor = [0.4 0.8 1];
 if LEcirc(2) > 0
     p(3).FaceColor = [1 0.8 1];
@@ -176,6 +183,7 @@ axis off
 axis square
 
 p = pie(REcirc);
+fprintf('%s %s %s circle has %d data points per pie \n',REdata.animal, REdata.array, REdata.eye, sum(REcirc));
 p(1).FaceColor = [0.4 0.8 1];
 if REcirc(2) > 0
     p(3).FaceColor = [1 0.8 1];

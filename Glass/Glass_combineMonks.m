@@ -68,7 +68,7 @@ WVV4diff  = angdiff(WVV4.meanOriDegDifAllStim, WVV4.meanOriDegDifPrefStim)
 % close all
 plotGlass_crNdxvsOriDiff(WUV1, WUV4)
 plotGlass_crNdxvsOriDiff(WVV1, WVV4)
-% plotGlass_crNdxvsOriDiff(XTV1, XTV4)
+plotGlass_crNdxvsOriDiff(XTV1, XTV4)
 
 % plotGlass_crNdxvsOriDiff_grat(WUV1, WUV4)
 % plotGlass_crNdxvsOriDiff_grat(WVV1, WVV4)
