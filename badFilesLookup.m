@@ -3,17 +3,18 @@ function [badFiles] = badFilesLookup()
 % ignored.  This document will be continually updated.
 
 badFiles = {
-    'XT_LE_gratings_nsp1_20181027_003_thresh35'
-    'XT_LE_gratings_nsp1_20181107_004_thresh35'
-    'XT_LE_gratings_nsp1_20181206_001_thresh35'
-    'XT_LE_gratings_nsp1_20181210_001_thresh35'
-    'XT_LE_gratings_nsp1_20181212_001_thresh35'
-    'XT_LE_gratings_nsp1_20181213_003_thresh35'
-    'XT_LE_gratings_nsp1_20181213_004_thresh35'
-    'XT_RE_Gratings_nsp1_20190122_002_thresh35'
-    'XT_RE_Gratings_nsp1_20190131_003_thresh35'
-    'XT_RE_gratings_nsp1_20181028_003_thresh35'
-    'XT_RE_gratings_nsp1_20181107_005_thresh35'
-    'XT_RE_gratings_nsp1_20181129_003_thresh35'
-    'XT_LE_Gratings_nsp1_20190131_002_thresh35'
+%     'XT_LE_edgeCos_nsp1_20181106_001_thresh35';
+%     'XT_LE_edgeCos_nsp1_20181106_002_thresh35';
+%     'XT_LE_edgeCos_nsp1_20181127_003_thresh35';
+%     'XT_LE_edgeCos_nsp1_20181127_004_thresh35';
+%     'XT_LE_edgeCos_nsp1_20181127_005_thresh35';
+%     'XT_LE_edgeCos_nsp1_20181129_004_thresh35';
+%     'XT_LE_edgeCos_nsp1_20181129_005_thresh35';
+%     'XT_LE_edgeCos_nsp1_20181129_006_thresh35';
+%     'XT_RE_edgeCos_nsp1_20181128_001_thresh35';
+%     'XT_RE_edgeCos_nsp1_20181128_002_thresh35';
+%     'XT_RE_edgeCos_nsp1_20181128_003_thresh35';
+    'XT_RE_edgeCos_nsp1_20181128_004_thresh35';
+    'XT_RE_edgeCos_nsp1_20181129_001_thresh35';
+    'XT_RE_edgeCos_nsp1_20181129_002_thresh35';
     };

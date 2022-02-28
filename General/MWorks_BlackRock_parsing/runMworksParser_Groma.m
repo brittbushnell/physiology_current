@@ -7,34 +7,28 @@ clear
 tic
 %%
 files = {
-%     'XT_LE_gratings_nsp1_20181027_003_thresh35_ogcorrupt'
-%     'XT_LE_gratings_nsp1_20181107_004_thresh35_ogcorrupt'
-    'XT_LE_gratings_nsp1_20181206_001_thresh35_ogcorrupt'
-%     'XT_LE_gratings_nsp1_20181210_001_thresh35_ogcorrupt'
-%     'XT_LE_gratings_nsp1_20181212_001_thresh35_ogcorrupt'
-%     'XT_LE_gratings_nsp1_20181213_003_thresh35_ogcorrupt'
-%     'XT_LE_gratings_nsp1_20181213_004_thresh35_ogcorrupt'
-%     'XT_RE_Gratings_nsp1_20190122_002_thresh35_ogcorrupt'
-%     'XT_RE_Gratings_nsp1_20190131_003_thresh35_ogcorrupt'
-%     'XT_RE_gratings_nsp1_20181028_003_thresh35_ogcorrupt'
-%     'XT_RE_gratings_nsp1_20181107_005_thresh35_ogcorrupt'
-%     'XT_RE_gratings_nsp1_20181129_003_thresh35_ogcorrupt'
-%     'XT_LE_Gratings_nsp1_20190131_002_thresh35_ogcorrupt'
-%     
-%     'XT_LE_Gratings_nsp2_20190131_002_thresh35'
-%     'XT_LE_gratings_nsp2_20181027_003_thresh35'
-%     'XT_LE_gratings_nsp2_20181107_004_thresh35'
-%     'XT_LE_gratings_nsp2_20181206_001_thresh35'
-%     'XT_LE_gratings_nsp2_20181210_001_thresh35'
-%     'XT_LE_gratings_nsp2_20181212_001_thresh35'
-%     'XT_LE_gratings_nsp2_20181213_003_thresh35'
-%     'XT_LE_gratings_nsp2_20181213_004_thresh35'
-%     'XT_RE_Gratings_nsp2_20190122_002_thresh35'
-%     'XT_RE_Gratings_nsp2_20190131_003_thresh35'
-%     'XT_RE_gratings_nsp2_20181028_003_thresh35'
-%     'XT_RE_gratings_nsp2_20181107_005_thresh35'
-%     'XT_RE_gratings_nsp2_20181129_003_thresh35'
+    'XT_LE_edgeCos_nsp1_20181106_001_thresh35_ogcorrupt';
+    'XT_LE_edgeCos_nsp1_20181106_002_thresh35_ogcorrupt';
+    'XT_LE_edgeCos_nsp1_20181127_003_thresh35_ogcorrupt';
+    'XT_LE_edgeCos_nsp1_20181127_004_thresh35_ogcorrupt';
+    'XT_LE_edgeCos_nsp1_20181127_005_thresh35_ogcorrupt';
+    'XT_LE_edgeCos_nsp1_20181129_004_thresh35_ogcorrupt';
+    'XT_LE_edgeCos_nsp1_20181129_005_thresh35_ogcorrupt';
+    'XT_LE_edgeCos_nsp1_20181129_006_thresh35_ogcorrupt';
+    'XT_RE_edgeCos_nsp1_20181128_001_thresh35_ogcorrupt';
+    'XT_RE_edgeCos_nsp1_20181128_002_thresh35_ogcorrupt';
+    'XT_RE_edgeCos_nsp1_20181128_004_thresh35_ogcorrupt';
+    'XT_RE_edgeCos_nsp1_20181129_001_thresh35_ogcorrupt';
+    'XT_RE_edgeCos_nsp1_20181129_002_thresh35_ogcorrupt';
 
+    'XT_LE_edgeCos_nsp2_20181129_005_thresh35';
+    'XT_LE_edgeCos_nsp2_20181129_006_thresh35';
+    'XT_RE_edgeCos_nsp2_20181128_001_thresh35';
+    'XT_RE_edgeCos_nsp2_20181128_002_thresh35';
+    'XT_RE_edgeCos_nsp2_20181128_003_thresh35';
+    'XT_RE_edgeCos_nsp2_20181128_004_thresh35';
+    'XT_RE_edgeCos_nsp2_20181129_001_thresh35';
+    'XT_RE_edgeCos_nsp2_20181129_002_thresh35';
 };
 %%
 stimType = 'gratings'; %'png';
@@ -42,7 +36,7 @@ stimType = 'gratings'; %'png';
 %%
 failNdx = 0;
 for fi = 1:length(files)
-    try
+%     try
         filename = string(files{fi});
         
         fileInfo = strsplit(filename,'_');
@@ -50,7 +44,7 @@ for fi = 1:length(files)
         input = sprintf('/v/awake/%s/recordings/%sReThreshold/gratingsAndEdges/%s/', fileInfo(1), fileInfo(4), fileInfo(2));
 
 
-        if contains(filename,'grating','IgnoreCase',true)
+        if contains(filename,'grating','IgnoreCase',true) || contains(filename,'edge','IgnoreCase',true)
             outputDir = sprintf('/v/awake/%s/recordings/%sReThreshold/gratingsAndEdges/parsed/',fileInfo(1), fileInfo(4));
         else
         end
@@ -65,9 +59,9 @@ for fi = 1:length(files)
         end
         toc/3600;
         
-    catch ME
-        failNdx = failNdx+1;
-        failedFiles{failNdx} = ME;
-        fprintf('%s failed\n\n',filename)
-    end 
+%     catch ME
+%         failNdx = failNdx+1;
+%         failedFiles{failNdx} = ME.message;
+%         fprintf('%s failed\n\n',filename)
+%     end 
 end
