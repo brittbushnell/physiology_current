@@ -39,8 +39,9 @@ end
 
 [~,~,e]=fileparts(file);
 e=e(2:end); % remove .
+% fprintf('reading file %s \n', file)
 if numel(e) == 3 && all(~isletter(e))
     S = read_behavraw_dos(file);
 elseif numel(e) == 4 || (numel(e) == 3 && strcmpi(e,'psy'))
-    S = read_behavraw_win(file);
+    S = read_behavraw_win3(file);
 end

@@ -18,7 +18,7 @@
 %
 % TvG Aug 2017, copied from read_behaveraw
 
-function S = read_behavraw_win(file)
+function S = read_behavraw_win3(file)
 
 %% initialize
 
@@ -44,7 +44,7 @@ while OK
         continue
     end
     SecHead = regexp(L,'^=== ([A-Z ]+) ===$','Tokens');
-    isSecHead = ~isempty(SecHead) && ~isempty(SecHead{1});
+    isSecHead = ~isempty(SecHead) && ~isempty(strtrim(SecHead{1}));
     if isSecHead
         SectionName = SecHead{1}{1};
         % translate section name into field name
@@ -66,15 +66,17 @@ while OK
         case 'PERFORMANCE DETAILS'
             FieldName = 'PerfDetails';
         otherwise
-            FieldName = '';
+            FieldName = 'unknown';
         end
-                
+
         % parse according to field properties
-        if ismember(FieldName,{'ExpInfo','BehavIndicators','StimSet','ExpSet','SysSet','SetupInfo'})
-            S.(FieldName) = p_F_c_V_nl(fid); % parse: Field colon Value till New Line         
-            
+        if ismember(FieldName,{'ExpInfo','StimSet','ExpSet','SysSet','SetupInfo'})
+            S.(FieldName) = p_F_c_V_nl(fid); % parse: Field colon Value till New Line
         elseif ismember(FieldName,{'PerfSumm','PerfDetails'})
             [S.(FieldName).ColInfo,S.(FieldName).mtx] = p_H_nl_R_nl(fid); % parse: matrix-style
+        elseif ismember(FieldName,{'unknown', 'BehavIndicators'})
+          skip_section(fid)      % skip sections Chao broke
+%           fprintf('Skipping %n section /n',FieldName)
         else
             keyboard
             error([mfilename ':format'],'Format unknown')
@@ -179,6 +181,16 @@ function S = p_F_c_V_nl(fid)
     end
     
 
+function skip_section(fid)
+    
+    OK = true;
+    while OK
+        L = fgetl(fid);
+        if isempty(L)
+            OK = false;
+            continue
+        end
+    end
 
 
 
@@ -188,7 +200,8 @@ function F = str2f(str)
     
     % Field name, specified as a character vector. Valid field names begin with a letter, and can contain letters, digits, and underscores. The maximum length of a field name is the value that the namelengthmax function returns.
     
-    F = deblanku(deblank(str));
+    %F = deblanku(deblank(str));
+    F = strtrim(str);
     if isempty(F)
         F = 'empty';
         return

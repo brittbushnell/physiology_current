@@ -47,7 +47,7 @@ cumgaussfun = @(b,x) b(1) + ((1-b(1)-b(2))*normcdf(x,b(3),b(4)));
 % actual function
 % b(1): lower lapse
 % b(2): upper lapse
-% b(3): peak
+% b(3): mean
 % b(4): variance
 
 %% input
