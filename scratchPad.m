@@ -18,3 +18,7 @@ while OK
 
 
 end
+%%
+c = Betas{1};
+
+(1-c(1) - c(2)) / (c(4)*(sqrt(2*pi)))

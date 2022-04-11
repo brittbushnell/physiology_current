@@ -40,7 +40,7 @@
 %
 % v1 TvG Oct 2015, NYU: added help.
 
-function [varargout]=gammafit(Xdata,Ydata,varargin)
+function [varargout]=cumgammafit(Xdata,Ydata,varargin)
 
 %%
 cumgammafun = @(b,x) b(1) + b(2)*gamcdf(x,b(3),b(4));
