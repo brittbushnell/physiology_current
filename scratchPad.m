@@ -19,6 +19,11 @@ while OK
 
 end
 %%
-c = Betas{1};
+
+for c = 1:length(Betas)
+    
+ = Betas{c};
 
 (1-c(1) - c(2)) / (c(4)*(sqrt(2*pi)))
+
+end
