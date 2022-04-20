@@ -1,189 +1,4 @@
 
-
-amblySubs.KJ.Peripho.age = 280;
-amblySubs.KJ.Peripho.LElens = +1.5;
-amblySubs.KJ.Peripho.RElens = 0;
-amblySubs.KJ.Peripho.sfDistLE = {'0.5@1','1@1','2@1','4@2'};
-amblySubs.KJ.Peripho.sfDistRE = {'0.5@1','1@1','2@1','4@2','8@2','12@2'};
-
-amblySubs.KJ.Peripho.LE = [
-];
-
-amblySubs.KJ.Peripho.RE = [
-];
-
-amblySubs.KJ.Peripho.REfiles = {
-    {'' '' ''};... %0.5
-    {'' '' ''};... %1
-    {'' '' ''};... %2
-    {'' '' ''};... %4
-    {'' '' ''};... %8
-    {'' '' ''}}; %12
-
-amblySubs.KJ.Peripho.LEfiles = {
-    {'' '' ''};... %0.5
-    {'' '' ''};... %1
-    {'' '' ''};... %2
-    {'' '' ''};... %4
-    {'' '' ''};... %8
-    {'' '' ''}}; %12
-
-amblySubs.KJ.Peripho.PsychSlopes.LE = [];
-amblySubs.KJ.Peripho.PsychSlopes.RE = [];
-
-% radial
-amblySubs.KJ.Radial.age = ;
-amblySubs.KJ.Radial.LE = ;
-amblySubs.KJ.Radial.RE = ;
-amblySubs.KJ.Radial.distanceComp = ;
-amblySubs.KJ.Radial.distancePhys = ;
-amblySubs.KJ.Radial.radius =;
-amblySubs.KJ.Radial.sf = ;
-
-amblySubs.KJ.Radial.LE = [
-];
-
-amblySubs.KJ.Radial.RE = [
-
-];
-
-amblySubs.KJ.Radial.PsychSlopes.LE = [];
-amblySubs.KJ.Radial.PsychSlopes.RE = [];
-
-% verno
-amblySubs.KJ.Verno.age = ;
-amblySubs.KJ.Verno.RElens = ;
-amblySubs.KJ.Verno.LElens = ;
-
-amblySubs.KJ.Verno.RE = [];
-amblySubs.KJ.Verno.LE = [];
-
-amblySubs.KJ.Verno.PsychSlopes.LE = ;
-amblySubs.KJ.Verno.PsychSlopes.RE = ;
-%%
-
-amblySubs.MM.Peripho.age = 280;
-amblySubs.MM.Peripho.LElens = +1.5;
-amblySubs.MM.Peripho.RElens = 0;
-amblySubs.MM.Peripho.sfDistLE = {'0.5@1','1@1','2@1','4@2'};
-amblySubs.MM.Peripho.sfDistRE = {'0.5@1','1@1','2@1','4@2','8@2','12@2'};
-
-amblySubs.MM.Peripho.LE = [
-];
-
-amblySubs.MM.Peripho.RE = [
-];
-
-amblySubs.MM.Peripho.REfiles = {
-    {'' '' ''};... %0.5
-    {'' '' ''};... %1
-    {'' '' ''};... %2
-    {'' '' ''};... %4
-    {'' '' ''};... %8
-    {'' '' ''}}; %12
-
-amblySubs.MM.Peripho.LEfiles = {
-    {'' '' ''};... %0.5
-    {'' '' ''};... %1
-    {'' '' ''};... %2
-    {'' '' ''};... %4
-    {'' '' ''};... %8
-    {'' '' ''}}; %12
-
-amblySubs.MM.Peripho.PsychSlopes.LE = [];
-amblySubs.MM.Peripho.PsychSlopes.RE = [];
-
-% radial
-amblySubs.MM.Radial.age = ;
-amblySubs.MM.Radial.LE = ;
-amblySubs.MM.Radial.RE = ;
-amblySubs.MM.Radial.distanceComp = ;
-amblySubs.MM.Radial.distancePhys = ;
-amblySubs.MM.Radial.radius =;
-amblySubs.MM.Radial.sf = ;
-
-amblySubs.MM.Radial.LE = [
-];
-
-amblySubs.MM.Radial.RE = [
-
-];
-
-amblySubs.MM.Radial.PsychSlopes.LE = [];
-amblySubs.MM.Radial.PsychSlopes.RE = [];
-
-% verno
-amblySubs.MM.Verno.age = ;
-amblySubs.MM.Verno.RElens = ;
-amblySubs.MM.Verno.LElens = ;
-
-amblySubs.MM.Verno.RE = [];
-amblySubs.MM.Verno.LE = [];
-
-amblySubs.MM.Verno.PsychSlopes.LE = ;
-amblySubs.MM.Verno.PsychSlopes.RE = ;
-
-%% 
-amblySubs.MN.Peripho.age = 280;
-amblySubs.MN.Peripho.LElens = +1.5;
-amblySubs.MN.Peripho.RElens = 0;
-amblySubs.MN.Peripho.sfDistLE = {'0.5@1','1@1','2@1','4@2'};
-amblySubs.MN.Peripho.sfDistRE = {'0.5@1','1@1','2@1','4@2','8@2','12@2'};
-
-amblySubs.MN.Peripho.LE = [
-];
-
-amblySubs.MN.Peripho.RE = [
-];
-
-amblySubs.MN.Peripho.REfiles = {
-    {'' '' ''};... %0.5
-    {'' '' ''};... %1
-    {'' '' ''};... %2
-    {'' '' ''};... %4
-    {'' '' ''};... %8
-    {'' '' ''}}; %12
-
-amblySubs.MN.Peripho.LEfiles = {
-    {'' '' ''};... %0.5
-    {'' '' ''};... %1
-    {'' '' ''};... %2
-    {'' '' ''};... %4
-    {'' '' ''};... %8
-    {'' '' ''}}; %12
-
-amblySubs.MN.Peripho.PsychSlopes.LE = [];
-amblySubs.MN.Peripho.PsychSlopes.RE = [];
-
-% radial
-amblySubs.MN.Radial.age = ;
-amblySubs.MN.Radial.LE = ;
-amblySubs.MN.Radial.RE = ;
-amblySubs.MN.Radial.distanceComp = ;
-amblySubs.MN.Radial.distancePhys = ;
-amblySubs.MN.Radial.radius =;
-amblySubs.MN.Radial.sf = ;
-
-amblySubs.MN.Radial.LE = [
-];
-
-amblySubs.MN.Radial.RE = [
-
-];
-
-amblySubs.MN.Radial.PsychSlopes.LE = [];
-amblySubs.MN.Radial.PsychSlopes.RE = [];
-
-% verno
-amblySubs.MN.Verno.age = ;
-amblySubs.MN.Verno.RElens = ;
-amblySubs.MN.Verno.LElens = ;
-
-amblySubs.MN.Verno.RE = [];
-amblySubs.MN.Verno.LE = [];
-
-amblySubs.MN.Verno.PsychSlopes.LE = ;
-amblySubs.MN.Verno.PsychSlopes.RE = ;
 %% GA
 amblySubs.GA.Peripho.age = 280;
 amblySubs.GA.Peripho.LElens = +1.5;
@@ -245,120 +60,74 @@ amblySubs.GA.Verno.LE = [];
 
 amblySubs.GA.Verno.PsychSlopes.LE = ;
 amblySubs.GA.Verno.PsychSlopes.RE = ;
-%% KG
-
-controlSubs.KG.Peripho.age = 280;
-controlSubs.KG.Peripho.LElens = +1.5;
-controlSubs.KG.Peripho.RElens = 0;
-controlSubs.KG.Peripho.sfDistLE = {'0.5@1','1@1','2@1','4@2'};
-controlSubs.KG.Peripho.sfDistRE = {'0.5@1','1@1','2@1','4@2','8@2','12@2'};
-
-controlSubs.KG.Peripho.LE = [
-];
-
-controlSubs.KG.Peripho.RE = [
-];
-
-controlSubs.KG.Peripho.REfiles = {
-    {'' '' ''};... %0.5
-    {'' '' ''};... %1
-    {'' '' ''};... %2
-    {'' '' ''};... %4
-    {'' '' ''};... %8
-    {'' '' ''}}; %12
-
-controlSubs.KG.Peripho.LEfiles = {
-    {'' '' ''};... %0.5
-    {'' '' ''};... %1
-    {'' '' ''};... %2
-    {'' '' ''};... %4
-    {'' '' ''};... %8
-    {'' '' ''}}; %12
-
-controlSubs.KG.Peripho.PsychSlopes.LE = [];
-controlSubs.KG.Peripho.PsychSlopes.RE = [];
-
-% radial
-controlSubs.KG.Radial.age = ;
-controlSubs.KG.Radial.LE = ;
-controlSubs.KG.Radial.RE = ;
-controlSubs.KG.Radial.distanceComp = ;
-controlSubs.KG.Radial.distancePhys = ;
-controlSubs.KG.Radial.radius =;
-controlSubs.KG.Radial.sf = ;
-
-controlSubs.KG.Radial.LE = [
-];
-
-controlSubs.KG.Radial.RE = [
-
-];
-
-controlSubs.KG.Radial.PsychSlopes.LE = [];
-controlSubs.KG.Radial.PsychSlopes.RE = [];
-
-% verno
-controlSubs.KG.Verno.age = ;
-controlSubs.KG.Verno.RElens = ;
-controlSubs.KG.Verno.LElens = ;
-
-controlSubs.KG.Verno.RE = [];
-controlSubs.KG.Verno.LE = [];
-
-controlSubs.KG.Verno.PsychSlopes.LE = ;
-controlSubs.KG.Verno.PsychSlopes.RE = ;
 
 %%
+% His RF analyses is all kinds of messed up, files of different RFs are
+% analyzed together as something totally different.
 
-controlSubs.LW.Peripho.age = 280;
-controlSubs.LW.Peripho.LElens = +1.5;
-controlSubs.LW.Peripho.RElens = 0;
-controlSubs.LW.Peripho.sfDistLE = {'0.5@1','1@1','2@1','4@2'};
+controlSubs.LW.Peripho.age = 483;
+controlSubs.LW.Peripho.LElens = +2.0;
+controlSubs.LW.Peripho.RElens = +2.25;
+controlSubs.LW.Peripho.sfDistLE = {'0.5@1','1@1','2@1','4@2','8@2','12@2'};
 controlSubs.LW.Peripho.sfDistRE = {'0.5@1','1@1','2@1','4@2','8@2','12@2'};
 
 controlSubs.LW.Peripho.LE = [
+0.5	1.64849	0.06112
+1	1.73322	0.06472
+2	1.65827	0.06339
+4	1.90171	0.05202
+8	1.64791	0.05729
+12	1.08404	0.05856    
 ];
 
 controlSubs.LW.Peripho.RE = [
+0.5	1.49662	0.06347
+1	1.69671	0.06068
+2	1.8486	0.06192
+4	1.81187	0.06832
+8	1.37568	0.07805
+12	1.25965	0.06083
 ];
 
-controlSubs.LW.Peripho.REfiles = {
-    {'' '' ''};... %0.5
-    {'' '' ''};... %1
-    {'' '' ''};... %2
-    {'' '' ''};... %4
-    {'' '' ''};... %8
-    {'' '' ''}}; %12
-
 controlSubs.LW.Peripho.LEfiles = {
-    {'' '' ''};... %0.5
-    {'' '' ''};... %1
-    {'' '' ''};... %2
-    {'' '' ''};... %4
-    {'' '' ''};... %8
-    {'' '' ''}}; %12
+    {'perip_lw.269' 'perip_lw.239' ''};... %0.5
+    {'perip_lw.268' 'perip_lw.241' 'perip_lw.242'};... %1
+    {'perip_lw.267' 'perip_lw.245' 'perip_lw.246'};... %2
+    {'perip_lw.266' 'perip_lw.250' 'perip_lw.251'};... %4
+    {'perip_lw.265' 'perip_lw.254' 'perip_lw.255'};... %8
+    {'perip_lw.264' 'perip_lw.262' 'perip_lw.263'}}; %12
 
-controlSubs.LW.Peripho.PsychSlopes.LE = [];
-controlSubs.LW.Peripho.PsychSlopes.RE = [];
+controlSubs.LW.Peripho.REfiles = {
+    {'perip_lw.270' 'perip_lw.236' 'perip_lw.199'};... %0.5
+    {'perip_lw.271' 'perip_lw.235' 'perip_lw.203'};... %1
+    {'perip_lw.272' 'perip_lw.234' 'perip_lw.209'};... %2
+    {'perip_lw.274' 'perip_lw.233' 'perip_lw.217'};... %4
+    {'perip_lw.275' 'perip_lw.232' 'perip_lw.227'};... %8
+    {'perip_lw.276' 'perip_lw.231' 'perip_lw.229'}}; %12
+
+controlSubs.LW.Peripho.PsychSlopes.LE = [3.93230 2.35936 2.44951 3.62359 2.99585 2.87574];
+controlSubs.LW.Peripho.PsychSlopes.RE = [2.46026 2.69347 2.56623 2.16181 1.72402 2.67836];
 
 % radial
-controlSubs.LW.Radial.age = ;
-controlSubs.LW.Radial.LE = ;
-controlSubs.LW.Radial.RE = ;
-controlSubs.LW.Radial.distanceComp = ;
-controlSubs.LW.Radial.distancePhys = ;
-controlSubs.LW.Radial.radius =;
-controlSubs.LW.Radial.sf = ;
+controlSubs.LW.Radial.age = 492;
+controlSubs.LW.Radial.LElens = +2.25;
+controlSubs.LW.Radial.RElens = +2;
+controlSubs.LW.Radial.distanceComp =[] ;
+controlSubs.LW.Radial.distancePhys =[] ;
+controlSubs.LW.Radial.radius = 1.5;
+controlSubs.LW.Radial.sf = 2;
 
 controlSubs.LW.Radial.LE = [
 ];
 
 controlSubs.LW.Radial.RE = [
-
+4         24213.4     0.04709
+8         14716.5     0.04978
+16        13040       0.04951
 ];
 
 controlSubs.LW.Radial.PsychSlopes.LE = [];
-controlSubs.LW.Radial.PsychSlopes.RE = [];
+controlSubs.LW.Radial.PsychSlopes.RE = [4.42449 3.94865 3.98420];
 
 % verno
 controlSubs.LW.Verno.age = ;
