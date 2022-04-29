@@ -15,7 +15,13 @@ end
 %%
 
 for f = 1%:length(files)
-    fid = fopen(files{f},'r')
-    
-    
+    tmpFile = files{f};
+    fid = fopen(tmpFile,'r');
+    while (~feof(fid)) % not end of file
+        line = fgetl(fid);
+        % find the x and y values of the psychometric curve
+        if contains(line, 'SE(Y)')
+            
+        end
+    end
 end
