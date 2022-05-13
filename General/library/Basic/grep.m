@@ -57,15 +57,19 @@
 %		   the use of regular expressions with <-I?|X?> options
 %		<-I?|X?> options allow wildcard searches using regular expressions
 %		clicking on underlined text opens the file at the matching line
+
 % created:
 %	us	14-Jan-1987
 % modified:
 %	us	04-Apr-2006 00:31:57
+
 %--------------------------------------------------------------------------------
 function	[pout,p]=grep(varargin)
+
 % program parameters
 		tim=clock;
 		ver='04-Apr-2006 00:31:57';
+
 % option table
 		com='command line';
 	otbl={
@@ -95,9 +99,11 @@ function	[pout,p]=grep(varargin)
 	'-Xf'	false	1	{}	1	'exclude files with matching token'
 	'-Xp'	false	1	{}	1	'exclude full paths with matching token'
 	};
+
 	if	nargout
 		pout=[];
 	end
+
 % initialize engine
 		p=ini_par(ver,tim);
 		[p,msg]=set_opt(otbl,p,varargin{:});
@@ -111,12 +117,14 @@ function	[pout,p]=grep(varargin)
 		p.npat=p.opt.ns;
 		p.pattern=p.opt.pattern(:);
 		p.porigin=p.opt.f.val;
+
 % get subfolders
 		p=show_res(-100,p,sprintf('GREP> searching folders    ...'));
 		t1=clock;
 		p=get_folders(p);
 		p.runtime(2)=etime(clock,t1);
 		p=show_res( -99,p,sprintf('GREP> done %13.3f   %d folder(s)',p.runtime(1),p.nfolder));
+
 % get files
 	if	p.nfolder
 		p=show_res( -98,p,sprintf('GREP> searching files      ...'));
@@ -125,6 +133,7 @@ function	[pout,p]=grep(varargin)
 		p.runtime(3)=etime(clock,t1);
 		p=show_res( -97,p,sprintf('GREP> done %13.3f   %d file(s)',p.runtime(2),p.nfiles));
 	end
+
 	if	nargout
 		pout=unique(p.files);
 	end
@@ -148,6 +157,7 @@ function	[pout,p]=grep(varargin)
 %--------------------------------------------------------------------------------
 %--------------------------------------------------------------------------------
 function	p=ehelp(p,fnam,tag)
+
 		[fp,msg]=fopen(which(fnam),'rt');
 	if	fp > 0
 		hs=fread(fp,inf,'*char').';
@@ -167,6 +177,7 @@ function	p=ehelp(p,fnam,tag)
 		return;
 %--------------------------------------------------------------------------------
 function	p=ini_par(ver,tim)
+
 % clean up
 	if	isstruct(ver)
 		p=ver;
@@ -186,10 +197,12 @@ function	p=ini_par(ver,tim)
 		p.runtime(1)=etime(clock,tim);
 		return;
 	end
+
 % initialize common structure
 % - parameters
 		magic='GREP';
 		fsep='/';
+
 % - special characters
 %   - EOL UNIX		= LF
 %   - EOL WINDOWS	= CR+LF
@@ -215,6 +228,7 @@ function	p=ini_par(ver,tim)
 		par.hdel='%$';
 		par.reft='<a href="matlab:opentoline(''%s'',%-1d)">%s</a>: %s';
 		par.tim=tim;
+
 % ID
 		p.magic=magic;
 		p.ver=ver;
@@ -225,6 +239,7 @@ function	p=ini_par(ver,tim)
 		p.opt=[];
 		p.msg=[];
 		p.par=par;
+
 		p.section_1='===== FOLDERS  =====';
 		p.nfolder=0;
 		p.nxfolder=0;
@@ -259,8 +274,10 @@ function	p=ini_par(ver,tim)
 		return;
 %--------------------------------------------------------------------------------
 function	[p,msg]=set_opt(otbl,p,varargin)
+
 		o=[];
 		msg=[];
+
 % set options
 % ...default options
 		o.des1='===== OPTIONS =====';
@@ -272,6 +289,7 @@ function	[p,msg]=set_opt(otbl,p,varargin)
 		o.(fn).def=otbl{i,4};
 		o.(fn).val=otbl{i,4};
 	end
+
 		argn=numel(varargin);
 	if	argn < 2
 	if	~argn
@@ -299,9 +317,11 @@ function	[p,msg]=set_opt(otbl,p,varargin)
 		p.opt=o;
 		return;
 	end
+
 % ...user defined options
 % ...must account for syntax of various forms
 %	('-a -b +c -d','-f',xxx,'-g +h',...)
+
 % ...reconstruct <varargin> as a string
 		pat=sprintf('GREP>ARG|%20.19f[',rand);
 		arg=varargin;
@@ -317,6 +337,7 @@ function	[p,msg]=set_opt(otbl,p,varargin)
 		iv=strfind(ic,pat);
 		iv=~cellfun('isempty',iv);
 		ic(iv)=arg(~il);
+
 	for	i=1:numel(ox)
 		ix=ox(i);
 		fn=otbl{ix,1}(2:end);
@@ -341,6 +362,7 @@ function	[p,msg]=set_opt(otbl,p,varargin)
 	end
 	end
 	end
+
 	if	o.Id.flg	||...
 		o.If.flg	||...
 		o.Ip.flg	||...
@@ -349,6 +371,7 @@ function	[p,msg]=set_opt(otbl,p,varargin)
 		o.Xp.flg
 		p.par.chkpath=true;
 	end
+
 % get search template(s)/file(s)
 % ...templates
 		o.des2='===== INPUT =====';
@@ -357,6 +380,7 @@ function	[p,msg]=set_opt(otbl,p,varargin)
 		o.pattern=varargin{end-1};
 		o.nf=0;
 		o.files=varargin{end};
+
 	if	~iscell(o.pattern)
 		o.pattern={o.pattern};
 	end
@@ -376,6 +400,7 @@ function	[p,msg]=set_opt(otbl,p,varargin)
 	end
 		o.ns=numel(o.pattern);
 		o.arg=ic;
+
 % ...files
 	if	~iscell(o.files)
 		o.files={o.files};
@@ -383,6 +408,7 @@ function	[p,msg]=set_opt(otbl,p,varargin)
 		o.files=o.files(:);
 		o.ns=numel(o.pattern);
 		o.nf=numel(o.files);
+
 	for	i=1:o.nf
 	if	isempty(o.files{i})
 		o.files{i}=[cd,p.par.fsep,'*.*'];
@@ -411,6 +437,7 @@ function	[p,msg]=set_opt(otbl,p,varargin)
 		o.fnam{i}=[o.fnam{i},o.fext{i}];
 	end
 	end
+
 % ...remove dup folders
 		o.npat=0;
 		o.xpat=1;
@@ -422,10 +449,12 @@ function	[p,msg]=set_opt(otbl,p,varargin)
 		[o.npat,o.npat,o.xpat]=unique(o.fpat);
 		o.npat=numel(o.npat);
 		o.upat=find([1;diff(o.xpat)]>0);
+
 		p.opt=o;
 		return;
 %--------------------------------------------------------------------------------
 function	p=get_folders(p)
+
 	for	i=1:p.opt.npat
 		cf=p.opt.fpat{p.opt.upat(i)};
 		cf=strrep(cf,filesep,p.par.fsep);
@@ -434,11 +463,13 @@ function	p=get_folders(p)
 		return;
 %--------------------------------------------------------------------------------
 function	p=get_folder(p,frot,crot,depth,ix)
+
 % recursively find all subfolders of a root
 % note	we CANNOT use <genpath> as it does not return all subfolders!
 %	eg,
 %	- @class  subfolders
 %	- private subfolders
+
 % root folders
 	if	~depth
 		p=show_res(-10,p,sprintf('GREP> folder              <%s>',frot));
@@ -454,9 +485,11 @@ function	p=get_folder(p,frot,crot,depth,ix)
 		p=show_res(100,p,msg);
 	end
 	end
+
 	if	~p.opt.r.flg
 		return;
 	end
+
 % subfolders
 		rd=dir(crot);
 		rx=[rd.isdir]==1;
@@ -489,6 +522,7 @@ function	p=get_folder(p,frot,crot,depth,ix)
 		return;
 %--------------------------------------------------------------------------------
 function	p=get_files(p)
+
 	for	i=1:p.opt.nf
 		cn=p.opt.fnam{i};
 		fx=find(p.fenum==p.opt.xpat(i));
@@ -515,6 +549,7 @@ function	p=get_files(p)
 		return;
 %--------------------------------------------------------------------------------
 function	p=get_file(p)
+
 %D	if	exist(p.par.cf,'file')
 		[fp,msg]=fopen(p.par.cf,'rb');
 	if	fp < 0
@@ -535,11 +570,13 @@ function	p=get_file(p)
 		return;
 %--------------------------------------------------------------------------------
 function	[tf,p]=chk_path(mode,p,fnam,frot)
+
 		tf=true;
 % - escape immediately if user did not choose inclusion/exclusion flags
 	if	~p.par.chkpath
 		return;
 	end
+
 		ixi=true;
 		ixe=false;
 	switch	mode
@@ -582,7 +619,9 @@ function	[tf,p]=chk_path(mode,p,fnam,frot)
 	end	% does not macht PATH Ip
 	end	% does not match FILE Xf
 	end	% does not match FILE If
+
 	end	% switch
+
 	if	~ixi		||...
 		ixe
 		p.par.chkex(mode)=p.par.chkex(mode)+1;
@@ -592,6 +631,7 @@ function	[tf,p]=chk_path(mode,p,fnam,frot)
 		return;
 %--------------------------------------------------------------------------------
 function	p=get_match(p)
+
 		p.par.hasmatch=false;
 		s=p.par.s;
 	if	p.opt.i.flg
@@ -603,23 +643,28 @@ function	p=get_match(p)
 		p.nfiles=p.nfiles+1;
 		p.nbytes=p.nbytes+p.par.nbytes;
 		p.nlines=p.nlines+p.par.nlines;
+
 	for	j=1:p.opt.ns
 		str=p.opt.pattern{j};
 	if	p.opt.i.flg
 		str=lower(str);
 	end
 		p.par.cs=str;
+
 % find string pattern <str>
 	if	p.opt.R.flg
 		ix=regexp(s,str);
 	else
 		ix=strfind(s,str);
 	end
+
 		p.par.nmatch=0;
 	if	~isempty(ix)
+
 % ...find line(s)
 		[lx,lx]=histc(ix,p.par.eol);	%#ok MLINT 2006a
 		lx=lx(find([diff(lx),1]));	%#ok MLINT 2006a
+
 % ...-v: only print non-matching lines
 	if	p.opt.v.flg
 		tl=1:numel(p.par.eol)-2;
@@ -627,6 +672,7 @@ function	p=get_match(p)
 		ll(lx)=false;
 		lx=tl(ll);
 	end
+
 		nx=numel(lx);
 	if	nx
 		p=show_res(-2,p,lx,0);
@@ -634,6 +680,7 @@ function	p=get_match(p)
 		sx=p.par.eol(lx(i))+1:p.par.eol(lx(i)+1)-1;
 		nl=lx(i);
 		nm=p.par.s(sx);
+
 % ...-x: only print fully matching lines
 	if	~p.opt.x.flg	||...
 		numel(sx)==numel(str)
@@ -647,6 +694,7 @@ function	p=get_match(p)
 	end	% each	match
 	end	% found match
 	end	% found matches
+
 	if	p.par.nmatch
 		p.par.hasmatch=true;
 		p.pfiles=p.pfiles+1;
@@ -659,15 +707,19 @@ function	p=get_match(p)
 		p=show_res(4,p);
 	end
 	end
+
 	end	% for each <string>
+
 	if	p.par.hasmatch
 		p.mfiles=p.mfiles+1;
 		p.mbytes=p.mbytes+p.par.nbytes;
 		p.mlines=p.mlines+p.par.nlines;
 	end
+
 		return;
 %--------------------------------------------------------------------------------
 function	p=update(mode,p,varargin)
+
 	switch	mode
 	case	3
 		p.line(p.par.mlc,1)=varargin{1};
@@ -680,7 +732,9 @@ function	p=update(mode,p,varargin)
 		return;
 %--------------------------------------------------------------------------------
 function	p=show_res(mode,p,varargin)
+
 % common output engine
+
 %	mode	display entity
 %	-100	subfolder engine start
 %	-99	subfolder engine end
@@ -696,11 +750,13 @@ function	p=show_res(mode,p,varargin)
 %	3	line
 %	4	line count only
 %	100	error message
+
 % display all ouput
 		if	p.opt.da.flg
 			p=show_entry(mode,p,varargin{:});
 			return;
 		end
+
 % display selected ouput only
 		if	p.opt.s.flg	&&...
 			mode < 100
@@ -721,6 +777,7 @@ function	p=show_res(mode,p,varargin)
 			return;
 %--------------------------------------------------------------------------------
 function	p=show_entry(mode,p,varargin)
+
 			str=[];
 			txt=[];		%#ok MLINT 2006a
 			ref=[];
@@ -778,6 +835,7 @@ function	p=show_entry(mode,p,varargin)
 			str=p.msg;
 		end
 	end
+
 		if	~isempty(str)
 			p=update(4,p,str);
 			disp(str);
@@ -794,6 +852,7 @@ function	p=show_entry(mode,p,varargin)
 %	___FORMAT___	input formats
 %	___OUTPUT___	P.field explanations
 %	___EXAMPLE___	examples
+
 %{
 %$___FORMAT___
 %$  SYNTAX
@@ -927,6 +986,7 @@ function	p=show_entry(mode,p,varargin)
 %$  P	structure  with timing and result of the engines (for programmers)
 %$	see: <grep -f> for information about .fields
 %$___FORMAT___
+
 %$___OUTPUT___
 %$  SYNTAX
 %$			[FL,P] = grep(...)
@@ -1000,28 +1060,33 @@ function	p=show_entry(mode,p,varargin)
 %$		   num2cell(P.lcount(P.findex)),...
 %$		   P.match]
 %$___OUTPUT___
+
 %$___EXAMPLE___
 % GREP EXAMPLES
 % assume GREP.TXT is in your current working folder
 	fnam='grep.txt';
 % - show contents (note all spaces are TABs!)
 	type(fnam);
+
 % simple case insensitive [-i] string search in GREP.M for instances of
 %		Version
 % listing file name [def] and the line number [-n] of occurrences
 %-------------------------------------------------------------------------------
 	grep -i -n Version grep.m
+
 % regular expression search [-R] in GREP.M for instances of
 %		=true or =false
 % listing line number [-n] but not the file name [-Q]
 %-------------------------------------------------------------------------------
 	grep -Q -n -R =true|=false grep.m
+
 % simple string search in GREP.M for exactly matching [-x] instances of
 %		\t\tmsg=true;
 % listing the file name [def] and the line number [-n] for each occurrence
 %-------------------------------------------------------------------------------
 	TAB=sprintf('\t');
 	fl=grep('-x -n',[TAB,TAB,'msg=true;'],'grep.m');
+
 % simple string search in GREP.TXT for
 %		every line of itself in turn
 % using the pattern-file [-f] option and
@@ -1029,6 +1094,7 @@ function	p=show_entry(mode,p,varargin)
 % as well as the file name [def] for each occurrence
 %-------------------------------------------------------------------------------
 	fl=grep('-l -f',fnam,fnam);
+
 % simple string search in GREP.TXT for instances of
 %		-n
 % using the [-e] option since -n itself is an option flag (listing line number!)
@@ -1036,6 +1102,7 @@ function	p=show_entry(mode,p,varargin)
 % - compare with previous example!
 %-------------------------------------------------------------------------------
 	fl=grep('-v -e',{'-n'},fnam);
+
 % full depth search [-r] of the entire ELFUN TOOLBOX for instances of
 %		sign or cosine or atan
 % listing the full file name and pattern for each file with matches [-l]
@@ -1043,6 +1110,7 @@ function	p=show_entry(mode,p,varargin)
 %-------------------------------------------------------------------------------
 	fpat=[matlabroot,'/toolbox/matlab/elfun'];
 	fl=grep('-r -l -n',{'sign','cosine','atan'},fpat);
+
 % full depth search [-r] of the entire ELFUN TOOLBOX for instances of
 %		sign or cosine or atan
 % using the two versions of the [-e] option and
@@ -1050,6 +1118,7 @@ function	p=show_entry(mode,p,varargin)
 % as well as the count [-c] of all instances
 %-------------------------------------------------------------------------------
 	fl=grep('-r -l -c -e sign -e',{'cosine','atan'},fpat);
+
 % full depth search [-r] of the entire ELFUN TOOLBOX for instances of
 %		sign or cosine or atan
 %	only including files with a regular expression pattern [-If]
@@ -1059,6 +1128,7 @@ function	p=show_entry(mode,p,varargin)
 % as well as the file name [def] and the line number [-n] for each occurrence
 %-------------------------------------------------------------------------------
 	fl=grep('-r -l -n -If [Cc]ont -e sign -e',{'cosine','atan'},fpat);
+
 % full depth search [-r] of the entire ELFUN TOOLBOX for instances of
 %		sign or cosine or atan
 %	only including files with a regular expression pattern [-If]
