@@ -556,7 +556,7 @@ function	p=get_file(p)
 		msg=sprintf('GREP> cannot open file <%s>\nGREP> %s',p.par.cf,msg);
 		p=show_res(100,p,msg);
 	else
-		p.par.s=fread(fp,inf,'*char').';
+		p.par.s=fread(fp,inf,'*char').'; % shows the full text
 		fclose(fp);
 		p.par.nbytes=numel(p.par.s);
 	if	ispc
@@ -655,7 +655,7 @@ function	p=get_match(p)
 	if	p.opt.R.flg
 		ix=regexp(s,str);
 	else
-		ix=strfind(s,str);
+		ix=strfind(s,str); % s is the full file text, str is what you are looking for.
 	end
 
 		p.par.nmatch=0;
@@ -679,7 +679,7 @@ function	p=get_match(p)
 	for	i=1:nx
 		sx=p.par.eol(lx(i))+1:p.par.eol(lx(i)+1)-1;
 		nl=lx(i);
-		nm=p.par.s(sx);
+		nm=p.par.s(sx); % returns just the line with the target string
 
 % ...-x: only print fully matching lines
 	if	~p.opt.x.flg	||...
@@ -809,8 +809,8 @@ function	p=show_entry(mode,p,varargin)
 			ref=sprintf('%-1d',varargin{1});
 			txt=sprintf('%-1d: %s',varargin{1},varargin{2});
 		elseif	~p.opt.Q.flg
-			ref=sprintf('%s',p.par.cn);
-			txt=sprintf('%s: %s',p.par.cn,varargin{2});
+			ref=sprintf('%s',p.par.cn); %file name
+			txt=sprintf('%s: %s',p.par.cn,varargin{2}); %filename and string
 		else
 			txt=sprintf('%s',varargin{2});
 		end
