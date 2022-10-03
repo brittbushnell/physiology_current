@@ -29,19 +29,24 @@
 %     ]
 %
 % TvG Aug 2017, NYU: initial
+%
+% Aug 2022 edited by Brittany to work with different if statements that are
+% more inclusive.
 
 
-function S = read_behavraw(file)
-%%
+function S = read_behavrawB(file)
+
 if exist(file,'file')~=2
-    error([mfilename ':filenotexist'],'The file does not exist.\n\t%s\n',file)
+    fprintf([mfilename ':filenotexist'],'\n The file does not exist.\n\t%s\n',file)
+%     keyboard
 end
 
-[~,~,e]=fileparts(file);
-e=e(2:end); % remove .
+% [~,~,e]=fileparts(file);
+% e=e(2:end); % remove .
 % fprintf('reading file %s \n', file)
-if numel(e) == 3 && all(~isletter(e))
-    S = read_behavraw_dos(file);
-elseif numel(e) == 4 || (numel(e) == 3 && strcmpi(e,'psy'))
+
+if contains(file,'psy') % run on Windows
     S = read_behavraw_win3(file);
+else
+    S = read_behavraw_dos(file);
 end
