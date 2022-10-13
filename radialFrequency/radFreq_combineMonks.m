@@ -145,5 +145,35 @@ plotRadFreq_tuningIOD(WVV4LE, WVV4RE)
 %% figure 4: IOD and array plotting differences 
  radFreq_plotIODsummary
  radFreq_plotArrayDiffsummary
+%% save data
+WU.V4.RE = WUV4RE;
+WU.V4.LE = WUV4LE;
+WU.V1.RE = WUV1RE;
+WU.V1.LE = WUV1LE;
+
+WV.V4.RE = WVV4RE;
+WV.V4.LE = WVV4LE;
+WV.V1.RE = WVV1RE;
+WV.V1.LE = WVV1LE;
+
+XT.V4.RE = XTV4RE;
+XT.V4.LE = XTV4LE;
+XT.V1.RE = XTV1RE;
+XT.V1.LE = XTV1LE;
+
+location = determineComputer;
+if location == 1
+    outputDir =  sprintf('~/bushnell-local/Dropbox/ArrayData/matFiles/radialFrequency/info/');
+elseif location == 0
+    outputDir =  sprintf('~/Dropbox/ArrayData/matFiles//radialFrequency/info/');
+end
+
+if ~exist(outputDir,'dir')
+    mkdir(outputDir)
+end
+
+saveName = [outputDir  'AllMonkRFdata' '.mat'];
+save(saveName,'XT','WU','WV','-v7.3');
+fprintf('%.2f minutes to complete %s analysis and save data \n',toc/60,filename)
 %%
 toc/60

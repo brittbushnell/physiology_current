@@ -7,7 +7,6 @@ REdataXT = callReceptiveFieldParameters(REdataXT);
 XTrfParamsLE = LEdataXT.chReceptiveFieldParamsBE;
 XTrfParamsRE = REdataXT.chReceptiveFieldParamsBE;
 
-
 LEdataWU = callReceptiveFieldParameters(LEdataWU);
 REdataWU = callReceptiveFieldParameters(REdataWU);
 
@@ -19,6 +18,7 @@ REdataWV = callReceptiveFieldParameters(REdataWV);
 
 WVrfParamsLE = LEdataWV.chReceptiveFieldParams;
 WVrfParamsRE = REdataWV.chReceptiveFieldParams;
+
 %% plot receptive fields relative to stimulus locations
 figure%(1)
 clf
