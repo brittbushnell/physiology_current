@@ -5,4 +5,4 @@ function [logDiff] = LogDifference(data1, data2)
 %
 % If amblyope, data 1 should be the amblyopic eye
 
-logDiff  = log10(data1./data2);
+logDiff  = log(data1./data2);

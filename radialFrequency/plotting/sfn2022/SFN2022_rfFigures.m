@@ -1,5 +1,5 @@
 % SFN 2022 physio figures
-
+tic
 load('AllMonkRFdata.mat')
 %% Extract for ease
 XTV4RE = XT.V4.RE;
@@ -51,14 +51,21 @@ set(gcf,'Position',[pos(1),pos(2),800,400])
 suptitle('Preferred RFs when only 1 is preferred')
 hold on
 
-[XTv1rf4LE, XTv1rf8LE, XTv1rf16LE, XTv1rf4RE, XTv1rf8RE, XTv1rf16RE ] = plotNumChsPref1RF(XTV1LE,XTV1RE);
-[XTv4rf4LE, XTv4rf8LE, XTv4rf16LE, XTv4rf4RE, XTv4rf8RE, XTv4rf16RE ] = plotNumChsPref1RF(XTV4LE,XTV4RE);
+plotNumChsPref1RF(XTV1LE,XTV1RE);
+plotNumChsPref1RF(XTV4LE,XTV4RE);
 
-[WUv1rf4LE, WUv1rf8LE, WUv1rf16LE, WUv1rf4RE, WUv1rf8RE, WUv1rf16RE ] = plotNumChsPref1RF(WUV1LE,WUV1RE);
-[WUv4rf4LE, WUv4rf8LE, WUv4rf16LE, WUv4rf4RE, WUv4rf8RE, WUv4rf16RE ] = plotNumChsPref1RF(WUV4LE,WUV4RE);
-
-[WVv1rf4LE, WVv1rf8LE, WVv1rf16LE, WVv1rf4RE, WVv1rf8RE, WVv1rf16RE ] = plotNumChsPref1RF(WVV1LE,WVV1RE);
-[WVv4rf4LE, WVv4rf8LE, WVv4rf16LE, WVv4rf4RE, WVv4rf8RE, WVv4rf16RE ] = plotNumChsPref1RF(WVV4LE,WVV4RE);
+plotNumChsPref1RF(WUV1LE,WUV1RE);
+plotNumChsPref1RF(WUV4LE,WUV4RE);
+plotNumChsPref1RF(WVV1LE,WVV1RE);
+plotNumChsPref1RF(WVV4LE,WVV4RE);
+% [XTv1rf4LE, XTv1rf8LE, XTv1rf16LE, XTv1rf4RE, XTv1rf8RE, XTv1rf16RE ] = plotNumChsPref1RF(XTV1LE,XTV1RE);
+% [XTv4rf4LE, XTv4rf8LE, XTv4rf16LE, XTv4rf4RE, XTv4rf8RE, XTv4rf16RE ] = plotNumChsPref1RF(XTV4LE,XTV4RE);
+% 
+% [WUv1rf4LE, WUv1rf8LE, WUv1rf16LE, WUv1rf4RE, WUv1rf8RE, WUv1rf16RE ] = plotNumChsPref1RF(WUV1LE,WUV1RE);
+% [WUv4rf4LE, WUv4rf8LE, WUv4rf16LE, WUv4rf4RE, WUv4rf8RE, WUv4rf16RE ] = plotNumChsPref1RF(WUV4LE,WUV4RE);
+% 
+% [WVv1rf4LE, WVv1rf8LE, WVv1rf16LE, WVv1rf4RE, WVv1rf8RE, WVv1rf16RE ] = plotNumChsPref1RF(WVV1LE,WVV1RE);
+% [WVv4rf4LE, WVv4rf8LE, WVv4rf16LE, WVv4rf4RE, WVv4rf8RE, WVv4rf16RE ] = plotNumChsPref1RF(WVV4LE,WVV4RE);
 
 % save
 figDir = '~/Dropbox/posters/SfN/2022/figures/Radial/tuning';
@@ -71,7 +78,39 @@ cd(figDir)
 figName = ['distRFprefsNarrowTuning','.pdf'];
 set(gcf,'PaperOrientation','landscape','InvertHardcopy','off','PaperSize',[6 5],'Color','w')
 print(figure(12), figName,'-dpdf','-bestfit')
-%%
-figure(5)
+%% same, but all sig correlations
+figure(13)
 clf
+pos = get(gcf,'Position');
+set(gcf,'Position',[pos(1),pos(2),800,400])
+suptitle('RFs with significant correlations')
+hold on
 
+[XTv1rf4LE, XTv1rf8LE, XTv1rf16LE, XTv1rf4RE, XTv1rf8RE, XTv1rf16RE ] = plotNumChsPrefRFcorrs(XTV1LE,XTV1RE);
+[XTv4rf4LE, XTv4rf8LE, XTv4rf16LE, XTv4rf4RE, XTv4rf8RE, XTv4rf16RE ] = plotNumChsPrefRFcorrs(XTV4LE,XTV4RE);
+
+[WUv1rf4LE, WUv1rf8LE, WUv1rf16LE, WUv1rf4RE, WUv1rf8RE, WUv1rf16RE ] = plotNumChsPrefRFcorrs(WUV1LE,WUV1RE);
+[WUv4rf4LE, WUv4rf8LE, WUv4rf16LE, WUv4rf4RE, WUv4rf8RE, WUv4rf16RE ] = plotNumChsPrefRFcorrs(WUV4LE,WUV4RE);
+
+[WVv1rf4LE, WVv1rf8LE, WVv1rf16LE, WVv1rf4RE, WVv1rf8RE, WVv1rf16RE ] = plotNumChsPrefRFcorrs(WVV1LE,WVV1RE);
+[WVv4rf4LE, WVv4rf8LE, WVv4rf16LE, WVv4rf4RE, WVv4rf8RE, WVv4rf16RE ] = plotNumChsPrefRFcorrs(WVV4LE,WVV4RE);
+
+% save
+figDir = '~/Dropbox/posters/SfN/2022/figures/Radial/tuning';
+
+if ~exist(figDir,'dir')
+    mkdir(figDir)
+end
+cd(figDir)
+
+figName = ['distRFprefsSigCorr','.pdf'];
+set(gcf,'PaperOrientation','landscape','InvertHardcopy','off','PaperSize',[6 5],'Color','w')
+print(figure(13), figName,'-dpdf','-bestfit')
+%% 
+
+%% get behavior data
+[amblySubs,amblyRFdata, amblyVernData, amblyPeriphoData,...
+          ctrlSubs,ctrlRFdata, ctrlVernData, ctrlPeriphoData] = BehavAnalysis_AllTasks; 
+      
+%%
+fprintf('%.2d to run all analyses and plots for SfN... \n so far...\n ', toc/60)

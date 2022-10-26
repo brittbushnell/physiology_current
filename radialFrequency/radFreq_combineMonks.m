@@ -146,20 +146,41 @@ plotRadFreq_tuningIOD(WVV4LE, WVV4RE)
  radFreq_plotIODsummary
  radFreq_plotArrayDiffsummary
 %% save data
+clear WU
 WU.V4.RE = WUV4RE;
 WU.V4.LE = WUV4LE;
 WU.V1.RE = WUV1RE;
 WU.V1.LE = WUV1LE;
 
+WU.V4.IOD.corrChDiff = WUdata.V4.IODcorrChDiff;
+WU.V4.IOD.corrPopDiff = WUdata.V4.IODcorrPopDiff;
+WU.V4.IOD.corrPval = WUdata.V4.IODcorrPval;
+WU.V4.IOD.dpSigPerms = WUdata.V4.IODdpSigPerms;
+WU.V4.IOD.maxDpChDiff = WUdata.V4.IODmaxDpChDiff;
+WU.V4.IOD.maxDpPopDiff = WUdata.V4.IODmaxDpPopDiff;
+
+WU.V1.IOD.corrChDiff = WUdata.V1.IODcorrChDiff;
+WU.V1.IOD.corrPopDiff = WUdata.V1.IODcorrPopDiff;
+WU.V1.IOD.corrPval = WUdata.V1.IODcorrPval;
+WU.V1.IOD.dpSigPerms = WUdata.V1.IODdpSigPerms;
+WU.V1.IOD.maxDpChDiff = WUdata.V1.IODmaxDpChDiff;
+WU.V1.IOD.maxDpPopDiff = WUdata.V1.IODmaxDpPopDiff;
+
+clear WV
 WV.V4.RE = WVV4RE;
 WV.V4.LE = WVV4LE;
+WV.V4.IOD = WVdata.V4.IOD;
 WV.V1.RE = WVV1RE;
 WV.V1.LE = WVV1LE;
+WV.V1.IOD = WVdata.V1.IOD;
 
+clear XT
 XT.V4.RE = XTV4RE;
 XT.V4.LE = XTV4LE;
+XT.V4.IOD = XTdata.V4.IOD;
 XT.V1.RE = XTV1RE;
 XT.V1.LE = XTV1LE;
+XT.V1.IOD = XTdata.V1.IOD;
 
 location = determineComputer;
 if location == 1
