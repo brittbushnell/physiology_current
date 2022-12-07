@@ -1,5 +1,4 @@
-function [rfMuZ, rfStErZ,circMuZ, circStErZ,...
-    rfMuSc, rfStErSc,circMuSc, circStErSc] = radFreq_getMuSerrSCandZ_WVXT(dataT)
+function [dataT] = radFreq_getMuSerrSCandZ_WVXT(dataT)
 
 %% separate zscores into RF and phase matrices
 % phases per RF:
@@ -151,6 +150,33 @@ for ch = 1:96
         end
     end
 end
+%% collapse across channels
+rfMuZ_ch = nanmedian(rfMuZ,7);
+rfStErZ_ch = nanmedian(rfStErZ,7);
+circMuZ_ch = nanmedian(circMuZ,4);
+circStErZ_ch = nanmedian(circStErZ,4);
 
+rfMuSc_ch = nanmedian(rfMuSc,7);
+rfStErSc_ch = nanmedian(rfStErSc,7);
+circMuSc_ch = nanmedian(circMuSc,4);
+circStErSc_ch = nanmedian(circMuSc,4);
+%% commit to data structure
+dataT.rfMuz = rfMuZ;
+dataT.rfStErZ = rfStErZ;
+dataT.circMuZ = circMuZ;
+dataT.circStErZ = circStErZ;
+dataT.rfMuSc = rfMuSc;
+dataT.rfStErSc = rfStErSc;
+dataT.circMuSc = circMuSc;
+dataT.circStErSc = circStErSc;
+
+dataT.rfMuz_ch = rfMuZ_ch;
+dataT.rfStErZ_ch = rfStErZ_ch;
+dataT.circMuZ_ch = circMuZ_ch;
+dataT.circStErZ_ch = circStErZ_ch;
+dataT.rfMuSc_ch = rfMuSc_ch;
+dataT.rfStErSc_ch = rfStErSc_ch;
+dataT.circMuSc_ch = circMuSc_ch;
+dataT.circStErSc_ch = circStErSc_ch;
 
 

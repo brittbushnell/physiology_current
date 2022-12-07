@@ -107,10 +107,35 @@ figName = ['distRFprefsSigCorr','.pdf'];
 set(gcf,'PaperOrientation','landscape','InvertHardcopy','off','PaperSize',[6 5],'Color','w')
 print(figure(13), figName,'-dpdf','-bestfit')
 %% 
+figure(14)
+clf
+pos = get(gcf,'Position');
+set(gcf,'Position',[pos(1),pos(2),800,400])
+suptitle('RFs with highest significant d''')
+hold on
 
+plotMaxDprimeDist(XTV1LE, XTV1RE)
+plotMaxDprimeDist(XTV4LE, XTV4RE)
+
+plotMaxDprimeDist(WUV1LE, WUV1RE)
+plotMaxDprimeDist(WUV4LE, WUV4RE)
+
+plotMaxDprimeDist(WVV1LE, WVV1RE)
+plotMaxDprimeDist(WVV4LE, WVV4RE)
+
+figDir = '~/Dropbox/posters/SfN/2022/figures/Radial/tuning';
+
+if ~exist(figDir,'dir')
+    mkdir(figDir)
+end
+cd(figDir)
+
+figName = ['distRFprefsSigDprime','.pdf'];
+set(gcf,'PaperOrientation','landscape','InvertHardcopy','off','PaperSize',[6 5],'Color','w')
+print(figure(14), figName,'-dpdf','-bestfit')
 %% get behavior data
 [amblySubs,amblyRFdata, amblyVernData, amblyPeriphoData,...
           ctrlSubs,ctrlRFdata, ctrlVernData, ctrlPeriphoData] = BehavAnalysis_AllTasks; 
       
 %%
-fprintf('%.2d to run all analyses and plots for SfN... \n so far...\n ', toc/60)
+fprintf('%.2f to run all analyses and plots for SfN... \n so far...\n ', toc/60)

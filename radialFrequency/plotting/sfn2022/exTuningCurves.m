@@ -77,12 +77,12 @@ for i = 1:length(chs)
     %     plot(ix1,smooth8,'Color',[1 0.5 0.1 0.7],'LineWidth',1.25)
     %     plot(ix1,smooth16,'Color',[0 0.6 0.2 0.7],'LineWidth',1.25)
     
-    plot(2:7,rf4,'-o','Color',[0.7 0 0.7],'MarkerFaceColor',[0.7 0 0.7],'MarkerEdgeColor','w','MarkerSize',7)
-    plot(2:7,rf8,'-o','Color',[1 0.5 0.1],'MarkerFaceColor',[1 0.5 0.1],'MarkerEdgeColor','w','MarkerSize',7)
-    plot(2:7,rf16,'-o','Color',[0 0.6 0.2],'MarkerFaceColor',[0 0.6 0.2],'MarkerEdgeColor','w','MarkerSize',7)
-    plot(0,0,'o','MarkerFaceColor','k','MarkerEdgeColor','w','MarkerSize',7)
+    plot(1:6,rf4,'-o','Color',[0.7 0 0.7],'MarkerFaceColor',[0.7 0 0.7],'MarkerEdgeColor','w','MarkerSize',7.5)
+    plot(1:6,rf8,'-o','Color',[1 0.5 0.1],'MarkerFaceColor',[1 0.5 0.1],'MarkerEdgeColor','w','MarkerSize',7.5)
+    plot(1:6,rf16,'-o','Color',[0 0.6 0.2],'MarkerFaceColor',[0 0.6 0.2],'MarkerEdgeColor','w','MarkerSize',7.5)
+%     plot(0,0,'o','MarkerFaceColor','k','MarkerEdgeColor','w','MarkerSize',7)
     
-    xlim([-0.5 7.5])
+    xlim([0 7])
     %     set(gca,'XTick',1:7,'XTickLabel',0:6,'tickdir','out','FontAngle','italic','FontSize',18)
     set(gca,'XTick',0:7,'XTickLabel',0:7,'tickdir','out','FontAngle','italic','FontSize',18)
     if i == 1
@@ -111,10 +111,10 @@ for i = 1:length(chs)
     %     plot(ix1,smooth8,'Color',[1 0.5 0.1 0.7],'LineWidth',1.25)
     %     plot(ix1,smooth16,'Color',[0 0.6 0.2 0.7],'LineWidth',1.25)
     
-    plot(2:7,rf4,'-o','Color',[0.7 0 0.7],'MarkerFaceColor',[0.7 0 0.7],'MarkerEdgeColor','w','MarkerSize',7)
-    plot(2:7,rf8,'-o','Color',[1 0.5 0.1],'MarkerFaceColor',[1 0.5 0.1],'MarkerEdgeColor','w','MarkerSize',7)
-    plot(2:7,rf16,'-o','Color',[0 0.6 0.2],'MarkerFaceColor',[0 0.6 0.2],'MarkerEdgeColor','w','MarkerSize',7)
-    plot(0,0,'o','MarkerFaceColor','k','MarkerEdgeColor','w','MarkerSize',7)
+    plot(1:6,rf4,'-o','Color',[0.7 0 0.7],'MarkerFaceColor',[0.7 0 0.7],'MarkerEdgeColor','w','MarkerSize',7)
+    plot(1:6,rf8,'-o','Color',[1 0.5 0.1],'MarkerFaceColor',[1 0.5 0.1],'MarkerEdgeColor','w','MarkerSize',7)
+    plot(1:6,rf16,'-o','Color',[0 0.6 0.2],'MarkerFaceColor',[0 0.6 0.2],'MarkerEdgeColor','w','MarkerSize',7)
+%     plot(0,0,'o','MarkerFaceColor','k','MarkerEdgeColor','w','MarkerSize',7)
     
     xlim([-0.5 7.5])
     set(gca,'XTick',0:7,'XTickLabel',0:7,'tickdir','out','FontSize',18,'FontAngle','italic')
@@ -126,5 +126,5 @@ for i = 1:length(chs)
 end
 
 figName = ['WV_V4_exTuning_unfit_2chs','.pdf'];
-set(gcf,'PaperOrientation','landscape','InvertHardcopy','off','PaperSize',[6.5 6.5],'Color','w')
+set(gcf,'PaperOrientation','landscape','InvertHardcopy','off','PaperSize',[6.75 7.25],'Color','w')
  print(figure(8), figName,'-dpdf','-bestfit')

@@ -48,17 +48,13 @@ for fi = 1:length(files)
     end
     %% plot neurometric curve
     if contains(REdata.animal,'WU')
-        [REdata.rfMuZ, REdata.rfStErZ, REdata.circMuZ, REdata.circStErZ,...
-            REdata.rfMuSc, REdata.rfStErSc, REdata.circMuSc, REdata.circStErSc] = radFreq_getMuSerrSCandZ(REdata);
+        REdata = radFreq_getMuSerrSCandZ(REdata);
         
-        [LEdata.rfMuZ, LEdata.rfStErZ, LEdata.circMuZ, LEdata.circStErZ,...
-            LEdata.rfMuSc, LEdata.rfStErSc, LEdata.circMuSc, LEdata.circStErSc] = radFreq_getMuSerrSCandZ(LEdata);
+        LEdata = radFreq_getMuSerrSCandZ(LEdata);
     else
-        [REdata.rfMuZ, REdata.rfStErZ, REdata.circMuZ, REdata.circStErZ,...
-            REdata.rfMuSc, REdata.rfStErSc, REdata.circMuSc, REdata.circStErSc] = radFreq_getMuSerrSCandZ_WVXT(REdata);
+        REdata = radFreq_getMuSerrSCandZ_WVXT(REdata);
         
-        [LEdata.rfMuZ, LEdata.rfStErZ, LEdata.circMuZ, LEdata.circStErZ,...
-            LEdata.rfMuSc, LEdata.rfStErSc, LEdata.circMuSc, LEdata.circStErSc] = radFreq_getMuSerrSCandZ_WVXT(LEdata);
+        LEdata = radFreq_getMuSerrSCandZ_WVXT(LEdata);
     end
     %% get fisher transformed correlations
     if contains(REdata.animal,'WU')

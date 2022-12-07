@@ -1,4 +1,4 @@
-function [zTr,sCorr] = radFreq_getFisher_allStim_WVXT(dataT)
+function [zTr,sCorr,zTr_ch,sCorr_ch] = radFreq_getFisher_allStim_WVXT(dataT)
 %zTr = (RF,phase,sf,radius,location, ch)
 % zTr contains the fisher transformed correlations based on spike counts
 % with the response to a circle subtracted from it.
@@ -37,3 +37,6 @@ for ch = 1:96
         end
     end
 end
+%% 
+zTr_ch = nanmedian(zTr,7);
+sCorr_ch = nanmedian(sCorr,7);
